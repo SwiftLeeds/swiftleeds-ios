@@ -10,14 +10,14 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         ZStack {
-            Color.background
+            Color.accentColor
+                .ignoresSafeArea(.all)
             
             Text("Hello, Swift Leeds!")
                 .font(.custom("Helvetica Neue", size: 26, relativeTo: .title))
                 .foregroundColor(.white)
                 .padding()
         }
-        .ignoresSafeArea(.all)
     }
 }
 
