@@ -8,8 +8,8 @@ on:
 
 jobs:
   build:
-    name: Build SwiftLeeds scheme using an iPhone simulator
-    runs-on: macos-latest
+    name: Build SwiftLeeds (DEBUG)
+    runs-on: macos-12
     steps:
       - name: Checkout iOS Repository
         uses: actions/checkout@v2
@@ -17,4 +17,4 @@ jobs:
       - name: Build iOS Project via Fastlane
         uses: maierj/fastlane-action@v2.2.1
         with:
-          lane: build
+          lane: build_debug
