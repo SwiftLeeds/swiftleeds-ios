@@ -7,7 +7,6 @@ platform :ios do
       project: "SwiftLeeds.xcodeproj",
       configuration: "Debug",
       scheme: "SwiftLeeds",
-      silent: true,
       clean: true,
       skip_archive: true,
       skip_codesigning: true
