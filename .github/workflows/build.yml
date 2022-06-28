@@ -1,0 +1,20 @@
+name: iOS CI Build Workflow
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    name: Build SwiftLeeds scheme using an iPhone simulator
+    runs-on: macos-latest
+    steps:
+      - name: Checkout iOS Repository
+        uses: actions/checkout@v2
+        
+      - name: Build iOS Project via Fastlane
+        uses: maierj/fastlane-action@v2.2.1
+        with:
+          lane: build
