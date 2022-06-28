@@ -31,12 +31,12 @@ struct TalkCell: View {
             timeLabel(time)
 
             VStack(alignment: .leading, spacing: 8) {
-                if let speaker {
+                if let speaker = speaker {
                     VStack(alignment: .leading, spacing: 4) {
                         Text(speaker)
                             .fontWeight(.medium)
 
-                        if let company {
+                        if let company = company {
                             Text(company)
                                 .fontWeight(.medium)
                                 .opacity(0.5)
@@ -54,7 +54,7 @@ struct TalkCell: View {
             .frame(maxWidth: .infinity)
             .foregroundColor(isNext ? .white : .cellForeground)
             .background {
-                if let gradientColors {
+                if let gradientColors = gradientColors {
                     RoundedRectangle(cornerRadius: 12)
                         .fill(LinearGradient(colors: gradientColors, startPoint: .topLeading, endPoint: .topTrailing))
                 } else {

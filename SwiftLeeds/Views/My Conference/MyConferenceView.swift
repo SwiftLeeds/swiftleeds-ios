@@ -16,15 +16,15 @@ struct MyConferenceView: View {
                 ScrollView {
                     VStack(spacing: 16) {
                         // TODO: Weather to come from Apple API
-                        AnnouncementCell(label: "Leeds", value: "26℃", valueIcon: "cloud.sun.fill", gradientColors: [.weatherGradiantStart, .weatherGradiantEnd])
+                        AnnouncementCell(label: "Leeds", value: "26℃", valueIcon: "cloud.sun.fill", gradientColors: [.weatherGradientStart, .weatherGradientEnd])
                             .previewDisplayName("Weather")
 
                         // TODO: Calculate days once data is available from API
-                        AnnouncementCell(label: "Get your ticket now!", value: "69 Days", valueIcon: "calendar.circle", gradientColors: [.buyTicketGradiantStart, .buyTicketGradiantEnd])
+                        AnnouncementCell(label: "Get your ticket now!", value: "69 Days", valueIcon: "calendar.circle", gradientColors: [.buyTicketGradientStart, .buyTicketGradientEnd])
                             .previewDisplayName("Buy Ticket")
 
                         // TODO: Retrieve sessions once available from API
-                        TalkCell(time: "11:00", details: "Take crosswords to the next level with macOS catalyst. You’ll learn how to tick that checkbox and break free from the chains of the iPad.", isNext: true, speaker: "Joe Williams", company: "Expodition", gradientColors: [.nextTalkGradiantStart, .nextTalkGradiantEnd])
+                        TalkCell(time: "11:00", details: "Take crosswords to the next level with macOS catalyst. You’ll learn how to tick that checkbox and break free from the chains of the iPad.", isNext: true, speaker: "Joe Williams", company: "Expodition", gradientColors: [.nextTalkGradientStart, .nextTalkGradientEnd])
 
                         TalkCell(time: "12:00", details: "Lunch")
 
