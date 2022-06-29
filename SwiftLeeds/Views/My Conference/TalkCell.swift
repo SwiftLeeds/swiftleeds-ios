@@ -50,15 +50,15 @@ struct TalkCell: View {
                     Spacer()
                 }
             }
-            .padding(12)
+            .padding(Padding.cell)
             .frame(maxWidth: .infinity)
             .foregroundColor(isNext ? .white : .cellForeground)
             .background {
                 if let gradientColors = gradientColors {
-                    RoundedRectangle(cornerRadius: 12)
+                    RoundedRectangle(cornerRadius: Constants.cellRadius)
                         .fill(LinearGradient(colors: gradientColors, startPoint: .topLeading, endPoint: .topTrailing))
                 } else {
-                    RoundedRectangle(cornerRadius: 12)
+                    RoundedRectangle(cornerRadius: Constants.cellRadius)
                         .fill(Color.cellBackground)
                 }
             }
@@ -75,12 +75,12 @@ struct TalkCell: View {
 
 struct TalkCell_Previews: PreviewProvider {
     static var previews: some View {
-        VStack(spacing: 8) {
+        VStack(spacing: Padding.cellGap) {
             TalkCell(time: "11:00", details: "Something about chats", speaker: "Adam Rush", company: "Stream")
 
             TalkCell(time: "12:00", details: "Lunch")
         }
-        .padding(20)
+        .padding(Padding.screen)
         .background(Color.gray)
     }
 }

@@ -22,11 +22,11 @@ struct AnnouncementCell: View {
             Text(value)
                 .fontWeight(.medium)
         }
-        .padding(.horizontal, 12)
-        .padding(.vertical, 20)
         .foregroundColor(.white)
+        .padding(Padding.cell)
+        .frame(minHeight: Constants.cellMinimumHeight)
         .background {
-            RoundedRectangle(cornerRadius: 12)
+            RoundedRectangle(cornerRadius: Constants.cellRadius)
                 .fill(LinearGradient(colors: gradientColors, startPoint: .topLeading, endPoint: .topTrailing))
         }
     }
@@ -34,7 +34,7 @@ struct AnnouncementCell: View {
 
 struct AnnouncementCell_Previews: PreviewProvider {
     static var previews: some View {
-        VStack(spacing: 8) {
+        VStack(spacing: Padding.cellGap) {
             AnnouncementCell(label: "Leeds", value: "26℃", valueIcon: "cloud.sun.fill", gradientColors: [.weatherGradientStart, .weatherGradientEnd])
                 .previewDisplayName("Weather")
             

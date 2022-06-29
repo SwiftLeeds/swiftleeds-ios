@@ -14,7 +14,7 @@ struct MyConferenceView: View {
                 Divider()
 
                 ScrollView {
-                    VStack(spacing: 16) {
+                    VStack(spacing: Padding.cellGap) {
                         // TODO: Weather to come from Apple API
                         AnnouncementCell(label: "Leeds", value: "26℃", valueIcon: "cloud.sun.fill", gradientColors: [.weatherGradientStart, .weatherGradientEnd])
                             .previewDisplayName("Weather")
@@ -30,7 +30,7 @@ struct MyConferenceView: View {
 
                         TalkCell(time: "13:00", details: "Something about chats", speaker: "Adam Rush", company: "Stream")
                     }
-                    .padding(16)
+                    .padding(Padding.screen)
                 }
 
                 Divider()
