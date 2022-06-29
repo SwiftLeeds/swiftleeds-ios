@@ -1,0 +1,20 @@
+default_platform(:ios)
+
+platform :ios do
+  desc "Build SwiftLeeds scheme"
+  lane :build do |options|
+    build_app(
+      project: "SwiftLeeds.xcodeproj",
+      configuration: options[:configuration],
+      scheme: "SwiftLeeds",
+      clean: true,
+      skip_archive: true,
+      skip_codesigning: true
+    )
+  end
+  
+  desc "Build SwiftLeeds scheme with Debug Configuration"
+  lane :build_debug do
+    build(configuration: 'Debug')
+  end
+end
