@@ -9,9 +9,13 @@ import SwiftUI
 
 @main
 struct SwiftLeedsApp: App {
+    init() {
+        UITabBar.appearance().backgroundColor = UIColor(named: "TabBarBackground")
+    }
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            Tabs()
         }
     }
 }

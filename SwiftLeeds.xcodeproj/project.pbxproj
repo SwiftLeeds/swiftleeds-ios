@@ -7,8 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AE32CDF0286CCF9D00DF0AFF /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE32CDEF286CCF9D00DF0AFF /* Constants.swift */; };
 		AECB295727417F9D00CDC983 /* SwiftLeedsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECB295627417F9D00CDC983 /* SwiftLeedsApp.swift */; };
-		AECB295927417F9D00CDC983 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECB295827417F9D00CDC983 /* ContentView.swift */; };
+		AECB295927417F9D00CDC983 /* MyConferenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECB295827417F9D00CDC983 /* MyConferenceView.swift */; };
 		AECB295B27417F9E00CDC983 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AECB295A27417F9E00CDC983 /* Assets.xcassets */; };
 		AECB295E27417F9E00CDC983 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AECB295D27417F9E00CDC983 /* Preview Assets.xcassets */; };
 		AECB296827417F9E00CDC983 /* SwiftLeedsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECB296727417F9E00CDC983 /* SwiftLeedsTests.swift */; };
@@ -16,6 +17,11 @@
 		AECB297427417F9E00CDC983 /* SwiftLeedsUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECB297327417F9E00CDC983 /* SwiftLeedsUITestsLaunchTests.swift */; };
 		AECB298227418DA200CDC983 /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECB298127418DA200CDC983 /* Color+Extension.swift */; };
 		AECB29882741ACE000CDC983 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AECB29872741ACE000CDC983 /* Colors.xcassets */; };
+		AED26F7028675DA000E06064 /* AnnouncementCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AED26F6F28675DA000E06064 /* AnnouncementCell.swift */; };
+		AED26F74286764F000E06064 /* TalkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AED26F73286764F000E06064 /* TalkCell.swift */; };
+		AED26F7828676A9900E06064 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AED26F7728676A9900E06064 /* AboutView.swift */; };
+		AED26F7A28676AA300E06064 /* LocalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AED26F7928676AA300E06064 /* LocalView.swift */; };
+		AEDC0DAE286759630078A153 /* Tabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEDC0DAD286759630078A153 /* Tabs.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,9 +42,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AE32CDEF286CCF9D00DF0AFF /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		AECB295327417F9D00CDC983 /* SwiftLeeds.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftLeeds.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AECB295627417F9D00CDC983 /* SwiftLeedsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftLeedsApp.swift; sourceTree = "<group>"; };
-		AECB295827417F9D00CDC983 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		AECB295827417F9D00CDC983 /* MyConferenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyConferenceView.swift; sourceTree = "<group>"; };
 		AECB295A27417F9E00CDC983 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AECB295D27417F9E00CDC983 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		AECB296327417F9E00CDC983 /* SwiftLeedsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftLeedsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -49,6 +56,11 @@
 		AECB298127418DA200CDC983 /* Color+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
 		AECB29832741ABFD00CDC983 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AECB29872741ACE000CDC983 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
+		AED26F6F28675DA000E06064 /* AnnouncementCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementCell.swift; sourceTree = "<group>"; };
+		AED26F73286764F000E06064 /* TalkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TalkCell.swift; sourceTree = "<group>"; };
+		AED26F7728676A9900E06064 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
+		AED26F7928676AA300E06064 /* LocalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalView.swift; sourceTree = "<group>"; };
+		AEDC0DAD286759630078A153 /* Tabs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tabs.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -153,7 +165,10 @@
 		AECB29852741AC4B00CDC983 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				AECB295827417F9D00CDC983 /* ContentView.swift */,
+				AED26F7628676A9200E06064 /* About */,
+				AED26F7528676A8E00E06064 /* Local */,
+				AEDC0DAF28675D060078A153 /* My Conference */,
+				AEDC0DAC286759570078A153 /* Tab */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -163,8 +178,43 @@
 			children = (
 				AECB29832741ABFD00CDC983 /* Info.plist */,
 				AECB295627417F9D00CDC983 /* SwiftLeedsApp.swift */,
+				AE32CDEF286CCF9D00DF0AFF /* Constants.swift */,
 			);
 			path = App;
+			sourceTree = "<group>";
+		};
+		AED26F7528676A8E00E06064 /* Local */ = {
+			isa = PBXGroup;
+			children = (
+				AED26F7928676AA300E06064 /* LocalView.swift */,
+			);
+			path = Local;
+			sourceTree = "<group>";
+		};
+		AED26F7628676A9200E06064 /* About */ = {
+			isa = PBXGroup;
+			children = (
+				AED26F7728676A9900E06064 /* AboutView.swift */,
+			);
+			path = About;
+			sourceTree = "<group>";
+		};
+		AEDC0DAC286759570078A153 /* Tab */ = {
+			isa = PBXGroup;
+			children = (
+				AEDC0DAD286759630078A153 /* Tabs.swift */,
+			);
+			path = Tab;
+			sourceTree = "<group>";
+		};
+		AEDC0DAF28675D060078A153 /* My Conference */ = {
+			isa = PBXGroup;
+			children = (
+				AED26F6F28675DA000E06064 /* AnnouncementCell.swift */,
+				AECB295827417F9D00CDC983 /* MyConferenceView.swift */,
+				AED26F73286764F000E06064 /* TalkCell.swift */,
+			);
+			path = "My Conference";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -298,9 +348,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AECB295927417F9D00CDC983 /* ContentView.swift in Sources */,
+				AED26F7828676A9900E06064 /* AboutView.swift in Sources */,
+				AED26F7A28676AA300E06064 /* LocalView.swift in Sources */,
+				AED26F74286764F000E06064 /* TalkCell.swift in Sources */,
+				AECB295927417F9D00CDC983 /* MyConferenceView.swift in Sources */,
 				AECB298227418DA200CDC983 /* Color+Extension.swift in Sources */,
+				AED26F7028675DA000E06064 /* AnnouncementCell.swift in Sources */,
 				AECB295727417F9D00CDC983 /* SwiftLeedsApp.swift in Sources */,
+				AEDC0DAE286759630078A153 /* Tabs.swift in Sources */,
+				AE32CDF0286CCF9D00DF0AFF /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -466,8 +522,8 @@
 				INFOPLIST_FILE = SwiftLeeds/App/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortraitUpsideDown;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -494,8 +550,8 @@
 				INFOPLIST_FILE = SwiftLeeds/App/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortraitUpsideDown;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
