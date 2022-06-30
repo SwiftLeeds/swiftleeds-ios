@@ -27,11 +27,11 @@ struct AnnouncementCell: View {
                     .font(.subheadline.weight(.semibold))
             }
         }
-        .padding(12)
         .foregroundColor(.white)
-        .frame(minHeight: 65)
+        .padding(Padding.cell)
+        .frame(minHeight: Constants.cellMinimumHeight)
         .background {
-            RoundedRectangle(cornerRadius: 12)
+            RoundedRectangle(cornerRadius: Constants.cellRadius)
                 .fill(LinearGradient(colors: gradientColors, startPoint: .topLeading, endPoint: .topTrailing))
         }
     }
@@ -54,11 +54,11 @@ struct AnnouncementCell: View {
 
 struct AnnouncementCell_Previews: PreviewProvider {
     static var previews: some View {
-        VStack(spacing: 8) {
-            AnnouncementCell(label: "Leeds", value: "26℃", valueIcon: "cloud.sun.fill", gradientColors: [.weatherGradiantStart, .weatherGradiantEnd])
+        VStack(spacing: Padding.cellGap) {
+            AnnouncementCell(label: "Leeds", value: "26℃", valueIcon: "cloud.sun.fill", gradientColors: [.weatherGradientStart, .weatherGradientEnd])
                 .previewDisplayName("Weather")
             
-            AnnouncementCell(label: "Get your ticket now", value: "69 days", valueIcon: "calendar.circle", gradientColors: [.buyTicketGradiantStart, .buyTicketGradiantEnd])
+            AnnouncementCell(label: "Get your ticket now", value: "69 days", valueIcon: "calendar.circle", gradientColors: [.buyTicketGradientStart, .buyTicketGradientEnd])
                 .previewDisplayName("Buy Ticket")
         }
         .padding(20)

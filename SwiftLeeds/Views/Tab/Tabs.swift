@@ -8,10 +8,6 @@
 import SwiftUI
 
 struct Tabs: View {
-    init() {
-        UITabBar.appearance().backgroundColor = UIColor(named: "TabBarBackground")
-    }
-
     var body: some View {
         TabView {
             MyConferenceView()

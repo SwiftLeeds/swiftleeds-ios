@@ -13,12 +13,12 @@ extension Color {
     static let cellBackground = Color("CellBackground")
     static let cellForeground = Color("CellForeground")
 
-    static let buyTicketGradiantStart = Color("BuyTicketGradiantStart")
-    static let buyTicketGradiantEnd = Color("BuyTicketGradiantEnd")
+    static let buyTicketGradientStart = Color("BuyTicketGradientStart")
+    static let buyTicketGradientEnd = Color("BuyTicketGradientEnd")
 
-    static let nextTalkGradiantStart = Color("NextTalkGradiantStart")
-    static let nextTalkGradiantEnd = Color("NextTalkGradiantEnd")
+    static let nextTalkGradientStart = Color("NextTalkGradientStart")
+    static let nextTalkGradientEnd = Color("NextTalkGradientEnd")
 
-    static let weatherGradiantStart = Color("WeatherGradiantStart")
-    static let weatherGradiantEnd = Color("WeatherGradiantEnd")
+    static let weatherGradientStart = Color("WeatherGradientStart")
+    static let weatherGradientEnd = Color("WeatherGradientEnd")
 }
