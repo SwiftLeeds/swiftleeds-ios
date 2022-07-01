@@ -9,25 +9,39 @@ import SwiftUI
 
 struct ContentTileView: View {
     let title: String
-    let subTitle: String?
+    var subTitle: String?
     let imageURL: URL?
 
     private let cornerRadius: CGFloat = 12
-
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             image
             text
         }
-        .background(Color.white, in: contentShape)
+        .background(Color.cellBackground, in: contentShape)
         .clipShape(contentShape)
     }
 
     private var image: some View {
-        Rectangle()
-            .aspectRatio(1.66, contentMode: .fit)
-            .foregroundColor(.accentColor)
+        AsyncImage(
+            url: imageURL,
+            content: { image in
+                Rectangle()
+                    .foregroundColor(.clear)
+                    .background(
+                        image
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                    )
+                    .clipped()
+            },
+            placeholder: {
+                Rectangle()
+                    .foregroundColor(Color("AccentColor"))
+            }
+        )
+        .aspectRatio(1.66, contentMode: .fit)
     }
 
     private var text: some View {
@@ -53,12 +67,19 @@ struct ContentTileView: View {
 struct ContentTileView_Previews: PreviewProvider {
     static var previews: some View {
         ZStack {
-            Color.backgrond.edgesIgnoringSafeArea(.all)
-            ContentTileView(
-                title: "Alex Logan",
-                subTitle: "subtitle",
-                imageURL: URL(string: "https://pbs.twimg.com/profile_images/1475087054652559361/lgTnY96Q_400x400.jpg")
-            )
+            Color.background.edgesIgnoringSafeArea(.all)
+            VStack {
+                ContentTileView(
+                    title: "Alex Logan",
+                    subTitle: "subtitle",
+                    imageURL: URL(string: "https://pbs.twimg.com/profile_images/1475087054652559361/lgTnY96Q_400x400.jpg")
+                )
+                ContentTileView(
+                    title: "Alex Logan",
+                    subTitle: nil,
+                    imageURL: nil
+                )
+            }
             .padding()
         }
     }
