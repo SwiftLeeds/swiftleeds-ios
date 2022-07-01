@@ -35,7 +35,7 @@ struct MyConferenceView: View {
 
                 Divider()
             }
-            .background(Color.backgrond)
+            .background(Color.background)
             .navigationTitle("Swift Leeds")
         }
     }

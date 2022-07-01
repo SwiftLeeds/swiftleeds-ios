@@ -8,8 +8,8 @@
 import SwiftUI
 
 extension Color {
-    static let tabBarBackgrond = Color("TabBarBackground")
-    static let backgrond = Color("Background")
+    static let tabBarBackground = Color("TabBarBackground")
+    static let background = Color("Background")
     static let cellBackground = Color("CellBackground")
     static let cellForeground = Color("CellForeground")
 
