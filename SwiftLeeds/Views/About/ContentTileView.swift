@@ -55,6 +55,7 @@ struct ContentTileView: View {
             }
         )
         .aspectRatio(1.66, contentMode: .fit)
+        .accessibilityHidden(true)
     }
 
     private var text: some View {
@@ -68,6 +69,10 @@ struct ContentTileView: View {
                     .font(.subheadline.weight(.regular))
             }
         }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(
+            "Sponsor, \(title) \(subTitle ?? "")"
+        )
         .padding()
         .frame(minHeight: 55)
     }

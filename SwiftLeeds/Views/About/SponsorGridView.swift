@@ -26,6 +26,7 @@ struct SponsorGridView: View {
             .font(.callout.weight(.semibold))
             .foregroundColor(.secondary)
             .frame(maxWidth:.infinity, alignment: .leading)
+            .accessibilityAddTraits(.isHeader)
     }
 
     private func contentTile(for sponsor: Sponsor, oneLinerEnabled: Bool = true) -> some View {
