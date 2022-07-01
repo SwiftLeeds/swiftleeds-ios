@@ -9,8 +9,11 @@ import SwiftUI
 
 struct ContentTileView: View {
     let title: String
-    var subTitle: String?
+    let subTitle: String?
     let imageURL: URL?
+    var placeholderColor: Color = .accentColor
+    var imageBackgroundColor: Color = .accentColor
+    var imageContentMode: ContentMode = .fill
 
     private let cornerRadius: CGFloat = 12
 
@@ -28,17 +31,27 @@ struct ContentTileView: View {
             url: imageURL,
             content: { image in
                 Rectangle()
+                    .aspectRatio(1.66, contentMode: .fill)
                     .foregroundColor(.clear)
                     .background(
                         image
                             .resizable()
-                            .aspectRatio(contentMode: .fill)
+                            .aspectRatio(contentMode: imageContentMode)
+                            .transition(.opacity)
                     )
+                    .background(imageBackgroundColor)
                     .clipped()
+                    .transition(contentTransition)
             },
             placeholder: {
                 Rectangle()
-                    .foregroundColor(Color("AccentColor"))
+                    .foregroundColor(placeholderColor)
+                    .transition(contentTransition)
+                    .overlay(content: {
+                        ProgressView()
+                            .tint(.white)
+                            .opacity(0.5)
+                    })
             }
         )
         .aspectRatio(1.66, contentMode: .fit)
@@ -61,6 +74,10 @@ struct ContentTileView: View {
 
     private var contentShape: some Shape {
         RoundedRectangle(cornerRadius: 12, style: .continuous)
+    }
+
+    private var contentTransition: AnyTransition {
+        .opacity.animation(.spring())
     }
 }
 
