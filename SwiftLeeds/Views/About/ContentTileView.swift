@@ -11,19 +11,25 @@ struct ContentTileView: View {
     let title: String
     let subTitle: String?
     let imageURL: URL?
+
     var placeholderColor: Color = .accentColor
     var imageBackgroundColor: Color = .accentColor
     var imageContentMode: ContentMode = .fill
 
+    let onTap: () -> ()
+
     private let cornerRadius: CGFloat = 12
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            image
-            text
+        Button(action: onTap) {
+            VStack(alignment: .leading, spacing: 0) {
+                image
+                text
+            }
         }
         .background(Color.cellBackground, in: contentShape)
         .clipShape(contentShape)
+        .buttonStyle(SquishyButtonStyle())
     }
 
     private var image: some View {
@@ -94,12 +100,14 @@ struct ContentTileView_Previews: PreviewProvider {
                 ContentTileView(
                     title: "Alex Logan",
                     subTitle: "subtitle",
-                    imageURL: URL(string: "https://pbs.twimg.com/profile_images/1475087054652559361/lgTnY96Q_400x400.jpg")
+                    imageURL: URL(string: "https://pbs.twimg.com/profile_images/1475087054652559361/lgTnY96Q_400x400.jpg"),
+                    onTap: {}
                 )
                 ContentTileView(
                     title: "Alex Logan",
                     subTitle: nil,
-                    imageURL: nil
+                    imageURL: nil,
+                    onTap: {}
                 )
             }
             .padding()

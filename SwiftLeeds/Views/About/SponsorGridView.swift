@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct SponsorGridView: View {
+    @Environment(\.openURL) var openURL
     let goldSponsors = Sponsor.platinum
 
     var body: some View {
@@ -35,7 +36,8 @@ struct SponsorGridView: View {
             subTitle: oneLinerEnabled ? sponsor.oneLiner : nil,
             imageURL: sponsor.imageURL,
             imageBackgroundColor: .white,
-            imageContentMode: .fit
+            imageContentMode: .fit,
+            onTap: { openSponsor(sponsor: sponsor) }
         )
         .frame(maxWidth: .infinity, alignment: .center)
     }
@@ -48,6 +50,11 @@ struct SponsorGridView: View {
                     contentTile(for: sponsor, oneLinerEnabled: false)
                 }
         }
+    }
+
+    private func openSponsor(sponsor: Sponsor) {
+        guard let link = sponsor.link else { return }
+        openURL(link)
     }
 }
 

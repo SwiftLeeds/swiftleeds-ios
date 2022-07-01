@@ -26,6 +26,7 @@
 		FA6F17DE286F81150088CDB7 /* Sponsor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6F17DD286F81150088CDB7 /* Sponsor.swift */; };
 		FA6F17E0286F81CD0088CDB7 /* SponsorGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6F17DF286F81CD0088CDB7 /* SponsorGridView.swift */; };
 		FA6F17E3286F89AF0088CDB7 /* SwiftLeedsContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6F17E2286F89AF0088CDB7 /* SwiftLeedsContainer.swift */; };
+		FA6F17E5286F8D9A0088CDB7 /* SquishyButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6F17E4286F8D9A0088CDB7 /* SquishyButtonStyle.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +70,7 @@
 		FA6F17DD286F81150088CDB7 /* Sponsor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sponsor.swift; sourceTree = "<group>"; };
 		FA6F17DF286F81CD0088CDB7 /* SponsorGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsorGridView.swift; sourceTree = "<group>"; };
 		FA6F17E2286F89AF0088CDB7 /* SwiftLeedsContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftLeedsContainer.swift; sourceTree = "<group>"; };
+		FA6F17E4286F8D9A0088CDB7 /* SquishyButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquishyButtonStyle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,6 +160,7 @@
 			isa = PBXGroup;
 			children = (
 				AECB298127418DA200CDC983 /* Color+Extension.swift */,
+				FA6F17E4286F8D9A0088CDB7 /* SquishyButtonStyle.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -386,6 +389,7 @@
 			files = (
 				AED26F7828676A9900E06064 /* AboutView.swift in Sources */,
 				AED26F7A28676AA300E06064 /* LocalView.swift in Sources */,
+				FA6F17E5286F8D9A0088CDB7 /* SquishyButtonStyle.swift in Sources */,
 				AED26F74286764F000E06064 /* TalkCell.swift in Sources */,
 				FA6F17DE286F81150088CDB7 /* Sponsor.swift in Sources */,
 				FA6F17E3286F89AF0088CDB7 /* SwiftLeedsContainer.swift in Sources */,
