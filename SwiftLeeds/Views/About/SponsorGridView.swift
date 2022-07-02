@@ -14,8 +14,7 @@ struct SponsorGridView: View {
         VStack(spacing: Padding.cellGap) {
             sectionHeader(text: "Platinum Sponsors")
             ForEach(Sponsor.platinum, id: \.self) { sponsor in
-                contentTile(for: Sponsor.codemagic)
-                contentTile(for: Sponsor.stream)
+                contentTile(for: sponsor)
             }
             sectionHeader(text: "Gold Sponsors")
             grid(for: Sponsor.gold)
