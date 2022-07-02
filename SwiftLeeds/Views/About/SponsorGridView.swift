@@ -9,13 +9,14 @@ import SwiftUI
 
 struct SponsorGridView: View {
     @Environment(\.openURL) var openURL
-    let goldSponsors = Sponsor.platinum
 
     var body: some View {
         VStack(spacing: Padding.cellGap) {
             sectionHeader(text: "Platinum Sponsors")
-            contentTile(for: Sponsor.codemagic)
-            contentTile(for: Sponsor.stream)
+            ForEach(Sponsor.platinum, id: \.self) { sponsor in
+                contentTile(for: Sponsor.codemagic)
+                contentTile(for: Sponsor.stream)
+            }
             sectionHeader(text: "Gold Sponsors")
             grid(for: Sponsor.gold)
         }

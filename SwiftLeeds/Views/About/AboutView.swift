@@ -16,7 +16,7 @@ struct AboutView: View {
         }
     }
 
-    var content: some View {
+    private var content: some View {
         SponsorGridView()
     }
 }

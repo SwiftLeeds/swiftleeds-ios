@@ -18,7 +18,6 @@ struct ContentTileView: View {
 
     let onTap: () -> ()
 
-    private let cornerRadius: CGFloat = 12
 
     var body: some View {
         Button(action: onTap) {
@@ -84,7 +83,7 @@ struct ContentTileView: View {
     }
 
     private var contentShape: some Shape {
-        RoundedRectangle(cornerRadius: 12, style: .continuous)
+        RoundedRectangle(cornerRadius: Constants.cellRadius, style: .continuous)
     }
 
     private var contentTransition: AnyTransition {
