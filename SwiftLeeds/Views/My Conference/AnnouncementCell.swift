@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct AnnouncementCell: View {
+    @Environment(\.sizeCategory) var sizeCategory
+
     let label: String
     let value: String
     let valueIcon: String
@@ -16,11 +18,14 @@ struct AnnouncementCell: View {
     var body: some View {
         HStack {
             Text(label)
-                .fontWeight(.medium)
+                .font(.headline.weight(.medium))
             Spacer()
-            Image(systemName: valueIcon)
-            Text(value)
-                .fontWeight(.medium)
+            sizeAwareStack {
+                Image(systemName: valueIcon)
+                    .font(.subheadline.weight(.semibold))
+                Text(value)
+                    .font(.subheadline.weight(.semibold))
+            }
         }
         .foregroundColor(.white)
         .padding(Padding.cell)
@@ -28,6 +33,21 @@ struct AnnouncementCell: View {
         .background {
             RoundedRectangle(cornerRadius: Constants.cellRadius)
                 .fill(LinearGradient(colors: gradientColors, startPoint: .topLeading, endPoint: .topTrailing))
+        }
+    }
+
+
+    // When the text is huge, stack vertically instead to avoid compressing the leading text
+    @ViewBuilder
+    func sizeAwareStack<Content: View>(@ViewBuilder content: () -> (Content)) -> some View {
+        if sizeCategory > .accessibilityLarge {
+            VStack {
+                content()
+            }
+        } else {
+            HStack {
+                content()
+            }
         }
     }
 }

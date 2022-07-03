@@ -27,26 +27,26 @@ struct TalkCell: View {
     }
 
     var body: some View {
-        VStack(spacing: 6) {
+        VStack(alignment: .leading, spacing: 6) {
             timeLabel(time)
 
             VStack(alignment: .leading, spacing: 8) {
                 if let speaker = speaker {
                     VStack(alignment: .leading, spacing: 4) {
                         Text(speaker)
-                            .fontWeight(.medium)
+                            .font(.headline.weight(.medium))
 
                         if let company = company {
                             Text(company)
-                                .fontWeight(.medium)
-                                .opacity(0.5)
+                                .font(.subheadline.weight(.medium))
+                                .opacity(0.6)
                         }
                     }
                 }
 
                 HStack {
                     Text(details)
-                        .fontWeight(.light)
+                        .font(.body.weight(.regular))
                     Spacer()
                 }
             }
