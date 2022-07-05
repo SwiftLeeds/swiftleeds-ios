@@ -46,10 +46,10 @@ struct StackedTileView<BackgroundType: ShapeStyle>: View {
     var body: some View {
         VStack(alignment: .leading, spacing: Padding.stackGap) {
             Text(primaryText)
-                .font(.subheadline.weight(.semibold))
+                .font(.headline.weight(.semibold))
                 .foregroundColor(primaryColor)
             Text(secondaryText)
-                .font(.subheadline.weight(.medium))
+                .font(.subheadline.weight(.regular))
                 .foregroundColor(secondaryColor)
         }
         .frame(maxWidth: .infinity, minHeight: Constants.compactCellMinimumHeight, alignment: .leading)
@@ -71,16 +71,18 @@ struct StackedTileView_Previews: PreviewProvider {
             Color(uiColor: .systemGroupedBackground).edgesIgnoringSafeArea(.all)
             VStack(spacing: Padding.cellGap) {
                 StackedTileView(
-                    primaryText: "Primary", secondaryText: "Secondary"
+                    primaryText: "Primary", secondaryText: "Walkin' through a crowd, the village is aglow\nKaleidoscope of loud heartbeats under coats\nEverybody here wanted somethin' more\nSearchin' for a sound we hadn't heard before"
                 )
                 StackedTileView(
                     primaryText: "Primary",
-                    secondaryText: "Secondary",
+                    secondaryText: "And it said\nWelcome to New York, it's been waitin' for you\nWelcome to New York, welcome to New York",
+                    primaryColor: .white,
+                    secondaryColor: .white,
                     backgroundStyle: .red
                 )
                 StackedTileView(
                     primaryText: "Primary",
-                    secondaryText: "Secondary",
+                    secondaryText: "Like any great love, it keeps you guessing\nLike any real love, it's ever-changing\nLike any true love, it drives you crazy\nBut you know you wouldn't change anything, anything, anything",
                     primaryColor: .white,
                     secondaryColor: .white.opacity(0.8),
                     backgroundStyle: LinearGradient(colors: [.blue, .teal], startPoint: .leading, endPoint: .trailing)
