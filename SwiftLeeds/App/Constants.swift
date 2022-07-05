@@ -9,6 +9,7 @@ import CoreGraphics
 
 enum Constants {
     static let cellRadius: CGFloat = 12
+    static let compactCellMinimumHeight: CGFloat = 53
     static let cellMinimumHeight: CGFloat = 65
 }
 
