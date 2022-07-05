@@ -23,6 +23,8 @@
 		AED26F7A28676AA300E06064 /* LocalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AED26F7928676AA300E06064 /* LocalView.swift */; };
 		AEDC0DAE286759630078A153 /* Tabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEDC0DAD286759630078A153 /* Tabs.swift */; };
 		FA5D34F92874CD7500F8B589 /* CommonTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5D34F82874CD7500F8B589 /* CommonTileView.swift */; };
+		FA5D34FB2874D13500F8B589 /* CommonTileButtton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5D34FA2874D13500F8B589 /* CommonTileButtton.swift */; };
+		FA5D34FD2874D25000F8B589 /* SquishyButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5D34FC2874D25000F8B589 /* SquishyButtonStyle.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +65,8 @@
 		AED26F7928676AA300E06064 /* LocalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalView.swift; sourceTree = "<group>"; };
 		AEDC0DAD286759630078A153 /* Tabs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tabs.swift; sourceTree = "<group>"; };
 		FA5D34F82874CD7500F8B589 /* CommonTileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonTileView.swift; sourceTree = "<group>"; };
+		FA5D34FA2874D13500F8B589 /* CommonTileButtton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonTileButtton.swift; sourceTree = "<group>"; };
+		FA5D34FC2874D25000F8B589 /* SquishyButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquishyButtonStyle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,6 +155,7 @@
 			isa = PBXGroup;
 			children = (
 				AECB298127418DA200CDC983 /* Color+Extension.swift */,
+				FA5D34FC2874D25000F8B589 /* SquishyButtonStyle.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -224,6 +229,7 @@
 			isa = PBXGroup;
 			children = (
 				FA5D34F82874CD7500F8B589 /* CommonTileView.swift */,
+				FA5D34FA2874D13500F8B589 /* CommonTileButtton.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -365,7 +371,9 @@
 				AED26F74286764F000E06064 /* TalkCell.swift in Sources */,
 				AECB295927417F9D00CDC983 /* MyConferenceView.swift in Sources */,
 				AECB298227418DA200CDC983 /* Color+Extension.swift in Sources */,
+				FA5D34FD2874D25000F8B589 /* SquishyButtonStyle.swift in Sources */,
 				AED26F7028675DA000E06064 /* AnnouncementCell.swift in Sources */,
+				FA5D34FB2874D13500F8B589 /* CommonTileButtton.swift in Sources */,
 				AECB295727417F9D00CDC983 /* SwiftLeedsApp.swift in Sources */,
 				AEDC0DAE286759630078A153 /* Tabs.swift in Sources */,
 				AE32CDF0286CCF9D00DF0AFF /* Constants.swift in Sources */,
