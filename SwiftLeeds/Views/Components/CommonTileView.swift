@@ -9,11 +9,17 @@ import SwiftUI
 
 /// Generic primary secondary view
 struct CommonTileView<BackgroundType: ShapeStyle>: View {
+    @Environment(\.sizeCategory) var sizeCategory
+
     let primaryText: String
     let secondaryText: String?
     let primaryColor: Color
     let secondaryColor: Color
     var backgroundStyle: BackgroundType
+
+    var accessibilityTextEnabled: Bool {
+        sizeCategory >= .accessibilityMedium
+    }
 
     init(
         primaryText: String,
@@ -44,17 +50,19 @@ struct CommonTileView<BackgroundType: ShapeStyle>: View {
     }
 
     var body: some View {
-        HStack(alignment: .center) {
+        sizeAwareStack(content: {
             Text(primaryText)
                 .font(.subheadline.weight(.semibold))
                 .foregroundColor(primaryColor)
-            Spacer()
+            if !accessibilityTextEnabled {
+                Spacer()
+            }
             if let secondaryText = secondaryText {
                 Text(secondaryText)
                     .font(.subheadline.weight(.medium))
                     .foregroundColor(secondaryColor)
             }
-        }
+        })
         .padding(Padding.cell)
         .frame(minHeight: Constants.compactCellMinimumHeight)
         .background(
@@ -65,6 +73,21 @@ struct CommonTileView<BackgroundType: ShapeStyle>: View {
         .accessibilityLabel(
             "\(primaryText) \(secondaryText ?? "")"
         )
+    }
+
+    // When the text is huge, stack vertically instead to avoid compressing the leading text
+    @ViewBuilder
+    func sizeAwareStack<Content: View>(@ViewBuilder content: () -> (Content)) -> some View {
+        if accessibilityTextEnabled {
+            VStack {
+                content()
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
+        } else {
+            HStack {
+                content()
+            }
+        }
     }
 }
 
@@ -89,12 +112,7 @@ struct CommonTileView_Previews: PreviewProvider {
                     secondaryText: "Secondary",
                     primaryColor: .white,
                     secondaryColor: .white.opacity(0.8),
-                    backgroundStyle:
-                        LinearGradient.init(
-                            colors: [.weatherGradientStart, .weatherGradientStart],
-                            startPoint: .top,
-                            endPoint: .bottom
-                        )
+                    backgroundStyle: LinearGradient.weather
                 )
             }
             .padding()
