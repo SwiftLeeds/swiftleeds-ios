@@ -88,12 +88,7 @@ struct CommonTileButtton_Previews: PreviewProvider {
                     secondaryText: "Secondary",
                     primaryColor: .white,
                     secondaryColor: .white.opacity(0.8),
-                    backgroundStyle:
-                        LinearGradient.init(
-                            colors: [.weatherGradientStart, .weatherGradientStart],
-                            startPoint: .top,
-                            endPoint: .bottom
-                        ),
+                    backgroundStyle: LinearGradient.weather,
                     onTap: {}
                 )
             }
