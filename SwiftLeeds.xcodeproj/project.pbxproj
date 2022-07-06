@@ -23,6 +23,7 @@
 		AED26F7A28676AA300E06064 /* LocalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AED26F7928676AA300E06064 /* LocalView.swift */; };
 		AEDC0DAE286759630078A153 /* Tabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEDC0DAD286759630078A153 /* Tabs.swift */; };
 		FA29253C286F7A4F00B1ABE7 /* ContentTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA29253B286F7A4F00B1ABE7 /* ContentTileView.swift */; };
+		FA57DE392875989500911F03 /* SquishyButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE382875989500911F03 /* SquishyButtonStyle.swift */; };
 		FA6F17DE286F81150088CDB7 /* Sponsor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6F17DD286F81150088CDB7 /* Sponsor.swift */; };
 		FA6F17E0286F81CD0088CDB7 /* SponsorGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6F17DF286F81CD0088CDB7 /* SponsorGridView.swift */; };
 		FA6F17E3286F89AF0088CDB7 /* SwiftLeedsContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6F17E2286F89AF0088CDB7 /* SwiftLeedsContainer.swift */; };
@@ -67,6 +68,7 @@
 		AED26F7928676AA300E06064 /* LocalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalView.swift; sourceTree = "<group>"; };
 		AEDC0DAD286759630078A153 /* Tabs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tabs.swift; sourceTree = "<group>"; };
 		FA29253B286F7A4F00B1ABE7 /* ContentTileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentTileView.swift; sourceTree = "<group>"; };
+		FA57DE382875989500911F03 /* SquishyButtonStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SquishyButtonStyle.swift; sourceTree = "<group>"; };
 		FA6F17DD286F81150088CDB7 /* Sponsor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sponsor.swift; sourceTree = "<group>"; };
 		FA6F17DF286F81CD0088CDB7 /* SponsorGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsorGridView.swift; sourceTree = "<group>"; };
 		FA6F17E2286F89AF0088CDB7 /* SwiftLeedsContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftLeedsContainer.swift; sourceTree = "<group>"; };
@@ -105,6 +107,7 @@
 				AECB296627417F9E00CDC983 /* SwiftLeedsTests */,
 				AECB297027417F9E00CDC983 /* SwiftLeedsUITests */,
 				AECB295427417F9D00CDC983 /* Products */,
+				FA57DE352875986900911F03 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -124,6 +127,7 @@
 				FA6F17DA286F81000088CDB7 /* Data */,
 				AECB29862741AC5800CDC983 /* App */,
 				AECB298027418D9800CDC983 /* Extension */,
+				FA57DE372875988300911F03 /* Style */,
 				AECB295C27417F9E00CDC983 /* Preview Content */,
 				AECB29842741AC2500CDC983 /* Resources */,
 				AECB29852741AC4B00CDC983 /* Views */,
@@ -160,7 +164,6 @@
 			isa = PBXGroup;
 			children = (
 				AECB298127418DA200CDC983 /* Color+Extension.swift */,
-				FA6F17E4286F8D9A0088CDB7 /* SquishyButtonStyle.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -230,6 +233,22 @@
 				AED26F73286764F000E06064 /* TalkCell.swift */,
 			);
 			path = "My Conference";
+			sourceTree = "<group>";
+		};
+		FA57DE352875986900911F03 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				FA6F17E4286F8D9A0088CDB7 /* SquishyButtonStyle.swift */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		FA57DE372875988300911F03 /* Style */ = {
+			isa = PBXGroup;
+			children = (
+				FA57DE382875989500911F03 /* SquishyButtonStyle.swift */,
+			);
+			path = Style;
 			sourceTree = "<group>";
 		};
 		FA6F17DA286F81000088CDB7 /* Data */ = {
@@ -395,6 +414,7 @@
 				FA6F17E3286F89AF0088CDB7 /* SwiftLeedsContainer.swift in Sources */,
 				AECB295927417F9D00CDC983 /* MyConferenceView.swift in Sources */,
 				AECB298227418DA200CDC983 /* Color+Extension.swift in Sources */,
+				FA57DE392875989500911F03 /* SquishyButtonStyle.swift in Sources */,
 				AED26F7028675DA000E06064 /* AnnouncementCell.swift in Sources */,
 				FA29253C286F7A4F00B1ABE7 /* ContentTileView.swift in Sources */,
 				AECB295727417F9D00CDC983 /* SwiftLeedsApp.swift in Sources */,
