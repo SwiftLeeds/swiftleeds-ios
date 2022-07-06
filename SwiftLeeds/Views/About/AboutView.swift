@@ -9,7 +9,15 @@ import SwiftUI
 
 struct AboutView: View {
     var body: some View {
-        Text("About")
+        SwiftLeedsContainer {
+            ScrollView {
+                content
+            }
+        }
+    }
+
+    private var content: some View {
+        SponsorGridView()
     }
 }
 
