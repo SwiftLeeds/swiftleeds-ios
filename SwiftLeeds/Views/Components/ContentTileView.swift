@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct ContentTileView: View {
+    // Label to be read prior to the content, i.e Sponsor
+    let accessibilityLabel: String
     let title: String
     let subTitle: String?
     let imageURL: URL?
@@ -76,7 +78,7 @@ struct ContentTileView: View {
         }
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(
-            "Sponsor, \(title) \(subTitle ?? "")"
+            "\(accessibilityLabel), \(title) \(subTitle ?? "")"
         )
         .padding()
         .frame(minHeight: 55)
@@ -97,12 +99,14 @@ struct ContentTileView_Previews: PreviewProvider {
             Color.background.edgesIgnoringSafeArea(.all)
             VStack {
                 ContentTileView(
+                    accessibilityLabel: "Speaker",
                     title: "Alex Logan",
                     subTitle: "subtitle",
                     imageURL: URL(string: "https://pbs.twimg.com/profile_images/1475087054652559361/lgTnY96Q_400x400.jpg"),
                     onTap: {}
                 )
                 ContentTileView(
+                    accessibilityLabel: "Speaker",
                     title: "Alex Logan",
                     subTitle: nil,
                     imageURL: nil,

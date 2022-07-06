@@ -32,6 +32,7 @@ struct SponsorGridView: View {
 
     private func contentTile(for sponsor: Sponsor, oneLinerEnabled: Bool = true) -> some View {
         ContentTileView(
+            accessibilityLabel: "Sponsor",
             title: sponsor.name,
             subTitle: oneLinerEnabled ? sponsor.oneLiner : nil,
             imageURL: sponsor.imageURL,
