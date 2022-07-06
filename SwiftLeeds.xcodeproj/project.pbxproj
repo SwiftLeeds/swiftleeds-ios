@@ -121,6 +121,7 @@
 		AECB295527417F9D00CDC983 /* SwiftLeeds */ = {
 			isa = PBXGroup;
 			children = (
+				FA57DE32287597B000911F03 /* Style */,
 				AECB29862741AC5800CDC983 /* App */,
 				AECB298027418D9800CDC983 /* Extension */,
 				AECB295C27417F9E00CDC983 /* Preview Content */,
@@ -159,7 +160,6 @@
 			isa = PBXGroup;
 			children = (
 				AECB298127418DA200CDC983 /* Color+Extension.swift */,
-				FA5D34FC2874D25000F8B589 /* SquishyButtonStyle.swift */,
 				FA5D34FE2874D31200F8B589 /* Gradient+Extension.swift */,
 			);
 			path = Extension;
@@ -228,6 +228,14 @@
 				AED26F73286764F000E06064 /* TalkCell.swift */,
 			);
 			path = "My Conference";
+			sourceTree = "<group>";
+		};
+		FA57DE32287597B000911F03 /* Style */ = {
+			isa = PBXGroup;
+			children = (
+				FA5D34FC2874D25000F8B589 /* SquishyButtonStyle.swift */,
+			);
+			path = Style;
 			sourceTree = "<group>";
 		};
 		FA5D34F72874CD4400F8B589 /* Components */ = {
