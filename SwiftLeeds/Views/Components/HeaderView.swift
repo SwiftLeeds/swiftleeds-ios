@@ -15,35 +15,50 @@ struct HeaderView: View {
     var placeholderColor: Color = .accentColor
     var imageBackgroundColor: Color = .accentColor
 
+    @State private var textImageStackSize = CGSize.zero
+
+    private let backgroundImageWidthToHeightRatio: CGFloat = 1.66
     private let frontImageHeight: CGFloat = 160
     private var imageOffset: CGFloat {
         frontImageHeight/2
     }
 
     var body: some View {
-        ZStack(alignment: .center) {
+        VStack(alignment: .center) {
             backgroundImage
-            imageAndTextStack
+                .overlay(
+                    imageAndTextStack.measureSize { size in
+                        textImageStackSize = size
+                    },
+                    alignment: .center
+                )
         }
-        .padding(.bottom, imageOffset)
+        .padding(.bottom, textImageStackSize.height/2)
+    }
+
+    var text: some View {
+        VStack(spacing: Padding.cellGap) {
+            Text(title)
+                .font(.title3.weight(.semibold))
+                .foregroundColor(.primary)
+                .multilineTextAlignment(.center)
+        }
     }
 
     var imageAndTextStack: some View {
-        VStack(spacing: 16) {
-            primaryImage
-            Text(title)
-                .font(.headline.weight(.bold))
-                .foregroundColor(.primary)
+        VStack(spacing: Padding.cellGap) {
+            frontImage
+            text
         }
-        .offset(y: imageOffset)
+        .offset(x: 0, y: textImageStackSize.height/2)
     }
 
-    var primaryImage: some View {
+    var frontImage: some View {
         AsyncImage(
             url: imageURL,
             content: { image in
                 Rectangle()
-                    .aspectRatio(1.66, contentMode: .fill)
+                    .aspectRatio(backgroundImageWidthToHeightRatio, contentMode: .fill)
                     .foregroundColor(.clear)
                     .background(
                         image
@@ -76,7 +91,7 @@ struct HeaderView: View {
             url: backgroundURL,
             content: { image in
                 Rectangle()
-                    .aspectRatio(1.66, contentMode: .fit)
+                    .aspectRatio(backgroundImageWidthToHeightRatio, contentMode: .fit)
                     .foregroundColor(.clear)
                     .background(
                         image
@@ -99,7 +114,7 @@ struct HeaderView: View {
                     })
             }
         )
-        .aspectRatio(1.66, contentMode: .fit)
+        .aspectRatio(backgroundImageWidthToHeightRatio, contentMode: .fit)
         .edgesIgnoringSafeArea(.top)
         .accessibilityHidden(true)
     }
@@ -117,7 +132,7 @@ struct HeaderView_Previews: PreviewProvider {
                 imageURL: URL(string: "https://cdn-az.allevents.in/events5/banners/458482c4fc7489448aa3d77f6e2cd5d0553fa5edd7178dbf18cf986d2172eaf2-rimg-w1200-h675-gmir.jpg?v=1655230338"),
                 backgroundURL: URL(string:"https://www.nycgo.com/images/itineraries/42961/soc_fb_dumbo_spots__facebook.jpg")
             )
-            Spacer()
+            Text("hey! :)")
         }
     }
 

@@ -32,6 +32,7 @@
 		FA57DE512875B09900911F03 /* SponsorGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE4F2875B09900911F03 /* SponsorGridView.swift */; };
 		FA57DE552875B0C100911F03 /* SquishyButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE542875B0C100911F03 /* SquishyButtonStyle.swift */; };
 		FA57DE592875B0EF00911F03 /* Sponsor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE582875B0EF00911F03 /* Sponsor.swift */; };
+		FAAB819128844EBC001159BB /* View+MeasureSize+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAB819028844EBC001159BB /* View+MeasureSize+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +82,7 @@
 		FA57DE4F2875B09900911F03 /* SponsorGridView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SponsorGridView.swift; sourceTree = "<group>"; };
 		FA57DE542875B0C100911F03 /* SquishyButtonStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SquishyButtonStyle.swift; sourceTree = "<group>"; };
 		FA57DE582875B0EF00911F03 /* Sponsor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sponsor.swift; sourceTree = "<group>"; };
+		FAAB819028844EBC001159BB /* View+MeasureSize+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+MeasureSize+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -173,6 +175,7 @@
 			children = (
 				FA57DE4C2875B08600911F03 /* Gradient+Extension.swift */,
 				AECB298127418DA200CDC983 /* Color+Extension.swift */,
+				FAAB819028844EBC001159BB /* View+MeasureSize+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -436,6 +439,7 @@
 				FA57DE512875B09900911F03 /* SponsorGridView.swift in Sources */,
 				AECB295927417F9D00CDC983 /* MyConferenceView.swift in Sources */,
 				FA57DE4B2875B06B00911F03 /* SwiftLeedsContainer.swift in Sources */,
+				FAAB819128844EBC001159BB /* View+MeasureSize+Extension.swift in Sources */,
 				AECB298227418DA200CDC983 /* Color+Extension.swift in Sources */,
 				AED26F7028675DA000E06064 /* AnnouncementCell.swift in Sources */,
 				AECB295727417F9D00CDC983 /* SwiftLeedsApp.swift in Sources */,
