@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2A3831122884A96600030002 /* FancyHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3831112884A96600030002 /* FancyHeaderView.swift */; };
 		AE32CDF0286CCF9D00DF0AFF /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE32CDEF286CCF9D00DF0AFF /* Constants.swift */; };
 		AECB295727417F9D00CDC983 /* SwiftLeedsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECB295627417F9D00CDC983 /* SwiftLeedsApp.swift */; };
 		AECB295927417F9D00CDC983 /* MyConferenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECB295827417F9D00CDC983 /* MyConferenceView.swift */; };
@@ -53,6 +54,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2A3831112884A96600030002 /* FancyHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FancyHeaderView.swift; sourceTree = "<group>"; };
 		AE32CDEF286CCF9D00DF0AFF /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		AECB295327417F9D00CDC983 /* SwiftLeeds.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftLeeds.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AECB295627417F9D00CDC983 /* SwiftLeedsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftLeedsApp.swift; sourceTree = "<group>"; };
@@ -265,6 +267,7 @@
 		FA57DE422875B03B00911F03 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				2A3831112884A96600030002 /* FancyHeaderView.swift */,
 				FA57DE4E2875B09900911F03 /* ContentTileView.swift */,
 				FA57DE432875B06500911F03 /* CommonTileButton.swift */,
 				FA57DE442875B06500911F03 /* CommonTileView.swift */,
@@ -438,6 +441,7 @@
 				FA1F7EF7287CB71600E12F8C /* HeaderView.swift in Sources */,
 				FA57DE512875B09900911F03 /* SponsorGridView.swift in Sources */,
 				AECB295927417F9D00CDC983 /* MyConferenceView.swift in Sources */,
+				2A3831122884A96600030002 /* FancyHeaderView.swift in Sources */,
 				FA57DE4B2875B06B00911F03 /* SwiftLeedsContainer.swift in Sources */,
 				FAAB819128844EBC001159BB /* View+MeasureSize+Extension.swift in Sources */,
 				AECB298227418DA200CDC983 /* Color+Extension.swift in Sources */,
