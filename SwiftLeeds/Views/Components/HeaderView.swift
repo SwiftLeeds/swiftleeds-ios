@@ -83,7 +83,8 @@ struct HeaderView: View {
         )
         .frame(width: frontImageHeight, height: frontImageHeight, alignment: .center)
         .accessibilityHidden(true)
-        .cornerRadius(15)
+        .cornerRadius(Constants.cellRadius)
+        .shadow(color: Color.black.opacity(1/3), radius: 8, x: 0, y: 0)
     }
 
     var backgroundImage: some View {
