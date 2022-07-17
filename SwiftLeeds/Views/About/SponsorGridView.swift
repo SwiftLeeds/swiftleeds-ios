@@ -19,7 +19,6 @@ struct SponsorGridView: View {
             sectionHeader(text: "Gold Sponsors")
             grid(for: Sponsor.gold)
         }
-        .padding()
     }
 
     private func sectionHeader(text: String) -> some View {
