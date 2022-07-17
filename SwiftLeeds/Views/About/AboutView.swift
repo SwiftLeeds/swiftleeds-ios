@@ -8,16 +8,46 @@
 import SwiftUI
 
 struct AboutView: View {
+
+    // TODO: Set these to the correct pages
+    let venueURL = URL(string: "https://swiftleeds.co.uk/#venue")
+    let codeOfConduct = URL(string: "https://swiftleeds.co.uk/conduct")
+
     var body: some View {
         SwiftLeedsContainer {
             ScrollView {
                 content
             }
         }
+        .edgesIgnoringSafeArea(.top)
     }
 
     private var content: some View {
-        SponsorGridView()
+        VStack(spacing: Padding.cellGap) {
+            HeaderView(
+                title: "Swift Leeds",
+                imageAssetName: Assets.Image.swiftLeedsIcon,
+                backgroundImageAssetName: Assets.Image.playhouseImage
+            )
+            VStack(spacing: Padding.cellGap) {
+                StackedTileView(primaryText: "About", secondaryText: Strings.aboutSwiftLeeds)
+                CommonTileButton(primaryText: "Code of conduct", secondaryText: nil, backgroundStyle: Color.cellBackground) {
+                    openURL(url: codeOfConduct)
+                }
+                CommonTileButton(primaryText: "Venue", secondaryText: nil, backgroundStyle: Color.cellBackground) {
+                    openURL(url: venueURL)
+                }
+                SponsorGridView()
+            }
+            .padding(Padding.screen)
+        }
+    }
+
+    private func openURL(url: URL?) {
+        guard let url = url else {
+            return
+        }
+        UIApplication.shared.open(url)
     }
 }
 

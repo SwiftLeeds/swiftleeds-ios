@@ -20,7 +20,6 @@ struct ContentTileView: View {
 
     let onTap: () -> ()
 
-
     var body: some View {
         Button(action: onTap) {
             VStack(alignment: .leading, spacing: 0) {

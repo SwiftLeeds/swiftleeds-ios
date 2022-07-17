@@ -22,7 +22,8 @@
 		AED26F7828676A9900E06064 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AED26F7728676A9900E06064 /* AboutView.swift */; };
 		AED26F7A28676AA300E06064 /* LocalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AED26F7928676AA300E06064 /* LocalView.swift */; };
 		AEDC0DAE286759630078A153 /* Tabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEDC0DAD286759630078A153 /* Tabs.swift */; };
-		FA57DE462875B06500911F03 /* CommonTileButtton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE432875B06500911F03 /* CommonTileButtton.swift */; };
+		FA1F7EF7287CB71600E12F8C /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1F7EF6287CB71600E12F8C /* HeaderView.swift */; };
+		FA57DE462875B06500911F03 /* CommonTileButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE432875B06500911F03 /* CommonTileButton.swift */; };
 		FA57DE472875B06500911F03 /* CommonTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE442875B06500911F03 /* CommonTileView.swift */; };
 		FA57DE482875B06500911F03 /* StackedTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE452875B06500911F03 /* StackedTileView.swift */; };
 		FA57DE4B2875B06B00911F03 /* SwiftLeedsContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE4A2875B06B00911F03 /* SwiftLeedsContainer.swift */; };
@@ -31,6 +32,7 @@
 		FA57DE512875B09900911F03 /* SponsorGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE4F2875B09900911F03 /* SponsorGridView.swift */; };
 		FA57DE552875B0C100911F03 /* SquishyButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE542875B0C100911F03 /* SquishyButtonStyle.swift */; };
 		FA57DE592875B0EF00911F03 /* Sponsor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE582875B0EF00911F03 /* Sponsor.swift */; };
+		FAAB819128844EBC001159BB /* View+MeasureSize+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAB819028844EBC001159BB /* View+MeasureSize+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,7 +72,8 @@
 		AED26F7728676A9900E06064 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		AED26F7928676AA300E06064 /* LocalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalView.swift; sourceTree = "<group>"; };
 		AEDC0DAD286759630078A153 /* Tabs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tabs.swift; sourceTree = "<group>"; };
-		FA57DE432875B06500911F03 /* CommonTileButtton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonTileButtton.swift; sourceTree = "<group>"; };
+		FA1F7EF6287CB71600E12F8C /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
+		FA57DE432875B06500911F03 /* CommonTileButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonTileButton.swift; sourceTree = "<group>"; };
 		FA57DE442875B06500911F03 /* CommonTileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonTileView.swift; sourceTree = "<group>"; };
 		FA57DE452875B06500911F03 /* StackedTileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StackedTileView.swift; sourceTree = "<group>"; };
 		FA57DE4A2875B06B00911F03 /* SwiftLeedsContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftLeedsContainer.swift; sourceTree = "<group>"; };
@@ -79,6 +82,7 @@
 		FA57DE4F2875B09900911F03 /* SponsorGridView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SponsorGridView.swift; sourceTree = "<group>"; };
 		FA57DE542875B0C100911F03 /* SquishyButtonStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SquishyButtonStyle.swift; sourceTree = "<group>"; };
 		FA57DE582875B0EF00911F03 /* Sponsor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sponsor.swift; sourceTree = "<group>"; };
+		FAAB819028844EBC001159BB /* View+MeasureSize+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+MeasureSize+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,6 +175,7 @@
 			children = (
 				FA57DE4C2875B08600911F03 /* Gradient+Extension.swift */,
 				AECB298127418DA200CDC983 /* Color+Extension.swift */,
+				FAAB819028844EBC001159BB /* View+MeasureSize+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -261,9 +266,10 @@
 			isa = PBXGroup;
 			children = (
 				FA57DE4E2875B09900911F03 /* ContentTileView.swift */,
-				FA57DE432875B06500911F03 /* CommonTileButtton.swift */,
+				FA57DE432875B06500911F03 /* CommonTileButton.swift */,
 				FA57DE442875B06500911F03 /* CommonTileView.swift */,
 				FA57DE452875B06500911F03 /* StackedTileView.swift */,
+				FA1F7EF6287CB71600E12F8C /* HeaderView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -429,9 +435,11 @@
 				FA57DE552875B0C100911F03 /* SquishyButtonStyle.swift in Sources */,
 				AED26F7A28676AA300E06064 /* LocalView.swift in Sources */,
 				AED26F74286764F000E06064 /* TalkCell.swift in Sources */,
+				FA1F7EF7287CB71600E12F8C /* HeaderView.swift in Sources */,
 				FA57DE512875B09900911F03 /* SponsorGridView.swift in Sources */,
 				AECB295927417F9D00CDC983 /* MyConferenceView.swift in Sources */,
 				FA57DE4B2875B06B00911F03 /* SwiftLeedsContainer.swift in Sources */,
+				FAAB819128844EBC001159BB /* View+MeasureSize+Extension.swift in Sources */,
 				AECB298227418DA200CDC983 /* Color+Extension.swift in Sources */,
 				AED26F7028675DA000E06064 /* AnnouncementCell.swift in Sources */,
 				AECB295727417F9D00CDC983 /* SwiftLeedsApp.swift in Sources */,
@@ -440,7 +448,7 @@
 				FA57DE482875B06500911F03 /* StackedTileView.swift in Sources */,
 				AE32CDF0286CCF9D00DF0AFF /* Constants.swift in Sources */,
 				FA57DE472875B06500911F03 /* CommonTileView.swift in Sources */,
-				FA57DE462875B06500911F03 /* CommonTileButtton.swift in Sources */,
+				FA57DE462875B06500911F03 /* CommonTileButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

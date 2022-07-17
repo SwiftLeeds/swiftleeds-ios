@@ -1,5 +1,5 @@
 //
-//  CommonTileButtton.swift
+//  CommonTileButton.swift
 //  SwiftLeeds
 //
 //  Created by Alex Logan on 05/07/2022.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CommonTileButtton<BackgroundType: ShapeStyle>: View {
+struct CommonTileButton<BackgroundType: ShapeStyle>: View {
     let primaryText: String
     let secondaryText: String?
     let primaryColor: Color
@@ -67,23 +67,23 @@ struct CommonTileButtton_Previews: PreviewProvider {
         ZStack {
             Color(uiColor: .systemGroupedBackground).edgesIgnoringSafeArea(.all)
             VStack(spacing: Padding.cellGap) {
-                CommonTileButtton(
+                CommonTileButton(
                     primaryText: "Primary",
                     secondaryText: "Secondary",
                     onTap: {}
                 )
-                CommonTileButtton(
+                CommonTileButton(
                     primaryText: "Primary",
                     secondaryText: nil,
                     onTap: {}
                 )
-                CommonTileButtton(
+                CommonTileButton(
                     primaryText: "Primary",
                     secondaryText: "Secondary",
                     backgroundStyle: .red,
                     onTap: {}
                 )
-                CommonTileButtton(
+                CommonTileButton(
                     primaryText: "Primary",
                     secondaryText: "Secondary",
                     primaryColor: .white,
