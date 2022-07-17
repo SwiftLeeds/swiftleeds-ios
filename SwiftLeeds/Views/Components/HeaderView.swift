@@ -11,16 +11,48 @@ struct HeaderView: View {
     let title: String
     let imageURL: URL?
     let backgroundURL: URL?
+    let imageAssetName: String?
+    let backgroundImageAssetName: String?
 
-    var placeholderColor: Color = .accentColor
-    var imageBackgroundColor: Color = .accentColor
+    private let placeholderColor: Color
+    private let imageBackgroundColor: Color
 
     @State private var textImageStackSize = CGSize.zero
 
     private let backgroundImageWidthToHeightRatio: CGFloat = 1.66
     private let frontImageHeight: CGFloat = 160
-    private var imageOffset: CGFloat {
-        frontImageHeight/2
+    private var textOffset: CGFloat { textImageStackSize.height/2 }
+
+    internal init(
+        title: String,
+        imageURL: URL?,
+        backgroundURL: URL?,
+        placeholderColor: Color = .accentColor,
+        imageBackgroundColor: Color = .accentColor
+    ) {
+        self.title = title
+        self.imageURL = imageURL
+        self.backgroundURL = backgroundURL
+        self.imageAssetName = nil
+        self.backgroundImageAssetName = nil
+        self.placeholderColor = placeholderColor
+        self.imageBackgroundColor = imageBackgroundColor
+    }
+
+    internal init(
+        title: String,
+        imageAssetName: String?,
+        backgroundImageAssetName: String?,
+        placeholderColor: Color = .accentColor,
+        imageBackgroundColor: Color = .accentColor
+    ) {
+        self.title = title
+        self.imageURL = nil
+        self.backgroundURL = nil
+        self.imageAssetName = imageAssetName
+        self.backgroundImageAssetName = backgroundImageAssetName
+        self.placeholderColor = placeholderColor
+        self.imageBackgroundColor = imageBackgroundColor
     }
 
     var body: some View {
@@ -33,7 +65,8 @@ struct HeaderView: View {
                     alignment: .center
                 )
         }
-        .padding(.bottom, textImageStackSize.height/2)
+        .padding(.bottom, textOffset)
+        .allowsHitTesting(false)
     }
 
     var text: some View {
@@ -42,6 +75,7 @@ struct HeaderView: View {
                 .font(.title3.weight(.semibold))
                 .foregroundColor(.primary)
                 .multilineTextAlignment(.center)
+                .accessibilityHeading(.h1)
         }
     }
 
@@ -50,10 +84,31 @@ struct HeaderView: View {
             frontImage
             text
         }
-        .offset(x: 0, y: textImageStackSize.height/2)
+        .offset(x: 0, y: textOffset)
     }
 
-    var frontImage: some View {
+    private var frontImage: some View {
+        Group {
+            if let imageAssetName = imageAssetName {
+                Rectangle()
+                    .foregroundColor(.clear)
+                    .aspectRatio(1.0, contentMode: .fit)
+                    .background(
+                        Image(imageAssetName)
+                            .resizable()
+                            .aspectRatio(1.0, contentMode: .fill)
+                    )
+            } else {
+                remoteFrontImage
+            }
+        }
+        .frame(width: frontImageHeight, height: frontImageHeight, alignment: .center)
+        .accessibilityHidden(true)
+        .cornerRadius(Constants.cellRadius)
+        .shadow(color: Color.black.opacity(1/3), radius: 8, x: 0, y: 0)
+    }
+
+    private var remoteFrontImage: some View {
         AsyncImage(
             url: imageURL,
             content: { image in
@@ -81,13 +136,29 @@ struct HeaderView: View {
                     })
             }
         )
-        .frame(width: frontImageHeight, height: frontImageHeight, alignment: .center)
-        .accessibilityHidden(true)
-        .cornerRadius(Constants.cellRadius)
-        .shadow(color: Color.black.opacity(1/3), radius: 8, x: 0, y: 0)
     }
 
-    var backgroundImage: some View {
+    private var backgroundImage: some View {
+        Group {
+            if let backgroundImageAssetName = backgroundImageAssetName {
+                Rectangle()
+                    .foregroundColor(.clear)
+                    .background(
+                        Image(backgroundImageAssetName)
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                    )
+                    .clipped()
+            } else {
+                remoteBackgroundImage
+            }
+        }
+        .aspectRatio(backgroundImageWidthToHeightRatio, contentMode: .fit)
+        .edgesIgnoringSafeArea(.top)
+        .accessibilityHidden(true)
+    }
+
+    private var remoteBackgroundImage: some View {
         AsyncImage(
             url: backgroundURL,
             content: { image in
@@ -115,9 +186,6 @@ struct HeaderView: View {
                     })
             }
         )
-        .aspectRatio(backgroundImageWidthToHeightRatio, contentMode: .fit)
-        .edgesIgnoringSafeArea(.top)
-        .accessibilityHidden(true)
     }
 
     private var contentTransition: AnyTransition {
