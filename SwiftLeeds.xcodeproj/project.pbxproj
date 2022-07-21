@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		39029E0228883851006BC6EE /* ContributorsPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39029E0128883851006BC6EE /* ContributorsPage.swift */; };
+		39029E0228883851006BC6EE /* ContributorsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39029E0128883851006BC6EE /* ContributorsView.swift */; };
 		39029E0428883DFE006BC6EE /* Contributor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39029E0328883DFE006BC6EE /* Contributor.swift */; };
 		AE32CDF0286CCF9D00DF0AFF /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE32CDEF286CCF9D00DF0AFF /* Constants.swift */; };
 		AECB295727417F9D00CDC983 /* SwiftLeedsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECB295627417F9D00CDC983 /* SwiftLeedsApp.swift */; };
@@ -55,7 +55,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		39029E0128883851006BC6EE /* ContributorsPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContributorsPage.swift; sourceTree = "<group>"; };
+		39029E0128883851006BC6EE /* ContributorsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContributorsView.swift; sourceTree = "<group>"; };
 		39029E0328883DFE006BC6EE /* Contributor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contributor.swift; sourceTree = "<group>"; };
 		AE32CDEF286CCF9D00DF0AFF /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		AECB295327417F9D00CDC983 /* SwiftLeeds.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftLeeds.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -229,7 +229,7 @@
 			children = (
 				AED26F7728676A9900E06064 /* AboutView.swift */,
 				FA57DE4F2875B09900911F03 /* SponsorGridView.swift */,
-				39029E0128883851006BC6EE /* ContributorsPage.swift */,
+				39029E0128883851006BC6EE /* ContributorsView.swift */,
 			);
 			path = About;
 			sourceTree = "<group>";
@@ -451,7 +451,7 @@
 				AECB295727417F9D00CDC983 /* SwiftLeedsApp.swift in Sources */,
 				FA57DE592875B0EF00911F03 /* Sponsor.swift in Sources */,
 				AEDC0DAE286759630078A153 /* Tabs.swift in Sources */,
-				39029E0228883851006BC6EE /* ContributorsPage.swift in Sources */,
+				39029E0228883851006BC6EE /* ContributorsView.swift in Sources */,
 				FA57DE482875B06500911F03 /* StackedTileView.swift in Sources */,
 				AE32CDF0286CCF9D00DF0AFF /* Constants.swift in Sources */,
 				FA57DE472875B06500911F03 /* CommonTileView.swift in Sources */,
@@ -617,6 +617,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SwiftLeeds/Preview Content\"";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SwiftLeeds/App/Info.plist;
@@ -645,6 +646,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SwiftLeeds/Preview Content\"";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SwiftLeeds/App/Info.plist;
