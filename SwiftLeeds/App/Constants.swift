@@ -28,6 +28,9 @@ enum Strings {
 
     In-person conferences are the best way to meet like-minded people who enjoy building apps with Swift. You can also learn from the best people in the industry and chat about all things Swift.
     """
+	static let aboutContributor = """
+	SwiftLeeds is a conference for the community, by the community. Here's the people who helped to bring you the conference this year.
+	"""
 }
 
 enum Assets {
