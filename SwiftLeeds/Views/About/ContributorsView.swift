@@ -26,7 +26,7 @@ struct ContributorsView: View {
             )
             Group {
                 StackedTileView(primaryText: "About", secondaryText: Strings.aboutContributor)
-                CommonCompo.sectionHeader(text: "Contributors")
+                SectionHeader(_title: "Contributors")
                 grid(for: Contributor.contributors)
             }
             .padding(Padding.screen)

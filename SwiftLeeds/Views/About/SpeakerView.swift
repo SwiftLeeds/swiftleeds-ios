@@ -24,11 +24,11 @@ struct SpeakerView: View {
                 imageAssetName: Assets.Image.swiftLeedsIcon,
                 backgroundImageAssetName: Assets.Image.playhouseImage
             )
-            
             VStack(spacing: Padding.screen){
                 StackedTileView(primaryText: "The Talk",
                                 secondaryText: "Stuff about the talk this could be long...",
-                                secondaryColor: Color.primary)
+                                secondaryColor: Color.primary
+                )
                 CommonTileButton(
                     primaryText: "Ask Questions Now",
                     secondaryText: nil,
@@ -41,14 +41,14 @@ struct SpeakerView: View {
                                 secondaryText: "This speaker is a speaker that can speak words about things to with swift is it about servers? apps? the language? who knows, but there's plenty of space for information about them here.",
                                 secondaryColor: Color.primary
                 )
-                CommonTileView(primaryText: "Twitter", secondaryText: "@somelongtwitter", secondaryColor: Color.primary)
-                
+                CommonTileView(primaryText: "Twitter",
+                               secondaryText: "@somelongtwitter",
+                               secondaryColor: Color.primary
+                )
             }
             .padding(Padding.screen)
         }
-        
     }
-    
 }
 
 struct SpeakerView_Previews: PreviewProvider {
