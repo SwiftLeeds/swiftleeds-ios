@@ -17,14 +17,6 @@ struct ContributorsView: View {
         .edgesIgnoringSafeArea(.top)
     }
     
-    private func sectionHeader(text: String) -> some View {
-        Text(text)
-            .font(.callout.weight(.semibold))
-            .foregroundColor(.secondary)
-            .frame(maxWidth:.infinity, alignment: .leading)
-            .accessibilityAddTraits(.isHeader)
-    }
-    
     private var content: some View {
         VStack(spacing: Padding.stackGap) {
             HeaderView(
@@ -34,7 +26,7 @@ struct ContributorsView: View {
             )
             Group {
                 StackedTileView(primaryText: "About", secondaryText: Strings.aboutContributor)
-                sectionHeader(text: "Contributors")
+                SectionHeader(title: "Contributors")
                 grid(for: Contributor.contributors)
             }
             .padding(Padding.screen)
