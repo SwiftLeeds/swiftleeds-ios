@@ -1,5 +1,5 @@
 //
-//  CommonCompo.swift
+//  SectionHeader.swift
 //  SwiftLeeds
 //
 //  Created by LUCKY AGARWAL on 23/07/22.
@@ -15,19 +15,19 @@ struct SectionHeader: View {
     let alignment: Alignment
     let accesibilityAddTraits: AccessibilityTraits
     
-    internal init(_title: String,
-                  _fontStyle: Font = .callout.weight(.semibold),
-                  _foregroundColor : Color = .secondary,
-                  _maxWidth: CGFloat = .infinity,
-                  _alignment: Alignment = .leading,
-                  _accessbilityAddTraits: AccessibilityTraits = .isHeader
+    internal init(title: String,
+                  fontStyle: Font = .callout.weight(.semibold),
+                  foregroundColor : Color = .secondary,
+                  maxWidth: CGFloat = .infinity,
+                  alignment: Alignment = .leading,
+                  accessbilityAddTraits: AccessibilityTraits = .isHeader
     ) {
-        title = _title
-        fontStyle = _fontStyle
-        foregroundColor = _foregroundColor
-        maxWidth = _maxWidth
-        alignment = _alignment
-        accesibilityAddTraits = _accessbilityAddTraits
+        self.title = title
+        self.fontStyle = fontStyle
+        self.foregroundColor = foregroundColor
+        self.maxWidth = maxWidth
+        self.alignment = alignment
+        self.accesibilityAddTraits = accessbilityAddTraits
     }
     
     var body: some View {
@@ -41,6 +41,6 @@ struct SectionHeader: View {
 
 struct SectionHeader_Previews: PreviewProvider {
     static var previews: some View {
-        SectionHeader(_title: "SwiftLeeds")
+        SectionHeader(title: "SwiftLeeds")
     }
 }
