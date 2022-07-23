@@ -10,6 +10,7 @@
 		39029E0228883851006BC6EE /* ContributorsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39029E0128883851006BC6EE /* ContributorsView.swift */; };
 		39029E0428883DFE006BC6EE /* Contributor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39029E0328883DFE006BC6EE /* Contributor.swift */; };
 		394653A9288BB47A00212E1C /* CommonCompo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394653A8288BB47A00212E1C /* CommonCompo.swift */; };
+		394653AB288BB7C800212E1C /* SpeakerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394653AA288BB7C800212E1C /* SpeakerView.swift */; };
 		AE32CDF0286CCF9D00DF0AFF /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE32CDEF286CCF9D00DF0AFF /* Constants.swift */; };
 		AECB295727417F9D00CDC983 /* SwiftLeedsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECB295627417F9D00CDC983 /* SwiftLeedsApp.swift */; };
 		AECB295927417F9D00CDC983 /* MyConferenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECB295827417F9D00CDC983 /* MyConferenceView.swift */; };
@@ -59,6 +60,7 @@
 		39029E0128883851006BC6EE /* ContributorsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContributorsView.swift; sourceTree = "<group>"; };
 		39029E0328883DFE006BC6EE /* Contributor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contributor.swift; sourceTree = "<group>"; };
 		394653A8288BB47A00212E1C /* CommonCompo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonCompo.swift; sourceTree = "<group>"; };
+		394653AA288BB7C800212E1C /* SpeakerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakerView.swift; sourceTree = "<group>"; };
 		AE32CDEF286CCF9D00DF0AFF /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		AECB295327417F9D00CDC983 /* SwiftLeeds.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftLeeds.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AECB295627417F9D00CDC983 /* SwiftLeedsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftLeedsApp.swift; sourceTree = "<group>"; };
@@ -232,6 +234,7 @@
 				AED26F7728676A9900E06064 /* AboutView.swift */,
 				FA57DE4F2875B09900911F03 /* SponsorGridView.swift */,
 				39029E0128883851006BC6EE /* ContributorsView.swift */,
+				394653AA288BB7C800212E1C /* SpeakerView.swift */,
 			);
 			path = About;
 			sourceTree = "<group>";
@@ -440,6 +443,7 @@
 			files = (
 				AED26F7828676A9900E06064 /* AboutView.swift in Sources */,
 				FA57DE502875B09900911F03 /* ContentTileView.swift in Sources */,
+				394653AB288BB7C800212E1C /* SpeakerView.swift in Sources */,
 				FA57DE4D2875B08600911F03 /* Gradient+Extension.swift in Sources */,
 				394653A9288BB47A00212E1C /* CommonCompo.swift in Sources */,
 				FA57DE552875B0C100911F03 /* SquishyButtonStyle.swift in Sources */,
