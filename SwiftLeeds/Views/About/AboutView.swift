@@ -34,9 +34,9 @@ struct AboutView: View {
                 backgroundImageAssetName: Assets.Image.playhouseImage
             )
             
-            FancyHeaderView(title: "Steve Jobs",
-                            foregroundImageURL: foregroundImageUrl ,
-                            backgroundImageURL: backgroundImageUrl)
+          FancyHeaderView(title: "Steve Jobs",
+                          foregroundImageURL: foregroundImageUrl,
+                          backgroundImageURL: backgroundImageUrl)
             
             VStack(spacing: Padding.cellGap) {
                 StackedTileView(primaryText: "About", secondaryText: Strings.aboutSwiftLeeds)

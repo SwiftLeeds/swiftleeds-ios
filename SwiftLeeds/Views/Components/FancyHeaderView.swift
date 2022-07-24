@@ -8,12 +8,34 @@
 import SwiftUI
 
 struct FancyHeaderView: View {
+    
+    internal init(title: String, foregroundImageURL: URL?, backgroundImageURL: URL?) {
+        self.title = title
+        self.foregroundImageURL = foregroundImageURL
+        self.backgroundImageURL = backgroundImageURL
+        self.forgroundImageName = nil
+        self.backgroundImageName = nil
+    }
+    
+    internal init(title: String, forgroundImageName: String?, backgroundImageName: String?) {
+        self.title = title
+        self.foregroundImageURL = nil
+        self.backgroundImageURL = nil
+        self.forgroundImageName = forgroundImageName
+        self.backgroundImageName = backgroundImageName
+    }
+    
     let title: String
-    let foregroundImageURL: URL
-    let backgroundImageURL: URL
+    let foregroundImageURL: URL?
+    let backgroundImageURL: URL?
+    let forgroundImageName: String?
+    let backgroundImageName: String?
     
     private let foregroundImageWidth = 160.0
     private let aspectRatio = 1.66
+    var shadowColor: Color {
+       Color.black.opacity(1/3)
+    }
     
     @State var foregroudGroupViewHeight: CGFloat = .zero
     
@@ -24,43 +46,44 @@ struct FancyHeaderView: View {
             .aspectRatio(aspectRatio, contentMode: .fill)
             .background(backgroundImage
                             .aspectRatio(contentMode: .fill))
-            .overlay(foregroudGroupView,alignment: .center)
+            .overlay(foregroudGroup,alignment: .center)
             .padding(.bottom,foregroudGroupViewHeight/2)
     }
     
     private var backgroundImage: some View {
-        AsyncImage(url: backgroundImageURL) { phase in
-            
-            switch phase {
-            case .empty:
-                ProgressView()
-            case .success(let image):
-                image
-                    .resizable()
-                    .aspectRatio(aspectRatio, contentMode: .fill)
-            case .failure(_):
-                ProgressView()
-                    .tint(.white)
-                    .opacity(0.5)
-                //TODO: Remove the loaded and set a default image
-            @unknown default:
-                ProgressView()
-                    .tint(.white)
-                    .opacity(0.5)
-            }
+        if let backgroundImageURL = backgroundImageURL {
+           return AnyView(AsyncImage(url: backgroundImageURL) { phase in
+                switch phase {
+                case .empty:
+                    ProgressView()
+                case .success(let image):
+                    crateRectangleImage(for: image, aspectRatio: aspectRatio)
+                case .failure(_):
+                    AnyView(crateRectangleImage(for: Image(Assets.Image.playhouseImage),
+                                           aspectRatio: aspectRatio))
+                @unknown default:
+                    ProgressView()
+                        .tint(.white)
+                        .opacity(0.5)
+                }
+            })
+        } else if let backgroundImageName =  backgroundImageName {
+            return AnyView(crateRectangleImage(for: Image(backgroundImageName),
+                                          aspectRatio: aspectRatio))
+        } else {
+            return AnyView(crateRectangleImage(for: Image(Assets.Image.playhouseImage),
+                                          aspectRatio: aspectRatio))
         }
     }
     
-    private var foregroudGroupView: some View {
+    private var foregroudGroup: some View {
         GeometryReader { geometry in
-            VStack{
+            VStack(spacing: Padding.stackGap){
                 foregroundImage
-                    .padding(.bottom, Padding.stackGap)
-                    .shadow(color: Color.black.opacity(1/3), radius: 8, x: 0, y: 0)
+                    .shadow(color: shadowColor, radius: 8, x: 0, y: 0)
                 Text(title)
                     .foregroundColor(.primary)
                     .font(.subheadline.weight(.bold))
-                    .padding(.bottom, Padding.stackGap)
                     .accessibilityAddTraits(.isHeader)
             }
             .frame(width: geometry.frame(in: .global).width,
@@ -76,34 +99,51 @@ struct FancyHeaderView: View {
     }
     
     private var foregroundImage: some View {
-        AsyncImage(url: foregroundImageURL) { phase in
-            switch phase {
-            case .empty:
-                ProgressView()
-            case .success( let image):
+        if let foregroundImageURL = foregroundImageURL {
+            return AnyView(AsyncImage(url: foregroundImageURL) { phase in
+                switch phase {
+                case .empty:
+                    ProgressView()
+                case .success( let image):
+                    crateRectangleImage(for: image, aspectRatio: aspectRatio)
+                        .frame(width: foregroundImageWidth, height: foregroundImageWidth)
+                        .cornerRadius(Constants.cellRadius)
+                        .accessibilityHidden(true)
+                case .failure(_):
+                    crateRectangleImage(for: Image(Assets.Image.swiftLeedsIcon), aspectRatio: aspectRatio)
+                @unknown default:
+                    ProgressView()
+                        .tint(.white)
+                        .opacity(0.5)
+                }
+            })
+        } else if let foregroundImageName = forgroundImageName {
+            return AnyView(crateRectangleImage(for: Image(foregroundImageName),
+                                       aspectRatio: aspectRatio))
+        } else {
+            return AnyView(crateRectangleImage(for: Image(Assets.Image.swiftLeedsIcon),
+                                       aspectRatio: aspectRatio))
+        }
+    }
+    
+    private func crateRectangleImage(for image: Image, aspectRatio: Double) -> some View {
+        return Rectangle()
+            .foregroundColor(.clear)
+            .aspectRatio(aspectRatio, contentMode: .fit)
+            .background(
                 image
                     .resizable()
-                    .frame(width: foregroundImageWidth, height: foregroundImageWidth)
-                    .cornerRadius(Constants.cellRadius)
-                    .accessibilityHidden(true)
-            case .failure(_):
-                ProgressView()
-                    .tint(.white)
-                    .opacity(0.5)
-                //TODO: Remove the progress view and set a default image
-            @unknown default:
-                ProgressView()
-                    .tint(.white)
-                    .opacity(0.5)
-            }
-        }
+                    .aspectRatio(contentMode: .fill)
+                    .transition(.opacity)
+            )
     }
 }
 
 struct FancyHeaderView_Previews: PreviewProvider {
     static var previews: some View {
         FancyHeaderView(title: "Steve Jobs",
-                   foregroundImageURL: URL(string: "https://cdn.profoto.com/cdn/053149e/contentassets/d39349344d004f9b8963df1551f24bf4/profoto-albert-watson-steve-jobs-pinned-image-original.jpg")!,
-                   backgroundImageURL: URL(string:"https://offloadmedia.feverup.com/secretldn.com/wp-content/uploads/2018/02/18151550/aviary-rooftop.jpg")!).frame(width: 200, height: 500, alignment: .center)
+                        forgroundImageName: Assets.Image.swiftLeedsIcon,
+                        backgroundImageName: Assets.Image.playhouseImage)
+            .frame(width: 200, height: 500, alignment: .center)
     }
 }
