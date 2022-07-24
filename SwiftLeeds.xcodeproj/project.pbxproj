@@ -7,7 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+
 		2A3831122884A96600030002 /* FancyHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3831112884A96600030002 /* FancyHeaderView.swift */; };
+		39029E0228883851006BC6EE /* ContributorsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39029E0128883851006BC6EE /* ContributorsView.swift */; };
+		39029E0428883DFE006BC6EE /* Contributor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39029E0328883DFE006BC6EE /* Contributor.swift */; };
+		394653A9288BB47A00212E1C /* SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394653A8288BB47A00212E1C /* SectionHeader.swift */; };
+		394653AB288BB7C800212E1C /* SpeakerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394653AA288BB7C800212E1C /* SpeakerView.swift */; };
 		AE32CDF0286CCF9D00DF0AFF /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE32CDEF286CCF9D00DF0AFF /* Constants.swift */; };
 		AECB295727417F9D00CDC983 /* SwiftLeedsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECB295627417F9D00CDC983 /* SwiftLeedsApp.swift */; };
 		AECB295927417F9D00CDC983 /* MyConferenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECB295827417F9D00CDC983 /* MyConferenceView.swift */; };
@@ -34,6 +39,8 @@
 		FA57DE552875B0C100911F03 /* SquishyButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE542875B0C100911F03 /* SquishyButtonStyle.swift */; };
 		FA57DE592875B0EF00911F03 /* Sponsor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE582875B0EF00911F03 /* Sponsor.swift */; };
 		FAAB819128844EBC001159BB /* View+MeasureSize+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAB819028844EBC001159BB /* View+MeasureSize+Extension.swift */; };
+		FAF74EDC288B44BE00A0926C /* NetworkKit in Frameworks */ = {isa = PBXBuildFile; productRef = FAF74EDB288B44BE00A0926C /* NetworkKit */; };
+		FAF74EDF288B451E00A0926C /* SwiftLeedsEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF74EDE288B451E00A0926C /* SwiftLeedsEnvironment.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,7 +61,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+
 		2A3831112884A96600030002 /* FancyHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FancyHeaderView.swift; sourceTree = "<group>"; };
+		39029E0128883851006BC6EE /* ContributorsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContributorsView.swift; sourceTree = "<group>"; };
+		39029E0328883DFE006BC6EE /* Contributor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contributor.swift; sourceTree = "<group>"; };
+		394653A8288BB47A00212E1C /* SectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeader.swift; sourceTree = "<group>"; };
+		394653AA288BB7C800212E1C /* SpeakerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakerView.swift; sourceTree = "<group>"; };
 		AE32CDEF286CCF9D00DF0AFF /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		AECB295327417F9D00CDC983 /* SwiftLeeds.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftLeeds.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AECB295627417F9D00CDC983 /* SwiftLeedsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftLeedsApp.swift; sourceTree = "<group>"; };
@@ -85,6 +97,8 @@
 		FA57DE542875B0C100911F03 /* SquishyButtonStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SquishyButtonStyle.swift; sourceTree = "<group>"; };
 		FA57DE582875B0EF00911F03 /* Sponsor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sponsor.swift; sourceTree = "<group>"; };
 		FAAB819028844EBC001159BB /* View+MeasureSize+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+MeasureSize+Extension.swift"; sourceTree = "<group>"; };
+		FAF74ED9288B415900A0926C /* NetworkKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = NetworkKit; sourceTree = "<group>"; };
+		FAF74EDE288B451E00A0926C /* SwiftLeedsEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftLeedsEnvironment.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +106,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAF74EDC288B44BE00A0926C /* NetworkKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -115,11 +130,13 @@
 		AECB294A27417F9D00CDC983 = {
 			isa = PBXGroup;
 			children = (
+				FAF74ED8288B413100A0926C /* Packages */,
 				AECB295527417F9D00CDC983 /* SwiftLeeds */,
 				AECB296627417F9E00CDC983 /* SwiftLeedsTests */,
 				AECB297027417F9E00CDC983 /* SwiftLeedsUITests */,
 				AECB295427417F9D00CDC983 /* Products */,
 				FA57DE402875B01900911F03 /* Recovered References */,
+				FAF74EDA288B44BE00A0926C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -136,12 +153,13 @@
 		AECB295527417F9D00CDC983 /* SwiftLeeds */ = {
 			isa = PBXGroup;
 			children = (
-				AECB29862741AC5800CDC983 /* App */,
 				FA57DE562875B0DC00911F03 /* Data */,
 				AECB298027418D9800CDC983 /* Extension */,
 				AECB295C27417F9E00CDC983 /* Preview Content */,
 				AECB29842741AC2500CDC983 /* Resources */,
 				FA57DE532875B0B500911F03 /* Style */,
+				AECB29862741AC5800CDC983 /* App */,
+				FAF74EDD288B44E200A0926C /* Network */,
 				AECB29852741AC4B00CDC983 /* Views */,
 			);
 			path = SwiftLeeds;
@@ -208,8 +226,8 @@
 			isa = PBXGroup;
 			children = (
 				AECB29832741ABFD00CDC983 /* Info.plist */,
-				AECB295627417F9D00CDC983 /* SwiftLeedsApp.swift */,
 				AE32CDEF286CCF9D00DF0AFF /* Constants.swift */,
+				AECB295627417F9D00CDC983 /* SwiftLeedsApp.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -227,6 +245,8 @@
 			children = (
 				AED26F7728676A9900E06064 /* AboutView.swift */,
 				FA57DE4F2875B09900911F03 /* SponsorGridView.swift */,
+				39029E0128883851006BC6EE /* ContributorsView.swift */,
+				394653AA288BB7C800212E1C /* SpeakerView.swift */,
 			);
 			path = About;
 			sourceTree = "<group>";
@@ -260,6 +280,7 @@
 			isa = PBXGroup;
 			children = (
 				FA57DE4A2875B06B00911F03 /* SwiftLeedsContainer.swift */,
+				394653A8288BB47A00212E1C /* SectionHeader.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -297,8 +318,32 @@
 			isa = PBXGroup;
 			children = (
 				FA57DE582875B0EF00911F03 /* Sponsor.swift */,
+				39029E0328883DFE006BC6EE /* Contributor.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		FAF74ED8288B413100A0926C /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				FAF74ED9288B415900A0926C /* NetworkKit */,
+			);
+			path = Packages;
+			sourceTree = "<group>";
+		};
+		FAF74EDA288B44BE00A0926C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FAF74EDD288B44E200A0926C /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				FAF74EDE288B451E00A0926C /* SwiftLeedsEnvironment.swift */,
+			);
+			path = Network;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -317,6 +362,9 @@
 			dependencies = (
 			);
 			name = SwiftLeeds;
+			packageProductDependencies = (
+				FAF74EDB288B44BE00A0926C /* NetworkKit */,
+			);
 			productName = SwiftLeeds;
 			productReference = AECB295327417F9D00CDC983 /* SwiftLeeds.app */;
 			productType = "com.apple.product-type.application";
@@ -434,7 +482,10 @@
 			files = (
 				AED26F7828676A9900E06064 /* AboutView.swift in Sources */,
 				FA57DE502875B09900911F03 /* ContentTileView.swift in Sources */,
+				394653AB288BB7C800212E1C /* SpeakerView.swift in Sources */,
+				FAF74EDF288B451E00A0926C /* SwiftLeedsEnvironment.swift in Sources */,
 				FA57DE4D2875B08600911F03 /* Gradient+Extension.swift in Sources */,
+				394653A9288BB47A00212E1C /* SectionHeader.swift in Sources */,
 				FA57DE552875B0C100911F03 /* SquishyButtonStyle.swift in Sources */,
 				AED26F7A28676AA300E06064 /* LocalView.swift in Sources */,
 				AED26F74286764F000E06064 /* TalkCell.swift in Sources */,
@@ -449,10 +500,12 @@
 				AECB295727417F9D00CDC983 /* SwiftLeedsApp.swift in Sources */,
 				FA57DE592875B0EF00911F03 /* Sponsor.swift in Sources */,
 				AEDC0DAE286759630078A153 /* Tabs.swift in Sources */,
+				39029E0228883851006BC6EE /* ContributorsView.swift in Sources */,
 				FA57DE482875B06500911F03 /* StackedTileView.swift in Sources */,
 				AE32CDF0286CCF9D00DF0AFF /* Constants.swift in Sources */,
 				FA57DE472875B06500911F03 /* CommonTileView.swift in Sources */,
 				FA57DE462875B06500911F03 /* CommonTileButton.swift in Sources */,
+				39029E0428883DFE006BC6EE /* Contributor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -613,6 +666,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SwiftLeeds/Preview Content\"";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SwiftLeeds/App/Info.plist;
@@ -641,6 +695,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SwiftLeeds/Preview Content\"";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SwiftLeeds/App/Info.plist;
@@ -793,6 +848,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		FAF74EDB288B44BE00A0926C /* NetworkKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = NetworkKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = AECB294B27417F9D00CDC983 /* Project object */;
 }

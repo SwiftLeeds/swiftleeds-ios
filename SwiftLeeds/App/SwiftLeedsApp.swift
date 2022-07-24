@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import NetworkKit
 
 @main
 struct SwiftLeedsApp: App {
