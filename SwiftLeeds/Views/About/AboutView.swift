@@ -24,13 +24,7 @@ struct AboutView: View {
 
     private var content: some View {
         VStack(spacing: Padding.cellGap) {
-            HeaderView(
-                title: "Swift Leeds",
-                imageAssetName: Assets.Image.swiftLeedsIcon,
-                backgroundImageAssetName: Assets.Image.playhouseImage
-            )
-            
-          FancyHeaderView(title: "Steve Jobs",
+          FancyHeaderView(title: "Swift Leeds",
                           foregroundImageName:Assets.Image.swiftLeedsIcon,
                           backgroundImageName: Assets.Image.playhouseImage)
             
