@@ -13,22 +13,22 @@ struct FancyHeaderView: View {
         self.title = title
         self.foregroundImageURL = foregroundImageURL
         self.backgroundImageURL = backgroundImageURL
-        self.forgroundImageName = nil
+        self.foregroundImageName = nil
         self.backgroundImageName = nil
     }
     
-    internal init(title: String, forgroundImageName: String?, backgroundImageName: String?) {
+    internal init(title: String, foregroundImageName: String?, backgroundImageName: String?) {
         self.title = title
         self.foregroundImageURL = nil
         self.backgroundImageURL = nil
-        self.forgroundImageName = forgroundImageName
+        self.foregroundImageName = foregroundImageName
         self.backgroundImageName = backgroundImageName
     }
     
     let title: String
     let foregroundImageURL: URL?
     let backgroundImageURL: URL?
-    let forgroundImageName: String?
+    let foregroundImageName: String?
     let backgroundImageName: String?
     
     private let foregroundImageWidth = 160.0
@@ -37,7 +37,7 @@ struct FancyHeaderView: View {
        Color.black.opacity(1/3)
     }
     
-    @State var foregroudGroupViewHeight: CGFloat = .zero
+    @State var foregroundGroupViewHeight: CGFloat = .zero
     
     var body: some View {
         Rectangle()
@@ -46,37 +46,39 @@ struct FancyHeaderView: View {
             .aspectRatio(aspectRatio, contentMode: .fill)
             .background(backgroundImage
                             .aspectRatio(contentMode: .fill))
-            .overlay(foregroudGroup,alignment: .center)
-            .padding(.bottom,foregroudGroupViewHeight/2)
+            .overlay(foregroundGroup,alignment: .center)
+            .padding(.bottom,foregroundGroupViewHeight/2)
     }
     
+    
+    @ViewBuilder
     private var backgroundImage: some View {
         if let backgroundImageURL = backgroundImageURL {
-           return AnyView(AsyncImage(url: backgroundImageURL) { phase in
+           AsyncImage(url: backgroundImageURL) { phase in
                 switch phase {
                 case .empty:
                     ProgressView()
                 case .success(let image):
                     crateRectangleImage(for: image, aspectRatio: aspectRatio)
                 case .failure(_):
-                    AnyView(crateRectangleImage(for: Image(Assets.Image.playhouseImage),
-                                           aspectRatio: aspectRatio))
+                    crateRectangleImage(for: Image(Assets.Image.playhouseImage),
+                                           aspectRatio: aspectRatio)
                 @unknown default:
                     ProgressView()
                         .tint(.white)
                         .opacity(0.5)
                 }
-            })
+            }
         } else if let backgroundImageName =  backgroundImageName {
-            return AnyView(crateRectangleImage(for: Image(backgroundImageName),
-                                          aspectRatio: aspectRatio))
+            crateRectangleImage(for: Image(backgroundImageName),
+                                          aspectRatio: aspectRatio)
         } else {
-            return AnyView(crateRectangleImage(for: Image(Assets.Image.playhouseImage),
-                                          aspectRatio: aspectRatio))
+            crateRectangleImage(for: Image(Assets.Image.playhouseImage),
+                                          aspectRatio: aspectRatio)
         }
     }
     
-    private var foregroudGroup: some View {
+    private var foregroundGroup: some View {
         GeometryReader { geometry in
             VStack(spacing: Padding.stackGap){
                 foregroundImage
@@ -90,10 +92,10 @@ struct FancyHeaderView: View {
                    height: geometry.frame(in: .global).height)
             .offset(y: geometry.size.height/2)
             .onAppear {
-                foregroudGroupViewHeight = geometry.size.height
+                foregroundGroupViewHeight = geometry.size.height
             }
             .onChange(of: geometry.size) { newValue in
-                foregroudGroupViewHeight = newValue.height
+                foregroundGroupViewHeight = newValue.height
             }
         }
     }
@@ -117,7 +119,7 @@ struct FancyHeaderView: View {
                         .opacity(0.5)
                 }
             })
-        } else if let foregroundImageName = forgroundImageName {
+        } else if let foregroundImageName = foregroundImageName {
             return AnyView(crateRectangleImage(for: Image(foregroundImageName),
                                        aspectRatio: aspectRatio))
         } else {
@@ -142,7 +144,7 @@ struct FancyHeaderView: View {
 struct FancyHeaderView_Previews: PreviewProvider {
     static var previews: some View {
         FancyHeaderView(title: "Steve Jobs",
-                        forgroundImageName: Assets.Image.swiftLeedsIcon,
+                        foregroundImageName: Assets.Image.swiftLeedsIcon,
                         backgroundImageName: Assets.Image.playhouseImage)
             .frame(width: 200, height: 500, alignment: .center)
     }
