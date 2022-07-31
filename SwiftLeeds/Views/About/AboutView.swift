@@ -24,11 +24,10 @@ struct AboutView: View {
 
     private var content: some View {
         VStack(spacing: Padding.cellGap) {
-            HeaderView(
-                title: "Swift Leeds",
-                imageAssetName: Assets.Image.swiftLeedsIcon,
-                backgroundImageAssetName: Assets.Image.playhouseImage
-            )
+          FancyHeaderView(title: "Swift Leeds",
+                          foregroundImageName:Assets.Image.swiftLeedsIcon,
+                          backgroundImageName: Assets.Image.playhouseImage)
+            
             VStack(spacing: Padding.cellGap) {
                 StackedTileView(primaryText: "About", secondaryText: Strings.aboutSwiftLeeds)
                 CommonTileButton(primaryText: "Code of conduct", secondaryText: nil, backgroundStyle: Color.cellBackground) {
