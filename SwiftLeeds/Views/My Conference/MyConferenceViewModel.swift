@@ -27,7 +27,14 @@ class MyConferenceViewModel: ObservableObject {
 
     var numberOfDaysToConference: Int? {
         guard let conferenceDate = event?.date else { return nil }
-        return Calendar.current.numberOfDays(to: conferenceDate)
+
+        let days = Calendar.current.numberOfDays(to: conferenceDate)
+
+        if days > 0 {
+            return days
+        } else {
+            return days
+        }
     }
 
     static let stringDateFormatter: DateFormatter = {
