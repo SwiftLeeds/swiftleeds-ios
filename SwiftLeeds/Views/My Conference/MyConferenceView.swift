@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct MyConferenceView: View {
+    @StateObject private var viewModel = MyConferenceViewModel()
+
     var body: some View {
         NavigationView {
             VStack(spacing: 0) {
@@ -19,16 +21,22 @@ struct MyConferenceView: View {
                         AnnouncementCell(label: "Leeds", value: "26℃", valueIcon: "cloud.sun.fill", gradientColors: [.weatherGradientStart, .weatherGradientEnd])
                             .previewDisplayName("Weather")
 
-                        // TODO: Calculate days once data is available from API
-                        AnnouncementCell(label: "Get your ticket now!", value: "69 Days", valueIcon: "calendar.circle", gradientColors: [.buyTicketGradientStart, .buyTicketGradientEnd])
-                            .previewDisplayName("Buy Ticket")
+                        if let numberOfDaysToConference = viewModel.numberOfDaysToConference {
+                            AnnouncementCell(label: "Get your ticket now!", value: "\(numberOfDaysToConference) days", valueIcon: "calendar.circle", gradientColors: [.buyTicketGradientStart, .buyTicketGradientEnd])
+                                .previewDisplayName("Buy Ticket")
+                        }
 
-                        // TODO: Retrieve sessions once available from API
-                        TalkCell(time: "11:00", details: "Take crosswords to the next level with macOS catalyst. You’ll learn how to tick that checkbox and break free from the chains of the iPad.", isNext: true, speaker: "Joe Williams", company: "Expodition", gradientColors: [.nextTalkGradientStart, .nextTalkGradientEnd])
+                        ForEach(viewModel.slots) { slot in
+                            if let activity = slot.activity {
+                                TalkCell(time: slot.startTime, details: activity.title)
+                            }
 
-                        TalkCell(time: "12:00", details: "Lunch")
+                            if let presentation = slot.presentation {
+                                //TalkCell(time: slot.startTime, details: presentation.title, isNext: true, speaker: presentation.speaker?.name, company: presentation.speaker?.organisation.description, imageURL: presentation.speaker?.profileImage, gradientColors: [.accentColor, .accentColor.opacity(0.7)])
 
-                        TalkCell(time: "13:00", details: "Something about chats", speaker: "Adam Rush", company: "Stream")
+                                TalkCell(time: slot.startTime, details: presentation.title, speaker: presentation.speaker?.name, company: presentation.speaker?.organisation.description, imageURL: presentation.speaker?.profileImage)
+                            }
+                        }
                     }
                     .padding(Padding.screen)
                 }
@@ -36,7 +44,10 @@ struct MyConferenceView: View {
                 Divider()
             }
             .background(Color.background)
-            .navigationTitle("Swift Leeds")
+            .navigationTitle("SwiftLeeds")
+            .task {
+                try? await viewModel.loadSchedule()
+            }
         }
     }
 

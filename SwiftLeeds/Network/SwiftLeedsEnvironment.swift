@@ -9,5 +9,11 @@ import Foundation
 import NetworkKit
 
 struct SwiftLeedsEnvironment: NetworkEnvironmentProviding {
-    let apiUrl: String = "https://rickandmortyapi.com/api"
+    let apiUrl: String = "https://www.swiftleeds.co.uk/api/v1"
+}
+
+struct ScheduleEndpoint: Endpoint {
+    typealias DataType = Schedule
+    let path: String = "schedule"
+    let method: HTTPMethod = .GET
 }

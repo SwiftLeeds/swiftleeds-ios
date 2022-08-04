@@ -1,5 +1,5 @@
 //
-//  Color+Extension.swift
+//  Color.swift
 //  SwiftLeeds
 //
 //  Created by Matthew Gallagher on 14/11/2021.
@@ -15,9 +15,6 @@ extension Color {
 
     static let buyTicketGradientStart = Color("BuyTicketGradientStart")
     static let buyTicketGradientEnd = Color("BuyTicketGradientEnd")
-
-    static let nextTalkGradientStart = Color("NextTalkGradientStart")
-    static let nextTalkGradientEnd = Color("NextTalkGradientEnd")
 
     static let weatherGradientStart = Color("WeatherGradientStart")
     static let weatherGradientEnd = Color("WeatherGradientEnd")

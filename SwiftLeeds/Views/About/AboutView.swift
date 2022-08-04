@@ -25,7 +25,7 @@ struct AboutView: View {
     private var content: some View {
         VStack(spacing: Padding.cellGap) {
             HeaderView(
-                title: "Swift Leeds",
+                title: "SwiftLeeds",
                 imageAssetName: Assets.Image.swiftLeedsIcon,
                 backgroundImageAssetName: Assets.Image.playhouseImage
             )
