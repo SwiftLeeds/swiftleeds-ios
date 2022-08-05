@@ -66,7 +66,6 @@ struct TalkCell: View {
                                         .clipShape(Circle())
                                 }
                             )
-                            .accessibilityHidden(true)
                         }
                     }
                 }
@@ -90,13 +89,23 @@ struct TalkCell: View {
                 }
             }
         }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(accessibilityLabel)
     }
 
-    func timeLabel(_ value: String) -> some View {
+    private func timeLabel(_ value: String) -> some View {
         HStack {
             Text(value)
             Spacer()
         }
+    }
+
+    private var accessibilityLabel: String {
+        let readableDetails = details.unicodeScalars
+            .filter { $0.properties.isEmojiPresentation == false }
+            .reduce("") { $0 + String($1) }
+
+        return [time, speaker, company, readableDetails].compactMap({ $0} ).joined(separator: ", ")
     }
 }
 

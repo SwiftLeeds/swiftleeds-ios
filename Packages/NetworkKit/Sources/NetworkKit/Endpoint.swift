@@ -21,11 +21,16 @@ public protocol Endpoint {
 
 public extension Endpoint {
     /// Default parameters so routes do not need to declare these
-    var queryParameters: [URLQueryItem] {
-        return []
+    var method: HTTPMethod {
+        .GET
     }
+
+    var queryParameters: [URLQueryItem] {
+        []
+    }
+
     var pathParameters: [String] {
-        return []
+        []
     }
 
     /// The basic implementation of `Endpoint` `toRequest` builds the path. This should be usable with most instances of Endpoint.

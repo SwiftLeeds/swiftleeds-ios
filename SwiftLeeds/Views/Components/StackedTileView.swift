@@ -60,7 +60,7 @@ struct StackedTileView<BackgroundType: ShapeStyle>: View {
             in: RoundedRectangle(cornerRadius: Constants.cellRadius)
         )
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel(primaryText + " " + secondaryText)
+        .accessibilityLabel("\(primaryText). \(secondaryText)")
     }
 }
 

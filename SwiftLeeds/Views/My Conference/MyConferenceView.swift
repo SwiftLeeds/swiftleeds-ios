@@ -32,8 +32,6 @@ struct MyConferenceView: View {
                             }
 
                             if let presentation = slot.presentation {
-                                //TalkCell(time: slot.startTime, details: presentation.title, isNext: true, speaker: presentation.speaker?.name, company: presentation.speaker?.organisation.description, imageURL: presentation.speaker?.profileImage, gradientColors: [.accentColor, .accentColor.opacity(0.7)])
-
                                 TalkCell(time: slot.startTime, details: presentation.title, speaker: presentation.speaker?.name, company: presentation.speaker?.organisation.description, imageURL: presentation.speaker?.profileImage)
                             }
                         }
@@ -48,13 +46,6 @@ struct MyConferenceView: View {
             .task {
                 try? await viewModel.loadSchedule()
             }
-        }
-    }
-
-    func timeLabel(_ value: String) -> some View {
-        HStack {
-            Text(value)
-            Spacer()
         }
     }
 }

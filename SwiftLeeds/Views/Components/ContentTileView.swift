@@ -77,7 +77,7 @@ struct ContentTileView: View {
         }
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(
-            "\(accessibilityLabel), \(title) \(subTitle ?? "")"
+            "\(accessibilityLabel). \(title), \(subTitle ?? "")"
         )
         .padding()
         .frame(minHeight: 55)
