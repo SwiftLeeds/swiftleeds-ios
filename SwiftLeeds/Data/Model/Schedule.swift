@@ -83,21 +83,6 @@ struct Activity: Decodable, Identifiable {
     let description: String?
     let image: String?
     let metadataURL: String?
-
-    init(from decoder: Decoder) throws {
-        let values = try decoder.container(keyedBy: CodingKeys.self)
-
-        id = try values.decode(UUID.self, forKey: .id)
-        title = try values.decode(String.self, forKey: .title)
-        subtitle = try values.decodeIfPresent(String.self, forKey: .subtitle)
-        description = try values.decodeIfPresent(String.self, forKey: .description)
-        image = try values.decodeIfPresent(String.self, forKey: .image)
-        metadataURL = try values.decodeIfPresent(String.self, forKey: .metadataURL)
-    }
-
-    private enum CodingKeys: CodingKey {
-        case id, title, subtitle, description, image, metadataURL
-    }
 }
 
 // MARK: - Presentation
@@ -117,5 +102,4 @@ struct Speaker: Decodable, Identifiable {
     let profileImage: String
     let organisation: String
     let twitter: String?
-    //let presentations: [String]?
 }

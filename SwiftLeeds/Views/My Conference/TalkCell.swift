@@ -66,6 +66,7 @@ struct TalkCell: View {
                                         .clipShape(Circle())
                                 }
                             )
+                            .accessibilityHidden(true)
                         }
                     }
                 }

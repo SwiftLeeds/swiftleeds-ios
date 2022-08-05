@@ -31,7 +31,7 @@ public extension Endpoint {
     /// The basic implementation of `Endpoint` `toRequest` builds the path. This should be usable with most instances of Endpoint.
     func makeRequest(for environment: NetworkEnvironmentProviding) -> URLRequest? {
         // Add all the parameters
-        guard var urlComponents = URLComponents(string: environment.apiUrl) else {
+        guard var urlComponents = URLComponents(string: environment.apiURL) else {
             return nil
         }
         urlComponents.queryItems = self.queryParameters
