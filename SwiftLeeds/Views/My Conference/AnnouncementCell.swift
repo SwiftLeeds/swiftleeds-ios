@@ -19,7 +19,9 @@ struct AnnouncementCell: View {
         HStack {
             Text(label)
                 .font(.headline.weight(.medium))
+
             Spacer()
+
             sizeAwareStack {
                 Image(systemName: valueIcon)
                     .font(.subheadline.weight(.semibold))
@@ -34,6 +36,8 @@ struct AnnouncementCell: View {
             RoundedRectangle(cornerRadius: Constants.cellRadius)
                 .fill(LinearGradient(colors: gradientColors, startPoint: .topLeading, endPoint: .topTrailing))
         }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("\(label). \(value)")
     }
 
 

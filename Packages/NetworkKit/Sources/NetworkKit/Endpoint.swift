@@ -21,17 +21,22 @@ public protocol Endpoint {
 
 public extension Endpoint {
     /// Default parameters so routes do not need to declare these
-    var queryParameters: [URLQueryItem] {
-        return []
+    var method: HTTPMethod {
+        .GET
     }
+
+    var queryParameters: [URLQueryItem] {
+        []
+    }
+
     var pathParameters: [String] {
-        return []
+        []
     }
 
     /// The basic implementation of `Endpoint` `toRequest` builds the path. This should be usable with most instances of Endpoint.
     func makeRequest(for environment: NetworkEnvironmentProviding) -> URLRequest? {
         // Add all the parameters
-        guard var urlComponents = URLComponents(string: environment.apiUrl) else {
+        guard var urlComponents = URLComponents(string: environment.apiURL) else {
             return nil
         }
         urlComponents.queryItems = self.queryParameters

@@ -1,5 +1,5 @@
 //
-//  Gradient+Extension.swift
+//  LinearGradient.swift
 //  SwiftLeeds
 //
 //  Created by Alex Logan on 05/07/2022.
@@ -15,9 +15,5 @@ extension LinearGradient {
 
     static let announcement = LinearGradient(colors: [
         .buyTicketGradientStart, .buyTicketGradientEnd
-    ], startPoint: .bottomLeading, endPoint: .topLeading)
-
-    static let callout = LinearGradient(colors: [
-        .nextTalkGradientStart, .nextTalkGradientEnd
     ], startPoint: .bottomLeading, endPoint: .topLeading)
 }

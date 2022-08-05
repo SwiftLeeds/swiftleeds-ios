@@ -65,8 +65,11 @@ final public class Network: Networking {
     }
     
     lazy var decoder: JSONDecoder = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd-MM-yyyy"
+
         let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .millisecondsSince1970
+        decoder.dateDecodingStrategy = .formatted(dateFormatter)
         return decoder
     }()
 }

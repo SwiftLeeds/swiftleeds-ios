@@ -5,5 +5,5 @@
 import Foundation
 
 public protocol NetworkEnvironmentProviding {
-    var apiUrl: String { get }
+    var apiURL: String { get }
 }
