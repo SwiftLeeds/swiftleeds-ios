@@ -6,10 +6,22 @@
 //
 
 import SwiftUI
-
+import MapKit
 struct LocalView: View {
+    @State private var bottomSheetShown = true
+    
+    @State private var mapRegion: MKCoordinateRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 41.89_02, longitude: 12.49_22), span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1))
+    
+    
     var body: some View {
-        Text("Local")
+        GeometryReader{ geometry in
+            ZStack{
+                Map(coordinateRegion: $mapRegion)
+                    .ignoresSafeArea()
+                BottomSheetView(isOpen: self.$bottomSheetShown, maxHeight: geometry.size.height * Constants.maxHeightRatio)
+            }
+        }
+        .edgesIgnoringSafeArea(.all)
     }
 }
 
