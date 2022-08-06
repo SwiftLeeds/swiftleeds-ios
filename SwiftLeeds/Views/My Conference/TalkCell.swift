@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CachedAsyncImage
 
 struct TalkCell: View {
     private let time: String
@@ -49,7 +50,7 @@ struct TalkCell: View {
                         Spacer()
 
                         if let imageURL = imageURL {
-                            AsyncImage(
+                            CachedAsyncImage(
                                 url: URL(string: "\(BaseURL.image)\(imageURL)"),
                                 content: { image in
                                     image
@@ -101,11 +102,7 @@ struct TalkCell: View {
     }
 
     private var accessibilityLabel: String {
-        let readableDetails = details.unicodeScalars
-            .filter { $0.properties.isEmojiPresentation == false }
-            .reduce("") { $0 + String($1) }
-
-        return [time, speaker, company, readableDetails].compactMap({ $0} ).joined(separator: ", ")
+        return [time, speaker, company, details.noEmojis].compactMap { $0 }.joined(separator: ", ")
     }
 }
 
