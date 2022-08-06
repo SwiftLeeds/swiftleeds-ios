@@ -9,15 +9,15 @@ import SwiftUI
 
 /// Used when there's lots of content to display.
 struct StackedTileView<BackgroundType: ShapeStyle>: View {
-    let primaryText: String
-    let secondaryText: String
+    let primaryText: String?
+    let secondaryText: String?
     let primaryColor: Color
     let secondaryColor: Color
     var backgroundStyle: BackgroundType
 
     init(
-        primaryText: String,
-        secondaryText: String,
+        primaryText: String?,
+        secondaryText: String?,
         primaryColor: Color = Color.primary,
         secondaryColor: Color = Color.secondary,
         backgroundStyle: BackgroundType
@@ -30,8 +30,8 @@ struct StackedTileView<BackgroundType: ShapeStyle>: View {
     }
 
     init(
-        primaryText: String,
-        secondaryText: String,
+        primaryText: String?,
+        secondaryText: String?,
         primaryColor: Color = Color.primary,
         secondaryColor: Color = Color.secondary,
         backgroundStyle: Color = Color.cellBackground
@@ -45,12 +45,17 @@ struct StackedTileView<BackgroundType: ShapeStyle>: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: Padding.stackGap) {
-            Text(primaryText)
-                .font(.headline.weight(.semibold))
-                .foregroundColor(primaryColor)
-            Text(secondaryText)
-                .font(.subheadline.weight(.regular))
-                .foregroundColor(secondaryColor)
+            if let primaryText = primaryText {
+                Text(primaryText)
+                    .font(.headline.weight(.semibold))
+                    .foregroundColor(primaryColor)
+            }
+
+            if let secondaryText = secondaryText {
+                Text(.init(secondaryText))
+                    .font(.subheadline.weight(.regular))
+                    .foregroundColor(secondaryColor)
+            }
         }
         .frame(maxWidth: .infinity, minHeight: Constants.compactCellMinimumHeight, alignment: .leading)
         .multilineTextAlignment(.leading)
@@ -60,7 +65,11 @@ struct StackedTileView<BackgroundType: ShapeStyle>: View {
             in: RoundedRectangle(cornerRadius: Constants.cellRadius)
         )
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel("\(primaryText). \(secondaryText)")
+        .accessibilityLabel(accessibilityLabel)
+    }
+
+    private var accessibilityLabel: String {
+        [primaryText?.noEmojis, secondaryText?.noEmojis].compactMap { $0 }.joined(separator: ", ")
     }
 }
 

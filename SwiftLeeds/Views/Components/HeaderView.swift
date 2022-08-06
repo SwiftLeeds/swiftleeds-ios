@@ -6,14 +6,14 @@
 //
 
 import SwiftUI
+import CachedAsyncImage
 
 struct HeaderView: View {
-    let title: String
-    let imageURL: URL?
-    let backgroundURL: URL?
-    let imageAssetName: String?
-    let backgroundImageAssetName: String?
-
+    private let title: String
+    private let imageURL: URL?
+    private let backgroundURL: URL?
+    private let imageAssetName: String?
+    private let backgroundImageAssetName: String?
     private let placeholderColor: Color
     private let imageBackgroundColor: Color
 
@@ -23,32 +23,18 @@ struct HeaderView: View {
     private let frontImageHeight: CGFloat = 160
     private var textOffset: CGFloat { textImageStackSize.height/2 }
 
-    internal init(
+    init(
         title: String,
-        imageURL: URL?,
-        backgroundURL: URL?,
-        placeholderColor: Color = .accentColor,
-        imageBackgroundColor: Color = .accentColor
+        imageURL: URL? = nil,
+        backgroundURL: URL? = nil,
+        imageAssetName: String? = nil,
+        backgroundImageAssetName: String? = nil,
+        placeholderColor: Color = .white,
+        imageBackgroundColor: Color = .white
     ) {
         self.title = title
         self.imageURL = imageURL
         self.backgroundURL = backgroundURL
-        self.imageAssetName = nil
-        self.backgroundImageAssetName = nil
-        self.placeholderColor = placeholderColor
-        self.imageBackgroundColor = imageBackgroundColor
-    }
-
-    internal init(
-        title: String,
-        imageAssetName: String?,
-        backgroundImageAssetName: String?,
-        placeholderColor: Color = .accentColor,
-        imageBackgroundColor: Color = .accentColor
-    ) {
-        self.title = title
-        self.imageURL = nil
-        self.backgroundURL = nil
         self.imageAssetName = imageAssetName
         self.backgroundImageAssetName = backgroundImageAssetName
         self.placeholderColor = placeholderColor
@@ -75,6 +61,7 @@ struct HeaderView: View {
                 .font(.title3.weight(.semibold))
                 .foregroundColor(.primary)
                 .multilineTextAlignment(.center)
+                .accessibilityLabel(title.noEmojis)
                 .accessibilityHeading(.h1)
         }
     }
@@ -109,7 +96,7 @@ struct HeaderView: View {
     }
 
     private var remoteFrontImage: some View {
-        AsyncImage(
+        CachedAsyncImage(
             url: imageURL,
             content: { image in
                 Rectangle()
@@ -159,7 +146,7 @@ struct HeaderView: View {
     }
 
     private var remoteBackgroundImage: some View {
-        AsyncImage(
+        CachedAsyncImage(
             url: backgroundURL,
             content: { image in
                 Rectangle()

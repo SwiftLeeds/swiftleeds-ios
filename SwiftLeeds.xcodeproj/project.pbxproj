@@ -11,8 +11,11 @@
 		39029E0428883DFE006BC6EE /* Contributor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39029E0328883DFE006BC6EE /* Contributor.swift */; };
 		394653A9288BB47A00212E1C /* SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394653A8288BB47A00212E1C /* SectionHeader.swift */; };
 		394653AB288BB7C800212E1C /* SpeakerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394653AA288BB7C800212E1C /* SpeakerView.swift */; };
+		AE1C8010289E9F3800996659 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1C800F289E9F3800996659 /* String.swift */; };
 		AE32CDF0286CCF9D00DF0AFF /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE32CDEF286CCF9D00DF0AFF /* Constants.swift */; };
 		AE5A52CB289CF37A00501E75 /* Endpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5A52CA289CF37A00501E75 /* Endpoints.swift */; };
+		AE5EFD73289DC1D000464FE1 /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = AE5EFD72289DC1D000464FE1 /* CachedAsyncImage */; };
+		AE5EFD75289E7CBF00464FE1 /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5EFD74289E7CBF00464FE1 /* ActivityView.swift */; };
 		AECB295727417F9D00CDC983 /* SwiftLeedsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECB295627417F9D00CDC983 /* SwiftLeedsApp.swift */; };
 		AECB295927417F9D00CDC983 /* MyConferenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECB295827417F9D00CDC983 /* MyConferenceView.swift */; };
 		AECB295B27417F9E00CDC983 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AECB295A27417F9E00CDC983 /* Assets.xcassets */; };
@@ -66,8 +69,10 @@
 		39029E0328883DFE006BC6EE /* Contributor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contributor.swift; sourceTree = "<group>"; };
 		394653A8288BB47A00212E1C /* SectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeader.swift; sourceTree = "<group>"; };
 		394653AA288BB7C800212E1C /* SpeakerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakerView.swift; sourceTree = "<group>"; };
+		AE1C800F289E9F3800996659 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		AE32CDEF286CCF9D00DF0AFF /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		AE5A52CA289CF37A00501E75 /* Endpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoints.swift; sourceTree = "<group>"; };
+		AE5EFD74289E7CBF00464FE1 /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
 		AECB295327417F9D00CDC983 /* SwiftLeeds.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftLeeds.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AECB295627417F9D00CDC983 /* SwiftLeedsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftLeedsApp.swift; sourceTree = "<group>"; };
 		AECB295827417F9D00CDC983 /* MyConferenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyConferenceView.swift; sourceTree = "<group>"; };
@@ -109,6 +114,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FAF74EDC288B44BE00A0926C /* NetworkKit in Frameworks */,
+				AE5EFD73289DC1D000464FE1 /* CachedAsyncImage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -155,13 +161,13 @@
 		AECB295527417F9D00CDC983 /* SwiftLeeds */ = {
 			isa = PBXGroup;
 			children = (
+				AECB29862741AC5800CDC983 /* App */,
 				FA57DE562875B0DC00911F03 /* Data */,
 				AECB298027418D9800CDC983 /* Extension */,
+				FAF74EDD288B44E200A0926C /* Network */,
 				AECB295C27417F9E00CDC983 /* Preview Content */,
 				AECB29842741AC2500CDC983 /* Resources */,
 				FA57DE532875B0B500911F03 /* Style */,
-				AECB29862741AC5800CDC983 /* App */,
-				FAF74EDD288B44E200A0926C /* Network */,
 				AECB29852741AC4B00CDC983 /* Views */,
 			);
 			path = SwiftLeeds;
@@ -198,6 +204,7 @@
 				AEDC2256289C65D500746247 /* Calendar.swift */,
 				AECB298127418DA200CDC983 /* Color.swift */,
 				FA57DE4C2875B08600911F03 /* LinearGradient.swift */,
+				AE1C800F289E9F3800996659 /* String.swift */,
 				FAAB819028844EBC001159BB /* View+MeasureSize.swift */,
 			);
 			path = Extension;
@@ -247,9 +254,8 @@
 			isa = PBXGroup;
 			children = (
 				AED26F7728676A9900E06064 /* AboutView.swift */,
-				FA57DE4F2875B09900911F03 /* SponsorGridView.swift */,
 				39029E0128883851006BC6EE /* ContributorsView.swift */,
-				394653AA288BB7C800212E1C /* SpeakerView.swift */,
+				FA57DE4F2875B09900911F03 /* SponsorGridView.swift */,
 			);
 			path = About;
 			sourceTree = "<group>";
@@ -265,9 +271,11 @@
 		AEDC0DAF28675D060078A153 /* My Conference */ = {
 			isa = PBXGroup;
 			children = (
+				AE5EFD74289E7CBF00464FE1 /* ActivityView.swift */,
 				AED26F6F28675DA000E06064 /* AnnouncementCell.swift */,
 				AECB295827417F9D00CDC983 /* MyConferenceView.swift */,
 				AEDC22522898281300746247 /* MyConferenceViewModel.swift */,
+				394653AA288BB7C800212E1C /* SpeakerView.swift */,
 				AED26F73286764F000E06064 /* TalkCell.swift */,
 			);
 			path = "My Conference";
@@ -283,8 +291,8 @@
 		FA57DE412875B03800911F03 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				FA57DE4A2875B06B00911F03 /* SwiftLeedsContainer.swift */,
 				394653A8288BB47A00212E1C /* SectionHeader.swift */,
+				FA57DE4A2875B06B00911F03 /* SwiftLeedsContainer.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -292,11 +300,11 @@
 		FA57DE422875B03B00911F03 /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				FA57DE4E2875B09900911F03 /* ContentTileView.swift */,
 				FA57DE432875B06500911F03 /* CommonTileButton.swift */,
 				FA57DE442875B06500911F03 /* CommonTileView.swift */,
-				FA57DE452875B06500911F03 /* StackedTileView.swift */,
+				FA57DE4E2875B09900911F03 /* ContentTileView.swift */,
 				FA1F7EF6287CB71600E12F8C /* HeaderView.swift */,
+				FA57DE452875B06500911F03 /* StackedTileView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -368,6 +376,7 @@
 			name = SwiftLeeds;
 			packageProductDependencies = (
 				FAF74EDB288B44BE00A0926C /* NetworkKit */,
+				AE5EFD72289DC1D000464FE1 /* CachedAsyncImage */,
 			);
 			productName = SwiftLeeds;
 			productReference = AECB295327417F9D00CDC983 /* SwiftLeeds.app */;
@@ -441,6 +450,9 @@
 				Base,
 			);
 			mainGroup = AECB294A27417F9D00CDC983;
+			packageReferences = (
+				AE5EFD71289DC1D000464FE1 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */,
+			);
 			productRefGroup = AECB295427417F9D00CDC983 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -496,11 +508,13 @@
 				AEDC22552898288F00746247 /* Schedule.swift in Sources */,
 				AED26F74286764F000E06064 /* TalkCell.swift in Sources */,
 				FA1F7EF7287CB71600E12F8C /* HeaderView.swift in Sources */,
+				AE1C8010289E9F3800996659 /* String.swift in Sources */,
 				FA57DE512875B09900911F03 /* SponsorGridView.swift in Sources */,
 				AECB295927417F9D00CDC983 /* MyConferenceView.swift in Sources */,
 				FA57DE4B2875B06B00911F03 /* SwiftLeedsContainer.swift in Sources */,
 				FAAB819128844EBC001159BB /* View+MeasureSize.swift in Sources */,
 				AECB298227418DA200CDC983 /* Color.swift in Sources */,
+				AE5EFD75289E7CBF00464FE1 /* ActivityView.swift in Sources */,
 				AED26F7028675DA000E06064 /* AnnouncementCell.swift in Sources */,
 				AECB295727417F9D00CDC983 /* SwiftLeedsApp.swift in Sources */,
 				FA57DE592875B0EF00911F03 /* Sponsor.swift in Sources */,
@@ -855,7 +869,23 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		AE5EFD71289DC1D000464FE1 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/lorenzofiamingo/swiftui-cached-async-image";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
+		AE5EFD72289DC1D000464FE1 /* CachedAsyncImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AE5EFD71289DC1D000464FE1 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */;
+			productName = CachedAsyncImage;
+		};
 		FAF74EDB288B44BE00A0926C /* NetworkKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = NetworkKit;
