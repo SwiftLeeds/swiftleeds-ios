@@ -26,7 +26,7 @@ struct SpeakerView: View {
             if let speaker = presentation.speaker {
                 HeaderView(
                     title: speaker.name,
-                    imageURL: URL(string: "\(BaseURL.image)\(speaker.profileImage)"),
+                    imageURL: URL(string: speaker.profileImage),
                     backgroundImageAssetName: Assets.Image.playhouseImage
                 )
             }
