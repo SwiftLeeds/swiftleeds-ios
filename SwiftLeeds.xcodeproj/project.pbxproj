@@ -9,8 +9,10 @@
 /* Begin PBXBuildFile section */
 		39029E0228883851006BC6EE /* ContributorsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39029E0128883851006BC6EE /* ContributorsView.swift */; };
 		39029E0428883DFE006BC6EE /* Contributor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39029E0328883DFE006BC6EE /* Contributor.swift */; };
+		39345FDA288F17EE0031BCFF /* BottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39345FD9288F17EE0031BCFF /* BottomSheetView.swift */; };
 		394653A9288BB47A00212E1C /* SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394653A8288BB47A00212E1C /* SectionHeader.swift */; };
 		394653AB288BB7C800212E1C /* SpeakerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394653AA288BB7C800212E1C /* SpeakerView.swift */; };
+		39ED0034288F113500AB337A /* LocalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39ED0033288F113500AB337A /* LocalCell.swift */; };
 		AE1C8010289E9F3800996659 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1C800F289E9F3800996659 /* String.swift */; };
 		AE32CDF0286CCF9D00DF0AFF /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE32CDEF286CCF9D00DF0AFF /* Constants.swift */; };
 		AE5A52CB289CF37A00501E75 /* Endpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5A52CA289CF37A00501E75 /* Endpoints.swift */; };
@@ -67,9 +69,12 @@
 /* Begin PBXFileReference section */
 		39029E0128883851006BC6EE /* ContributorsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContributorsView.swift; sourceTree = "<group>"; };
 		39029E0328883DFE006BC6EE /* Contributor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contributor.swift; sourceTree = "<group>"; };
+		39345FD9288F17EE0031BCFF /* BottomSheetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BottomSheetView.swift; sourceTree = "<group>"; };
 		394653A8288BB47A00212E1C /* SectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeader.swift; sourceTree = "<group>"; };
 		394653AA288BB7C800212E1C /* SpeakerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakerView.swift; sourceTree = "<group>"; };
+		39ED0033288F113500AB337A /* LocalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalCell.swift; sourceTree = "<group>"; };
 		AE1C800F289E9F3800996659 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+
 		AE32CDEF286CCF9D00DF0AFF /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		AE5A52CA289CF37A00501E75 /* Endpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoints.swift; sourceTree = "<group>"; };
 		AE5EFD74289E7CBF00464FE1 /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
@@ -246,6 +251,7 @@
 			isa = PBXGroup;
 			children = (
 				AED26F7928676AA300E06064 /* LocalView.swift */,
+				39ED0033288F113500AB337A /* LocalCell.swift */,
 			);
 			path = Local;
 			sourceTree = "<group>";
@@ -300,6 +306,8 @@
 		FA57DE422875B03B00911F03 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				39345FD9288F17EE0031BCFF /* BottomSheetView.swift */,
+				FA57DE4E2875B09900911F03 /* ContentTileView.swift */,
 				FA57DE432875B06500911F03 /* CommonTileButton.swift */,
 				FA57DE442875B06500911F03 /* CommonTileView.swift */,
 				FA57DE4E2875B09900911F03 /* ContentTileView.swift */,
@@ -505,6 +513,7 @@
 				FA57DE552875B0C100911F03 /* SquishyButtonStyle.swift in Sources */,
 				AE5A52CB289CF37A00501E75 /* Endpoints.swift in Sources */,
 				AED26F7A28676AA300E06064 /* LocalView.swift in Sources */,
+				39ED0034288F113500AB337A /* LocalCell.swift in Sources */,
 				AEDC22552898288F00746247 /* Schedule.swift in Sources */,
 				AED26F74286764F000E06064 /* TalkCell.swift in Sources */,
 				FA1F7EF7287CB71600E12F8C /* HeaderView.swift in Sources */,
@@ -524,6 +533,7 @@
 				AE32CDF0286CCF9D00DF0AFF /* Constants.swift in Sources */,
 				FA57DE472875B06500911F03 /* CommonTileView.swift in Sources */,
 				FA57DE462875B06500911F03 /* CommonTileButton.swift in Sources */,
+				39345FDA288F17EE0031BCFF /* BottomSheetView.swift in Sources */,
 				39029E0428883DFE006BC6EE /* Contributor.swift in Sources */,
 				AEDC2257289C65D500746247 /* Calendar.swift in Sources */,
 			);
@@ -683,7 +693,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SwiftLeeds/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
@@ -701,6 +711,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = uk.co.swiftleeds.SwiftLeeds;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -712,7 +723,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SwiftLeeds/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
@@ -730,6 +741,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = uk.co.swiftleeds.SwiftLeeds;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
