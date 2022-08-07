@@ -33,49 +33,55 @@ struct TalkCell: View {
         VStack(alignment: .leading, spacing: 6) {
             timeLabel(time)
 
-            VStack(alignment: .leading, spacing: 8) {
-                if let speaker = speaker {
-                    HStack {
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text(speaker)
-                                .font(.headline.weight(.medium))
+            HStack {
+                VStack(alignment: .leading, spacing: 8) {
+                    if let speaker = speaker {
+                        HStack {
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text(speaker)
+                                    .font(.headline.weight(.medium))
 
-                            if let company = company {
-                                Text(company)
-                                    .font(.subheadline.weight(.medium))
-                                    .opacity(0.6)
+                                if let company = company {
+                                    Text(company)
+                                        .font(.subheadline.weight(.medium))
+                                        .opacity(0.6)
+                                }
+                            }
+
+                            Spacer()
+
+                            if let imageURL = imageURL {
+                                CachedAsyncImage(
+                                    url: URL(string: imageURL),
+                                    content: { image in
+                                        image
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fill)
+                                            .frame(maxWidth: 40, maxHeight: 40)
+                                            .clipShape(Circle())
+                                    },
+                                    placeholder: {
+                                        Circle()
+                                            .fill(.white)
+                                            .opacity(0.3)
+                                            .frame(maxWidth: 40, maxHeight: 40)
+                                            .clipShape(Circle())
+                                    }
+                                )
                             }
                         }
+                    }
 
+                    HStack {
+                        Text(details)
+                            .font(.body.weight(.regular))
+                            .multilineTextAlignment(.leading)
                         Spacer()
-
-                        if let imageURL = imageURL {
-                            CachedAsyncImage(
-                                url: URL(string: imageURL),
-                                content: { image in
-                                    image
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fill)
-                                        .frame(maxWidth: 40, maxHeight: 40)
-                                        .clipShape(Circle())
-                                },
-                                placeholder: {
-                                    Circle()
-                                        .fill(.white)
-                                        .opacity(0.3)
-                                        .frame(maxWidth: 40, maxHeight: 40)
-                                        .clipShape(Circle())
-                                }
-                            )
-                        }
                     }
                 }
+                .padding(.trailing, 2)
 
-                HStack {
-                    Text(details)
-                        .font(.body.weight(.regular))
-                    Spacer()
-                }
+                Image(systemName: "chevron.right")
             }
             .padding(Padding.cell)
             .frame(maxWidth: .infinity)
@@ -97,6 +103,8 @@ struct TalkCell: View {
     private func timeLabel(_ value: String) -> some View {
         HStack {
             Text(value)
+                .foregroundColor(.cellForeground)
+
             Spacer()
         }
     }
