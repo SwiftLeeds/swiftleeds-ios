@@ -34,6 +34,7 @@ struct MyConferenceView: View {
                                     .onTapGesture {
                                         selectedActivity = activity
                                     }
+                                    .transition(.opacity)
                             }
 
                             if let presentation = slot.presentation {
@@ -41,9 +42,11 @@ struct MyConferenceView: View {
                                     .onTapGesture {
                                         selectedPresentation = presentation
                                     }
+                                    .transition(.opacity)
                             }
                         }
                     }
+                    .animation(.easeInOut, value: viewModel.slots)
                     .padding(Padding.screen)
                 }
 
