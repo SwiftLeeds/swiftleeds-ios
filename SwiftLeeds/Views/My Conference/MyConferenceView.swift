@@ -8,6 +8,10 @@
 import SwiftUI
 
 struct MyConferenceView: View {
+    @StateObject private var viewModel = MyConferenceViewModel()
+    @State private var selectedPresentation: Presentation?
+    @State private var selectedActivity: Activity?
+
     var body: some View {
         NavigationView {
             VStack(spacing: 0) {
@@ -19,16 +23,26 @@ struct MyConferenceView: View {
                         AnnouncementCell(label: "Leeds", value: "26℃", valueIcon: "cloud.sun.fill", gradientColors: [.weatherGradientStart, .weatherGradientEnd])
                             .previewDisplayName("Weather")
 
-                        // TODO: Calculate days once data is available from API
-                        AnnouncementCell(label: "Get your ticket now!", value: "69 Days", valueIcon: "calendar.circle", gradientColors: [.buyTicketGradientStart, .buyTicketGradientEnd])
-                            .previewDisplayName("Buy Ticket")
+                        if let numberOfDaysToConference = viewModel.numberOfDaysToConference {
+                            AnnouncementCell(label: "Get your ticket now!", value: "\(numberOfDaysToConference) days", valueIcon: "calendar.circle", gradientColors: [.buyTicketGradientStart, .buyTicketGradientEnd])
+                                .previewDisplayName("Buy Ticket")
+                        }
 
-                        // TODO: Retrieve sessions once available from API
-                        TalkCell(time: "11:00", details: "Take crosswords to the next level with macOS catalyst. You’ll learn how to tick that checkbox and break free from the chains of the iPad.", isNext: true, speaker: "Joe Williams", company: "Expodition", gradientColors: [.nextTalkGradientStart, .nextTalkGradientEnd])
+                        ForEach(viewModel.slots) { slot in
+                            if let activity = slot.activity {
+                                TalkCell(time: slot.startTime, details: activity.title)
+                                    .onTapGesture {
+                                        selectedActivity = activity
+                                    }
+                            }
 
-                        TalkCell(time: "12:00", details: "Lunch")
-
-                        TalkCell(time: "13:00", details: "Something about chats", speaker: "Adam Rush", company: "Stream")
+                            if let presentation = slot.presentation {
+                                TalkCell(time: slot.startTime, details: presentation.title, speaker: presentation.speaker?.name, company: presentation.speaker?.organisation.description, imageURL: presentation.speaker?.profileImage)
+                                    .onTapGesture {
+                                        selectedPresentation = presentation
+                                    }
+                            }
+                        }
                     }
                     .padding(Padding.screen)
                 }
@@ -36,14 +50,16 @@ struct MyConferenceView: View {
                 Divider()
             }
             .background(Color.background)
-            .navigationTitle("Swift Leeds")
+            .navigationTitle("SwiftLeeds")
+            .task {
+                try? await viewModel.loadSchedule()
+            }
         }
-    }
-
-    func timeLabel(_ value: String) -> some View {
-        HStack {
-            Text(value)
-            Spacer()
+        .sheet(item: $selectedPresentation) { presentation in
+            SpeakerView(presentation: presentation)
+        }
+        .sheet(item: $selectedActivity) { activity in
+            ActivityView(activity: activity)
         }
     }
 }

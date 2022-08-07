@@ -71,7 +71,7 @@ struct CommonTileView<BackgroundType: ShapeStyle>: View {
         )
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(
-            "\(primaryText) \(secondaryText ?? "")"
+            "\(primaryText), \(secondaryText ?? "")"
         )
     }
 
