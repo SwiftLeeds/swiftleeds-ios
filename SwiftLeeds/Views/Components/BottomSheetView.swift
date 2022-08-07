@@ -26,8 +26,8 @@ struct BottomSheetView: View {
     }
     
     var body: some View {
-        GeometryReader{ geometry in
-            VStack{
+        GeometryReader { geometry in
+            VStack {
                 VStack(spacing: Padding.cellGap) {
                     Spacer()
                     SectionHeader(title: "Local",
@@ -35,7 +35,7 @@ struct BottomSheetView: View {
                                   foregroundColor: .primary)
                     ScrollView {
                         LocalCell(label: "Food",
-                                  imageName:"takeoutbag.and.cup.and.straw.fill",
+                                  imageName: "takeoutbag.and.cup.and.straw.fill",
                                   labelFontStyle: .body)
                         LocalCell(label: "Coffee",
                                   imageName: "cup.and.saucer.fill",
@@ -51,7 +51,7 @@ struct BottomSheetView: View {
                 .padding(Padding.screen)
             }
             .frame(width: geometry.size.width, height: self.maxHeight, alignment: .top)
-            .background(Color(.secondarySystemBackground))
+            .background(Color.background)
             .cornerRadius(Constants.bottomSheetRadius)
             .frame(height: geometry.size.height, alignment: .bottom)
             .offset(y: max(self.offsetY + self.translation, 0))
