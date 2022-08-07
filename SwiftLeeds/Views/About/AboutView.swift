@@ -24,18 +24,22 @@ struct AboutView: View {
 
     private var content: some View {
         VStack(spacing: Padding.cellGap) {
-          FancyHeaderView(title: "Swift Leeds",
-                          foregroundImageName:Assets.Image.swiftLeedsIcon,
-                          backgroundImageName: Assets.Image.playhouseImage)
-            
+            FancyHeaderView(
+                title: "SwiftLeeds",
+                foregroundImageName:Assets.Image.swiftLeedsIcon,
+                backgroundImageName: Assets.Image.playhouseImage
+            )
             VStack(spacing: Padding.cellGap) {
                 StackedTileView(primaryText: "About", secondaryText: Strings.aboutSwiftLeeds)
+
                 CommonTileButton(primaryText: "Code of conduct", secondaryText: nil, backgroundStyle: Color.cellBackground) {
                     openURL(url: codeOfConduct)
                 }
+
                 CommonTileButton(primaryText: "Venue", secondaryText: nil, backgroundStyle: Color.cellBackground) {
                     openURL(url: venueURL)
                 }
+
                 SponsorGridView()
             }
             .padding(Padding.screen)

@@ -10,6 +10,10 @@ import NetworkKit
 
 @main
 struct SwiftLeedsApp: App {
+    init() {
+        URLCache.shared.diskCapacity = 100_000_000
+    }
+
     var body: some Scene {
         WindowGroup {
             Tabs()
