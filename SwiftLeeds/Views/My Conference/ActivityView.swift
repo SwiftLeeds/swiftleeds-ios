@@ -25,7 +25,7 @@ struct ActivityView: View {
         VStack(spacing: Padding.stackGap) {
             HeaderView(
                 title: activity.title,
-                imageURL: URL(string: "\(BaseURL.image)\(activity.image ?? "")"),
+                imageURL: URL(string: activity.image ?? ""),
                 backgroundImageAssetName: Assets.Image.playhouseImage
             )
 

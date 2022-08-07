@@ -51,7 +51,7 @@ struct TalkCell: View {
 
                         if let imageURL = imageURL {
                             CachedAsyncImage(
-                                url: URL(string: "\(BaseURL.image)\(imageURL)"),
+                                url: URL(string: imageURL),
                                 content: { image in
                                     image
                                         .resizable()

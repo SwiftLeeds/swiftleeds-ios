@@ -20,10 +20,6 @@ enum Padding {
     static let stackGap: CGFloat = 4
 }
 
-enum BaseURL {
-    static let image = "https://swiftleeds-speakers.s3.eu-west-2.amazonaws.com/"
-}
-
 enum Strings {
     static let aboutSwiftLeeds = """
     Adam Rush founded SwiftLeeds in 2019, born from over ten years of experience attending conferences. The inspiration was bringing a modern, inclusive conference in the North of the UK to be more accessible for all.
