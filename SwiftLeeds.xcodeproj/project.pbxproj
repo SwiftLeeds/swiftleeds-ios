@@ -15,7 +15,7 @@
 		39ED0034288F113500AB337A /* LocalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39ED0033288F113500AB337A /* LocalCell.swift */; };
 		AE1C8010289E9F3800996659 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1C800F289E9F3800996659 /* String.swift */; };
 		AE32CDF0286CCF9D00DF0AFF /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE32CDEF286CCF9D00DF0AFF /* Constants.swift */; };
-		AE5A52CB289CF37A00501E75 /* Endpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5A52CA289CF37A00501E75 /* Endpoints.swift */; };
+		AE5A52CB289CF37A00501E75 /* ScheduleEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5A52CA289CF37A00501E75 /* ScheduleEndpoint.swift */; };
 		AE5EFD73289DC1D000464FE1 /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = AE5EFD72289DC1D000464FE1 /* CachedAsyncImage */; };
 		AE5EFD75289E7CBF00464FE1 /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5EFD74289E7CBF00464FE1 /* ActivityView.swift */; };
 		AECB295727417F9D00CDC983 /* SwiftLeedsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECB295627417F9D00CDC983 /* SwiftLeedsApp.swift */; };
@@ -36,6 +36,7 @@
 		AEDC22552898288F00746247 /* Schedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEDC22542898288F00746247 /* Schedule.swift */; };
 		AEDC2257289C65D500746247 /* Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEDC2256289C65D500746247 /* Calendar.swift */; };
 		FA1F7EF7287CB71600E12F8C /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1F7EF6287CB71600E12F8C /* HeaderView.swift */; };
+		FA534D7F28A1905000A3BFBB /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA534D7E28A1905000A3BFBB /* Environment.swift */; };
 		FA57DE462875B06500911F03 /* CommonTileButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE432875B06500911F03 /* CommonTileButton.swift */; };
 		FA57DE472875B06500911F03 /* CommonTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE442875B06500911F03 /* CommonTileView.swift */; };
 		FA57DE482875B06500911F03 /* StackedTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE452875B06500911F03 /* StackedTileView.swift */; };
@@ -74,9 +75,8 @@
 		394653AA288BB7C800212E1C /* SpeakerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakerView.swift; sourceTree = "<group>"; };
 		39ED0033288F113500AB337A /* LocalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalCell.swift; sourceTree = "<group>"; };
 		AE1C800F289E9F3800996659 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
-
 		AE32CDEF286CCF9D00DF0AFF /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		AE5A52CA289CF37A00501E75 /* Endpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoints.swift; sourceTree = "<group>"; };
+		AE5A52CA289CF37A00501E75 /* ScheduleEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleEndpoint.swift; sourceTree = "<group>"; };
 		AE5EFD74289E7CBF00464FE1 /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
 		AECB295327417F9D00CDC983 /* SwiftLeeds.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftLeeds.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AECB295627417F9D00CDC983 /* SwiftLeedsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftLeedsApp.swift; sourceTree = "<group>"; };
@@ -100,6 +100,7 @@
 		AEDC22542898288F00746247 /* Schedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Schedule.swift; sourceTree = "<group>"; };
 		AEDC2256289C65D500746247 /* Calendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calendar.swift; sourceTree = "<group>"; };
 		FA1F7EF6287CB71600E12F8C /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
+		FA534D7E28A1905000A3BFBB /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		FA57DE432875B06500911F03 /* CommonTileButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonTileButton.swift; sourceTree = "<group>"; };
 		FA57DE442875B06500911F03 /* CommonTileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonTileView.swift; sourceTree = "<group>"; };
 		FA57DE452875B06500911F03 /* StackedTileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StackedTileView.swift; sourceTree = "<group>"; };
@@ -307,7 +308,6 @@
 			isa = PBXGroup;
 			children = (
 				39345FD9288F17EE0031BCFF /* BottomSheetView.swift */,
-				FA57DE4E2875B09900911F03 /* ContentTileView.swift */,
 				FA57DE432875B06500911F03 /* CommonTileButton.swift */,
 				FA57DE442875B06500911F03 /* CommonTileView.swift */,
 				FA57DE4E2875B09900911F03 /* ContentTileView.swift */,
@@ -361,7 +361,8 @@
 		FAF74EDD288B44E200A0926C /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				AE5A52CA289CF37A00501E75 /* Endpoints.swift */,
+				AE5A52CA289CF37A00501E75 /* ScheduleEndpoint.swift */,
+				FA534D7E28A1905000A3BFBB /* Environment.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -511,7 +512,8 @@
 				FA57DE4D2875B08600911F03 /* LinearGradient.swift in Sources */,
 				394653A9288BB47A00212E1C /* SectionHeader.swift in Sources */,
 				FA57DE552875B0C100911F03 /* SquishyButtonStyle.swift in Sources */,
-				AE5A52CB289CF37A00501E75 /* Endpoints.swift in Sources */,
+				FA534D7F28A1905000A3BFBB /* Environment.swift in Sources */,
+				AE5A52CB289CF37A00501E75 /* ScheduleEndpoint.swift in Sources */,
 				AED26F7A28676AA300E06064 /* LocalView.swift in Sources */,
 				39ED0034288F113500AB337A /* LocalCell.swift in Sources */,
 				AEDC22552898288F00746247 /* Schedule.swift in Sources */,
