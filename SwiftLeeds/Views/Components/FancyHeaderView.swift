@@ -95,7 +95,7 @@ struct FancyHeaderView: View {
     
     private var foregroundGroup: some View {
         GeometryReader { geometry in
-            VStack(spacing: Padding.stackGap){
+            VStack(spacing: Padding.cellGap) {
                 foregroundImage
                     .frame(width: foregroundImageWidth)
                     .cornerRadius(Constants.cellRadius)
@@ -142,14 +142,14 @@ struct FancyHeaderView: View {
         }
     }
     
-    private func createRectangleImage(for image: Image, aspectRatio: Double = 1.0 ) -> some View {
+    private func createRectangleImage(for image: Image, aspectRatio: Double = 1.0) -> some View {
         return Rectangle()
             .foregroundColor(.clear)
             .aspectRatio(aspectRatio, contentMode: .fit)
             .background(
                 image
                     .resizable()
-                    .aspectRatio(aspectRatio, contentMode: .fill)
+                    .aspectRatio(contentMode: .fill)
                     .transition(.opacity)
             )
     }
