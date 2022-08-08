@@ -16,7 +16,7 @@ struct LocalCell: View {
     
     internal init(label : String,
                   imageName: String,
-                  foregroundColor: Color = Color.primary,
+                  foregroundColor: Color = .cellForeground,
                   labelFontStyle: Font = .headline.weight(.medium),
                   onTap: @escaping () -> () = {}
     ){
@@ -33,9 +33,10 @@ struct LocalCell: View {
                 Text(label)
                     .font(labelFontStyle)
                 Spacer()
+                
                 Image(uiImage: UIImage(systemName: imageName) ?? UIImage(imageLiteralResourceName: imageName))
                     .renderingMode(.template)
-                    .foregroundColor(Color.primary)
+                    .frame(width: 30)
             }
             .padding(Padding.cell)
             .frame(minHeight: Constants.cellMinimumHeight)
@@ -49,7 +50,12 @@ struct LocalCell: View {
 
 struct LocalCell_Previews: PreviewProvider {
     static var previews: some View {
-        LocalCell(label: "Food", imageName: "wineglass.fill")
+        VStack {
+            LocalCell(label: "Food", imageName: "takeoutbag.and.cup.and.straw.fill")
+            LocalCell(label: "Coffee", imageName: "cup.and.saucer.fill")
+            LocalCell(label: "Drink", imageName: "wineglass.fill")
+            LocalCell(label: "Best of Leeds", imageName: "mappin")
+        }
     }
     
 }
