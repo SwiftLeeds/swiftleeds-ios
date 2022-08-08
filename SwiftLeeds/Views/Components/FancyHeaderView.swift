@@ -123,16 +123,14 @@ struct FancyHeaderView: View {
            AsyncImage(url: foregroundImageURL) { phase in
                 switch phase {
                 case .empty:
-                    ProgressView()
+                    loadingView()
                 case .success( let image):
                     createRectangleImage(for: image)
                         .accessibilityHidden(true)
                 case .failure(_):
                     createRectangleImage(for: Image(Assets.Image.swiftLeedsIcon))
                 @unknown default:
-                    ProgressView()
-                        .tint(.white)
-                        .opacity(0.5)
+                    loadingView()
                 }
             }
         } else if let foregroundImageName = foregroundImageName {
@@ -152,6 +150,16 @@ struct FancyHeaderView: View {
                     .aspectRatio(contentMode: .fill)
                     .transition(.opacity)
             )
+    }
+
+    private func loadingView(aspectRatio: Double = 1.0) -> some View {
+        return Rectangle()
+            .foregroundColor(.secondary)
+            .aspectRatio(aspectRatio, contentMode: .fit)
+            .overlay(
+                ProgressView()
+            )
+            .progressViewStyle(CircularProgressViewStyle())
     }
 }
 
