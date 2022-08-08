@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CachedAsyncImage
 
 struct FancyHeaderView: View {
     internal init(
@@ -68,7 +69,7 @@ struct FancyHeaderView: View {
     @ViewBuilder
     private var backgroundImage: some View {
         if let backgroundImageURL = backgroundImageURL {
-           AsyncImage(url: backgroundImageURL) { phase in
+           CachedAsyncImage(url: backgroundImageURL) { phase in
                 switch phase {
                 case .empty:
                     ProgressView()
