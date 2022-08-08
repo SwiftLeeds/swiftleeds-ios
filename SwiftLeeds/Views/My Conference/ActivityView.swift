@@ -23,10 +23,10 @@ struct ActivityView: View {
 
     private var content: some View {
         VStack(spacing: Padding.stackGap) {
-            HeaderView(
+            FancyHeaderView(
                 title: activity.title,
-                imageURL: URL(string: activity.image ?? ""),
-                backgroundImageAssetName: Assets.Image.playhouseImage
+                foregroundImageURL: URL(string: activity.image ?? ""),
+                backgroundImageName: Assets.Image.playhouseImage
             )
 
             StackedTileView(
