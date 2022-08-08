@@ -8,7 +8,6 @@ import Combine
 /// A fully featured mock for `Networking` that allows injection of any error or data, from any endpoint.
 /// The endpoint itself is ignored, and the provided data or error is emitted instead.
 public class MockNetwork: Networking {
-
     private let environment: NetworkEnvironmentProviding
     private let urlSession: URLSession
     private var mockData: Decodable?
@@ -32,6 +31,16 @@ public class MockNetwork: Networking {
         .eraseToAnyPublisher()
     }
 
+    public func performRequest<E>(endpoint: E) async throws -> E.DataType where E : Endpoint {
+        if let mockData = self.mockData as? E.DataType {
+            return mockData
+        } else if let mockError = self.mockError {
+            throw mockError
+        } else {
+            throw MockNetworkError.misconfigured
+        }
+    }
+
     /// Sets up the network handlers to return success with the provided `Decodable` provided that it matches the `Endpoint` data type.
     /// Takes precedence over `injectMockError`, in cases where both are provided the success will be returned.
     func injectMockData(data: Decodable) {
@@ -43,4 +52,8 @@ public class MockNetwork: Networking {
         self.mockError = error
     }
 
+}
+
+private enum MockNetworkError: Error {
+    case misconfigured
 }

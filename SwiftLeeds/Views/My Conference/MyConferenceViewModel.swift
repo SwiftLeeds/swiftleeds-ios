@@ -8,15 +8,16 @@
 import Foundation
 import Combine
 import NetworkKit
+import SwiftUI
 
 class MyConferenceViewModel: ObservableObject {
     @Published var event: Schedule.Event?
     @Published var slots: [Schedule.Slot] = []
+    @Environment(\.network) var network: Networking
 
     @MainActor
     func loadSchedule() async throws {
         do {
-            let network = Network(environment: SwiftLeedsEnvironment())
             let schedule = try await network.performRequest(endpoint: ScheduleEndpoint())
             self.event = schedule.data.event
             self.slots = schedule.data.slots

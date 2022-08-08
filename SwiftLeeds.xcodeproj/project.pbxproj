@@ -39,6 +39,7 @@
 		FA534D7F28A1905000A3BFBB /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA534D7E28A1905000A3BFBB /* Environment.swift */; };
 		FA534D8228A1909300A3BFBB /* Local.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA534D8128A1909300A3BFBB /* Local.swift */; };
 		FA534D8428A1910B00A3BFBB /* LocalEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA534D8328A1910B00A3BFBB /* LocalEndpoint.swift */; };
+		FA534D8628A1917C00A3BFBB /* Environment+Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA534D8528A1917C00A3BFBB /* Environment+Network.swift */; };
 		FA57DE462875B06500911F03 /* CommonTileButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE432875B06500911F03 /* CommonTileButton.swift */; };
 		FA57DE472875B06500911F03 /* CommonTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE442875B06500911F03 /* CommonTileView.swift */; };
 		FA57DE482875B06500911F03 /* StackedTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE452875B06500911F03 /* StackedTileView.swift */; };
@@ -105,6 +106,7 @@
 		FA534D7E28A1905000A3BFBB /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		FA534D8128A1909300A3BFBB /* Local.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Local.swift; sourceTree = "<group>"; };
 		FA534D8328A1910B00A3BFBB /* LocalEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalEndpoint.swift; sourceTree = "<group>"; };
+		FA534D8528A1917C00A3BFBB /* Environment+Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Environment+Network.swift"; sourceTree = "<group>"; };
 		FA57DE432875B06500911F03 /* CommonTileButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonTileButton.swift; sourceTree = "<group>"; };
 		FA57DE442875B06500911F03 /* CommonTileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonTileView.swift; sourceTree = "<group>"; };
 		FA57DE452875B06500911F03 /* StackedTileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StackedTileView.swift; sourceTree = "<group>"; };
@@ -216,6 +218,7 @@
 				FA57DE4C2875B08600911F03 /* LinearGradient.swift */,
 				AE1C800F289E9F3800996659 /* String.swift */,
 				FAAB819028844EBC001159BB /* View+MeasureSize.swift */,
+				FA534D8528A1917C00A3BFBB /* Environment+Network.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -545,6 +548,7 @@
 				FA57DE462875B06500911F03 /* CommonTileButton.swift in Sources */,
 				39345FDA288F17EE0031BCFF /* BottomSheetView.swift in Sources */,
 				39029E0428883DFE006BC6EE /* Contributor.swift in Sources */,
+				FA534D8628A1917C00A3BFBB /* Environment+Network.swift in Sources */,
 				AEDC2257289C65D500746247 /* Calendar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
