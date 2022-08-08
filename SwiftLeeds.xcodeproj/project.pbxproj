@@ -40,6 +40,7 @@
 		FA534D8228A1909300A3BFBB /* Local.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA534D8128A1909300A3BFBB /* Local.swift */; };
 		FA534D8428A1910B00A3BFBB /* LocalEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA534D8328A1910B00A3BFBB /* LocalEndpoint.swift */; };
 		FA534D8628A1917C00A3BFBB /* Environment+Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA534D8528A1917C00A3BFBB /* Environment+Network.swift */; };
+		FA534D8828A1939500A3BFBB /* LocalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA534D8728A1939500A3BFBB /* LocalViewModel.swift */; };
 		FA57DE462875B06500911F03 /* CommonTileButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE432875B06500911F03 /* CommonTileButton.swift */; };
 		FA57DE472875B06500911F03 /* CommonTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE442875B06500911F03 /* CommonTileView.swift */; };
 		FA57DE482875B06500911F03 /* StackedTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE452875B06500911F03 /* StackedTileView.swift */; };
@@ -107,6 +108,7 @@
 		FA534D8128A1909300A3BFBB /* Local.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Local.swift; sourceTree = "<group>"; };
 		FA534D8328A1910B00A3BFBB /* LocalEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalEndpoint.swift; sourceTree = "<group>"; };
 		FA534D8528A1917C00A3BFBB /* Environment+Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Environment+Network.swift"; sourceTree = "<group>"; };
+		FA534D8728A1939500A3BFBB /* LocalViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalViewModel.swift; sourceTree = "<group>"; };
 		FA57DE432875B06500911F03 /* CommonTileButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonTileButton.swift; sourceTree = "<group>"; };
 		FA57DE442875B06500911F03 /* CommonTileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonTileView.swift; sourceTree = "<group>"; };
 		FA57DE452875B06500911F03 /* StackedTileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StackedTileView.swift; sourceTree = "<group>"; };
@@ -258,8 +260,10 @@
 		AED26F7528676A8E00E06064 /* Local */ = {
 			isa = PBXGroup;
 			children = (
+				39345FD9288F17EE0031BCFF /* BottomSheetView.swift */,
 				AED26F7928676AA300E06064 /* LocalView.swift */,
 				39ED0033288F113500AB337A /* LocalCell.swift */,
+				FA534D8728A1939500A3BFBB /* LocalViewModel.swift */,
 			);
 			path = Local;
 			sourceTree = "<group>";
@@ -314,7 +318,6 @@
 		FA57DE422875B03B00911F03 /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				39345FD9288F17EE0031BCFF /* BottomSheetView.swift */,
 				FA57DE432875B06500911F03 /* CommonTileButton.swift */,
 				FA57DE442875B06500911F03 /* CommonTileView.swift */,
 				FA57DE4E2875B09900911F03 /* ContentTileView.swift */,
@@ -534,6 +537,7 @@
 				FA57DE4B2875B06B00911F03 /* SwiftLeedsContainer.swift in Sources */,
 				FAAB819128844EBC001159BB /* View+MeasureSize.swift in Sources */,
 				AECB298227418DA200CDC983 /* Color.swift in Sources */,
+				FA534D8828A1939500A3BFBB /* LocalViewModel.swift in Sources */,
 				AE5EFD75289E7CBF00464FE1 /* ActivityView.swift in Sources */,
 				AED26F7028675DA000E06064 /* AnnouncementCell.swift in Sources */,
 				AECB295727417F9D00CDC983 /* SwiftLeedsApp.swift in Sources */,

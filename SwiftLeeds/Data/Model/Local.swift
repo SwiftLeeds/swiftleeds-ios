@@ -10,14 +10,14 @@ import Foundation
 struct Local: Decodable {
     let data: [LocationCategory]
 
-    struct LocationCategory: Decodable {
+    struct LocationCategory: Decodable, Hashable {
         let id: UUID
         let name: String
         let symbolName: String
         let locations: [Location]
     }
 
-    struct Location: Decodable {
+    struct Location: Decodable, Hashable {
         let id: UUID
         let name: String
         let lat: Double
