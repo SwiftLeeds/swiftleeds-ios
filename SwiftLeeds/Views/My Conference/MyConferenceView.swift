@@ -9,8 +9,6 @@ import SwiftUI
 
 struct MyConferenceView: View {
     @StateObject private var viewModel = MyConferenceViewModel()
-    @State private var selectedPresentation: Presentation?
-    @State private var selectedActivity: Activity?
 
     var body: some View {
         NavigationView {
@@ -30,19 +28,21 @@ struct MyConferenceView: View {
 
                         ForEach(viewModel.slots) { slot in
                             if let activity = slot.activity {
-                                TalkCell(time: slot.startTime, details: activity.title)
-                                    .onTapGesture {
-                                        selectedActivity = activity
-                                    }
-                                    .transition(.opacity)
+                                NavigationLink {
+                                    ActivityView(activity: activity)
+                                } label: {
+                                    TalkCell(time: slot.startTime, details: activity.title)
+                                        .transition(.opacity)
+                                }
                             }
 
                             if let presentation = slot.presentation {
-                                TalkCell(time: slot.startTime, details: presentation.title, speaker: presentation.speaker?.name, company: presentation.speaker?.organisation.description, imageURL: presentation.speaker?.profileImage)
-                                    .onTapGesture {
-                                        selectedPresentation = presentation
-                                    }
-                                    .transition(.opacity)
+                                NavigationLink {
+                                    SpeakerView(presentation: presentation)
+                                } label: {
+                                    TalkCell(time: slot.startTime, details: presentation.title, speaker: presentation.speaker?.name, company: presentation.speaker?.organisation.description, imageURL: presentation.speaker?.profileImage)
+                                        .transition(.opacity)
+                                }
                             }
                         }
                     }
@@ -58,12 +58,7 @@ struct MyConferenceView: View {
                 try? await viewModel.loadSchedule()
             }
         }
-        .sheet(item: $selectedPresentation) { presentation in
-            SpeakerView(presentation: presentation)
-        }
-        .sheet(item: $selectedActivity) { activity in
-            ActivityView(activity: activity)
-        }
+        .accentColor(.white)
     }
 }
 

@@ -24,10 +24,10 @@ struct SpeakerView: View {
     private var content: some View {
         VStack(spacing: Padding.stackGap) {
             if let speaker = presentation.speaker {
-                HeaderView(
+                FancyHeaderView(
                     title: speaker.name,
-                    imageURL: URL(string: speaker.profileImage),
-                    backgroundImageAssetName: Assets.Image.playhouseImage
+                    foregroundImageURL: URL(string: speaker.profileImage),
+                    backgroundImageName: Assets.Image.playhouseImage
                 )
             }
 

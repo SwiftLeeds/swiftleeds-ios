@@ -8,7 +8,21 @@
 import SwiftUI
 
 struct FancyHeaderView: View {
-    
+    internal init(
+        title: String,
+        foregroundImageURL: URL? = nil,
+        backgroundImageURL: URL? = nil,
+        foregroundImageName: String? = nil,
+        backgroundImageName: String? = nil
+    ) {
+        self.title = title
+        self.foregroundImageURL = foregroundImageURL
+        self.backgroundImageURL = backgroundImageURL
+        self.foregroundImageName = foregroundImageName
+        self.backgroundImageName = backgroundImageName
+    }
+
+    // MARK: Convenience Initialisers
     internal init(title: String, foregroundImageURL: URL?, backgroundImageURL: URL?) {
         self.title = title
         self.foregroundImageURL = foregroundImageURL
