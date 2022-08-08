@@ -24,12 +24,11 @@ struct AboutView: View {
 
     private var content: some View {
         VStack(spacing: Padding.cellGap) {
-            HeaderView(
+            FancyHeaderView(
                 title: "SwiftLeeds",
-                imageAssetName: Assets.Image.swiftLeedsIcon,
-                backgroundImageAssetName: Assets.Image.playhouseImage
+                foregroundImageName:Assets.Image.swiftLeedsIcon,
+                backgroundImageName: Assets.Image.playhouseImage
             )
-
             VStack(spacing: Padding.cellGap) {
                 StackedTileView(primaryText: "About", secondaryText: Strings.aboutSwiftLeeds)
 
