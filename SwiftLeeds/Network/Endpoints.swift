@@ -7,6 +7,8 @@
 
 import NetworkKit
 
+/// All endpoints should stay in this file to avoid creating lots of little files
+
 // MARK: - Schedule Endpoint
 struct ScheduleEndpoint: Endpoint {
     typealias DataType = Schedule
