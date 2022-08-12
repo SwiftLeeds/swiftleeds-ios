@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CachedAsyncImage
 
 struct FancyHeaderView: View {
     internal init(
@@ -68,14 +69,14 @@ struct FancyHeaderView: View {
     @ViewBuilder
     private var backgroundImage: some View {
         if let backgroundImageURL = backgroundImageURL {
-           AsyncImage(url: backgroundImageURL) { phase in
+           CachedAsyncImage(url: backgroundImageURL) { phase in
                 switch phase {
                 case .empty:
                     ProgressView()
                 case .success(let image):
-                    crateRectangleImage(for: image, aspectRatio: aspectRatio)
+                    createRectangleImage(for: image, aspectRatio: aspectRatio)
                 case .failure(_):
-                    crateRectangleImage(for: Image(Assets.Image.playhouseImage),
+                    createRectangleImage(for: Image(Assets.Image.playhouseImage),
                                            aspectRatio: aspectRatio)
                 @unknown default:
                     ProgressView()
@@ -84,17 +85,17 @@ struct FancyHeaderView: View {
                 }
             }
         } else if let backgroundImageName =  backgroundImageName {
-            crateRectangleImage(for: Image(backgroundImageName),
+            createRectangleImage(for: Image(backgroundImageName),
                                           aspectRatio: aspectRatio)
         } else {
-            crateRectangleImage(for: Image(Assets.Image.playhouseImage),
+            createRectangleImage(for: Image(Assets.Image.playhouseImage),
                                           aspectRatio: aspectRatio)
         }
     }
     
     private var foregroundGroup: some View {
         GeometryReader { geometry in
-            VStack(spacing: Padding.stackGap){
+            VStack(spacing: Padding.cellGap) {
                 foregroundImage
                     .frame(width: foregroundImageWidth)
                     .cornerRadius(Constants.cellRadius)
@@ -122,35 +123,43 @@ struct FancyHeaderView: View {
            AsyncImage(url: foregroundImageURL) { phase in
                 switch phase {
                 case .empty:
-                    ProgressView()
+                    loadingView()
                 case .success( let image):
-                    crateRectangleImage(for: image)
+                    createRectangleImage(for: image)
                         .accessibilityHidden(true)
                 case .failure(_):
-                    crateRectangleImage(for: Image(Assets.Image.swiftLeedsIcon))
+                    createRectangleImage(for: Image(Assets.Image.swiftLeedsIcon))
                 @unknown default:
-                    ProgressView()
-                        .tint(.white)
-                        .opacity(0.5)
+                    loadingView()
                 }
             }
         } else if let foregroundImageName = foregroundImageName {
-             crateRectangleImage(for: Image(foregroundImageName))
+            createRectangleImage(for: Image(foregroundImageName))
         } else {
-            crateRectangleImage(for: Image(Assets.Image.swiftLeedsIcon))
+            createRectangleImage(for: Image(Assets.Image.swiftLeedsIcon))
         }
     }
     
-    private func crateRectangleImage(for image: Image, aspectRatio: Double = 1.0 ) -> some View {
+    private func createRectangleImage(for image: Image, aspectRatio: Double = 1.0) -> some View {
         return Rectangle()
             .foregroundColor(.clear)
             .aspectRatio(aspectRatio, contentMode: .fit)
             .background(
                 image
                     .resizable()
-                    .aspectRatio(aspectRatio, contentMode: .fill)
+                    .aspectRatio(contentMode: .fill)
                     .transition(.opacity)
             )
+    }
+
+    private func loadingView(aspectRatio: Double = 1.0) -> some View {
+        return Rectangle()
+            .foregroundColor(.secondary)
+            .aspectRatio(aspectRatio, contentMode: .fit)
+            .overlay(
+                ProgressView()
+            )
+            .progressViewStyle(CircularProgressViewStyle())
     }
 }
 
