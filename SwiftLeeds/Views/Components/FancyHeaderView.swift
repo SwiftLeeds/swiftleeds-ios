@@ -134,7 +134,7 @@ struct FancyHeaderView: View {
                 }
             }
         } else if let foregroundImageName = foregroundImageName {
-             createRectangleImage(for: Image(foregroundImageName))
+            createRectangleImage(for: Image(foregroundImageName))
         } else {
             createRectangleImage(for: Image(Assets.Image.swiftLeedsIcon))
         }
