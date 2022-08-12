@@ -10,6 +10,9 @@ import SwiftUI
 struct BottomSheetView: View {
     @GestureState private var translation: CGFloat = 0
     @Binding var isOpen: Bool
+
+    let categories: [Local.LocationCategory]
+    let error: Error?
     
     let maxHeight: CGFloat
     let minHeight: CGFloat
@@ -18,10 +21,16 @@ struct BottomSheetView: View {
         isOpen ? 0 : maxHeight - minHeight
     }
     
-    internal init (isOpen: Binding<Bool>,
-                   maxHeight: CGFloat){
+    internal init (
+        isOpen: Binding<Bool>,
+        categories: [Local.LocationCategory],
+        error: Error?,
+        maxHeight: CGFloat
+    ){
         self.minHeight = maxHeight * Constants.minHeightRatio
         self.maxHeight = maxHeight
+        self.categories = categories
+        self.error = error
         self._isOpen = isOpen
     }
     
@@ -34,19 +43,16 @@ struct BottomSheetView: View {
                                   fontStyle: .title2.weight(.semibold),
                                   foregroundColor: .primary)
                     ScrollView {
-                        LocalCell(label: "Food",
-                                  imageName: "takeoutbag.and.cup.and.straw.fill",
-                                  labelFontStyle: .body)
-                        LocalCell(label: "Coffee",
-                                  imageName: "cup.and.saucer.fill",
-                                  labelFontStyle: .body)
-                        LocalCell(label: "Drink",
-                                  imageName: "wineglass.fill" ,
-                                  labelFontStyle: .body)
-                        LocalCell(label: "Best of Leeds",
-                                  imageName: "mappin",
-                                  labelFontStyle: .body)
+                        ForEach(categories, id: \.self) { category in
+                            LocalCell(
+                                label: category.name,
+                                imageName: category.symbolName,
+                                labelFontStyle: .body
+                            )
+                        }
                     }
+                    .padding(.bottom, Constant.tabBarPadding) // Account for the tab bar
+                    .transition(.opacity)
                 }
                 .padding(Padding.screen)
             }
@@ -73,14 +79,26 @@ struct BottomSheetView: View {
     }
 }
 
+private extension BottomSheetView {
+    struct Constant {
+        static let tabBarPadding: CGFloat = UITabBar().frame.height
+    }
+}
 
 struct BottomSheet_Previews: PreviewProvider {
     
     static var previews: some View {
         GeometryReader{ proxy in
-            BottomSheetView(isOpen: .constant(true), maxHeight: proxy.size.height * Constants.maxHeightRatio)
-                .background(.blue)
-                .previewDevice(PreviewDevice(rawValue: "iPhone 13"))
+            BottomSheetView(
+                isOpen: .constant(true),
+                categories: [
+                    Local.LocationCategory(id: .init(), name: "Drinks", symbolName: "wineglass.fill", locations: [])
+                ],
+                error: nil,
+                maxHeight: proxy.size.height * Constants.maxHeightRatio
+            )
+            .background(.blue)
+            .previewDevice(PreviewDevice(rawValue: "iPhone 13"))
         }
         .edgesIgnoringSafeArea(.all)
     }
