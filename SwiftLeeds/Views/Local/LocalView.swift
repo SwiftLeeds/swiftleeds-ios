@@ -11,7 +11,6 @@ import MapKit
 struct LocalView: View {
     @StateObject private var model = LocalViewModel()
 
-    //-1.548567
     @State private var bottomSheetShown = true
     @State private var mapRegion: MKCoordinateRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 53.78613099154973, longitude: -1.5461652186147719), span: MKCoordinateSpan(latitudeDelta: 0.04, longitudeDelta: 0.04))
     @State private var selectedLocation: Local.Location?
@@ -20,7 +19,7 @@ struct LocalView: View {
         ZStack {
             GeometryReader{ geometry in
                 if let category = model.selectedCategory {
-                    Map(coordinateRegion: $mapRegion, showsUserLocation: true, annotationItems: category.locations) { location in
+                    Map(coordinateRegion: $mapRegion, showsUserLocation: true, annotationItems: model.selectedLocations) { location in
                         MapAnnotation(coordinate: location.location.coordinate) {
                             Image(uiImage: UIImage(systemName: category.symbolName) ?? UIImage(imageLiteralResourceName: category.symbolName))
                                 .frame(width: 44, height: 44)
@@ -30,14 +29,11 @@ struct LocalView: View {
                                 )
                                 .onTapGesture {
                                     selectedLocation = location
-                                    print(mapRegion)
+
                                 }
                         }
                     }
                     .ignoresSafeArea()
-                } else {
-                    Map(coordinateRegion: $mapRegion, showsUserLocation: true)
-                        .ignoresSafeArea()
                 }
 
                 if let location = selectedLocation {
@@ -66,9 +62,6 @@ struct LocalView: View {
                     errorView
                 }
             }
-        }
-        .task {
-            await model.loadData()
         }
     }
 
