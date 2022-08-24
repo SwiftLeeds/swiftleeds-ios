@@ -264,8 +264,8 @@
 			isa = PBXGroup;
 			children = (
 				39345FD9288F17EE0031BCFF /* BottomSheetView.swift */,
-				AED26F7928676AA300E06064 /* LocalView.swift */,
 				39ED0033288F113500AB337A /* LocalCell.swift */,
+				AED26F7928676AA300E06064 /* LocalView.swift */,
 				FA534D8728A1939500A3BFBB /* LocalViewModel.swift */,
 			);
 			path = Local;

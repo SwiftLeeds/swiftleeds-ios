@@ -13,6 +13,8 @@ struct SwiftLeedsApp: App {
     private let network = Network(environment: SwiftLeedsEnvironment())
 
     init() {
+        UITabBar.appearance().backgroundColor = UIColor(named: "TabBarBackground")
+
         URLCache.shared.diskCapacity = 100_000_000
     }
 

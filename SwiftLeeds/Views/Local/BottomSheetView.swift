@@ -8,14 +8,16 @@
 import SwiftUI
 
 struct BottomSheetView: View {
-    @GestureState private var translation: CGFloat = 0
     @Binding var isOpen: Bool
+    @Binding var selectedCategory: Local.LocationCategory?
 
-    let categories: [Local.LocationCategory]
-    let error: Error?
+    @GestureState private var translation: CGFloat = 0
+
+    private let categories: [Local.LocationCategory]
+    private let error: Error?
     
-    let maxHeight: CGFloat
-    let minHeight: CGFloat
+    private let maxHeight: CGFloat
+    private let minHeight: CGFloat
     
     private var offsetY: CGFloat {
         isOpen ? 0 : maxHeight - minHeight
@@ -23,15 +25,17 @@ struct BottomSheetView: View {
     
     internal init (
         isOpen: Binding<Bool>,
+        selectedCategory: Binding<Local.LocationCategory?>,
         categories: [Local.LocationCategory],
         error: Error?,
         maxHeight: CGFloat
     ){
         self.minHeight = maxHeight * Constants.minHeightRatio
         self.maxHeight = maxHeight
-        self.categories = categories
+        self.categories = categories.filter { $0.locations.isEmpty == false }
         self.error = error
         self._isOpen = isOpen
+        self._selectedCategory = selectedCategory
     }
     
     var body: some View {
@@ -43,15 +47,17 @@ struct BottomSheetView: View {
                                   fontStyle: .title2.weight(.semibold),
                                   foregroundColor: .primary)
                     ScrollView {
-                        ForEach(categories, id: \.self) { category in
+                        ForEach(categories) { category in
                             LocalCell(
                                 label: category.name,
                                 imageName: category.symbolName,
-                                labelFontStyle: .body
-                            )
+                                foregroundColor: (category == selectedCategory ? .accent : .cellForeground),
+                                labelFontStyle: .body) {
+                                    selectedCategory = category
+                                }
                         }
+                        .padding(.bottom, Padding.screen)
                     }
-                    .padding(.bottom, Constant.tabBarPadding) // Account for the tab bar
                     .transition(.opacity)
                 }
                 .padding(Padding.screen)
@@ -59,7 +65,7 @@ struct BottomSheetView: View {
             .frame(width: geometry.size.width, height: self.maxHeight, alignment: .top)
             .background(Color.background)
             .cornerRadius(Constants.bottomSheetRadius)
-            .frame(height: geometry.size.height, alignment: .bottom)
+            .frame(height: geometry.size.height + Padding.screen, alignment: .bottom)
             .offset(y: max(self.offsetY + self.translation, 0))
             .animation(.interactiveSpring(), value: isOpen)
             .animation(.interactiveSpring(), value: translation)
@@ -79,21 +85,18 @@ struct BottomSheetView: View {
     }
 }
 
-private extension BottomSheetView {
-    struct Constant {
-        static let tabBarPadding: CGFloat = UITabBar().frame.height
-    }
-}
-
 struct BottomSheet_Previews: PreviewProvider {
-    
+    static let items: [Local.LocationCategory] = [
+        Local.LocationCategory(id: UUID(), name: "Food", symbolName: "takeoutbag.and.cup.and.straw.fill", locations: [.init(id: UUID(), name: "Trinity Kitchen", url: URL(string: "https://trinityleeds.com/shops/trinity-kitchen")!, location: .init(latitude: 53.797378, longitude: -1.545209))]),
+        Local.LocationCategory(id: UUID(), name: "Drinks", symbolName: "wineglass.fill", locations: [.init(id: UUID(), name: "Brew Society", url: URL(string: "https://www.brewsociety.co.uk/")!, location: .init(latitude: 53.79584058588689, longitude: -1.550339186509128))])
+    ]
+
     static var previews: some View {
         GeometryReader{ proxy in
             BottomSheetView(
                 isOpen: .constant(true),
-                categories: [
-                    Local.LocationCategory(id: .init(), name: "Drinks", symbolName: "wineglass.fill", locations: [])
-                ],
+                selectedCategory: .constant(Self.items.first),
+                categories: Self.items,
                 error: nil,
                 maxHeight: proxy.size.height * Constants.maxHeightRatio
             )
