@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0B8D8CA628B788BE00983386 /* SwiftLeedsAppClipApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B8D8CA528B788BE00983386 /* SwiftLeedsAppClipApp.swift */; };
+		0B8D8CA828B788BE00983386 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B8D8CA728B788BE00983386 /* ContentView.swift */; };
+		0B8D8CAA28B788BF00983386 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B8D8CA928B788BF00983386 /* Assets.xcassets */; };
+		0B8D8CAD28B788BF00983386 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B8D8CAC28B788BF00983386 /* Preview Assets.xcassets */; };
+		0B8D8CB228B788BF00983386 /* SwiftLeedsAppClip.app in Embed App Clips */ = {isa = PBXBuildFile; fileRef = 0B8D8CA328B788BE00983386 /* SwiftLeedsAppClip.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		2A3831122884A96600030002 /* FancyHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3831112884A96600030002 /* FancyHeaderView.swift */; };
 		39029E0228883851006BC6EE /* ContributorsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39029E0128883851006BC6EE /* ContributorsView.swift */; };
 		39029E0428883DFE006BC6EE /* Contributor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39029E0328883DFE006BC6EE /* Contributor.swift */; };
@@ -56,6 +61,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		0B8D8CB028B788BF00983386 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AECB294B27417F9D00CDC983 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0B8D8CA228B788BE00983386;
+			remoteInfo = SwiftLeedsAppClip;
+		};
 		AECB296427417F9E00CDC983 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = AECB294B27417F9D00CDC983 /* Project object */;
@@ -72,7 +84,28 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		0B8D8CB628B788BF00983386 /* Embed App Clips */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/AppClips";
+			dstSubfolderSpec = 16;
+			files = (
+				0B8D8CB228B788BF00983386 /* SwiftLeedsAppClip.app in Embed App Clips */,
+			);
+			name = "Embed App Clips";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		0B8D8CA328B788BE00983386 /* SwiftLeedsAppClip.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftLeedsAppClip.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0B8D8CA528B788BE00983386 /* SwiftLeedsAppClipApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftLeedsAppClipApp.swift; sourceTree = "<group>"; };
+		0B8D8CA728B788BE00983386 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		0B8D8CA928B788BF00983386 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		0B8D8CAC28B788BF00983386 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		0B8D8CAE28B788BF00983386 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0B8D8CAF28B788BF00983386 /* SwiftLeedsAppClip.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SwiftLeedsAppClip.entitlements; sourceTree = "<group>"; };
 		2A3831112884A96600030002 /* FancyHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FancyHeaderView.swift; sourceTree = "<group>"; };
 		39029E0128883851006BC6EE /* ContributorsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContributorsView.swift; sourceTree = "<group>"; };
 		39029E0328883DFE006BC6EE /* Contributor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contributor.swift; sourceTree = "<group>"; };
@@ -125,6 +158,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		0B8D8CA028B788BE00983386 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AECB295027417F9D00CDC983 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -151,6 +191,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0B8D8CA428B788BE00983386 /* SwiftLeedsAppClip */ = {
+			isa = PBXGroup;
+			children = (
+				0B8D8CA528B788BE00983386 /* SwiftLeedsAppClipApp.swift */,
+				0B8D8CA728B788BE00983386 /* ContentView.swift */,
+				0B8D8CA928B788BF00983386 /* Assets.xcassets */,
+				0B8D8CAE28B788BF00983386 /* Info.plist */,
+				0B8D8CAF28B788BF00983386 /* SwiftLeedsAppClip.entitlements */,
+				0B8D8CAB28B788BF00983386 /* Preview Content */,
+			);
+			path = SwiftLeedsAppClip;
+			sourceTree = "<group>";
+		};
+		0B8D8CAB28B788BF00983386 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				0B8D8CAC28B788BF00983386 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
 		AECB294A27417F9D00CDC983 = {
 			isa = PBXGroup;
 			children = (
@@ -159,8 +220,8 @@
 				AE1C801328A7BCD000996659 /* Settings.bundle */,
 				AECB296627417F9E00CDC983 /* SwiftLeedsTests */,
 				AECB297027417F9E00CDC983 /* SwiftLeedsUITests */,
+				0B8D8CA428B788BE00983386 /* SwiftLeedsAppClip */,
 				AECB295427417F9D00CDC983 /* Products */,
-				FA57DE402875B01900911F03 /* Recovered References */,
 				FAF74EDA288B44BE00A0926C /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -171,6 +232,7 @@
 				AECB295327417F9D00CDC983 /* SwiftLeeds.app */,
 				AECB296327417F9E00CDC983 /* SwiftLeedsTests.xctest */,
 				AECB296D27417F9E00CDC983 /* SwiftLeedsUITests.xctest */,
+				0B8D8CA328B788BE00983386 /* SwiftLeedsAppClip.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -302,13 +364,6 @@
 			path = "My Conference";
 			sourceTree = "<group>";
 		};
-		FA57DE402875B01900911F03 /* Recovered References */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "Recovered References";
-			sourceTree = "<group>";
-		};
 		FA57DE412875B03800911F03 /* Common */ = {
 			isa = PBXGroup;
 			children = (
@@ -385,6 +440,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		0B8D8CA228B788BE00983386 /* SwiftLeedsAppClip */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0B8D8CB328B788BF00983386 /* Build configuration list for PBXNativeTarget "SwiftLeedsAppClip" */;
+			buildPhases = (
+				0B8D8C9F28B788BE00983386 /* Sources */,
+				0B8D8CA028B788BE00983386 /* Frameworks */,
+				0B8D8CA128B788BE00983386 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SwiftLeedsAppClip;
+			productName = SwiftLeedsAppClip;
+			productReference = 0B8D8CA328B788BE00983386 /* SwiftLeedsAppClip.app */;
+			productType = "com.apple.product-type.application.on-demand-install-capable";
+		};
 		AECB295227417F9D00CDC983 /* SwiftLeeds */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = AECB297727417F9E00CDC983 /* Build configuration list for PBXNativeTarget "SwiftLeeds" */;
@@ -392,10 +464,12 @@
 				AECB294F27417F9D00CDC983 /* Sources */,
 				AECB295027417F9D00CDC983 /* Frameworks */,
 				AECB295127417F9D00CDC983 /* Resources */,
+				0B8D8CB628B788BF00983386 /* Embed App Clips */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				0B8D8CB128B788BF00983386 /* PBXTargetDependency */,
 			);
 			name = SwiftLeeds;
 			packageProductDependencies = (
@@ -449,9 +523,12 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1310;
+				LastSwiftUpdateCheck = 1340;
 				LastUpgradeCheck = 1310;
 				TargetAttributes = {
+					0B8D8CA228B788BE00983386 = {
+						CreatedOnToolsVersion = 13.4.1;
+					};
 					AECB295227417F9D00CDC983 = {
 						CreatedOnToolsVersion = 13.1;
 					};
@@ -484,11 +561,21 @@
 				AECB295227417F9D00CDC983 /* SwiftLeeds */,
 				AECB296227417F9E00CDC983 /* SwiftLeedsTests */,
 				AECB296C27417F9E00CDC983 /* SwiftLeedsUITests */,
+				0B8D8CA228B788BE00983386 /* SwiftLeedsAppClip */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		0B8D8CA128B788BE00983386 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0B8D8CAD28B788BF00983386 /* Preview Assets.xcassets in Resources */,
+				0B8D8CAA28B788BF00983386 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AECB295127417F9D00CDC983 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -517,6 +604,15 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		0B8D8C9F28B788BE00983386 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0B8D8CA828B788BE00983386 /* ContentView.swift in Sources */,
+				0B8D8CA628B788BE00983386 /* SwiftLeedsAppClipApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AECB294F27417F9D00CDC983 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -581,6 +677,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		0B8D8CB128B788BF00983386 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0B8D8CA228B788BE00983386 /* SwiftLeedsAppClip */;
+			targetProxy = 0B8D8CB028B788BF00983386 /* PBXContainerItemProxy */;
+		};
 		AECB296527417F9E00CDC983 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = AECB295227417F9D00CDC983 /* SwiftLeeds */;
@@ -594,6 +695,74 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		0B8D8CB428B788BF00983386 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = SwiftLeedsAppClip/SwiftLeedsAppClip.entitlements;
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"SwiftLeedsAppClip/Preview Content\"";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SwiftLeedsAppClip/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = SwiftLeeds;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = uk.co.swiftleeds.SwiftLeeds.Clip;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		0B8D8CB528B788BF00983386 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = SwiftLeedsAppClip/SwiftLeedsAppClip.entitlements;
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"SwiftLeedsAppClip/Preview Content\"";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SwiftLeedsAppClip/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = SwiftLeeds;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = uk.co.swiftleeds.SwiftLeeds.Clip;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		AECB297527417F9E00CDC983 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -713,6 +882,7 @@
 		AECB297827417F9E00CDC983 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Manual;
@@ -743,6 +913,7 @@
 		AECB297927417F9E00CDC983 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Manual;
@@ -865,6 +1036,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		0B8D8CB328B788BF00983386 /* Build configuration list for PBXNativeTarget "SwiftLeedsAppClip" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0B8D8CB428B788BF00983386 /* Debug */,
+				0B8D8CB528B788BF00983386 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		AECB294E27417F9D00CDC983 /* Build configuration list for PBXProject "SwiftLeeds" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
