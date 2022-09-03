@@ -31,10 +31,11 @@ class MyConferenceViewModel: ObservableObject {
 
         let days = Calendar.current.numberOfDays(to: conferenceDate)
 
-        if days > 0 {
+        // Stop showing ticket sales a week before the event
+        if days > 7 {
             return days
         } else {
-            return days
+            return nil
         }
     }
 

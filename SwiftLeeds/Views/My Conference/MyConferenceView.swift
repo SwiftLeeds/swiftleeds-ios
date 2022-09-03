@@ -17,10 +17,6 @@ struct MyConferenceView: View {
 
                 ScrollView {
                     VStack(spacing: Padding.cellGap) {
-                        // TODO: Weather to come from Apple API
-                        AnnouncementCell(label: "Leeds", value: "26℃", valueIcon: "cloud.sun.fill", gradientColors: [.weatherGradientStart, .weatherGradientEnd])
-                            .previewDisplayName("Weather")
-
                         if let numberOfDaysToConference = viewModel.numberOfDaysToConference {
                             AnnouncementCell(label: "Get your ticket now!", value: "\(numberOfDaysToConference) days", valueIcon: "calendar.circle", gradientColors: [.buyTicketGradientStart, .buyTicketGradientEnd])
                                 .previewDisplayName("Buy Ticket")
@@ -36,11 +32,11 @@ struct MyConferenceView: View {
                                 }
                             }
 
-                            if let presentation = slot.presentation {
+                            if let presentation = slot.presentation, let speakers = presentation.speakers {
                                 NavigationLink {
                                     SpeakerView(presentation: presentation)
                                 } label: {
-                                    TalkCell(time: slot.startTime, details: presentation.title, speaker: presentation.speaker?.name, company: presentation.speaker?.organisation.description, imageURL: presentation.speaker?.profileImage)
+                                    TalkCell(time: slot.startTime, details: presentation.title, speakers: speakers)
                                         .transition(.opacity)
                                 }
                             }

@@ -6,29 +6,24 @@
 //
 
 import Foundation
-import UIKit
 
-//Static Filler Data
-
-struct SocialHandle: Hashable{
-    let socialType: String
-    let socialValue: String
-}
-
-struct Contributor : Hashable {
-    
+struct Contributor: Hashable {
     let name: String
     let oneLiner: String
     let imageURL: URL?
     let aboutDescription: String
     let socialList: [SocialHandle]
+
+    struct SocialHandle: Hashable {
+        let socialType: String
+        let socialValue: String
+    }
+
 }
 
-
-// MARK: - Static Data -
-
+// MARK: - Static Data
 extension Contributor {
-    static let contributors = [person1,person2,person3,person4,person5]
+    static let contributors = [person1, person2, person3, person4, person5]
     
     static let person1 = Contributor(
         name: "Naruto",
@@ -84,6 +79,4 @@ extension Contributor {
             SocialHandle(socialType: "Linkedin", socialValue: "@lightguyLinkedin"),
             SocialHandle(socialType: "Website", socialValue: "www.lightguy.in")
         ])
-    
 }
-
