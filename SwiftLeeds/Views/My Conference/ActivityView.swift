@@ -25,8 +25,7 @@ struct ActivityView: View {
         VStack(spacing: Padding.stackGap) {
             FancyHeaderView(
                 title: activity.title,
-                foregroundImageURL: URL(string: activity.image ?? ""),
-                backgroundImageName: Assets.Image.playhouseImage
+                foregroundImageURLs: foregroundImageURLs
             )
 
             StackedTileView(
@@ -36,6 +35,15 @@ struct ActivityView: View {
             )
             .padding(Padding.screen)
         }
+    }
+
+    private var foregroundImageURLs: [URL] {
+        if let image = activity.image?.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed), let url = URL(string: image) {
+            return [url]
+        } else {
+            return []
+        }
+
     }
 }
 

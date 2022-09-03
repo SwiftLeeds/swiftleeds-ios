@@ -72,36 +72,3 @@ extension Schedule.Slot: Equatable {
         lhs.id == rhs.id
     }
 }
-
-// MARK: - Activity
-struct Activity: Decodable, Identifiable {
-    let id: UUID
-    let title: String
-    let subtitle: String?
-    let description: String?
-    let image: String?
-    let metadataURL: String?
-
-    static let lunch = Activity(id: UUID(), title: "Lunch 🍕", subtitle: "It's time for some well deserved food", description: "We have partnered with the venue to provide us with handmade food. The venue has an incredible chef who will produce food to cater to everyone. They have access to a stone-baked pizza oven to provide fresh pizza slices and handmade buffet food with a vast selection. Don't forget your handmade brownie or Bakewell slice 😋", image: "IMG_6298.jpg-93D1F0E2-6F47-4149-944B-FB824EFB2549", metadataURL: "")
-}
-
-// MARK: - Presentation
-struct Presentation: Decodable, Identifiable {
-    let id: UUID
-    let title: String
-    let synopsis: String
-    let speaker: Speaker?
-    let image: String?
-
-    static let donnyWalls = Presentation(id: UUID(), title: "Building (and testing) custom property wrappers for SwiftUI", synopsis: "In this talk, you will learn everything you need to know about using DynamicProperty to build custom property wrappers that integrate with SwiftUI’s view lifecycle and environment beautifully. And more importantly, you will learn how you can write unit tests for your custom property wrappers as well.", speaker: .init(id: UUID(), name: "Donny Wals", biography: "I'm a curious, passionate iOS Developer from The Netherlands who loves learning and sharing knowledge.", profileImage: "jOaeQ1Og_400x400.jpeg-AEAB9C2A-9572-4E6A-A63E-C3534EE5C321", organisation: "DonnyWals.com", twitter: "donnywals"), image: nil)
-}
-
-// MARK: - Speaker
-struct Speaker: Decodable, Identifiable {
-    let id: UUID
-    let name: String
-    let biography: String
-    let profileImage: String
-    let organisation: String
-    let twitter: String?
-}
