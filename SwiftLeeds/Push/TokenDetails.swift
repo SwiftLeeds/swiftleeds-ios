@@ -18,6 +18,12 @@ struct TokenDetails: Encodable {
     }
 }
 
+struct TokenResponse: Decodable {
+    let id: String
+    let token: String
+    let debug: Bool
+}
+
 extension TokenDetails {
     init(token: Data) {
         self.token = token.reduce("") { $0 + String(format: "%02x", $1) }

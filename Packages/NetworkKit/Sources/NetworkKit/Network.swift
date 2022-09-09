@@ -27,6 +27,7 @@ final public class Network: Networking {
             do {
                 return try decoder.decode(E.DataType.self, from: data)
             } catch {
+                print("Unable to decode body from \(error.localizedDescription)")
                 throw NetworkError.failedToDecode
             }
         } catch {

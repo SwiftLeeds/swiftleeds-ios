@@ -12,7 +12,7 @@ import NetworkKit
 struct SwiftLeedsApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
 
-    private let network = Network(environment: SwiftLeedsEnvironment())
+    private let network = Network.shared
 
     var body: some Scene {
         WindowGroup {
@@ -24,6 +24,7 @@ struct SwiftLeedsApp: App {
 
 // MARK: - AppDelegate
 final class AppDelegate: NSObject, UIApplicationDelegate {
+    let network = Network.shared
     static let pushURL: String = "https://www.swiftleeds.co.uk/push"
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {

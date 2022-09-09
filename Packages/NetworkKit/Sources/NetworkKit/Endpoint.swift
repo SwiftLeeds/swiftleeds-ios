@@ -4,13 +4,17 @@
 
 import Foundation
 
-public enum HTTPMethod {
+public enum HTTPMethod: String {
     case GET, POST, PUT, PATCH, DELETE
 }
 
+public struct Empty: Codable { }
+
 public protocol Endpoint {
     associatedtype DataType: Decodable
+    associatedtype BodyType: Encodable
 
+    var body: BodyType { get }
     var path: String { get }
     var method: HTTPMethod { get }
     var queryParameters: [URLQueryItem] { get }
@@ -20,6 +24,10 @@ public protocol Endpoint {
 }
 
 public extension Endpoint {
+    var body: Empty? {
+        return nil
+    }
+    
     /// Default parameters so routes do not need to declare these
     var method: HTTPMethod {
         .GET
@@ -51,6 +59,17 @@ public extension Endpoint {
 
         var request = URLRequest(url: url)
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = method.rawValue
+        
+        if let body = body {
+            do {
+                let encoder = JSONEncoder()
+                request.httpBody = try encoder.encode(body)
+            } catch {
+                print("Unable to encode body to \(error.localizedDescription)")
+            }
+        }
+                
         return request
     }
 }

@@ -56,6 +56,7 @@
 		FA57DE552875B0C100911F03 /* SquishyButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE542875B0C100911F03 /* SquishyButtonStyle.swift */; };
 		FA57DE592875B0EF00911F03 /* Sponsor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE582875B0EF00911F03 /* Sponsor.swift */; };
 		FAAB819128844EBC001159BB /* View+MeasureSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAB819028844EBC001159BB /* View+MeasureSize.swift */; };
+		FAF1079428CB6C290025CEEF /* Network+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF1079328CB6C290025CEEF /* Network+Shared.swift */; };
 		FAF74EDC288B44BE00A0926C /* NetworkKit in Frameworks */ = {isa = PBXBuildFile; productRef = FAF74EDB288B44BE00A0926C /* NetworkKit */; };
 		FAFDC5E328A51CEB000B840C /* Endpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFDC5E228A51CEB000B840C /* Endpoints.swift */; };
 /* End PBXBuildFile section */
@@ -131,6 +132,7 @@
 		FA57DE542875B0C100911F03 /* SquishyButtonStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SquishyButtonStyle.swift; sourceTree = "<group>"; };
 		FA57DE582875B0EF00911F03 /* Sponsor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sponsor.swift; sourceTree = "<group>"; };
 		FAAB819028844EBC001159BB /* View+MeasureSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+MeasureSize.swift"; sourceTree = "<group>"; };
+		FAF1079328CB6C290025CEEF /* Network+Shared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Network+Shared.swift"; sourceTree = "<group>"; };
 		FAF74ED9288B415900A0926C /* NetworkKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = NetworkKit; sourceTree = "<group>"; };
 		FAFDC5E228A51CEB000B840C /* Endpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoints.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -246,6 +248,7 @@
 				AE1C800F289E9F3800996659 /* String.swift */,
 				FAAB819028844EBC001159BB /* View+MeasureSize.swift */,
 				FA534D8528A1917C00A3BFBB /* Environment+Network.swift */,
+				FAF1079328CB6C290025CEEF /* Network+Shared.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -561,6 +564,7 @@
 				FA1F7EF7287CB71600E12F8C /* HeaderView.swift in Sources */,
 				AE1C8010289E9F3800996659 /* String.swift in Sources */,
 				FA57DE512875B09900911F03 /* SponsorGridView.swift in Sources */,
+				FAF1079428CB6C290025CEEF /* Network+Shared.swift in Sources */,
 				AECB295927417F9D00CDC983 /* MyConferenceView.swift in Sources */,
 				AE8C1B2428BFCFC700AF7318 /* Presentation.swift in Sources */,
 				2A3831122884A96600030002 /* FancyHeaderView.swift in Sources */,

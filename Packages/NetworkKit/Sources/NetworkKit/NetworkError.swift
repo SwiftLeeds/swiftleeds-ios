@@ -9,6 +9,7 @@ public enum NetworkError: Int, Error {
     case badRequest = 400
     case notFound = 404
     case conflict = 409
+    case unprocessableEntity = 422
     case offline = -1009
     case other
     case failedToDecode = 4864
