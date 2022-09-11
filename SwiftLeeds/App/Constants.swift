@@ -41,5 +41,6 @@ enum Assets {
     enum Image {
         static let swiftLeedsIcon = "SwiftLeedsIcon"
         static let playhouseImage = "LeedsPlayhouse"
+        static let swiftLeedsIconNoShadow = "SwiftLeedsNoShadow"
     }
 }

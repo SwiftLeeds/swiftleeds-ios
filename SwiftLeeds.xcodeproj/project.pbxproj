@@ -14,6 +14,25 @@
 		394653A9288BB47A00212E1C /* SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394653A8288BB47A00212E1C /* SectionHeader.swift */; };
 		394653AB288BB7C800212E1C /* SpeakerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394653AA288BB7C800212E1C /* SpeakerView.swift */; };
 		39ED0034288F113500AB337A /* LocalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39ED0033288F113500AB337A /* LocalCell.swift */; };
+		74A09FDF28C6778C00E03F39 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74A09FDE28C6778C00E03F39 /* WidgetKit.framework */; };
+		74A09FE128C6778C00E03F39 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74A09FE028C6778C00E03F39 /* SwiftUI.framework */; };
+		74A09FE428C6778C00E03F39 /* SwiftLeedsWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A09FE328C6778C00E03F39 /* SwiftLeedsWidget.swift */; };
+		74A09FE628C6779300E03F39 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 74A09FE528C6779300E03F39 /* Assets.xcassets */; };
+		74A09FEA28C6779300E03F39 /* SwiftLeedsWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 74A09FDD28C6778C00E03F39 /* SwiftLeedsWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		74A09FEF28C6794900E03F39 /* Contributor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39029E0328883DFE006BC6EE /* Contributor.swift */; };
+		74A09FF028C688E700E03F39 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AECB295A27417F9E00CDC983 /* Assets.xcassets */; };
+		74A09FF128C688E700E03F39 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AECB29872741ACE000CDC983 /* Colors.xcassets */; };
+		74A09FF228C689AB00E03F39 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECB298127418DA200CDC983 /* Color.swift */; };
+		74B14FB028CE21D7004C0A40 /* TimeineProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B14FAF28CE21D7004C0A40 /* TimeineProvider.swift */; };
+		74B14FB228CE2221004C0A40 /* SwiftLeedsWidgetEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B14FB128CE2221004C0A40 /* SwiftLeedsWidgetEntry.swift */; };
+		74B14FB428CE2245004C0A40 /* SwiftLeedsWidgetEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B14FB328CE2245004C0A40 /* SwiftLeedsWidgetEntryView.swift */; };
+		74E62F7028CA68D2004422F9 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE32CDEF286CCF9D00DF0AFF /* Constants.swift */; };
+		74E62F7228CA98EA004422F9 /* SwiftLeedsSmallWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E62F7128CA98EA004422F9 /* SwiftLeedsSmallWidgetView.swift */; };
+		74E62F7428CAAB30004422F9 /* SwiftLeedsMediumWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E62F7328CAAB30004422F9 /* SwiftLeedsMediumWidgetView.swift */; };
+		74E62F7728CADBD8004422F9 /* Schedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEDC22542898288F00746247 /* Schedule.swift */; };
+		74E62F7828CADBE0004422F9 /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8C1B2128BFCF4700AF7318 /* Activity.swift */; };
+		74E62F7928CADBE6004422F9 /* Presentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8C1B2328BFCFC700AF7318 /* Presentation.swift */; };
+		74E62F7A28CAE4DF004422F9 /* Speaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8C1B2528BFCFE700AF7318 /* Speaker.swift */; };
 		AE1C8010289E9F3800996659 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1C800F289E9F3800996659 /* String.swift */; };
 		AE1C801428A7BCD000996659 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AE1C801328A7BCD000996659 /* Settings.bundle */; };
 		AE32CDF0286CCF9D00DF0AFF /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE32CDEF286CCF9D00DF0AFF /* Constants.swift */; };
@@ -62,6 +81,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		74A09FE828C6779300E03F39 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AECB294B27417F9D00CDC983 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 74A09FDC28C6778C00E03F39;
+			remoteInfo = SwiftLeedsWidgetExtension;
+		};
 		AECB296427417F9E00CDC983 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = AECB294B27417F9D00CDC983 /* Project object */;
@@ -78,6 +104,20 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		74A09FEB28C6779300E03F39 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				74A09FEA28C6779300E03F39 /* SwiftLeedsWidgetExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		2A3831112884A96600030002 /* FancyHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FancyHeaderView.swift; sourceTree = "<group>"; };
 		39029E0128883851006BC6EE /* ContributorsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContributorsView.swift; sourceTree = "<group>"; };
@@ -86,6 +126,19 @@
 		394653A8288BB47A00212E1C /* SectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeader.swift; sourceTree = "<group>"; };
 		394653AA288BB7C800212E1C /* SpeakerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakerView.swift; sourceTree = "<group>"; };
 		39ED0033288F113500AB337A /* LocalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalCell.swift; sourceTree = "<group>"; };
+		74A09FDD28C6778C00E03F39 /* SwiftLeedsWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SwiftLeedsWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		74A09FDE28C6778C00E03F39 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		74A09FE028C6778C00E03F39 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		74A09FE328C6778C00E03F39 /* SwiftLeedsWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftLeedsWidget.swift; sourceTree = "<group>"; };
+		74A09FE528C6779300E03F39 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		74A09FE728C6779300E03F39 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		74B14FAD28CB22B4004C0A40 /* SwiftLeedsWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SwiftLeedsWidgetExtension.entitlements; sourceTree = "<group>"; };
+		74B14FAF28CE21D7004C0A40 /* TimeineProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeineProvider.swift; sourceTree = "<group>"; };
+		74B14FB128CE2221004C0A40 /* SwiftLeedsWidgetEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftLeedsWidgetEntry.swift; sourceTree = "<group>"; };
+		74B14FB328CE2245004C0A40 /* SwiftLeedsWidgetEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftLeedsWidgetEntryView.swift; sourceTree = "<group>"; };
+		74E62F7128CA98EA004422F9 /* SwiftLeedsSmallWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftLeedsSmallWidgetView.swift; sourceTree = "<group>"; };
+		74E62F7328CAAB30004422F9 /* SwiftLeedsMediumWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftLeedsMediumWidgetView.swift; sourceTree = "<group>"; };
+		74E62F7D28CB18D4004422F9 /* SwiftLeeds.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SwiftLeeds.entitlements; sourceTree = "<group>"; };
 		AE1C800F289E9F3800996659 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		AE1C801328A7BCD000996659 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		AE32CDEF286CCF9D00DF0AFF /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -138,6 +191,15 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		74A09FDA28C6778C00E03F39 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				74A09FE128C6778C00E03F39 /* SwiftUI.framework in Frameworks */,
+				74A09FDF28C6778C00E03F39 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AECB295027417F9D00CDC983 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -164,6 +226,29 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		74A09FE228C6778C00E03F39 /* SwiftLeedsWidget */ = {
+			isa = PBXGroup;
+			children = (
+				74B14FAE28CE13E4004C0A40 /* WidgetSetup */,
+				74E62F7328CAAB30004422F9 /* SwiftLeedsMediumWidgetView.swift */,
+				74E62F7128CA98EA004422F9 /* SwiftLeedsSmallWidgetView.swift */,
+				74B14FB328CE2245004C0A40 /* SwiftLeedsWidgetEntryView.swift */,
+				74A09FE328C6778C00E03F39 /* SwiftLeedsWidget.swift */,
+				74A09FE528C6779300E03F39 /* Assets.xcassets */,
+				74A09FE728C6779300E03F39 /* Info.plist */,
+			);
+			path = SwiftLeedsWidget;
+			sourceTree = "<group>";
+		};
+		74B14FAE28CE13E4004C0A40 /* WidgetSetup */ = {
+			isa = PBXGroup;
+			children = (
+				74B14FAF28CE21D7004C0A40 /* TimeineProvider.swift */,
+				74B14FB128CE2221004C0A40 /* SwiftLeedsWidgetEntry.swift */,
+			);
+			path = WidgetSetup;
+			sourceTree = "<group>";
+		};
 		AE8C1B2928C4B38400AF7318 /* Push */ = {
 			isa = PBXGroup;
 			children = (
@@ -176,11 +261,13 @@
 		AECB294A27417F9D00CDC983 = {
 			isa = PBXGroup;
 			children = (
+				74B14FAD28CB22B4004C0A40 /* SwiftLeedsWidgetExtension.entitlements */,
 				FAF74ED8288B413100A0926C /* Packages */,
 				AECB295527417F9D00CDC983 /* SwiftLeeds */,
 				AE1C801328A7BCD000996659 /* Settings.bundle */,
 				AECB296627417F9E00CDC983 /* SwiftLeedsTests */,
 				AECB297027417F9E00CDC983 /* SwiftLeedsUITests */,
+				74A09FE228C6778C00E03F39 /* SwiftLeedsWidget */,
 				AECB295427417F9D00CDC983 /* Products */,
 				FA57DE402875B01900911F03 /* Recovered References */,
 				FAF74EDA288B44BE00A0926C /* Frameworks */,
@@ -193,6 +280,7 @@
 				AECB295327417F9D00CDC983 /* SwiftLeeds.app */,
 				AECB296327417F9E00CDC983 /* SwiftLeedsTests.xctest */,
 				AECB296D27417F9E00CDC983 /* SwiftLeedsUITests.xctest */,
+				74A09FDD28C6778C00E03F39 /* SwiftLeedsWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -397,6 +485,8 @@
 		FAF74EDA288B44BE00A0926C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				74A09FDE28C6778C00E03F39 /* WidgetKit.framework */,
+				74A09FE028C6778C00E03F39 /* SwiftUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -413,6 +503,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		74A09FDC28C6778C00E03F39 /* SwiftLeedsWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 74A09FEE28C6779300E03F39 /* Build configuration list for PBXNativeTarget "SwiftLeedsWidgetExtension" */;
+			buildPhases = (
+				74A09FD928C6778C00E03F39 /* Sources */,
+				74A09FDA28C6778C00E03F39 /* Frameworks */,
+				74A09FDB28C6778C00E03F39 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SwiftLeedsWidgetExtension;
+			productName = SwiftLeedsWidgetExtension;
+			productReference = 74A09FDD28C6778C00E03F39 /* SwiftLeedsWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		AECB295227417F9D00CDC983 /* SwiftLeeds */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = AECB297727417F9E00CDC983 /* Build configuration list for PBXNativeTarget "SwiftLeeds" */;
@@ -420,10 +527,12 @@
 				AECB294F27417F9D00CDC983 /* Sources */,
 				AECB295027417F9D00CDC983 /* Frameworks */,
 				AECB295127417F9D00CDC983 /* Resources */,
+				74A09FEB28C6779300E03F39 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				74A09FE928C6779300E03F39 /* PBXTargetDependency */,
 			);
 			name = SwiftLeeds;
 			packageProductDependencies = (
@@ -477,9 +586,12 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1310;
+				LastSwiftUpdateCheck = 1340;
 				LastUpgradeCheck = 1310;
 				TargetAttributes = {
+					74A09FDC28C6778C00E03F39 = {
+						CreatedOnToolsVersion = 13.4.1;
+					};
 					AECB295227417F9D00CDC983 = {
 						CreatedOnToolsVersion = 13.1;
 					};
@@ -512,11 +624,22 @@
 				AECB295227417F9D00CDC983 /* SwiftLeeds */,
 				AECB296227417F9E00CDC983 /* SwiftLeedsTests */,
 				AECB296C27417F9E00CDC983 /* SwiftLeedsUITests */,
+				74A09FDC28C6778C00E03F39 /* SwiftLeedsWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		74A09FDB28C6778C00E03F39 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				74A09FF128C688E700E03F39 /* Colors.xcassets in Resources */,
+				74A09FF028C688E700E03F39 /* Assets.xcassets in Resources */,
+				74A09FE628C6779300E03F39 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AECB295127417F9D00CDC983 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -545,6 +668,26 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		74A09FD928C6778C00E03F39 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				74A09FE428C6778C00E03F39 /* SwiftLeedsWidget.swift in Sources */,
+				74A09FEF28C6794900E03F39 /* Contributor.swift in Sources */,
+				74E62F7928CADBE6004422F9 /* Presentation.swift in Sources */,
+				74E62F7428CAAB30004422F9 /* SwiftLeedsMediumWidgetView.swift in Sources */,
+				74E62F7228CA98EA004422F9 /* SwiftLeedsSmallWidgetView.swift in Sources */,
+				74A09FF228C689AB00E03F39 /* Color.swift in Sources */,
+				74B14FB028CE21D7004C0A40 /* TimeineProvider.swift in Sources */,
+				74E62F7828CADBE0004422F9 /* Activity.swift in Sources */,
+				74E62F7A28CAE4DF004422F9 /* Speaker.swift in Sources */,
+				74E62F7728CADBD8004422F9 /* Schedule.swift in Sources */,
+				74B14FB228CE2221004C0A40 /* SwiftLeedsWidgetEntry.swift in Sources */,
+				74E62F7028CA68D2004422F9 /* Constants.swift in Sources */,
+				74B14FB428CE2245004C0A40 /* SwiftLeedsWidgetEntryView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AECB294F27417F9D00CDC983 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -615,6 +758,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		74A09FE928C6779300E03F39 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 74A09FDC28C6778C00E03F39 /* SwiftLeedsWidgetExtension */;
+			targetProxy = 74A09FE828C6779300E03F39 /* PBXContainerItemProxy */;
+		};
 		AECB296527417F9E00CDC983 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = AECB295227417F9D00CDC983 /* SwiftLeeds */;
@@ -628,6 +776,68 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		74A09FEC28C6779300E03F39 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = SwiftLeedsWidgetExtension.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6T2Y89G2CV;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SwiftLeedsWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = SwiftLeedsWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = uk.co.swiftleeds.SwiftLeeds.SwiftLeedsWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		74A09FED28C6779300E03F39 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = SwiftLeedsWidgetExtension.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6T2Y89G2CV;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SwiftLeedsWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = SwiftLeedsWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = uk.co.swiftleeds.SwiftLeeds.SwiftLeedsWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		AECB297527417F9E00CDC983 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -747,14 +957,15 @@
 		AECB297827417F9E00CDC983 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = SwiftLeeds/SwiftLeeds.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SwiftLeeds/Preview Content\"";
-				DEVELOPMENT_TEAM = K33K6V7FBA;
+				DEVELOPMENT_TEAM = 6T2Y89G2CV;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SwiftLeeds/App/Info.plist;
@@ -779,14 +990,15 @@
 		AECB297927417F9E00CDC983 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = SwiftLeeds/SwiftLeeds.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SwiftLeeds/Preview Content\"";
-				DEVELOPMENT_TEAM = K33K6V7FBA;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SwiftLeeds/App/Info.plist;
@@ -907,6 +1119,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		74A09FEE28C6779300E03F39 /* Build configuration list for PBXNativeTarget "SwiftLeedsWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				74A09FEC28C6779300E03F39 /* Debug */,
+				74A09FED28C6779300E03F39 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		AECB294E27417F9D00CDC983 /* Build configuration list for PBXProject "SwiftLeeds" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - Presentation
-struct Presentation: Decodable, Identifiable {
+struct Presentation: Codable, Identifiable {
     let id: UUID
     let title: String
     let synopsis: String
