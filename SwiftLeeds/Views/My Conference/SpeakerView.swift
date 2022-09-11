@@ -23,11 +23,10 @@ struct SpeakerView: View {
 
     private var content: some View {
         VStack(spacing: Padding.stackGap) {
-            if let speaker = presentation.speaker {
+            if presentation.speakers.isEmpty == false {
                 FancyHeaderView(
-                    title: speaker.name,
-                    foregroundImageURL: URL(string: speaker.profileImage),
-                    backgroundImageName: Assets.Image.playhouseImage
+                    title: presentation.speakers.joinedNames,
+                    foregroundImageURLs: presentation.speakers.map { URL(string: $0.profileImage)! }
                 )
             }
 
@@ -49,9 +48,9 @@ struct SpeakerView: View {
                 )
                 .accessibilityHint("Double tap to ask a question")
 
-                if let speaker = presentation.speaker {
+                ForEach(presentation.speakers) { speaker in
                     StackedTileView(
-                        primaryText: "About",
+                        primaryText: "About\(presentation.speakers.count == 1 ? "" : ": \(speaker.name)")",
                         secondaryText: speaker.biography,
                         secondaryColor: Color.primary
                     )
@@ -78,5 +77,9 @@ struct SpeakerView: View {
 struct SpeakerView_Previews: PreviewProvider {
     static var previews: some View {
         SpeakerView(presentation: .donnyWalls)
+            .previewDisplayName("Donny Wals")
+
+        SpeakerView(presentation: .skyBet)
+            .previewDisplayName("Sky Bet")
     }
 }

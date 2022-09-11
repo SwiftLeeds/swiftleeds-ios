@@ -69,7 +69,9 @@ struct StackedTileView<BackgroundType: ShapeStyle>: View {
     }
 
     private var accessibilityLabel: String {
-        [primaryText?.noEmojis, secondaryText?.noEmojis].compactMap { $0 }.joined(separator: ", ")
+        [primaryText?.noEmojis, secondaryText?.noEmojis]
+            .compactMap { $0 }
+            .joined(separator: ", ")
     }
 }
 

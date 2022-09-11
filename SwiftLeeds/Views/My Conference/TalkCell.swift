@@ -12,20 +12,16 @@ struct TalkCell: View {
     private let time: String
     private let details: String
     private let isNext: Bool
-    private let speaker: String?
-    private let company: String?
-    private let imageURL: String?
+    private let speakers: [Speaker]
     private let gradientColors: [Color]?
 
     @Environment(\.colorScheme) var colorScheme
 
-    init(time: String, details: String, isNext: Bool = false, speaker: String? = nil, company: String? = nil, imageURL: String? = nil, gradientColors: [Color]? = nil) {
+    init(time: String, details: String, isNext: Bool = false, speakers: [Speaker] = [], gradientColors: [Color]? = nil) {
         self.time = time
         self.details = details
         self.isNext = isNext
-        self.speaker = speaker
-        self.company = company
-        self.imageURL = imageURL
+        self.speakers = speakers
         self.gradientColors = gradientColors
     }
 
@@ -35,39 +31,40 @@ struct TalkCell: View {
 
             HStack {
                 VStack(alignment: .leading, spacing: 8) {
-                    if let speaker = speaker {
+                    if speakers.isEmpty == false {
                         HStack {
                             VStack(alignment: .leading, spacing: 4) {
-                                Text(speaker)
+                                Text(speakers.joinedNames)
                                     .font(.headline.weight(.medium))
+                                    .multilineTextAlignment(.leading)
 
-                                if let company = company {
-                                    Text(company)
-                                        .font(.subheadline.weight(.medium))
-                                        .opacity(0.6)
-                                }
+                                Text(speakers.joinedOrganisations)
+                                    .font(.subheadline.weight(.medium))
+                                    .opacity(0.6)
                             }
 
                             Spacer()
 
-                            if let imageURL = imageURL {
-                                CachedAsyncImage(
-                                    url: URL(string: imageURL),
-                                    content: { image in
-                                        image
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fill)
-                                            .frame(maxWidth: 40, maxHeight: 40)
-                                            .clipShape(Circle())
-                                    },
-                                    placeholder: {
-                                        Circle()
-                                            .fill(.white)
-                                            .opacity(0.3)
-                                            .frame(maxWidth: 40, maxHeight: 40)
-                                            .clipShape(Circle())
-                                    }
-                                )
+                            HStack(spacing: -5) {
+                                ForEach(speakers) { speaker in
+                                    CachedAsyncImage(
+                                        url: URL(string: speaker.profileImage),
+                                        content: { image in
+                                            image
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fill)
+                                                .frame(maxWidth: 40, maxHeight: 40)
+                                                .clipShape(Circle())
+                                        },
+                                        placeholder: {
+                                            Circle()
+                                                .fill(.white)
+                                                .opacity(0.3)
+                                                .frame(maxWidth: 40, maxHeight: 40)
+                                                .clipShape(Circle())
+                                        }
+                                    )
+                                }
                             }
                         }
                     }
@@ -110,16 +107,20 @@ struct TalkCell: View {
     }
 
     private var accessibilityLabel: String {
-        return [time, speaker, company, details.noEmojis].compactMap { $0 }.joined(separator: ", ")
+        [time, speakers.joinedNames, speakers.joinedOrganisations, details.noEmojis]
+            .filter { $0.isEmpty == false }
+            .joined(separator: ", ")
     }
 }
 
 struct TalkCell_Previews: PreviewProvider {
     static var previews: some View {
         VStack(spacing: Padding.cellGap) {
-            TalkCell(time: "11:00", details: "Something about chats", speaker: "Adam Rush", company: "Stream", imageURL: "https://swiftleeds-speakers.s3.eu-west-2.amazonaws.com/adam.jpg-A5B77EEF-07F8-4EB9-A160-795CB42D814E")
+            TalkCell(time: "11:00", details: Presentation.donnyWalls.title, speakers: Presentation.donnyWalls.speakers)
 
             TalkCell(time: "12:00", details: "Lunch")
+
+            TalkCell(time: "1:00", details: Presentation.skyBet.title, speakers: Presentation.skyBet.speakers)
         }
         .padding(Padding.screen)
         .background(Color.gray)

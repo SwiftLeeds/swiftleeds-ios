@@ -26,6 +26,9 @@
 		AE32CDF0286CCF9D00DF0AFF /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE32CDEF286CCF9D00DF0AFF /* Constants.swift */; };
 		AE5EFD73289DC1D000464FE1 /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = AE5EFD72289DC1D000464FE1 /* CachedAsyncImage */; };
 		AE5EFD75289E7CBF00464FE1 /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5EFD74289E7CBF00464FE1 /* ActivityView.swift */; };
+		AE8C1B2228BFCF4700AF7318 /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8C1B2128BFCF4700AF7318 /* Activity.swift */; };
+		AE8C1B2428BFCFC700AF7318 /* Presentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8C1B2328BFCFC700AF7318 /* Presentation.swift */; };
+		AE8C1B2628BFCFE700AF7318 /* Speaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8C1B2528BFCFE700AF7318 /* Speaker.swift */; };
 		AECB295727417F9D00CDC983 /* SwiftLeedsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECB295627417F9D00CDC983 /* SwiftLeedsApp.swift */; };
 		AECB295927417F9D00CDC983 /* MyConferenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECB295827417F9D00CDC983 /* MyConferenceView.swift */; };
 		AECB295B27417F9E00CDC983 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AECB295A27417F9E00CDC983 /* Assets.xcassets */; };
@@ -119,6 +122,9 @@
 		AE1C801328A7BCD000996659 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		AE32CDEF286CCF9D00DF0AFF /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		AE5EFD74289E7CBF00464FE1 /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
+		AE8C1B2128BFCF4700AF7318 /* Activity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Activity.swift; sourceTree = "<group>"; };
+		AE8C1B2328BFCFC700AF7318 /* Presentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Presentation.swift; sourceTree = "<group>"; };
+		AE8C1B2528BFCFE700AF7318 /* Speaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Speaker.swift; sourceTree = "<group>"; };
 		AECB295327417F9D00CDC983 /* SwiftLeeds.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftLeeds.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AECB295627417F9D00CDC983 /* SwiftLeedsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftLeedsApp.swift; sourceTree = "<group>"; };
 		AECB295827417F9D00CDC983 /* MyConferenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyConferenceView.swift; sourceTree = "<group>"; };
@@ -409,10 +415,13 @@
 		FA57DE572875B0E300911F03 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				AE8C1B2128BFCF4700AF7318 /* Activity.swift */,
 				39029E0328883DFE006BC6EE /* Contributor.swift */,
-				AEDC22542898288F00746247 /* Schedule.swift */,
-				FA57DE582875B0EF00911F03 /* Sponsor.swift */,
 				FA534D8128A1909300A3BFBB /* Local.swift */,
+				AE8C1B2328BFCFC700AF7318 /* Presentation.swift */,
+				AEDC22542898288F00746247 /* Schedule.swift */,
+				AE8C1B2528BFCFE700AF7318 /* Speaker.swift */,
+				FA57DE582875B0EF00911F03 /* Sponsor.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -641,6 +650,7 @@
 				AE1C8010289E9F3800996659 /* String.swift in Sources */,
 				FA57DE512875B09900911F03 /* SponsorGridView.swift in Sources */,
 				AECB295927417F9D00CDC983 /* MyConferenceView.swift in Sources */,
+				AE8C1B2428BFCFC700AF7318 /* Presentation.swift in Sources */,
 				2A3831122884A96600030002 /* FancyHeaderView.swift in Sources */,
 				FA57DE4B2875B06B00911F03 /* SwiftLeedsContainer.swift in Sources */,
 				FAAB819128844EBC001159BB /* View+MeasureSize.swift in Sources */,
@@ -651,8 +661,10 @@
 				AECB295727417F9D00CDC983 /* SwiftLeedsApp.swift in Sources */,
 				FA57DE592875B0EF00911F03 /* Sponsor.swift in Sources */,
 				AEDC0DAE286759630078A153 /* Tabs.swift in Sources */,
+				AE8C1B2628BFCFE700AF7318 /* Speaker.swift in Sources */,
 				39029E0228883851006BC6EE /* ContributorsView.swift in Sources */,
 				FAFDC5E328A51CEB000B840C /* Endpoints.swift in Sources */,
+				AE8C1B2228BFCF4700AF7318 /* Activity.swift in Sources */,
 				FA57DE482875B06500911F03 /* StackedTileView.swift in Sources */,
 				FA534D8228A1909300A3BFBB /* Local.swift in Sources */,
 				AE32CDF0286CCF9D00DF0AFF /* Constants.swift in Sources */,
@@ -893,10 +905,11 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SwiftLeeds/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = K33K6V7FBA;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SwiftLeeds/App/Info.plist;
@@ -924,10 +937,11 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SwiftLeeds/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = K33K6V7FBA;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SwiftLeeds/App/Info.plist;
@@ -956,6 +970,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = K33K6V7FBA;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -980,6 +995,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = K33K6V7FBA;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1003,6 +1019,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = K33K6V7FBA;
 				GENERATE_INFOPLIST_FILE = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1025,6 +1042,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = K33K6V7FBA;
 				GENERATE_INFOPLIST_FILE = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

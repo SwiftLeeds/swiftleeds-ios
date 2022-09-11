@@ -21,8 +21,7 @@ struct ContributorsView: View {
         VStack(spacing: Padding.stackGap) {
             FancyHeaderView(
                 title: "Our Team",
-                foregroundImageName: Assets.Image.swiftLeedsIcon,
-                backgroundImageName: Assets.Image.playhouseImage
+                foregroundImageName: Assets.Image.swiftLeedsIcon
             )
             Group {
                 StackedTileView(primaryText: "About", secondaryText: Strings.aboutContributor)
