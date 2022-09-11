@@ -12,6 +12,8 @@
 		0B8D8CAA28B788BF00983386 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B8D8CA928B788BF00983386 /* Assets.xcassets */; };
 		0B8D8CAD28B788BF00983386 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B8D8CAC28B788BF00983386 /* Preview Assets.xcassets */; };
 		0B8D8CB228B788BF00983386 /* SwiftLeedsAppClip.app in Embed App Clips */ = {isa = PBXBuildFile; fileRef = 0B8D8CA328B788BE00983386 /* SwiftLeedsAppClip.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		0B8D8CBE28BC209500983386 /* NetworkKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0B8D8CBD28BC209500983386 /* NetworkKit */; };
+		0B8D8CC028BC209500983386 /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = 0B8D8CBF28BC209500983386 /* CachedAsyncImage */; };
 		2A3831122884A96600030002 /* FancyHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3831112884A96600030002 /* FancyHeaderView.swift */; };
 		39029E0228883851006BC6EE /* ContributorsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39029E0128883851006BC6EE /* ContributorsView.swift */; };
 		39029E0428883DFE006BC6EE /* Contributor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39029E0328883DFE006BC6EE /* Contributor.swift */; };
@@ -162,6 +164,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0B8D8CBE28BC209500983386 /* NetworkKit in Frameworks */,
+				0B8D8CC028BC209500983386 /* CachedAsyncImage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -453,6 +457,10 @@
 			dependencies = (
 			);
 			name = SwiftLeedsAppClip;
+			packageProductDependencies = (
+				0B8D8CBD28BC209500983386 /* NetworkKit */,
+				0B8D8CBF28BC209500983386 /* CachedAsyncImage */,
+			);
 			productName = SwiftLeedsAppClip;
 			productReference = 0B8D8CA328B788BE00983386 /* SwiftLeedsAppClip.app */;
 			productType = "com.apple.product-type.application.on-demand-install-capable";
@@ -1095,6 +1103,15 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		0B8D8CBD28BC209500983386 /* NetworkKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = NetworkKit;
+		};
+		0B8D8CBF28BC209500983386 /* CachedAsyncImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AE5EFD71289DC1D000464FE1 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */;
+			productName = CachedAsyncImage;
+		};
 		AE5EFD72289DC1D000464FE1 /* CachedAsyncImage */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = AE5EFD71289DC1D000464FE1 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */;
