@@ -14,7 +14,6 @@ struct SwiftLeedsApp: App {
 
     init() {
         UITabBar.appearance().backgroundColor = UIColor(named: "TabBarBackground")
-
         URLCache.shared.diskCapacity = 100_000_000
     }
 
@@ -22,6 +21,18 @@ struct SwiftLeedsApp: App {
         WindowGroup {
             Tabs()
                 .environment(\.network, network)
+                .onContinueUserActivity(NSUserActivityTypeBrowsingWeb, perform: handleUserActivity)
         }
+    }
+}
+
+private extension SwiftLeedsApp {
+    func handleUserActivity(_ userActivity: NSUserActivity) {
+        guard let incomingURL = userActivity.webpageURL, let components = URLComponents(
+              url: incomingURL, resolvingAgainstBaseURL: true), let queryItems = components.queryItems
+          else {
+            return
+        }
+        print(queryItems)
     }
 }
