@@ -20,6 +20,10 @@ struct Schedule: Decodable {
         let name: String
         let location: String
         let date: Date
+
+        var daysUntil: Int {
+            Calendar.current.numberOfDays(to: date)
+        }
     }
 
     struct Slot: Identifiable {

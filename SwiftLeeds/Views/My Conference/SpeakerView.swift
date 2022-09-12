@@ -9,6 +9,9 @@ import SwiftUI
 
 struct SpeakerView: View {
     let presentation: Presentation
+    let showSlido: Bool
+
+    @State private var showWebSheet = false
 
     @Environment(\.openURL) var openURL
 
@@ -37,16 +40,19 @@ struct SpeakerView: View {
                     secondaryColor: Color.primary
                 )
 
-                // TODO: Show slido link here
-                CommonTileButton(
-                    primaryText: "Ask Questions Now",
-                    secondaryText: nil,
-                    primaryColor: .white,
-                    secondaryColor: .white.opacity(0.8),
-                    backgroundStyle: LinearGradient(gradient: Gradient(colors:[.buyTicketGradientStart, .buyTicketGradientEnd]) ,startPoint: .leading, endPoint: .trailing),
-                    onTap: {}
-                )
-                .accessibilityHint("Double tap to ask a question")
+                if showSlido, presentation.slidoURL != nil {
+                    CommonTileButton(
+                        primaryText: "Ask Questions Now",
+                        secondaryText: nil,
+                        primaryColor: .white,
+                        secondaryColor: .white.opacity(0.8),
+                        backgroundStyle: LinearGradient(gradient: Gradient(colors:[.buyTicketGradientStart, .buyTicketGradientEnd]) ,startPoint: .leading, endPoint: .trailing),
+                        onTap: {
+                            showWebSheet.toggle()
+                        }
+                    )
+                    .accessibilityHint("Double tap to ask a question")
+                }
 
                 ForEach(presentation.speakers) { speaker in
                     StackedTileView(
@@ -71,15 +77,18 @@ struct SpeakerView: View {
             }
             .padding(Padding.screen)
         }
+        .sheet(isPresented: $showWebSheet) {
+            WebView(url: presentation.slidoURL ?? "")
+        }
     }
 }
 
 struct SpeakerView_Previews: PreviewProvider {
     static var previews: some View {
-        SpeakerView(presentation: .donnyWalls)
+        SpeakerView(presentation: .donnyWalls, showSlido: true)
             .previewDisplayName("Donny Wals")
 
-        SpeakerView(presentation: .skyBet)
+        SpeakerView(presentation: .skyBet, showSlido: true)
             .previewDisplayName("Sky Bet")
     }
 }
