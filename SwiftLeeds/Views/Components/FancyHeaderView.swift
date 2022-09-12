@@ -125,21 +125,21 @@ struct FancyHeaderView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             VStack {
-                Text("Local Asset")
+                Text(verbatim: "Local Asset")
                 FancyHeaderView(title: "Some Long Text here",
                                 foregroundImageName: Assets.Image.swiftLeedsIcon)
-                Text("Remote Data")
+                Text(verbatim: "Remote Data")
                 FancyHeaderView(title: "Swift Taylor",
                                 foregroundImageURLs: [URL(string: "https://cdn-az.allevents.in/events5/banners/458482c4fc7489448aa3d77f6e2cd5d0553fa5edd7178dbf18cf986d2172eaf2-rimg-w1200-h675-gmir.jpg?v=1655230338")!])
 
             }
             ScrollView {
-                Text("Local Asset")
+                Text(verbatim: "Local Asset")
                 VStack {
                     FancyHeaderView(title: "Kannan Prasad",
                                     foregroundImageName: Assets.Image.swiftLeedsIcon)
                 }
-                Text("Remote Data")
+                Text(verbatim: "Remote Data")
                 FancyHeaderView(title: "Swift Taylor",
                                 foregroundImageURLs: [URL(string: "https://cdn-az.allevents.in/events5/banners/458482c4fc7489448aa3d77f6e2cd5d0553fa5edd7178dbf18cf986d2172eaf2-rimg-w1200-h675-gmir.jpg?v=1655230338")!])
             }
