@@ -36,11 +36,22 @@ extension AppDelegate {
         request.httpMethod = "POST"
         request.httpBody = try? TokenDetails.encoder.encode(details)
 
-        URLSession.shared.dataTask(with: request).resume()
+        Task {
+            do {
+                let (_, response) = try await URLSession.shared.data(for: request)
+
+                guard let statusCode = (response as? HTTPURLResponse)?.statusCode, 200..<399 ~= statusCode else {
+                    print("⛔️ Push registration failed, invalid response")
+                    return
+                }
+            } catch {
+                print("⛔️ Push registration failed due to unexpected network issue:", error)
+            }
+        }
     }
 
     func handleFailedRegistration(application: UIApplication, error: Error) {
-        print("⛔️", error)
+        print("⛔️ Push registration failed:", error)
     }
 }
 

@@ -25,7 +25,7 @@ struct SwiftLeedsContainer<Content: View>: View {
 struct SwiftLeedsContainer_Previews: PreviewProvider {
     static var previews: some View {
         SwiftLeedsContainer {
-            Text("SwiftLeeds 22")
+            Text(verbatim: "SwiftLeeds 22")
         }
     }
 }
