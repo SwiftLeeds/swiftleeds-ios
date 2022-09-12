@@ -27,9 +27,7 @@ class MyConferenceViewModel: ObservableObject {
     }
 
     var numberOfDaysToConference: Int? {
-        guard let conferenceDate = event?.date else { return nil }
-
-        let days = Calendar.current.numberOfDays(to: conferenceDate)
+        guard let days = event?.daysUntil else { return nil }
 
         // Stop showing ticket sales a week before the event
         if days > 7 {
@@ -37,6 +35,12 @@ class MyConferenceViewModel: ObservableObject {
         } else {
             return nil
         }
+    }
+
+    // Only show slido links on the day of the event
+    var showSlido: Bool {
+        guard let days = event?.daysUntil else { return false }
+        return days == 0
     }
 
     static let stringDateFormatter: DateFormatter = {
