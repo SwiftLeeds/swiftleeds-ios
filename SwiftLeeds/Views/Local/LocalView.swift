@@ -71,11 +71,11 @@ struct LocalView: View {
             .edgesIgnoringSafeArea(.all)
             .overlay(
                 VStack(alignment: .center, spacing: Padding.stackGap) {
-                    Text("Something has gone wrong. Please try again later.")
+                    Text(verbatim: "Something has gone wrong. Please try again later.")
                         .font(.subheadline.weight(.medium))
                         .multilineTextAlignment(.center)
                     Button(action: { reload() }) {
-                        Text("Reload")
+                        Text(verbatim: "Reload")
                     }
                 }
                 .padding()
@@ -99,7 +99,7 @@ struct LocalView: View {
             Button {
                 UIApplication.shared.open(location.url)
             } label: {
-                Text("View More")
+                Text(verbatim: "View More")
                     .bold()
                     .padding(12)
                     .frame(maxWidth: .infinity)
