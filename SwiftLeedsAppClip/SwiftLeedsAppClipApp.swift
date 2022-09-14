@@ -6,12 +6,16 @@
 //
 
 import SwiftUI
+import NetworkKit
 
 @main
 struct SwiftLeedsAppClipApp: App {
+    private let network = Network(environment: SwiftLeedsEnvironment())
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MyConferenceView()
+                .environment(\.network, network)
         }
     }
 }

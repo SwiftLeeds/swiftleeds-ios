@@ -14,6 +14,32 @@
 		0B8D8CB228B788BF00983386 /* SwiftLeedsAppClip.app in Embed App Clips */ = {isa = PBXBuildFile; fileRef = 0B8D8CA328B788BE00983386 /* SwiftLeedsAppClip.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		0B8D8CBE28BC209500983386 /* NetworkKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0B8D8CBD28BC209500983386 /* NetworkKit */; };
 		0B8D8CC028BC209500983386 /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = 0B8D8CBF28BC209500983386 /* CachedAsyncImage */; };
+		0BB9C6E828D2667E00C12E75 /* MyConferenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECB295827417F9D00CDC983 /* MyConferenceView.swift */; };
+		0BB9C6E928D2668900C12E75 /* MyConferenceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEDC22522898281300746247 /* MyConferenceViewModel.swift */; };
+		0BB9C6EA28D2669300C12E75 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE32CDEF286CCF9D00DF0AFF /* Constants.swift */; };
+		0BB9C6EB28D267F500C12E75 /* Schedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEDC22542898288F00746247 /* Schedule.swift */; };
+		0BB9C6EC28D2680700C12E75 /* Environment+Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA534D8528A1917C00A3BFBB /* Environment+Network.swift */; };
+		0BB9C6ED28D2681C00C12E75 /* Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEDC2256289C65D500746247 /* Calendar.swift */; };
+		0BB9C6EE28D2682200C12E75 /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8C1B2128BFCF4700AF7318 /* Activity.swift */; };
+		0BB9C6EF28D2682600C12E75 /* Presentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8C1B2328BFCFC700AF7318 /* Presentation.swift */; };
+		0BB9C6F028D2683400C12E75 /* Speaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8C1B2528BFCFE700AF7318 /* Speaker.swift */; };
+		0BB9C6F128D2683C00C12E75 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA534D7E28A1905000A3BFBB /* Environment.swift */; };
+		0BB9C6F228D2684900C12E75 /* Endpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFDC5E228A51CEB000B840C /* Endpoints.swift */; };
+		0BB9C6F328D2685A00C12E75 /* AnnouncementCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AED26F6F28675DA000E06064 /* AnnouncementCell.swift */; };
+		0BB9C6F428D2686300C12E75 /* Local.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA534D8128A1909300A3BFBB /* Local.swift */; };
+		0BB9C6F528D2687800C12E75 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECB298127418DA200CDC983 /* Color.swift */; };
+		0BB9C6F628D2688500C12E75 /* TalkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AED26F73286764F000E06064 /* TalkCell.swift */; };
+		0BB9C6F728D2689400C12E75 /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5EFD74289E7CBF00464FE1 /* ActivityView.swift */; };
+		0BB9C6F828D2689D00C12E75 /* SwiftLeedsContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE4A2875B06B00911F03 /* SwiftLeedsContainer.swift */; };
+		0BB9C6F928D268A600C12E75 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1C800F289E9F3800996659 /* String.swift */; };
+		0BB9C6FA28D268B000C12E75 /* FancyHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3831112884A96600030002 /* FancyHeaderView.swift */; };
+		0BB9C6FB28D268BC00C12E75 /* SpeakerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394653AA288BB7C800212E1C /* SpeakerView.swift */; };
+		0BB9C6FC28D268C900C12E75 /* StackedTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE452875B06500911F03 /* StackedTileView.swift */; };
+		0BB9C6FD28D268D800C12E75 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB06BD028CF8D2100E51967 /* WebView.swift */; };
+		0BB9C6FE28D268EC00C12E75 /* CommonTileButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE432875B06500911F03 /* CommonTileButton.swift */; };
+		0BB9C6FF28D268F600C12E75 /* CommonTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE442875B06500911F03 /* CommonTileView.swift */; };
+		0BB9C70028D2690000C12E75 /* SquishyButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE542875B0C100911F03 /* SquishyButtonStyle.swift */; };
+		0BB9C70128D2690800C12E75 /* LinearGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE4C2875B08600911F03 /* LinearGradient.swift */; };
 		2A3831122884A96600030002 /* FancyHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3831112884A96600030002 /* FancyHeaderView.swift */; };
 		39029E0228883851006BC6EE /* ContributorsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39029E0128883851006BC6EE /* ContributorsView.swift */; };
 		39029E0428883DFE006BC6EE /* Contributor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39029E0328883DFE006BC6EE /* Contributor.swift */; };
@@ -644,8 +670,34 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0BB9C6EB28D267F500C12E75 /* Schedule.swift in Sources */,
+				0BB9C6F128D2683C00C12E75 /* Environment.swift in Sources */,
+				0BB9C6F928D268A600C12E75 /* String.swift in Sources */,
+				0BB9C6F228D2684900C12E75 /* Endpoints.swift in Sources */,
+				0BB9C6EA28D2669300C12E75 /* Constants.swift in Sources */,
+				0BB9C6FC28D268C900C12E75 /* StackedTileView.swift in Sources */,
+				0BB9C6E928D2668900C12E75 /* MyConferenceViewModel.swift in Sources */,
+				0BB9C6F828D2689D00C12E75 /* SwiftLeedsContainer.swift in Sources */,
+				0BB9C6F728D2689400C12E75 /* ActivityView.swift in Sources */,
+				0BB9C6FD28D268D800C12E75 /* WebView.swift in Sources */,
+				0BB9C6F528D2687800C12E75 /* Color.swift in Sources */,
+				0BB9C6FA28D268B000C12E75 /* FancyHeaderView.swift in Sources */,
+				0BB9C70128D2690800C12E75 /* LinearGradient.swift in Sources */,
+				0BB9C6FB28D268BC00C12E75 /* SpeakerView.swift in Sources */,
+				0BB9C6EF28D2682600C12E75 /* Presentation.swift in Sources */,
+				0BB9C70028D2690000C12E75 /* SquishyButtonStyle.swift in Sources */,
+				0BB9C6F428D2686300C12E75 /* Local.swift in Sources */,
+				0BB9C6ED28D2681C00C12E75 /* Calendar.swift in Sources */,
+				0BB9C6F028D2683400C12E75 /* Speaker.swift in Sources */,
+				0BB9C6F328D2685A00C12E75 /* AnnouncementCell.swift in Sources */,
+				0BB9C6E828D2667E00C12E75 /* MyConferenceView.swift in Sources */,
 				0B8D8CA828B788BE00983386 /* ContentView.swift in Sources */,
+				0BB9C6EE28D2682200C12E75 /* Activity.swift in Sources */,
+				0BB9C6F628D2688500C12E75 /* TalkCell.swift in Sources */,
+				0BB9C6EC28D2680700C12E75 /* Environment+Network.swift in Sources */,
+				0BB9C6FF28D268F600C12E75 /* CommonTileView.swift in Sources */,
 				0B8D8CA628B788BE00983386 /* SwiftLeedsAppClipApp.swift in Sources */,
+				0BB9C6FE28D268EC00C12E75 /* CommonTileButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
