@@ -18,13 +18,13 @@ struct AnnouncementCell: View {
     var body: some View {
         HStack {
             Text(label)
-                .font(.headline.weight(.medium))
+                .font(.headline.weight(.bold))
 
             Spacer()
 
             sizeAwareStack {
                 Image(systemName: valueIcon)
-                    .font(.subheadline.weight(.semibold))
+                    .font(.title.weight(.semibold))
                 Text(value)
                     .font(.subheadline.weight(.semibold))
             }
