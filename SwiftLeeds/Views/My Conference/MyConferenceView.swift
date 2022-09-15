@@ -18,7 +18,7 @@ struct MyConferenceView: View {
                 ScrollView {
                     VStack(spacing: Padding.cellGap) {
                         if let numberOfDaysToConference = viewModel.numberOfDaysToConference {
-                            AnnouncementCell(label: "Get your ticket now!", value: "\(numberOfDaysToConference) days", valueIcon: "calendar.circle", gradientColors: [.buyTicketGradientStart, .buyTicketGradientEnd])
+                            AnnouncementCell(label: "Get your ticket now!", value: "\(numberOfDaysToConference) days", valueIcon: "calendar.circle.fill", gradientColors: [.accent, .accent])
                                 .previewDisplayName("Buy Ticket")
                         }
 
@@ -48,12 +48,13 @@ struct MyConferenceView: View {
 
                 Divider()
             }
-            .background(Color.background)
+            .background(Color.listBackground)
             .navigationTitle("SwiftLeeds")
             .task {
                 try? await viewModel.loadSchedule()
             }
         }
+        .navigationViewStyle(StackNavigationViewStyle())
         .accentColor(.white)
     }
 }

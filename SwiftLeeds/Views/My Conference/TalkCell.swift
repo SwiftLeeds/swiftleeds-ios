@@ -89,7 +89,7 @@ struct TalkCell: View {
                         .fill(LinearGradient(colors: gradientColors, startPoint: .topLeading, endPoint: .topTrailing))
                 } else {
                     RoundedRectangle(cornerRadius: Constants.cellRadius)
-                        .fill(Color.cellBackground)
+                        .strokeBorder(Color.cellBorder)
                 }
             }
         }
@@ -98,12 +98,15 @@ struct TalkCell: View {
     }
 
     private func timeLabel(_ value: String) -> some View {
-        HStack {
+        HStack(spacing: 7) {
+            Image("Clock")
+
             Text(value)
                 .foregroundColor(.cellForeground)
 
             Spacer()
         }
+        .padding(.leading, 4)
     }
 
     private var accessibilityLabel: String {
@@ -123,6 +126,6 @@ struct TalkCell_Previews: PreviewProvider {
             TalkCell(time: "1:00", details: Presentation.skyBet.title, speakers: Presentation.skyBet.speakers)
         }
         .padding(Padding.screen)
-        .background(Color.gray)
+        .background(Color.listBackground)
     }
 }

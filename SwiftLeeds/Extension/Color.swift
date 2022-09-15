@@ -12,7 +12,10 @@ extension Color {
 
     static let tabBarBackground = Color("TabBarBackground")
     static let background = Color("Background")
+    static let listBackground = Color("ListBackground")
+
     static let cellBackground = Color("CellBackground")
+    static let cellBorder = Color("CellBorder")
     static let cellForeground = Color("CellForeground")
 
     static let buyTicketGradientStart = Color("BuyTicketGradientStart")
