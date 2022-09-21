@@ -20,8 +20,8 @@ struct MyConferenceView: View {
                         if let numberOfDaysToConference = viewModel.numberOfDaysToConference {
                             AnnouncementCell(label: "Get your ticket now!",
                                              value: "\(numberOfDaysToConference) days",
-                                             valueIcon: "calendar.circle",
-                                             gradientColors: [.buyTicketGradientStart, .buyTicketGradientEnd])
+                                             valueIcon: "calendar.circle.fill",
+                                             gradientColors: [.accent, .accent])
                                 .previewDisplayName("Buy Ticket")
                         }
 
@@ -54,12 +54,13 @@ struct MyConferenceView: View {
 
                 Divider()
             }
-            .background(Color.background)
+            .background(Color.listBackground)
             .navigationTitle("SwiftLeeds")
             .task {
                 try? await viewModel.loadSchedule()
             }
         }
+        .navigationViewStyle(StackNavigationViewStyle())
         .accentColor(.white)
     }
 }
