@@ -29,12 +29,13 @@ struct SponsorGridView: View {
             .accessibilityAddTraits(.isHeader)
     }
 
-    private func contentTile(for sponsor: Sponsor, oneLinerEnabled: Bool = true) -> some View {
+    private func contentTile(for sponsor: Sponsor, oneLinerEnabled: Bool = true, isImagePadded: Bool = false) -> some View {
         ContentTileView(
             accessibilityLabel: "Sponsor",
             title: sponsor.name,
             subTitle: oneLinerEnabled ? sponsor.oneLiner : nil,
             imageURL: sponsor.imageURL,
+            isImagePadded: isImagePadded,
             imageBackgroundColor: .white,
             imageContentMode: .fit,
             onTap: { openSponsor(sponsor: sponsor) }
@@ -47,7 +48,7 @@ struct SponsorGridView: View {
             columns: Array(repeating: GridItem(.flexible(), spacing: Padding.cellGap), count: 2),
             alignment: .center, spacing: Padding.cellGap, pinnedViews: []) {
                 ForEach(sponsors, id: \.self) { sponsor in
-                    contentTile(for: sponsor, oneLinerEnabled: false)
+                    contentTile(for: sponsor, oneLinerEnabled: false, isImagePadded: true)
                 }
         }
     }
@@ -63,6 +64,7 @@ struct SponsorGridView_Previews: PreviewProvider {
         SwiftLeedsContainer {
             ScrollView {
                 SponsorGridView()
+                    .padding()
             }
         }
     }

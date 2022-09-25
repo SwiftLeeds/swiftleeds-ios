@@ -18,7 +18,7 @@ struct Sponsor: Hashable {
 // MARK: - Static data
 extension Sponsor {
     static let platinum = [codemagic, stream]
-    static let gold = [mkodo, and, xdesign, bitrise]
+    static let gold = [mkodo, and, xdesign, bitrise, revenueCat]
 
     // All of these images are temporary until this is API based
 
@@ -64,5 +64,12 @@ extension Sponsor {
         oneLiner: "Build better mobile applications, faster",
         imageURL: URL(string: "https://assets-global.website-files.com/5db35de024bb983af1b4e151/5e6f9ccda4e7ff12841abe18_Bitrise%20Logo%20-%20White%20Bg.png"),
         link: URL(string: "https://www.bitrise.io/")
+    )
+
+    static let revenueCat = Sponsor(
+        name: "RevenueCat",
+        oneLiner: "In-App Subscriptions Made Easy",
+        imageURL: URL(string: "https://swiftleeds-speakers.s3.eu-west-2.amazonaws.com/1B6DDD64-3DCE-46BD-9EFB-75444654ADBE-revenuecat-logo-red.png"),
+        link: URL(string: "https://www.revenuecat.com")
     )
 }

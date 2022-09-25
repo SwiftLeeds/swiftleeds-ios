@@ -14,6 +14,7 @@ struct ContentTileView: View {
     let title: String
     let subTitle: String?
     let imageURL: URL?
+    let isImagePadded: Bool
 
     var placeholderColor: Color = .accentColor
     var imageBackgroundColor: Color = .accentColor
@@ -25,6 +26,8 @@ struct ContentTileView: View {
         Button(action: onTap) {
             VStack(alignment: .leading, spacing: 0) {
                 image
+                    .padding(isImagePadded ? 8 : 0)
+
                 text
             }
         }
@@ -103,6 +106,7 @@ struct ContentTileView_Previews: PreviewProvider {
                     title: "Alex Logan",
                     subTitle: "subtitle",
                     imageURL: URL(string: "https://pbs.twimg.com/profile_images/1475087054652559361/lgTnY96Q_400x400.jpg"),
+                    isImagePadded: false,
                     onTap: {}
                 )
                 ContentTileView(
@@ -110,6 +114,7 @@ struct ContentTileView_Previews: PreviewProvider {
                     title: "Alex Logan",
                     subTitle: nil,
                     imageURL: nil,
+                    isImagePadded: false,
                     onTap: {}
                 )
             }
