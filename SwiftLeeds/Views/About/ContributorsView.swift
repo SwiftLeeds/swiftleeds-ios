@@ -38,6 +38,7 @@ struct ContributorsView: View {
             title: contributer.name,
             subTitle: oneLinerEnabled ? contributer.oneLiner : nil,
             imageURL: contributer.imageURL,
+            isImagePadded: false,
             imageBackgroundColor: .white,
             imageContentMode: .fill,
             onTap: { }
