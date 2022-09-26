@@ -22,28 +22,34 @@ struct Provider: TimelineProvider {
         var entries: [SwiftLeedsWidgetEntry] = []
         var slots: [Schedule.Slot] = []
         
-        if let data = UserDefaults(suiteName: "group.uk.co.swiftleeds")?.data(forKey: "Slots") {
-            slots = try! PropertyListDecoder().decode([Schedule.Slot].self, from: data)
-        }
-        
-        for slot in slots {
-            let date = buildDate(for: slot)
-            if date > Date() {
-                let entry = SwiftLeedsWidgetEntry(date: date, slot: slot)
-                entries.append(entry)
+        do {
+            if let data = UserDefaults(suiteName: "group.uk.co.swiftleeds")?.data(forKey: "Slots") {
+                slots = try PropertyListDecoder().decode([Schedule.Slot].self, from: data)
             }
-        }
+            
+            for slot in slots {
+                let date = buildDate(for: slot)
+                if date > Date() {
+                    let entry = SwiftLeedsWidgetEntry(date: date, slot: slot)
+                    entries.append(entry)
+                }
+            }
 
-        let nextUpdateTime = Calendar.autoupdatingCurrent.date(byAdding: .hour, value: 1, to: Calendar.autoupdatingCurrent.startOfDay(for: Date()))!
-        let timeline = Timeline(entries: entries, policy: .after(nextUpdateTime))
-        completion(timeline)
+            let nextUpdateTime = Calendar.autoupdatingCurrent.date(byAdding: .hour, value: 1, to: Calendar.autoupdatingCurrent.startOfDay(for: Date()))!
+            let timeline = Timeline(entries: entries, policy: .after(nextUpdateTime))
+            completion(timeline)
+        } catch {
+            let nextUpdateTime = Calendar.autoupdatingCurrent.date(byAdding: .minute, value: 5, to: Calendar.autoupdatingCurrent.startOfDay(for: Date()))!
+            let timeline = Timeline(entries: entries, policy: .after(nextUpdateTime))
+            completion(timeline)
+        }
     }
     
     private func buildDate(for slot: Schedule.Slot) -> Date {
         let slotTime = slot.startTime
         let slotTimeComponents = slotTime.components(separatedBy: ":")
-        let slotHour = Int(slotTimeComponents.first!)
-        let slotMinute = Int(slotTimeComponents.last!)
+        let slotHour = Int(slotTimeComponents.first ?? "0")
+        let slotMinute = Int(slotTimeComponents.last ?? "0")
         
         var dateComponents = DateComponents()
         dateComponents.year = 2022
@@ -53,7 +59,7 @@ struct Provider: TimelineProvider {
         dateComponents.hour = slotHour
         dateComponents.minute = slotMinute
         let userCalendar = Calendar(identifier: .gregorian)
-        let dateTime = userCalendar.date(from: dateComponents)!
+        let dateTime = userCalendar.date(from: dateComponents) ?? Date()
         
         return dateTime
     }

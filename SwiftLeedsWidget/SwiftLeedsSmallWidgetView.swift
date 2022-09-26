@@ -13,11 +13,6 @@ struct SwiftLeedsSmallWidgetView: View {
     // MARK: - Pivate Properties
     
     private let slot: Schedule.Slot
-    private let timeFontSize: CGFloat = 10
-    private let titleFontSize: CGFloat = 14
-    private let detailsFontSize: CGFloat = 14
-    private let logoImageWidth: CGFloat = 45
-    private let logoImageHeight: CGFloat = 45
     
     // MARK: - Init
     
@@ -42,52 +37,46 @@ extension SwiftLeedsSmallWidgetView {
         }
 
         if let presentation = slot.presentation {
-            let speakers = presentation.speakers
-            let firstSpeakerName = speakers.first?.name  ?? ""
-            slotView(time: slot.startTime, speaker: firstSpeakerName, details: presentation.title)
+            let speakers = presentation.speakers.joinedNames
+            slotView(time: slot.startTime, speaker: speakers, details: presentation.title)
         }
     }
     
-    @ViewBuilder
     private func slotView(time: String, speaker: String = "", details: String) -> some View {
         ZStack {
             Color.background
-            HStack {
-                contentView(time: time, speaker: speaker, details: details)
-            }
+            contentView(time: time, speaker: speaker, details: details)
         }
     }
     
-    @ViewBuilder
     private func contentView(time: String, speaker: String = "", details: String) -> some View {
         VStack(alignment: .leading) {
             logoView
             Spacer()
             VStack(alignment: .leading, spacing: 4) {
                 Text(time)
-                    .font(.system(size: timeFontSize, weight: .medium))
+                    .font(.system(size: WidgetConstants.timeFontSize, weight: .medium))
                 VStack(alignment: .leading) {
                     Text(speaker)
-                        .font(.system(size: titleFontSize, weight: .bold, design: .default))
+                        .font(.system(size: WidgetConstants.titleFontSize, weight: .bold, design: .default))
                         .foregroundColor(Color.accent)
                         .lineLimit(2)
                     Text(details)
-                        .font(.system(size: detailsFontSize, weight: .regular, design: .default))
+                        .font(.system(size: WidgetConstants.detailsFontSize, weight: .regular, design: .default))
                         .lineLimit(2)
                 }
             }
         }
-        .padding([.leading, .trailing, .bottom, .top], 16)
+        .padding(16)
         .frame(maxWidth: .infinity, alignment: .leading)
     }
     
-    @ViewBuilder
     private var logoView: some View {
         Image(Assets.Image.swiftLeedsIconWithNoBackground)
             .resizable()
             .aspectRatio(contentMode: .fill)
             .transition(.opacity)
-            .frame(width: logoImageWidth, height: logoImageHeight, alignment: .center)
+            .frame(width: WidgetConstants.logoImageWidth, height: WidgetConstants.logoImageHeight, alignment: .center)
     }
 }
 

@@ -26,7 +26,7 @@ struct Schedule: Decodable {
         }
     }
 
-    struct Slot: Codable, Identifiable {
+    struct Slot: Identifiable {
         let id: UUID
         let startTime: String
         let duration: Int
@@ -46,7 +46,7 @@ struct Schedule: Decodable {
 }
 
 // MARK: - Slot Decodable
-extension Schedule.Slot {
+extension Schedule.Slot: Codable {
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
 

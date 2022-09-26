@@ -15,6 +15,7 @@
 		394653AB288BB7C800212E1C /* SpeakerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394653AA288BB7C800212E1C /* SpeakerView.swift */; };
 		39ED0034288F113500AB337A /* LocalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39ED0033288F113500AB337A /* LocalCell.swift */; };
 		7406572728E2304E0087F44F /* Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEDC2256289C65D500746247 /* Calendar.swift */; };
+		7406572928E240720087F44F /* WidgetConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7406572828E240720087F44F /* WidgetConstants.swift */; };
 		74A09FDF28C6778C00E03F39 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74A09FDE28C6778C00E03F39 /* WidgetKit.framework */; };
 		74A09FE128C6778C00E03F39 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74A09FE028C6778C00E03F39 /* SwiftUI.framework */; };
 		74A09FE428C6778C00E03F39 /* SwiftLeedsWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A09FE328C6778C00E03F39 /* SwiftLeedsWidget.swift */; };
@@ -127,6 +128,7 @@
 		394653A8288BB47A00212E1C /* SectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeader.swift; sourceTree = "<group>"; };
 		394653AA288BB7C800212E1C /* SpeakerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakerView.swift; sourceTree = "<group>"; };
 		39ED0033288F113500AB337A /* LocalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalCell.swift; sourceTree = "<group>"; };
+		7406572828E240720087F44F /* WidgetConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetConstants.swift; sourceTree = "<group>"; };
 		74A09FDD28C6778C00E03F39 /* SwiftLeedsWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SwiftLeedsWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		74A09FDE28C6778C00E03F39 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		74A09FE028C6778C00E03F39 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -245,6 +247,7 @@
 			children = (
 				74B14FAF28CE21D7004C0A40 /* TimeineProvider.swift */,
 				74B14FB128CE2221004C0A40 /* SwiftLeedsWidgetEntry.swift */,
+				7406572828E240720087F44F /* WidgetConstants.swift */,
 			);
 			path = WidgetSetup;
 			sourceTree = "<group>";
@@ -677,6 +680,7 @@
 				74E62F7928CADBE6004422F9 /* Presentation.swift in Sources */,
 				74E62F7428CAAB30004422F9 /* SwiftLeedsMediumWidgetView.swift in Sources */,
 				74E62F7228CA98EA004422F9 /* SwiftLeedsSmallWidgetView.swift in Sources */,
+				7406572928E240720087F44F /* WidgetConstants.swift in Sources */,
 				74A09FF228C689AB00E03F39 /* Color.swift in Sources */,
 				74B14FB028CE21D7004C0A40 /* TimeineProvider.swift in Sources */,
 				74E62F7828CADBE0004422F9 /* Activity.swift in Sources */,
