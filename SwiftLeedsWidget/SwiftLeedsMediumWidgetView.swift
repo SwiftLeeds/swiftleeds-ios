@@ -94,7 +94,7 @@ extension SwiftLeedsMediumWidgetView {
     
     @ViewBuilder
     private var logoView: some View {
-        Image(Assets.Image.swiftLeedsIconNoShadow)
+        Image(Assets.Image.swiftLeedsIconWithNoBackground)
             .resizable()
             .aspectRatio(contentMode: .fill)
             .transition(.opacity)

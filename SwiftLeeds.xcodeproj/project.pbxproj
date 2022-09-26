@@ -14,6 +14,7 @@
 		394653A9288BB47A00212E1C /* SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394653A8288BB47A00212E1C /* SectionHeader.swift */; };
 		394653AB288BB7C800212E1C /* SpeakerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394653AA288BB7C800212E1C /* SpeakerView.swift */; };
 		39ED0034288F113500AB337A /* LocalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39ED0033288F113500AB337A /* LocalCell.swift */; };
+		7406572728E2304E0087F44F /* Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEDC2256289C65D500746247 /* Calendar.swift */; };
 		74A09FDF28C6778C00E03F39 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74A09FDE28C6778C00E03F39 /* WidgetKit.framework */; };
 		74A09FE128C6778C00E03F39 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74A09FE028C6778C00E03F39 /* SwiftUI.framework */; };
 		74A09FE428C6778C00E03F39 /* SwiftLeedsWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A09FE328C6778C00E03F39 /* SwiftLeedsWidget.swift */; };
@@ -138,7 +139,6 @@
 		74B14FB328CE2245004C0A40 /* SwiftLeedsWidgetEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftLeedsWidgetEntryView.swift; sourceTree = "<group>"; };
 		74E62F7128CA98EA004422F9 /* SwiftLeedsSmallWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftLeedsSmallWidgetView.swift; sourceTree = "<group>"; };
 		74E62F7328CAAB30004422F9 /* SwiftLeedsMediumWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftLeedsMediumWidgetView.swift; sourceTree = "<group>"; };
-		74E62F7D28CB18D4004422F9 /* SwiftLeeds.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SwiftLeeds.entitlements; sourceTree = "<group>"; };
 		AE1C800F289E9F3800996659 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		AE1C801328A7BCD000996659 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		AE32CDEF286CCF9D00DF0AFF /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -685,6 +685,7 @@
 				74B14FB228CE2221004C0A40 /* SwiftLeedsWidgetEntry.swift in Sources */,
 				74E62F7028CA68D2004422F9 /* Constants.swift in Sources */,
 				74B14FB428CE2245004C0A40 /* SwiftLeedsWidgetEntryView.swift in Sources */,
+				7406572728E2304E0087F44F /* Calendar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
