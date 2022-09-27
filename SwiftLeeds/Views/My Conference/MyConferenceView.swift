@@ -49,7 +49,7 @@ struct MyConferenceView: View {
                 Divider()
             }
             .background(Color.listBackground)
-            .navigationTitle("SwiftLeeds")
+            .navigationTitle("Schedule")
             .task {
                 try? await viewModel.loadSchedule()
             }

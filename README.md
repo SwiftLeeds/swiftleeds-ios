@@ -1,7 +1,7 @@
 <p align="center"><img width=70% src="https://github.com/SwiftLeeds/swiftleeds-ios/blob/main/media/swift-leeds-logo.png"></p>
 
 ![Platforms](https://img.shields.io/badge/Platforms-iOS-lightgrey.svg)
-![Swift](https://img.shields.io/badge/Swift-5.6.1-F16D39.svg)
+![Swift](https://img.shields.io/badge/Swift-5.7-F16D39.svg)
 ![Contributions welcome](https://img.shields.io/badge/contributions-welcome-orange.svg)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
@@ -19,12 +19,12 @@ Follow these steps to get your development environment setup to run SwiftLeeds i
 You'll need the following installed to get started:
 
 ```
-Xcode 13.4.1
+Xcode 14.0
 ```
 
 #### Xcode
 
-Xcode 13.4.1 can be downloaded directly from the [Apple Developer Downloads Page](https://download.developer.apple.com/Developer_Tools/Xcode_13.4.1/Xcode_13.4.1.xip).
+Xcode 14.0 can be downloaded directly from the [Apple Developer Downloads Page](https://download.developer.apple.com/Developer_Tools/Xcode_14.0/Xcode_14.0.xip).
 
 _You will need to have access to your developer account in order to download this._
 
@@ -38,3 +38,15 @@ We welcome all contributions to this repository. Please raise a PR so our Lead M
 ### Branch Stratergy
 
 We branch off the *main* branch into a *Feature branch* and then generate a PR to merge the changes back into *main*.  We do not merge from any branch other than *main*.   
+
+
+## Contributors
+
+Thanks to all the effors from our App Contributors:
+- [Matthew Gallagher](https://github.com/pdamonkey)
+- [Adam Rush](https://github.com/adamrushy)
+- [Karim Ebrahem](https://github.com/KarimEbrahemAbdelaziz)
+- [Alex Logan](https://github.com/SwiftyAlex)
+- [Lucky Agarwal](https://github.com/luckyagarwal)
+- [Kannan Prasad](https://github.com/kannanprasad87)
+- [Muralidharan Kathiresan](https://github.com/kmuralidharan91)
