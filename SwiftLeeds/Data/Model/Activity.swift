@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - Activity
-struct Activity: Decodable, Identifiable {
+struct Activity: Codable, Identifiable {
     let id: UUID
     let title: String
     let subtitle: String?

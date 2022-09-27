@@ -46,7 +46,7 @@ struct Schedule: Decodable {
 }
 
 // MARK: - Slot Decodable
-extension Schedule.Slot: Decodable {
+extension Schedule.Slot: Codable {
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
 

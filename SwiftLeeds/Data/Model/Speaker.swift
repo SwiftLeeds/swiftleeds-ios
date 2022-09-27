@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Speaker: Decodable, Identifiable {
+struct Speaker: Codable, Identifiable {
     let id: UUID
     let name: String
     let biography: String
