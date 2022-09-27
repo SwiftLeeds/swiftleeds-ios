@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "Icon.png",
+      "filename" : "LaunchScreen.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
@@ -12,12 +12,12 @@
           "value" : "dark"
         }
       ],
-      "filename" : "IconDark.png",
+      "filename" : "LaunchScreen-Dark.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Icon@2x.png",
+      "filename" : "LaunchScreen@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
@@ -28,12 +28,12 @@
           "value" : "dark"
         }
       ],
-      "filename" : "IconDark@2x.png",
+      "filename" : "LaunchScreen-Dark@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Icon@3x.png",
+      "filename" : "LaunchScreen@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     },
@@ -44,7 +44,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "IconDark@3x.png",
+      "filename" : "LaunchScreen-Dark@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
