@@ -18,7 +18,10 @@ struct MyConferenceView: View {
                 ScrollView {
                     VStack(spacing: Padding.cellGap) {
                         if let numberOfDaysToConference = viewModel.numberOfDaysToConference {
-                            AnnouncementCell(label: "Get your ticket now!", value: "\(numberOfDaysToConference) days", valueIcon: "calendar.circle.fill", gradientColors: [.accent, .accent])
+                            AnnouncementCell(label: "Get your ticket now!",
+                                             value: "\(numberOfDaysToConference) days",
+                                             valueIcon: "calendar.circle.fill",
+                                             gradientColors: [.accent, .accent])
                                 .previewDisplayName("Buy Ticket")
                         }
 
@@ -34,9 +37,12 @@ struct MyConferenceView: View {
 
                             if let presentation = slot.presentation, let speakers = presentation.speakers {
                                 NavigationLink {
-                                    SpeakerView(presentation: presentation, showSlido: viewModel.showSlido)
+                                    SpeakerView(presentation: presentation,
+                                                showSlido: viewModel.showSlido)
                                 } label: {
-                                    TalkCell(time: slot.startTime, details: presentation.title, speakers: speakers)
+                                    TalkCell(time: slot.startTime,
+                                             details: presentation.title,
+                                             speakers: speakers)
                                         .transition(.opacity)
                                 }
                             }

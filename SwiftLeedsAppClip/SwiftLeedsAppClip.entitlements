@@ -2,16 +2,13 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>aps-environment</key>
-	<string>development</string>
 	<key>com.apple.developer.associated-domains</key>
 	<array>
 		<string>appclips:swiftleeds.co.uk</string>
-		<string>applinks:swiftleeds.co.uk</string>
 	</array>
-	<key>com.apple.security.application-groups</key>
+	<key>com.apple.developer.parent-application-identifiers</key>
 	<array>
-		<string>group.uk.co.swiftleeds</string>
+		<string>$(AppIdentifierPrefix)uk.co.swiftleeds.SwiftLeeds</string>
 	</array>
 </dict>
 </plist>
