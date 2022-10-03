@@ -40,6 +40,8 @@
 		0B4CB3F628EAF63100246E62 /* LinearGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE4C2875B08600911F03 /* LinearGradient.swift */; };
 		0B4CB3FA28EAF7C500246E62 /* NetworkKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0B4CB3F928EAF7C500246E62 /* NetworkKit */; };
 		0B4CB3FC28EAF7C500246E62 /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = 0B4CB3FB28EAF7C500246E62 /* CachedAsyncImage */; };
+		0B4CB3FD28EAF7FE00246E62 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AECB295A27417F9E00CDC983 /* Assets.xcassets */; };
+		0B4CB3FE28EAF80200246E62 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AECB29872741ACE000CDC983 /* Colors.xcassets */; };
 		2A3831122884A96600030002 /* FancyHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3831112884A96600030002 /* FancyHeaderView.swift */; };
 		39029E0228883851006BC6EE /* ContributorsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39029E0128883851006BC6EE /* ContributorsView.swift */; };
 		39029E0428883DFE006BC6EE /* Contributor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39029E0328883DFE006BC6EE /* Contributor.swift */; };
@@ -747,6 +749,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				0B4CB3CF28EAF19100246E62 /* Preview Assets.xcassets in Resources */,
+				0B4CB3FE28EAF80200246E62 /* Colors.xcassets in Resources */,
+				0B4CB3FD28EAF7FE00246E62 /* Assets.xcassets in Resources */,
 				0B4CB3CC28EAF19100246E62 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
