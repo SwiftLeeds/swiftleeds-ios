@@ -15,12 +15,15 @@ class MyConferenceViewModel: ObservableObject {
     @Published var slots: [Schedule.Slot] = []
     @Environment(\.network) var network: Networking
 
-    @MainActor
     func loadSchedule() async throws {
         do {
             let schedule = try await network.performRequest(endpoint: ScheduleEndpoint())
-            self.event = schedule.data.event
-            self.slots = schedule.data.slots
+
+            await MainActor.run {
+                self.event = schedule.data.event
+                self.slots = schedule.data.slots
+            }
+
             do {
                 let data = try PropertyListEncoder().encode(slots)
                 UserDefaults(suiteName: "group.uk.co.swiftleeds")?.setValue(data, forKey: "Slots")
