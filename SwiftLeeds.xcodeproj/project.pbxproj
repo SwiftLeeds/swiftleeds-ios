@@ -952,7 +952,7 @@
 				CODE_SIGN_ENTITLEMENTS = SwiftLeedsAppClip/SwiftLeedsAppClip.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"SwiftLeedsAppClip/Preview Content\"";
 				DEVELOPMENT_TEAM = K33K6V7FBA;
 				ENABLE_PREVIEWS = YES;
@@ -990,7 +990,7 @@
 				CODE_SIGN_ENTITLEMENTS = SwiftLeedsAppClip/SwiftLeedsAppClip.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"SwiftLeedsAppClip/Preview Content\"";
 				DEVELOPMENT_TEAM = K33K6V7FBA;
 				ENABLE_PREVIEWS = YES;
@@ -1027,7 +1027,7 @@
 				CODE_SIGN_ENTITLEMENTS = SwiftLeedsWidgetExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = K33K6V7FBA;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SwiftLeedsWidget/Info.plist;
@@ -1058,7 +1058,7 @@
 				CODE_SIGN_ENTITLEMENTS = SwiftLeedsWidgetExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = K33K6V7FBA;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SwiftLeedsWidget/Info.plist;
@@ -1206,7 +1206,7 @@
 				CODE_SIGN_ENTITLEMENTS = SwiftLeeds/SwiftLeeds.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"SwiftLeeds/Preview Content\"";
 				DEVELOPMENT_TEAM = K33K6V7FBA;
 				ENABLE_PREVIEWS = YES;
@@ -1241,7 +1241,7 @@
 				CODE_SIGN_ENTITLEMENTS = SwiftLeeds/SwiftLeeds.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"SwiftLeeds/Preview Content\"";
 				DEVELOPMENT_TEAM = K33K6V7FBA;
 				ENABLE_PREVIEWS = YES;

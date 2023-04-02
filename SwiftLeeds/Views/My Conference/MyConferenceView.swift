@@ -91,6 +91,8 @@ struct MyConferenceView: View {
             Spacer()
         }
         .foregroundColor(.cellForeground)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("Come back soon. We're working on filling this schedule")
     }
 }
 
