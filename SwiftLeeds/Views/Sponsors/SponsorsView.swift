@@ -12,27 +12,17 @@ struct SponsorsView: View {
     @StateObject private var viewModel = SponsorsViewModel()
     
     var body: some View {
-        ScrollView {
-            VStack(spacing: Padding.cellGap) {
-                ForEach(viewModel.sponsors, id: \.self) { sponsor in
-                    switch sponsor.sponsorLevel {
-                    case .silver:
-                        sectionHeader(for: .silver)
-                        contentTile(for: sponsor)
-                    case .gold:
-                        sectionHeader(for: .gold)
-                        contentTile(for: sponsor)
-                    case .platinum:
-                        sectionHeader(for: .platinum)
+        List {
+            ForEach(viewModel.sections) { section in
+                Section(header: Text(section.id)){
+                    ForEach(section.sponsors) { sponsor in
                         contentTile(for: sponsor)
                     }
-                }.background(Color.listBackground)
-            }
-            .accentColor(.white)
-            .padding(Padding.cell)
-                .task {
-                    try? await viewModel.loadSponsors()
                 }
+            }
+        }
+        .task {
+            try? await viewModel.loadSponsors()
         }
     }
 }

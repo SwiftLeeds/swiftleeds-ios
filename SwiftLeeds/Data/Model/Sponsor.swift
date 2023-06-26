@@ -11,7 +11,7 @@ struct Sponsors: Decodable {
     let data: [Sponsor]
 }
 
-struct Sponsor: Decodable, Hashable {
+struct Sponsor: Decodable, Hashable, Identifiable {
     let image: String
     let name: String
     let sponsorLevel: SponsorLevel
