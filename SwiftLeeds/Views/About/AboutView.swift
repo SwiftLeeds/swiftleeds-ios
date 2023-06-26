@@ -38,8 +38,6 @@ struct AboutView: View {
                 CommonTileButton(primaryText: "Venue", secondaryText: nil, backgroundStyle: Color.cellBackground) {
                     openURL(url: venueURL)
                 }
-
-                SponsorGridView()
             }
             .padding(Padding.screen)
         }
