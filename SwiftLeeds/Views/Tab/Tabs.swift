@@ -24,6 +24,11 @@ struct Tabs: View {
                 .tabItem {
                     Label("About", systemImage: "info.circle")
                 }
+            
+            SponsorsView()
+                .tabItem {
+                    Label("Sponsors", systemImage: "sparkles")
+                }
         }
     }
 }
