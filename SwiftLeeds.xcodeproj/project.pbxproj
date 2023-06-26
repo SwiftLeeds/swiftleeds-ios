@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0B4B1A4B2A4858F600ED7EA9 /* SponsorsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4B1A4A2A4858F600ED7EA9 /* SponsorsView.swift */; };
+		0B4B1A4D2A486EA800ED7EA9 /* SponsorsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4B1A4C2A486EA800ED7EA9 /* SponsorsViewModel.swift */; };
+		0B4B1A512A48FB6400ED7EA9 /* SponsorsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4B1A4C2A486EA800ED7EA9 /* SponsorsViewModel.swift */; };
+		0B4B1A532A48FBA200ED7EA9 /* SponsorsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4B1A4A2A4858F600ED7EA9 /* SponsorsView.swift */; };
 		0B4CB3C828EAF19100246E62 /* SwiftLeedsAppClipApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4CB3C728EAF19100246E62 /* SwiftLeedsAppClipApp.swift */; };
 		0B4CB3CA28EAF19100246E62 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4CB3C928EAF19100246E62 /* ContentView.swift */; };
 		0B4CB3CC28EAF19100246E62 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B4CB3CB28EAF19100246E62 /* Assets.xcassets */; };
@@ -42,6 +46,9 @@
 		0B4CB3FC28EAF7C500246E62 /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = 0B4CB3FB28EAF7C500246E62 /* CachedAsyncImage */; };
 		0B4CB3FD28EAF7FE00246E62 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AECB295A27417F9E00CDC983 /* Assets.xcassets */; };
 		0B4CB3FE28EAF80200246E62 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AECB29872741ACE000CDC983 /* Colors.xcassets */; };
+		0B910A352A48FEC100648B32 /* ContentTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE4E2875B09900911F03 /* ContentTileView.swift */; };
+		0B910A372A49D07700648B32 /* Sponsor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B910A362A49D07700648B32 /* Sponsor.swift */; };
+		0B910A382A49D09300648B32 /* Sponsor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B910A362A49D07700648B32 /* Sponsor.swift */; };
 		2A3831122884A96600030002 /* FancyHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3831112884A96600030002 /* FancyHeaderView.swift */; };
 		39029E0228883851006BC6EE /* ContributorsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39029E0128883851006BC6EE /* ContributorsView.swift */; };
 		39029E0428883DFE006BC6EE /* Contributor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39029E0328883DFE006BC6EE /* Contributor.swift */; };
@@ -109,9 +116,7 @@
 		FA57DE4B2875B06B00911F03 /* SwiftLeedsContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE4A2875B06B00911F03 /* SwiftLeedsContainer.swift */; };
 		FA57DE4D2875B08600911F03 /* LinearGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE4C2875B08600911F03 /* LinearGradient.swift */; };
 		FA57DE502875B09900911F03 /* ContentTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE4E2875B09900911F03 /* ContentTileView.swift */; };
-		FA57DE512875B09900911F03 /* SponsorGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE4F2875B09900911F03 /* SponsorGridView.swift */; };
 		FA57DE552875B0C100911F03 /* SquishyButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE542875B0C100911F03 /* SquishyButtonStyle.swift */; };
-		FA57DE592875B0EF00911F03 /* Sponsor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE582875B0EF00911F03 /* Sponsor.swift */; };
 		FAAB819128844EBC001159BB /* View+MeasureSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAB819028844EBC001159BB /* View+MeasureSize.swift */; };
 		FAF74EDC288B44BE00A0926C /* NetworkKit in Frameworks */ = {isa = PBXBuildFile; productRef = FAF74EDB288B44BE00A0926C /* NetworkKit */; };
 		FAFDC5E328A51CEB000B840C /* Endpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFDC5E228A51CEB000B840C /* Endpoints.swift */; };
@@ -174,6 +179,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0B4B1A4A2A4858F600ED7EA9 /* SponsorsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsorsView.swift; sourceTree = "<group>"; };
+		0B4B1A4C2A486EA800ED7EA9 /* SponsorsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsorsViewModel.swift; sourceTree = "<group>"; };
 		0B4CB3C528EAF19000246E62 /* SwiftLeedsAppClip.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftLeedsAppClip.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B4CB3C728EAF19100246E62 /* SwiftLeedsAppClipApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftLeedsAppClipApp.swift; sourceTree = "<group>"; };
 		0B4CB3C928EAF19100246E62 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -181,6 +188,7 @@
 		0B4CB3CE28EAF19100246E62 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		0B4CB3D028EAF19100246E62 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0B4CB3D128EAF19100246E62 /* SwiftLeedsAppClip.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SwiftLeedsAppClip.entitlements; sourceTree = "<group>"; };
+		0B910A362A49D07700648B32 /* Sponsor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sponsor.swift; sourceTree = "<group>"; };
 		2A3831112884A96600030002 /* FancyHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FancyHeaderView.swift; sourceTree = "<group>"; };
 		39029E0128883851006BC6EE /* ContributorsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContributorsView.swift; sourceTree = "<group>"; };
 		39029E0328883DFE006BC6EE /* Contributor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contributor.swift; sourceTree = "<group>"; };
@@ -244,9 +252,7 @@
 		FA57DE4A2875B06B00911F03 /* SwiftLeedsContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftLeedsContainer.swift; sourceTree = "<group>"; };
 		FA57DE4C2875B08600911F03 /* LinearGradient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinearGradient.swift; sourceTree = "<group>"; };
 		FA57DE4E2875B09900911F03 /* ContentTileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentTileView.swift; sourceTree = "<group>"; };
-		FA57DE4F2875B09900911F03 /* SponsorGridView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SponsorGridView.swift; sourceTree = "<group>"; };
 		FA57DE542875B0C100911F03 /* SquishyButtonStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SquishyButtonStyle.swift; sourceTree = "<group>"; };
-		FA57DE582875B0EF00911F03 /* Sponsor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sponsor.swift; sourceTree = "<group>"; };
 		FAAB819028844EBC001159BB /* View+MeasureSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+MeasureSize.swift"; sourceTree = "<group>"; };
 		FAF74ED9288B415900A0926C /* NetworkKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = NetworkKit; sourceTree = "<group>"; };
 		FAFDC5E228A51CEB000B840C /* Endpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoints.swift; sourceTree = "<group>"; };
@@ -297,6 +303,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0B4B1A492A4858DC00ED7EA9 /* Sponsors */ = {
+			isa = PBXGroup;
+			children = (
+				0B4B1A4A2A4858F600ED7EA9 /* SponsorsView.swift */,
+				0B4B1A4C2A486EA800ED7EA9 /* SponsorsViewModel.swift */,
+			);
+			path = Sponsors;
+			sourceTree = "<group>";
+		};
 		0B4CB3C628EAF19100246E62 /* SwiftLeedsAppClip */ = {
 			isa = PBXGroup;
 			children = (
@@ -447,10 +462,11 @@
 			isa = PBXGroup;
 			children = (
 				AED26F7628676A9200E06064 /* About */,
-				FA57DE422875B03B00911F03 /* Components */,
 				FA57DE412875B03800911F03 /* Common */,
+				FA57DE422875B03B00911F03 /* Components */,
 				AED26F7528676A8E00E06064 /* Local */,
 				AEDC0DAF28675D060078A153 /* My Conference */,
+				0B4B1A492A4858DC00ED7EA9 /* Sponsors */,
 				AEDC0DAC286759570078A153 /* Tab */,
 			);
 			path = Views;
@@ -482,7 +498,6 @@
 			children = (
 				AED26F7728676A9900E06064 /* AboutView.swift */,
 				39029E0128883851006BC6EE /* ContributorsView.swift */,
-				FA57DE4F2875B09900911F03 /* SponsorGridView.swift */,
 			);
 			path = About;
 			sourceTree = "<group>";
@@ -556,7 +571,7 @@
 				AE8C1B2328BFCFC700AF7318 /* Presentation.swift */,
 				AEDC22542898288F00746247 /* Schedule.swift */,
 				AE8C1B2528BFCFE700AF7318 /* Speaker.swift */,
-				FA57DE582875B0EF00911F03 /* Sponsor.swift */,
+				0B910A362A49D07700648B32 /* Sponsor.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -807,6 +822,7 @@
 				0B4CB3ED28EAF5F200246E62 /* SwiftLeedsContainer.swift in Sources */,
 				0B4CB3EC28EAF5E900246E62 /* ActivityView.swift in Sources */,
 				0B4CB3F228EAF61600246E62 /* WebView.swift in Sources */,
+				0B4B1A512A48FB6400ED7EA9 /* SponsorsViewModel.swift in Sources */,
 				0B4CB3EA28EAF5D900246E62 /* Color.swift in Sources */,
 				0B4CB3EF28EAF60200246E62 /* FancyHeaderView.swift in Sources */,
 				0B4CB3F628EAF63100246E62 /* LinearGradient.swift in Sources */,
@@ -815,13 +831,16 @@
 				0B4CB3F528EAF62A00246E62 /* SquishyButtonStyle.swift in Sources */,
 				0B4CB3E928EAF5D200246E62 /* Local.swift in Sources */,
 				0B4CB3E228EAF59900246E62 /* Calendar.swift in Sources */,
+				0B910A352A48FEC100648B32 /* ContentTileView.swift in Sources */,
 				0B4CB3E528EAF5B700246E62 /* Speaker.swift in Sources */,
 				0B4CB3E828EAF5CD00246E62 /* AnnouncementCell.swift in Sources */,
+				0B4B1A532A48FBA200ED7EA9 /* SponsorsView.swift in Sources */,
 				0B4CB3DD28EAF57900246E62 /* MyConferenceView.swift in Sources */,
 				0B4CB3CA28EAF19100246E62 /* ContentView.swift in Sources */,
 				0B4CB3E328EAF5A200246E62 /* Activity.swift in Sources */,
 				0B4CB3EB28EAF5E300246E62 /* TalkCell.swift in Sources */,
 				0B4CB3E128EAF59300246E62 /* Environment+Network.swift in Sources */,
+				0B910A382A49D09300648B32 /* Sponsor.swift in Sources */,
 				0B4CB3F428EAF62100246E62 /* CommonTileView.swift in Sources */,
 				0B4CB3C828EAF19100246E62 /* SwiftLeedsAppClipApp.swift in Sources */,
 				0B4CB3F328EAF61B00246E62 /* CommonTileButton.swift in Sources */,
@@ -868,7 +887,6 @@
 				AED26F74286764F000E06064 /* TalkCell.swift in Sources */,
 				FA1F7EF7287CB71600E12F8C /* HeaderView.swift in Sources */,
 				AE1C8010289E9F3800996659 /* String.swift in Sources */,
-				FA57DE512875B09900911F03 /* SponsorGridView.swift in Sources */,
 				AECB295927417F9D00CDC983 /* MyConferenceView.swift in Sources */,
 				AE8C1B2428BFCFC700AF7318 /* Presentation.swift in Sources */,
 				2A3831122884A96600030002 /* FancyHeaderView.swift in Sources */,
@@ -880,9 +898,11 @@
 				AED26F7028675DA000E06064 /* AnnouncementCell.swift in Sources */,
 				AEB06BD128CF8D2100E51967 /* WebView.swift in Sources */,
 				AE8C1B2828C4B36B00AF7318 /* AppDelegate+Push.swift in Sources */,
+				0B4B1A4D2A486EA800ED7EA9 /* SponsorsViewModel.swift in Sources */,
 				AECB295727417F9D00CDC983 /* SwiftLeedsApp.swift in Sources */,
+				0B4B1A4B2A4858F600ED7EA9 /* SponsorsView.swift in Sources */,
 				AE8C1B2B28C4B39A00AF7318 /* TokenDetails.swift in Sources */,
-				FA57DE592875B0EF00911F03 /* Sponsor.swift in Sources */,
+				0B910A372A49D07700648B32 /* Sponsor.swift in Sources */,
 				AEDC0DAE286759630078A153 /* Tabs.swift in Sources */,
 				AE8C1B2628BFCFE700AF7318 /* Speaker.swift in Sources */,
 				39029E0228883851006BC6EE /* ContributorsView.swift in Sources */,

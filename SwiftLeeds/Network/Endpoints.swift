@@ -20,3 +20,9 @@ struct LocalEndpoint: Endpoint {
     typealias DataType = Local
     let path: String = "local"
 }
+
+// MARK: - Sponsors Endpoint
+struct SponsorsEndpoint: Endpoint {
+    typealias DataType = Sponsors
+    let path: String = "sponsors"
+}
