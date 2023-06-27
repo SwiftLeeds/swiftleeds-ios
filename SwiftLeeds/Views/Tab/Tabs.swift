@@ -8,27 +8,15 @@
 import SwiftUI
 
 struct Tabs: View {
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+    
     var body: some View {
-        TabView {
-            MyConferenceView()
-                .tabItem {
-                    Label("My Conference", systemImage: "person.fill")
-                }
-
-            LocalView()
-                .tabItem {
-                    Label("Local", systemImage: "map.fill")
-                }
-
-            AboutView()
-                .tabItem {
-                    Label("About", systemImage: "info.circle")
-                }
-            
-            SponsorsView()
-                .tabItem {
-                    Label("Sponsors", systemImage: "sparkles")
-                }
+        GeometryReader { ruler in
+            if ruler.size.width < ruler.size.height || horizontalSizeClass == .compact {
+                TabsMainView()
+            } else {
+                SidebarMainView()
+            }
         }
     }
 }

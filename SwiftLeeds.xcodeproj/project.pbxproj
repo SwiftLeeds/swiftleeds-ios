@@ -77,6 +77,9 @@
 		74E62F7828CADBE0004422F9 /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8C1B2128BFCF4700AF7318 /* Activity.swift */; };
 		74E62F7928CADBE6004422F9 /* Presentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8C1B2328BFCFC700AF7318 /* Presentation.swift */; };
 		74E62F7A28CAE4DF004422F9 /* Speaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8C1B2528BFCFE700AF7318 /* Speaker.swift */; };
+		74F5EF852A49CE6A008D9413 /* TabsMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F5EF842A49CE6A008D9413 /* TabsMainView.swift */; };
+		74F5EF872A49CE9D008D9413 /* SidebarMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F5EF862A49CE9D008D9413 /* SidebarMainView.swift */; };
+		74F5EF892A49CECB008D9413 /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F5EF882A49CECB008D9413 /* SidebarView.swift */; };
 		AE1C8010289E9F3800996659 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1C800F289E9F3800996659 /* String.swift */; };
 		AE1C801428A7BCD000996659 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AE1C801328A7BCD000996659 /* Settings.bundle */; };
 		AE32CDF0286CCF9D00DF0AFF /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE32CDEF286CCF9D00DF0AFF /* Constants.swift */; };
@@ -209,6 +212,9 @@
 		74B14FB328CE2245004C0A40 /* SwiftLeedsWidgetEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftLeedsWidgetEntryView.swift; sourceTree = "<group>"; };
 		74E62F7128CA98EA004422F9 /* SwiftLeedsSmallWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftLeedsSmallWidgetView.swift; sourceTree = "<group>"; };
 		74E62F7328CAAB30004422F9 /* SwiftLeedsMediumWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftLeedsMediumWidgetView.swift; sourceTree = "<group>"; };
+		74F5EF842A49CE6A008D9413 /* TabsMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabsMainView.swift; sourceTree = "<group>"; };
+		74F5EF862A49CE9D008D9413 /* SidebarMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarMainView.swift; sourceTree = "<group>"; };
+		74F5EF882A49CECB008D9413 /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
 		AE1C800F289E9F3800996659 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		AE1C801328A7BCD000996659 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		AE32CDEF286CCF9D00DF0AFF /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -506,6 +512,9 @@
 			isa = PBXGroup;
 			children = (
 				AEDC0DAD286759630078A153 /* Tabs.swift */,
+				74F5EF842A49CE6A008D9413 /* TabsMainView.swift */,
+				74F5EF862A49CE9D008D9413 /* SidebarMainView.swift */,
+				74F5EF882A49CECB008D9413 /* SidebarView.swift */,
 			);
 			path = Tab;
 			sourceTree = "<group>";
@@ -891,6 +900,7 @@
 				AE8C1B2428BFCFC700AF7318 /* Presentation.swift in Sources */,
 				2A3831122884A96600030002 /* FancyHeaderView.swift in Sources */,
 				FA57DE4B2875B06B00911F03 /* SwiftLeedsContainer.swift in Sources */,
+				74F5EF892A49CECB008D9413 /* SidebarView.swift in Sources */,
 				FAAB819128844EBC001159BB /* View+MeasureSize.swift in Sources */,
 				AECB298227418DA200CDC983 /* Color.swift in Sources */,
 				FA534D8828A1939500A3BFBB /* LocalViewModel.swift in Sources */,
@@ -913,7 +923,9 @@
 				AE32CDF0286CCF9D00DF0AFF /* Constants.swift in Sources */,
 				FA57DE472875B06500911F03 /* CommonTileView.swift in Sources */,
 				FA57DE462875B06500911F03 /* CommonTileButton.swift in Sources */,
+				74F5EF852A49CE6A008D9413 /* TabsMainView.swift in Sources */,
 				39345FDA288F17EE0031BCFF /* BottomSheetView.swift in Sources */,
+				74F5EF872A49CE9D008D9413 /* SidebarMainView.swift in Sources */,
 				39029E0428883DFE006BC6EE /* Contributor.swift in Sources */,
 				FA534D8628A1917C00A3BFBB /* Environment+Network.swift in Sources */,
 				AEDC2257289C65D500746247 /* Calendar.swift in Sources */,
@@ -1237,7 +1249,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1272,7 +1284,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
