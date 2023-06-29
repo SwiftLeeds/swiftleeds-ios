@@ -14,9 +14,16 @@ struct SponsorsView: View {
     var body: some View {
         List {
             ForEach(viewModel.sections) { section in
-                Section(header: Text(section.id)){
-                    ForEach(section.sponsors) { sponsor in
-                        contentTile(for: sponsor)
+                if section.type != .silver {
+                    Section(header: sectionHeader(for: section.type)) {
+                        ForEach(section.sponsors) { sponsor in
+                            contentTile(for: sponsor)
+                        }
+                    }
+                } else {
+                    Section(header: sectionHeader(for: section.type)) {
+                        grid(for: section.sponsors)
+                        .background(Color.listBackground)
                     }
                 }
             }
@@ -47,12 +54,32 @@ private extension SponsorsView {
             imageContentMode: .fit,
             onTap: { openSponsor(sponsor: sponsor) }
         )
-        .frame(maxWidth: .infinity, alignment: .center)
     }
     
     func openSponsor(sponsor: Sponsor) {
         guard let link = URL(string: sponsor.url) else { return }
         openURL(link)
+    }
+    
+    func grid(for sponsors: [Sponsor]) -> some View {
+        let adaptiveColumns = [
+            GridItem(.adaptive(minimum: 170))
+        ]
+        let numberOfColumns = [
+            GridItem(.flexible()), GridItem(.flexible())
+        ]
+
+        return LazyVGrid(
+            columns: numberOfColumns,
+            alignment: .leading,
+            spacing: Padding.cellGap,
+            pinnedViews: []) {
+                ForEach(sponsors, id: \.self) { sponsor in
+                    ZStack {
+                        contentTile(for: sponsor)
+                    }
+                }
+            }
     }
 }
 
