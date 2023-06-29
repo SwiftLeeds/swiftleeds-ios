@@ -26,6 +26,21 @@ final class SponsorsViewModel: ObservableObject {
             await MainActor.run {
                 var sections: [Section] = [Section]()
                 let sponsors = sponsors.data
+                
+                let platinumSponsors = sponsors
+                    .filter {$0.sponsorLevel == .platinum}
+                    .compactMap { $0 }
+                if !platinumSponsors.isEmpty {
+                    sections.append(Section(type: .platinum, sponsors: platinumSponsors))
+                }
+                
+                let goldSponsors = sponsors
+                    .filter {$0.sponsorLevel == .gold}
+                    .compactMap { $0 }
+                if !goldSponsors.isEmpty {
+                    sections.append(Section(type: .gold, sponsors: goldSponsors))
+                }
+                
                 let silverSponsors = sponsors
                     .filter {$0.sponsorLevel == .silver}
                     .compactMap { $0 }
@@ -35,18 +50,7 @@ final class SponsorsViewModel: ObservableObject {
                 if !silverSponsors.isEmpty {
                     sections.append(Section(type: .silver, sponsors: silverSponsors))
                 }
-                let goldSponsors = sponsors
-                    .filter {$0.sponsorLevel == .gold}
-                    .compactMap { $0 }
-                if !goldSponsors.isEmpty {
-                    sections.append(Section(type: .gold, sponsors: goldSponsors))
-                }
-                let platinumSponsors = sponsors
-                    .filter {$0.sponsorLevel == .platinum}
-                    .compactMap { $0 }
-                if !platinumSponsors.isEmpty {
-                    sections.append(Section(type: .platinum, sponsors: platinumSponsors))
-                }
+                
                 self.sections = sections
             }
         } catch {
