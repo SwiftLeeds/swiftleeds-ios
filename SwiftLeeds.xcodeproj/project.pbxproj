@@ -56,6 +56,8 @@
 		394653A9288BB47A00212E1C /* SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394653A8288BB47A00212E1C /* SectionHeader.swift */; };
 		394653AB288BB7C800212E1C /* SpeakerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394653AA288BB7C800212E1C /* SpeakerView.swift */; };
 		39ED0034288F113500AB337A /* LocalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39ED0033288F113500AB337A /* LocalCell.swift */; };
+		740162DA2A7053A000C2D1B3 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740162D92A7053A000C2D1B3 /* AppState.swift */; };
+		740162DB2A7053A000C2D1B3 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740162D92A7053A000C2D1B3 /* AppState.swift */; };
 		7406572728E2304E0087F44F /* Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEDC2256289C65D500746247 /* Calendar.swift */; };
 		7406572928E240720087F44F /* WidgetConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7406572828E240720087F44F /* WidgetConstants.swift */; };
 		74A09FDF28C6778C00E03F39 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74A09FDE28C6778C00E03F39 /* WidgetKit.framework */; };
@@ -80,6 +82,7 @@
 		74F5EF852A49CE6A008D9413 /* TabsMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F5EF842A49CE6A008D9413 /* TabsMainView.swift */; };
 		74F5EF872A49CE9D008D9413 /* SidebarMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F5EF862A49CE9D008D9413 /* SidebarMainView.swift */; };
 		74F5EF892A49CECB008D9413 /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F5EF882A49CECB008D9413 /* SidebarView.swift */; };
+		74F5EF8C2A4B4352008D9413 /* ReadabilityModifier in Frameworks */ = {isa = PBXBuildFile; productRef = 74F5EF8B2A4B4352008D9413 /* ReadabilityModifier */; };
 		AE1C8010289E9F3800996659 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1C800F289E9F3800996659 /* String.swift */; };
 		AE1C801428A7BCD000996659 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AE1C801328A7BCD000996659 /* Settings.bundle */; };
 		AE32CDF0286CCF9D00DF0AFF /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE32CDEF286CCF9D00DF0AFF /* Constants.swift */; };
@@ -199,6 +202,7 @@
 		394653A8288BB47A00212E1C /* SectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeader.swift; sourceTree = "<group>"; };
 		394653AA288BB7C800212E1C /* SpeakerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakerView.swift; sourceTree = "<group>"; };
 		39ED0033288F113500AB337A /* LocalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalCell.swift; sourceTree = "<group>"; };
+		740162D92A7053A000C2D1B3 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		7406572828E240720087F44F /* WidgetConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetConstants.swift; sourceTree = "<group>"; };
 		74A09FDD28C6778C00E03F39 /* SwiftLeedsWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SwiftLeedsWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		74A09FDE28C6778C00E03F39 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
@@ -287,6 +291,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				74F5EF8C2A4B4352008D9413 /* ReadabilityModifier in Frameworks */,
 				FAF74EDC288B44BE00A0926C /* NetworkKit in Frameworks */,
 				AE5EFD73289DC1D000464FE1 /* CachedAsyncImage in Frameworks */,
 			);
@@ -484,6 +489,7 @@
 				AE32CDEF286CCF9D00DF0AFF /* Constants.swift */,
 				AECB29832741ABFD00CDC983 /* Info.plist */,
 				AECB295627417F9D00CDC983 /* SwiftLeedsApp.swift */,
+				740162D92A7053A000C2D1B3 /* AppState.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -672,6 +678,7 @@
 			packageProductDependencies = (
 				FAF74EDB288B44BE00A0926C /* NetworkKit */,
 				AE5EFD72289DC1D000464FE1 /* CachedAsyncImage */,
+				74F5EF8B2A4B4352008D9413 /* ReadabilityModifier */,
 			);
 			productName = SwiftLeeds;
 			productReference = AECB295327417F9D00CDC983 /* SwiftLeeds.app */;
@@ -753,6 +760,7 @@
 			mainGroup = AECB294A27417F9D00CDC983;
 			packageReferences = (
 				AE5EFD71289DC1D000464FE1 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */,
+				74F5EF8A2A4B4352008D9413 /* XCRemoteSwiftPackageReference "ReadabilityModifier" */,
 			);
 			productRefGroup = AECB295427417F9D00CDC983 /* Products */;
 			projectDirPath = "";
@@ -849,6 +857,7 @@
 				0B4CB3E328EAF5A200246E62 /* Activity.swift in Sources */,
 				0B4CB3EB28EAF5E300246E62 /* TalkCell.swift in Sources */,
 				0B4CB3E128EAF59300246E62 /* Environment+Network.swift in Sources */,
+				740162DB2A7053A000C2D1B3 /* AppState.swift in Sources */,
 				0B910A382A49D09300648B32 /* Sponsor.swift in Sources */,
 				0B4CB3F428EAF62100246E62 /* CommonTileView.swift in Sources */,
 				0B4CB3C828EAF19100246E62 /* SwiftLeedsAppClipApp.swift in Sources */,
@@ -925,6 +934,7 @@
 				FA57DE462875B06500911F03 /* CommonTileButton.swift in Sources */,
 				74F5EF852A49CE6A008D9413 /* TabsMainView.swift in Sources */,
 				39345FDA288F17EE0031BCFF /* BottomSheetView.swift in Sources */,
+				740162DA2A7053A000C2D1B3 /* AppState.swift in Sources */,
 				74F5EF872A49CE9D008D9413 /* SidebarMainView.swift in Sources */,
 				39029E0428883DFE006BC6EE /* Contributor.swift in Sources */,
 				FA534D8628A1917C00A3BFBB /* Environment+Network.swift in Sources */,
@@ -1250,6 +1260,7 @@
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1285,6 +1296,7 @@
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1455,6 +1467,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		74F5EF8A2A4B4352008D9413 /* XCRemoteSwiftPackageReference "ReadabilityModifier" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/yazio/ReadabilityModifier";
+			requirement = {
+				kind = exactVersion;
+				version = 1.0.0;
+			};
+		};
 		AE5EFD71289DC1D000464FE1 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/lorenzofiamingo/swiftui-cached-async-image";
@@ -1474,6 +1494,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = AE5EFD71289DC1D000464FE1 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */;
 			productName = CachedAsyncImage;
+		};
+		74F5EF8B2A4B4352008D9413 /* ReadabilityModifier */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 74F5EF8A2A4B4352008D9413 /* XCRemoteSwiftPackageReference "ReadabilityModifier" */;
+			productName = ReadabilityModifier;
 		};
 		AE5EFD72289DC1D000464FE1 /* CachedAsyncImage */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -8,10 +8,21 @@
 import SwiftUI
 
 struct SidebarMainView: View {
+    @EnvironmentObject var appState: AppState
+    
     var body: some View {
-        NavigationView {
+        NavigationSplitView {
             SidebarView()
-            MyConferenceView()
+        } detail: {
+            switch appState.selectedTab {
+            case .conference:
+                MyConferenceView()
+            case .about:
+                AboutView()
+            case .location:
+                LocalView()
+            }
         }
+
     }
 }

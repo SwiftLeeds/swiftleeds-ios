@@ -1,6 +1,15 @@
 {
   "pins" : [
     {
+      "identity" : "readabilitymodifier",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/yazio/ReadabilityModifier",
+      "state" : {
+        "revision" : "ce162150a090d5ae54a682d1f6be3862a3ad3ad4",
+        "version" : "1.0.0"
+      }
+    },
+    {
       "identity" : "swiftui-cached-async-image",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/lorenzofiamingo/swiftui-cached-async-image",

@@ -8,15 +8,23 @@
 import SwiftUI
 
 struct SidebarView: View {
+    @EnvironmentObject var appState: AppState
+    
     var body: some View {
         List {
-            NavigationLink(destination: MyConferenceView()) {
+            NavigationLink(destination: MyConferenceView().onAppear {
+                appState.selectedTab = .conference
+            }) {
                 Label("My Conference", systemImage: "person.fill")
             }
-            NavigationLink(destination: LocalView()) {
+            NavigationLink(destination: LocalView().onAppear {
+                appState.selectedTab = .location
+            }) {
                 Label("Local", systemImage: "map.fill")
             }
-            NavigationLink(destination: AboutView()) {
+            NavigationLink(destination: AboutView().onAppear {
+                appState.selectedTab = .about
+            }) {
                 Label("About", systemImage: "info.circle")
             }
         }
