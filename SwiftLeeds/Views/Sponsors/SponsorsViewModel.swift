@@ -44,9 +44,6 @@ final class SponsorsViewModel: ObservableObject {
                 let silverSponsors = sponsors
                     .filter {$0.sponsorLevel == .silver}
                     .compactMap { $0 }
-                let silverSponsors1 = sponsors
-                    .filter {$0.sponsorLevel == .silver}
-                    .compactMap { $0 }
                 if !silverSponsors.isEmpty {
                     sections.append(Section(type: .silver, sponsors: silverSponsors))
                 }

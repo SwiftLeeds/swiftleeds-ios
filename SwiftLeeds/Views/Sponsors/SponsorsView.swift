@@ -20,6 +20,7 @@ struct SponsorsView: View {
                         ForEach(section.sponsors) { sponsor in
                             contentTile(for: sponsor)
                                 .listRowBackground(Color.clear)
+                                .listRowInsets(EdgeInsets())
                         }
                     }
                 case .gold:
@@ -27,12 +28,14 @@ struct SponsorsView: View {
                         ForEach(section.sponsors) { sponsor in
                             contentTile(for: sponsor)
                                 .listRowBackground(Color.clear)
+                                .listRowInsets(EdgeInsets())
                         }
                     }
                 case .silver:
                     Section(header: sectionHeader(for: section.type)) {
                         grid(for: section.sponsors)
                             .listRowBackground(Color.clear)
+                            .listRowInsets(EdgeInsets())
                     }
                 }
             }
@@ -43,11 +46,12 @@ struct SponsorsView: View {
 
 private extension SponsorsView {
     func sectionHeader(for sponsorLevel: SponsorLevel) -> some View {
-        Text("\(sponsorLevel.rawValue) Sponsors")
+        Text("\(sponsorLevel.rawValue.capitalized) Sponsors")
             .font(.callout.weight(.semibold))
             .foregroundColor(.secondary)
             .frame(maxWidth:.infinity, alignment: .leading)
             .accessibilityAddTraits(.isHeader)
+            .textCase(nil)
     }
     
     func contentTile(for sponsor: Sponsor) -> some View {
