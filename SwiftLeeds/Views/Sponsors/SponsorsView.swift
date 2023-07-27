@@ -15,15 +15,7 @@ struct SponsorsView: View {
         List {
             ForEach(viewModel.sections) { section in
                 switch section.type {
-                case .platinum:
-                    Section(header: sectionHeader(for: section.type)) {
-                        ForEach(section.sponsors) { sponsor in
-                            contentTile(for: sponsor)
-                                .listRowBackground(Color.clear)
-                                .listRowInsets(EdgeInsets())
-                        }
-                    }
-                case .gold:
+                case .platinum, .gold:
                     Section(header: sectionHeader(for: section.type)) {
                         ForEach(section.sponsors) { sponsor in
                             contentTile(for: sponsor)
