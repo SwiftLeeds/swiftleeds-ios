@@ -46,14 +46,14 @@ struct MyConferenceView: View {
                         }
                     }
 
-                    if let presentation = slot.presentation, let speakers = presentation.speakers {
+                    if let presentation = slot.presentation {
                         NavigationLink {
                             SpeakerView(presentation: presentation,
                                         showSlido: viewModel.showSlido)
                         } label: {
                             TalkCell(time: slot.startTime,
                                      details: presentation.title,
-                                     speakers: speakers)
+                                     speakers: presentation.speakers)
                             .transition(.opacity)
                         }
                     }
