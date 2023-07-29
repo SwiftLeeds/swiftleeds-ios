@@ -30,6 +30,11 @@ struct TabsMainView: View {
                     Label("About", systemImage: "info.circle")
                 }
                 .tag(TabItems.about)
+            SponsorsView()
+                .tabItem {
+                    Label("Sponsors", systemImage: "sparkles")
+                }
+                .tag(TabItems.sponsors)
         }
     }
 }

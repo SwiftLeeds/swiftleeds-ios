@@ -26,7 +26,7 @@ struct ContentTileView: View {
         Button(action: onTap) {
             VStack(alignment: .leading, spacing: 0) {
                 image
-                    .padding(isImagePadded ? 8 : 0)
+                    .padding(isImagePadded ? 16 : 0)
 
                 text
             }

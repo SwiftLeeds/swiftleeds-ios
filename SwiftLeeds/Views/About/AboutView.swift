@@ -40,7 +40,6 @@ struct AboutView: View {
                     openURL(url: venueURL)
                 }
                 
-                SponsorGridView()
             }
             .fitToReadableContentGuide(type: .width)
         }

@@ -7,7 +7,7 @@
 
 import Foundation
 enum TabItems: Int {
-    case conference, location, about
+    case conference, location, about, sponsors
 }
 
 final class AppState: ObservableObject {

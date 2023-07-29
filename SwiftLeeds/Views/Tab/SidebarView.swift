@@ -27,6 +27,11 @@ struct SidebarView: View {
             }) {
                 Label("About", systemImage: "info.circle")
             }
+            NavigationLink(destination: SponsorsView().onAppear {
+                appState.selectedTab = .sponsors
+            }) {
+                Label("Sponsors", systemImage: "sparkles")
+            }
         }
         .listStyle(.sidebar)
     }
