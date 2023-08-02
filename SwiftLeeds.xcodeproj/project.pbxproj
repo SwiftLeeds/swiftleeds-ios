@@ -10,7 +10,6 @@
 		0B4B1A4B2A4858F600ED7EA9 /* SponsorsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4B1A4A2A4858F600ED7EA9 /* SponsorsView.swift */; };
 		0B4B1A4D2A486EA800ED7EA9 /* SponsorsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4B1A4C2A486EA800ED7EA9 /* SponsorsViewModel.swift */; };
 		0B4B1A512A48FB6400ED7EA9 /* SponsorsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4B1A4C2A486EA800ED7EA9 /* SponsorsViewModel.swift */; };
-		0B4B1A532A48FBA200ED7EA9 /* SponsorsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4B1A4A2A4858F600ED7EA9 /* SponsorsView.swift */; };
 		0B4CB3C828EAF19100246E62 /* SwiftLeedsAppClipApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4CB3C728EAF19100246E62 /* SwiftLeedsAppClipApp.swift */; };
 		0B4CB3CA28EAF19100246E62 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4CB3C928EAF19100246E62 /* ContentView.swift */; };
 		0B4CB3CC28EAF19100246E62 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B4CB3CB28EAF19100246E62 /* Assets.xcassets */; };
@@ -56,8 +55,12 @@
 		394653A9288BB47A00212E1C /* SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394653A8288BB47A00212E1C /* SectionHeader.swift */; };
 		394653AB288BB7C800212E1C /* SpeakerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394653AA288BB7C800212E1C /* SpeakerView.swift */; };
 		39ED0034288F113500AB337A /* LocalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39ED0033288F113500AB337A /* LocalCell.swift */; };
+		740162DA2A7053A000C2D1B3 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740162D92A7053A000C2D1B3 /* AppState.swift */; };
+		740162DB2A7053A000C2D1B3 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740162D92A7053A000C2D1B3 /* AppState.swift */; };
 		7406572728E2304E0087F44F /* Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEDC2256289C65D500746247 /* Calendar.swift */; };
 		7406572928E240720087F44F /* WidgetConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7406572828E240720087F44F /* WidgetConstants.swift */; };
+		741ED8FB2A75829C00494B25 /* ReadabilityModifier in Frameworks */ = {isa = PBXBuildFile; productRef = 741ED8FA2A75829C00494B25 /* ReadabilityModifier */; };
+		741ED8FC2A7582A600494B25 /* SponsorsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4B1A4A2A4858F600ED7EA9 /* SponsorsView.swift */; };
 		74A09FDF28C6778C00E03F39 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74A09FDE28C6778C00E03F39 /* WidgetKit.framework */; };
 		74A09FE128C6778C00E03F39 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74A09FE028C6778C00E03F39 /* SwiftUI.framework */; };
 		74A09FE428C6778C00E03F39 /* SwiftLeedsWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A09FE328C6778C00E03F39 /* SwiftLeedsWidget.swift */; };
@@ -77,6 +80,10 @@
 		74E62F7828CADBE0004422F9 /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8C1B2128BFCF4700AF7318 /* Activity.swift */; };
 		74E62F7928CADBE6004422F9 /* Presentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8C1B2328BFCFC700AF7318 /* Presentation.swift */; };
 		74E62F7A28CAE4DF004422F9 /* Speaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8C1B2528BFCFE700AF7318 /* Speaker.swift */; };
+		74F5EF852A49CE6A008D9413 /* TabsMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F5EF842A49CE6A008D9413 /* TabsMainView.swift */; };
+		74F5EF872A49CE9D008D9413 /* SidebarMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F5EF862A49CE9D008D9413 /* SidebarMainView.swift */; };
+		74F5EF892A49CECB008D9413 /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F5EF882A49CECB008D9413 /* SidebarView.swift */; };
+		74F5EF8C2A4B4352008D9413 /* ReadabilityModifier in Frameworks */ = {isa = PBXBuildFile; productRef = 74F5EF8B2A4B4352008D9413 /* ReadabilityModifier */; };
 		AE1C8010289E9F3800996659 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1C800F289E9F3800996659 /* String.swift */; };
 		AE1C801428A7BCD000996659 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AE1C801328A7BCD000996659 /* Settings.bundle */; };
 		AE32CDF0286CCF9D00DF0AFF /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE32CDEF286CCF9D00DF0AFF /* Constants.swift */; };
@@ -196,6 +203,7 @@
 		394653A8288BB47A00212E1C /* SectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeader.swift; sourceTree = "<group>"; };
 		394653AA288BB7C800212E1C /* SpeakerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakerView.swift; sourceTree = "<group>"; };
 		39ED0033288F113500AB337A /* LocalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalCell.swift; sourceTree = "<group>"; };
+		740162D92A7053A000C2D1B3 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		7406572828E240720087F44F /* WidgetConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetConstants.swift; sourceTree = "<group>"; };
 		74A09FDD28C6778C00E03F39 /* SwiftLeedsWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SwiftLeedsWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		74A09FDE28C6778C00E03F39 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
@@ -209,6 +217,9 @@
 		74B14FB328CE2245004C0A40 /* SwiftLeedsWidgetEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftLeedsWidgetEntryView.swift; sourceTree = "<group>"; };
 		74E62F7128CA98EA004422F9 /* SwiftLeedsSmallWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftLeedsSmallWidgetView.swift; sourceTree = "<group>"; };
 		74E62F7328CAAB30004422F9 /* SwiftLeedsMediumWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftLeedsMediumWidgetView.swift; sourceTree = "<group>"; };
+		74F5EF842A49CE6A008D9413 /* TabsMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabsMainView.swift; sourceTree = "<group>"; };
+		74F5EF862A49CE9D008D9413 /* SidebarMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarMainView.swift; sourceTree = "<group>"; };
+		74F5EF882A49CECB008D9413 /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
 		AE1C800F289E9F3800996659 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		AE1C801328A7BCD000996659 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		AE32CDEF286CCF9D00DF0AFF /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -263,6 +274,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				741ED8FB2A75829C00494B25 /* ReadabilityModifier in Frameworks */,
 				0B4CB3FA28EAF7C500246E62 /* NetworkKit in Frameworks */,
 				0B4CB3FC28EAF7C500246E62 /* CachedAsyncImage in Frameworks */,
 			);
@@ -281,6 +293,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				74F5EF8C2A4B4352008D9413 /* ReadabilityModifier in Frameworks */,
 				FAF74EDC288B44BE00A0926C /* NetworkKit in Frameworks */,
 				AE5EFD73289DC1D000464FE1 /* CachedAsyncImage in Frameworks */,
 			);
@@ -478,6 +491,7 @@
 				AE32CDEF286CCF9D00DF0AFF /* Constants.swift */,
 				AECB29832741ABFD00CDC983 /* Info.plist */,
 				AECB295627417F9D00CDC983 /* SwiftLeedsApp.swift */,
+				740162D92A7053A000C2D1B3 /* AppState.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -506,6 +520,9 @@
 			isa = PBXGroup;
 			children = (
 				AEDC0DAD286759630078A153 /* Tabs.swift */,
+				74F5EF842A49CE6A008D9413 /* TabsMainView.swift */,
+				74F5EF862A49CE9D008D9413 /* SidebarMainView.swift */,
+				74F5EF882A49CECB008D9413 /* SidebarView.swift */,
 			);
 			path = Tab;
 			sourceTree = "<group>";
@@ -621,6 +638,7 @@
 			packageProductDependencies = (
 				0B4CB3F928EAF7C500246E62 /* NetworkKit */,
 				0B4CB3FB28EAF7C500246E62 /* CachedAsyncImage */,
+				741ED8FA2A75829C00494B25 /* ReadabilityModifier */,
 			);
 			productName = SwiftLeedsAppClip;
 			productReference = 0B4CB3C528EAF19000246E62 /* SwiftLeedsAppClip.app */;
@@ -663,6 +681,7 @@
 			packageProductDependencies = (
 				FAF74EDB288B44BE00A0926C /* NetworkKit */,
 				AE5EFD72289DC1D000464FE1 /* CachedAsyncImage */,
+				74F5EF8B2A4B4352008D9413 /* ReadabilityModifier */,
 			);
 			productName = SwiftLeeds;
 			productReference = AECB295327417F9D00CDC983 /* SwiftLeeds.app */;
@@ -744,6 +763,7 @@
 			mainGroup = AECB294A27417F9D00CDC983;
 			packageReferences = (
 				AE5EFD71289DC1D000464FE1 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */,
+				74F5EF8A2A4B4352008D9413 /* XCRemoteSwiftPackageReference "ReadabilityModifier" */,
 			);
 			productRefGroup = AECB295427417F9D00CDC983 /* Products */;
 			projectDirPath = "";
@@ -828,18 +848,19 @@
 				0B4CB3F628EAF63100246E62 /* LinearGradient.swift in Sources */,
 				0B4CB3F028EAF60800246E62 /* SpeakerView.swift in Sources */,
 				0B4CB3E428EAF5AF00246E62 /* Presentation.swift in Sources */,
+				741ED8FC2A7582A600494B25 /* SponsorsView.swift in Sources */,
 				0B4CB3F528EAF62A00246E62 /* SquishyButtonStyle.swift in Sources */,
 				0B4CB3E928EAF5D200246E62 /* Local.swift in Sources */,
 				0B4CB3E228EAF59900246E62 /* Calendar.swift in Sources */,
 				0B910A352A48FEC100648B32 /* ContentTileView.swift in Sources */,
 				0B4CB3E528EAF5B700246E62 /* Speaker.swift in Sources */,
 				0B4CB3E828EAF5CD00246E62 /* AnnouncementCell.swift in Sources */,
-				0B4B1A532A48FBA200ED7EA9 /* SponsorsView.swift in Sources */,
 				0B4CB3DD28EAF57900246E62 /* MyConferenceView.swift in Sources */,
 				0B4CB3CA28EAF19100246E62 /* ContentView.swift in Sources */,
 				0B4CB3E328EAF5A200246E62 /* Activity.swift in Sources */,
 				0B4CB3EB28EAF5E300246E62 /* TalkCell.swift in Sources */,
 				0B4CB3E128EAF59300246E62 /* Environment+Network.swift in Sources */,
+				740162DB2A7053A000C2D1B3 /* AppState.swift in Sources */,
 				0B910A382A49D09300648B32 /* Sponsor.swift in Sources */,
 				0B4CB3F428EAF62100246E62 /* CommonTileView.swift in Sources */,
 				0B4CB3C828EAF19100246E62 /* SwiftLeedsAppClipApp.swift in Sources */,
@@ -891,6 +912,7 @@
 				AE8C1B2428BFCFC700AF7318 /* Presentation.swift in Sources */,
 				2A3831122884A96600030002 /* FancyHeaderView.swift in Sources */,
 				FA57DE4B2875B06B00911F03 /* SwiftLeedsContainer.swift in Sources */,
+				74F5EF892A49CECB008D9413 /* SidebarView.swift in Sources */,
 				FAAB819128844EBC001159BB /* View+MeasureSize.swift in Sources */,
 				AECB298227418DA200CDC983 /* Color.swift in Sources */,
 				FA534D8828A1939500A3BFBB /* LocalViewModel.swift in Sources */,
@@ -913,7 +935,10 @@
 				AE32CDF0286CCF9D00DF0AFF /* Constants.swift in Sources */,
 				FA57DE472875B06500911F03 /* CommonTileView.swift in Sources */,
 				FA57DE462875B06500911F03 /* CommonTileButton.swift in Sources */,
+				74F5EF852A49CE6A008D9413 /* TabsMainView.swift in Sources */,
 				39345FDA288F17EE0031BCFF /* BottomSheetView.swift in Sources */,
+				740162DA2A7053A000C2D1B3 /* AppState.swift in Sources */,
+				74F5EF872A49CE9D008D9413 /* SidebarMainView.swift in Sources */,
 				39029E0428883DFE006BC6EE /* Contributor.swift in Sources */,
 				FA534D8628A1917C00A3BFBB /* Environment+Network.swift in Sources */,
 				AEDC2257289C65D500746247 /* Calendar.swift in Sources */,
@@ -986,7 +1011,7 @@
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1024,7 +1049,7 @@
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1152,7 +1177,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1207,7 +1232,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -1237,7 +1262,8 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1272,7 +1298,8 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1443,6 +1470,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		74F5EF8A2A4B4352008D9413 /* XCRemoteSwiftPackageReference "ReadabilityModifier" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/yazio/ReadabilityModifier";
+			requirement = {
+				kind = exactVersion;
+				version = 1.0.0;
+			};
+		};
 		AE5EFD71289DC1D000464FE1 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/lorenzofiamingo/swiftui-cached-async-image";
@@ -1462,6 +1497,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = AE5EFD71289DC1D000464FE1 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */;
 			productName = CachedAsyncImage;
+		};
+		741ED8FA2A75829C00494B25 /* ReadabilityModifier */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 74F5EF8A2A4B4352008D9413 /* XCRemoteSwiftPackageReference "ReadabilityModifier" */;
+			productName = ReadabilityModifier;
+		};
+		74F5EF8B2A4B4352008D9413 /* ReadabilityModifier */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 74F5EF8A2A4B4352008D9413 /* XCRemoteSwiftPackageReference "ReadabilityModifier" */;
+			productName = ReadabilityModifier;
 		};
 		AE5EFD72289DC1D000464FE1 /* CachedAsyncImage */ = {
 			isa = XCSwiftPackageProductDependency;

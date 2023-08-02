@@ -6,12 +6,20 @@
 //
 
 import SwiftUI
+import ReadabilityModifier
 
 struct SponsorsView: View {
     @Environment(\.openURL) var openURL
     @StateObject private var viewModel = SponsorsViewModel()
     
     var body: some View {
+        SwiftLeedsContainer {
+            content
+        }
+        .edgesIgnoringSafeArea(.top)
+    }
+    
+    private var content: some View {
         List {
             ForEach(viewModel.sections) { section in
                 switch section.type {
@@ -40,7 +48,10 @@ struct SponsorsView: View {
                 }
             }
         }
+        .scrollContentBackground(.hidden)
+        .fitToReadableContentGuide(type: .width)
         .task { try? await viewModel.loadSponsors() }
+        .navigationBarHidden(true)
     }
 }
 

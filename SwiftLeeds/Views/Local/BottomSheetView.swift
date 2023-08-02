@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import ReadabilityModifier
 
 struct BottomSheetView: View {
     @Binding var isOpen: Bool
@@ -46,6 +47,7 @@ struct BottomSheetView: View {
                     SectionHeader(title: "Local",
                                   fontStyle: .title2.weight(.semibold),
                                   foregroundColor: .primary)
+                    .fitToReadableContentGuide(type: .width)
                     ScrollView {
                         ForEach(categories) { category in
                             LocalCell(
@@ -58,6 +60,7 @@ struct BottomSheetView: View {
                         }
                         .padding(.bottom, Padding.screen)
                     }
+                    .fitToReadableContentGuide(type: .width)
                     .transition(.opacity)
                 }
                 .padding(Padding.screen)

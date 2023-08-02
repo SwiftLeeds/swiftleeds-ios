@@ -36,7 +36,7 @@ struct FancyHeaderView: View {
                 .accessibilityHidden(true)
             )
             .overlay(foregroundGroup,alignment: .center)
-            .padding(.bottom,foregroundGroupViewHeight/2)
+            .padding(.bottom,foregroundGroupViewHeight/4)
     }
     
     private var foregroundGroup: some View {
