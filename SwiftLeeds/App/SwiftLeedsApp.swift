@@ -11,6 +11,8 @@ import NetworkKit
 @main
 struct SwiftLeedsApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
+    
+    @StateObject private var appState = AppState()
 
     private let network = Network(environment: SwiftLeedsEnvironment())
 
@@ -18,6 +20,7 @@ struct SwiftLeedsApp: App {
         WindowGroup {
             Tabs()
                 .environment(\.network, network)
+                .environmentObject(appState)
                 .onContinueUserActivity(NSUserActivityTypeBrowsingWeb, perform: handleUserActivity)
         }
     }
