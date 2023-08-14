@@ -23,7 +23,7 @@ struct SponsorsView: View {
         List {
             ForEach(viewModel.sections) { section in
                 switch section.type {
-                case .platinum, .gold:
+                case .platinum:
                     Section(header: sectionHeader(for: section.type)) {
                         ForEach(section.sponsors) { sponsor in
                             contentTile(for: sponsor)
@@ -31,7 +31,7 @@ struct SponsorsView: View {
                                 .listRowInsets(EdgeInsets())
                         }
                     }
-                case .silver:
+                case .gold, .silver:
                     Section(header: sectionHeader(for: section.type)) {
                         grid(for: section.sponsors)
                             .listRowBackground(Color.clear)
@@ -40,10 +40,10 @@ struct SponsorsView: View {
                 }
             }
         }
+        .padding(.top, 50)
         .scrollContentBackground(.hidden)
         .fitToReadableContentGuide(type: .width)
         .task { try? await viewModel.loadSponsors() }
-        .navigationBarHidden(true)
     }
 }
 
@@ -61,7 +61,7 @@ private extension SponsorsView {
         ContentTileView(
             accessibilityLabel: "Sponsor",
             title: sponsor.name,
-            subTitle: nil,
+            subTitle: sponsor.subtitle,
             imageURL: URL(string: sponsor.image),
             isImagePadded: true,
             imageBackgroundColor: .white,
