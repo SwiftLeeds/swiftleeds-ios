@@ -14,6 +14,7 @@ struct Sponsors: Decodable {
 struct Sponsor: Decodable, Hashable, Identifiable {
     let image: String
     let name: String
+    let subtitle: String
     let sponsorLevel: SponsorLevel
     let url: String
     let id: String
