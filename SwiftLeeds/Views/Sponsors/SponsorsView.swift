@@ -29,6 +29,7 @@ struct SponsorsView: View {
                             contentTile(for: sponsor)
                                 .listRowBackground(Color.clear)
                                 .listRowInsets(EdgeInsets())
+                                .padding(.bottom, 8)
                         }
                     }
                 case .gold, .silver:
@@ -41,6 +42,7 @@ struct SponsorsView: View {
             }
         }
         .padding(.top, 50)
+        .scrollIndicators(.hidden)
         .scrollContentBackground(.hidden)
         .fitToReadableContentGuide(type: .width)
         .task { try? await viewModel.loadSponsors() }
@@ -55,6 +57,7 @@ private extension SponsorsView {
             .frame(maxWidth:.infinity, alignment: .leading)
             .accessibilityAddTraits(.isHeader)
             .textCase(nil)
+            .padding(.bottom, 8)
     }
     
     func contentTile(for sponsor: Sponsor) -> some View {
