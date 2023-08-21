@@ -94,6 +94,13 @@
 		AE8C1B2628BFCFE700AF7318 /* Speaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8C1B2528BFCFE700AF7318 /* Speaker.swift */; };
 		AE8C1B2828C4B36B00AF7318 /* AppDelegate+Push.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8C1B2728C4B36B00AF7318 /* AppDelegate+Push.swift */; };
 		AE8C1B2B28C4B39A00AF7318 /* TokenDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8C1B2A28C4B39A00AF7318 /* TokenDetails.swift */; };
+		AE93678F2A93455400F2DB3F /* ScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE93678E2A93455400F2DB3F /* ScheduleView.swift */; };
+		AE9367902A93467500F2DB3F /* ScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE93678E2A93455400F2DB3F /* ScheduleView.swift */; };
+		AE9367922A93481800F2DB3F /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE9367912A93481800F2DB3F /* Date.swift */; };
+		AE9367932A93481800F2DB3F /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE9367912A93481800F2DB3F /* Date.swift */; };
+		AE9367962A9354CC00F2DB3F /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE9367952A9354CC00F2DB3F /* Helper.swift */; };
+		AE9367972A9354CC00F2DB3F /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE9367952A9354CC00F2DB3F /* Helper.swift */; };
+		AE9367982A9357D000F2DB3F /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE9367952A9354CC00F2DB3F /* Helper.swift */; };
 		AEB06BD128CF8D2100E51967 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB06BD028CF8D2100E51967 /* WebView.swift */; };
 		AECB295727417F9D00CDC983 /* SwiftLeedsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECB295627417F9D00CDC983 /* SwiftLeedsApp.swift */; };
 		AECB295927417F9D00CDC983 /* MyConferenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECB295827417F9D00CDC983 /* MyConferenceView.swift */; };
@@ -230,6 +237,9 @@
 		AE8C1B2728C4B36B00AF7318 /* AppDelegate+Push.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Push.swift"; sourceTree = "<group>"; };
 		AE8C1B2A28C4B39A00AF7318 /* TokenDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenDetails.swift; sourceTree = "<group>"; };
 		AE8C1B2C28C4B8D800AF7318 /* SwiftLeeds.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SwiftLeeds.entitlements; sourceTree = "<group>"; };
+		AE93678E2A93455400F2DB3F /* ScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleView.swift; sourceTree = "<group>"; };
+		AE9367912A93481800F2DB3F /* Date.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
+		AE9367952A9354CC00F2DB3F /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		AEB06BD028CF8D2100E51967 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		AECB295327417F9D00CDC983 /* SwiftLeeds.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftLeeds.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AECB295627417F9D00CDC983 /* SwiftLeedsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftLeedsApp.swift; sourceTree = "<group>"; };
@@ -454,6 +464,7 @@
 			children = (
 				AEDC2256289C65D500746247 /* Calendar.swift */,
 				AECB298127418DA200CDC983 /* Color.swift */,
+				AE9367912A93481800F2DB3F /* Date.swift */,
 				FA57DE4C2875B08600911F03 /* LinearGradient.swift */,
 				AE1C800F289E9F3800996659 /* String.swift */,
 				FAAB819028844EBC001159BB /* View+MeasureSize.swift */,
@@ -534,6 +545,7 @@
 				AED26F6F28675DA000E06064 /* AnnouncementCell.swift */,
 				AECB295827417F9D00CDC983 /* MyConferenceView.swift */,
 				AEDC22522898281300746247 /* MyConferenceViewModel.swift */,
+				AE93678E2A93455400F2DB3F /* ScheduleView.swift */,
 				394653AA288BB7C800212E1C /* SpeakerView.swift */,
 				AED26F73286764F000E06064 /* TalkCell.swift */,
 			);
@@ -545,6 +557,7 @@
 			children = (
 				394653A8288BB47A00212E1C /* SectionHeader.swift */,
 				FA57DE4A2875B06B00911F03 /* SwiftLeedsContainer.swift */,
+				AE9367952A9354CC00F2DB3F /* Helper.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -839,6 +852,7 @@
 				0B4CB3DF28EAF58400246E62 /* Constants.swift in Sources */,
 				0B4CB3F128EAF61000246E62 /* StackedTileView.swift in Sources */,
 				0B4CB3DE28EAF57E00246E62 /* MyConferenceViewModel.swift in Sources */,
+				AE9367902A93467500F2DB3F /* ScheduleView.swift in Sources */,
 				0B4CB3ED28EAF5F200246E62 /* SwiftLeedsContainer.swift in Sources */,
 				0B4CB3EC28EAF5E900246E62 /* ActivityView.swift in Sources */,
 				0B4CB3F228EAF61600246E62 /* WebView.swift in Sources */,
@@ -847,12 +861,14 @@
 				0B4CB3EF28EAF60200246E62 /* FancyHeaderView.swift in Sources */,
 				0B4CB3F628EAF63100246E62 /* LinearGradient.swift in Sources */,
 				0B4CB3F028EAF60800246E62 /* SpeakerView.swift in Sources */,
+				AE9367932A93481800F2DB3F /* Date.swift in Sources */,
 				0B4CB3E428EAF5AF00246E62 /* Presentation.swift in Sources */,
 				741ED8FC2A7582A600494B25 /* SponsorsView.swift in Sources */,
 				0B4CB3F528EAF62A00246E62 /* SquishyButtonStyle.swift in Sources */,
 				0B4CB3E928EAF5D200246E62 /* Local.swift in Sources */,
 				0B4CB3E228EAF59900246E62 /* Calendar.swift in Sources */,
 				0B910A352A48FEC100648B32 /* ContentTileView.swift in Sources */,
+				AE9367972A9354CC00F2DB3F /* Helper.swift in Sources */,
 				0B4CB3E528EAF5B700246E62 /* Speaker.swift in Sources */,
 				0B4CB3E828EAF5CD00246E62 /* AnnouncementCell.swift in Sources */,
 				0B4CB3DD28EAF57900246E62 /* MyConferenceView.swift in Sources */,
@@ -879,6 +895,7 @@
 				74E62F7228CA98EA004422F9 /* SwiftLeedsSmallWidgetView.swift in Sources */,
 				7406572928E240720087F44F /* WidgetConstants.swift in Sources */,
 				74A09FF228C689AB00E03F39 /* Color.swift in Sources */,
+				AE9367982A9357D000F2DB3F /* Helper.swift in Sources */,
 				74B14FB028CE21D7004C0A40 /* TimeineProvider.swift in Sources */,
 				74E62F7828CADBE0004422F9 /* Activity.swift in Sources */,
 				74E62F7A28CAE4DF004422F9 /* Speaker.swift in Sources */,
@@ -902,6 +919,7 @@
 				394653A9288BB47A00212E1C /* SectionHeader.swift in Sources */,
 				FA57DE552875B0C100911F03 /* SquishyButtonStyle.swift in Sources */,
 				FA534D7F28A1905000A3BFBB /* Environment.swift in Sources */,
+				AE9367962A9354CC00F2DB3F /* Helper.swift in Sources */,
 				AED26F7A28676AA300E06064 /* LocalView.swift in Sources */,
 				39ED0034288F113500AB337A /* LocalCell.swift in Sources */,
 				AEDC22552898288F00746247 /* Schedule.swift in Sources */,
@@ -925,6 +943,7 @@
 				0B4B1A4B2A4858F600ED7EA9 /* SponsorsView.swift in Sources */,
 				AE8C1B2B28C4B39A00AF7318 /* TokenDetails.swift in Sources */,
 				0B910A372A49D07700648B32 /* Sponsor.swift in Sources */,
+				AE9367922A93481800F2DB3F /* Date.swift in Sources */,
 				AEDC0DAE286759630078A153 /* Tabs.swift in Sources */,
 				AE8C1B2628BFCFE700AF7318 /* Speaker.swift in Sources */,
 				39029E0228883851006BC6EE /* ContributorsView.swift in Sources */,
@@ -932,6 +951,7 @@
 				AE8C1B2228BFCF4700AF7318 /* Activity.swift in Sources */,
 				FA57DE482875B06500911F03 /* StackedTileView.swift in Sources */,
 				FA534D8228A1909300A3BFBB /* Local.swift in Sources */,
+				AE93678F2A93455400F2DB3F /* ScheduleView.swift in Sources */,
 				AE32CDF0286CCF9D00DF0AFF /* Constants.swift in Sources */,
 				FA57DE472875B06500911F03 /* CommonTileView.swift in Sources */,
 				FA57DE462875B06500911F03 /* CommonTileButton.swift in Sources */,

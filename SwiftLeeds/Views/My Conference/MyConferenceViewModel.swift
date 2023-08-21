@@ -11,8 +11,10 @@ import NetworkKit
 import SwiftUI
 
 class MyConferenceViewModel: ObservableObject {
-    @Published var event: Schedule.Event?
-    @Published var slots: [Schedule.Slot] = []
+    @Published private(set) var event: Schedule.Event?
+    @Published private(set) var days: [String] = []
+    @Published private(set) var slots: [String: [Schedule.Slot]] = [:]
+
     @Environment(\.network) var network: Networking
 
     func loadSchedule() async throws {
@@ -20,8 +22,15 @@ class MyConferenceViewModel: ObservableObject {
             let schedule = try await network.performRequest(endpoint: ScheduleEndpoint())
 
             await MainActor.run {
-                self.event = schedule.data.event
-                self.slots = schedule.data.slots
+                event = schedule.data.event
+
+                let individualDates = Set(schedule.data.slots.compactMap { $0.date?.withoutTime }).sorted(by: (<))
+                days = individualDates.map { Helper.shortDateFormatter.string(from: $0) }
+
+                for date in individualDates {
+                    let key = Helper.shortDateFormatter.string(from: date)
+                    slots[key] = schedule.data.slots.filter { Calendar.current.compare(date, to: $0.date ?? Date(), toGranularity: .day) == .orderedSame }
+                }
             }
 
             do {

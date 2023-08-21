@@ -28,13 +28,14 @@ struct Schedule: Decodable {
 
     struct Slot: Identifiable {
         let id: UUID
+        let date: Date?
         let startTime: String
         let duration: Int
         let activity: Activity?
         let presentation: Presentation?
 
         private enum CodingKeys: CodingKey {
-            case id, activity, presentation, startTime, duration
+            case id, activity, presentation, date, startTime, duration
         }
 
         static var timeFormat: DateFormatter = {
@@ -51,8 +52,11 @@ extension Schedule.Slot: Codable {
         let values = try decoder.container(keyedBy: CodingKeys.self)
 
         id = try values.decode(UUID.self, forKey: .id)
-        duration = try values.decode(Int.self, forKey: .duration)
         startTime = try values.decode(String.self, forKey: .startTime)
+        duration = try values.decode(Int.self, forKey: .duration)
+
+        let date = try values.decodeIfPresent(String.self, forKey: .date) ?? ""
+        self.date = ISO8601DateFormatter().date(from: date)
 
         if let activity = try values.decodeIfPresent(Activity.self, forKey: .activity) {
             self.activity = activity
