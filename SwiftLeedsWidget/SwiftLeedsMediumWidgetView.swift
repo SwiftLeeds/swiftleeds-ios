@@ -94,10 +94,10 @@ extension SwiftLeedsMediumWidgetView {
 
 struct SwiftLeedsMediumWidgetView_Previews: PreviewProvider {
     static var previews: some View {
-        SwiftLeedsMediumWidgetView(slot: Schedule.Slot(id: UUID(), startTime: "11:00 AM", duration: 1, activity: nil, presentation: Presentation.donnyWalls))
+        SwiftLeedsMediumWidgetView(slot: Schedule.Slot(id: UUID(), date: Date(), startTime: "11:00 AM", duration: 1, activity: nil, presentation: Presentation.donnyWalls))
             .previewContext(WidgetPreviewContext(family: .systemMedium))
         
-        SwiftLeedsMediumWidgetView(slot: Schedule.Slot(id: UUID(), startTime: "11:00 AM", duration: 1, activity: nil, presentation: Presentation.donnyWalls))
+        SwiftLeedsMediumWidgetView(slot: Schedule.Slot(id: UUID(), date: Date(), startTime: "11:00 AM", duration: 1, activity: nil, presentation: Presentation.donnyWalls))
             .environment(\.colorScheme, .dark)
             .previewContext(WidgetPreviewContext(family: .systemMedium))
     }
