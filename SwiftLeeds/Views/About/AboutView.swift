@@ -9,11 +9,12 @@ import SwiftUI
 import ReadabilityModifier
 
 struct AboutView: View {
-    
-    // TODO: Set these to the correct pages
-    let venueURL = URL(string: "https://swiftleeds.co.uk/#venue")
-    let codeOfConduct = URL(string: "https://swiftleeds.co.uk/conduct")
-    
+    @State private var isReportAProblemShown = false
+
+    private let venueURL = URL(string: "https://swiftleeds.co.uk/#venue")
+    private let codeOfConductURL = URL(string: "https://swiftleeds.co.uk/conduct")
+    private let reportAProblemLink = "https://forms.gle/PJie9aRNAtzQUdUu9"
+
     var body: some View {
         SwiftLeedsContainer {
             ScrollView {
@@ -29,27 +30,34 @@ struct AboutView: View {
                 title: "About",
                 foregroundImageName: Assets.Image.swiftLeedsIcon
             )
+
             VStack(spacing: Padding.cellGap) {
                 StackedTileView(primaryText: "About", secondaryText: Strings.aboutSwiftLeeds)
-                
-                CommonTileButton(primaryText: "Code of conduct", secondaryText: nil, backgroundStyle: Color.cellBackground) {
-                    openURL(url: codeOfConduct)
+
+                CommonTileButton(primaryText: "Report a problem", backgroundStyle: Color.cellBackground) {
+                    isReportAProblemShown = true
+                }
+
+                CommonTileButton(primaryText: "Code of conduct", backgroundStyle: Color.cellBackground) {
+                    openURL(url: codeOfConductURL)
                 }
                 
-                CommonTileButton(primaryText: "Venue", secondaryText: nil, backgroundStyle: Color.cellBackground) {
+                CommonTileButton(primaryText: "Venue", backgroundStyle: Color.cellBackground) {
                     openURL(url: venueURL)
                 }
-                
             }
             .fitToReadableContentGuide(type: .width)
+        }
+        .padding(.bottom, Padding.cellGap)
+        .sheet(isPresented: $isReportAProblemShown) {
+            WebView(url: reportAProblemLink)
+                .ignoresSafeArea(edges: .bottom)
         }
         .navigationBarHidden(true)
     }
     
     private func openURL(url: URL?) {
-        guard let url = url else {
-            return
-        }
+        guard let url = url else { return }
         UIApplication.shared.open(url)
     }
 }
