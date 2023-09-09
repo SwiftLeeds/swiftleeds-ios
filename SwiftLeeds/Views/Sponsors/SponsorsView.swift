@@ -11,8 +11,6 @@ import ReadabilityModifier
 struct SponsorsView: View {
     @Environment(\.openURL) private var openURL
     @StateObject private var viewModel = SponsorsViewModel()
-    @State private var isPresentWebView = false
-    @State private var urlToOpen = ""
     
     var body: some View {
         SwiftLeedsContainer {
@@ -51,9 +49,6 @@ struct SponsorsView: View {
         .scrollContentBackground(.hidden)
         .fitToReadableContentGuide(type: .width)
         .task { try? await viewModel.loadSponsors() }
-        .sheet(isPresented: $isPresentWebView) {
-            NavigationStack { WebView(url: urlToOpen) }
-        }
     }
 }
 
@@ -109,13 +104,13 @@ private extension SponsorsView {
 
 private extension SponsorsView {
     func openSponsor(sponsor: Sponsor) {
-        urlToOpen = sponsor.url
-        isPresentWebView = true
+        guard let link = URL(string: sponsor.url) else { return }
+        openURL(link)
     }
     
     func openSponsorJob(urlString: String) {
-        urlToOpen = urlString
-        isPresentWebView = true
+        guard let link = URL(string: urlString) else { return }
+        openURL(link)
     }
 }
 
