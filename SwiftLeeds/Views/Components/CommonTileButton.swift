@@ -18,7 +18,7 @@ struct CommonTileButton<BackgroundType: ShapeStyle>: View {
 
     init(
         primaryText: String,
-        secondaryText: String?,
+        secondaryText: String? = nil,
         primaryColor: Color = Color.primary,
         secondaryColor: Color = Color.secondary,
         backgroundStyle: Color = Color.cellBackground,
