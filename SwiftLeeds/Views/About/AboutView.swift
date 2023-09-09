@@ -13,7 +13,9 @@ struct AboutView: View {
     // TODO: Set these to the correct pages
     let venueURL = URL(string: "https://swiftleeds.co.uk/#venue")
     let codeOfConduct = URL(string: "https://swiftleeds.co.uk/conduct")
+    let slack = URL(string: "https://join.slack.com/t/swiftleedsworkspace/shared_invite/zt-wkmr6pif-ZDCdDeHM60jcBUy0BxHdCQ")
     
+
     var body: some View {
         SwiftLeedsContainer {
             ScrollView {
@@ -30,14 +32,19 @@ struct AboutView: View {
                 foregroundImageName: Assets.Image.swiftLeedsIcon
             )
             VStack(spacing: Padding.cellGap) {
-                StackedTileView(primaryText: "About", secondaryText: Strings.aboutSwiftLeeds)
+                StackedTileView(primaryText: "About",
+                                secondaryText: Strings.aboutSwiftLeeds)
                 
-                CommonTileButton(primaryText: "Code of conduct", secondaryText: nil, backgroundStyle: Color.cellBackground) {
-                    openURL(url: codeOfConduct)
+                CommonTileButton(primaryText: "Venue",
+                                 secondaryText: nil,
+                                 backgroundStyle: Color.cellBackground) {
+                    openURL(url: venueURL)
                 }
                 
-                CommonTileButton(primaryText: "Venue", secondaryText: nil, backgroundStyle: Color.cellBackground) {
-                    openURL(url: venueURL)
+                CommonTileButton(primaryText: "Code of conduct",
+                                 secondaryText: nil,
+                                 backgroundStyle: Color.cellBackground) {
+                    openURL(url: codeOfConduct)
                 }
                 
             }

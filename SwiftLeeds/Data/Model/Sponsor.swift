@@ -18,10 +18,19 @@ struct Sponsor: Decodable, Hashable, Identifiable {
     let sponsorLevel: SponsorLevel
     let url: String
     let id: String
+    let jobs: [Job]
 }
 
 enum SponsorLevel: String, Decodable {
     case silver
     case platinum
     case gold
+}
+
+struct Job: Decodable, Hashable, Identifiable {
+    let details: String
+    let id: String
+    let url: String
+    let title: String
+    let location: String
 }

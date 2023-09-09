@@ -24,7 +24,8 @@ struct ContributorsView: View {
                 foregroundImageName: Assets.Image.swiftLeedsIcon
             )
             Group {
-                StackedTileView(primaryText: "About", secondaryText: Strings.aboutContributor)
+                StackedTileView(primaryText: "About",
+                                secondaryText: Strings.aboutContributor)
                 SectionHeader(title: "Contributors")
                 grid(for: Contributor.contributors)
             }

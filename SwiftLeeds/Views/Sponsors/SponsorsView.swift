@@ -9,8 +9,10 @@ import SwiftUI
 import ReadabilityModifier
 
 struct SponsorsView: View {
-    @Environment(\.openURL) var openURL
+    @Environment(\.openURL) private var openURL
     @StateObject private var viewModel = SponsorsViewModel()
+    @State private var isPresentWebView = false
+    @State private var urlToOpen = ""
     
     var body: some View {
         SwiftLeedsContainer {
@@ -26,10 +28,13 @@ struct SponsorsView: View {
                 case .platinum:
                     Section(header: sectionHeader(for: section.type)) {
                         ForEach(section.sponsors) { sponsor in
-                            contentTile(for: sponsor)
-                                .listRowBackground(Color.clear)
-                                .listRowInsets(EdgeInsets())
-                                .padding(.bottom, 8)
+                            VStack {
+                                contentTile(for: sponsor)
+                                jobtile(for: sponsor)
+                            }
+                            .listRowBackground(Color.clear)
+                            .listRowInsets(EdgeInsets())
+                            .padding(.bottom, 8)
                         }
                     }
                 case .gold, .silver:
@@ -46,6 +51,9 @@ struct SponsorsView: View {
         .scrollContentBackground(.hidden)
         .fitToReadableContentGuide(type: .width)
         .task { try? await viewModel.loadSponsors() }
+        .sheet(isPresented: $isPresentWebView) {
+            NavigationStack { WebView(url: urlToOpen) }
+        }
     }
 }
 
@@ -71,12 +79,6 @@ private extension SponsorsView {
             imageContentMode: .fit,
             onTap: { openSponsor(sponsor: sponsor) }
         )
-        .frame(maxWidth: .infinity, alignment: .center)
-    }
-    
-    func openSponsor(sponsor: Sponsor) {
-        guard let link = URL(string: sponsor.url) else { return }
-        openURL(link)
     }
     
     func grid(for sponsors: [Sponsor]) -> some View {
@@ -93,13 +95,35 @@ private extension SponsorsView {
                 }
             }.foregroundColor(.clear)
     }
+    
+    func jobtile(for sponsor: Sponsor) -> some View {
+        ForEach(sponsor.jobs) { job in
+            CommonTileButton(primaryText: job.title,
+                             secondaryText: "💼",
+                             backgroundStyle: Color.cellBackground) {
+                openSponsorJob(urlString: job.url)
+            }
+        }
+    }
+}
+
+private extension SponsorsView {
+    func openSponsor(sponsor: Sponsor) {
+        urlToOpen = sponsor.url
+        isPresentWebView = true
+    }
+    
+    func openSponsorJob(urlString: String) {
+        urlToOpen = urlString
+        isPresentWebView = true
+    }
 }
 
 struct SponsorsView_Previews: PreviewProvider {
     static var previews: some View {
         SwiftLeedsContainer {
             ScrollView {
-                SponsorsView().padding()
+                SponsorsView()
             }
         }
     }
