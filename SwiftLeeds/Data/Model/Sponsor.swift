@@ -29,7 +29,7 @@ enum SponsorLevel: String, Decodable {
 
 struct Job: Decodable, Hashable, Identifiable {
     let details: String
-    let id: String
+    let id: UUID
     let url: String
     let title: String
     let location: String
