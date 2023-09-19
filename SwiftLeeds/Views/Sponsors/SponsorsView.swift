@@ -9,7 +9,6 @@ import SwiftUI
 import ReadabilityModifier
 
 struct SponsorsView: View {
-    @Environment(\.openURL) private var openURL
     @StateObject private var viewModel = SponsorsViewModel()
     
     var body: some View {
@@ -26,13 +25,10 @@ struct SponsorsView: View {
                 case .platinum:
                     Section(header: sectionHeader(for: section.type)) {
                         ForEach(section.sponsors) { sponsor in
-                            VStack {
-                                contentTile(for: sponsor)
-                                jobtile(for: sponsor)
-                            }
-                            .listRowBackground(Color.clear)
-                            .listRowInsets(EdgeInsets())
-                            .padding(.bottom, 8)
+                            sponsorTile(for: sponsor)
+                                .listRowBackground(Color.clear)
+                                .listRowInsets(EdgeInsets())
+                                .padding(.bottom, Padding.cellGap   )
                         }
                     }
                 case .gold, .silver:
@@ -48,7 +44,9 @@ struct SponsorsView: View {
         .scrollIndicators(.hidden)
         .scrollContentBackground(.hidden)
         .fitToReadableContentGuide(type: .width)
-        .task { try? await viewModel.loadSponsors() }
+        .task {
+            try? await viewModel.loadSponsors()
+        }
     }
 }
 
@@ -63,54 +61,24 @@ private extension SponsorsView {
             .padding(.bottom, 8)
     }
     
-    func contentTile(for sponsor: Sponsor) -> some View {
-        ContentTileView(
-            accessibilityLabel: "Sponsor",
-            title: sponsor.name,
-            subTitle: sponsor.subtitle,
-            imageURL: URL(string: sponsor.image),
-            isImagePadded: true,
-            imageBackgroundColor: .white,
-            imageContentMode: .fit,
-            onTap: { openSponsor(sponsor: sponsor) }
-        )
+    func sponsorTile(for sponsor: Sponsor) -> some View {
+        SponsorTileView(sponsor: sponsor)
     }
     
     func grid(for sponsors: [Sponsor]) -> some View {
         let columns = [
             GridItem(.flexible()), GridItem(.flexible())
         ]
+
         return LazyVGrid(
             columns: columns,
             alignment: .leading,
             spacing: Padding.cellGap,
             pinnedViews: []) {
                 ForEach(sponsors, id: \.self) { sponsor in
-                    contentTile(for: sponsor)
+                    sponsorTile(for: sponsor)
                 }
             }.foregroundColor(.clear)
-    }
-    
-    func jobtile(for sponsor: Sponsor) -> some View {
-        ForEach(sponsor.jobs) { job in
-            CommonTileButton(primaryText: job.title,
-                             secondaryText: "💼",
-                             backgroundStyle: Color.cellBackground) {
-                openSponsorJob(urlString: job.url)
-            }
-        }
-    }
-}
-
-private extension SponsorsView {
-    func openSponsor(sponsor: Sponsor) {
-        guard let link = URL(string: sponsor.url) else { return }
-        openURL(link)
-    }
-    
-    func openSponsorJob(urlString: String) {
-        guard let link = URL(string: urlString) else { return }
-        openURL(link)
     }
 }
 

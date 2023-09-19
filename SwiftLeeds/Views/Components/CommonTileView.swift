@@ -13,6 +13,7 @@ struct CommonTileView<BackgroundType: ShapeStyle>: View {
 
     let primaryText: String
     let secondaryText: String?
+    let showChevron: Bool
     let primaryColor: Color
     let secondaryColor: Color
     var backgroundStyle: BackgroundType
@@ -24,12 +25,14 @@ struct CommonTileView<BackgroundType: ShapeStyle>: View {
     init(
         primaryText: String,
         secondaryText: String?,
+        showChevron: Bool = false,
         primaryColor: Color = Color.primary,
         secondaryColor: Color = Color.secondary,
         backgroundStyle: BackgroundType
     ) {
         self.primaryText = primaryText
         self.secondaryText = secondaryText
+        self.showChevron = showChevron
         self.primaryColor = primaryColor
         self.secondaryColor = secondaryColor
         self.backgroundStyle = backgroundStyle
@@ -38,12 +41,14 @@ struct CommonTileView<BackgroundType: ShapeStyle>: View {
     init(
         primaryText: String,
         secondaryText: String?,
+        showChevron: Bool = false,
         primaryColor: Color = Color.primary,
         secondaryColor: Color = Color.secondary,
         backgroundStyle: Color = Color.cellBackground
     ) where BackgroundType == Color {
         self.primaryText = primaryText
         self.secondaryText = secondaryText
+        self.showChevron = showChevron
         self.primaryColor = primaryColor
         self.secondaryColor = secondaryColor
         self.backgroundStyle = backgroundStyle
@@ -54,13 +59,17 @@ struct CommonTileView<BackgroundType: ShapeStyle>: View {
             Text(primaryText)
                 .font(.subheadline.weight(.semibold))
                 .foregroundColor(primaryColor)
+
             if !accessibilityTextEnabled {
                 Spacer()
             }
+
             if let secondaryText = secondaryText {
                 Text(secondaryText)
                     .font(.subheadline.weight(.medium))
                     .foregroundColor(secondaryColor)
+            } else if showChevron {
+                Image(systemName: "chevron.right")
             }
         })
         .padding(Padding.cell)
