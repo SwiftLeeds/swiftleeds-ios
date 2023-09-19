@@ -13,6 +13,7 @@ struct CommonTileView<BackgroundType: ShapeStyle>: View {
 
     let primaryText: String
     let secondaryText: String?
+    let subtitleText: String?
     let showChevron: Bool
     let primaryColor: Color
     let secondaryColor: Color
@@ -24,7 +25,8 @@ struct CommonTileView<BackgroundType: ShapeStyle>: View {
 
     init(
         primaryText: String,
-        secondaryText: String?,
+        secondaryText: String? = nil,
+        subtitleText: String? = nil,
         showChevron: Bool = false,
         primaryColor: Color = Color.primary,
         secondaryColor: Color = Color.secondary,
@@ -32,6 +34,7 @@ struct CommonTileView<BackgroundType: ShapeStyle>: View {
     ) {
         self.primaryText = primaryText
         self.secondaryText = secondaryText
+        self.subtitleText = subtitleText
         self.showChevron = showChevron
         self.primaryColor = primaryColor
         self.secondaryColor = secondaryColor
@@ -40,7 +43,8 @@ struct CommonTileView<BackgroundType: ShapeStyle>: View {
 
     init(
         primaryText: String,
-        secondaryText: String?,
+        secondaryText: String? = nil,
+        subtitleText: String? = nil,
         showChevron: Bool = false,
         primaryColor: Color = Color.primary,
         secondaryColor: Color = Color.secondary,
@@ -48,6 +52,7 @@ struct CommonTileView<BackgroundType: ShapeStyle>: View {
     ) where BackgroundType == Color {
         self.primaryText = primaryText
         self.secondaryText = secondaryText
+        self.subtitleText = subtitleText
         self.showChevron = showChevron
         self.primaryColor = primaryColor
         self.secondaryColor = secondaryColor
@@ -56,9 +61,17 @@ struct CommonTileView<BackgroundType: ShapeStyle>: View {
 
     var body: some View {
         sizeAwareStack(content: {
-            Text(primaryText)
-                .font(.subheadline.weight(.semibold))
-                .foregroundColor(primaryColor)
+            VStack(alignment: .leading, spacing: 2) {
+                Text(primaryText)
+                    .font(.subheadline.weight(.semibold))
+
+                if let subtitleText {
+                    Text(subtitleText)
+                        .font(.subheadline.weight(.light))
+
+                }
+            }
+            .foregroundColor(primaryColor)
 
             if !accessibilityTextEnabled {
                 Spacer()
@@ -106,10 +119,10 @@ struct CommonTileView_Previews: PreviewProvider {
             Color(uiColor: .systemGroupedBackground).edgesIgnoringSafeArea(.all)
             VStack(spacing: Padding.cellGap) {
                 CommonTileView(
-                    primaryText: "Primary", secondaryText: "Secondary"
+                    primaryText: "Primary", secondaryText: "Secondary", subtitleText: "More details", showChevron: true
                 )
                 CommonTileView(
-                    primaryText: "Primary", secondaryText: nil
+                    primaryText: "Primary"
                 )
                 CommonTileView(
                     primaryText: "Primary",

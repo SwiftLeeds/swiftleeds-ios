@@ -10,6 +10,7 @@ import SwiftUI
 struct CommonTileButton<BackgroundType: ShapeStyle>: View {
     let primaryText: String
     let secondaryText: String?
+    let subtitleText: String?
     let showChevron: Bool
     let primaryColor: Color
     let secondaryColor: Color
@@ -20,6 +21,7 @@ struct CommonTileButton<BackgroundType: ShapeStyle>: View {
     init(
         primaryText: String,
         secondaryText: String? = nil,
+        subtitleText: String? = nil,
         showChevron: Bool = false,
         primaryColor: Color = Color.primary,
         secondaryColor: Color = Color.secondary,
@@ -28,6 +30,7 @@ struct CommonTileButton<BackgroundType: ShapeStyle>: View {
     ) where BackgroundType == Color {
         self.primaryText = primaryText
         self.secondaryText = secondaryText
+        self.subtitleText = subtitleText
         self.showChevron = showChevron
         self.primaryColor = primaryColor
         self.secondaryColor = secondaryColor
@@ -38,6 +41,7 @@ struct CommonTileButton<BackgroundType: ShapeStyle>: View {
     init(
         primaryText: String,
         secondaryText: String?,
+        subtitleText: String? = nil,
         showChevron: Bool = false,
         primaryColor: Color = Color.primary,
         secondaryColor: Color = Color.secondary,
@@ -46,6 +50,7 @@ struct CommonTileButton<BackgroundType: ShapeStyle>: View {
     ) {
         self.primaryText = primaryText
         self.secondaryText = secondaryText
+        self.subtitleText = subtitleText
         self.showChevron = showChevron
         self.primaryColor = primaryColor
         self.secondaryColor = secondaryColor
@@ -58,6 +63,7 @@ struct CommonTileButton<BackgroundType: ShapeStyle>: View {
             CommonTileView(
                 primaryText: primaryText,
                 secondaryText: secondaryText,
+                subtitleText: subtitleText,
                 showChevron: showChevron,
                 primaryColor: primaryColor,
                 secondaryColor: secondaryColor,

@@ -32,6 +32,7 @@ struct SponsorTileView: View {
                     VStack(spacing: 0) {
                         Divider()
                         CommonTileButton(primaryText: job.title,
+                                         subtitleText: job.location,
                                          showChevron: true,
                                          backgroundStyle: Color.cellBackground) {
                             openURL(job.url)
