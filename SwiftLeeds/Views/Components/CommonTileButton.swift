@@ -10,6 +10,8 @@ import SwiftUI
 struct CommonTileButton<BackgroundType: ShapeStyle>: View {
     let primaryText: String
     let secondaryText: String?
+    let subtitleText: String?
+    let showChevron: Bool
     let primaryColor: Color
     let secondaryColor: Color
     var backgroundStyle: BackgroundType
@@ -19,6 +21,8 @@ struct CommonTileButton<BackgroundType: ShapeStyle>: View {
     init(
         primaryText: String,
         secondaryText: String? = nil,
+        subtitleText: String? = nil,
+        showChevron: Bool = false,
         primaryColor: Color = Color.primary,
         secondaryColor: Color = Color.secondary,
         backgroundStyle: Color = Color.cellBackground,
@@ -26,6 +30,8 @@ struct CommonTileButton<BackgroundType: ShapeStyle>: View {
     ) where BackgroundType == Color {
         self.primaryText = primaryText
         self.secondaryText = secondaryText
+        self.subtitleText = subtitleText
+        self.showChevron = showChevron
         self.primaryColor = primaryColor
         self.secondaryColor = secondaryColor
         self.backgroundStyle = backgroundStyle
@@ -35,6 +41,8 @@ struct CommonTileButton<BackgroundType: ShapeStyle>: View {
     init(
         primaryText: String,
         secondaryText: String?,
+        subtitleText: String? = nil,
+        showChevron: Bool = false,
         primaryColor: Color = Color.primary,
         secondaryColor: Color = Color.secondary,
         backgroundStyle: BackgroundType,
@@ -42,6 +50,8 @@ struct CommonTileButton<BackgroundType: ShapeStyle>: View {
     ) {
         self.primaryText = primaryText
         self.secondaryText = secondaryText
+        self.subtitleText = subtitleText
+        self.showChevron = showChevron
         self.primaryColor = primaryColor
         self.secondaryColor = secondaryColor
         self.backgroundStyle = backgroundStyle
@@ -53,6 +63,8 @@ struct CommonTileButton<BackgroundType: ShapeStyle>: View {
             CommonTileView(
                 primaryText: primaryText,
                 secondaryText: secondaryText,
+                subtitleText: subtitleText,
+                showChevron: showChevron,
                 primaryColor: primaryColor,
                 secondaryColor: secondaryColor,
                 backgroundStyle: backgroundStyle
@@ -74,7 +86,7 @@ struct CommonTileButtton_Previews: PreviewProvider {
                 )
                 CommonTileButton(
                     primaryText: "Primary",
-                    secondaryText: nil,
+                    showChevron: true,
                     onTap: {}
                 )
                 CommonTileButton(

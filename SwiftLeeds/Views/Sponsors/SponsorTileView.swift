@@ -1,5 +1,5 @@
 //
-//  ContentTileView.swift
+//  SponsorTileView.swift
 //  SwiftLeeds
 //
 //  Created by Alex Logan on 01/07/2022.
@@ -8,37 +8,47 @@
 import SwiftUI
 import CachedAsyncImage
 
-struct ContentTileView: View {
-    // Label to be read prior to the content, i.e Sponsor
-    let accessibilityLabel: String
-    let title: String
-    let subTitle: String?
-    let imageURL: URL?
-    let isImagePadded: Bool
+struct SponsorTileView: View {
+    let sponsor: Sponsor
 
-    var placeholderColor: Color = .accentColor
-    var imageBackgroundColor: Color = .accentColor
-    var imageContentMode: ContentMode = .fill
-
-    let onTap: () -> ()
+    @Environment(\.openURL) private var openURL
 
     var body: some View {
-        Button(action: onTap) {
+        Button(action: { openURL(sponsor.url) }) {
             VStack(alignment: .leading, spacing: 0) {
                 image
-                    .padding(isImagePadded ? 16 : 0)
+                    .padding(16)
 
                 text
+
+                if sponsor.jobs.isEmpty == false {
+                    Text("JOBS")
+                        .font(.caption)
+                        .fontWeight(.thin)
+                        .padding(Padding.cell)
+                }
+
+                ForEach(sponsor.jobs) { job in
+                    VStack(spacing: 0) {
+                        Divider()
+                        CommonTileButton(primaryText: job.title,
+                                         subtitleText: job.location,
+                                         showChevron: true,
+                                         backgroundStyle: Color.cellBackground) {
+                            openURL(job.url)
+                        }
+                        .foregroundColor(.secondary)
+                    }
+                }
             }
         }
         .background(Color.cellBackground, in: contentShape)
-        .clipShape(contentShape)
         .buttonStyle(SquishyButtonStyle())
     }
 
     private var image: some View {
         CachedAsyncImage(
-            url: imageURL,
+            url: URL(string: sponsor.image),
             content: { image in
                 Rectangle()
                     .aspectRatio(1.66, contentMode: .fill)
@@ -46,16 +56,16 @@ struct ContentTileView: View {
                     .background(
                         image
                             .resizable()
-                            .aspectRatio(contentMode: imageContentMode)
+                            .aspectRatio(contentMode: .fit)
                             .transition(.opacity)
                     )
-                    .background(imageBackgroundColor)
+                    .background(Color.cellBackground)
                     .clipped()
                     .transition(contentTransition)
             },
             placeholder: {
                 Rectangle()
-                    .foregroundColor(placeholderColor)
+                    .foregroundColor(.cellBackground)
                     .transition(contentTransition)
                     .overlay(content: {
                         ProgressView()
@@ -70,18 +80,19 @@ struct ContentTileView: View {
 
     private var text: some View {
         VStack(alignment: .leading, spacing: 4) {
-            Text(title)
+            Text(sponsor.name)
                 .foregroundColor(.primary)
                 .font(.subheadline.weight(.medium))
-            if let subTitle = subTitle {
-                Text(subTitle)
+
+            if sponsor.subtitle.isEmpty == false {
+                Text(sponsor.subtitle)
                     .foregroundColor(.secondary)
                     .font(.subheadline.weight(.regular))
             }
         }
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(
-            "\(accessibilityLabel). \(title), \(subTitle ?? "")"
+            "Sponsor, \(sponsor.name), \(sponsor.subtitle)"
         )
         .padding()
         .frame(minHeight: 55)
@@ -94,28 +105,21 @@ struct ContentTileView: View {
     private var contentTransition: AnyTransition {
         .opacity.animation(.spring())
     }
+
+    private func openURL(_ urlString: String) {
+        guard let link = URL(string: urlString) else { return }
+        openURL(link)
+    }
 }
 
-struct ContentTileView_Previews: PreviewProvider {
+struct SponsorTileView_Previews: PreviewProvider {
     static var previews: some View {
         ZStack {
             Color.background.edgesIgnoringSafeArea(.all)
+
             VStack {
-                ContentTileView(
-                    accessibilityLabel: "Speaker",
-                    title: "Alex Logan",
-                    subTitle: "subtitle",
-                    imageURL: URL(string: "https://pbs.twimg.com/profile_images/1475087054652559361/lgTnY96Q_400x400.jpg"),
-                    isImagePadded: false,
-                    onTap: {}
-                )
-                ContentTileView(
-                    accessibilityLabel: "Speaker",
-                    title: "Alex Logan",
-                    subTitle: nil,
-                    imageURL: nil,
-                    isImagePadded: false,
-                    onTap: {}
+                SponsorTileView(
+                    sponsor: .sample
                 )
             }
             .padding()
