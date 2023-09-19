@@ -24,12 +24,12 @@ class MyConferenceViewModel: ObservableObject {
             await MainActor.run {
                 event = schedule.data.event
 
-                let individualDates = Set(schedule.data.slots.compactMap { $0.date?.withoutTime }).sorted(by: (<))
+                let individualDates = Set(schedule.data.slots.compactMap { $0.date?.withoutTimeAtConferenceVenue }).sorted(by: (<))
                 days = individualDates.map { Helper.shortDateFormatter.string(from: $0) }
 
                 for date in individualDates {
                     let key = Helper.shortDateFormatter.string(from: date)
-                    slots[key] = schedule.data.slots.filter { Calendar.current.compare(date, to: $0.date ?? Date(), toGranularity: .day) == .orderedSame }
+                    slots[key] = schedule.data.slots.filter { Calendar.atConferenceVenue.compare(date, to: $0.date ?? Date(), toGranularity: .day) == .orderedSame }
                 }
             }
 
