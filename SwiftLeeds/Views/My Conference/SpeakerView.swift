@@ -12,7 +12,6 @@ struct SpeakerView: View {
     let showSlido: Bool
 
     @State private var showWebSheet = false
-    @State private var showVideo = false
 
     @Environment(\.openURL) var openURL
 
@@ -41,7 +40,7 @@ struct SpeakerView: View {
                     secondaryColor: Color.primary
                 )
 
-                if presentation.videoURL != nil {
+                if let videoURL = presentation.videoURL {
                     CommonTileView(
                         icon: "video.fill",
                         primaryText: "Watch video",
@@ -51,7 +50,7 @@ struct SpeakerView: View {
                     .accessibilityHint("Double tap to view video")
                     .accessibilityAddTraits(.isButton)
                     .onTapGesture {
-                        showVideo = true
+                        openURL(URL(string: videoURL)!)
                     }
                 }
 
@@ -95,9 +94,6 @@ struct SpeakerView: View {
         }
         .sheet(isPresented: $showWebSheet) {
             WebView(url: presentation.slidoURL ?? "")
-        }
-        .sheet(isPresented: $showVideo) {
-            WebView(url: presentation.videoURL ?? "")
                 .edgesIgnoringSafeArea(.bottom)
         }
     }
