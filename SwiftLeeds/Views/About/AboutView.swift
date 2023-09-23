@@ -34,15 +34,15 @@ struct AboutView: View {
             VStack(spacing: Padding.cellGap) {
                 StackedTileView(primaryText: "About", secondaryText: Strings.aboutSwiftLeeds)
 
-                CommonTileButton(primaryText: "Report a problem", backgroundStyle: Color.cellBackground) {
+                CommonTileButton(primaryText: "Report a problem", accessibilityHint: "Opens a web view to allow a problem to be reported", backgroundStyle: Color.cellBackground) {
                     isReportAProblemShown = true
                 }
 
-                CommonTileButton(primaryText: "Code of conduct", backgroundStyle: Color.cellBackground) {
+                CommonTileButton(primaryText: "Code of conduct", accessibilityHint: "Opens a web page showing our code of conduct", backgroundStyle: Color.cellBackground) {
                     openURL(url: codeOfConductURL)
                 }
                 
-                CommonTileButton(primaryText: "Venue", backgroundStyle: Color.cellBackground) {
+                CommonTileButton(primaryText: "Venue", accessibilityHint: "Opens a web page showing our venue information", backgroundStyle: Color.cellBackground) {
                     openURL(url: venueURL)
                 }
             }

@@ -47,7 +47,7 @@ struct SpeakerView: View {
                         showChevron: true,
                         secondaryColor: Color.primary
                     )
-                    .accessibilityHint("Double tap to view video")
+                    .accessibilityHint("Opens the video")
                     .accessibilityAddTraits(.isButton)
                     .onTapGesture {
                         openURL(URL(string: videoURL)!)
@@ -58,7 +58,7 @@ struct SpeakerView: View {
                     CommonTileButton(
                         icon: "questionmark.bubble.fill",
                         primaryText: "Ask Questions Now",
-                        secondaryText: nil,
+                        accessibilityHint: "Opens Slido to allow questions to be asked",
                         primaryColor: .white,
                         secondaryColor: .white.opacity(0.8),
                         backgroundStyle: LinearGradient(gradient: Gradient(colors:[.buyTicketGradientStart, .buyTicketGradientEnd]) ,startPoint: .leading, endPoint: .trailing),
@@ -66,7 +66,6 @@ struct SpeakerView: View {
                             showWebSheet.toggle()
                         }
                     )
-                    .accessibilityHint("Double tap to ask a question")
                 }
 
                 ForEach(presentation.speakers) { speaker in
@@ -82,7 +81,7 @@ struct SpeakerView: View {
                             secondaryText: "@\(twitter)",
                             secondaryColor: Color.primary
                         )
-                        .accessibilityHint("Double tap to view on Twitter")
+                        .accessibilityHint("Opens twitter for this speaker")
                         .accessibilityAddTraits(.isButton)
                         .onTapGesture {
                             openURL(URL(string: "https://twitter.com/\(twitter)")!)

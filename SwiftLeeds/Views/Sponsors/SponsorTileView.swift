@@ -31,10 +31,13 @@ struct SponsorTileView: View {
                 ForEach(sponsor.jobs) { job in
                     VStack(spacing: 0) {
                         Divider()
+
                         CommonTileButton(primaryText: job.title,
                                          subtitleText: job.location,
+                                         accessibilityHint: "Opens a web site showing more details about the job",
                                          showChevron: true,
-                                         backgroundStyle: Color.cellBackground) {
+                                         backgroundStyle: Color.cellBackground) 
+                        {
                             openURL(job.url)
                         }
                         .foregroundColor(.secondary)

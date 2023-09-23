@@ -12,6 +12,7 @@ struct CommonTileButton<BackgroundType: ShapeStyle>: View {
     let primaryText: String
     let secondaryText: String?
     let subtitleText: String?
+    let accessibilityHint: String?
     let showChevron: Bool
     let primaryColor: Color
     let secondaryColor: Color
@@ -24,6 +25,7 @@ struct CommonTileButton<BackgroundType: ShapeStyle>: View {
         primaryText: String,
         secondaryText: String? = nil,
         subtitleText: String? = nil,
+        accessibilityHint: String? = nil,
         showChevron: Bool = false,
         primaryColor: Color = Color.primary,
         secondaryColor: Color = Color.secondary,
@@ -34,6 +36,7 @@ struct CommonTileButton<BackgroundType: ShapeStyle>: View {
         self.primaryText = primaryText
         self.secondaryText = secondaryText
         self.subtitleText = subtitleText
+        self.accessibilityHint = accessibilityHint
         self.showChevron = showChevron
         self.primaryColor = primaryColor
         self.secondaryColor = secondaryColor
@@ -44,8 +47,9 @@ struct CommonTileButton<BackgroundType: ShapeStyle>: View {
     init(
         icon: String? = nil,
         primaryText: String,
-        secondaryText: String?,
+        secondaryText: String? = nil,
         subtitleText: String? = nil,
+        accessibilityHint: String? = nil,
         showChevron: Bool = false,
         primaryColor: Color = Color.primary,
         secondaryColor: Color = Color.secondary,
@@ -56,6 +60,7 @@ struct CommonTileButton<BackgroundType: ShapeStyle>: View {
         self.primaryText = primaryText
         self.secondaryText = secondaryText
         self.subtitleText = subtitleText
+        self.accessibilityHint = accessibilityHint
         self.showChevron = showChevron
         self.primaryColor = primaryColor
         self.secondaryColor = secondaryColor
@@ -77,6 +82,8 @@ struct CommonTileButton<BackgroundType: ShapeStyle>: View {
             )
         }
         .buttonStyle(SquishyButtonStyle())
+        .accessibilityHint(accessibilityHint ?? "")
+        .accessibilityAddTraits(.isButton)
     }
 }
 
