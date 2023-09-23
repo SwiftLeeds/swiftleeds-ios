@@ -40,8 +40,23 @@ struct SpeakerView: View {
                     secondaryColor: Color.primary
                 )
 
+                if let videoURL = presentation.videoURL {
+                    CommonTileView(
+                        icon: "video.fill",
+                        primaryText: "Watch video",
+                        showChevron: true,
+                        secondaryColor: Color.primary
+                    )
+                    .accessibilityHint("Double tap to view video")
+                    .accessibilityAddTraits(.isButton)
+                    .onTapGesture {
+                        openURL(URL(string: videoURL)!)
+                    }
+                }
+
                 if showSlido, presentation.slidoURL != nil {
                     CommonTileButton(
+                        icon: "questionmark.bubble.fill",
                         primaryText: "Ask Questions Now",
                         secondaryText: nil,
                         primaryColor: .white,
@@ -79,6 +94,7 @@ struct SpeakerView: View {
         }
         .sheet(isPresented: $showWebSheet) {
             WebView(url: presentation.slidoURL ?? "")
+                .edgesIgnoringSafeArea(.bottom)
         }
     }
 }

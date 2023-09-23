@@ -11,6 +11,7 @@ import SwiftUI
 struct CommonTileView<BackgroundType: ShapeStyle>: View {
     @Environment(\.sizeCategory) var sizeCategory
 
+    let icon: String?
     let primaryText: String
     let secondaryText: String?
     let subtitleText: String?
@@ -24,6 +25,7 @@ struct CommonTileView<BackgroundType: ShapeStyle>: View {
     }
 
     init(
+        icon: String? = nil,
         primaryText: String,
         secondaryText: String? = nil,
         subtitleText: String? = nil,
@@ -32,6 +34,7 @@ struct CommonTileView<BackgroundType: ShapeStyle>: View {
         secondaryColor: Color = Color.secondary,
         backgroundStyle: BackgroundType
     ) {
+        self.icon = icon
         self.primaryText = primaryText
         self.secondaryText = secondaryText
         self.subtitleText = subtitleText
@@ -42,6 +45,7 @@ struct CommonTileView<BackgroundType: ShapeStyle>: View {
     }
 
     init(
+        icon: String? = nil,
         primaryText: String,
         secondaryText: String? = nil,
         subtitleText: String? = nil,
@@ -50,6 +54,7 @@ struct CommonTileView<BackgroundType: ShapeStyle>: View {
         secondaryColor: Color = Color.secondary,
         backgroundStyle: Color = Color.cellBackground
     ) where BackgroundType == Color {
+        self.icon = icon
         self.primaryText = primaryText
         self.secondaryText = secondaryText
         self.subtitleText = subtitleText
@@ -62,8 +67,14 @@ struct CommonTileView<BackgroundType: ShapeStyle>: View {
     var body: some View {
         sizeAwareStack(content: {
             VStack(alignment: .leading, spacing: 2) {
-                Text(primaryText)
-                    .font(.subheadline.weight(.semibold))
+                if let icon {
+                    Text("\(Image(systemName: icon)) \(primaryText)")
+                        .font(.subheadline.weight(.semibold))
+                } else {
+                    Text(primaryText)
+                        .font(.subheadline.weight(.semibold))
+                }
+
 
                 if let subtitleText {
                     Text(subtitleText)
