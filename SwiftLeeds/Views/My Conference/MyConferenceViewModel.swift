@@ -58,7 +58,7 @@ class MyConferenceViewModel: ObservableObject {
     // Only show slido links on the day of the event
     var showSlido: Bool {
         guard let days = event?.daysUntil else { return false }
-        return days == 0
+        return days <= 0 && days >= -1
     }
 
     static let stringDateFormatter: DateFormatter = {

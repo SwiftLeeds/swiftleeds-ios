@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct CommonTileButton<BackgroundType: ShapeStyle>: View {
+    let icon: String?
     let primaryText: String
     let secondaryText: String?
     let subtitleText: String?
@@ -19,6 +20,7 @@ struct CommonTileButton<BackgroundType: ShapeStyle>: View {
     let onTap: () -> ()
 
     init(
+        icon: String? = nil,
         primaryText: String,
         secondaryText: String? = nil,
         subtitleText: String? = nil,
@@ -28,6 +30,7 @@ struct CommonTileButton<BackgroundType: ShapeStyle>: View {
         backgroundStyle: Color = Color.cellBackground,
         onTap: @escaping () -> ()
     ) where BackgroundType == Color {
+        self.icon = icon
         self.primaryText = primaryText
         self.secondaryText = secondaryText
         self.subtitleText = subtitleText
@@ -39,6 +42,7 @@ struct CommonTileButton<BackgroundType: ShapeStyle>: View {
     }
 
     init(
+        icon: String? = nil,
         primaryText: String,
         secondaryText: String?,
         subtitleText: String? = nil,
@@ -48,6 +52,7 @@ struct CommonTileButton<BackgroundType: ShapeStyle>: View {
         backgroundStyle: BackgroundType,
         onTap: @escaping () -> ()
     ) {
+        self.icon = icon
         self.primaryText = primaryText
         self.secondaryText = secondaryText
         self.subtitleText = subtitleText
@@ -61,6 +66,7 @@ struct CommonTileButton<BackgroundType: ShapeStyle>: View {
     var body: some View {
         Button(action: onTap) {
             CommonTileView(
+                icon: icon,
                 primaryText: primaryText,
                 secondaryText: secondaryText,
                 subtitleText: subtitleText,
