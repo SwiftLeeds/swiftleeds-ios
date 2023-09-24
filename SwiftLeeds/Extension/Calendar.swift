@@ -15,4 +15,10 @@ extension Calendar {
 
         return numberOfDays.day ?? 0
     }
+    
+    static var atConferenceVenue: Calendar {
+        var calendar = Calendar.current
+        calendar.timeZone = .init(abbreviation: "BST")!
+        return calendar
+    }
 }

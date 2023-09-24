@@ -8,8 +8,8 @@
 import Foundation
 
 extension Date {
-    var withoutTime: Date {
-        guard let date = Calendar.current.date(from: Calendar.current.dateComponents([.year, .month, .day], from: self)) else {
+    var withoutTimeAtConferenceVenue: Date {
+        guard let date = Calendar.atConferenceVenue.date(from: Calendar.atConferenceVenue.dateComponents([.year, .month, .day], from: self)) else {
             fatalError("Failed to strip time from Date")
         }
 
