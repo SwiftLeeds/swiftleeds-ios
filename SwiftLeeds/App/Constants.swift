@@ -39,8 +39,9 @@ enum Strings {
 
 enum Assets {
     enum Image {
+        static let carriageworksTheatre = "CarriageworksTheatre"
+        static let leedsPlayhouse = "LeedsPlayhouse"
         static let swiftLeedsIcon = "SwiftLeedsIcon"
-        static let playhouseImage = "LeedsPlayhouse"
         static let swiftLeedsIconWithNoBackground = "Icon"
     }
 }

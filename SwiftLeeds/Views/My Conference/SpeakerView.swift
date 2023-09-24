@@ -40,7 +40,7 @@ struct SpeakerView: View {
                     secondaryColor: Color.primary
                 )
 
-                if let videoURL = presentation.videoURL {
+                if let videoURL = presentation.videoURL, videoURL.isEmpty == false {
                     CommonTileView(
                         icon: "video.fill",
                         primaryText: "Watch video",
@@ -54,7 +54,7 @@ struct SpeakerView: View {
                     }
                 }
 
-                if showSlido, presentation.slidoURL != nil {
+                if showSlido, presentation.slidoURL?.isEmpty == false {
                     CommonTileButton(
                         icon: "questionmark.bubble.fill",
                         primaryText: "Ask Questions Now",
@@ -75,7 +75,7 @@ struct SpeakerView: View {
                         secondaryColor: Color.primary
                     )
 
-                    if let twitter = speaker.twitter {
+                    if let twitter = speaker.twitter, twitter.isEmpty == false {
                         CommonTileView(
                             primaryText: "Twitter",
                             secondaryText: "@\(twitter)",

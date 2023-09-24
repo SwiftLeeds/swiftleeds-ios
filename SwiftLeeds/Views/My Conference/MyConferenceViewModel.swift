@@ -12,8 +12,10 @@ import SwiftUI
 
 class MyConferenceViewModel: ObservableObject {
     @Published private(set) var event: Schedule.Event?
+    @Published private(set) var events: [Schedule.Event] = []
     @Published private(set) var days: [String] = []
     @Published private(set) var slots: [String: [Schedule.Slot]] = [:]
+    @Published private(set) var currentEvent: Schedule.Event?
 
     @Environment(\.network) var network: Networking
 
@@ -23,6 +25,12 @@ class MyConferenceViewModel: ObservableObject {
 
             await MainActor.run {
                 event = schedule.data.event
+                events = schedule.data.events.sorted(by: { $0.name < $1.name })
+
+                // Set the event to the current one on first launch
+                if currentEvent == nil {
+                    currentEvent = event
+                }
 
                 let individualDates = Set(schedule.data.slots.compactMap { $0.date?.withoutTime }).sorted(by: (<))
                 days = individualDates.map { Helper.shortDateFormatter.string(from: $0) }
@@ -41,6 +49,24 @@ class MyConferenceViewModel: ObservableObject {
             }
         } catch {
             throw(error)
+        }
+    }
+
+    private func reloadSchedule() async throws {
+        guard let currentEvent else { return }
+
+        var endpoint = ScheduleEndpoint()
+        endpoint.eventID = currentEvent.id.uuidString
+        let schedule = try await network.performRequest(endpoint: endpoint)
+
+        await MainActor.run {
+            let individualDates = Set(schedule.data.slots.compactMap { $0.date?.withoutTime }).sorted(by: (<))
+            days = individualDates.map { Helper.shortDateFormatter.string(from: $0) }
+
+            for date in individualDates {
+                let key = Helper.shortDateFormatter.string(from: date)
+                slots[key] = schedule.data.slots.filter { Calendar.current.compare(date, to: $0.date ?? Date(), toGranularity: .day) == .orderedSame }
+            }
         }
     }
 
@@ -66,4 +92,12 @@ class MyConferenceViewModel: ObservableObject {
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
         return dateFormatter
     }()
+
+    func updateCurrentEvent(_ event: Schedule.Event) {
+        currentEvent = event
+
+        Task {
+            try? await reloadSchedule()
+        }
+    }
 }

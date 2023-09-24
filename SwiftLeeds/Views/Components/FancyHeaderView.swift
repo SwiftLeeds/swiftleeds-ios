@@ -31,7 +31,7 @@ struct FancyHeaderView: View {
             .edgesIgnoringSafeArea(.top)
             .aspectRatio(aspectRatio, contentMode: .fill)
             .background(
-                createRectangleImage(for: Image(Assets.Image.playhouseImage), aspectRatio: aspectRatio)
+                createRectangleImage(for: Image(Assets.Image.leedsPlayhouse), aspectRatio: aspectRatio)
                 .aspectRatio(contentMode: .fill)
                 .accessibilityHidden(true)
             )

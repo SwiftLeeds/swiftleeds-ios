@@ -28,8 +28,29 @@ struct MyConferenceView: View {
             }
             .background(Color.listBackground)
             .navigationTitle("Schedule")
-            .accentColor(.white)
+            .toolbar {
+                if let currentEvent = viewModel.currentEvent {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Menu {
+                            ForEach(viewModel.events) { event in
+                                Button(action: { viewModel.updateCurrentEvent(event) }) {
+                                    Text(event.name)
+                                }
+                            }
+                        } label: {
+                            HStack {
+                                Text(currentEvent.name)
+                                Image(systemName: "chevron.up.chevron.down")
+                                    .font(.caption)
+
+                            }
+                        }
+                        .accentColor(Color("AccentColor"))
+                    }
+                }
+            }
         }
+        .accentColor(.white)
         .task {
             try? await viewModel.loadSchedule()
         }
@@ -59,11 +80,7 @@ struct MyConferenceView: View {
 
     @ViewBuilder
     private var scheduleHeaders: some View {
-        if viewModel.days.count == 1 {
-            tabBarHeader(title: viewModel.days.first!, index: 0)
-                .disabled(true)
-                .padding()
-        } else {
+        if viewModel.days.count > 1 {
             HStack(spacing: 20) {
                 ForEach(Array(zip(viewModel.days.indices, viewModel.days)), id: \.0) { index, key in
                     tabBarHeader(title: "Day \(index + 1)", index: index)
