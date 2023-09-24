@@ -12,10 +12,11 @@ struct Schedule: Decodable {
 
     struct Data: Decodable {
         let event: Event
+        let events: [Event]
         let slots: [Slot]
     }
 
-    struct Event: Decodable {
+    struct Event: Decodable, Identifiable {
         let id: UUID
         let name: String
         let location: String
