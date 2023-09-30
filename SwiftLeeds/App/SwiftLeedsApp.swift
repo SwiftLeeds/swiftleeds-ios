@@ -52,5 +52,6 @@ private extension SwiftLeedsApp {
         guard let incomingURL = userActivity.webpageURL, let components = URLComponents(
               url: incomingURL, resolvingAgainstBaseURL: true), let queryItems = components.queryItems
         else { return }
+        print(queryItems)
     }
 }
