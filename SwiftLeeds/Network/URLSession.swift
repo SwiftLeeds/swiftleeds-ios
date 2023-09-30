@@ -11,8 +11,8 @@ public extension URLSession {
     static var awaitConnectivity: URLSession = {
         let configuration = URLSessionConfiguration.default
         configuration.waitsForConnectivity = true
-        configuration.timeoutIntervalForRequest = 5 //60
-        configuration.timeoutIntervalForResource = 5 //60 * 30
+        configuration.timeoutIntervalForRequest = 30
+        configuration.timeoutIntervalForResource = 30
         configuration.urlCache = nil
         configuration.requestCachePolicy = .reloadIgnoringLocalAndRemoteCacheData
         return URLSession(configuration: configuration)
@@ -49,10 +49,6 @@ public extension URLSession {
 
                 guard let response = response as? HTTPURLResponse else { throw URLError(.badServerResponse) }
 
-                if let eTagKey = request.eTagKey, let eTagValue = response.value(forHTTPHeaderField: "Etag") {
-                    UserDefaults.standard.set(eTagValue, forKey: eTagKey)
-                }
-
                 switch response.statusCode {
                 case 200...299: break
                 case 304: throw NetworkError.notModified
@@ -60,6 +56,10 @@ public extension URLSession {
                 }
 
                 try data.write(to: path, options: .atomicWrite)
+
+                if let eTagKey = request.eTagKey, let eTagValue = response.value(forHTTPHeaderField: "Etag") {
+                    UserDefaults.standard.set(eTagValue, forKey: eTagKey)
+                }
 
                 if let dateDecodingStrategy {
                     decoder.dateDecodingStrategy = dateDecodingStrategy
