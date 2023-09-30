@@ -7,39 +7,20 @@
 
 import Foundation
 import Combine
-import NetworkKit
 import SwiftUI
 
 class MyConferenceViewModel: ObservableObject {
+    @Published private(set) var hasLoaded = false
     @Published private(set) var event: Schedule.Event?
     @Published private(set) var events: [Schedule.Event] = []
     @Published private(set) var days: [String] = []
     @Published private(set) var slots: [String: [Schedule.Slot]] = [:]
     @Published private(set) var currentEvent: Schedule.Event?
 
-    @Environment(\.network) var network: Networking
-
     func loadSchedule() async throws {
         do {
-            let schedule = try await network.performRequest(endpoint: ScheduleEndpoint())
-
-            await MainActor.run {
-                event = schedule.data.event
-                events = schedule.data.events.sorted(by: { $0.name < $1.name })
-
-                // Set the event to the current one on first launch
-                if currentEvent == nil {
-                    currentEvent = event
-                }
-
-                let individualDates = Set(schedule.data.slots.compactMap { $0.date?.withoutTime }).sorted(by: (<))
-                days = individualDates.map { Helper.shortDateFormatter.string(from: $0) }
-
-                for date in individualDates {
-                    let key = Helper.shortDateFormatter.string(from: date)
-                    slots[key] = schedule.data.slots.filter { Calendar.current.compare(date, to: $0.date ?? Date(), toGranularity: .day) == .orderedSame }
-                }
-            }
+            let schedule = try await URLSession.awaitConnectivity.decode(Requests.schedule, dateDecodingStrategy: Requests.defaultDateDecodingStratergy)
+            await updateSchedule(schedule)
 
             do {
                 let data = try PropertyListEncoder().encode(slots)
@@ -48,26 +29,40 @@ class MyConferenceViewModel: ObservableObject {
                 throw(error)
             }
         } catch {
-            throw(error)
+            if let cachedResponse = try? await URLSession.shared.cached(Requests.schedule, dateDecodingStrategy: Requests.defaultDateDecodingStratergy) {
+                await updateSchedule(cachedResponse)
+            } else {
+                throw(error)
+            }
         }
+    }
+
+    @MainActor
+    private func updateSchedule(_ schedule: Schedule) async {
+        event = schedule.data.event
+        events = schedule.data.events.sorted(by: { $0.name < $1.name })
+
+        // Set the event to the current one on first launch
+        if currentEvent == nil {
+            currentEvent = event
+        }
+
+        let individualDates = Set(schedule.data.slots.compactMap { $0.date?.withoutTime }).sorted(by: (<))
+        days = individualDates.map { Helper.shortDateFormatter.string(from: $0) }
+
+        for date in individualDates {
+            let key = Helper.shortDateFormatter.string(from: date)
+            slots[key] = schedule.data.slots.filter { Calendar.current.compare(date, to: $0.date ?? Date(), toGranularity: .day) == .orderedSame }
+        }
+
+        hasLoaded = true
     }
 
     private func reloadSchedule() async throws {
         guard let currentEvent else { return }
 
-        var endpoint = ScheduleEndpoint()
-        endpoint.eventID = currentEvent.id.uuidString
-        let schedule = try await network.performRequest(endpoint: endpoint)
-
-        await MainActor.run {
-            let individualDates = Set(schedule.data.slots.compactMap { $0.date?.withoutTime }).sorted(by: (<))
-            days = individualDates.map { Helper.shortDateFormatter.string(from: $0) }
-
-            for date in individualDates {
-                let key = Helper.shortDateFormatter.string(from: date)
-                slots[key] = schedule.data.slots.filter { Calendar.current.compare(date, to: $0.date ?? Date(), toGranularity: .day) == .orderedSame }
-            }
-        }
+        let schedule = try await URLSession.awaitConnectivity.decode(Requests.schedule(for: currentEvent.id), dateDecodingStrategy: Requests.defaultDateDecodingStratergy, filename: "schedule-\(currentEvent.id.uuidString)")
+        await updateSchedule(schedule)
     }
 
     var numberOfDaysToConference: Int? {

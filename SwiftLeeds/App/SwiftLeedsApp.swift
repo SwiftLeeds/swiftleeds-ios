@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import NetworkKit
 
 @main
 struct SwiftLeedsApp: App {
@@ -14,12 +13,9 @@ struct SwiftLeedsApp: App {
     
     @StateObject private var appState = AppState()
 
-    private let network = Network(environment: SwiftLeedsEnvironment())
-
     var body: some Scene {
         WindowGroup {
             Tabs()
-                .environment(\.network, network)
                 .environmentObject(appState)
                 .onContinueUserActivity(NSUserActivityTypeBrowsingWeb, perform: handleUserActivity)
         }
@@ -55,9 +51,6 @@ private extension SwiftLeedsApp {
     func handleUserActivity(_ userActivity: NSUserActivity) {
         guard let incomingURL = userActivity.webpageURL, let components = URLComponents(
               url: incomingURL, resolvingAgainstBaseURL: true), let queryItems = components.queryItems
-          else {
-            return
-        }
-        print(queryItems)
+        else { return }
     }
 }
