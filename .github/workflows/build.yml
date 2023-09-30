@@ -9,7 +9,7 @@ on:
 jobs:
   build:
     name: Build SwiftLeeds (DEBUG)
-    runs-on: macos-12
+    runs-on: macos-13
     steps:
       - name: Checkout iOS Repository
         uses: actions/checkout@v2

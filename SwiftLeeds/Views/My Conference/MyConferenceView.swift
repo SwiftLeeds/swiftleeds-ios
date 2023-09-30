@@ -18,7 +18,15 @@ struct MyConferenceView: View {
             VStack(spacing: 0) {
                 Divider()
 
-                if viewModel.slots.isEmpty {
+                if viewModel.hasLoaded == false {
+                    ZStack {
+                        Color.clear
+
+                        ProgressView()
+                            .progressViewStyle(.circular)
+                            .scaleEffect(2)
+                    }
+                } else if viewModel.slots.isEmpty {
                     empty
                 } else {
                     schedule
