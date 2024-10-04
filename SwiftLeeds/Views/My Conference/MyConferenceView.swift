@@ -88,7 +88,16 @@ struct MyConferenceView: View {
 
     @ViewBuilder
     private var scheduleHeaders: some View {
-        if viewModel.days.count > 1 {
+        if viewModel.days.count == 3 {
+            // Temporary solution until new API is ready to support days correctly
+            HStack(spacing: 20) {
+                tabBarHeader(title: "Talkshow", index: 0)
+                tabBarHeader(title: "Day 1", index: 1)
+                tabBarHeader(title: "Day 2", index: 2)
+            }
+            .padding(.horizontal)
+            .padding(.top)
+        } else if viewModel.days.count > 1 {
             HStack(spacing: 20) {
                 ForEach(Array(zip(viewModel.days.indices, viewModel.days)), id: \.0) { index, key in
                     tabBarHeader(title: "Day \(index + 1)", index: index)
