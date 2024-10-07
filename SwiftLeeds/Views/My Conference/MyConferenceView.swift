@@ -58,6 +58,7 @@ struct MyConferenceView: View {
                 }
             }
         }
+        .navigationViewStyle(.stack)
         .accentColor(.white)
         .task {
             try? await viewModel.loadSchedule()
