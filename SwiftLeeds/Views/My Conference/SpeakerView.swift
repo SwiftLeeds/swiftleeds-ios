@@ -27,9 +27,12 @@ struct SpeakerView: View {
     private var content: some View {
         VStack(spacing: Padding.stackGap) {
             if presentation.speakers.isEmpty == false {
+                let imageURLs = presentation.speakers.compactMap { speaker in
+                    speaker.profileImage.isEmpty ? nil : URL(string: speaker.profileImage)
+                }
                 FancyHeaderView(
                     title: presentation.speakers.joinedNames,
-                    foregroundImageURLs: presentation.speakers.map { URL(string: $0.profileImage)! }
+                    foregroundImageURLs: imageURLs
                 )
             }
 
@@ -69,11 +72,13 @@ struct SpeakerView: View {
                 }
 
                 ForEach(presentation.speakers) { speaker in
-                    StackedTileView(
-                        primaryText: "About\(presentation.speakers.count == 1 ? "" : ": \(speaker.name)")",
-                        secondaryText: speaker.biography,
-                        secondaryColor: Color.primary
-                    )
+                    if !speaker.biography.isEmpty {
+                        StackedTileView(
+                            primaryText: "About\(presentation.speakers.count == 1 ? "" : ": \(speaker.name)")",
+                            secondaryText: speaker.biography,
+                            secondaryColor: Color.primary
+                        )
+                    }
 
                     if let twitter = speaker.twitter, twitter.isEmpty == false {
                         CommonTileView(
