@@ -113,7 +113,9 @@ struct FancyHeaderView: View {
     }
 
     private var foregroundImageCount: Int {
-        foregroundImageURLs.count + (foregroundImageName == nil ? 0 : 1)
+        let count = foregroundImageURLs.count + (foregroundImageName == nil ? 0 : 1)
+        // Ensure we always have at least 1 for the fallback image
+        return count == 0 ? 1 : count
     }
 
     private var shadowColor: Color {
