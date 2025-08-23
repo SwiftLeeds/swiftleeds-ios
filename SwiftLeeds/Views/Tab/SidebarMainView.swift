@@ -23,6 +23,8 @@ struct SidebarMainView: View {
                 LocalView()
             case .sponsors:
                 SponsorsView()
+            case .settings:
+                SettingsView()
             }
         }
 

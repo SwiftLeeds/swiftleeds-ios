@@ -15,7 +15,7 @@ struct SidebarView: View {
             NavigationLink(destination: MyConferenceView().onAppear {
                 appState.selectedTab = .conference
             }) {
-                Label("My Conference", systemImage: "person.fill")
+                Label("Schedule", systemImage: "person.fill")
             }
             NavigationLink(destination: LocalView().onAppear {
                 appState.selectedTab = .location

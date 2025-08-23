@@ -12,11 +12,13 @@ struct SwiftLeedsApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
     
     @StateObject private var appState = AppState()
+    @StateObject private var themeManager = ThemeManager.shared
 
     var body: some Scene {
         WindowGroup {
             Tabs()
                 .environmentObject(appState)
+                .environmentObject(themeManager)
                 .onContinueUserActivity(NSUserActivityTypeBrowsingWeb, perform: handleUserActivity)
         }
     }
