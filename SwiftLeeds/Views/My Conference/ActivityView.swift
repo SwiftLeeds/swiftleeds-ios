@@ -28,22 +28,29 @@ struct ActivityView: View {
                 foregroundImageURLs: foregroundImageURLs
             )
 
-            StackedTileView(
-                primaryText: activity.subtitle,
-                secondaryText: activity.description,
-                secondaryColor: Color.primary
-            )
-            .padding(Padding.screen)
+            let hasSubtitle = activity.subtitle != nil && !activity.subtitle!.isEmpty
+            let hasDescription = activity.description != nil && !activity.description!.isEmpty
+            
+            if hasSubtitle || hasDescription {
+                StackedTileView(
+                    primaryText: activity.subtitle,
+                    secondaryText: activity.description,
+                    secondaryColor: Color.primary
+                )
+                .padding(Padding.screen)
+            }
         }
     }
 
     private var foregroundImageURLs: [URL] {
-        if let image = activity.image?.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed), let url = URL(string: image) {
+        if let image = activity.image,
+           !image.isEmpty,
+           let encodedImage = image.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed),
+           let url = URL(string: encodedImage) {
             return [url]
         } else {
             return []
         }
-
     }
 }
 

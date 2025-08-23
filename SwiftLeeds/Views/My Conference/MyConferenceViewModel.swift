@@ -52,7 +52,9 @@ class MyConferenceViewModel: ObservableObject {
 
         for date in individualDates {
             let key = Helper.shortDateFormatter.string(from: date)
-            slots[key] = schedule.data.slots.filter { Calendar.current.compare(date, to: $0.date ?? Date(), toGranularity: .day) == .orderedSame }
+            slots[key] = schedule.data.slots
+                .filter { Calendar.current.compare(date, to: $0.date ?? Date(), toGranularity: .day) == .orderedSame }
+                .sorted { $0.startTime < $1.startTime }
         }
 
         hasLoaded = true
