@@ -120,6 +120,8 @@
 		AEDC22532898281300746247 /* MyConferenceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEDC22522898281300746247 /* MyConferenceViewModel.swift */; };
 		AEDC22552898288F00746247 /* Schedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEDC22542898288F00746247 /* Schedule.swift */; };
 		AEDC2257289C65D500746247 /* Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEDC2256289C65D500746247 /* Calendar.swift */; };
+		E3569AEE2E5A1D0200BC9556 /* ShimmerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3569AED2E5A1D0200BC9556 /* ShimmerView.swift */; };
+		E3569AEF2E5A1D0200BC9556 /* ShimmerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3569AED2E5A1D0200BC9556 /* ShimmerView.swift */; };
 		FA1F7EF7287CB71600E12F8C /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1F7EF6287CB71600E12F8C /* HeaderView.swift */; };
 		FA534D8228A1909300A3BFBB /* Local.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA534D8128A1909300A3BFBB /* Local.swift */; };
 		FA534D8828A1939500A3BFBB /* LocalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA534D8728A1939500A3BFBB /* LocalViewModel.swift */; };
@@ -261,6 +263,7 @@
 		AEDC22522898281300746247 /* MyConferenceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyConferenceViewModel.swift; sourceTree = "<group>"; };
 		AEDC22542898288F00746247 /* Schedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Schedule.swift; sourceTree = "<group>"; };
 		AEDC2256289C65D500746247 /* Calendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calendar.swift; sourceTree = "<group>"; };
+		E3569AED2E5A1D0200BC9556 /* ShimmerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerView.swift; sourceTree = "<group>"; };
 		FA1F7EF6287CB71600E12F8C /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		FA534D8128A1909300A3BFBB /* Local.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Local.swift; sourceTree = "<group>"; };
 		FA534D8728A1939500A3BFBB /* LocalViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalViewModel.swift; sourceTree = "<group>"; };
@@ -559,6 +562,7 @@
 				FA57DE432875B06500911F03 /* CommonTileButton.swift */,
 				FA57DE442875B06500911F03 /* CommonTileView.swift */,
 				2A3831112884A96600030002 /* FancyHeaderView.swift */,
+				E3569AED2E5A1D0200BC9556 /* ShimmerView.swift */,
 				FA1F7EF6287CB71600E12F8C /* HeaderView.swift */,
 				FA57DE452875B06500911F03 /* StackedTileView.swift */,
 				AEB06BD028CF8D2100E51967 /* WebView.swift */,
@@ -852,6 +856,7 @@
 				AE1CDBED2AC05B2B00E83420 /* Request.swift in Sources */,
 				AE9367972A9354CC00F2DB3F /* Helper.swift in Sources */,
 				0B4CB3E528EAF5B700246E62 /* Speaker.swift in Sources */,
+				E3569AEE2E5A1D0200BC9556 /* ShimmerView.swift in Sources */,
 				0B4CB3E828EAF5CD00246E62 /* AnnouncementCell.swift in Sources */,
 				0B4CB3DD28EAF57900246E62 /* MyConferenceView.swift in Sources */,
 				0B4CB3CA28EAF19100246E62 /* ContentView.swift in Sources */,
@@ -922,6 +927,7 @@
 				AED26F7028675DA000E06064 /* AnnouncementCell.swift in Sources */,
 				AEB06BD128CF8D2100E51967 /* WebView.swift in Sources */,
 				AE8C1B2828C4B36B00AF7318 /* AppDelegate+Push.swift in Sources */,
+				E3569AEF2E5A1D0200BC9556 /* ShimmerView.swift in Sources */,
 				0B4B1A4D2A486EA800ED7EA9 /* SponsorsViewModel.swift in Sources */,
 				AECB295727417F9D00CDC983 /* SwiftLeedsApp.swift in Sources */,
 				0B4B1A4B2A4858F600ED7EA9 /* SponsorsView.swift in Sources */,
