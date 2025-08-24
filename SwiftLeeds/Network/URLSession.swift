@@ -10,29 +10,6 @@ public extension URLSession {
         return URLSession(configuration: configuration)
     }()
 
-    func cached<Response: Decodable>(
-        _ request: Request<Response>,
-        using decoder: JSONDecoder = .init(),
-        dateDecodingStrategy: JSONDecoder.DateDecodingStrategy = .deferredToDate,
-        fileManager: FileManager = .default,
-        filename: String? = nil
-    ) async throws -> Response {
-        let filename = filename ?? request.url.lastPathComponent
-        let path = fileManager.temporaryDirectory.appendingPathComponent(filename)
-
-        guard let data = fileManager.contents(atPath: path.path.appending(".json")) else {
-            throw NetworkError.cacheNotFound
-        }
-
-        let decoded = Task.detached(priority: .userInitiated) {
-            try Task.checkCancellation()
-            decoder.dateDecodingStrategy = dateDecodingStrategy
-            return try decoder.decode(Response.self, from: data)
-        }
-
-        return try await decoded.value
-    }
-
     func decode<Response: Decodable>(
         _ request: Request<Response>,
         using decoder: JSONDecoder = .init(),
