@@ -53,6 +53,9 @@ public extension URLSession {
                 case 304: throw NetworkError.notModified
                 default: throw NetworkError.unexpectedStatusCode(response.statusCode)
                 }
+                
+                let cachedResponse = CachedURLResponse(response: response, data: data)
+                URLCache.shared.storeCachedResponse(cachedResponse, for: request.urlRequest)
 
                 try data.write(to: path, options: .atomicWrite)
 
