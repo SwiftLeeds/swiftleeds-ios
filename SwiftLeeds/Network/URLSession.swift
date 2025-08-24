@@ -24,7 +24,7 @@ public extension URLSession {
         let filename = filename ?? request.url.lastPathComponent
         let path = fileManager.temporaryDirectory.appendingPathComponent(filename)
 
-        guard let data = fileManager.contents(atPath: path.path.appending(".json")) else { throw NetworkError.cacheNotFound }
+        guard let data = fileManager.contents(atPath: path.appendingPathExtension("json").path) else { throw NetworkError.cacheNotFound }
 
         let decoded = Task.detached(priority: .userInitiated) {
             try Task.checkCancellation()
@@ -39,7 +39,7 @@ public extension URLSession {
                                      dateDecodingStrategy: JSONDecoder.DateDecodingStrategy?,
                                      fileManager: FileManager = .default, filename: String? = nil) async throws -> Response {
         let filename = filename ?? request.url.lastPathComponent
-        let path = fileManager.temporaryDirectory.appendingPathComponent("\(filename).json")
+        let path = fileManager.temporaryDirectory.appendingPathComponent(filename).appendingPathExtension("json")
 
         let decoded = Task.detached(priority: .userInitiated) {
             do {

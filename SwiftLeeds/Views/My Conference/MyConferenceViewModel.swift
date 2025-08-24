@@ -19,7 +19,7 @@ class MyConferenceViewModel: ObservableObject {
 
     func loadSchedule() async throws {
         do {
-            let schedule = try await URLSession.awaitConnectivity.decode(Requests.schedule, dateDecodingStrategy: Requests.defaultDateDecodingStratergy)
+            let schedule = try await URLSession.shared.decode(Requests.schedule, dateDecodingStrategy: Requests.defaultDateDecodingStratergy)
             await updateSchedule(schedule)
 
             do {
@@ -63,7 +63,7 @@ class MyConferenceViewModel: ObservableObject {
     private func reloadSchedule() async throws {
         guard let currentEvent else { return }
 
-        let schedule = try await URLSession.awaitConnectivity.decode(Requests.schedule(for: currentEvent.id), dateDecodingStrategy: Requests.defaultDateDecodingStratergy, filename: "schedule-\(currentEvent.id.uuidString)")
+        let schedule = try await URLSession.shared.decode(Requests.schedule(for: currentEvent.id), dateDecodingStrategy: Requests.defaultDateDecodingStratergy, filename: "schedule-\(currentEvent.id.uuidString)")
         await updateSchedule(schedule)
     }
 

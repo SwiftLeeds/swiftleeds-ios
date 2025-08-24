@@ -20,7 +20,7 @@ final class SponsorsViewModel: ObservableObject {
 
     func loadSponsors() async throws {
         do {
-            let sponsors = try await URLSession.awaitConnectivity.decode(Requests.sponsors, dateDecodingStrategy: Requests.defaultDateDecodingStratergy)
+            let sponsors = try await URLSession.shared.decode(Requests.sponsors, dateDecodingStrategy: Requests.defaultDateDecodingStratergy)
             await updateSponsors(sponsors)
         } catch {
             if let cachedResponse = try? await URLSession.shared.cached(Requests.sponsors, dateDecodingStrategy: Requests.defaultDateDecodingStratergy) {
