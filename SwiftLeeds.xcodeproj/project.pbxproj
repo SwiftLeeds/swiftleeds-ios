@@ -224,6 +224,7 @@
 		74F5EF842A49CE6A008D9413 /* TabsMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabsMainView.swift; sourceTree = "<group>"; };
 		74F5EF862A49CE9D008D9413 /* SidebarMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarMainView.swift; sourceTree = "<group>"; };
 		74F5EF882A49CECB008D9413 /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
+		7B8108412E5CA00E00CCB2F5 /* SwiftLeedsPackage */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SwiftLeedsPackage; sourceTree = "<group>"; };
 		AE1C800F289E9F3800996659 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		AE1C801328A7BCD000996659 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		AE1CDBE02AC0586500E83420 /* HttpMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpMethod.swift; sourceTree = "<group>"; };
@@ -389,6 +390,7 @@
 		AECB294A27417F9D00CDC983 = {
 			isa = PBXGroup;
 			children = (
+				7B8108412E5CA00E00CCB2F5 /* SwiftLeedsPackage */,
 				74B14FAD28CB22B4004C0A40 /* SwiftLeedsWidgetExtension.entitlements */,
 				AECB295527417F9D00CDC983 /* SwiftLeeds */,
 				AE1C801328A7BCD000996659 /* Settings.bundle */,
