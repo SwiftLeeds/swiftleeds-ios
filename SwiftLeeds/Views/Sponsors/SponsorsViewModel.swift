@@ -23,11 +23,7 @@ final class SponsorsViewModel: ObservableObject {
             let sponsors = try await URLSession.awaitConnectivity.decode(Requests.sponsors, dateDecodingStrategy: Requests.defaultDateDecodingStratergy)
             await updateSponsors(sponsors)
         } catch {
-            if let cachedResponse = try? await URLSession.shared.cached(Requests.sponsors, dateDecodingStrategy: Requests.defaultDateDecodingStratergy) {
-                await updateSponsors(cachedResponse)
-            } else {
-                throw(error)
-            }
+            throw error
         }
     }
 

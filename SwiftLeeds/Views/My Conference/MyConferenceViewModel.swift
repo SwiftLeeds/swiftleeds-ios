@@ -19,7 +19,10 @@ class MyConferenceViewModel: ObservableObject {
 
     func loadSchedule() async throws {
         do {
-            let schedule = try await URLSession.awaitConnectivity.decode(Requests.schedule, dateDecodingStrategy: Requests.defaultDateDecodingStratergy)
+            let schedule = try await URLSession.awaitConnectivity.decode(
+                Requests.schedule,
+                dateDecodingStrategy: Requests.defaultDateDecodingStratergy
+            )
             await updateSchedule(schedule)
 
             do {
@@ -29,11 +32,7 @@ class MyConferenceViewModel: ObservableObject {
                 throw(error)
             }
         } catch {
-            if let cachedResponse = try? await URLSession.shared.cached(Requests.schedule, dateDecodingStrategy: Requests.defaultDateDecodingStratergy) {
-                await updateSchedule(cachedResponse)
-            } else {
-                throw(error)
-            }
+            throw error
         }
     }
 

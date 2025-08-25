@@ -29,11 +29,7 @@ class LocalViewModel: ObservableObject {
             let localResults = try await URLSession.awaitConnectivity.decode(Requests.local, dateDecodingStrategy: Requests.defaultDateDecodingStratergy)
             await updateLocal(localResults)
         } catch {
-            if let cachedResponse = try? await URLSession.shared.cached(Requests.local, dateDecodingStrategy: Requests.defaultDateDecodingStratergy) {
-                await updateLocal(cachedResponse)
-            } else {
-                self.error = error
-            }
+            self.error = error
         }
     }
 
