@@ -1,10 +1,3 @@
-//
-//  URLSession.swift
-//  SwiftLeeds
-//
-//  Created by Matthew Gallagher on 24/09/2023.
-//
-
 import Foundation
 
 public extension URLSession {
@@ -17,13 +10,19 @@ public extension URLSession {
         return URLSession(configuration: configuration)
     }()
 
-    func cached<Response: Decodable>(_ request: Request<Response>, using decoder: JSONDecoder = .init(),
-                                     dateDecodingStrategy: JSONDecoder.DateDecodingStrategy = .deferredToDate,
-                                     fileManager: FileManager = .default, filename: String? = nil) async throws -> Response {
+    func cached<Response: Decodable>(
+        _ request: Request<Response>,
+        using decoder: JSONDecoder = .init(),
+        dateDecodingStrategy: JSONDecoder.DateDecodingStrategy = .deferredToDate,
+        fileManager: FileManager = .default,
+        filename: String? = nil
+    ) async throws -> Response {
         let filename = filename ?? request.url.lastPathComponent
         let path = fileManager.temporaryDirectory.appendingPathComponent(filename)
 
-        guard let data = fileManager.contents(atPath: path.path.appending(".json")) else { throw NetworkError.cacheNotFound }
+        guard let data = fileManager.contents(atPath: path.path.appending(".json")) else {
+            throw NetworkError.cacheNotFound
+        }
 
         let decoded = Task.detached(priority: .userInitiated) {
             try Task.checkCancellation()
@@ -34,9 +33,13 @@ public extension URLSession {
         return try await decoded.value
     }
 
-    func decode<Response: Decodable>(_ request: Request<Response>, using decoder: JSONDecoder = .init(),
-                                     dateDecodingStrategy: JSONDecoder.DateDecodingStrategy?,
-                                     fileManager: FileManager = .default, filename: String? = nil) async throws -> Response {
+    func decode<Response: Decodable>(
+        _ request: Request<Response>,
+        using decoder: JSONDecoder = .init(),
+        dateDecodingStrategy: JSONDecoder.DateDecodingStrategy?,
+        fileManager: FileManager = .default,
+        filename: String? = nil
+    ) async throws -> Response {
         let filename = filename ?? request.url.lastPathComponent
         let path = fileManager.temporaryDirectory.appendingPathComponent("\(filename).json")
 
@@ -46,7 +49,9 @@ public extension URLSession {
 
                 try Task.checkCancellation()
 
-                guard let response = response as? HTTPURLResponse else { throw URLError(.badServerResponse) }
+                guard let response = response as? HTTPURLResponse else {
+                    throw URLError(.badServerResponse)
+                }
 
                 switch response.statusCode {
                 case 200...299: break
@@ -54,10 +59,19 @@ public extension URLSession {
                 default: throw NetworkError.unexpectedStatusCode(response.statusCode)
                 }
                 
-                let cachedResponse = CachedURLResponse(response: response, data: data)
-                URLCache.shared.storeCachedResponse(cachedResponse, for: request.urlRequest)
+                let cachedResponse = CachedURLResponse(
+                    response: response,
+                    data: data
+                )
+                URLCache.shared.storeCachedResponse(
+                    cachedResponse,
+                    for: request.urlRequest
+                )
 
-                try data.write(to: path, options: .atomicWrite)
+                try data.write(
+                    to: path,
+                    options: .atomicWrite
+                )
 
                 if let eTagKey = request.eTagKey, let eTagValue = response.value(forHTTPHeaderField: "Etag") {
                     UserDefaults.standard.set(eTagValue, forKey: eTagKey)
