@@ -17,9 +17,6 @@ public extension URLSession {
         fileManager: FileManager = .default,
         filename: String? = nil
     ) async throws -> Response {
-        let filename = filename ?? request.url.lastPathComponent
-        let path = fileManager.temporaryDirectory.appendingPathComponent("\(filename).json")
-
         let decoded = Task.detached(priority: .userInitiated) {
             do {
                 let (data, response) = try await self.data(for: request.urlRequest)
@@ -43,11 +40,6 @@ public extension URLSession {
                 URLCache.shared.storeCachedResponse(
                     cachedResponse,
                     for: request.urlRequest
-                )
-
-                try data.write(
-                    to: path,
-                    options: .atomicWrite
                 )
 
                 if let eTagKey = request.eTagKey, let eTagValue = response.value(forHTTPHeaderField: "Etag") {
