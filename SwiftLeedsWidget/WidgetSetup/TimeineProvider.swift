@@ -21,12 +21,14 @@ struct Provider: TimelineProvider {
     func getTimeline(in context: Context, completion: @escaping (Timeline<SwiftLeedsWidgetEntry>) -> ()) {
         var entries: [SwiftLeedsWidgetEntry] = []
         var slots: [Schedule.Slot] = []
-        
+
         do {
-            if let data = UserDefaults(suiteName: "group.uk.co.swiftleeds")?.data(forKey: "Slots") {
-                slots = try PropertyListDecoder().decode([Schedule.Slot].self, from: data)
+            if let data = UserDefaults(suiteName: "group.uk.co.swiftleeds")?.data(forKey: "Schedule") {
+                // Decode the full schedule and flatten days into slots
+                let schedule = try PropertyListDecoder().decode(Schedule.self, from: data)
+                slots = schedule.data.days.flatMap { $0.slots }.sorted { $0.startTime < $1.startTime }
             }
-            
+
             for slot in slots {
                 let date = buildDate(for: slot)
                 if date > Date() {
@@ -44,23 +46,20 @@ struct Provider: TimelineProvider {
             completion(timeline)
         }
     }
-    
+
     private func buildDate(for slot: Schedule.Slot) -> Date {
+        guard let slotDate = slot.date else { return Date() }
+
         let slotTime = slot.startTime
         let slotTimeComponents = slotTime.components(separatedBy: ":")
-        let slotHour = Int(slotTimeComponents.first ?? "0")
-        let slotMinute = Int(slotTimeComponents.last ?? "0")
-        
-        var dateComponents = DateComponents()
-        dateComponents.year = 2022
-        dateComponents.month = 10
-        dateComponents.day = 20
-        dateComponents.timeZone = TimeZone.current
+        let slotHour = Int(slotTimeComponents.first ?? "0") ?? 0
+        let slotMinute = Int(slotTimeComponents.last ?? "0") ?? 0
+
+        var dateComponents = Calendar.current.dateComponents([.year, .month, .day], from: slotDate)
         dateComponents.hour = slotHour
         dateComponents.minute = slotMinute
-        let userCalendar = Calendar(identifier: .gregorian)
-        let dateTime = userCalendar.date(from: dateComponents) ?? Date()
-        
-        return dateTime
+        dateComponents.timeZone = TimeZone.current
+
+        return Calendar.current.date(from: dateComponents) ?? Date()
     }
 }
