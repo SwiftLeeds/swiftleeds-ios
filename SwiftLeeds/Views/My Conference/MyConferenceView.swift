@@ -26,7 +26,7 @@ struct MyConferenceView: View {
                             .progressViewStyle(.circular)
                             .scaleEffect(2)
                     }
-                } else if viewModel.slots.isEmpty {
+                } else if viewModel.days.isEmpty {
                     empty
                 } else {
                     schedule
@@ -69,7 +69,6 @@ struct MyConferenceView: View {
         VStack(spacing: 0) {
             ViewThatFits {
                 scheduleHeaders
-
                 ScrollView(.horizontal) {
                     scheduleHeaders
                 }
@@ -77,8 +76,8 @@ struct MyConferenceView: View {
 
             TabView(selection: $currentIndex) {
                 ForEach(Array(zip(viewModel.days.indices, viewModel.days)),
-                        id: \.0) { index, key in
-                    ScheduleView(slots: viewModel.slots[key] ?? [], showSlido: viewModel.showSlido)
+                        id: \.0) { index, day in
+                    ScheduleView(slots: day.slots, showSlido: viewModel.showSlido)
                         .tag(index)
                 }
             }
@@ -89,19 +88,11 @@ struct MyConferenceView: View {
 
     @ViewBuilder
     private var scheduleHeaders: some View {
-        if viewModel.days.count == 3 {
-            // Temporary solution until new API is ready to support days correctly
+        if viewModel.days.count > 1 {
             HStack(spacing: 20) {
-                tabBarHeader(title: "Talkshow", index: 0)
-                tabBarHeader(title: "Day 1", index: 1)
-                tabBarHeader(title: "Day 2", index: 2)
-            }
-            .padding(.horizontal)
-            .padding(.top)
-        } else if viewModel.days.count > 1 {
-            HStack(spacing: 20) {
-                ForEach(Array(zip(viewModel.days.indices, viewModel.days)), id: \.0) { index, key in
-                    tabBarHeader(title: "Day \(index + 1)", index: index)
+                ForEach(Array(zip(viewModel.days.indices, viewModel.days)), id: \.0) { index, day in
+                    // Use the actual day names from the API
+                    tabBarHeader(title: day.name, index: index)
                 }
             }
             .padding(.horizontal)
