@@ -13,23 +13,29 @@ class MyConferenceViewModel: ObservableObject {
     @Published private(set) var hasLoaded = false
     @Published private(set) var event: Schedule.Event?
     @Published private(set) var events: [Schedule.Event] = []
-    @Published private(set) var days: [String] = []
-    @Published private(set) var slots: [String: [Schedule.Slot]] = [:]
+    @Published private(set) var days: [Schedule.Day] = []
     @Published private(set) var currentEvent: Schedule.Event?
 
     func loadSchedule() async throws {
         do {
-            let schedule = try await URLSession.shared.decode(Requests.schedule, dateDecodingStrategy: Requests.defaultDateDecodingStratergy)
+            let schedule = try await URLSession.awaitConnectivity.decode(
+                Requests.schedule,
+                dateDecodingStrategy: Requests.scheduleDateDecodingStrategy
+            )
+
             await updateSchedule(schedule)
 
             do {
-                let data = try PropertyListEncoder().encode(slots)
-                UserDefaults(suiteName: "group.uk.co.swiftleeds")?.setValue(data, forKey: "Slots")
+                let data = try PropertyListEncoder().encode(schedule)
+                UserDefaults(suiteName: "group.uk.co.swiftleeds")?.setValue(data, forKey: "Schedule")
             } catch {
                 throw(error)
             }
         } catch {
-            if let cachedResponse = try? await URLSession.shared.cached(Requests.schedule, dateDecodingStrategy: Requests.defaultDateDecodingStratergy) {
+            if let cachedResponse = try? await URLSession.shared.cached(
+                Requests.schedule,
+                dateDecodingStrategy: Requests.scheduleDateDecodingStrategy
+            ) {
                 await updateSchedule(cachedResponse)
             } else {
                 throw(error)
@@ -47,15 +53,15 @@ class MyConferenceViewModel: ObservableObject {
             currentEvent = event
         }
 
-        let individualDates = Set(schedule.data.slots.compactMap { $0.date?.withoutTimeAtConferenceVenue }).sorted(by: (<))
-        days = individualDates.map { Helper.shortDateFormatter.string(from: $0) }
-
-        for date in individualDates {
-            let key = Helper.shortDateFormatter.string(from: date)
-            slots[key] = schedule.data.slots
-                .filter { Calendar.current.compare(date, to: $0.date ?? Date(), toGranularity: .day) == .orderedSame }
-                .sorted { $0.startTime < $1.startTime }
-        }
+        days = schedule.data.days
+            .sorted(by: { $0.date < $1.date })
+            .map { day in
+                Schedule.Day(
+                    date: day.date,
+                    name: day.name,
+                    slots: day.slots.sorted { $0.startTime < $1.startTime }
+                )
+            }
 
         hasLoaded = true
     }
@@ -63,7 +69,12 @@ class MyConferenceViewModel: ObservableObject {
     private func reloadSchedule() async throws {
         guard let currentEvent else { return }
 
-        let schedule = try await URLSession.shared.decode(Requests.schedule(for: currentEvent.id), dateDecodingStrategy: Requests.defaultDateDecodingStratergy, filename: "schedule-\(currentEvent.id.uuidString)")
+        let schedule = try await URLSession.awaitConnectivity.decode(
+            Requests.schedule(for: currentEvent.id),
+            dateDecodingStrategy: Requests.scheduleDateDecodingStrategy,
+            filename: "schedule-\(currentEvent.id.uuidString)"
+        )
+
         await updateSchedule(schedule)
     }
 

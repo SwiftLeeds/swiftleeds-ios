@@ -7,16 +7,27 @@
 
 import Foundation
 
-struct Schedule: Decodable {
+struct Schedule: Codable {
     let data: Data
 
-    struct Data: Decodable {
+
+    struct Data: Codable {
         let event: Event
         let events: [Event]
-        let slots: [Slot]
+        let days: [Day]
     }
 
-    struct Event: Decodable, Identifiable {
+    struct Day: Codable, Identifiable {
+        let date: Date
+        let name: String
+        let slots: [Slot]
+
+        var id: String {
+            "\(name)-\(date.timeIntervalSince1970.description)"
+        }
+    }
+
+    struct Event: Codable, Identifiable {
         let id: UUID
         let name: String
         let location: String
