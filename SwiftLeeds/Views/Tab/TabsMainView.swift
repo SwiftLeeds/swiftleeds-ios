@@ -15,7 +15,7 @@ struct TabsMainView: View {
         TabView(selection: $appState.selectedTab) {
             MyConferenceView()
                 .tabItem {
-                    Label("My Conference", systemImage: "person.fill")
+                    Label("Schedule", systemImage: "person.fill")
                 }
                 .tag(TabItems.conference)
             
@@ -35,6 +35,12 @@ struct TabsMainView: View {
                     Label("Sponsors", systemImage: "sparkles")
                 }
                 .tag(TabItems.sponsors)
+            
+            SettingsView()
+                .tabItem {
+                    Label("Settings", systemImage: "gearshape.fill")
+                }
+                .tag(TabItems.settings)
         }
     }
 }
