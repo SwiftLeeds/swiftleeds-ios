@@ -26,7 +26,7 @@ class LocalViewModel: ObservableObject {
     
     func loadData() async {
         do {
-            let localResults = try await URLSession.awaitConnectivity.decode(Requests.local, dateDecodingStrategy: Requests.defaultDateDecodingStratergy)
+            let localResults = try await URLSession.shared.decode(Requests.local, dateDecodingStrategy: Requests.defaultDateDecodingStratergy)
             await updateLocal(localResults)
         } catch {
             if let cachedResponse = try? await URLSession.shared.cached(Requests.local, dateDecodingStrategy: Requests.defaultDateDecodingStratergy) {

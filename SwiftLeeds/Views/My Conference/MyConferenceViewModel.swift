@@ -22,6 +22,7 @@ class MyConferenceViewModel: ObservableObject {
                 Requests.schedule,
                 dateDecodingStrategy: Requests.scheduleDateDecodingStrategy
             )
+
             await updateSchedule(schedule)
 
             do {
@@ -73,6 +74,7 @@ class MyConferenceViewModel: ObservableObject {
             dateDecodingStrategy: Requests.scheduleDateDecodingStrategy,
             filename: "schedule-\(currentEvent.id.uuidString)"
         )
+
         await updateSchedule(schedule)
     }
 
