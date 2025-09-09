@@ -45,6 +45,27 @@ struct ScheduleView: View {
 
 struct ScheduleView_Previews: PreviewProvider {
     static var previews: some View {
-        ScheduleView(slots: [], showSlido: true)
+        NavigationView {
+            ScheduleView(slots: [
+                Schedule.Slot(
+                    id: UUID(),
+                    date: ISO8601DateFormatter().date(from: "2025-10-07T00:00:00Z"),
+                    startTime: "10:00",
+                    duration: 45,
+                    activity: nil,
+                    presentation: Presentation.donnyWalls
+                ),
+                Schedule.Slot(
+                    id: UUID(),
+                    date: ISO8601DateFormatter().date(from: "2025-10-07T00:00:00Z"),
+                    startTime: "12:30",
+                    duration: 75,
+                    activity: Activity.lunch,
+                    presentation: nil
+                )
+            ], showSlido: true)
+            .navigationTitle("Schedule")
+        }
+        .navigationViewStyle(.stack)
     }
 }

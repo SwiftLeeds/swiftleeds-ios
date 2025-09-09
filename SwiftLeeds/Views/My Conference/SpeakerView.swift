@@ -70,6 +70,42 @@ struct SpeakerView: View {
                         }
                     )
                 }
+                
+                NavigationLink {
+                    TalkRatingView(presentation: presentation)
+                } label: {
+                    HStack {
+                        VStack(alignment: .leading, spacing: 4) {
+                            HStack {
+                                Text("Rate This Talk")
+                                    .font(.body.weight(.medium))
+                                    .foregroundColor(.primary)
+                                Spacer()
+                                Image(systemName: "star.fill")
+                                    .foregroundColor(.accent)
+                                Text("4.6")
+                                    .font(.subheadline.weight(.semibold))
+                                    .foregroundColor(.secondary)
+                            }
+                        }
+                        
+                        Spacer()
+                        
+                        Image(systemName: "chevron.right")
+                            .font(.caption.weight(.semibold))
+                            .foregroundColor(.secondary)
+                    }
+                    .padding(Padding.cell)
+                    .background(
+                        RoundedRectangle(cornerRadius: Constants.cellRadius)
+                            .fill(Color.cellBackground)
+                    )
+                    .overlay(
+                        RoundedRectangle(cornerRadius: Constants.cellRadius)
+                            .stroke(Color.cellBorder, lineWidth: 1)
+                    )
+                }
+                .accessibilityHint("Rate and review this presentation")
 
                 ForEach(presentation.speakers) { speaker in
                     if !speaker.biography.isEmpty {
@@ -105,10 +141,16 @@ struct SpeakerView: View {
 
 struct SpeakerView_Previews: PreviewProvider {
     static var previews: some View {
-        SpeakerView(presentation: .donnyWalls, showSlido: true)
-            .previewDisplayName("Donny Wals")
+        NavigationView {
+            SpeakerView(presentation: .donnyWalls, showSlido: true)
+        }
+        .navigationViewStyle(.stack)
+        .previewDisplayName("Donny Wals")
 
-        SpeakerView(presentation: .skyBet, showSlido: true)
-            .previewDisplayName("Sky Bet")
+        NavigationView {
+            SpeakerView(presentation: .skyBet, showSlido: true)
+        }
+        .navigationViewStyle(.stack)
+        .previewDisplayName("Sky Bet")
     }
 }

@@ -41,9 +41,18 @@
 		0B4CB3FC28EAF7C500246E62 /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = 0B4CB3FB28EAF7C500246E62 /* CachedAsyncImage */; };
 		0B4CB3FD28EAF7FE00246E62 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AECB295A27417F9E00CDC983 /* Assets.xcassets */; };
 		0B4CB3FE28EAF80200246E62 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AECB29872741ACE000CDC983 /* Colors.xcassets */; };
+		0B59B55B2E7011F600820C3C /* TalkRatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B59B55A2E7011F600820C3C /* TalkRatingView.swift */; };
+		0B59B55C2E7011F600820C3C /* TalkRatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B59B55A2E7011F600820C3C /* TalkRatingView.swift */; };
+		0B59B55E2E70122400820C3C /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B59B55D2E70122400820C3C /* Review.swift */; };
+		0B59B55F2E70122400820C3C /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B59B55D2E70122400820C3C /* Review.swift */; };
+		0B59B5602E70122400820C3C /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B59B55D2E70122400820C3C /* Review.swift */; };
+		0B59B5622E70123600820C3C /* StarRatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B59B5612E70123600820C3C /* StarRatingView.swift */; };
+		0B59B5632E70123600820C3C /* StarRatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B59B5612E70123600820C3C /* StarRatingView.swift */; };
 		0B910A352A48FEC100648B32 /* SponsorTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE4E2875B09900911F03 /* SponsorTileView.swift */; };
 		0B910A372A49D07700648B32 /* Sponsor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B910A362A49D07700648B32 /* Sponsor.swift */; };
 		0B910A382A49D09300648B32 /* Sponsor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B910A362A49D07700648B32 /* Sponsor.swift */; };
+		0BD1C8F42E700E1B0094D163 /* schedule.json in Resources */ = {isa = PBXBuildFile; fileRef = 0BD1C8F32E700E1B0094D163 /* schedule.json */; };
+		0BD1C8F52E700E1B0094D163 /* schedule.json in Resources */ = {isa = PBXBuildFile; fileRef = 0BD1C8F32E700E1B0094D163 /* schedule.json */; };
 		2A3831122884A96600030002 /* FancyHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3831112884A96600030002 /* FancyHeaderView.swift */; };
 		39345FDA288F17EE0031BCFF /* BottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39345FD9288F17EE0031BCFF /* BottomSheetView.swift */; };
 		394653A9288BB47A00212E1C /* SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394653A8288BB47A00212E1C /* SectionHeader.swift */; };
@@ -209,7 +218,11 @@
 		0B4CB3CE28EAF19100246E62 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		0B4CB3D028EAF19100246E62 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0B4CB3D128EAF19100246E62 /* SwiftLeedsAppClip.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SwiftLeedsAppClip.entitlements; sourceTree = "<group>"; };
+		0B59B55A2E7011F600820C3C /* TalkRatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TalkRatingView.swift; sourceTree = "<group>"; };
+		0B59B55D2E70122400820C3C /* Review.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
+		0B59B5612E70123600820C3C /* StarRatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarRatingView.swift; sourceTree = "<group>"; };
 		0B910A362A49D07700648B32 /* Sponsor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sponsor.swift; sourceTree = "<group>"; };
+		0BD1C8F32E700E1B0094D163 /* schedule.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = schedule.json; sourceTree = "<group>"; };
 		2A3831112884A96600030002 /* FancyHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FancyHeaderView.swift; sourceTree = "<group>"; };
 		39345FD9288F17EE0031BCFF /* BottomSheetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BottomSheetView.swift; sourceTree = "<group>"; };
 		394653A8288BB47A00212E1C /* SectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeader.swift; sourceTree = "<group>"; };
@@ -483,6 +496,7 @@
 		AECB29842741AC2500CDC983 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				0BD1C8F32E700E1B0094D163 /* schedule.json */,
 				AECB295A27417F9E00CDC983 /* Assets.xcassets */,
 				AECB29872741ACE000CDC983 /* Colors.xcassets */,
 			);
@@ -557,6 +571,7 @@
 				AE93678E2A93455400F2DB3F /* ScheduleView.swift */,
 				394653AA288BB7C800212E1C /* SpeakerView.swift */,
 				AED26F73286764F000E06064 /* TalkCell.swift */,
+				0B59B55A2E7011F600820C3C /* TalkRatingView.swift */,
 			);
 			path = "My Conference";
 			sourceTree = "<group>";
@@ -584,6 +599,7 @@
 			isa = PBXGroup;
 			children = (
 				FA57DE432875B06500911F03 /* CommonTileButton.swift */,
+				0B59B5612E70123600820C3C /* StarRatingView.swift */,
 				FA57DE442875B06500911F03 /* CommonTileView.swift */,
 				2A3831112884A96600030002 /* FancyHeaderView.swift */,
 				E3569AED2E5A1D0200BC9556 /* ShimmerView.swift */,
@@ -616,6 +632,7 @@
 				AE8C1B2128BFCF4700AF7318 /* Activity.swift */,
 				FA534D8128A1909300A3BFBB /* Local.swift */,
 				AE8C1B2328BFCFC700AF7318 /* Presentation.swift */,
+				0B59B55D2E70122400820C3C /* Review.swift */,
 				AEDC22542898288F00746247 /* Schedule.swift */,
 				AE8C1B2528BFCFE700AF7318 /* Speaker.swift */,
 				0B910A362A49D07700648B32 /* Sponsor.swift */,
@@ -806,6 +823,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0B4CB3CF28EAF19100246E62 /* Preview Assets.xcassets in Resources */,
+				0BD1C8F52E700E1B0094D163 /* schedule.json in Resources */,
 				0B4CB3FE28EAF80200246E62 /* Colors.xcassets in Resources */,
 				0B4CB3FD28EAF7FE00246E62 /* Assets.xcassets in Resources */,
 				0B4CB3CC28EAF19100246E62 /* Assets.xcassets in Resources */,
@@ -827,6 +845,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AE1C801428A7BCD000996659 /* Settings.bundle in Resources */,
+				0BD1C8F42E700E1B0094D163 /* schedule.json in Resources */,
 				AECB29882741ACE000CDC983 /* Colors.xcassets in Resources */,
 				AECB295E27417F9E00CDC983 /* Preview Assets.xcassets in Resources */,
 				AECB295B27417F9E00CDC983 /* Assets.xcassets in Resources */,
@@ -862,14 +881,17 @@
 				0B4CB3F128EAF61000246E62 /* StackedTileView.swift in Sources */,
 				0B4CB3DE28EAF57E00246E62 /* MyConferenceViewModel.swift in Sources */,
 				AE9367902A93467500F2DB3F /* ScheduleView.swift in Sources */,
+				0B59B5632E70123600820C3C /* StarRatingView.swift in Sources */,
 				AE1CDBEF2AC05B2B00E83420 /* URLSession.swift in Sources */,
 				0B4CB3ED28EAF5F200246E62 /* SwiftLeedsContainer.swift in Sources */,
 				0B4CB3EC28EAF5E900246E62 /* ActivityView.swift in Sources */,
 				0B4CB3F228EAF61600246E62 /* WebView.swift in Sources */,
 				E3569B052E5B902B00BC9556 /* UserDefaultsKeys.swift in Sources */,
 				AE1CDBF02AC05B2B00E83420 /* HttpMethod.swift in Sources */,
+				0B59B55C2E7011F600820C3C /* TalkRatingView.swift in Sources */,
 				0B4B1A512A48FB6400ED7EA9 /* SponsorsViewModel.swift in Sources */,
 				0B4CB3EA28EAF5D900246E62 /* Color.swift in Sources */,
+				0B59B55E2E70122400820C3C /* Review.swift in Sources */,
 				0B4CB3EF28EAF60200246E62 /* FancyHeaderView.swift in Sources */,
 				0B4CB3F628EAF63100246E62 /* LinearGradient.swift in Sources */,
 				0B4CB3F028EAF60800246E62 /* SpeakerView.swift in Sources */,
@@ -912,6 +934,7 @@
 				AE9367982A9357D000F2DB3F /* Helper.swift in Sources */,
 				74B14FB028CE21D7004C0A40 /* TimeineProvider.swift in Sources */,
 				74E62F7828CADBE0004422F9 /* Activity.swift in Sources */,
+				0B59B55F2E70122400820C3C /* Review.swift in Sources */,
 				74E62F7A28CAE4DF004422F9 /* Speaker.swift in Sources */,
 				74E62F7728CADBD8004422F9 /* Schedule.swift in Sources */,
 				74B14FB228CE2221004C0A40 /* SwiftLeedsWidgetEntry.swift in Sources */,
@@ -936,8 +959,10 @@
 				AE1CDBE52AC0589100E83420 /* Request.swift in Sources */,
 				AE9367962A9354CC00F2DB3F /* Helper.swift in Sources */,
 				AED26F7A28676AA300E06064 /* LocalView.swift in Sources */,
+				0B59B55B2E7011F600820C3C /* TalkRatingView.swift in Sources */,
 				39ED0034288F113500AB337A /* LocalCell.swift in Sources */,
 				AEDC22552898288F00746247 /* Schedule.swift in Sources */,
+				0B59B5602E70122400820C3C /* Review.swift in Sources */,
 				AED26F74286764F000E06064 /* TalkCell.swift in Sources */,
 				FA1F7EF7287CB71600E12F8C /* HeaderView.swift in Sources */,
 				AE1C8010289E9F3800996659 /* String.swift in Sources */,
@@ -978,6 +1003,7 @@
 				74F5EF852A49CE6A008D9413 /* TabsMainView.swift in Sources */,
 				39345FDA288F17EE0031BCFF /* BottomSheetView.swift in Sources */,
 				740162DA2A7053A000C2D1B3 /* AppState.swift in Sources */,
+				0B59B5622E70123600820C3C /* StarRatingView.swift in Sources */,
 				74F5EF872A49CE9D008D9413 /* SidebarMainView.swift in Sources */,
 				AEDC2257289C65D500746247 /* Calendar.swift in Sources */,
 			);
