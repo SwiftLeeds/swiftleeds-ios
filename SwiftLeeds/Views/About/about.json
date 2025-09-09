@@ -1,0 +1,92 @@
+{
+  "urls": {
+    "venue": "https://swiftleeds.co.uk/#venue",
+    "codeOfConduct": "https://swiftleeds.co.uk/conduct",
+    "reportAProblem": "https://forms.gle/PJie9aRNAtzQUdUu9",
+    "slack": "https://join.slack.com/t/swiftleedsworkspace/shared_invite/zt-3dex3vb3k-JNYQ~ollX6R619D_tZVfXQ",
+    "youtube": "https://www.youtube.com/@swiftleeds"
+  },
+  "truncatedAboutText": "Adam Rush founded SwiftLeeds in 2019, born from over ten years of experience attending conferences. The inspiration was bringing a modern, inclusive conference in the North of the UK to be more accessible for all.\n\nSwiftLeeds is now run with over ten community volunteers building the website, iOS applications...",
+  "teamMembers": [
+    {
+      "name": "Adam Oxley",
+      "role": null,
+      "linkedInURL": "https://www.linkedin.com/in/adam-oxley-41183a82/",
+      "twitterURL": "https://twitter.com/admoxly",
+      "slackURL": "https://swiftleedsworkspace.slack.com/team/U02DRL7KUCS",
+      "photoURL": "https://swiftleeds.co.uk/img/team/oxley.jpg"
+    },
+    {
+      "name": "Adam Rush",
+      "role": "Founder and Host",
+      "linkedInURL": "https://www.linkedin.com/in/swiftlyrush/",
+      "twitterURL": "https://twitter.com/Adam9Rush",
+      "slackURL": "https://swiftleedsworkspace.slack.com/archives/D02ELG76VC0",
+      "photoURL": "https://swiftleeds.co.uk/img/team/rush.jpg"
+    },
+    {
+      "name": "James Sherlock",
+      "role": "Production Team Lead",
+      "linkedInURL": "https://www.linkedin.com/in/jamessherlockdeveloper/",
+      "twitterURL": "https://twitter.com/JamesSherlouk",
+      "slackURL": "https://swiftleedsworkspace.slack.com/archives/D05RK6AAV29",
+      "photoURL": "https://swiftleeds.co.uk/img/team/sherlock.jpg"
+    },
+    {
+      "name": "Joe Williams",
+      "role": "Camera Operator",
+      "linkedInURL": "https://www.linkedin.com/in/joe-williams-1676b871/",
+      "twitterURL": "https://twitter.com/joedub_dev",
+      "slackURL": "https://swiftleedsworkspace.slack.com/archives/C05N7JZE2NP",
+      "photoURL": "https://swiftleeds.co.uk/img/team/joe.jpg"
+    },
+    {
+      "name": "Kannan Prasad",
+      "role": null,
+      "linkedInURL": "https://www.linkedin.com/in/kannanprasad/",
+      "twitterURL": null,
+      "slackURL": "https://swiftleedsworkspace.slack.com/archives/D0477TRS28G",
+      "photoURL": "https://swiftleeds.co.uk/img/team/kannan.jpg"
+    },
+    {
+      "name": "Matthew Gallagher",
+      "role": "Registration and Mobile App",
+      "linkedInURL": "https://www.linkedin.com/in/pdamonkey/",
+      "twitterURL": "https://twitter.com/pdamonkey",
+      "slackURL": "https://swiftleedsworkspace.slack.com/archives/D030PN528UA",
+      "photoURL": "https://swiftleeds.co.uk/img/team/matt.jpg"
+    },
+    {
+      "name": "Muralidharan Kathiresan",
+      "role": null,
+      "linkedInURL": "https://www.linkedin.com/in/muralidharankathiresan/",
+      "twitterURL": "https://twitter.com/Muralidharan_K",
+      "slackURL": "https://swiftleedsworkspace.slack.com/archives/D02ELG6HV08",
+      "photoURL": "https://swiftleeds.co.uk/img/team/mural.jpg"
+    },
+    {
+      "name": "Noam Efergan",
+      "role": "Camera Operator and Social Media",
+      "linkedInURL": "https://www.linkedin.com/in/noamefergan/",
+      "twitterURL": "https://twitter.com/No_Wham",
+      "slackURL": "https://swiftleedsworkspace.slack.com/archives/C05N7JZE2NP",
+      "photoURL": "https://swiftleeds.co.uk/img/team/noam.jpg"
+    },
+    {
+      "name": "Paul Willis",
+      "role": null,
+      "linkedInURL": "https://www.linkedin.com/in/paulrobertwillis/",
+      "twitterURL": null,
+      "slackURL": "https://swiftleedsworkspace.slack.com/archives/C05N7JZE2NP",
+      "photoURL": "https://swiftleeds.co.uk/img/team/paul.jpg"
+    },
+    {
+      "name": "Preeti Thombare",
+      "role": null,
+      "linkedInURL": null,
+      "twitterURL": null,
+      "slackURL": "https://swiftleedsworkspace.slack.com/archives/C05N7JZE2NP",
+      "photoURL": "https://swiftleeds.co.uk/img/team/preeti.jpg"
+    }
+  ]
+}
