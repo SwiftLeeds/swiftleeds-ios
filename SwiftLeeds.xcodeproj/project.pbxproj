@@ -41,6 +41,16 @@
 		0B4CB3FC28EAF7C500246E62 /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = 0B4CB3FB28EAF7C500246E62 /* CachedAsyncImage */; };
 		0B4CB3FD28EAF7FE00246E62 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AECB295A27417F9E00CDC983 /* Assets.xcassets */; };
 		0B4CB3FE28EAF80200246E62 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AECB29872741ACE000CDC983 /* Colors.xcassets */; };
+		0B59B5652E70E5D400820C3C /* TeamMember.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B59B5642E70E5D400820C3C /* TeamMember.swift */; };
+		0B59B5662E70E5D400820C3C /* TeamMember.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B59B5642E70E5D400820C3C /* TeamMember.swift */; };
+		0B59B5672E70E5D400820C3C /* TeamMember.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B59B5642E70E5D400820C3C /* TeamMember.swift */; };
+		0B59B5692E70E5FE00820C3C /* TeamMemberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B59B5682E70E5FE00820C3C /* TeamMemberView.swift */; };
+		0B59B56B2E70E6AC00820C3C /* CompactActionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B59B56A2E70E6AC00820C3C /* CompactActionItem.swift */; };
+		0B59B56E2E70EA4F00820C3C /* about.json in Resources */ = {isa = PBXBuildFile; fileRef = 0B59B56C2E70EA4F00820C3C /* about.json */; };
+		0B59B56F2E70EA4F00820C3C /* AboutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B59B56D2E70EA4F00820C3C /* AboutViewModel.swift */; };
+		0B59B5712E70EA6600820C3C /* About.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B59B5702E70EA6600820C3C /* About.swift */; };
+		0B59B5722E70EA6600820C3C /* About.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B59B5702E70EA6600820C3C /* About.swift */; };
+		0B59B5732E70EA6600820C3C /* About.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B59B5702E70EA6600820C3C /* About.swift */; };
 		0B910A352A48FEC100648B32 /* SponsorTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE4E2875B09900911F03 /* SponsorTileView.swift */; };
 		0B910A372A49D07700648B32 /* Sponsor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B910A362A49D07700648B32 /* Sponsor.swift */; };
 		0B910A382A49D09300648B32 /* Sponsor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B910A362A49D07700648B32 /* Sponsor.swift */; };
@@ -209,6 +219,12 @@
 		0B4CB3CE28EAF19100246E62 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		0B4CB3D028EAF19100246E62 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0B4CB3D128EAF19100246E62 /* SwiftLeedsAppClip.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SwiftLeedsAppClip.entitlements; sourceTree = "<group>"; };
+		0B59B5642E70E5D400820C3C /* TeamMember.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamMember.swift; sourceTree = "<group>"; };
+		0B59B5682E70E5FE00820C3C /* TeamMemberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamMemberView.swift; sourceTree = "<group>"; };
+		0B59B56A2E70E6AC00820C3C /* CompactActionItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompactActionItem.swift; sourceTree = "<group>"; };
+		0B59B56C2E70EA4F00820C3C /* about.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = about.json; sourceTree = "<group>"; };
+		0B59B56D2E70EA4F00820C3C /* AboutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewModel.swift; sourceTree = "<group>"; };
+		0B59B5702E70EA6600820C3C /* About.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = About.swift; sourceTree = "<group>"; };
 		0B910A362A49D07700648B32 /* Sponsor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sponsor.swift; sourceTree = "<group>"; };
 		2A3831112884A96600030002 /* FancyHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FancyHeaderView.swift; sourceTree = "<group>"; };
 		39345FD9288F17EE0031BCFF /* BottomSheetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BottomSheetView.swift; sourceTree = "<group>"; };
@@ -531,7 +547,11 @@
 		AED26F7628676A9200E06064 /* About */ = {
 			isa = PBXGroup;
 			children = (
+				0B59B56C2E70EA4F00820C3C /* about.json */,
 				AED26F7728676A9900E06064 /* AboutView.swift */,
+				0B59B56D2E70EA4F00820C3C /* AboutViewModel.swift */,
+				0B59B56A2E70E6AC00820C3C /* CompactActionItem.swift */,
+				0B59B5682E70E5FE00820C3C /* TeamMemberView.swift */,
 			);
 			path = About;
 			sourceTree = "<group>";
@@ -613,12 +633,14 @@
 		FA57DE572875B0E300911F03 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				0B59B5702E70EA6600820C3C /* About.swift */,
 				AE8C1B2128BFCF4700AF7318 /* Activity.swift */,
 				FA534D8128A1909300A3BFBB /* Local.swift */,
 				AE8C1B2328BFCFC700AF7318 /* Presentation.swift */,
 				AEDC22542898288F00746247 /* Schedule.swift */,
 				AE8C1B2528BFCFE700AF7318 /* Speaker.swift */,
 				0B910A362A49D07700648B32 /* Sponsor.swift */,
+				0B59B5642E70E5D400820C3C /* TeamMember.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -829,6 +851,7 @@
 				AE1C801428A7BCD000996659 /* Settings.bundle in Resources */,
 				AECB29882741ACE000CDC983 /* Colors.xcassets in Resources */,
 				AECB295E27417F9E00CDC983 /* Preview Assets.xcassets in Resources */,
+				0B59B56E2E70EA4F00820C3C /* about.json in Resources */,
 				AECB295B27417F9E00CDC983 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -867,6 +890,7 @@
 				0B4CB3EC28EAF5E900246E62 /* ActivityView.swift in Sources */,
 				0B4CB3F228EAF61600246E62 /* WebView.swift in Sources */,
 				E3569B052E5B902B00BC9556 /* UserDefaultsKeys.swift in Sources */,
+				0B59B5712E70EA6600820C3C /* About.swift in Sources */,
 				AE1CDBF02AC05B2B00E83420 /* HttpMethod.swift in Sources */,
 				0B4B1A512A48FB6400ED7EA9 /* SponsorsViewModel.swift in Sources */,
 				0B4CB3EA28EAF5D900246E62 /* Color.swift in Sources */,
@@ -891,6 +915,7 @@
 				0B4CB3EB28EAF5E300246E62 /* TalkCell.swift in Sources */,
 				AE1CDBEE2AC05B2B00E83420 /* Requests.swift in Sources */,
 				740162DB2A7053A000C2D1B3 /* AppState.swift in Sources */,
+				0B59B5652E70E5D400820C3C /* TeamMember.swift in Sources */,
 				0B910A382A49D09300648B32 /* Sponsor.swift in Sources */,
 				0B4CB3F428EAF62100246E62 /* CommonTileView.swift in Sources */,
 				0B4CB3C828EAF19100246E62 /* SwiftLeedsAppClipApp.swift in Sources */,
@@ -908,6 +933,7 @@
 				74E62F7428CAAB30004422F9 /* SwiftLeedsMediumWidgetView.swift in Sources */,
 				74E62F7228CA98EA004422F9 /* SwiftLeedsSmallWidgetView.swift in Sources */,
 				7406572928E240720087F44F /* WidgetConstants.swift in Sources */,
+				0B59B5672E70E5D400820C3C /* TeamMember.swift in Sources */,
 				74A09FF228C689AB00E03F39 /* Color.swift in Sources */,
 				AE9367982A9357D000F2DB3F /* Helper.swift in Sources */,
 				74B14FB028CE21D7004C0A40 /* TimeineProvider.swift in Sources */,
@@ -917,6 +943,7 @@
 				74B14FB228CE2221004C0A40 /* SwiftLeedsWidgetEntry.swift in Sources */,
 				74E62F7028CA68D2004422F9 /* Constants.swift in Sources */,
 				74B14FB428CE2245004C0A40 /* SwiftLeedsWidgetEntryView.swift in Sources */,
+				0B59B5732E70EA6600820C3C /* About.swift in Sources */,
 				7406572728E2304E0087F44F /* Calendar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -928,8 +955,10 @@
 				AEDC22532898281300746247 /* MyConferenceViewModel.swift in Sources */,
 				AED26F7828676A9900E06064 /* AboutView.swift in Sources */,
 				FA57DE502875B09900911F03 /* SponsorTileView.swift in Sources */,
+				0B59B5692E70E5FE00820C3C /* TeamMemberView.swift in Sources */,
 				394653AB288BB7C800212E1C /* SpeakerView.swift in Sources */,
 				E3569B002E5A55D000BC9556 /* UserDefaultsKeys.swift in Sources */,
+				0B59B56F2E70EA4F00820C3C /* AboutViewModel.swift in Sources */,
 				FA57DE4D2875B08600911F03 /* LinearGradient.swift in Sources */,
 				394653A9288BB47A00212E1C /* SectionHeader.swift in Sources */,
 				FA57DE552875B0C100911F03 /* SquishyButtonStyle.swift in Sources */,
@@ -948,6 +977,8 @@
 				2A3831122884A96600030002 /* FancyHeaderView.swift in Sources */,
 				E3569B082E5B905100BC9556 /* SettingsView.swift in Sources */,
 				FA57DE4B2875B06B00911F03 /* SwiftLeedsContainer.swift in Sources */,
+				0B59B5722E70EA6600820C3C /* About.swift in Sources */,
+				0B59B56B2E70E6AC00820C3C /* CompactActionItem.swift in Sources */,
 				74F5EF892A49CECB008D9413 /* SidebarView.swift in Sources */,
 				FAAB819128844EBC001159BB /* View+MeasureSize.swift in Sources */,
 				E3569AF92E5A301D00BC9556 /* ThemeManager.swift in Sources */,
@@ -962,6 +993,7 @@
 				E3569AEF2E5A1D0200BC9556 /* ShimmerView.swift in Sources */,
 				0B4B1A4D2A486EA800ED7EA9 /* SponsorsViewModel.swift in Sources */,
 				AECB295727417F9D00CDC983 /* SwiftLeedsApp.swift in Sources */,
+				0B59B5662E70E5D400820C3C /* TeamMember.swift in Sources */,
 				0B4B1A4B2A4858F600ED7EA9 /* SponsorsView.swift in Sources */,
 				AE8C1B2B28C4B39A00AF7318 /* TokenDetails.swift in Sources */,
 				0B910A372A49D07700648B32 /* Sponsor.swift in Sources */,
