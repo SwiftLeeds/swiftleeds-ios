@@ -10,17 +10,25 @@ import SwiftUI
 struct TalkRatingView: View {
     private let presentation: Presentation
     
-    @State private var ratingSummary: RatingSummary
+    @State private var ratingSummary: RatingSummary?
     @State private var userRating: Int = 0
     @State private var userComment: String = ""
+    @State private var userName: String = ""
     @State private var userSubmittedReview: Review? = nil
-    @State private var isEditingExistingReview: Bool = false
+    @State private var hasUserAlreadyReviewed: Bool = false
     @State private var showingSubmittedAlert: Bool = false
+    @State private var isLoading: Bool = true
+    @State private var errorMessage: String? = nil
     @FocusState private var isCommentFieldFocused: Bool
+    @FocusState private var isUserNameFieldFocused: Bool
+    
+    // Get the primary speaker ID for this presentation
+    private var speakerId: String? {
+        presentation.speakers.first?.id.uuidString
+    }
     
     init(presentation: Presentation) {
         self.presentation = presentation
-        self._ratingSummary = State(initialValue: RatingSummary(reviews: Review.sampleReviews))
     }
     
     var body: some View {
@@ -31,11 +39,24 @@ struct TalkRatingView: View {
         }
         .navigationTitle("Rate Talk")
         .navigationBarTitleDisplayMode(.inline)
+        .task {
+            await loadReviews()
+        }
         .alert("Review Submitted",
                isPresented: $showingSubmittedAlert) {
             Button("OK") { }
         } message: {
             Text("Thank you for your feedback!")
+        }
+        .alert("Error",
+               isPresented: .constant(errorMessage != nil)) {
+            Button("OK") {
+                errorMessage = nil
+            }
+        } message: {
+            if let errorMessage = errorMessage {
+                Text(errorMessage)
+            }
         }
     }
     
@@ -43,15 +64,92 @@ struct TalkRatingView: View {
         VStack(spacing: Padding.stackGap) {
             headerView
             
-            VStack(spacing: Padding.screen) {
-                if userSubmittedReview == nil || isEditingExistingReview {
-                    userRatingSection
+            if isLoading {
+                loadingView
+            } else if let ratingSummary = ratingSummary {
+                VStack(spacing: Padding.screen) {
+                    if hasUserAlreadyReviewed {
+                        alreadyReviewedSection
+                    } else {
+                        userRatingSection
+                    }
+                    
+                    reviewsSection(ratingSummary: ratingSummary)
+                }
+                .padding(Padding.screen)
+            } else {
+                emptyReviewsView
+            }
+        }
+    }
+    
+    private var loadingView: some View {
+        VStack(spacing: 16) {
+            ProgressView()
+                .scaleEffect(1.5)
+            Text("Loading reviews...")
+                .font(.subheadline)
+                .foregroundColor(.secondary)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding(.top, 50)
+    }
+    
+    private var emptyReviewsView: some View {
+        VStack(spacing: Padding.screen) {
+            if hasUserAlreadyReviewed {
+                alreadyReviewedSection
+            } else {
+                userRatingSection
+            }
+            
+            VStack(spacing: 16) {
+                Image(systemName: "star.circle")
+                    .font(.system(size: 50))
+                    .foregroundColor(.secondary)
+                
+                Text("No reviews yet")
+                    .font(.headline)
+                    .foregroundColor(.primary)
+                
+                Text(hasUserAlreadyReviewed ? "Thank you for your review!" : "Be the first to rate this talk!")
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+            }
+            .padding(.top, 50)
+        }
+        .padding(Padding.screen)
+    }
+    
+    private var alreadyReviewedSection: some View {
+        VStack(spacing: 16) {
+            HStack {
+                Image(systemName: "checkmark.circle.fill")
+                    .font(.title2)
+                    .foregroundColor(.green)
+                
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Review Submitted")
+                        .font(.headline.weight(.semibold))
+                        .foregroundColor(.primary)
+                    
+                    Text("Thank you for rating this talk!")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
                 }
                 
-                reviewsSection
+                Spacer()
             }
-            .padding(Padding.screen)
         }
+        .padding(Padding.cell)
+        .background(
+            RoundedRectangle(cornerRadius: Constants.cellRadius)
+                .fill(Color.green.opacity(0.1))
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: Constants.cellRadius)
+                .stroke(Color.green.opacity(0.3), lineWidth: 1)
+        )
     }
     
     private var headerView: some View {
@@ -65,7 +163,7 @@ struct TalkRatingView: View {
     
     private var userRatingSection: some View {
         VStack(spacing: 16) {
-            Text(isEditingExistingReview ? "Edit Your Rating" : "Add Rating")
+            Text("Add Your Rating")
                 .font(.headline.weight(.semibold))
                 .foregroundColor(.primary)
                 .frame(maxWidth: .infinity, alignment: .center)
@@ -77,6 +175,17 @@ struct TalkRatingView: View {
                     starSize: 32
                 ) { newRating in
                     userRating = newRating
+                }
+                
+                VStack(alignment: .leading, spacing: 8) {
+                    TextField("Your name (optional)", text: $userName)
+                        .textFieldStyle(.roundedBorder)
+                        .focused($isUserNameFieldFocused)
+                    
+                    Text("Leave empty to post as 'Anonymous'")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                        .padding(.leading, 4)
                 }
                 
                 VStack(alignment: .leading, spacing: 8) {
@@ -92,15 +201,10 @@ struct TalkRatingView: View {
                     }
                 }) {
                     HStack {
-                        if isEditingExistingReview {
-                            Image(systemName: "checkmark")
-                                .font(.system(size: 16, weight: .semibold))
-                        } else {
-                            Image(systemName: "paperplane.fill")
-                                .font(.system(size: 16, weight: .semibold))
-                        }
+                        Image(systemName: "paperplane.fill")
+                            .font(.system(size: 16, weight: .semibold))
                         
-                        Text(buttonText)
+                        Text("SUBMIT REVIEW")
                             .font(.system(size: 16, weight: .semibold))
                     }
                     .foregroundColor(.white)
@@ -122,22 +226,6 @@ struct TalkRatingView: View {
             RoundedRectangle(cornerRadius: Constants.cellRadius)
                 .stroke(Color.cellBorder, lineWidth: 1)
         )
-        .onAppear {
-            if let existingReview = userSubmittedReview, isEditingExistingReview {
-                userRating = existingReview.rating
-                userComment = existingReview.comment
-            }
-        }
-    }
-    
-    private var buttonText: String {
-        if userRating == 0 {
-            return "SEND RATING"
-        } else if isEditingExistingReview {
-            return "EDIT RATING"
-        } else {
-            return "SEND RATING"
-        }
     }
     
     private var buttonBackground: LinearGradient {
@@ -156,7 +244,7 @@ struct TalkRatingView: View {
         }
     }
     
-    private var reviewsSection: some View {
+    private func reviewsSection(ratingSummary: RatingSummary) -> some View {
         VStack(spacing: 12) {
             HStack {
                 Text("\(ratingSummary.totalRatings) Ratings")
@@ -180,14 +268,14 @@ struct TalkRatingView: View {
                 }
                 
                 // Show other reviews (excluding user's review if it exists)
-                ForEach(otherReviews.sorted { $0.date > $1.date }) { review in
+                ForEach(otherReviews(from: ratingSummary).sorted { $0.date > $1.date }) { review in
                     reviewCell(review, isUserReview: false)
                 }
             }
         }
     }
     
-    private var otherReviews: [Review] {
+    private func otherReviews(from ratingSummary: RatingSummary) -> [Review] {
         ratingSummary.reviews.filter { review in
             if let userReview = userSubmittedReview {
                 return review.id != userReview.id
@@ -256,66 +344,92 @@ struct TalkRatingView: View {
             RoundedRectangle(cornerRadius: Constants.cellRadius)
                 .stroke(isUserReview ? Color.accent.opacity(0.3) : Color.cellBorder, lineWidth: 1)
         )
-        .onTapGesture {
-            if isUserReview {
-                // Enable editing mode
-                isEditingExistingReview = true
-                userRating = review.rating
-                userComment = review.comment
-            }
-        }
     }
     
     private func submitReview() {
-        if isEditingExistingReview {
-            // Update existing review
-            if let existingReview = userSubmittedReview {
-                let updatedReview = Review(
-                    id: existingReview.id,
-                    userName: "You",
-                    userInitials: "ME",
+        guard let speakerId = speakerId else {
+            errorMessage = "Unable to determine speaker for this presentation"
+            return
+        }
+        
+        // Check if user has already reviewed this speaker
+        if Review.hasUserReviewed(speakerId: speakerId) {
+            errorMessage = "You have already reviewed this speaker"
+            return
+        }
+        
+        Task {
+            do {
+                // Create new review with optional username
+                let newReview = Review(
+                    userName: userName.isEmpty ? nil : userName,
                     rating: userRating,
                     comment: userComment,
                     date: Date(),
                     isCurrentUser: true
                 )
                 
-                // Update in the main reviews list
-                var updatedReviews = ratingSummary.reviews
-                if let index = updatedReviews.firstIndex(where: { $0.id == existingReview.id }) {
-                    updatedReviews[index] = updatedReview
-                }
+                // Submit new review
+                let submittedReview = try await Review.submitReview(newReview, for: speakerId)
                 
-                // Update user's submitted review
-                userSubmittedReview = updatedReview
-                ratingSummary = RatingSummary(reviews: updatedReviews)
+                // Save the user's review ID for tracking
+                Review.saveUserReviewId(submittedReview.id.uuidString, for: speakerId)
+                
+                // Update local state
+                await MainActor.run {
+                    if let currentSummary = ratingSummary {
+                        var updatedReviews = currentSummary.reviews
+                        updatedReviews.append(submittedReview)
+                        ratingSummary = RatingSummary(reviews: updatedReviews)
+                    } else {
+                        ratingSummary = RatingSummary(reviews: [submittedReview])
+                    }
+                    
+                    // Update UI state
+                    hasUserAlreadyReviewed = true
+                    userRating = 0
+                    userComment = ""
+                    userName = ""
+                    isCommentFieldFocused = false
+                    isUserNameFieldFocused = false
+                    showingSubmittedAlert = true
+                }
+            } catch {
+                await MainActor.run {
+                    errorMessage = "Failed to submit review: \(error.localizedDescription)"
+                }
             }
-        } else {
-            // Create new review
-            let newReview = Review(
-                userName: "You",
-                userInitials: "ME",
-                rating: userRating,
-                comment: userComment,
-                date: Date(),
-                isCurrentUser: true
-            )
-            
-            // Add to rating summary
-            var updatedReviews = ratingSummary.reviews
-            updatedReviews.append(newReview)
-            ratingSummary = RatingSummary(reviews: updatedReviews)
-            
-            // Set as user's submitted review
-            userSubmittedReview = newReview
+        }
+    }
+    
+    private func loadReviews() async {
+        guard let speakerId = speakerId else {
+            await MainActor.run {
+                errorMessage = "Unable to determine speaker for this presentation"
+                isLoading = false
+            }
+            return
         }
         
-        // Reset form state
-        isEditingExistingReview = false
-        userRating = 0
-        userComment = ""
-        isCommentFieldFocused = false
-        showingSubmittedAlert = true
+        
+        // Check if user has already reviewed this speaker
+        let hasReviewed = Review.hasUserReviewed(speakerId: speakerId)
+        
+        do {
+            let reviews = try await Review.loadReviews(for: speakerId)
+            await MainActor.run {
+                ratingSummary = RatingSummary(reviews: reviews)
+                hasUserAlreadyReviewed = hasReviewed
+                isLoading = false
+            }
+        } catch {
+            await MainActor.run {
+                // Create empty rating summary if no reviews found
+                ratingSummary = RatingSummary(reviews: [])
+                hasUserAlreadyReviewed = hasReviewed
+                isLoading = false
+            }
+        }
     }
     
     private func timeAgoString(from date: Date) -> String {

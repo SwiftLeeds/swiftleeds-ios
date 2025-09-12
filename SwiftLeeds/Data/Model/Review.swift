@@ -7,7 +7,6 @@
 
 import Foundation
 
-// MARK: - Review Model
 struct Review: Codable, Identifiable {
     let id: UUID
     let userName: String
@@ -18,23 +17,45 @@ struct Review: Codable, Identifiable {
     let isCurrentUser: Bool
     
     init(id: UUID = UUID(),
-         userName: String,
-         userInitials: String,
+         userName: String?,
          rating: Int,
          comment: String,
          date: Date = Date(),
          isCurrentUser: Bool = false) {
         self.id = id
-        self.userName = userName
-        self.userInitials = userInitials
+        
+        if let userName = userName,
+            !userName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            self.userName = userName.trimmingCharacters(in: .whitespacesAndNewlines)
+            self.userInitials = Review.generateInitials(from: userName)
+        } else {
+            self.userName = "Anonymous"
+            self.userInitials = "AA"
+        }
+        
         self.rating = rating
         self.comment = comment
         self.date = date
         self.isCurrentUser = isCurrentUser
     }
+    
+    private static func generateInitials(from name: String) -> String {
+        let components = name.trimmingCharacters(in: .whitespacesAndNewlines)
+            .components(separatedBy: .whitespacesAndNewlines)
+            .filter { !$0.isEmpty }
+        
+        if components.isEmpty {
+            return "AA"
+        } else if components.count == 1 {
+            return String(components[0].prefix(2)).uppercased()
+        } else {
+            let firstInitial = String(components[0].prefix(1))
+            let lastInitial = String(components[components.count - 1].prefix(1))
+            return "\(firstInitial)\(lastInitial)".uppercased()
+        }
+    }
 }
 
-// MARK: - Rating Summary
 struct RatingSummary {
     let averageRating: Double
     let totalRatings: Int
@@ -47,43 +68,46 @@ struct RatingSummary {
     }
 }
 
-// MARK: - Static Data
 extension Review {
-    static let sampleReviews: [Review] = [
-        Review(
-            userName: "Sarah Mitchell",
-            userInitials: "SM",
-            rating: 5,
-            comment: "Outstanding talk! The examples were incredibly practical and I immediately implemented custom property wrappers in my project. Donny's teaching style is excellent.",
-            date: Calendar.current.date(byAdding: .day, value: -2, to: Date()) ?? Date()
-        ),
-        Review(
-            userName: "James Rodriguez",
-            userInitials: "JR", 
-            rating: 4,
-            comment: "Great content and well-structured presentation. The testing part was particularly valuable. Would have loved a bit more advanced examples.",
-            date: Calendar.current.date(byAdding: .day, value: -1, to: Date()) ?? Date()
-        ),
-        Review(
-            userName: "Emily Chen",
-            userInitials: "EC",
-            rating: 5,
-            comment: "Mind-blowing! I never fully understood property wrappers until this talk. The live coding examples were perfect.",
-            date: Calendar.current.date(byAdding: .hour, value: -6, to: Date()) ?? Date()
-        ),
-        Review(
-            userName: "Alex Thompson",
-            userInitials: "AT",
-            rating: 4,
-            comment: "Solid talk with good practical advice. The unit testing section was exactly what I needed for my team.",
-            date: Calendar.current.date(byAdding: .hour, value: -3, to: Date()) ?? Date()
-        ),
-        Review(
-            userName: "Maria Santos",
-            userInitials: "MS",
-            rating: 5,
-            comment: "Fantastic presentation! Clear explanations and the Q&A session was very helpful. Definitely recommend.",
-            date: Calendar.current.date(byAdding: .hour, value: -1, to: Date()) ?? Date()
-        )
-    ]
+    static let service = ReviewService()
+    
+    // UserDefaults key for tracking reviewed speakers
+    private static let reviewedSpeakersKey = "ReviewedSpeakers"
+    
+    /// Load reviews for a specific speaker
+    static func loadReviews(for speakerId: String) async throws -> [Review] {
+        return try await service.fetchReviews(for: speakerId)
+    }
+    
+    /// Submit a new review for a specific speaker
+    static func submitReview(_ review: Review, for speakerId: String) async throws -> Review {
+        // Mark this speaker as reviewed
+        markSpeakerAsReviewed(speakerId)
+        return try await service.submitReview(review, for: speakerId)
+    }
+    
+    /// Check if the current user has already reviewed this speaker
+    static func hasUserReviewed(speakerId: String) -> Bool {
+        let reviewedSpeakers = UserDefaults.standard.array(forKey: reviewedSpeakersKey) as? [String] ?? []
+        return reviewedSpeakers.contains(speakerId)
+    }
+    
+    /// Mark a speaker as reviewed by the current user
+    private static func markSpeakerAsReviewed(_ speakerId: String) {
+        var reviewedSpeakers = UserDefaults.standard.array(forKey: reviewedSpeakersKey) as? [String] ?? []
+        if !reviewedSpeakers.contains(speakerId) {
+            reviewedSpeakers.append(speakerId)
+            UserDefaults.standard.set(reviewedSpeakers, forKey: reviewedSpeakersKey)
+        }
+    }
+    
+    /// Get the user's review ID for a specific speaker (if exists)
+    static func getUserReviewId(for speakerId: String) -> String? {
+        return UserDefaults.standard.string(forKey: "UserReview_\(speakerId)")
+    }
+    
+    /// Save the user's review ID for a specific speaker
+    static func saveUserReviewId(_ reviewId: String, for speakerId: String) {
+        UserDefaults.standard.set(reviewId, forKey: "UserReview_\(speakerId)")
+    }
 }

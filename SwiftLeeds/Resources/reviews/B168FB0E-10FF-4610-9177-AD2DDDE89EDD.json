@@ -1,0 +1,56 @@
+[
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440001",
+    "userName": "Sarah Mitchell",
+    "userInitials": "SM",
+    "rating": 5,
+    "comment": "Tim's explanation of server-side Swift was absolutely brilliant! The practical examples really helped me understand how to implement Vapor in my projects.",
+    "date": "2024-09-08T14:30:00Z",
+    "isCurrentUser": false
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440002",
+    "userName": "James Rodriguez",
+    "userInitials": "JR",
+    "rating": 4,
+    "comment": "Great talk on server-side Swift! The live coding demonstrations were excellent. Would love to see more advanced deployment strategies.",
+    "date": "2024-09-08T15:45:00Z",
+    "isCurrentUser": false
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440003",
+    "userName": "Emily Chen",
+    "userInitials": "EC",
+    "rating": 5,
+    "comment": "Outstanding presentation! Tim made server-side Swift accessible and exciting. The real-world examples were perfect.",
+    "date": "2024-09-08T16:20:00Z",
+    "isCurrentUser": false
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440004",
+    "userName": "Alex Thompson",
+    "userInitials": "AT",
+    "rating": 4,
+    "comment": "Solid talk with great technical depth. The Vapor framework examples were exactly what I needed for my backend project.",
+    "date": "2024-09-08T17:10:00Z",
+    "isCurrentUser": false
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440005",
+    "userName": "Maria Santos",
+    "userInitials": "MS",
+    "rating": 5,
+    "comment": "Fantastic! Tim's passion for server-side Swift is contagious. I'm definitely going to try Vapor after this talk.",
+    "date": "2024-09-08T18:30:00Z",
+    "isCurrentUser": false
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440006",
+    "userName": "David Kim",
+    "userInitials": "DK",
+    "rating": 4,
+    "comment": "Excellent overview of Swift on the server! The performance comparisons with other backend languages were very insightful.",
+    "date": "2024-09-08T19:15:00Z",
+    "isCurrentUser": false
+  }
+]

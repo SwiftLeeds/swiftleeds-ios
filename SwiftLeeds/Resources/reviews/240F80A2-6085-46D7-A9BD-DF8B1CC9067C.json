@@ -1,0 +1,56 @@
+[
+  {
+    "id": "aa0e8400-e29b-41d4-a716-446655440001",
+    "userName": "Victoria Adams",
+    "userInitials": "VA",
+    "rating": 5,
+    "comment": "Chris's time zone talk was both hilarious and educational! His weather app struggles resonated with every developer in the room.",
+    "date": "2024-09-07T20:30:00Z",
+    "isCurrentUser": false
+  },
+  {
+    "id": "aa0e8400-e29b-41d4-a716-446655440002",
+    "userName": "Samuel Turner",
+    "userInitials": "ST",
+    "rating": 4,
+    "comment": "Great talk on time zone pitfalls! Chris made a complex topic approachable with humor and practical examples.",
+    "date": "2024-09-07T21:15:00Z",
+    "isCurrentUser": false
+  },
+  {
+    "id": "aa0e8400-e29b-41d4-a716-446655440003",
+    "userName": "Emma Collins",
+    "userInitials": "EC",
+    "rating": 5,
+    "comment": "Fantastic presentation! Chris turned time zone horror stories into valuable learning experiences. So relatable!",
+    "date": "2024-09-07T21:45:00Z",
+    "isCurrentUser": false
+  },
+  {
+    "id": "aa0e8400-e29b-41d4-a716-446655440004",
+    "userName": "Logan Peterson",
+    "userInitials": "LP",
+    "rating": 4,
+    "comment": "Excellent talk with great humor! The WeatherKit time zone quirks section saved me from future headaches.",
+    "date": "2024-09-07T22:20:00Z",
+    "isCurrentUser": false
+  },
+  {
+    "id": "aa0e8400-e29b-41d4-a716-446655440005",
+    "userName": "Isabella Carter",
+    "userInitials": "IC",
+    "rating": 5,
+    "comment": "Brilliant and entertaining! Chris made time zones less scary and more manageable. Love the practical tips.",
+    "date": "2024-09-07T23:00:00Z",
+    "isCurrentUser": false
+  },
+  {
+    "id": "aa0e8400-e29b-41d4-a716-446655440006",
+    "userName": "Zachary White",
+    "userInitials": "ZW",
+    "rating": 4,
+    "comment": "Great lighthearted approach to a complex topic. Chris's weather app journey was both amusing and instructive.",
+    "date": "2024-09-07T23:30:00Z",
+    "isCurrentUser": false
+  }
+]

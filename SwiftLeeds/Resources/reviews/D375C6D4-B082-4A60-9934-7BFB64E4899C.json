@@ -1,0 +1,56 @@
+[
+  {
+    "id": "660e8400-e29b-41d4-a716-446655440001",
+    "userName": "Rachel Green",
+    "userInitials": "RG",
+    "rating": 5,
+    "comment": "Eric's exploration of Apple's open-source packages was eye-opening! I had no idea about Swift Numerics and Swift Argument Parser.",
+    "date": "2024-09-07T10:30:00Z",
+    "isCurrentUser": false
+  },
+  {
+    "id": "660e8400-e29b-41d4-a716-446655440002",
+    "userName": "Michael Brown",
+    "userInitials": "MB",
+    "rating": 4,
+    "comment": "Great overview of hidden gems in Apple's GitHub. The Swift Markdown examples were particularly useful.",
+    "date": "2024-09-07T11:45:00Z",
+    "isCurrentUser": false
+  },
+  {
+    "id": "660e8400-e29b-41d4-a716-446655440003",
+    "userName": "Lisa Wang",
+    "userInitials": "LW",
+    "rating": 5,
+    "comment": "Fantastic talk! Eric showed us tools I never knew existed. The Swift OpenAPI Generator will save me hours of work.",
+    "date": "2024-09-07T12:20:00Z",
+    "isCurrentUser": false
+  },
+  {
+    "id": "660e8400-e29b-41d4-a716-446655440004",
+    "userName": "Tom Wilson",
+    "userInitials": "TW",
+    "rating": 4,
+    "comment": "Very informative session on Apple's open-source ecosystem. The practical examples made it easy to understand.",
+    "date": "2024-09-07T13:10:00Z",
+    "isCurrentUser": false
+  },
+  {
+    "id": "660e8400-e29b-41d4-a716-446655440005",
+    "userName": "Jennifer Davis",
+    "userInitials": "JD",
+    "rating": 5,
+    "comment": "Brilliant presentation! I'm excited to explore Swift Certificates and Swift Container Plugin for my projects.",
+    "date": "2024-09-07T14:30:00Z",
+    "isCurrentUser": false
+  },
+  {
+    "id": "660e8400-e29b-41d4-a716-446655440006",
+    "userName": "Robert Lee",
+    "userInitials": "RL",
+    "rating": 4,
+    "comment": "Excellent deep dive into Apple's GitHub repositories. The Subprocess examples were particularly enlightening.",
+    "date": "2024-09-07T15:15:00Z",
+    "isCurrentUser": false
+  }
+]

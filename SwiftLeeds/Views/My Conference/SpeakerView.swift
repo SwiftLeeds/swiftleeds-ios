@@ -12,8 +12,15 @@ struct SpeakerView: View {
     let showSlido: Bool
 
     @State private var showWebSheet = false
+    @State private var averageRating: Double = 0.0
+    @State private var totalRatings: Int = 0
 
     @Environment(\.openURL) var openURL
+    
+    // Get the primary speaker ID for this presentation
+    private var speakerId: String? {
+        presentation.speakers.first?.id.uuidString
+    }
 
     var body: some View {
         SwiftLeedsContainer {
@@ -22,6 +29,9 @@ struct SpeakerView: View {
             }
         }
         .edgesIgnoringSafeArea(.top)
+        .task {
+            await loadRatings()
+        }
     }
 
     private var content: some View {
@@ -81,11 +91,20 @@ struct SpeakerView: View {
                                     .font(.body.weight(.medium))
                                     .foregroundColor(.primary)
                                 Spacer()
-                                Image(systemName: "star.fill")
-                                    .foregroundColor(.accent)
-                                Text("4.6")
-                                    .font(.subheadline.weight(.semibold))
-                                    .foregroundColor(.secondary)
+                                if totalRatings > 0 {
+                                    Image(systemName: "star.fill")
+                                        .foregroundColor(.accent)
+                                    Text(String(format: "%.1f", averageRating))
+                                        .font(.subheadline.weight(.semibold))
+                                        .foregroundColor(.secondary)
+                                    Text("(\(totalRatings))")
+                                        .font(.caption)
+                                        .foregroundColor(.secondary)
+                                } else {
+                                    Text("No ratings yet")
+                                        .font(.caption)
+                                        .foregroundColor(.secondary)
+                                }
                             }
                         }
                         
@@ -135,6 +154,27 @@ struct SpeakerView: View {
         .sheet(isPresented: $showWebSheet) {
             WebView(url: presentation.slidoURL ?? "")
                 .edgesIgnoringSafeArea(.bottom)
+        }
+    }
+    
+    // MARK: - Private Methods
+    private func loadRatings() async {
+        guard let speakerId = speakerId else { return }
+        
+        do {
+            let reviews = try await Review.loadReviews(for: speakerId)
+            let ratingSummary = RatingSummary(reviews: reviews)
+            
+            await MainActor.run {
+                averageRating = ratingSummary.averageRating
+                totalRatings = ratingSummary.totalRatings
+            }
+        } catch {
+            // If no reviews found, keep default values (0.0, 0)
+            await MainActor.run {
+                averageRating = 0.0
+                totalRatings = 0
+            }
         }
     }
 }
