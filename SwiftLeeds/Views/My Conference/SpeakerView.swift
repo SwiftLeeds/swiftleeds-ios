@@ -12,8 +12,15 @@ struct SpeakerView: View {
     let showSlido: Bool
 
     @State private var showWebSheet = false
+    @State private var averageRating: Double = 0.0
+    @State private var totalRatings: Int = 0
 
     @Environment(\.openURL) var openURL
+    
+    // Get the primary speaker ID for this presentation
+    private var speakerId: String? {
+        presentation.speakers.first?.id.uuidString
+    }
 
     var body: some View {
         SwiftLeedsContainer {
@@ -22,6 +29,9 @@ struct SpeakerView: View {
             }
         }
         .edgesIgnoringSafeArea(.top)
+        .task {
+            await loadRatings()
+        }
     }
 
     private var content: some View {
@@ -70,6 +80,51 @@ struct SpeakerView: View {
                         }
                     )
                 }
+                
+                NavigationLink {
+                    TalkRatingView(presentation: presentation)
+                } label: {
+                    HStack {
+                        VStack(alignment: .leading, spacing: 4) {
+                            HStack {
+                                Text("Rate This Talk")
+                                    .font(.body.weight(.medium))
+                                    .foregroundColor(.primary)
+                                Spacer()
+                                if totalRatings > 0 {
+                                    Image(systemName: "star.fill")
+                                        .foregroundColor(.accent)
+                                    Text(String(format: "%.1f", averageRating))
+                                        .font(.subheadline.weight(.semibold))
+                                        .foregroundColor(.secondary)
+                                    Text("(\(totalRatings))")
+                                        .font(.caption)
+                                        .foregroundColor(.secondary)
+                                } else {
+                                    Text("No ratings yet")
+                                        .font(.caption)
+                                        .foregroundColor(.secondary)
+                                }
+                            }
+                        }
+                        
+                        Spacer()
+                        
+                        Image(systemName: "chevron.right")
+                            .font(.caption.weight(.semibold))
+                            .foregroundColor(.secondary)
+                    }
+                    .padding(Padding.cell)
+                    .background(
+                        RoundedRectangle(cornerRadius: Constants.cellRadius)
+                            .fill(Color.cellBackground)
+                    )
+                    .overlay(
+                        RoundedRectangle(cornerRadius: Constants.cellRadius)
+                            .stroke(Color.cellBorder, lineWidth: 1)
+                    )
+                }
+                .accessibilityHint("Rate and review this presentation")
 
                 ForEach(presentation.speakers) { speaker in
                     if !speaker.biography.isEmpty {
@@ -101,14 +156,41 @@ struct SpeakerView: View {
                 .edgesIgnoringSafeArea(.bottom)
         }
     }
+    
+    // MARK: - Private Methods
+    private func loadRatings() async {
+        guard let speakerId = speakerId else { return }
+        
+        do {
+            let reviews = try await Review.loadReviews(for: speakerId)
+            let ratingSummary = RatingSummary(reviews: reviews)
+            
+            await MainActor.run {
+                averageRating = ratingSummary.averageRating
+                totalRatings = ratingSummary.totalRatings
+            }
+        } catch {
+            // If no reviews found, keep default values (0.0, 0)
+            await MainActor.run {
+                averageRating = 0.0
+                totalRatings = 0
+            }
+        }
+    }
 }
 
 struct SpeakerView_Previews: PreviewProvider {
     static var previews: some View {
-        SpeakerView(presentation: .donnyWalls, showSlido: true)
-            .previewDisplayName("Donny Wals")
+        NavigationView {
+            SpeakerView(presentation: .donnyWalls, showSlido: true)
+        }
+        .navigationViewStyle(.stack)
+        .previewDisplayName("Donny Wals")
 
-        SpeakerView(presentation: .skyBet, showSlido: true)
-            .previewDisplayName("Sky Bet")
+        NavigationView {
+            SpeakerView(presentation: .skyBet, showSlido: true)
+        }
+        .navigationViewStyle(.stack)
+        .previewDisplayName("Sky Bet")
     }
 }

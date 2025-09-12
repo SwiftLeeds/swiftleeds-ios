@@ -1,0 +1,794 @@
+{
+    "data":
+    {
+        "days":
+        [
+            {
+                "date": "2025-10-06T00:00:00Z",
+                "name": "Evening Talkshow",
+                "slots":
+                [
+                    {
+                        "activity":
+                        {
+                            "description": "It's time to check-in for your exclusive event which is the brand new SwiftLeeds Talkshow LIVE!\r\n\r\nThis is a paid add-on and requires a talk show ticket.",
+                            "id": "E03BB393-DE76-4DBE-8554-FF940204C180",
+                            "metadataURL": "",
+                            "subtitle": "",
+                            "title": "Registration"
+                        },
+                        "date": "2025-10-06T00:00:00Z",
+                        "duration": 75,
+                        "id": "7F918010-37D4-4C9F-9F72-7494ED5E038A",
+                        "startTime": "16:30"
+                    },
+                    {
+                        "activity":
+                        {
+                            "description": "Open the conversation with us. It's the official SwiftLeeds Live Talkshow, with a live panel. Bring your questions and get ready for the best event.",
+                            "id": "9939088D-5B2C-4EC1-AB82-E422F572608D",
+                            "image": "https://swiftleeds-speakers.s3.eu-west-2.amazonaws.com/2EC08199-3F54-4B8E-8FF0-993772F3FA7A-refreshment-break.jpg",
+                            "metadataURL": "",
+                            "subtitle": "",
+                            "title": "Talkshow 1st Half"
+                        },
+                        "date": "2025-10-06T00:00:00Z",
+                        "duration": 60,
+                        "id": "5430B29B-91E7-4059-BFDC-88C6ED1CCA31",
+                        "startTime": "18:00"
+                    },
+                    {
+                        "activity":
+                        {
+                            "description": "",
+                            "id": "6EA3DBB4-3889-4F05-AB7A-EEE9D1E38373",
+                            "image": "https://swiftleeds-speakers.s3.eu-west-2.amazonaws.com/6265C02C-AC7C-4136-8BBF-40721C2D7A62-refreshment-break.jpg",
+                            "metadataURL": "",
+                            "subtitle": "You might like to drink ☕️ or 🫖",
+                            "title": "Refreshment Break ☕️"
+                        },
+                        "date": "2025-10-06T00:00:00Z",
+                        "duration": 15,
+                        "id": "679D7AEC-7B74-4E2C-8607-8072F3B8F8AB",
+                        "startTime": "19:00"
+                    },
+                    {
+                        "activity":
+                        {
+                            "description": "Open the conversation with us. It's the official SwiftLeeds Live Talkshow, with a live panel. Bring your questions and get ready for the best event.",
+                            "id": "AC50DD89-F405-4F34-93C0-7B3F3FC78EBF",
+                            "image": "https://swiftleeds-speakers.s3.eu-west-2.amazonaws.com/7621E786-7C81-4B80-ABC8-78037F994FA3-refreshment-break.jpg",
+                            "metadataURL": "",
+                            "subtitle": "",
+                            "title": "Talkshow 2nd Half"
+                        },
+                        "date": "2025-10-06T00:00:00Z",
+                        "duration": 60,
+                        "id": "62ABDF2D-6720-4392-B10C-1F71405BEC65",
+                        "startTime": "19:30"
+                    },
+                    {
+                        "activity":
+                        {
+                            "description": "We're delighted to end the SwiftLeeds Talkshow with our friends and sponsors CodeMagic for a special fun Happy Hour. It will be hosted in the bar area of the main venue.",
+                            "id": "3774A08D-A00E-4ED1-8E97-02E795A32AAB",
+                            "metadataURL": "",
+                            "subtitle": "",
+                            "title": "CodeMagic Happy Hour 🍻"
+                        },
+                        "date": "2025-10-06T00:00:00Z",
+                        "duration": 180,
+                        "id": "C14B072E-5525-4925-B540-007FBE90460A",
+                        "startTime": "20:30"
+                    }
+                ]
+            },
+            {
+                "date": "2025-10-07T00:00:00Z",
+                "name": "Day 1",
+                "slots":
+                [
+                    {
+                        "activity":
+                        {
+                            "description": "",
+                            "id": "4D22DE68-6B6D-40DD-8F97-C3114183A237",
+                            "image": "https://swiftleeds-speakers.s3.eu-west-2.amazonaws.com/A7F2FBC4-E298-49BC-9A6E-A813C12FB263-refreshment-break.jpg",
+                            "metadataURL": "",
+                            "subtitle": "Time for a group shot",
+                            "title": "Attendee Group Photo 📸"
+                        },
+                        "date": "2025-10-07T00:00:00Z",
+                        "duration": 15,
+                        "id": "4F89CE09-6440-4FC3-BC8C-9FE7D0B527C1",
+                        "startTime": "12:15"
+                    },
+                    {
+                        "date": "2025-10-07T00:00:00Z",
+                        "duration": 0,
+                        "id": "6A7DC094-C648-46C8-9214-D222F1FDDCBD",
+                        "presentation":
+                        {
+                            "id": "27546429-D9A0-4B8F-A3B0-782AD1A57E91",
+                            "slidoURL": "",
+                            "speakers":
+                            [
+                                {
+                                    "biography": "Tim is a Swift developer from Manchester, UK and one half of the Vapor Core Team. He sits on the Swift Server Workgroup and delivers talks and workshops on Vapor and server-side Swift around the world. He runs Broken Hands, a server-side Swift consultancy and works with clients around the world to help them deploy Swift on their backends. He also co-organises the ServerSide.swift conference - the world’s first and only conference focused on server-side Swift.",
+                                    "id": "B168FB0E-10FF-4610-9177-AD2DDDE89EDD",
+                                    "name": "Tim Condon",
+                                    "organisation": "Vapor Core Team",
+                                    "presentations":
+                                    [],
+                                    "profileImage": "https://swiftleeds-speakers.s3.eu-west-2.amazonaws.com/D5E50533-4880-49AF-A2B1-EAE87BAE15ED-tim-condon.jpeg",
+                                    "twitter": "0xTim"
+                                }
+                            ],
+                            "synopsis": "Ever since Swift on the server became an option, the question has always been but is it ready, are we there yet? This talk will provide a state of the union for Swift on the server and definitively prove that yes, we are there and it is being used in the real world for a wide range of backends from the very small to the absolutely massive.\r\n\r\nThis talk will cover the changes over the last year or two with Swift 6, structured concurrency, new generations of frameworks from Hummingbird and Vapor and an invigorated ecosystem that covers everything you'd ever need. We'll also look at Swift's general expansion into non-Apple platform areas covering everything from running in the browser with Swift Wasm and running on tidy embedded devices.\r\n\r\nBy the end of the talk you should have a good understanding of where Swift on the server is and how much it really is being used in the real world. You'll see _why_ it is becoming so popular and how it is setting itself apart from not only the traditional backend languages but newer languages as well.",
+                            "title": "Swift on the Server - we ARE there now"
+                        },
+                        "startTime": "14:15"
+                    },
+                    {
+                        "date": "2025-10-07T00:00:00Z",
+                        "duration": 0,
+                        "id": "E707F3BF-CC18-4FEE-8444-AD0A5137CCDE",
+                        "presentation":
+                        {
+                            "id": "F6F7EADB-04CC-4F36-91F5-114D42CAA6EE",
+                            "slidoURL": "",
+                            "speakers":
+                            [
+                                {
+                                    "biography": "Eric, a Software Engineer by trade and a Geek at heart, has had numerous encounters with development in the Apple software ecosystem throughout his career, starting from his early professional days developing on a NeXTstation. Currently, Eric's focus lies in Personal Knowledge Management and wearable AI solutions on various Apple platforms.",
+                                    "id": "D375C6D4-B082-4A60-9934-7BFB64E4899C",
+                                    "name": "Eric Bariaux",
+                                    "organisation": "Nelcea, Founder",
+                                    "presentations":
+                                    [],
+                                    "profileImage": "https://swiftleeds-speakers.s3.eu-west-2.amazonaws.com/1d3a-400o400o1-NmdxutWqmKxYWoLzd2yKib.png",
+                                    "twitter": "ebariaux"
+                                }
+                            ],
+                            "synopsis": "Think all Apple has to offer comes packaged with Xcode? Think again. Apple's GitHub account contains more than 300 repositories. Although some of them are experimental or very specific to the compiler and the toolchain, quite a few could come in handy for any Swift developer.\r\n\r\nIn this talk, we'll explore some of these open-source packages and see how we can put them to good use in our everyday code:\r\n- Swift Numerics makes your life easier when you need to implement more advanced mathematics. Its modular approach makes it useful even if you only need a small part, like handling complex numbers.\r\n- Swift Argument Parser simplifies the creation of command-line tools by taking care of argument parsing for you.\r\n- Subprocess makes it easy to spawn external processes and interface with their input and output, not only on macOS but also on Linux and Windows.\r\n- Swift Protobuf provides a nice alternative to Codable for data storage or messaging with other systems.\r\n- Swift Markdown comes in handy when manipulating Markdown documents.\r\n- Swift OpenAPI Generator is useful not only when you're doing server-side development but anytime you need to call a REST API from your Swift code.\r\n- swift-certificates takes care of the nitty-gritty details of dealing with X.509 certificates.\r\n\r\nWe'll also take a brief look at packages targeted at specific environments, like Swift MMIO, which simplifies bare-metal embedded development and the Swift Container Plugin, which makes creating Docker images much easier.\r\n\r\nThis talk targets any developer with a basic knowledge of Swift. We will not go into the details of how to use each package but show practical use cases where such packages can be valuable.\r\n\r\nAttendees will discover how, exploring the additional packages made available by Apple, can help in their day-to-day development tasks. But since these packages are open source, we encourage everyone to explore their implementation, or even better, contribute. This is a great way to learn even more and take your Swift expertise to the next level.",
+                            "title": "Beyond Xcode: Exploring Apple’s Open-Source Offerings"
+                        },
+                        "startTime": "13:30"
+                    },
+                    {
+                        "activity":
+                        {
+                            "description": "Welcome to SwiftLeeds 25.\r\n\r\nIt's time to check in using your QR code-generated ticket and receive our famous SwiftLeeds swag. Please make your way up the stairs to be greeted by our famous warm and cold buffet-style breakfast options.",
+                            "id": "523E5217-7161-4CA1-812B-C0CF21DDDE4D",
+                            "image": "https://swiftleeds-speakers.s3.eu-west-2.amazonaws.com/C3E4AB52-CB86-418A-843F-1A6192BAB8A1-refreshment-break.jpg",
+                            "metadataURL": "",
+                            "subtitle": "Time to check in 🎟",
+                            "title": "Registration & Breakfast"
+                        },
+                        "date": "2025-10-07T00:00:00Z",
+                        "duration": 75,
+                        "id": "60D2A44E-A8C4-41E3-920F-0D3AAA1C0215",
+                        "startTime": "08:30"
+                    },
+                    {
+                        "activity":
+                        {
+                            "description": "Adam Rush will be hosting your SwiftLeeds this year and hear some thoughts about what is in store for you this year and a glimpse into some of the amazing talks we have lined up.",
+                            "id": "3E6490FE-2C77-4C00-8DB9-9A1F58930D95",
+                            "metadataURL": "",
+                            "subtitle": "Get ready to lift off 2025!",
+                            "title": "Astronauts Prepare... 👩🏼‍🚀"
+                        },
+                        "date": "2025-10-07T00:00:00Z",
+                        "duration": 15,
+                        "id": "63B1569E-9C93-4155-B8C5-13FDF38D950F",
+                        "startTime": "09:45"
+                    },
+                    {
+                        "date": "2025-10-07T00:00:00Z",
+                        "duration": 45,
+                        "id": "6D7C90D7-FE0C-435F-B6CA-C6A6852C5A52",
+                        "presentation":
+                        {
+                            "id": "5DE0DAA9-3D8A-4B6B-B6C5-FA339FB4BFA2",
+                            "slidoURL": "",
+                            "speakers":
+                            [
+                                {
+                                    "biography": "Daniel is the author of more than a dozen books including the best selling books The Curious Case of the Async Cafe, A SwiftUI Kickstart, A Swift Kickstart, A Bread Baking Kickstart, and Dear Elena. ",
+                                    "id": "8BEA98F8-C939-4093-8164-1A291C584E5B",
+                                    "name": "Daniel Steinberg",
+                                    "organisation": "Storyteller, Writer, Teacher, Coder and Podcaster",
+                                    "presentations":
+                                    [],
+                                    "profileImage": "https://swiftleeds-speakers.s3.eu-west-2.amazonaws.com/C038D7D3-6BF9-4559-8E2D-D46E091CA04C-thumbnail_Daniel3.png"
+                                }
+                            ],
+                            "synopsis": "We are lucky to be a part of the Swift Community. We begin SwiftLeeds by considering our roles as individuals in this community and the larger community.",
+                            "title": "“That One”"
+                        },
+                        "startTime": "10:00"
+                    },
+                    {
+                        "date": "2025-10-07T00:00:00Z",
+                        "duration": 0,
+                        "id": "29E89CFB-7B36-4CFB-9EC7-FD4953A58E9A",
+                        "presentation":
+                        {
+                            "id": "CE86672E-FA23-4512-A009-46C414708AC9",
+                            "slidoURL": "",
+                            "speakers":
+                            [
+                                {
+                                    "biography": "Peter is a Staff Developer Advocate on the Firebase at Google, helping developers build amazing experiences and high quality apps using Firebase and AI.\r\n\r\nWith a passion for empowering developers and fostering innovation, Peter works tirelessly with the Firebase team to make his vision of “cutting short the time to magic” a reality.\r\n\r\nPeter is also the author of the book \"Asynchronous Programming with SwiftUI and Combine: Functional Programming to Build UIs on Apple Platforms\" and host of the YouTube show \"Firebase After Hours\", in which he and his colleagues explore Firebase in a light-hearted and fun setting.\r\n\r\nHe has written code in BASIC, C, ObjectPascal, Java, Kotlin, Xtext, JavaScript, TypeScript, Objective-C, and a number of home-grown DSLs - but his all-time favourite is Swift.",
+                                    "id": "81E97AD9-18D3-42B9-9BC3-D88D5DED53E1",
+                                    "name": "Peter Friese",
+                                    "organisation": "Staff Developer Advocate, Firebase",
+                                    "presentations":
+                                    [],
+                                    "profileImage": "https://swiftleeds-speakers.s3.eu-west-2.amazonaws.com/D3C58946-432A-4F00-A2C7-88075D60E05C-peter-friese.jpeg",
+                                    "twitter": "peterfriese"
+                                }
+                            ],
+                            "synopsis": "Mobile apps have to permanently deal with asynchronous events - notifications, network status, database updates, user input, and more. The way how we have dealt with asynchronous events has changed significantly over time - from callback delegates to closures, and now AsyncSequence.\r\n\r\nIn this talk, we will take a deep dive into how AsyncStream works, how to use it in your apps, and how to use it to build ergonomic APIs. We will also take a trip down memory lane to understand where we’re coming from, and how asynchronous APIs have evolved over the years.\r\n\r\nYou will learn:\r\n\r\n- All the ways to listen to asynchronous events\r\n- How AsyncStream helps to make your apps more robust \r\n- What’s the difference between AsyncSequence and AsyncStream\r\n- How to use AsyncStream to implement modern APIs that are easy to use\r\n\r\nI will provide real-world examples to explain the underlying concepts, and we’ll take a look at how the Firebase team implemented asynchronous APIs over the span of almost a decade and several iterations of Objective-C and Swift.",
+                            "title": "Don’t call us - we’ll call you: Modern SwiftUI callbacks using AsyncStream"
+                        },
+                        "startTime": "10:45"
+                    },
+                    {
+                        "activity":
+                        {
+                            "description": "",
+                            "id": "6EA3DBB4-3889-4F05-AB7A-EEE9D1E38373",
+                            "image": "https://swiftleeds-speakers.s3.eu-west-2.amazonaws.com/6265C02C-AC7C-4136-8BBF-40721C2D7A62-refreshment-break.jpg",
+                            "metadataURL": "",
+                            "subtitle": "You might like to drink ☕️ or 🫖",
+                            "title": "Refreshment Break ☕️"
+                        },
+                        "date": "2025-10-07T00:00:00Z",
+                        "duration": 15,
+                        "id": "A3BBA54C-77E6-4B9A-82F5-A9F01B278287",
+                        "startTime": "11:30"
+                    },
+                    {
+                        "date": "2025-10-07T00:00:00Z",
+                        "duration": 0,
+                        "id": "34C48189-35B4-4FA7-B7C4-0E8FF0996867",
+                        "presentation":
+                        {
+                            "id": "0561EAE8-FEA9-4125-83AA-B0ACBF65479A",
+                            "slidoURL": "",
+                            "speakers":
+                            [
+                                {
+                                    "biography": "Richard is an Apple Platforms Developer working as a consultant. He has more than 10 years of experience developing apps from scratch, improving existing apps or developing tools such as SDKs and libraries. In his free time he also creates open-source libraries, such as CalendarKit, speaks at local meetups or releases new videos about iOS development on his YouTube channel.",
+                                    "id": "9A72F159-4178-486F-B31B-43573CD4E6DA",
+                                    "name": "Richard Topchii",
+                                    "organisation": "Apple Platforms Engineer / Consultant",
+                                    "presentations":
+                                    [],
+                                    "profileImage": "https://swiftleeds-speakers.s3.eu-west-2.amazonaws.com/c790-400o400o1-hxc1WjJK2yWEcN6TjD6fEb.jpeg",
+                                    "twitter": "richardtop_ios"
+                                }
+                            ],
+                            "synopsis": "Keychain, a framework used to store sensitive data securely, has an interesting place in the Apple Developer’s toolchain. Pretty much everyone has worked with it, it’s used literally in every app, yet not many developers interact with it’s API directly. \r\nBecause the Keychain's API, while being flexible, is often considered low-level, developers often use third-party libraries or wrappers to bridge the gap and present it's API in a simpler way. As a result, most developers become unaware of the full potential of the framework and might be reluctant to implement custom data storage and retrieval mechanisms associated with it.\r\nThis talk will shine the light on the intricacies of the Keychain by building one of those „Keychain Wrappers“ from scratch and gradually adding support for extra functionality, such as the biometric authentication, sharing data across multiple apps and storing multiple data types.\r\nLater, we’ll focus on creating custom authentication flows to improve user experience, for example, by not showing a biometric authentication prompt every time the user would like to access the data. \r\n\r\nThe following topics will be covered in detail:\r\n- Deep Dive into Keychain API: Understanding the API's structure, storage mechanics, and how it handles background encryption and decryption.\r\n\r\n- Enhanced Security through Biometrics: Strategies for integrating Face ID and Touch ID to protect data stored in the Keychain, and managing biometric state changes.\r\n\r\n- Efficient Data Management and Retrieval: Techniques for setting, retrieving, and  deleting data within Keychain, including error handling and best practices.\r\n\r\n- Cross-App / App Extensions Keychain Sharing: Implementing keychain groups to enable secure data sharing across multiple apps and managing access control for inter-app communication.\r\n\r\n- Security Analysis: Keychain-related coding tips for improving app security. ",
+                            "title": "Keychain Unlocked: Mastering Advanced Security for Smarter, Safer Apps"
+                        },
+                        "startTime": "11:45"
+                    },
+                    {
+                        "activity":
+                        {
+                            "description": "",
+                            "id": "6EA3DBB4-3889-4F05-AB7A-EEE9D1E38373",
+                            "image": "https://swiftleeds-speakers.s3.eu-west-2.amazonaws.com/6265C02C-AC7C-4136-8BBF-40721C2D7A62-refreshment-break.jpg",
+                            "metadataURL": "",
+                            "subtitle": "You might like to drink ☕️ or 🫖",
+                            "title": "Refreshment Break ☕️"
+                        },
+                        "date": "2025-10-07T00:00:00Z",
+                        "duration": 15,
+                        "id": "55E9F8D1-1754-41EA-AB70-5488F1B6B9C6",
+                        "startTime": "15:00"
+                    },
+                    {
+                        "date": "2025-10-07T00:00:00Z",
+                        "duration": 0,
+                        "id": "83B17A31-CDC6-433C-90FC-B10EE8FC964C",
+                        "presentation":
+                        {
+                            "id": "DAE37528-2651-43C3-A60E-3BADB1DF1050",
+                            "slidoURL": "",
+                            "speakers":
+                            [
+                                {
+                                    "biography": "I'm a SwiftUI hobbyist that has been making apps since 2017. I'm also one of the organizers of iOS Dev Happy Hour and CommunityKit.",
+                                    "id": "240F80A2-6085-46D7-A9BD-DF8B1CC9067C",
+                                    "name": "Chris Wu",
+                                    "organisation": "Indie App Developer",
+                                    "presentations":
+                                    [],
+                                    "profileImage": "https://swiftleeds-speakers.s3.eu-west-2.amazonaws.com/c294-400o400o1-siTakmhPyEiBH8DskgKPDZ.jpg"
+                                }
+                            ],
+                            "synopsis": "Even things that seem simple can quickly spiral out of control when dealing with time zones. This is exactly what happened when I started building my weather app. From subtle coding mistakes with serious consequences, to unexpected WeatherKit behavior, this lighthearted talk will share my (painful) journey navigating time zones. My goal with this talk is to lift much of the fear around time zones and help you avoid many of the mistakes I made.\r\n\r\nFor the first part of my talk, I want to show how easy it is to get yourself into trouble with time zones with subtle coding mistakes with multiple examples (adding to dates, displaying dates, formatting dates, dates in chart axis labels, etc).  I’ll then explain how I slowly started to realize that things had gone off the rails with the time data my app was displaying.\r\n\r\nI’m going to show multiple comments people have posted online about hating dealing with time zones or being outright afraid to. Some of these will be funny of course.\r\n\r\nThen I’ll step through each of my code examples explaining why they were wrong and how to fix them.\r\n\r\nNow that we have a better understanding of how to code for time zones I want to explain how you should assume nothing about time zones or your data and give some examples.\r\n\r\nFor example, you might assume that Apple WeatherKit won’t tell you that a day starts at two different times in a single response. That assumption is incorrect and it absolutely can happen in certain locations thanks to time zone wackiness.\r\n\r\nThis is an unpleasant subject but I aim to make it a lighthearted talk that can hopefully help some people avoid what I went through and give them the confidence to tackle time zone coding.",
+                            "title": "Don’t Let Time Zones Ruin Your Day (Days?)"
+                        },
+                        "startTime": "15:30"
+                    },
+                    {
+                        "date": "2025-10-07T00:00:00Z",
+                        "duration": 0,
+                        "id": "AD840040-8DA4-4F41-AD38-E19221D8B9ED",
+                        "presentation":
+                        {
+                            "id": "0F439065-0076-4C90-8D35-AC1241620B7E",
+                            "slidoURL": "",
+                            "speakers":
+                            [
+                                {
+                                    "biography": "When Erin is not working in his 9-5 capacity as as Partner Technology Manager at Google, he may be doing one or more of the following things (occasionally at the same time): raising his 9 and 7 year old with his wife in Pittsburgh, Pennsylvania; creating absurdist edge-case business models as the sole proprietor of Happitec, LLC; proposing new classes to teach at NYU or Cooper Union; internet-enabling things that should not be internet-enabled with his brother. While his decades in various forms of design and technology leadership are surpassed only by the age of his LambdaMoo character (who celebrated its 30th birthday this year), Erin's biggest race against time is a challenge set almost a decade ago: convince his children to care about their domain names, registered on the day they were born, before the 10-year renewal comes to pass.",
+                                    "id": "3A2AC0A6-23BD-44FE-A0B3-B0FB128BC609",
+                                    "name": "Erin Sparling",
+                                    "organisation": "Creating single points of failure for fun and profit at Happitec, LLC",
+                                    "presentations":
+                                    [],
+                                    "profileImage": "https://swiftleeds-speakers.s3.eu-west-2.amazonaws.com/1d05-400o400o1-MsQC8YnFknAoiRDGG5LHzZ.png"
+                                }
+                            ],
+                            "synopsis": "An odyssey a decade in the making, with a simple end goal: answering the question of how hard can it be to send a postcard?\r\n\r\nCome along for the journey as we delve into everything that makes an app an app, from the practical (using swift-openapi-generator to share api contracts across client and server, the value of investing in Xcode Cloud for CI/CD, why in-app purchases are wonderful) to the very impractical (why AppClips are awesome and yet no-one uses them, how to build the most privacy-focused experiences at the expense of your users) and everything in between. \r\n\r\nAlong the way, we'll learn how Apple's 15% fee can be less than a credit card processor's 3.5% fee, when is a physical good NOT a physical good, and what happens when you ask \"Where can I find a stamp?\" while in southern India.\r\n\r\nJoin me, as we take the road less-traveled, and begin to understand why that is.",
+                            "title": "How hard can it be to send a postcard?"
+                        },
+                        "startTime": "16:45"
+                    },
+                    {
+                        "activity":
+                        {
+                            "description": "This year marks 5 years in the making. To celebrate we are hosting our 5th birthday bash at the venue immediately after the conference ends. Grab a drink, have a sing or keep on networking!",
+                            "id": "5A9A4707-6E09-4BCA-B3F9-305F278353F4",
+                            "metadataURL": "",
+                            "subtitle": "Celebrate our 5 years in style!",
+                            "title": "SwiftLeeds 5th Birthday Bash 🎉"
+                        },
+                        "date": "2025-10-07T00:00:00Z",
+                        "duration": 360,
+                        "id": "C3FB9A2F-8F8C-45E9-8577-3B445496F91F",
+                        "startTime": "17:30"
+                    },
+                    {
+                        "activity":
+                        {
+                            "description": "This year we have signed an exclusive deal with the Leeds Kirkgate Market. With over 15 food traders to choose from with a voucher to spend on anything you fancy.\r\n\r\nWe can't wait to see what you pick to eat 🌭\r\n\r\nYou can view a full list of traders [here](https://markets.leeds.gov.uk/where-street-food-meets-market)",
+                            "id": "6E20F336-9E51-4D30-A04F-631D134ACCE9",
+                            "image": "https://swiftleeds-speakers.s3.eu-west-2.amazonaws.com/2DE277E1-111E-43F3-9780-C5FB86985A3D-ec2730_b754e4ee192a4263a353875688f57e5b~mv2.avif",
+                            "metadataURL": "",
+                            "subtitle": "",
+                            "title": "Leeds Kirkgate Market Lunch"
+                        },
+                        "date": "2025-10-07T00:00:00Z",
+                        "duration": 75,
+                        "id": "CC420596-EC0D-4158-AF48-421194B09A78",
+                        "startTime": "12:30"
+                    },
+                    {
+                        "date": "2025-10-07T00:00:00Z",
+                        "duration": 0,
+                        "id": "514B6913-DA16-4ACC-A1CF-14011FD95565",
+                        "presentation":
+                        {
+                            "id": "174D9C2B-8996-4FB3-900C-D87D1A4DED1A",
+                            "slidoURL": "",
+                            "speakers":
+                            [
+                                {
+                                    "biography": "Hi, I’m Cyril, an iOS System Architect with over a decade of experience building cutting-edge mobile applications. I specialize in leading teams to deliver state-of-the-art mobile engineering solutions. My passions include software engineering, iOS security, modular architecture, and reverse engineering iOS apps. I frequently share my expertise through workshops and talks, aiming to inspire others and drive innovation and a practical security mindset in the mobile development community.",
+                                    "id": "29484B2A-C761-4F3A-9241-3A5D11575302",
+                                    "name": "Cyril Cermak",
+                                    "organisation": "iOS System Architect - Porsche A.G",
+                                    "presentations":
+                                    [],
+                                    "profileImage": "https://swiftleeds-speakers.s3.eu-west-2.amazonaws.com/01da-400o400o1-BDrwsoGZSAE2vcAMCqLWgZ.jpg"
+                                }
+                            ],
+                            "synopsis": "In this presentation, I would like to demonstrate how a malicious attacker can steal a user’s identity by exploiting a vulnerability in a mobile application. \r\n\r\nLive on stage, I will find a vulnerable WebView implementation which I will then try to exploit via my jailbroken device from where I will gather enough information to craft the exploit for real devices, up to a point where with one link I am able to steal user's identity if a user clicked on the link and the vulnerable app was installed.\r\n\r\nThe goal is to bring awareness to mobile security and how such an exploit can be conducted.\r\n\r\nThe presentation highlights the importance of cyber security and personal awareness of such threats.\r\n\r\nIt is all one big live demo with reverse engineering live on stage.",
+                            "title": "Stealing user’s identity"
+                        },
+                        "startTime": "16:15"
+                    }
+                ]
+            },
+            {
+                "date": "2025-10-08T00:00:00Z",
+                "name": "Day 2",
+                "slots":
+                [
+                    {
+                        "activity":
+                        {
+                            "description": "Welcome to SwiftLeeds 25.\r\n\r\nIt's time to check in using your QR code-generated ticket and receive our famous SwiftLeeds swag. Please make your way up the stairs to be greeted by our famous warm and cold buffet-style breakfast options.",
+                            "id": "523E5217-7161-4CA1-812B-C0CF21DDDE4D",
+                            "image": "https://swiftleeds-speakers.s3.eu-west-2.amazonaws.com/C3E4AB52-CB86-418A-843F-1A6192BAB8A1-refreshment-break.jpg",
+                            "metadataURL": "",
+                            "subtitle": "Time to check in 🎟",
+                            "title": "Registration & Breakfast"
+                        },
+                        "date": "2025-10-08T00:00:00Z",
+                        "duration": 75,
+                        "id": "BB11AFD2-E543-4201-9BF2-469B83F29301",
+                        "startTime": "08:30"
+                    },
+                    {
+                        "activity":
+                        {
+                            "description": "Adam Rush will be hosting your SwiftLeeds this year and hear some thoughts about what is in store for you this year and a glimpse into some of the amazing talks we have lined up.",
+                            "id": "3E6490FE-2C77-4C00-8DB9-9A1F58930D95",
+                            "metadataURL": "",
+                            "subtitle": "Get ready to lift off 2025!",
+                            "title": "Astronauts Prepare... 👩🏼‍🚀"
+                        },
+                        "date": "2025-10-08T00:00:00Z",
+                        "duration": 15,
+                        "id": "37288BB1-36C2-4FE5-AC33-179190FB6718",
+                        "startTime": "09:45"
+                    },
+                    {
+                        "date": "2025-10-08T00:00:00Z",
+                        "duration": 0,
+                        "id": "BFA1489B-0B7F-45BA-BA71-4B4FD3F73788",
+                        "presentation":
+                        {
+                            "id": "86D08C3F-6114-4CBE-86A4-1D27047FC0CF",
+                            "slidoURL": "",
+                            "speakers":
+                            [
+                                {
+                                    "biography": "Sash has been working at Meta for the past 8 years focusing on exploring new technologies while shipping at scale. Recently Sash been working on Meta AI, previously he was one of the first engineers on Threads and many other exciting projects.",
+                                    "id": "1C1DB5B7-6A53-477C-98AF-CBCFAF5BB0CF",
+                                    "name": "Sash Zats",
+                                    "organisation": "Software engineer at Instagram",
+                                    "presentations":
+                                    [],
+                                    "profileImage": "https://swiftleeds-speakers.s3.eu-west-2.amazonaws.com/6247-400o400o1-60f94d50-2192-47ef-bad2-ba9fdd7984e5.jpg",
+                                    "twitter": "zats"
+                                }
+                            ],
+                            "synopsis": "For the past 8 years, I’ve been working at Meta, company known for shipping fast. I worked on many 0 to 1 projects, notably being one of the first engineers on the Threads team, brain-computer interfaces recently demoed as a part of the Orion project, and for the past year, been working on various Meta AI efforts. I worked on iOS apps, backend, frontend, Android AOSP system, and hardware.\r\nIn this talk, I wanted to share some battle-tested principles I learned over the years at Meta. These principles allow companies and teams of all sizes to ship products quickly. You will walk away with some concrete approaches allowing you to understand how to prototype faster, help product and designers come up with higher-quality ideas, and cut time from idea to a real product in people’s hands. The lessons we will talk about are applicable to teams of all sizes.",
+                            "title": "Practical Guide to Shipping Fast"
+                        },
+                        "startTime": "10:00"
+                    },
+                    {
+                        "date": "2025-10-08T00:00:00Z",
+                        "duration": 0,
+                        "id": "8114FA8E-086B-46E0-9D08-0EE7805E14A0",
+                        "presentation":
+                        {
+                            "id": "859FD7A1-369D-44F7-9250-724E882D4A8C",
+                            "slidoURL": "",
+                            "speakers":
+                            [
+                                {
+                                    "biography": "Oksana moved to Berlin, Germany at the age of 19 from Ukraine, to study. During her studies she started her engineering career in QA, changing to iOS along the way when no growth was possible in the previous field. After graduation Oksana continued her work in iOS, getting more and more inspired by SwiftUI in last years. Now, working for Kayak, she is an active promoter for SwiftUI in her team and together with that team, has fun creating interesting solutions for using said framework in an older bigger project.",
+                                    "id": "8BF27FD8-E729-44D9-BC3C-2D36A7AD1233",
+                                    "name": "Oksana Shcherban",
+                                    "organisation": "iOS Engineer at Kayak.com",
+                                    "presentations":
+                                    [],
+                                    "profileImage": "https://swiftleeds-speakers.s3.eu-west-2.amazonaws.com/ef2e-400o400o1-aqSG2umWudAtcRg7cUBjcW.png"
+                                }
+                            ],
+                            "synopsis": "(integrating SwiftUI into big projects full of UIKit, communication intricacies between old UIKit modules and new SwiftUI built on top of them)\r\n\r\n1. Step: Denial - “We need to rewrite the whole project in SwiftUI OR we just can’t use it, stick to UIKit and programmatic layout”\r\nHow to move on: See some SwiftUI in action and get inspired (examples of simple design and basic property wrappers, SwiftUI strengths)\r\n\r\n2. Step: Anger - “Things that were extremely easy in UIKit can be the opposite in SwiftUI”\r\nHow to move on: Realize the opposite is true as well. Design more complex layouts with SwiftUI (example layout and focus on GeometryReader)\r\n\r\n3. Step: Bargaining - “I’m adding more SwiftUI views BUT with delegates and arrays of views, inheritance and factories”\r\nHow to move on: Realize the struggle whenever you try to use proper SwiftUI or any online solution (examples of struggles)\r\n\r\n4. Step: Depression - “my SwiftUI doesn’t really look like SwiftUI, dudes on Stackoverflow mock my code”\r\nHow to move on: Design swiftUI components which conform to swiftUI api but also can work with UIKit (examples of such component design)\r\n\r\n5. Step: Acceptance - “In big older projects, we are still far from being SwiftUI only, but I will fight for any chance to use it”\r\nHow to remain in acceptance: Use only SwiftUI for anything new whenever possible; have a strong base of systems and practices in place to make building new UI on top of old UI easier (examples of solutions to two-way communication problems between SwiftUI and UIKit)\r\n",
+                            "title": "Overcoming the 5 Stages of UI Grief  (integrating SwiftUI into big projects full of UIKit)"
+                        },
+                        "startTime": "10:45"
+                    },
+                    {
+                        "activity":
+                        {
+                            "description": "",
+                            "id": "6EA3DBB4-3889-4F05-AB7A-EEE9D1E38373",
+                            "image": "https://swiftleeds-speakers.s3.eu-west-2.amazonaws.com/6265C02C-AC7C-4136-8BBF-40721C2D7A62-refreshment-break.jpg",
+                            "metadataURL": "",
+                            "subtitle": "You might like to drink ☕️ or 🫖",
+                            "title": "Refreshment Break ☕️"
+                        },
+                        "date": "2025-10-08T00:00:00Z",
+                        "duration": 15,
+                        "id": "9A42EEBA-C128-435C-8B91-4985FB16693E",
+                        "startTime": "11:15"
+                    },
+                    {
+                        "date": "2025-10-08T00:00:00Z",
+                        "duration": 0,
+                        "id": "DCE5A6BC-C728-40C2-8719-EB94E209A234",
+                        "presentation":
+                        {
+                            "id": "699F0CCF-A671-4CEA-B4F2-38B38336220E",
+                            "slidoURL": "",
+                            "speakers":
+                            [
+                                {
+                                    "biography": "I’m an iOS Developer and Content Creator from Spain, and the maker of popular apps such as Helm for App Store Connect, NowPlaying, QReate, and Fosi. \r\n\r\nI also curate the iOS CI Newsletter, regularly speak at conferences around the world and work as a Senior Software Engineer at RevenueCat.",
+                                    "id": "3D62EF3A-BC73-4465-A0EF-55C7C776D172",
+                                    "name": "Pol Piella Abadia",
+                                    "organisation": "iOS Developer",
+                                    "presentations":
+                                    [],
+                                    "profileImage": "https://swiftleeds-speakers.s3.eu-west-2.amazonaws.com/df23-400o400o1-JApkGP88sQ3rJcXqY6nBDY.png",
+                                    "twitter": "polpielladev"
+                                }
+                            ],
+                            "synopsis": "Have you ever spent hours chasing down frustrating performance issues like bloated app storage or laggy UIs? Or maybe you’ve noticed something off in your app’s performance but weren’t quite sure how to track down the root cause?\r\n\r\nYou’re not alone. After years of debugging apps at scale, I’ve built a toolkit of techniques, tools, and processes to help you quickly identify and fix those elusive performance problems like a pro.\r\n\r\nIn this session, I’ll take you on a deep dive into analyzing real-world performance, memory, and UI issues using Xcode’s Instruments. Drawing from my own experience working with apps at scale, I’ll walk you through the most common challenges developers face—from unexpected memory spikes to sluggish UI elements. You’ll see how to approach these problems in practice, using real scenarios I’ve encountered in production apps.\r\n\r\nWe’ll explore several powerful Instruments templates, including Time Profiler for spotting CPU bottlenecks and analyzing thread usage, Zombies for catching memory leaks, and the Concurrency instrument for visualizing task execution and actor behavior. I’ll also highlight the often-overlooked SwiftUI instrument—a potential game-changer for anyone working with SwiftUI.\r\n\r\nBy the end of this session, you’ll walk away with a clear process and a practical toolkit for investigating and resolving a wide range of app performance issues—ready to put to work in your own projects.",
+                            "title": "Tuning your app using Xcode's Instruments"
+                        },
+                        "startTime": "11:30"
+                    },
+                    {
+                        "activity":
+                        {
+                            "description": "This year we have signed an exclusive deal with the Leeds Kirkgate Market. With over 15 food traders to choose from with a voucher to spend on anything you fancy.\r\n\r\nWe can't wait to see what you pick to eat 🌭\r\n\r\nYou can view a full list of traders [here](https://markets.leeds.gov.uk/where-street-food-meets-market)",
+                            "id": "6E20F336-9E51-4D30-A04F-631D134ACCE9",
+                            "image": "https://swiftleeds-speakers.s3.eu-west-2.amazonaws.com/2DE277E1-111E-43F3-9780-C5FB86985A3D-ec2730_b754e4ee192a4263a353875688f57e5b~mv2.avif",
+                            "metadataURL": "",
+                            "subtitle": "",
+                            "title": "Leeds Kirkgate Market Lunch"
+                        },
+                        "date": "2025-10-08T00:00:00Z",
+                        "duration": 75,
+                        "id": "792C0F80-8CB0-496B-BD97-474AFE128150",
+                        "startTime": "12:15"
+                    },
+                    {
+                        "date": "2025-10-08T00:00:00Z",
+                        "duration": 0,
+                        "id": "A3A3D21D-5038-4518-8AAC-34FD4AA15265",
+                        "presentation":
+                        {
+                            "id": "43ED03DB-DFAB-4595-A460-A56079083150",
+                            "slidoURL": "",
+                            "speakers":
+                            [
+                                {
+                                    "biography": "Gyuri Kim is a Lead iOS Engineer with a focus on building scalable and sustainable architectures, grounded in clean domain modeling.\r\nShe enjoys shaping intuitive flows, designing systems that grow with products and teams, and writing code that’s easy to reason about — even months later.",
+                                    "id": "7499306F-08A1-4511-B2B9-773FEE9F811A",
+                                    "name": "Kim Gyuri",
+                                    "organisation": "Lead iOS Engineer @PFC Technologies",
+                                    "presentations":
+                                    [],
+                                    "profileImage": "https://swiftleeds-speakers.s3.eu-west-2.amazonaws.com/27f7-400o400o1-fozi9tzG2ShJjxME2tXJuZ.jpg",
+                                    "twitter": "ggyuuuri?s=21"
+                                }
+                            ],
+                            "synopsis": "In most iOS apps, event logging and analytics are treated as scattered side effects — buried in view models, dumped into coordinators, or forgotten altogether. But what if we modeled them as first-class behaviors?\r\n\r\nIn this talk, I’ll share how I used Swift’s concurrency model and actors to build a flow-aware event logger for a complex multi-step user journey. When users made a choice on one screen, that context needed to persist and influence logging on all subsequent screens. Rather than rely on brittle state passing, we modeled the logger itself as a structured, stateful component.\r\n\r\nThis approach separates logging concerns from UI, reduces boilerplate, and opens the door to broader uses: A/B testing, recommendation engines, and more.\r\nBy the end of the session, you’ll see how even side effects can be designed — and why that makes your architecture better.",
+                            "title": "Side Effects as Behavior: Modeling Analytics and Beyond with Swift Concurrency"
+                        },
+                        "startTime": "13:30"
+                    },
+                    {
+                        "date": "2025-10-08T00:00:00Z",
+                        "duration": 0,
+                        "id": "ECD1199A-DFE5-4FFA-829A-81D9E669B5C6",
+                        "presentation":
+                        {
+                            "id": "2A357E58-76E7-444B-9528-A060006E044D",
+                            "slidoURL": "",
+                            "speakers":
+                            [
+                                {
+                                    "biography": "Daniel is an indie developer that is building SDKs & apps for the  stack, using Swift, SwiftUI, and the Swift Package Manager.",
+                                    "id": "0DB484FC-47A6-45D2-B995-97F9A6EC4253",
+                                    "name": "Daniel Saidi",
+                                    "organisation": "Indie developer - SDKs & apps",
+                                    "presentations":
+                                    [],
+                                    "profileImage": "https://swiftleeds-speakers.s3.eu-west-2.amazonaws.com/c73a-400o400o1-Vzhnu1uaGL1ZnshuSUKxX1.jpg",
+                                    "twitter": "danielsaidi"
+                                }
+                            ],
+                            "synopsis": "Modern software increasingly relies on open-source and commercial libraries, yet creating a maintainable, developer-friendly SDK remains a challenge. \r\n\r\nThis talk delves into best practices that differentiate great SDKs from good ones. We'll explore critical aspects of SDK development including:\r\n\r\n* Designing intuitive, future-proof APIs\r\n* Implementing robust versioning strategies.\r\n* Structuring the API surface for discoverability.\r\n* Creating tests that ensure SDK reliability over time.\r\n* Building documentation that serves your users' needs.\r\n\r\nWhether you're maintaining an existing SDK or planning a new one, you'll walk away with insights to create SDKs that developers trust and enjoy using.",
+                            "title": "Best Practices in SDK Development - Building a Great Developer Experience"
+                        },
+                        "startTime": "14:15"
+                    },
+                    {
+                        "activity":
+                        {
+                            "description": "",
+                            "id": "6EA3DBB4-3889-4F05-AB7A-EEE9D1E38373",
+                            "image": "https://swiftleeds-speakers.s3.eu-west-2.amazonaws.com/6265C02C-AC7C-4136-8BBF-40721C2D7A62-refreshment-break.jpg",
+                            "metadataURL": "",
+                            "subtitle": "You might like to drink ☕️ or 🫖",
+                            "title": "Refreshment Break ☕️"
+                        },
+                        "date": "2025-10-08T00:00:00Z",
+                        "duration": 15,
+                        "id": "3D179018-3A6A-4F0D-8319-F0199286FDB4",
+                        "startTime": "14:45"
+                    },
+                    {
+                        "date": "2025-10-08T00:00:00Z",
+                        "duration": 15,
+                        "id": "5502AC8D-A619-46D0-A2A1-D9EA3D140B6A",
+                        "presentation":
+                        {
+                            "id": "69DF7CB8-56D4-43B3-AB83-E8E1ACEE04E5",
+                            "slidoURL": "",
+                            "speakers":
+                            [
+                                {
+                                    "biography": "Erica is a Staff engineer at Slack. She is a mobile developer who specializes in iOS and dabbles in Android. When she’s not working on her phone, Erica spends a lot of time running, cycling, and time with her dog Eddie.  ",
+                                    "id": "8A594340-1EBD-4C4F-8A8B-7778B556C899",
+                                    "name": "Erica Engle",
+                                    "organisation": "Staff Engineer @slack",
+                                    "presentations":
+                                    [],
+                                    "profileImage": "https://swiftleeds-speakers.s3.eu-west-2.amazonaws.com/a059-400o400o1-RxDAby99gctZ4goqrkBMG5.png"
+                                }
+                            ],
+                            "synopsis": "We always talk about how to make a good pull request or even how to a good reviewer, but there are effective tools to make the experience more consistent and build confidence for both parties in the review process with a solid pull request template. In this talk we’ll figure out the questions we have, build an example template, and see how confidence can grow throughout the talk. Whether you’re on a large team, working solo, and especially if you’re diving into unknown codebases there’s something for you in this talk. ",
+                            "title": "The art of the pull request template"
+                        },
+                        "startTime": "15:45"
+                    },
+                    {
+                        "date": "2025-10-08T00:00:00Z",
+                        "duration": 0,
+                        "id": "5E26C6E5-D76E-4E79-BBAB-0A1DDC8530AF",
+                        "presentation":
+                        {
+                            "id": "890CC18C-3E29-4339-A97D-4B6C1D10925A",
+                            "slidoURL": "",
+                            "speakers":
+                            [
+                                {
+                                    "biography": "Douglas is invested in iPad as a developer and user. He’s an organiser of the NSLondon meetup and enjoys travelling while working remotely.\r\n\r\nhe/him",
+                                    "id": "CD18FAA0-2D65-4120-9377-5A783D33957F",
+                                    "name": "Douglas Hill",
+                                    "organisation": "iOS team lead at Nutrient",
+                                    "presentations":
+                                    [],
+                                    "profileImage": "https://swiftleeds-speakers.s3.eu-west-2.amazonaws.com/a9b5-400o400o1-MmwWG9uUdMZ8MuKxbkLFoa.jpeg"
+                                }
+                            ],
+                            "synopsis": "With PencilKit, it’s easy for iOS apps to include a highly polished drawing UI for users with or without Apple Pencil. Apple introduced this framework in iOS 13, initially as black box with limited customisation opportunities. In the years since, they’ve opened it up with deep APIs. Most recently, iOS 18 added support for custom tools in the tool picker.\r\n\r\nThis talk will provide an overview of the capabilities of PencilKit across iPad, iPhone, Mac and Apple Vision Pro. We’ll look at the vector-based data model used by PKDrawing and see how the modular design of the API allows the canvas and tool picker to be used independently, which opens the framework up to a lot more than simply recreating Apple’s Markup feature in your app.",
+                            "title": "PencilKit: From simple drawings to custom creative tools"
+                        },
+                        "startTime": "16:00"
+                    },
+                    {
+                        "activity":
+                        {
+                            "description": "Imagine stepping on an island without your MacBook 💻",
+                            "id": "93367897-E0D1-4065-92A0-06EAD605C007",
+                            "metadataURL": "",
+                            "subtitle": "",
+                            "title": "This will be out of this world 🌍"
+                        },
+                        "date": "2025-10-08T00:00:00Z",
+                        "duration": 30,
+                        "id": "243EDF72-ADDB-42DD-A211-79C9E5064C89",
+                        "startTime": "16:15"
+                    },
+                    {
+                        "date": "2025-10-08T00:00:00Z",
+                        "duration": 0,
+                        "id": "E396A29E-7D80-4F28-91BF-32E4A325739D",
+                        "presentation":
+                        {
+                            "id": "547F7C2B-9320-4A06-AD98-31B7C26BF5F0",
+                            "slidoURL": "",
+                            "speakers":
+                            [
+                                {
+                                    "biography": "I started as a PMO at Deutsche Telekom before deciding to become an engineer from scratch. Before graduating from Metropolia University with engineering degree, I joined Zalando as an iOS developer — and soon found myself shipping features to millions of users… while quietly wondering if I really belonged. Now, I talk about the parts of tech we don’t always put on LinkedIn.",
+                                    "id": "9A1DE81A-F508-4174-8E52-36704959C964",
+                                    "name": "Ekaterina Volkova",
+                                    "organisation": "Software Engineer @ Zalando",
+                                    "presentations":
+                                    [],
+                                    "profileImage": "https://swiftleeds-speakers.s3.eu-west-2.amazonaws.com/0c05-400o400o1-D6ZFTXX2LXVF5iwW5ckfqV.png"
+                                }
+                            ],
+                            "synopsis": "I launched a feature to 50 millions of users — and still felt like I didn’t belong at the table.\r\n\r\nYou hit deadlines. You build great things. People trust your work — but you still question if they should.\r\n\r\nThis isn’t a talk about crushing impostor syndrome in 5 easy steps. It’s an honest account of what it’s like to grow your career in Big Tech while battling a voice that says, “You’re not good enough.”\r\n\r\nWe’ll cover:\r\n\r\n1) Why impostor syndrome is especially loud in high-performance environments.\r\n\r\n2) The moments that nearly made me walk away — and what helped me stay.\r\n\r\n3) How to spot self-doubt patterns before they spiral.\r\n\r\n4) And ways teams and leaders can create cultures that don’t quietly exhaust their most vulnerable people.\r\n\r\n\r\nThis is a talk for anyone who’s ever felt like a fluke in a fancy job title. You’re not here by mistake. And neither am I.\r\n",
+                            "title": "\"I'm Here by Mistake\" — Dealing with Impostor Syndrome in Big Tech"
+                        },
+                        "startTime": "16:45"
+                    },
+                    {
+                        "activity":
+                        {
+                            "description": "A closing remark from Adam Rush and the SwiftLeeds team.",
+                            "id": "AE17531C-7F8E-4A99-9F09-F852EC00BE08",
+                            "metadataURL": "",
+                            "subtitle": "",
+                            "title": "Prepare for landing 🏝️"
+                        },
+                        "date": "2025-10-08T00:00:00Z",
+                        "duration": 16,
+                        "id": "89E53E09-4B00-440A-9E58-ECECF2F8C05D",
+                        "startTime": "17:15"
+                    },
+                    {
+                        "activity":
+                        {
+                            "description": "The final closing party for SwiftLeeds will be hosted inside the venue to close out SwiftLeeds 25.",
+                            "id": "3F74EDD4-2749-4874-8D34-726D44121055",
+                            "metadataURL": "",
+                            "subtitle": "",
+                            "title": "After Party 🍾"
+                        },
+                        "date": "2025-10-08T00:00:00Z",
+                        "duration": 120,
+                        "id": "83D4AC32-A4BD-44CB-AD96-0A4E0D629C98",
+                        "startTime": "17:30"
+                    },
+                    {
+                        "date": "2025-10-08T00:00:00Z",
+                        "duration": 0,
+                        "id": "B2C0F48D-83E9-40B1-9B28-223C0BE097E8",
+                        "presentation":
+                        {
+                            "id": "C043B7E4-EC50-4098-96C2-1149DBF4617B",
+                            "slidoURL": "",
+                            "speakers":
+                            [
+                                {
+                                    "biography": " iOS Engineer with 10 years of experience. Currently building secure and innovative baby monitoring solutions at Harbor. Previously worked on mobile platform teams at PicPay and safety features at Uber.",
+                                    "id": "E6B9A621-80B7-414A-A5E1-14F6FC320542",
+                                    "name": "Aline Borges",
+                                    "organisation": "Lead iOS Engineer @ Harbor",
+                                    "presentations":
+                                    [],
+                                    "profileImage": "https://swiftleeds-speakers.s3.eu-west-2.amazonaws.com/5060-400o400o1-PV3BoUCbyFQD4L6HrXUtoc.jpg"
+                                }
+                            ],
+                            "synopsis": "In a world where security and privacy are critical, Mutual TLS (mTLS) ensures that only trusted devices can communicate with each other. In this talk, we’ll break down mTLS fundamentals and explore how we’ve implemented a robust certificate architecture at Harbor to secure baby monitor connections. We’ll dive into the technical details of integrating mTLS with URLSession delegates, the challenges of managing certificates in the Keychain, and the hurdles of enforcing mTLS across the entire stack—including AVPlayer and third-party libraries that don’t support custom networking. Join us for a deep dive into real-world lessons from securing IoT applications with mTLS.",
+                            "title": "Building Trust: Using mTLS for Secure Baby Monitor Connections"
+                        },
+                        "startTime": "15:15"
+                    }
+                ]
+            }
+        ],
+        "event":
+        {
+            "date": "07-10-2025",
+            "id": "FA38DED7-558C-4DB5-BFF2-ADBE0113858A",
+            "location": "The Playhouse, Leeds",
+            "name": "SwiftLeeds 2025"
+        },
+        "events":
+        [
+            {
+                "date": "06-10-2021",
+                "id": "9C8A70F3-2EC5-4B8B-B483-0349448A1E0A",
+                "location": "The Carriageworks Theatre",
+                "name": "SwiftLeeds 2021"
+            },
+            {
+                "date": "20-10-2022",
+                "id": "CD72144D-8786-4188-ADA5-794393225AB2",
+                "location": "The Playhouse, Leeds",
+                "name": "SwiftLeeds 2022"
+            },
+            {
+                "date": "09-10-2023",
+                "id": "2D951908-1679-4D02-944B-54579698888B",
+                "location": "The Playhouse, Leeds",
+                "name": "SwiftLeeds 2023"
+            },
+            {
+                "date": "08-10-2024",
+                "id": "63B6A444-7416-4989-9903-B9DBB4D78488",
+                "location": "The Playhouse, Leeds",
+                "name": "SwiftLeeds 2024"
+            },
+            {
+                "date": "07-10-2025",
+                "id": "FA38DED7-558C-4DB5-BFF2-ADBE0113858A",
+                "location": "The Playhouse, Leeds",
+                "name": "SwiftLeeds 2025"
+            }
+        ]
+    }
+}

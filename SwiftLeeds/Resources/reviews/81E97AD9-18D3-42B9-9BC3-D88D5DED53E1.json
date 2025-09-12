@@ -1,0 +1,56 @@
+[
+  {
+    "id": "880e8400-e29b-41d4-a716-446655440001",
+    "userName": "Jessica Parker",
+    "userInitials": "JP",
+    "rating": 5,
+    "comment": "Peter's deep dive into AsyncStream was exceptional! Finally understand how to build modern asynchronous APIs properly.",
+    "date": "2024-09-07T12:30:00Z",
+    "isCurrentUser": false
+  },
+  {
+    "id": "880e8400-e29b-41d4-a716-446655440002",
+    "userName": "Brian Cooper",
+    "userInitials": "BC",
+    "rating": 4,
+    "comment": "Excellent technical presentation on SwiftUI callbacks. The Firebase examples were really well explained.",
+    "date": "2024-09-07T13:15:00Z",
+    "isCurrentUser": false
+  },
+  {
+    "id": "880e8400-e29b-41d4-a716-446655440003",
+    "userName": "Helen Zhang",
+    "userInitials": "HZ",
+    "rating": 5,
+    "comment": "Outstanding! Peter made complex async concepts accessible. The evolution from callbacks to AsyncStream was brilliant.",
+    "date": "2024-09-07T13:45:00Z",
+    "isCurrentUser": false
+  },
+  {
+    "id": "880e8400-e29b-41d4-a716-446655440004",
+    "userName": "Daniel Murphy",
+    "userInitials": "DM",
+    "rating": 4,
+    "comment": "Great talk with practical examples. Peter's experience with Firebase really shows in the quality of examples.",
+    "date": "2024-09-07T14:20:00Z",
+    "isCurrentUser": false
+  },
+  {
+    "id": "880e8400-e29b-41d4-a716-446655440005",
+    "userName": "Sofia Gonzalez",
+    "userInitials": "SG",
+    "rating": 5,
+    "comment": "Fantastic presentation! The way Peter explained AsyncStream vs AsyncSequence cleared up my confusion completely.",
+    "date": "2024-09-07T15:00:00Z",
+    "isCurrentUser": false
+  },
+  {
+    "id": "880e8400-e29b-41d4-a716-446655440006",
+    "userName": "Marcus Williams",
+    "userInitials": "MW",
+    "rating": 4,
+    "comment": "Excellent deep dive into modern Swift async patterns. Peter's real-world Firebase examples were very valuable.",
+    "date": "2024-09-07T15:30:00Z",
+    "isCurrentUser": false
+  }
+]

@@ -1,0 +1,56 @@
+[
+  {
+    "id": "770e8400-e29b-41d4-a716-446655440001",
+    "userName": "Amanda Foster",
+    "userInitials": "AF",
+    "rating": 5,
+    "comment": "Daniel's opening talk was inspiring! His perspective on community and being 'that one' person really resonated with me.",
+    "date": "2024-09-07T08:30:00Z",
+    "isCurrentUser": false
+  },
+  {
+    "id": "770e8400-e29b-41d4-a716-446655440002",
+    "userName": "Christopher Taylor",
+    "userInitials": "CT",
+    "rating": 5,
+    "comment": "Powerful and thoughtful presentation. Daniel's storytelling ability combined with technical wisdom is unmatched.",
+    "date": "2024-09-07T09:15:00Z",
+    "isCurrentUser": false
+  },
+  {
+    "id": "770e8400-e29b-41d4-a716-446655440003",
+    "userName": "Nicole Johnson",
+    "userInitials": "NJ",
+    "rating": 4,
+    "comment": "Great opening keynote! Daniel set the perfect tone for the conference. Love his approach to community building.",
+    "date": "2024-09-07T09:45:00Z",
+    "isCurrentUser": false
+  },
+  {
+    "id": "770e8400-e29b-41d4-a716-446655440004",
+    "userName": "Kevin Martinez",
+    "userInitials": "KM",
+    "rating": 5,
+    "comment": "Phenomenal speaker! Daniel's message about our role in the Swift community was exactly what I needed to hear.",
+    "date": "2024-09-07T10:20:00Z",
+    "isCurrentUser": false
+  },
+  {
+    "id": "770e8400-e29b-41d4-a716-446655440005",
+    "userName": "Stephanie Clark",
+    "userInitials": "SC",
+    "rating": 4,
+    "comment": "Inspiring talk that made me reflect on my own contributions to the community. Daniel is a natural storyteller.",
+    "date": "2024-09-07T11:00:00Z",
+    "isCurrentUser": false
+  },
+  {
+    "id": "770e8400-e29b-41d4-a716-446655440006",
+    "userName": "Andrew Rodriguez",
+    "userInitials": "AR",
+    "rating": 5,
+    "comment": "Brilliant opening! Daniel's wisdom and experience shine through every word. Perfect start to SwiftLeeds.",
+    "date": "2024-09-07T11:30:00Z",
+    "isCurrentUser": false
+  }
+]

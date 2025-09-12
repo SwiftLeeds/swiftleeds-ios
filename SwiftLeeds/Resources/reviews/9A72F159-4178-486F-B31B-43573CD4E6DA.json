@@ -1,0 +1,56 @@
+[
+  {
+    "id": "990e8400-e29b-41d4-a716-446655440001",
+    "userName": "Catherine Moore",
+    "userInitials": "CM",
+    "rating": 5,
+    "comment": "Richard's Keychain deep dive was incredible! Building the wrapper from scratch really helped me understand the API.",
+    "date": "2024-09-07T16:30:00Z",
+    "isCurrentUser": false
+  },
+  {
+    "id": "990e8400-e29b-41d4-a716-446655440002",
+    "userName": "Jonathan Hayes",
+    "userInitials": "JH",
+    "rating": 4,
+    "comment": "Excellent security-focused talk. The biometric authentication examples were exactly what I needed for my app.",
+    "date": "2024-09-07T17:15:00Z",
+    "isCurrentUser": false
+  },
+  {
+    "id": "990e8400-e29b-41d4-a716-446655440003",
+    "userName": "Olivia Bennett",
+    "userInitials": "OB",
+    "rating": 5,
+    "comment": "Outstanding presentation on Keychain! Richard made complex security concepts easy to understand and implement.",
+    "date": "2024-09-07T17:45:00Z",
+    "isCurrentUser": false
+  },
+  {
+    "id": "990e8400-e29b-41d4-a716-446655440004",
+    "userName": "Ryan Scott",
+    "userInitials": "RS",
+    "rating": 4,
+    "comment": "Great technical depth on iOS security. The cross-app sharing section was particularly valuable for our enterprise app.",
+    "date": "2024-09-07T18:20:00Z",
+    "isCurrentUser": false
+  },
+  {
+    "id": "990e8400-e29b-41d4-a716-446655440005",
+    "userName": "Grace Thompson",
+    "userInitials": "GT",
+    "rating": 5,
+    "comment": "Brilliant security talk! Richard's practical approach to Keychain implementation will definitely improve our app's security.",
+    "date": "2024-09-07T19:00:00Z",
+    "isCurrentUser": false
+  },
+  {
+    "id": "990e8400-e29b-41d4-a716-446655440006",
+    "userName": "Nathan Lewis",
+    "userInitials": "NL",
+    "rating": 4,
+    "comment": "Excellent deep dive into Keychain security. The custom authentication flows section opened my eyes to new possibilities.",
+    "date": "2024-09-07T19:30:00Z",
+    "isCurrentUser": false
+  }
+]

@@ -1,0 +1,56 @@
+[
+  {
+    "id": "bb0e8400-e29b-41d4-a716-446655440001",
+    "userName": "Rebecca Johnson",
+    "userInitials": "RJ",
+    "rating": 5,
+    "comment": "Sash's insights into shipping fast at Meta were incredible! The practical principles are already changing how our team approaches development.",
+    "date": "2024-09-08T09:30:00Z",
+    "isCurrentUser": false
+  },
+  {
+    "id": "bb0e8400-e29b-41d4-a716-446655440002",
+    "userName": "Tyler Brooks",
+    "userInitials": "TB",
+    "rating": 4,
+    "comment": "Fantastic talk on scaling development practices! The Meta insights were particularly valuable for our growing team.",
+    "date": "2024-09-08T10:15:00Z",
+    "isCurrentUser": false
+  },
+  {
+    "id": "bb0e8400-e29b-41d4-a716-446655440003",
+    "userName": "Megan Clark",
+    "userInitials": "MC",
+    "rating": 5,
+    "comment": "Outstanding presentation! Sash's experience with Threads and Meta AI gave amazing perspectives on rapid prototyping.",
+    "date": "2024-09-08T11:00:00Z",
+    "isCurrentUser": false
+  },
+  {
+    "id": "bb0e8400-e29b-41d4-a716-446655440004",
+    "userName": "Jason Miller",
+    "userInitials": "JM",
+    "rating": 4,
+    "comment": "Great practical advice on shipping fast! The battle-tested principles from Meta's experience are gold for any development team.",
+    "date": "2024-09-08T11:45:00Z",
+    "isCurrentUser": false
+  },
+  {
+    "id": "bb0e8400-e29b-41d4-a716-446655440005",
+    "userName": "Ashley Turner",
+    "userInitials": "AT",
+    "rating": 5,
+    "comment": "Brilliant talk! Sash's experience across iOS, backend, and hardware gave unique insights into shipping products at scale.",
+    "date": "2024-09-08T12:30:00Z",
+    "isCurrentUser": false
+  },
+  {
+    "id": "bb0e8400-e29b-41d4-a716-446655440006",
+    "userName": "Ryan Martinez",
+    "userInitials": "RM",
+    "rating": 4,
+    "comment": "Excellent insights into Meta's development culture! The principles for cutting time from idea to product are invaluable.",
+    "date": "2024-09-08T13:15:00Z",
+    "isCurrentUser": false
+  }
+]
