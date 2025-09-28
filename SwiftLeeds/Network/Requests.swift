@@ -30,6 +30,12 @@ enum Requests {
         eTagKey: "etag-sponsors"
     )
 
+    static let team = Request<Team>(
+        host: host,
+        path: "\(apiVersion2)/team",
+        eTagKey: "etag-team"
+    )
+
     static func schedule(for eventID: UUID) -> Request<Schedule> {
         Request<Schedule>(
             host: host,

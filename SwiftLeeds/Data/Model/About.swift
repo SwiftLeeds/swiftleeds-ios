@@ -20,3 +20,8 @@ struct AboutData: Codable {
     let truncatedAboutText: String
     let teamMembers: [TeamMember]
 }
+
+struct AboutContent: Codable {
+    let urls: AboutURLs
+    let truncatedAboutText: String
+}
