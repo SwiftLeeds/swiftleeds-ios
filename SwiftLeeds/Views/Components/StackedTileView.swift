@@ -45,16 +45,16 @@ struct StackedTileView<BackgroundType: ShapeStyle>: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: Padding.stackGap) {
-            if let primaryText = primaryText {
+            if let primaryText = primaryText, primaryText.isEmpty == false {
                 Text(primaryText)
                     .font(.headline.weight(.semibold))
                     .foregroundColor(primaryColor)
             }
 
-            if let secondaryText = secondaryText {
+            if let secondaryText = secondaryText, secondaryText.isEmpty == false {
                 Text(.init(secondaryText))
                     .font(.subheadline.weight(.regular))
-                    .foregroundColor(secondaryColor)
+                    .accentColor(.accent)
             }
         }
         .frame(maxWidth: .infinity, minHeight: Constants.compactCellMinimumHeight, alignment: .leading)
