@@ -5,6 +5,7 @@
 //  Created by Matthew Gallagher on 14/11/2021.
 //
 
+import SwiftLeedsCore
 import SwiftUI
 
 @main

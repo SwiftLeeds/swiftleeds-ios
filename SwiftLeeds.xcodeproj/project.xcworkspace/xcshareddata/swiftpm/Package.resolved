@@ -1,9 +1,10 @@
 {
+  "originHash" : "5e2396688b4fcb94ba4589017738a013e07e45529243591853be11a1b35d66cb",
   "pins" : [
     {
       "identity" : "readabilitymodifier",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/yazio/ReadabilityModifier",
+      "location" : "https://github.com/yazio/ReadabilityModifier.git",
       "state" : {
         "revision" : "ce162150a090d5ae54a682d1f6be3862a3ad3ad4",
         "version" : "1.0.0"
@@ -19,5 +20,5 @@
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }

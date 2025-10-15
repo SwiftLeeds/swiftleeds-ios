@@ -87,6 +87,7 @@
 		74F5EF872A49CE9D008D9413 /* SidebarMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F5EF862A49CE9D008D9413 /* SidebarMainView.swift */; };
 		74F5EF892A49CECB008D9413 /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F5EF882A49CECB008D9413 /* SidebarView.swift */; };
 		74F5EF8C2A4B4352008D9413 /* ReadabilityModifier in Frameworks */ = {isa = PBXBuildFile; productRef = 74F5EF8B2A4B4352008D9413 /* ReadabilityModifier */; };
+		7BDE75552E9FF4FB006108F1 /* SwiftLeedsCore in Frameworks */ = {isa = PBXBuildFile; productRef = 7BDE75542E9FF4FB006108F1 /* SwiftLeedsCore */; };
 		AE1C8010289E9F3800996659 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1C800F289E9F3800996659 /* String.swift */; };
 		AE1C801428A7BCD000996659 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AE1C801328A7BCD000996659 /* Settings.bundle */; };
 		AE1CDBE12AC0586500E83420 /* HttpMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1CDBE02AC0586500E83420 /* HttpMethod.swift */; };
@@ -329,6 +330,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7BDE75552E9FF4FB006108F1 /* SwiftLeedsCore in Frameworks */,
 				74F5EF8C2A4B4352008D9413 /* ReadabilityModifier in Frameworks */,
 				AE5EFD73289DC1D000464FE1 /* CachedAsyncImage in Frameworks */,
 			);
@@ -728,6 +730,7 @@
 			packageProductDependencies = (
 				AE5EFD72289DC1D000464FE1 /* CachedAsyncImage */,
 				74F5EF8B2A4B4352008D9413 /* ReadabilityModifier */,
+				7BDE75542E9FF4FB006108F1 /* SwiftLeedsCore */,
 			);
 			productName = SwiftLeeds;
 			productReference = AECB295327417F9D00CDC983 /* SwiftLeeds.app */;
@@ -1569,6 +1572,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 74F5EF8A2A4B4352008D9413 /* XCRemoteSwiftPackageReference "ReadabilityModifier" */;
 			productName = ReadabilityModifier;
+		};
+		7BDE75542E9FF4FB006108F1 /* SwiftLeedsCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SwiftLeedsCore;
 		};
 		AE5EFD72289DC1D000464FE1 /* CachedAsyncImage */ = {
 			isa = XCSwiftPackageProductDependency;

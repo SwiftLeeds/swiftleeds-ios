@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-@main
+//@main
 struct SwiftLeedsApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
     
