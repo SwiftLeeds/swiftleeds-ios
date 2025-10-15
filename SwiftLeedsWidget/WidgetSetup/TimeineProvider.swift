@@ -5,8 +5,9 @@
 //  Created by Karim Ebrahem on 11/09/2022.
 //  
 
-import WidgetKit
+import SwiftLeedsCore
 import SwiftUI
+import WidgetKit
 
 struct Provider: TimelineProvider {
     func placeholder(in context: Context) -> SwiftLeedsWidgetEntry {

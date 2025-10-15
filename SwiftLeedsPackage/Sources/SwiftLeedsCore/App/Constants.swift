@@ -37,11 +37,11 @@ enum Strings {
  """
 }
 
-enum Assets {
-    enum Image {
-        static let carriageworksTheatre = "CarriageworksTheatre"
-        static let leedsPlayhouse = "LeedsPlayhouse"
-        static let swiftLeedsIcon = "SwiftLeedsIcon"
-        static let swiftLeedsIconWithNoBackground = "Icon"
+public enum Assets {
+    public enum Image {
+        public static let carriageworksTheatre = "CarriageworksTheatre"
+        public static let leedsPlayhouse = "LeedsPlayhouse"
+        public static let swiftLeedsIcon = "SwiftLeedsIcon"
+        public static let swiftLeedsIconWithNoBackground = "Icon"
     }
 }

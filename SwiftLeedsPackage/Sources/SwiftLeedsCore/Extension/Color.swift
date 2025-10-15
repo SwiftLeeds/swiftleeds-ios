@@ -8,19 +8,19 @@
 import SwiftUI
 
 extension Color {
-    static let accent = Color("AccentColor")
+    public static let accent = Color("AccentColor")
 
-    static let tabBarBackground = Color("TabBarBackground")
-    static let background = Color("Background")
-    static let listBackground = Color("ListBackground")
+    public static let tabBarBackground = Color("TabBarBackground")
+    public static let background = Color("Background")
+    public static let listBackground = Color("ListBackground")
 
-    static let cellBackground = Color("CellBackground")
-    static let cellBorder = Color("CellBorder")
-    static let cellForeground = Color("CellForeground")
+    public static let cellBackground = Color("CellBackground")
+    public static let cellBorder = Color("CellBorder")
+    public static let cellForeground = Color("CellForeground")
 
-    static let buyTicketGradientStart = Color("BuyTicketGradientStart")
-    static let buyTicketGradientEnd = Color("BuyTicketGradientEnd")
+    public static let buyTicketGradientStart = Color("BuyTicketGradientStart")
+    public static let buyTicketGradientEnd = Color("BuyTicketGradientEnd")
 
-    static let weatherGradientStart = Color("WeatherGradientStart")
-    static let weatherGradientEnd = Color("WeatherGradientEnd")
+    public static let weatherGradientStart = Color("WeatherGradientStart")
+    public static let weatherGradientEnd = Color("WeatherGradientEnd")
 }

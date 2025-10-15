@@ -7,13 +7,15 @@
 
 import SwiftUI
 
-struct MyConferenceView: View {
+public struct MyConferenceView: View {
     @StateObject private var viewModel = MyConferenceViewModel()
 
     @State private var currentIndex: Int = 0
     @Namespace private var namespace
     
-    var body: some View {
+    public init() {}
+    
+    public var body: some View {
         NavigationView {
             VStack(spacing: 0) {
                 Divider()

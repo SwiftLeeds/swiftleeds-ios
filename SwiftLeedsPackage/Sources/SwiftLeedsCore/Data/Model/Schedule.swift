@@ -7,45 +7,59 @@
 
 import Foundation
 
-struct Schedule: Codable {
-    let data: Data
-
-
-    struct Data: Codable {
-        let event: Event
-        let events: [Event]
-        let days: [Day]
+public struct Schedule: Codable {
+    public let data: Data
+    
+    public struct Data: Codable {
+        public let event: Event
+        public let events: [Event]
+        public let days: [Day]
     }
 
-    struct Day: Codable, Identifiable {
-        let date: Date
-        let name: String
-        let slots: [Slot]
-
-        var id: String {
+    public struct Day: Codable, Identifiable {
+        public let date: Date
+        public let name: String
+        public let slots: [Slot]
+        public var id: String {
             "\(name)-\(date.timeIntervalSince1970.description)"
         }
     }
 
-    struct Event: Codable, Identifiable {
-        let id: UUID
-        let name: String
-        let location: String
-        let date: Date
+    public struct Event: Codable, Identifiable {
+        public let id: UUID
+        public let name: String
+        public let location: String
+        public let date: Date
 
-        var daysUntil: Int {
+        public var daysUntil: Int {
             Calendar.current.numberOfDays(to: date)
         }
     }
 
-    struct Slot: Identifiable {
-        let id: UUID
-        let date: Date?
-        let startTime: String
-        let duration: Int
-        let activity: Activity?
-        let presentation: Presentation?
-
+    public struct Slot: Identifiable {
+        public let id: UUID
+        public let date: Date?
+        public let startTime: String
+        public let duration: Int
+        public let activity: Activity?
+        public let presentation: Presentation?
+        
+        public init(
+            id: UUID,
+            date: Date?,
+            startTime: String,
+            duration: Int,
+            activity: Activity?,
+            presentation: Presentation?
+        ) {
+            self.id = id
+            self.date = date
+            self.startTime = startTime
+            self.duration = duration
+            self.activity = activity
+            self.presentation = presentation
+        }
+        
         private enum CodingKeys: CodingKey {
             case id, activity, presentation, date, startTime, duration
         }
@@ -60,7 +74,7 @@ struct Schedule: Codable {
 
 // MARK: - Slot Decodable
 extension Schedule.Slot: Codable {
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
 
         id = try values.decode(UUID.self, forKey: .id)
@@ -88,7 +102,7 @@ extension Schedule.Slot: Codable {
 
 // MARK: - Slot Equatable
 extension Schedule.Slot: Equatable {
-    static func == (lhs: Schedule.Slot, rhs: Schedule.Slot) -> Bool {
+    public static func == (lhs: Schedule.Slot, rhs: Schedule.Slot) -> Bool {
         lhs.id == rhs.id
     }
 }
