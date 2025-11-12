@@ -26,8 +26,8 @@ let package = Package(
         .target(
             name: "SwiftLeedsCore",
             dependencies: [
-                "ReadabilityModifier",
                 "CachedAsyncImage",
+                "ReadabilityModifier",
             ]
         ),
         .testTarget(
