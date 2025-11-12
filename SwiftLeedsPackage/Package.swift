@@ -27,6 +27,7 @@ let package = Package(
             name: "SwiftLeedsCore",
             dependencies: [
                 "CachedAsyncImage",
+                "Networking",
                 "ReadabilityModifier",
             ]
         ),
@@ -34,6 +35,18 @@ let package = Package(
             name: "SwiftLeedsCoreTests",
             dependencies: [
                 "SwiftLeedsCore"
+            ]
+        ),
+        .target(
+            name: "Networking",
+            dependencies: [
+                
+            ]
+        ),
+        .testTarget(
+            name: "NetworkingTests",
+            dependencies: [
+                
             ]
         ),
     ],

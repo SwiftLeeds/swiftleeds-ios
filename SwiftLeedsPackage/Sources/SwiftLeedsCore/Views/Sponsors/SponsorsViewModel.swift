@@ -1,12 +1,6 @@
-//
-//  SponsorsViewModel.swift
-//  SwiftLeeds
-//
-//  Created by Muralidharan Kathiresan on 25/06/23.
-//
-
-import Foundation
 import Combine
+import Foundation
+import Networking
 import SwiftUI
 
 final class SponsorsViewModel: ObservableObject {
@@ -59,4 +53,12 @@ final class SponsorsViewModel: ObservableObject {
 
         self.sections = sections
     }
+}
+
+private extension Requests {
+    static let sponsors = Request<Sponsors>(
+        host: host,
+        path: "\(apiVersion1)/sponsors",
+        eTagKey: "etag-sponsors"
+    )
 }

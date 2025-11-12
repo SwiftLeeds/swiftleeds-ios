@@ -1,10 +1,3 @@
-//
-//  Request.swift
-//  SwiftLeeds
-//
-//  Created by Matthew Gallagher on 24/09/2023.
-//
-
 import Foundation
 
 public struct Request<Response> {

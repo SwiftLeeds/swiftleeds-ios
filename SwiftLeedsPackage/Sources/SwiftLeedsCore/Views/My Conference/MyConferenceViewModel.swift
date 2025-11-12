@@ -1,12 +1,6 @@
-//
-//  MyConferenceViewModel.swift
-//  SwiftLeeds
-//
-//  Created by Matthew Gallagher on 01/08/2022.
-//
-
-import Foundation
 import Combine
+import Foundation
+import Networking
 import SwiftUI
 
 class MyConferenceViewModel: ObservableObject {
@@ -107,5 +101,25 @@ class MyConferenceViewModel: ObservableObject {
         Task {
             try? await reloadSchedule()
         }
+    }
+}
+
+private extension Requests {
+    static let schedule = Request<Schedule>(
+        host: host,
+        path: "\(apiVersion2)/schedule",
+        eTagKey: "etag-schedule"
+    )
+    
+    static func schedule(for eventID: UUID) -> Request<Schedule> {
+        Request<Schedule>(
+            host: host,
+            path: "\(apiVersion2)/schedule",
+            method: .get([.init(
+                name: "event",
+                value: eventID.uuidString)
+            ]),
+            eTagKey: "etag-schedule-\(eventID.uuidString)"
+        )
     }
 }
