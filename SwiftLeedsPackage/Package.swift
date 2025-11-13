@@ -9,15 +9,17 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "SwiftLeedsPackage",
-            targets: ["SwiftLeedsPackage"]),
+            name: "SwiftLeeds",
+            targets: ["SwiftLeedsCore"]
+        ),
     ],
     targets: [
         .target(
-            name: "SwiftLeedsPackage"),
+            name: "SwiftLeedsCore"
+        ),
         .testTarget(
-            name: "SwiftLeedsPackageTests",
-            dependencies: ["SwiftLeedsPackage"]
+            name: "SwiftLeedsCoreTests",
+            dependencies: ["SwiftLeedsCore"]
         ),
     ]
 )
