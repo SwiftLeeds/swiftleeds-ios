@@ -11,6 +11,12 @@ jobs:
     name: Build SwiftLeeds (DEBUG)
     runs-on: macos-13
     steps:
+      - uses: swift-actions/setup-swift@v2
+        with:
+          swift-version: "6.2.0"
+      - name: Get swift version
+        run: swift --version # Swift 6.2.0
+      
       - name: Checkout iOS Repository
         uses: actions/checkout@v2
         
