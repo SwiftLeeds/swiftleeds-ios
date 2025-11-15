@@ -9,7 +9,7 @@ on:
 jobs:
   build:
     name: Build SwiftLeeds (DEBUG)
-    runs-on: macos-13
+    runs-on: macos-latest
     steps:
       - uses: swift-actions/setup-swift@v2
       
