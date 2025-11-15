@@ -5,6 +5,7 @@
 //  Created by karim ebrahim on 09/09/2022.
 //
 
+import SwiftLeedsCore
 import SwiftUI
 import WidgetKit
 
