@@ -19,7 +19,13 @@ let package = Package(
             targets: [
                 "Networking",
             ]
-        )
+        ),
+        .library(
+            name: "DesignKit",
+            targets: [
+                "DesignKit"
+            ]
+        ),
     ],
     targets: [
         .target(
@@ -27,6 +33,9 @@ let package = Package(
         ),
         .target(
             name: "Networking"
+        ),
+        .target(
+            name: "DesignKit"
         ),
     ],
     // Set to v5 to avoid strict concurrency checking in pre swift 6 code
