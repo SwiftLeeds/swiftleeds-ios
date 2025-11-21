@@ -146,7 +146,7 @@ struct AboutView: View {
             NavigationView {
                 ScrollView {
                     VStack(alignment: .leading, spacing: Padding.cellGap) {
-                        Text(.init(Strings.aboutSwiftLeeds))
+                        Text(aboutSwiftLeeds)
                             .font(.body)
                             .foregroundColor(.primary)
                             .frame(maxWidth: .infinity, alignment: .leading)
@@ -177,6 +177,14 @@ struct AboutView: View {
         guard let url = url else { return }
         UIApplication.shared.open(url)
     }
+
+    private let aboutSwiftLeeds = """
+    Adam Rush founded SwiftLeeds in 2019, born from over ten years of experience attending conferences. The inspiration was bringing a modern, inclusive conference in the North of the UK to be more accessible for all.
+    
+    SwiftLeeds is now run with over ten community volunteers building the website, iOS applications and making sure we cover all the bases on the day. SwiftLeeds is entirely non-profit, and the funds make sure we can deliver the best experience possible.
+    
+    In-person conferences are the best way to meet like-minded people who enjoy building apps with Swift. You can also learn from the best people in the industry and chat about all things Swift.
+    """
 }
 
 struct AboutView_Previews: PreviewProvider {
