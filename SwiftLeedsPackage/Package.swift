@@ -14,10 +14,23 @@ let package = Package(
                 "SwiftLeedsCore",
             ]
         ),
+        .library(
+            name: "Networking",
+            targets: [
+                "Networking",
+            ]
+        )
     ],
     targets: [
         .target(
             name: "SwiftLeedsCore"
         ),
+        .target(
+            name: "Networking"
+        ),
+    ],
+    // Set to v5 to avoid strict concurrency checking in pre swift 6 code
+    swiftLanguageModes: [
+        .v5,
     ]
 )

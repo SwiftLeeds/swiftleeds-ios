@@ -1,10 +1,3 @@
-//
-//  Request.swift
-//  SwiftLeeds
-//
-//  Created by Matthew Gallagher on 24/09/2023.
-//
-
 import Foundation
 
 public struct Request<Response> {
@@ -16,7 +9,14 @@ public struct Request<Response> {
     let eTagKey: String?
     let url: URL
 
-    public init(scheme: String = "https", host: String, path: String, method: HttpMethod = .get([]), headers: [String: String] = [:], eTagKey: String? = nil) {
+    public init(
+        scheme: String = "https",
+        host: String,
+        path: String,
+        method: HttpMethod = .get([]),
+        headers: [String: String] = [:],
+        eTagKey: String? = nil
+    ) {
         self.scheme = scheme
         self.host = host
         self.path = path
@@ -29,7 +29,9 @@ public struct Request<Response> {
         components.host = host
         components.path = path
 
-        guard let url = components.url else { preconditionFailure("Couldn't create a url from components") }
+        guard let url = components.url else {
+            preconditionFailure("Couldn't create a url from components")
+        }
         self.url = url
     }
 
@@ -41,7 +43,9 @@ public struct Request<Response> {
             var components = URLComponents(url: url, resolvingAgainstBaseURL: false)
             components?.queryItems = queryItems
 
-            guard let url = components?.url else { preconditionFailure("Couldn't create a url from components...") }
+            guard let url = components?.url else {
+                preconditionFailure("Couldn't create a url from components...")
+            }
 
             request = URLRequest(url: url)
         case .post(let data):

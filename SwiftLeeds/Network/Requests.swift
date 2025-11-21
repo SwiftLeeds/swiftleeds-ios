@@ -1,11 +1,5 @@
-//
-//  Requests.swift
-//  SwiftLeeds
-//
-//  Created by Matthew Gallagher on 24/09/2023.
-//
-
 import Foundation
+import Networking
 
 enum Requests {
     private static let host = "swiftleeds.co.uk"
