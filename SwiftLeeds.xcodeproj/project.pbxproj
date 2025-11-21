@@ -36,7 +36,6 @@
 		0B4CB3F228EAF61600246E62 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB06BD028CF8D2100E51967 /* WebView.swift */; };
 		0B4CB3F328EAF61B00246E62 /* CommonTileButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE432875B06500911F03 /* CommonTileButton.swift */; };
 		0B4CB3F428EAF62100246E62 /* CommonTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE442875B06500911F03 /* CommonTileView.swift */; };
-		0B4CB3F528EAF62A00246E62 /* SquishyButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE542875B0C100911F03 /* SquishyButtonStyle.swift */; };
 		0B4CB3F628EAF63100246E62 /* LinearGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE4C2875B08600911F03 /* LinearGradient.swift */; };
 		0B4CB3FC28EAF7C500246E62 /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = 0B4CB3FB28EAF7C500246E62 /* CachedAsyncImage */; };
 		0B4CB3FD28EAF7FE00246E62 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AECB295A27417F9E00CDC983 /* Assets.xcassets */; };
@@ -90,6 +89,9 @@
 		7B31C8E52ED08DD100FEEDF7 /* Networking in Frameworks */ = {isa = PBXBuildFile; productRef = 7B31C8E42ED08DD100FEEDF7 /* Networking */; };
 		7B31C8E72ED08EE800FEEDF7 /* Networking in Frameworks */ = {isa = PBXBuildFile; productRef = 7B31C8E62ED08EE800FEEDF7 /* Networking */; };
 		7B31C8E92ED08EEE00FEEDF7 /* Networking in Frameworks */ = {isa = PBXBuildFile; productRef = 7B31C8E82ED08EEE00FEEDF7 /* Networking */; };
+		7B31C8EB2ED0959000FEEDF7 /* DesignKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7B31C8EA2ED0959000FEEDF7 /* DesignKit */; };
+		7B31C8ED2ED0959600FEEDF7 /* DesignKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7B31C8EC2ED0959600FEEDF7 /* DesignKit */; };
+		7B31C8EF2ED0959A00FEEDF7 /* DesignKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7B31C8EE2ED0959A00FEEDF7 /* DesignKit */; };
 		AE1C8010289E9F3800996659 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1C800F289E9F3800996659 /* String.swift */; };
 		AE1C801428A7BCD000996659 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AE1C801328A7BCD000996659 /* Settings.bundle */; };
 		AE32CDF0286CCF9D00DF0AFF /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE32CDEF286CCF9D00DF0AFF /* Constants.swift */; };
@@ -144,7 +146,6 @@
 		FA57DE4B2875B06B00911F03 /* SwiftLeedsContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE4A2875B06B00911F03 /* SwiftLeedsContainer.swift */; };
 		FA57DE4D2875B08600911F03 /* LinearGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE4C2875B08600911F03 /* LinearGradient.swift */; };
 		FA57DE502875B09900911F03 /* SponsorTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE4E2875B09900911F03 /* SponsorTileView.swift */; };
-		FA57DE552875B0C100911F03 /* SquishyButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE542875B0C100911F03 /* SquishyButtonStyle.swift */; };
 		FAAB819128844EBC001159BB /* View+MeasureSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAB819028844EBC001159BB /* View+MeasureSize.swift */; };
 /* End PBXBuildFile section */
 
@@ -293,7 +294,6 @@
 		FA57DE4A2875B06B00911F03 /* SwiftLeedsContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftLeedsContainer.swift; sourceTree = "<group>"; };
 		FA57DE4C2875B08600911F03 /* LinearGradient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinearGradient.swift; sourceTree = "<group>"; };
 		FA57DE4E2875B09900911F03 /* SponsorTileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SponsorTileView.swift; sourceTree = "<group>"; };
-		FA57DE542875B0C100911F03 /* SquishyButtonStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SquishyButtonStyle.swift; sourceTree = "<group>"; };
 		FAAB819028844EBC001159BB /* View+MeasureSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+MeasureSize.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -305,6 +305,7 @@
 				7B31C8E92ED08EEE00FEEDF7 /* Networking in Frameworks */,
 				741ED8FB2A75829C00494B25 /* ReadabilityModifier in Frameworks */,
 				0B4CB3FC28EAF7C500246E62 /* CachedAsyncImage in Frameworks */,
+				7B31C8EF2ED0959A00FEEDF7 /* DesignKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -315,6 +316,7 @@
 				7B31C8E72ED08EE800FEEDF7 /* Networking in Frameworks */,
 				74A09FE128C6778C00E03F39 /* SwiftUI.framework in Frameworks */,
 				74A09FDF28C6778C00E03F39 /* WidgetKit.framework in Frameworks */,
+				7B31C8ED2ED0959600FEEDF7 /* DesignKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -325,6 +327,7 @@
 				7B31C8E52ED08DD100FEEDF7 /* Networking in Frameworks */,
 				74F5EF8C2A4B4352008D9413 /* ReadabilityModifier in Frameworks */,
 				AE5EFD73289DC1D000464FE1 /* CachedAsyncImage in Frameworks */,
+				7B31C8EB2ED0959000FEEDF7 /* DesignKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -446,7 +449,6 @@
 				AECB295C27417F9E00CDC983 /* Preview Content */,
 				AE8C1B2928C4B38400AF7318 /* Push */,
 				AECB29842741AC2500CDC983 /* Resources */,
-				FA57DE532875B0B500911F03 /* Style */,
 				AE8C1B2C28C4B8D800AF7318 /* SwiftLeeds.entitlements */,
 				AECB29852741AC4B00CDC983 /* Views */,
 			);
@@ -609,14 +611,6 @@
 			path = Components;
 			sourceTree = "<group>";
 		};
-		FA57DE532875B0B500911F03 /* Style */ = {
-			isa = PBXGroup;
-			children = (
-				FA57DE542875B0C100911F03 /* SquishyButtonStyle.swift */,
-			);
-			path = Style;
-			sourceTree = "<group>";
-		};
 		FA57DE562875B0DC00911F03 /* Data */ = {
 			isa = PBXGroup;
 			children = (
@@ -669,6 +663,7 @@
 				0B4CB3FB28EAF7C500246E62 /* CachedAsyncImage */,
 				741ED8FA2A75829C00494B25 /* ReadabilityModifier */,
 				7B31C8E82ED08EEE00FEEDF7 /* Networking */,
+				7B31C8EE2ED0959A00FEEDF7 /* DesignKit */,
 			);
 			productName = SwiftLeedsAppClip;
 			productReference = 0B4CB3C528EAF19000246E62 /* SwiftLeedsAppClip.app */;
@@ -712,6 +707,7 @@
 				AE5EFD72289DC1D000464FE1 /* CachedAsyncImage */,
 				74F5EF8B2A4B4352008D9413 /* ReadabilityModifier */,
 				7B31C8E42ED08DD100FEEDF7 /* Networking */,
+				7B31C8EA2ED0959000FEEDF7 /* DesignKit */,
 			);
 			productName = SwiftLeeds;
 			productReference = AECB295327417F9D00CDC983 /* SwiftLeeds.app */;
@@ -884,7 +880,6 @@
 				AE9367932A93481800F2DB3F /* Date.swift in Sources */,
 				0B4CB3E428EAF5AF00246E62 /* Presentation.swift in Sources */,
 				741ED8FC2A7582A600494B25 /* SponsorsView.swift in Sources */,
-				0B4CB3F528EAF62A00246E62 /* SquishyButtonStyle.swift in Sources */,
 				0B4CB3E928EAF5D200246E62 /* Local.swift in Sources */,
 				0B4CB3E228EAF59900246E62 /* Calendar.swift in Sources */,
 				0B910A352A48FEC100648B32 /* SponsorTileView.swift in Sources */,
@@ -943,7 +938,6 @@
 				0B59B56F2E70EA4F00820C3C /* AboutViewModel.swift in Sources */,
 				FA57DE4D2875B08600911F03 /* LinearGradient.swift in Sources */,
 				394653A9288BB47A00212E1C /* SectionHeader.swift in Sources */,
-				FA57DE552875B0C100911F03 /* SquishyButtonStyle.swift in Sources */,
 				AE9367962A9354CC00F2DB3F /* Helper.swift in Sources */,
 				AED26F7A28676AA300E06064 /* LocalView.swift in Sources */,
 				39ED0034288F113500AB337A /* LocalCell.swift in Sources */,
@@ -1557,6 +1551,18 @@
 		7B31C8E82ED08EEE00FEEDF7 /* Networking */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Networking;
+		};
+		7B31C8EA2ED0959000FEEDF7 /* DesignKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = DesignKit;
+		};
+		7B31C8EC2ED0959600FEEDF7 /* DesignKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = DesignKit;
+		};
+		7B31C8EE2ED0959A00FEEDF7 /* DesignKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = DesignKit;
 		};
 		AE5EFD72289DC1D000464FE1 /* CachedAsyncImage */ = {
 			isa = XCSwiftPackageProductDependency;
