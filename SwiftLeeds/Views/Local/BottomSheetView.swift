@@ -1,12 +1,6 @@
-//
-//  BottomSheetView.swift
-//  SwiftLeeds
-//
-//  Created by LUCKY AGARWAL on 25/07/22.
-//
-
-import SwiftUI
+import DesignKit
 import ReadabilityModifier
+import SwiftUI
 
 struct BottomSheetView: View {
     @Binding var isOpen: Bool

@@ -1,21 +1,4 @@
-//
-//  Constants.swift
-//  SwiftLeeds
-//
-//  Created by Matthew Gallagher on 29/06/2022.
-//
-
 import CoreGraphics
-
-enum Constants {
-    static let cellRadius: CGFloat = 12
-    static let compactCellMinimumHeight: CGFloat = 53
-    static let cellMinimumHeight: CGFloat = 65
-    static let bottomSheetRadius: CGFloat = 30
-    static let minHeightRatio: CGFloat = 0.3
-    static let maxHeightRatio: CGFloat = 0.5
-    static let snapRatio: CGFloat = 0.25
-}
 
 enum Padding {
     static let screen: CGFloat = 16
