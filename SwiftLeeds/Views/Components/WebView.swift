@@ -1,10 +1,3 @@
-//
-//  WebView.swift
-//  SwiftLeeds
-//
-//  Created by Matthew Gallagher on 12/09/2022.
-//
-
 import SwiftUI
 import WebKit
 

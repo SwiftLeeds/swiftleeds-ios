@@ -1,10 +1,3 @@
-//
-//  Presentation.swift
-//  SwiftLeeds
-//
-//  Created by Matthew Gallagher on 31/08/2022.
-//
-
 import Foundation
 
 // MARK: - Presentation

@@ -1,10 +1,3 @@
-//
-//  SwiftLeedsContainer.swift
-//  SwiftLeeds
-//
-//  Created by Alex Logan on 01/07/2022.
-//
-
 import SwiftUI
 
 struct SwiftLeedsContainer<Content: View>: View {

@@ -1,10 +1,3 @@
-//
-//  About.swift
-//  SwiftLeeds
-//
-//  Created by Muralidharan Kathiresan on 10/09/2025.
-//
-
 import Foundation
 
 struct AboutURLs: Codable {

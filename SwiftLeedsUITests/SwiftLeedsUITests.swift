@@ -1,10 +1,3 @@
-//
-//  SwiftLeedsUITests.swift
-//  SwiftLeedsUITests
-//
-//  Created by Matthew Gallagher on 14/11/2021.
-//
-
 import XCTest
 
 class SwiftLeedsUITests: XCTestCase {

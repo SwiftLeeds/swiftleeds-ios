@@ -1,10 +1,3 @@
-//
-//  Schedule.swift
-//  SwiftLeeds
-//
-//  Created by Matthew Gallagher on 01/08/2022.
-//
-
 import Foundation
 
 struct Schedule: Codable {

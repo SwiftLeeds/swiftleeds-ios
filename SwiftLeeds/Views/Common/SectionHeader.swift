@@ -1,10 +1,3 @@
-//
-//  SectionHeader.swift
-//  SwiftLeeds
-//
-//  Created by LUCKY AGARWAL on 23/07/22.
-//
-
 import SwiftUI
 
 struct SectionHeader: View {

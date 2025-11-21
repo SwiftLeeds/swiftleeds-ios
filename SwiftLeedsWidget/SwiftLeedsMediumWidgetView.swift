@@ -1,10 +1,3 @@
-//
-//  SwiftLeedsMediumWidgetView.swift
-//  SwiftLeedsWidgetExtension
-//
-//  Created by karim ebrahim on 09/09/2022.
-//
-
 import SwiftUI
 import WidgetKit
 

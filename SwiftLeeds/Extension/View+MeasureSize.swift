@@ -1,10 +1,3 @@
-//
-//  View+MeasureSize.swift
-//  SwiftLeeds
-//
-//  Created by Alex Logan on 17/07/2022.
-//
-
 import Foundation
 import SwiftUI
 

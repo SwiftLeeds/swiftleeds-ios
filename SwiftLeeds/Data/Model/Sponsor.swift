@@ -1,10 +1,3 @@
-//
-//  Sponsor.swift
-//  SwiftLeeds
-//
-//  Created by Muralidharan Kathiresan on 26/06/23.
-//
-
 import Foundation
 
 struct Sponsors: Decodable {
