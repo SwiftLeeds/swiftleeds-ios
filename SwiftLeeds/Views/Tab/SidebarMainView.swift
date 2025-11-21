@@ -1,3 +1,4 @@
+import Settings
 import SwiftUI
 
 struct SidebarMainView: View {

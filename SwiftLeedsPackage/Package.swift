@@ -31,7 +31,7 @@ let package = Package(
             targets: [
                 "Settings",
             ]
-        )
+        ),
     ],
     targets: [
         .target(
@@ -44,8 +44,14 @@ let package = Package(
             name: "DesignKit"
         ),
         .target(
-            name: "Settings"
+            name: "Settings",
+            dependencies: [
+                "ColorTheme",
+            ]
         ),
+        .target(
+            name: "ColorTheme"
+        )
     ],
     // Set to v5 to avoid strict concurrency checking in pre swift 6 code
     swiftLanguageModes: [

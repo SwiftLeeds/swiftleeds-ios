@@ -1,10 +1,13 @@
+import ColorTheme
 import SwiftUI
 
-struct SettingsView: View {
+public struct SettingsView: View {
     @EnvironmentObject var themeManager: ThemeManager
     @StateObject private var viewModel = SettingsViewModel()
-    
-    var body: some View {
+
+    public init() {}
+
+    public var body: some View {
         NavigationView {
             List {
                 Section("App Icon") {
