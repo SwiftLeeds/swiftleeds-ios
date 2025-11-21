@@ -135,7 +135,6 @@ enum AppIconOption: String, CaseIterable {
     }
 }
 
-
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
         SettingsView()
