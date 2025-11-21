@@ -113,7 +113,6 @@
 		AECB295727417F9D00CDC983 /* SwiftLeedsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECB295627417F9D00CDC983 /* SwiftLeedsApp.swift */; };
 		AECB295927417F9D00CDC983 /* MyConferenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECB295827417F9D00CDC983 /* MyConferenceView.swift */; };
 		AECB295B27417F9E00CDC983 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AECB295A27417F9E00CDC983 /* Assets.xcassets */; };
-		AECB295E27417F9E00CDC983 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AECB295D27417F9E00CDC983 /* Preview Assets.xcassets */; };
 		AECB296827417F9E00CDC983 /* SwiftLeedsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECB296727417F9E00CDC983 /* SwiftLeedsTests.swift */; };
 		AECB297227417F9E00CDC983 /* SwiftLeedsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECB297127417F9E00CDC983 /* SwiftLeedsUITests.swift */; };
 		AECB297427417F9E00CDC983 /* SwiftLeedsUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECB297327417F9E00CDC983 /* SwiftLeedsUITestsLaunchTests.swift */; };
@@ -263,7 +262,6 @@
 		AECB295627417F9D00CDC983 /* SwiftLeedsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftLeedsApp.swift; sourceTree = "<group>"; };
 		AECB295827417F9D00CDC983 /* MyConferenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyConferenceView.swift; sourceTree = "<group>"; };
 		AECB295A27417F9E00CDC983 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		AECB295D27417F9E00CDC983 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		AECB296327417F9E00CDC983 /* SwiftLeedsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftLeedsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AECB296727417F9E00CDC983 /* SwiftLeedsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftLeedsTests.swift; sourceTree = "<group>"; };
 		AECB296D27417F9E00CDC983 /* SwiftLeedsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftLeedsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -446,21 +444,12 @@
 				AECB29862741AC5800CDC983 /* App */,
 				FA57DE562875B0DC00911F03 /* Data */,
 				AECB298027418D9800CDC983 /* Extension */,
-				AECB295C27417F9E00CDC983 /* Preview Content */,
 				AE8C1B2928C4B38400AF7318 /* Push */,
 				AECB29842741AC2500CDC983 /* Resources */,
 				AE8C1B2C28C4B8D800AF7318 /* SwiftLeeds.entitlements */,
 				AECB29852741AC4B00CDC983 /* Views */,
 			);
 			path = SwiftLeeds;
-			sourceTree = "<group>";
-		};
-		AECB295C27417F9E00CDC983 /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				AECB295D27417F9E00CDC983 /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
 			sourceTree = "<group>";
 		};
 		AECB296627417F9E00CDC983 /* SwiftLeedsTests */ = {
@@ -832,7 +821,6 @@
 			files = (
 				AE1C801428A7BCD000996659 /* Settings.bundle in Resources */,
 				AECB29882741ACE000CDC983 /* Colors.xcassets in Resources */,
-				AECB295E27417F9E00CDC983 /* Preview Assets.xcassets in Resources */,
 				0B59B56E2E70EA4F00820C3C /* about.json in Resources */,
 				AECB295B27417F9E00CDC983 /* Assets.xcassets in Resources */,
 			);
@@ -1298,7 +1286,6 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 0;
-				DEVELOPMENT_ASSET_PATHS = "\"SwiftLeeds/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SwiftLeeds/App/Info.plist;
@@ -1333,7 +1320,6 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 0;
-				DEVELOPMENT_ASSET_PATHS = "\"SwiftLeeds/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SwiftLeeds/App/Info.plist;
