@@ -2,13 +2,13 @@ import SwiftUI
 import UIKit
 
 /// Available theme options for the application
-enum ThemeOption: String, CaseIterable {
+public enum ThemeOption: String, CaseIterable {
     case system = "system"
     case light = "light"
     case dark = "dark"
     
     /// User-friendly display name for the theme option
-    var displayName: String {
+    public var displayName: String {
         switch self {
         case .system: return "System"
         case .light: return "Light"
@@ -17,7 +17,7 @@ enum ThemeOption: String, CaseIterable {
     }
     
     /// Corresponding UIUserInterfaceStyle for the theme
-    var userInterfaceStyle: UIUserInterfaceStyle {
+    public var userInterfaceStyle: UIUserInterfaceStyle {
         switch self {
         case .light: return .light
         case .dark: return .dark
@@ -27,13 +27,13 @@ enum ThemeOption: String, CaseIterable {
 }
 
 /// Manages the application's theme settings and appearance
-final class ThemeManager: ObservableObject {
+public final class ThemeManager: ObservableObject {
     /// Shared singleton instance
-    static let shared = ThemeManager()
-    
+    public static let shared = ThemeManager()
+
     /// Currently selected theme, automatically synced with UserDefaults
-    @Published var currentTheme: ThemeOption = .system
-    
+    @Published public var currentTheme: ThemeOption = .system
+
     private init() {
         loadTheme()
         applyTheme(currentTheme)
@@ -41,7 +41,7 @@ final class ThemeManager: ObservableObject {
     
     /// Updates the application theme and persists the selection
     /// - Parameter theme: The new theme to apply
-    func setTheme(_ theme: ThemeOption) {
+    public func setTheme(_ theme: ThemeOption) {
         currentTheme = theme
         UserDefaults.standard.set(theme.rawValue, forKey: UserDefaultsKeys.selectedTheme)
         applyTheme(theme)
