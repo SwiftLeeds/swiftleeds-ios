@@ -1,13 +1,7 @@
-//
-//  AboutView.swift
-//  SwiftLeeds
-//
-//  Created by Matthew Gallagher on 25/06/2022.
-//
-
-import SwiftUI
-import ReadabilityModifier
+import DesignKit
 import CachedAsyncImage
+import ReadabilityModifier
+import SwiftUI
 
 struct AboutView: View {
     @StateObject private var viewModel = AboutViewModel()

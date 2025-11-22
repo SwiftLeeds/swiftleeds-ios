@@ -1,10 +1,4 @@
-//
-//  AnnouncementCell.swift.swift
-//  SwiftLeeds
-//
-//  Created by Matthew Gallagher on 25/06/2022.
-//
-
+import DesignKit
 import SwiftUI
 
 struct AnnouncementCell: View {

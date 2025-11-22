@@ -1,10 +1,4 @@
-//
-//  SponsorTileView.swift
-//  SwiftLeeds
-//
-//  Created by Alex Logan on 01/07/2022.
-//
-
+import DesignKit
 import SwiftUI
 import CachedAsyncImage
 

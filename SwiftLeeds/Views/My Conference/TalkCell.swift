@@ -1,12 +1,6 @@
-//
-//  TalkCell.swift
-//  SwiftLeeds
-//
-//  Created by Matthew Gallagher on 25/06/2022.
-//
-
-import SwiftUI
 import CachedAsyncImage
+import DesignKit
+import SwiftUI
 
 struct TalkCell: View {
     private let time: String

@@ -1,10 +1,4 @@
-//
-//  StackedTileView.swift
-//  SwiftLeeds
-//
-//  Created by Alex Logan on 05/07/2022.
-//
-
+import DesignKit
 import SwiftUI
 
 /// Used when there's lots of content to display.

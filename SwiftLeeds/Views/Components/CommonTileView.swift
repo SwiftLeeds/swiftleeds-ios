@@ -1,10 +1,4 @@
-//
-//  CommonTileView.swift
-//  SwiftLeeds
-//
-//  Created by Alex Logan on 05/07/2022.
-//
-
+import DesignKit
 import SwiftUI
 
 /// Generic primary secondary view

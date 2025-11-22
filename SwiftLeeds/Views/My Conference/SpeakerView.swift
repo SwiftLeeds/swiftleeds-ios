@@ -1,10 +1,4 @@
-//
-//  SpeakerView.swift
-//  SwiftLeeds
-//
-//  Created by LUCKY AGARWAL on 23/07/22.
-//
-
+import DesignKit
 import SwiftUI
 
 struct SpeakerView: View {

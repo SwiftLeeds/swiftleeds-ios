@@ -1,10 +1,4 @@
-//
-//  CompactActionItem.swift
-//  SwiftLeeds
-//
-//  Created by Muralidharan Kathiresan on 09/09/2025.
-//
-
+import DesignKit
 import SwiftUI
 
 struct CompactActionItem: View {

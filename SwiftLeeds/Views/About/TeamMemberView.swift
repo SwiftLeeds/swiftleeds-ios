@@ -1,12 +1,6 @@
-//
-//  TeamMemberView.swift
-//  SwiftLeeds
-//
-//  Created by Muralidharan Kathiresan on 09/09/2025.
-//
-
-import SwiftUI
 import CachedAsyncImage
+import DesignKit
+import SwiftUI
 
 struct TeamMemberView: View {
     let member: TeamMember

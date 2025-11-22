@@ -1,10 +1,4 @@
-//
-//  LocalCell.swift
-//  SwiftLeeds
-//
-//  Created by LUCKY AGARWAL on 25/07/22.
-//
-
+import DesignKit
 import SwiftUI
 
 struct LocalCell: View {

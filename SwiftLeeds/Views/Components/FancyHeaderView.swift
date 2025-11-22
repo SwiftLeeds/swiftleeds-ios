@@ -1,12 +1,6 @@
-//
-//  HeaderView.swift
-//  SwiftLeeds
-//
-//  Created by Kannan Prasad on 05/07/2022.
-//
-
-import SwiftUI
 import CachedAsyncImage
+import DesignKit
+import SwiftUI
 
 struct FancyHeaderView: View {
     private let title: String

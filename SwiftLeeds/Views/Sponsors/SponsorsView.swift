@@ -1,12 +1,6 @@
-//
-//  SponsorsView.swift
-//  SwiftLeeds
-//
-//  Created by Muralidharan Kathiresan on 25/06/23.
-//
-
-import SwiftUI
+import DesignKit
 import ReadabilityModifier
+import SwiftUI
 
 struct SponsorsView: View {
     @StateObject private var viewModel = SponsorsViewModel()

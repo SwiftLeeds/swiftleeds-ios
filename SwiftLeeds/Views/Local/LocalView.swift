@@ -1,12 +1,6 @@
-//
-//  LocalView.swift
-//  SwiftLeeds
-//
-//  Created by Matthew Gallagher on 25/06/2022.
-//
-
-import SwiftUI
+import DesignKit
 import MapKit
+import SwiftUI
 
 struct LocalView: View {
     @StateObject private var model = LocalViewModel()
