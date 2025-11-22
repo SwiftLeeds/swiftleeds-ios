@@ -133,7 +133,6 @@
 		FA57DE482875B06500911F03 /* StackedTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE452875B06500911F03 /* StackedTileView.swift */; };
 		FA57DE4B2875B06B00911F03 /* SwiftLeedsContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE4A2875B06B00911F03 /* SwiftLeedsContainer.swift */; };
 		FA57DE502875B09900911F03 /* SponsorTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE4E2875B09900911F03 /* SponsorTileView.swift */; };
-		FAAB819128844EBC001159BB /* View+MeasureSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAB819028844EBC001159BB /* View+MeasureSize.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -273,7 +272,6 @@
 		FA57DE452875B06500911F03 /* StackedTileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StackedTileView.swift; sourceTree = "<group>"; };
 		FA57DE4A2875B06B00911F03 /* SwiftLeedsContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftLeedsContainer.swift; sourceTree = "<group>"; };
 		FA57DE4E2875B09900911F03 /* SponsorTileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SponsorTileView.swift; sourceTree = "<group>"; };
-		FAAB819028844EBC001159BB /* View+MeasureSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+MeasureSize.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -462,7 +460,6 @@
 			children = (
 				AECB298127418DA200CDC983 /* Color.swift */,
 				AE1C800F289E9F3800996659 /* String.swift */,
-				FAAB819028844EBC001159BB /* View+MeasureSize.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -912,7 +909,6 @@
 				0B59B5722E70EA6600820C3C /* About.swift in Sources */,
 				0B59B56B2E70E6AC00820C3C /* CompactActionItem.swift in Sources */,
 				74F5EF892A49CECB008D9413 /* SidebarView.swift in Sources */,
-				FAAB819128844EBC001159BB /* View+MeasureSize.swift in Sources */,
 				AECB298227418DA200CDC983 /* Color.swift in Sources */,
 				FA534D8828A1939500A3BFBB /* LocalViewModel.swift in Sources */,
 				AE5EFD75289E7CBF00464FE1 /* ActivityView.swift in Sources */,
