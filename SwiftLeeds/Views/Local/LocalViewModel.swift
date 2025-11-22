@@ -1,10 +1,5 @@
-//
-//  LocalViewModel.swift
-//  SwiftLeeds
-//
-//  Created by Alex Logan on 08/08/2022.
-//
-
+import Foundation
+import Networking
 import SwiftUI
 import MapKit
 
@@ -42,4 +37,12 @@ class LocalViewModel: ObservableObject {
         self.categories = localResults.data
         self.selectedCategory = self.categories.first
     }
+}
+
+private extension Requests {
+    static let local = Request<Local>(
+        host: host,
+        path: "\(apiVersion1)/local",
+        eTagKey: "etag-local"
+    )
 }

@@ -1,14 +1,7 @@
-//
-//  AboutViewModel.swift
-//  SwiftLeeds
-//
-//  Created by Muralidharan Kathiresan on 09/09/2025.
-//
-
-import Foundation
 import Combine
+import Foundation
+import Networking
 
-// MARK: - ViewModel
 @MainActor
 class AboutViewModel: ObservableObject {
     @Published var aboutContent: AboutContent?
@@ -103,4 +96,12 @@ class AboutViewModel: ObservableObject {
     private func updateTeamMembers(_ members: [TeamMember]) async {
         self.teamMembers = members
     }
+}
+
+private extension Requests {
+    static let team = Request<Team>(
+        host: host,
+        path: "\(apiVersion2)/team",
+        eTagKey: "etag-team"
+    )
 }
