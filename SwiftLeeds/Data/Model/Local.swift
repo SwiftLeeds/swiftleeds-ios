@@ -1,10 +1,3 @@
-//
-//  Local.swift
-//  SwiftLeeds
-//
-//  Created by Alex Logan on 08/08/2022.
-//
-
 import Foundation
 import MapKit
 

@@ -1,10 +1,3 @@
-//
-//  Tabs.swift
-//  SwiftLeeds
-//
-//  Created by Matthew Gallagher on 25/06/2022.
-//
-
 import SwiftUI
 
 struct Tabs: View {

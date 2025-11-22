@@ -1,10 +1,3 @@
-//
-//  SwiftLeedsWidget.swift
-//  SwiftLeedsWidget
-//
-//  Created by karim ebrahim on 05/09/2022.
-//
-
 import WidgetKit
 import SwiftUI
 

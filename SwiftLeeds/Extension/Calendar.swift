@@ -1,10 +1,3 @@
-//
-//  Calendar.swift
-//  SwiftLeeds
-//
-//  Created by Matthew Gallagher on 04/08/2022.
-//
-
 import Foundation
 
 extension Calendar {

@@ -1,10 +1,3 @@
-//
-//  TokenDetails.swift
-//  SwiftLeeds
-//
-//  Created by Matthew Gallagher on 04/09/2022.
-//
-
 import Foundation
 
 struct TokenDetails: Encodable {

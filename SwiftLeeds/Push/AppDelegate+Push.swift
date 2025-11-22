@@ -1,10 +1,3 @@
-//
-//  AppDelegate+Push.swift
-//  SwiftLeeds
-//
-//  Created by Matthew Gallagher on 04/09/2022.
-//
-
 import UIKit
 import UserNotifications
 

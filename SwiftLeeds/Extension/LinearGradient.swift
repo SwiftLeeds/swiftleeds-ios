@@ -1,10 +1,3 @@
-//
-//  LinearGradient.swift
-//  SwiftLeeds
-//
-//  Created by Alex Logan on 05/07/2022.
-//
-
 import Foundation
 import SwiftUI
 
