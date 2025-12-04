@@ -32,6 +32,12 @@ let package = Package(
                 "Settings",
             ]
         ),
+        .library(
+            name: "UIColors",
+            targets: [
+                "UIColors",
+            ]
+        ),
     ],
     dependencies: [
         .package(url: "https://github.com/SwiftGen/SwiftGenPlugin", from: "6.6.0"),
@@ -54,7 +60,10 @@ let package = Package(
         ),
         .target(
             name: "ColorTheme"
-        )
+        ),
+        .target(
+            name: "UIColors"
+        ),
     ],
     // Set to v5 to avoid strict concurrency checking in pre swift 6 code
     swiftLanguageModes: [

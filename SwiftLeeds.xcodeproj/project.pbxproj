@@ -92,6 +92,7 @@
 		7B31C8F12ED0A7BF00FEEDF7 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = 7B31C8F02ED0A7BF00FEEDF7 /* Settings */; };
 		7B31C8F32ED0AB0E00FEEDF7 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = 7B31C8F22ED0AB0E00FEEDF7 /* Settings */; };
 		7B31C8F52ED0AB1600FEEDF7 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = 7B31C8F42ED0AB1600FEEDF7 /* Settings */; };
+		7B8C3EB52EE238C70089C6CF /* UIColors in Frameworks */ = {isa = PBXBuildFile; productRef = 7B8C3EB42EE238C70089C6CF /* UIColors */; };
 		AE1C8010289E9F3800996659 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1C800F289E9F3800996659 /* String.swift */; };
 		AE1C801428A7BCD000996659 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AE1C801328A7BCD000996659 /* Settings.bundle */; };
 		AE32CDF0286CCF9D00DF0AFF /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE32CDEF286CCF9D00DF0AFF /* Constants.swift */; };
@@ -311,6 +312,7 @@
 				7B31C8F12ED0A7BF00FEEDF7 /* Settings in Frameworks */,
 				74F5EF8C2A4B4352008D9413 /* ReadabilityModifier in Frameworks */,
 				AE5EFD73289DC1D000464FE1 /* CachedAsyncImage in Frameworks */,
+				7B8C3EB52EE238C70089C6CF /* UIColors in Frameworks */,
 				7B31C8EB2ED0959000FEEDF7 /* DesignKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -676,6 +678,7 @@
 				7B31C8E42ED08DD100FEEDF7 /* Networking */,
 				7B31C8EA2ED0959000FEEDF7 /* DesignKit */,
 				7B31C8F02ED0A7BF00FEEDF7 /* Settings */,
+				7B8C3EB42EE238C70089C6CF /* UIColors */,
 			);
 			productName = SwiftLeeds;
 			productReference = AECB295327417F9D00CDC983 /* SwiftLeeds.app */;
@@ -1524,6 +1527,10 @@
 		7B31C8F42ED0AB1600FEEDF7 /* Settings */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Settings;
+		};
+		7B8C3EB42EE238C70089C6CF /* UIColors */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = UIColors;
 		};
 		AE5EFD72289DC1D000464FE1 /* CachedAsyncImage */ = {
 			isa = XCSwiftPackageProductDependency;
