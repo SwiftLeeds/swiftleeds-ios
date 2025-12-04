@@ -33,6 +33,9 @@ let package = Package(
             ]
         ),
     ],
+    dependencies: [
+        .package(url: "https://github.com/SwiftGen/SwiftGenPlugin", from: "6.6.0"),
+    ],
     targets: [
         .target(
             name: "SwiftLeedsCore"
