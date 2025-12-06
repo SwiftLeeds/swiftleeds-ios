@@ -3,11 +3,10 @@
 import SwiftUI
 
 struct Test: View {
-    let color: ColorResource = .accent
+    let color: SLColorResource = .accent
 
     var body: some View {
         Color(color)
-        Text("Hi there!")
     }
 }
 

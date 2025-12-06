@@ -1,9 +1,15 @@
+input_dir: Resources
+output_dir: ${DERIVED_SOURCES_DIR}
+
 xcassets:
   inputs:
-    - Resources/Colors.xcassets
+    - .
   outputs:
     - templatePath: Templates/assets.stencil
-      output: ${DERIVED_SOURCES_DIR}/Assets+Generated.swift
+      output: Assets+Generated.swift
       params:
+        colorResourceName: SLColorResource
+        imageResourceName: SLImageResource
+        bundle: Bundle.module
         publicAccess: true
         forceProvidesNamespaces: true

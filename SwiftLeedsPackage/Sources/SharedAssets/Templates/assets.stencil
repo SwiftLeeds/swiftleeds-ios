@@ -1,68 +1,19 @@
-// swiftlint:disable all
 // Generated using SwiftGen — https://github.com/SwiftGen/SwiftGen
-// Template created by Yehor Myropoltsev
-
+// swiftlint:disable all
 {% if catalogs %}
-{% macro casesBlock assets assetType %}
-    {% for asset in assets %}
-        {% if asset.type == assetType %}
-    /// The "{{ asset.name }}" asset catalog {{ assetType }} theme.
-    static let {{ asset.name|swiftIdentifier:"pretty"|lowerFirstWord|escapeReservedKeywords }} = {{ assetType|capitalize }}Theme(name: "{{ asset.name }}", bundle: themeBundle)
-        {% elif asset.items %}
-            {% call casesBlock asset.items assetType %}
-        {% endif %}
-    {% endfor %}
+{% macro hasValuesBlock assets filter %}
+  {%- for asset in assets -%}
+    {%- if asset.type == filter -%}
+      1
+    {%- elif asset.items -%}
+      {% call hasValuesBlock asset.items filter %}
+    {%- endif -%}
+  {%- endfor -%}
 {% endmacro %}
-{% macro allValuesBlock catalogs assetType %}
-    {% if catalogs.count > 1 %}
-        {% for catalog in catalogs %}
-            {% if catalog.assets %}
-                {% call casesBlock catalog.assets assetType %}
-            {% endif %}
-        {% endfor %}
-    {% else %}
-        {% call casesBlock catalogs.first.assets assetType %}
-    {% endif %}
-{% endmacro %}
-{% macro generateAssetProperty asset assetType platform %}
-    /// The "{{ asset.name }}" asset catalog {{ assetType }}.
-    static var {{ asset.name|swiftIdentifier:"pretty"|lowerFirstWord|escapeReservedKeywords }}: {{ platform }} {
-        {% if platform == "Color" %}
-        Color(theme: .{{ asset.name|swiftIdentifier:"pretty"|lowerFirstWord|escapeReservedKeywords }})
-        {% elif platform == "Image" %}
-        Image(theme: .{{ asset.name|swiftIdentifier:"pretty"|lowerFirstWord|escapeReservedKeywords }})
-        {% elif platform == "NSColor" or platform == "UIColor" or platform == "NSImage" or platform == "UIImage" %}
-        #if !os(watchOS) && !targetEnvironment(macCatalyst)
-        {{ platform }}(theme: .{{ asset.name|swiftIdentifier:"pretty"|lowerFirstWord|escapeReservedKeywords }})
-        #else
-        {{ platform }}()
-        #endif
-        {% else %}
-        fatalError("Unsupported platform: {{ platform }}")
-        {% endif %}
-    }
-{% endmacro %}
-{% macro processAssets assets assetType platform %}
-    {% for asset in assets %}
-        {% if asset.type == assetType %}
-            {% call generateAssetProperty asset assetType platform %}
-        {% elif asset.items %}
-            {% call processAssets asset.items assetType platform %}
-        {% endif %}
-    {% endfor %}
-{% endmacro %}
-{% macro extensionBlock catalogs assetType platform %}
-    {% if catalogs.count > 1 %}
-        {% for catalog in catalogs %}
-            {% if catalog.assets %}
-                {% call processAssets catalog.assets assetType platform %}
-            {% endif %}
-        {% endfor %}
-    {% else %}
-        {% call processAssets catalogs.first.assets assetType platform %}
-    {% endif %}
-{% endmacro %}
-
+{% set colorResourceName %}{{param.colorResourceName|default:"ColorResource"}}{% endset %}
+{% set imageResourceName %}{{param.imageResourceName|default:"ImageResource"}}{% endset %}
+{% set forceNamespaces %}{{param.forceProvidesNamespaces|default:"false"}}{% endset %}
+{% set accessModifier %}{% if param.publicAccess %}public{% else %}internal{% endif %}{% endset %}
 import Foundation
 #if canImport(AppKit)
 import AppKit
@@ -73,164 +24,349 @@ import UIKit
 #if canImport(SwiftUI)
 import SwiftUI
 #endif
+#if canImport(DeveloperToolsSupport)
+import DeveloperToolsSupport
+#endif
 
 #if SWIFT_PACKAGE
-private let themeBundle = Bundle.module
+private let resourceBundle = Bundle.module
 #else
-private class ThemeBundleClass {}
-private let themeBundle = Bundle(for: ThemeBundleClass.self)
+private class ResourceBundleClass {}
+private let resourceBundle = Foundation.Bundle(for: ResourceBundleClass.self)
 #endif
 
+{% macro colorBlock assets %}
+{% set hasItems %}{% call hasValuesBlock asset.items "color" %}{% endset %}
+{% if hasItems %}
 // MARK: - Color Symbols -
 
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-public extension ColorTheme {
-    {% call allValuesBlock catalogs "color" %}
+{{accessModifier}} extension {{colorResourceName}} {
+  {% call colorAssetsBlock assets %}
 }
 
+#if canImport(SwiftUI)
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+{{accessModifier}} extension SwiftUI.Color {
+  {% call colorSwiftUIBlock assets %}
+}
+#endif
+{% endif %}
+{% endmacro %}
+{% macro colorSwiftUIBlock assets %}
+  {% for asset in assets %}
+  {% if asset.type == "color" %}
+
+  {# {% set parts %}{% asset.value|split:"/" %}{% endset %} #}
+  {# {{ parts|map("lowercase")|map("capitalize")|join:"." }} #}
+
+  public static var {{asset.name|swiftIdentifier:"pretty"|lowerFirstWord|escapeReservedKeywords}}: SwiftUI.Color { .init({{colorResourceName}}.{{asset.value|split:"/"|join:"."}}) }
+  {% elif asset.items and ( forceNamespaces == "true" or asset.isNamespaced == "true" ) %}
+  {% set hasItems %}{% call hasValuesBlock asset.items "color" %}{% endset %}
+  {% if hasItems %}
+  public enum {{asset.name|swiftIdentifier:escapeReservedKeywords}} {
+    {% filter indent:2," ",true %}{% call colorSwiftUIBlock asset.items %}{% endfilter %}
+  }
+  {% endif %}
+  {% endif %}
+  {% endfor %}
+{% endmacro %}
+{% macro colorAssetsBlock assets %}
+  {% for asset in assets %}
+  {% if asset.type == "color" %}
+  {{accessModifier}} static let {{asset.name|swiftIdentifier:"pretty"|lowerFirstWord|escapeReservedKeywords}}: {{colorResourceName}} = {{colorResourceName}}(name: "{{asset.value}}", bundle: resourceBundle)
+  {% elif asset.items and ( forceNamespaces == "true" or asset.isNamespaced == "true" ) %}
+  {% set hasItems %}{% call hasValuesBlock asset.items "color" %}{% endset %}
+  {% if hasItems %}
+  public enum {{asset.name|swiftIdentifier:escapeReservedKeywords}} {
+    {% filter indent:2," ",true %}{% call colorAssetsBlock asset.items %}{% endfilter %}
+  }
+  {% endif %}
+  {% endif %}
+  {% endfor %}
+{% endmacro %}
+
+{% macro hasImagesOrSymbols asset %}
+  {% set hasImages %}{% call hasValuesBlock asset.items "image" %}{% endset %}
+  {% set hasSymbols %}{% call hasValuesBlock asset.items "symbol" %}{% endset %}
+  {% if hasImages or hasSymbols %}
+    1
+  {% endif %}
+{% endmacro %}
+
+{% macro imageBlock assets %}
+{% set hasImages %}{% call hasImagesOrSymbols asset %}{% endset %}
+{% if hasImages %}
 // MARK: - Image Symbols -
-
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-public extension ImageTheme {
-    {% call allValuesBlock catalogs "image" %}
+{{accessModifier}} extension {{imageResourceName}} {
+  {% call imageAssetsBlock assets %}
 }
+{% endif %}
+{% endmacro %}
+{% macro imageAssetsBlock assets %}
+  {% for asset in assets %}
+  {% if asset.type == "image" %}
+  {{accessModifier}} static let {{asset.name|swiftIdentifier:"pretty"|lowerFirstWord|escapeReservedKeywords}}: {{imageResourceName}} = {{imageResourceName}}(name: "{{asset.value}}", bundle: resourceBundle)
+  {% elif asset.type == "symbol" %}
+  {{accessModifier}} static let {{asset.name|swiftIdentifier:"pretty"|lowerFirstWord|escapeReservedKeywords}}: {{imageResourceName}} = {{imageResourceName}}(name: "{{asset.value}}", bundle: resourceBundle)
+  {% elif asset.items and ( forceNamespaces == "true" or asset.isNamespaced == "true" ) %}
+  {% set hasImages %}{% call hasImagesOrSymbols asset %}{% endset %}
+  {% if hasImages %}
+  public enum {{asset.name|swiftIdentifier:escapeReservedKeywords}} {
+    {% filter indent:2," ",true %}{% call imageAssetsBlock asset.items %}{% endfilter %}
+  }
+  {% endif %}
+  {% endif %}
+  {% endfor %}
+{% endmacro %}
 
-// MARK: - Color Symbol Extensions -
+{% call colorBlock catalogs.first.assets %}
 
-#if canImport(AppKit)
-@available(macOS 12.0, *)
-@available(macCatalyst, unavailable)
-public extension NSColor {
-    {% call extensionBlock catalogs "color" "NSColor" %}
-}
+{% call imageBlock catalogs.first.assets %}
+// swiftlint:enable identifier_name line_length nesting type_body_length type_name
+
+// MARK: - Thinnable Asset Support -
+
+@available(iOS 11.0, macOS 10.13, tvOS 11.0, *)
+@available(watchOS, unavailable)
+extension {{colorResourceName}} {
+
+    private init?(thinnableName: Swift.String, bundle: Foundation.Bundle) {
+#if canImport(UIKit) && !os(watchOS)
+        if UIKit.UIColor(named: thinnableName, in: bundle, compatibleWith: nil) != nil {
+            self.init(name: thinnableName, bundle: bundle)
+        } else {
+            return nil
+        }
+#else
+        return nil
 #endif
+    }
+
+}
 
 #if canImport(UIKit)
-@available(iOS 15.0, tvOS 15.0, *)
+@available(iOS 11.0, tvOS 11.0, *)
 @available(watchOS, unavailable)
-public extension UIColor {
-    {% call extensionBlock catalogs "color" "UIColor" %}
+extension UIKit.UIColor {
+
+    private convenience init?(thinnableResource: {{colorResourceName}}?) {
+#if !os(watchOS)
+        if let resource = thinnableResource {
+            self.init(resource: resource)
+        } else {
+            return nil
+        }
+#else
+        return nil
+#endif
+    }
+
 }
 #endif
 
 #if canImport(SwiftUI)
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-public extension Color {
-    {% call extensionBlock catalogs "color" "Color" %}
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension SwiftUI.Color {
+
+    private init?(thinnableResource: {{colorResourceName}}?) {
+        if let resource = thinnableResource {
+            self.init(resource)
+        } else {
+            return nil
+        }
+    }
+
 }
 
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-public extension ShapeStyle where Self == Color {
-    {% call extensionBlock catalogs "color" "Color" %}
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension SwiftUI.ShapeStyle where Self == SwiftUI.Color {
+
+    private init?(thinnableResource: {{colorResourceName}}?) {
+        if let resource = thinnableResource {
+            self.init(resource)
+        } else {
+            return nil
+        }
+    }
+
 }
 #endif
 
-// MARK: - Image Symbol Extensions -
+@available(iOS 11.0, macOS 10.7, tvOS 11.0, *)
+@available(watchOS, unavailable)
+extension {{imageResourceName}} {
+
+    private init?(thinnableName: Swift.String, bundle: Foundation.Bundle) {
+#if canImport(UIKit) && !os(watchOS)
+        if UIKit.UIImage(named: thinnableName, in: bundle, compatibleWith: nil) != nil {
+            self.init(name: thinnableName, bundle: bundle)
+        } else {
+            return nil
+        }
+#else
+        return nil
+#endif
+    }
+
+}
 
 #if canImport(AppKit)
-@available(macOS 12.0, *)
+@available(macOS 10.7, *)
 @available(macCatalyst, unavailable)
-public extension NSImage {
-    {% call extensionBlock catalogs "image" "NSImage" %}
+extension AppKit.NSImage {
+
+    private convenience init?(thinnableResource: {{imageResourceName}}?) {
+#if !targetEnvironment(macCatalyst)
+        if let resource = thinnableResource {
+            self.init(resource: resource)
+        } else {
+            return nil
+        }
+#else
+        return nil
+#endif
+    }
+
 }
 #endif
 
 #if canImport(UIKit)
-@available(iOS 15.0, tvOS 15.0, *)
+@available(iOS 11.0, tvOS 11.0, *)
 @available(watchOS, unavailable)
-public extension UIImage {
-    {% call extensionBlock catalogs "image" "UIImage" %}
-}
-#endif
+extension UIKit.UIImage {
 
-#if canImport(SwiftUI)
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-public extension Image {
-    {% call extensionBlock catalogs "image" "Image" %}
+    private convenience init?(thinnableResource: {{imageResourceName}}?) {
+#if !os(watchOS)
+        if let resource = thinnableResource {
+            self.init(resource: resource)
+        } else {
+            return nil
+        }
+#else
+        return nil
+#endif
+    }
+
 }
 #endif
 
 // MARK: - Backwards Deployment Support -
 
-public struct ColorTheme: Hashable, Sendable {
-    public let name: String
-    public let bundle: Bundle
+/// A color resource.
+{{accessModifier}} struct {{colorResourceName}}: Swift.Hashable, Swift.Sendable {
 
-    public init(name: String, bundle: Bundle) {
+    /// An asset catalog color resource name.
+    fileprivate let name: Swift.String
+
+    /// An asset catalog color resource bundle.
+    fileprivate let bundle: Foundation.Bundle
+
+    /// Initialize a `{{colorResourceName}}` with `name` and `bundle`.
+    init(name: Swift.String, bundle: Foundation.Bundle) {
+        self.name = name
+        self.bundle = bundle
+    }
+
+}
+
+/// An image resource.
+{{accessModifier}} struct {{imageResourceName}}: Swift.Hashable, Swift.Sendable {
+
+    /// An asset catalog image resource name.
+    fileprivate let name: Swift.String
+
+    /// An asset catalog image resource bundle.
+    fileprivate let bundle: Foundation.Bundle
+
+    /// Initialize an `{{imageResourceName}}` with `name` and `bundle`.
+    init(name: Swift.String, bundle: Foundation.Bundle) {
         self.name = name
         self.bundle = bundle
     }
 }
 
-public struct ImageTheme: Hashable, Sendable {
-    public let name: String
-    public let bundle: Bundle
-
-    public init(name: String, bundle: Bundle) {
-        self.name = name
-        self.bundle = bundle
-    }
-}
-
-@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
-public extension Color {
-    init(theme: ColorTheme) {
-        self.init(theme.name, bundle: theme.bundle)
-    }
-}
-
-@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
-public extension Color {
-    init(_ theme: ColorTheme) {
-        self.init(theme: theme)
-    }
-}
-
-@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
-public extension Image {
-    init(theme: ImageTheme) {
-        self.init(theme.name, bundle: theme.bundle)
-    }
-}
-
-@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
-public extension Image {
-    init(_ theme: ImageTheme) {
-        self.init(theme: theme)
-    }
-}
 
 #if canImport(UIKit)
 @available(iOS 11.0, tvOS 11.0, *)
-public extension UIColor {
-    convenience init(theme: ColorTheme) {
-        self.init(named: theme.name, in: theme.bundle, compatibleWith: nil)!
+@available(watchOS, unavailable)
+{{accessModifier}} extension UIKit.UIColor {
+
+    /// Initialize a `UIColor` with a color resource.
+    convenience init(resource: {{colorResourceName}}) {
+#if !os(watchOS)
+        self.init(named: resource.name, in: resource.bundle, compatibleWith: nil)!
+#else
+        self.init()
+#endif
     }
+
 }
 
 @available(iOS 11.0, tvOS 11.0, *)
-public extension UIImage {
-    convenience init(theme: ImageTheme) {
-        self.init(named: theme.name, in: theme.bundle, compatibleWith: nil)!
+@available(watchOS, unavailable)
+{{accessModifier}} extension UIKit.UIImage {
+
+    /// Initialize a `UIImage` with an image resource.
+    convenience init(resource: {{imageResourceName}}) {
+#if !os(watchOS)
+        self.init(named: resource.name, in: resource.bundle, compatibleWith: nil)!
+#else
+        self.init()
+#endif
     }
+
 }
 #endif
 
-#if canImport(AppKit)
-@available(macOS 10.13, *)
-public extension NSColor {
-    convenience init(theme: ColorTheme) {
-        self.init(named: NSColor.Name(theme.name), bundle: theme.bundle)!
+#if canImport(SwiftUI)
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+{{accessModifier}} extension SwiftUI.Color {
+
+    /// Initialize a `Color` with a color resource.
+    init(_ resource: {{colorResourceName}}) {
+        self.init(resource.name, bundle: resource.bundle)
     }
+
 }
 
-@available(macOS 10.7, *)
-public extension NSImage {
-    convenience init(theme: ImageTheme) {
-        self.init(named: NSImage.Name(theme.name))!
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+{{accessModifier}} extension SwiftUI.Image {
+
+    /// Initialize an `Image` with an image resource.
+    init(_ resource: {{imageResourceName}}) {
+        self.init(resource.name, bundle: resource.bundle)
+    }
+
+}
+#endif
+
+#if canImport(SwiftUI)
+{{accessModifier}} extension Button where Label == SwiftUI.Label<AnyView, Image?> {
+    init(
+        _ titleKey: any StringProtocol,
+        spImage: {{imageResourceName}}? = nil,
+        role: ButtonRole? = nil,
+        action: @escaping () -> Void
+    ) {
+        self.init(
+            role: role,
+            action: action,
+            label: {
+                Label(
+                    title: {
+                        AnyView(
+                            Text(titleKey)
+                                .accessibilityIdentifier(
+                                    "button\(titleKey.capitalized.replacingOccurrences(of: " ", with: ""))"
+                                )
+                        )
+                    },
+                    icon: { if let spImage { Image(spImage) } }
+                )
+            }
+        )
     }
 }
 #endif
-{% else %}
-// No assets found
 {% endif %}
+// swiftlint:enable all
