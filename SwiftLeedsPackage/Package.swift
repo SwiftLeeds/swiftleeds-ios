@@ -62,7 +62,10 @@ let package = Package(
             name: "ColorTheme"
         ),
         .target(
-            name: "SharedAssets"
+            name: "SharedAssets",
+            plugins: [
+              .plugin(name: "SwiftGenPlugin", package: "SwiftGenPlugin"),
+            ]
         ),
     ],
     // Set to v5 to avoid strict concurrency checking in pre swift 6 code

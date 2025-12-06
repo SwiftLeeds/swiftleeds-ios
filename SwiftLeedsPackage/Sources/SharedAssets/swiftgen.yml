@@ -1,0 +1,9 @@
+xcassets:
+  inputs:
+    - Resources/Colors.xcassets
+  outputs:
+    - templatePath: Templates/assets.stencil
+      output: ${DERIVED_SOURCES_DIR}/Assets+Generated.swift
+      params:
+        publicAccess: true
+        forceProvidesNamespaces: true
