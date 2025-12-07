@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 70;
+	objectVersion = 55;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -274,10 +274,6 @@
 		FA57DE4A2875B06B00911F03 /* SwiftLeedsContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftLeedsContainer.swift; sourceTree = "<group>"; };
 		FA57DE4E2875B09900911F03 /* SponsorTileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SponsorTileView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
-
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		7BE0EBDB2ED2190900806982 /* Extensions */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Extensions; sourceTree = "<group>"; };
-/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		0B4CB3C228EAF19000246E62 /* Frameworks */ = {
@@ -561,7 +557,6 @@
 		FA57DE422875B03B00911F03 /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				7BE0EBDB2ED2190900806982 /* Extensions */,
 				FA57DE432875B06500911F03 /* CommonTileButton.swift */,
 				FA57DE442875B06500911F03 /* CommonTileView.swift */,
 				2A3831112884A96600030002 /* FancyHeaderView.swift */,
@@ -620,9 +615,6 @@
 			);
 			dependencies = (
 			);
-			fileSystemSynchronizedGroups = (
-				7BE0EBDB2ED2190900806982 /* Extensions */,
-			);
 			name = SwiftLeedsAppClip;
 			packageProductDependencies = (
 				0B4CB3FB28EAF7C500246E62 /* CachedAsyncImage */,
@@ -667,9 +659,6 @@
 			dependencies = (
 				74A09FE928C6779300E03F39 /* PBXTargetDependency */,
 				0B4CB3D328EAF19100246E62 /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				7BE0EBDB2ED2190900806982 /* Extensions */,
 			);
 			name = SwiftLeeds;
 			packageProductDependencies = (

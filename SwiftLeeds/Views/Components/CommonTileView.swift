@@ -134,13 +134,6 @@ struct CommonTileView_Previews: PreviewProvider {
                     secondaryText: "Secondary",
                     backgroundStyle: .red
                 )
-                CommonTileView(
-                    primaryText: "Primary",
-                    secondaryText: "Secondary",
-                    primaryColor: .white,
-                    secondaryColor: .white.opacity(0.8),
-                    backgroundStyle: LinearGradient.weather
-                )
             }
             .padding()
         }

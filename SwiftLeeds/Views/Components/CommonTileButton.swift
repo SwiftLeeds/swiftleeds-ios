@@ -102,14 +102,6 @@ struct CommonTileButtton_Previews: PreviewProvider {
                     backgroundStyle: .red,
                     onTap: {}
                 )
-                CommonTileButton(
-                    primaryText: "Primary",
-                    secondaryText: "Secondary",
-                    primaryColor: .white,
-                    secondaryColor: .white.opacity(0.8),
-                    backgroundStyle: LinearGradient.weather,
-                    onTap: {}
-                )
             }
             .padding()
         }

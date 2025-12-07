@@ -13,7 +13,4 @@ extension Color {
 
     static let buyTicketGradientStart = Color("BuyTicketGradientStart")
     static let buyTicketGradientEnd = Color("BuyTicketGradientEnd")
-
-    static let weatherGradientStart = Color("WeatherGradientStart")
-    static let weatherGradientEnd = Color("WeatherGradientEnd")
 }
