@@ -6,6 +6,4 @@ extension Color {
     static let tabBarBackground = Color("TabBarBackground")
     static let background = Color("Background")
     static let listBackground = Color("ListBackground")
-
-    static let cellBackground = Color("CellBackground")
 }

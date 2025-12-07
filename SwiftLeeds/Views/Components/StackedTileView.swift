@@ -1,4 +1,5 @@
 import DesignKit
+import SharedAssets
 import SwiftUI
 
 /// Used when there's lots of content to display.

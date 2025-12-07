@@ -1,4 +1,5 @@
 import DesignKit
+import SharedAssets
 import SwiftUI
 import CachedAsyncImage
 
