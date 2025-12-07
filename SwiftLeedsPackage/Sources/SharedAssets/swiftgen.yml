@@ -11,4 +11,3 @@ xcassets:
         resourcePrefix: SL
         bundle: Bundle.module
         publicAccess: true
-        forceProvidesNamespaces: true
