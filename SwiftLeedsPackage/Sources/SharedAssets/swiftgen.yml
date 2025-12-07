@@ -7,7 +7,3 @@ xcassets:
   outputs:
     - templatePath: Templates/assets.stencil
       output: Assets+Generated.swift
-      params:
-        resourcePrefix: SL
-        bundle: Bundle.module
-        publicAccess: true
