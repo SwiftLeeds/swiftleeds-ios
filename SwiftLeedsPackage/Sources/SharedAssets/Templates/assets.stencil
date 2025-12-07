@@ -34,7 +34,6 @@ private let resourceBundle = Bundle.module
 private class ResourceBundleClass {}
 private let resourceBundle = Foundation.Bundle(for: ResourceBundleClass.self)
 #endif
-
 {% macro colorBlock assets %}
 {% set hasItems %}{% call hasValuesBlock asset.items "color" %}{% endset %}
 {% if hasItems %}
@@ -55,10 +54,8 @@ private let resourceBundle = Foundation.Bundle(for: ResourceBundleClass.self)
 {% macro colorSwiftUIBlock assets %}
   {% for asset in assets %}
   {% if asset.type == "color" %}
-
   {# {% set parts %}{% asset.value|split:"/" %}{% endset %} #}
   {# {{ parts|map("lowercase")|map("capitalize")|join:"." }} #}
-
   public static var {{asset.name|swiftIdentifier:"pretty"|lowerFirstWord|escapeReservedKeywords}}: SwiftUI.Color { .init({{colorResourceName}}.{{asset.value|split:"/"|join:"."}}) }
   {% elif asset.items and ( forceNamespaces == "true" or asset.isNamespaced == "true" ) %}
   {% set hasItems %}{% call hasValuesBlock asset.items "color" %}{% endset %}
@@ -126,72 +123,6 @@ private let resourceBundle = Foundation.Bundle(for: ResourceBundleClass.self)
 
 // MARK: - Thinnable Asset Support -
 
-@available(iOS 11.0, macOS 10.13, tvOS 11.0, *)
-@available(watchOS, unavailable)
-extension {{colorResourceName}} {
-
-    private init?(thinnableName: Swift.String, bundle: Foundation.Bundle) {
-#if canImport(UIKit) && !os(watchOS)
-        if UIKit.UIColor(named: thinnableName, in: bundle, compatibleWith: nil) != nil {
-            self.init(name: thinnableName, bundle: bundle)
-        } else {
-            return nil
-        }
-#else
-        return nil
-#endif
-    }
-
-}
-
-#if canImport(UIKit)
-@available(iOS 11.0, tvOS 11.0, *)
-@available(watchOS, unavailable)
-extension UIKit.UIColor {
-
-    private convenience init?(thinnableResource: {{colorResourceName}}?) {
-#if !os(watchOS)
-        if let resource = thinnableResource {
-            self.init(resource: resource)
-        } else {
-            return nil
-        }
-#else
-        return nil
-#endif
-    }
-
-}
-#endif
-
-#if canImport(SwiftUI)
-@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
-extension SwiftUI.Color {
-
-    private init?(thinnableResource: {{colorResourceName}}?) {
-        if let resource = thinnableResource {
-            self.init(resource)
-        } else {
-            return nil
-        }
-    }
-
-}
-
-@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
-extension SwiftUI.ShapeStyle where Self == SwiftUI.Color {
-
-    private init?(thinnableResource: {{colorResourceName}}?) {
-        if let resource = thinnableResource {
-            self.init(resource)
-        } else {
-            return nil
-        }
-    }
-
-}
-#endif
-
 @available(iOS 11.0, macOS 10.7, tvOS 11.0, *)
 @available(watchOS, unavailable)
 extension {{imageResourceName}} {
@@ -252,23 +183,6 @@ extension UIKit.UIImage {
 
 // MARK: - Backwards Deployment Support -
 
-/// A color resource.
-{{accessModifier}} struct {{colorResourceName}}: Swift.Hashable, Swift.Sendable {
-
-    /// An asset catalog color resource name.
-    fileprivate let name: Swift.String
-
-    /// An asset catalog color resource bundle.
-    fileprivate let bundle: Foundation.Bundle
-
-    /// Initialize a `{{colorResourceName}}` with `name` and `bundle`.
-    init(name: Swift.String, bundle: Foundation.Bundle) {
-        self.name = name
-        self.bundle = bundle
-    }
-
-}
-
 /// An image resource.
 {{accessModifier}} struct {{imageResourceName}}: Swift.Hashable, Swift.Sendable {
 
@@ -285,23 +199,7 @@ extension UIKit.UIImage {
     }
 }
 
-
 #if canImport(UIKit)
-@available(iOS 11.0, tvOS 11.0, *)
-@available(watchOS, unavailable)
-{{accessModifier}} extension UIKit.UIColor {
-
-    /// Initialize a `UIColor` with a color resource.
-    convenience init(resource: {{colorResourceName}}) {
-#if !os(watchOS)
-        self.init(named: resource.name, in: resource.bundle, compatibleWith: nil)!
-#else
-        self.init()
-#endif
-    }
-
-}
-
 @available(iOS 11.0, tvOS 11.0, *)
 @available(watchOS, unavailable)
 {{accessModifier}} extension UIKit.UIImage {
@@ -319,16 +217,6 @@ extension UIKit.UIImage {
 #endif
 
 #if canImport(SwiftUI)
-@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
-{{accessModifier}} extension SwiftUI.Color {
-
-    /// Initialize a `Color` with a color resource.
-    init(_ resource: {{colorResourceName}}) {
-        self.init(resource.name, bundle: resource.bundle)
-    }
-
-}
-
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 {{accessModifier}} extension SwiftUI.Image {
 
