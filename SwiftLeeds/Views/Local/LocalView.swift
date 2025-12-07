@@ -1,5 +1,6 @@
 import DesignKit
 import MapKit
+import SharedAssets
 import SwiftUI
 
 struct LocalView: View {

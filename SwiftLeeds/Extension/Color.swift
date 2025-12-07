@@ -9,5 +9,4 @@ extension Color {
 
     static let cellBackground = Color("CellBackground")
     static let cellBorder = Color("CellBorder")
-    static let cellForeground = Color("CellForeground")
 }
