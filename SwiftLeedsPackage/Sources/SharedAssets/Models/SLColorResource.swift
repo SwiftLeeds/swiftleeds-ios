@@ -1,3 +1,4 @@
+// swiftlint:disable all
 #if canImport(UIKit)
 import UIKit
 #endif
@@ -74,3 +75,4 @@ public extension UIKit.UIColor {
 
 }
 #endif
+// swiftlint:enable all
