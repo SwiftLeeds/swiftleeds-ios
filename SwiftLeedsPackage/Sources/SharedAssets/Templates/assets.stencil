@@ -1,19 +1,70 @@
 // Generated using SwiftGen — https://github.com/SwiftGen/SwiftGen
 // swiftlint:disable all
+
 {% if catalogs %}
-{% macro hasValuesBlock assets filter %}
-  {%- for asset in assets -%}
-    {%- if asset.type == filter -%}
-      1
-    {%- elif asset.items -%}
-      {% call hasValuesBlock asset.items filter %}
-    {%- endif -%}
-  {%- endfor -%}
-{% endmacro %}
-{% set colorResourceName %}{{param.colorResourceName|default:"ColorResource"}}{% endset %}
-{% set imageResourceName %}{{param.imageResourceName|default:"ImageResource"}}{% endset %}
+{% set resourcePrefix %}{{param.resourcePrefix|default:""}}{% endset %}
 {% set forceNamespaces %}{{param.forceProvidesNamespaces|default:"false"}}{% endset %}
 {% set accessModifier %}{% if param.publicAccess %}public{% else %}internal{% endif %}{% endset %}
+{% macro casesBlock assets assetType %}
+    {% for asset in assets %}
+        {% if asset.type == assetType %}
+    /// The "{{ asset.name }}" asset catalog {{ assetType }} resource.
+    static let {{ asset.name|swiftIdentifier:"pretty"|lowerFirstWord|escapeReservedKeywords }} = {{ resourcePrefix }}{{ assetType|capitalize }}Resource(name: "{{ asset.name }}", bundle: resourceBundle)
+        {% elif asset.items %}
+            {% call casesBlock asset.items assetType %}
+        {% endif %}
+    {% endfor %}
+{% endmacro %}
+{% macro allValuesBlock catalogs assetType %}
+    {% if catalogs.count > 1 %}
+        {% for catalog in catalogs %}
+            {% if catalog.assets %}
+                {% call casesBlock catalog.assets assetType %}
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        {% call casesBlock catalogs.first.assets assetType %}
+    {% endif %}
+{% endmacro %}
+{% macro generateAssetProperty asset assetType platform %}
+    /// The "{{ asset.name }}" asset catalog {{ assetType }}.
+    static var {{ asset.name|swiftIdentifier:"pretty"|lowerFirstWord|escapeReservedKeywords }}: {{ platform }} {
+        {% if platform == "Color" %}
+        Color(theme: .{{ asset.name|swiftIdentifier:"pretty"|lowerFirstWord|escapeReservedKeywords }})
+        {% elif platform == "Image" %}
+        Image(theme: .{{ asset.name|swiftIdentifier:"pretty"|lowerFirstWord|escapeReservedKeywords }})
+        {% elif platform == "NSColor" or platform == "UIColor" or platform == "NSImage" or platform == "UIImage" %}
+        #if !os(watchOS) && !targetEnvironment(macCatalyst)
+        {{ platform }}(theme: .{{ asset.name|swiftIdentifier:"pretty"|lowerFirstWord|escapeReservedKeywords }})
+        #else
+        {{ platform }}()
+        #endif
+        {% else %}
+        fatalError("Unsupported platform: {{ platform }}")
+        {% endif %}
+    }
+{% endmacro %}
+{% macro processAssets assets assetType platform %}
+    {% for asset in assets %}
+        {% if asset.type == assetType %}
+            {% call generateAssetProperty asset assetType platform %}
+        {% elif asset.items %}
+            {% call processAssets asset.items assetType platform %}
+        {% endif %}
+    {% endfor %}
+{% endmacro %}
+{% macro extensionBlock catalogs assetType platform %}
+    {% if catalogs.count > 1 %}
+        {% for catalog in catalogs %}
+            {% if catalog.assets %}
+                {% call processAssets catalog.assets assetType platform %}
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        {% call processAssets catalogs.first.assets assetType platform %}
+    {% endif %}
+{% endmacro %}
+
 import Foundation
 #if canImport(AppKit)
 import AppKit
@@ -24,9 +75,6 @@ import UIKit
 #if canImport(SwiftUI)
 import SwiftUI
 #endif
-#if canImport(DeveloperToolsSupport)
-import DeveloperToolsSupport
-#endif
 
 #if SWIFT_PACKAGE
 private let resourceBundle = Bundle.module
@@ -34,88 +82,21 @@ private let resourceBundle = Bundle.module
 private class ResourceBundleClass {}
 private let resourceBundle = Foundation.Bundle(for: ResourceBundleClass.self)
 #endif
-{% macro colorBlock assets %}
-{% set hasItems %}{% call hasValuesBlock asset.items "color" %}{% endset %}
-{% if hasItems %}
+
 // MARK: - Color Symbols -
 
-{{accessModifier}} extension {{colorResourceName}} {
-  {% call colorAssetsBlock assets %}
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+public extension SLColorResource {
+    {% call allValuesBlock catalogs "color" %}
 }
 
-#if canImport(SwiftUI)
-@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
-{{accessModifier}} extension SwiftUI.Color {
-  {% call colorSwiftUIBlock assets %}
-}
-#endif
-{% endif %}
-{% endmacro %}
-{% macro colorSwiftUIBlock assets %}
-  {% for asset in assets %}
-  {% if asset.type == "color" %}
-  {# {% set parts %}{% asset.value|split:"/" %}{% endset %} #}
-  {# {{ parts|map("lowercase")|map("capitalize")|join:"." }} #}
-  static var {{asset.name|swiftIdentifier:"pretty"|lowerFirstWord|escapeReservedKeywords}}: SwiftUI.Color { .init({{colorResourceName}}.{{asset.value|split:"/"|join:"."}}) }
-  {% elif asset.items and ( forceNamespaces == "true" or asset.isNamespaced == "true" ) %}
-  {% set hasItems %}{% call hasValuesBlock asset.items "color" %}{% endset %}
-  {% if hasItems %}
-  public enum {{asset.name|swiftIdentifier:escapeReservedKeywords}} {
-    {% filter indent:2," ",true %}{% call colorSwiftUIBlock asset.items %}{% endfilter %}
-  }
-  {% endif %}
-  {% endif %}
-  {% endfor %}
-{% endmacro %}
-{% macro colorAssetsBlock assets %}
-  {% for asset in assets %}
-  {% if asset.type == "color" %}
-  static let {{asset.name|swiftIdentifier:"pretty"|lowerFirstWord|escapeReservedKeywords}}: {{colorResourceName}} = {{colorResourceName}}(name: "{{asset.value}}", bundle: resourceBundle)
-  {% elif asset.items and ( forceNamespaces == "true" or asset.isNamespaced == "true" ) %}
-  {% set hasItems %}{% call hasValuesBlock asset.items "color" %}{% endset %}
-  {% if hasItems %}
-  public enum {{asset.name|swiftIdentifier:escapeReservedKeywords}} {
-    {% filter indent:2," ",true %}{% call colorAssetsBlock asset.items %}{% endfilter %}
-  }
-  {% endif %}
-  {% endif %}
-  {% endfor %}
-{% endmacro %}
-{% macro hasImagesOrSymbols asset %}
-  {% set hasImages %}{% call hasValuesBlock asset.items "image" %}{% endset %}
-  {% set hasSymbols %}{% call hasValuesBlock asset.items "symbol" %}{% endset %}
-  {% if hasImages or hasSymbols %}
-    1
-  {% endif %}
-{% endmacro %}
-{% macro imageBlock assets %}
-{% set hasImages %}{% call hasImagesOrSymbols asset %}{% endset %}
-{% if hasImages %}
 // MARK: - Image Symbols -
-{{accessModifier}} extension {{imageResourceName}} {
-  {% call imageAssetsBlock assets %}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+public extension SLImageResource {
+    {% call allValuesBlock catalogs "image" %}
 }
-{% endif %}
-{% endmacro %}
-{% macro imageAssetsBlock assets %}
-  {% for asset in assets %}
-  {% if asset.type == "image" %}
-  static let {{asset.name|swiftIdentifier:"pretty"|lowerFirstWord|escapeReservedKeywords}}: {{imageResourceName}} = {{imageResourceName}}(name: "{{asset.value}}", bundle: resourceBundle)
-  {% elif asset.type == "symbol" %}
-  static let {{asset.name|swiftIdentifier:"pretty"|lowerFirstWord|escapeReservedKeywords}}: {{imageResourceName}} = {{imageResourceName}}(name: "{{asset.value}}", bundle: resourceBundle)
-  {% elif asset.items and ( forceNamespaces == "true" or asset.isNamespaced == "true" ) %}
-  {% set hasImages %}{% call hasImagesOrSymbols asset %}{% endset %}
-  {% if hasImages %}
-  public enum {{asset.name|swiftIdentifier:escapeReservedKeywords}} {
-    {% filter indent:2," ",true %}{% call imageAssetsBlock asset.items %}{% endfilter %}
-  }
-  {% endif %}
-  {% endif %}
-  {% endfor %}
-{% endmacro %}
-
-{% call colorBlock catalogs.first.assets %}
-
-{% call imageBlock catalogs.first.assets %}
+{% else %}
+// No assets found
 {% endif %}
 // swiftlint:enable all

@@ -8,8 +8,7 @@ xcassets:
     - templatePath: Templates/assets.stencil
       output: Assets+Generated.swift
       params:
-        colorResourceName: SLColorResource
-        imageResourceName: SLImageResource
+        resourcePrefix: SL
         bundle: Bundle.module
         publicAccess: true
         forceProvidesNamespaces: true
