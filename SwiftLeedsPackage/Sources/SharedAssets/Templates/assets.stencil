@@ -56,7 +56,7 @@ private let resourceBundle = Foundation.Bundle(for: ResourceBundleClass.self)
   {% if asset.type == "color" %}
   {# {% set parts %}{% asset.value|split:"/" %}{% endset %} #}
   {# {{ parts|map("lowercase")|map("capitalize")|join:"." }} #}
-  public static var {{asset.name|swiftIdentifier:"pretty"|lowerFirstWord|escapeReservedKeywords}}: SwiftUI.Color { .init({{colorResourceName}}.{{asset.value|split:"/"|join:"."}}) }
+  static var {{asset.name|swiftIdentifier:"pretty"|lowerFirstWord|escapeReservedKeywords}}: SwiftUI.Color { .init({{colorResourceName}}.{{asset.value|split:"/"|join:"."}}) }
   {% elif asset.items and ( forceNamespaces == "true" or asset.isNamespaced == "true" ) %}
   {% set hasItems %}{% call hasValuesBlock asset.items "color" %}{% endset %}
   {% if hasItems %}
@@ -70,7 +70,7 @@ private let resourceBundle = Foundation.Bundle(for: ResourceBundleClass.self)
 {% macro colorAssetsBlock assets %}
   {% for asset in assets %}
   {% if asset.type == "color" %}
-  {{accessModifier}} static let {{asset.name|swiftIdentifier:"pretty"|lowerFirstWord|escapeReservedKeywords}}: {{colorResourceName}} = {{colorResourceName}}(name: "{{asset.value}}", bundle: resourceBundle)
+  static let {{asset.name|swiftIdentifier:"pretty"|lowerFirstWord|escapeReservedKeywords}}: {{colorResourceName}} = {{colorResourceName}}(name: "{{asset.value}}", bundle: resourceBundle)
   {% elif asset.items and ( forceNamespaces == "true" or asset.isNamespaced == "true" ) %}
   {% set hasItems %}{% call hasValuesBlock asset.items "color" %}{% endset %}
   {% if hasItems %}
@@ -81,7 +81,6 @@ private let resourceBundle = Foundation.Bundle(for: ResourceBundleClass.self)
   {% endif %}
   {% endfor %}
 {% endmacro %}
-
 {% macro hasImagesOrSymbols asset %}
   {% set hasImages %}{% call hasValuesBlock asset.items "image" %}{% endset %}
   {% set hasSymbols %}{% call hasValuesBlock asset.items "symbol" %}{% endset %}
@@ -89,7 +88,6 @@ private let resourceBundle = Foundation.Bundle(for: ResourceBundleClass.self)
     1
   {% endif %}
 {% endmacro %}
-
 {% macro imageBlock assets %}
 {% set hasImages %}{% call hasImagesOrSymbols asset %}{% endset %}
 {% if hasImages %}
@@ -102,9 +100,9 @@ private let resourceBundle = Foundation.Bundle(for: ResourceBundleClass.self)
 {% macro imageAssetsBlock assets %}
   {% for asset in assets %}
   {% if asset.type == "image" %}
-  {{accessModifier}} static let {{asset.name|swiftIdentifier:"pretty"|lowerFirstWord|escapeReservedKeywords}}: {{imageResourceName}} = {{imageResourceName}}(name: "{{asset.value}}", bundle: resourceBundle)
+  static let {{asset.name|swiftIdentifier:"pretty"|lowerFirstWord|escapeReservedKeywords}}: {{imageResourceName}} = {{imageResourceName}}(name: "{{asset.value}}", bundle: resourceBundle)
   {% elif asset.type == "symbol" %}
-  {{accessModifier}} static let {{asset.name|swiftIdentifier:"pretty"|lowerFirstWord|escapeReservedKeywords}}: {{imageResourceName}} = {{imageResourceName}}(name: "{{asset.value}}", bundle: resourceBundle)
+  static let {{asset.name|swiftIdentifier:"pretty"|lowerFirstWord|escapeReservedKeywords}}: {{imageResourceName}} = {{imageResourceName}}(name: "{{asset.value}}", bundle: resourceBundle)
   {% elif asset.items and ( forceNamespaces == "true" or asset.isNamespaced == "true" ) %}
   {% set hasImages %}{% call hasImagesOrSymbols asset %}{% endset %}
   {% if hasImages %}
