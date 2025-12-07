@@ -1,4 +1,6 @@
 // Generated using SwiftGen — https://github.com/SwiftGen/SwiftGen
+// Template created by Yehor Myropoltsev
+// See: https://gist.github.com/yegormi/1aaeb901f7a54a27d0e5016ae5103317
 // swiftlint:disable all
 {% if catalogs %}
 {% set resourcePrefix %}{{param.resourcePrefix|default:""}}{% endset %}
@@ -7,7 +9,7 @@
     {% for asset in assets %}
         {% if asset.type == assetType %}
     /// The "{{ asset.name }}" asset catalog {{ assetType }} resource.
-    static let {{ asset.name|swiftIdentifier:"pretty"|lowerFirstWord|escapeReservedKeywords }} = {{ resourcePrefix }}{{ assetType|capitalize }}Resource(name: "{{ asset.name }}", bundle: resourceBundle)
+    static let {{ asset.name|swiftIdentifier:"pretty"|lowerFirstWord|escapeReservedKeywords }} = {{ resourcePrefix }}{{ assetType|capitalize }}Theme(name: "{{ asset.name }}", bundle: resourceBundle)
         {% elif asset.items %}
             {% call casesBlock asset.items assetType %}
         {% endif %}
@@ -80,19 +82,156 @@ private class ResourceBundleClass {}
 private let resourceBundle = Foundation.Bundle(for: ResourceBundleClass.self)
 #endif
 
-// MARK: - Color symbols
+// MARK: - Color Symbols
 
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-{{ accessModifier }} extension SLColorResource {
+extension ColorTheme {
     {% call allValuesBlock catalogs "color" %}
 }
 
-// MARK: - Image symbols
+// MARK: - Image Symbols
 
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-{{ accessModifier }} extension SLImageResource {
+extension ImageTheme {
     {% call allValuesBlock catalogs "image" %}
 }
+
+// MARK: - Color Symbol Extensions
+
+#if canImport(AppKit)
+@available(macOS 12.0, *)
+@available(macCatalyst, unavailable)
+public extension NSColor {
+    {% call extensionBlock catalogs "color" "NSColor" %}
+}
+#endif
+
+#if canImport(UIKit)
+@available(iOS 15.0, tvOS 15.0, *)
+@available(watchOS, unavailable)
+public extension UIColor {
+    {% call extensionBlock catalogs "color" "UIColor" %}
+}
+#endif
+
+#if canImport(SwiftUI)
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+public extension Color {
+    {% call extensionBlock catalogs "color" "Color" %}
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+public extension ShapeStyle where Self == Color {
+    {% call extensionBlock catalogs "color" "Color" %}
+}
+#endif
+
+// MARK: - Image Symbol Extensions -
+
+#if canImport(AppKit)
+@available(macOS 12.0, *)
+@available(macCatalyst, unavailable)
+public extension NSImage {
+    {% call extensionBlock catalogs "image" "NSImage" %}
+}
+#endif
+
+#if canImport(UIKit)
+@available(iOS 15.0, tvOS 15.0, *)
+@available(watchOS, unavailable)
+public extension UIImage {
+    {% call extensionBlock catalogs "image" "UIImage" %}
+}
+#endif
+
+#if canImport(SwiftUI)
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+public extension Image {
+    {% call extensionBlock catalogs "image" "Image" %}
+}
+#endif
+
+// MARK: - Backwards Deployment Support -
+
+public struct ColorTheme: Hashable, Sendable {
+    public let name: String
+    public let bundle: Bundle
+
+    public init(name: String, bundle: Bundle) {
+        self.name = name
+        self.bundle = bundle
+    }
+}
+
+public struct ImageTheme: Hashable, Sendable {
+    public let name: String
+    public let bundle: Bundle
+
+    public init(name: String, bundle: Bundle) {
+        self.name = name
+        self.bundle = bundle
+    }
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+public extension Color {
+    init(theme: ColorTheme) {
+        self.init(theme.name, bundle: theme.bundle)
+    }
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+public extension Color {
+    init(_ theme: ColorTheme) {
+        self.init(theme: theme)
+    }
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+public extension Image {
+    init(theme: ImageTheme) {
+        self.init(theme.name, bundle: theme.bundle)
+    }
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+public extension Image {
+    init(_ theme: ImageTheme) {
+        self.init(theme: theme)
+    }
+}
+
+#if canImport(UIKit)
+@available(iOS 11.0, tvOS 11.0, *)
+public extension UIColor {
+    convenience init(theme: ColorTheme) {
+        self.init(named: theme.name, in: theme.bundle, compatibleWith: nil)!
+    }
+}
+
+@available(iOS 11.0, tvOS 11.0, *)
+public extension UIImage {
+    convenience init(theme: ImageTheme) {
+        self.init(named: theme.name, in: theme.bundle, compatibleWith: nil)!
+    }
+}
+#endif
+
+#if canImport(AppKit)
+@available(macOS 10.13, *)
+public extension NSColor {
+    convenience init(theme: ColorTheme) {
+        self.init(named: NSColor.Name(theme.name), bundle: theme.bundle)!
+    }
+}
+
+@available(macOS 10.7, *)
+public extension NSImage {
+    convenience init(theme: ImageTheme) {
+        self.init(named: NSImage.Name(theme.name))!
+    }
+}
+#endif
 {% else %}
 // No assets found
 {% endif %}
