@@ -2,7 +2,6 @@
 // swiftlint:disable all
 {% if catalogs %}
 {% set resourcePrefix %}{{param.resourcePrefix|default:""}}{% endset %}
-{% set forceNamespaces %}{{param.forceProvidesNamespaces|default:"false"}}{% endset %}
 {% set accessModifier %}{% if param.publicAccess %}public{% else %}internal{% endif %}{% endset %}
 {% macro casesBlock assets assetType %}
     {% for asset in assets %}
@@ -81,17 +80,17 @@ private class ResourceBundleClass {}
 private let resourceBundle = Foundation.Bundle(for: ResourceBundleClass.self)
 #endif
 
-// MARK: - Color Symbols -
+// MARK: - Color symbols
 
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-public extension SLColorResource {
+{{ accessModifier }} extension SLColorResource {
     {% call allValuesBlock catalogs "color" %}
 }
 
-// MARK: - Image Symbols -
+// MARK: - Image symbols
 
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-public extension SLImageResource {
+{{ accessModifier }} extension SLImageResource {
     {% call allValuesBlock catalogs "image" %}
 }
 {% else %}
