@@ -1,6 +1,5 @@
 // Generated using SwiftGen — https://github.com/SwiftGen/SwiftGen
 // swiftlint:disable all
-
 {% if catalogs %}
 {% set resourcePrefix %}{{param.resourcePrefix|default:""}}{% endset %}
 {% set forceNamespaces %}{{param.forceProvidesNamespaces|default:"false"}}{% endset %}
@@ -64,7 +63,6 @@
         {% call processAssets catalogs.first.assets assetType platform %}
     {% endif %}
 {% endmacro %}
-
 import Foundation
 #if canImport(AppKit)
 import AppKit
