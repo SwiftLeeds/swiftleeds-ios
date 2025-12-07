@@ -2,7 +2,4 @@ import SwiftUI
 
 extension Color {
     static let accent = Color("AccentColor")
-
-    static let tabBarBackground = Color("TabBarBackground")
-    static let background = Color("Background")
 }
