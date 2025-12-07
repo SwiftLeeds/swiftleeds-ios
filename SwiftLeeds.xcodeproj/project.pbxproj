@@ -93,6 +93,7 @@
 		7B31C8F32ED0AB0E00FEEDF7 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = 7B31C8F22ED0AB0E00FEEDF7 /* Settings */; };
 		7B31C8F52ED0AB1600FEEDF7 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = 7B31C8F42ED0AB1600FEEDF7 /* Settings */; };
 		7B8C3ECF2EE4A9F70089C6CF /* SharedAssets in Frameworks */ = {isa = PBXBuildFile; productRef = 7B8C3ECE2EE4A9F70089C6CF /* SharedAssets */; };
+		7BE081522EE5BDA8004BCD1F /* SharedAssets in Frameworks */ = {isa = PBXBuildFile; productRef = 7BE081512EE5BDA8004BCD1F /* SharedAssets */; };
 		AE1C8010289E9F3800996659 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1C800F289E9F3800996659 /* String.swift */; };
 		AE1C801428A7BCD000996659 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AE1C801328A7BCD000996659 /* Settings.bundle */; };
 		AE32CDF0286CCF9D00DF0AFF /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE32CDEF286CCF9D00DF0AFF /* Constants.swift */; };
@@ -280,6 +281,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7BE081522EE5BDA8004BCD1F /* SharedAssets in Frameworks */,
 				7B31C8E92ED08EEE00FEEDF7 /* Networking in Frameworks */,
 				7B31C8F52ED0AB1600FEEDF7 /* Settings in Frameworks */,
 				741ED8FB2A75829C00494B25 /* ReadabilityModifier in Frameworks */,
@@ -622,6 +624,7 @@
 				7B31C8E82ED08EEE00FEEDF7 /* Networking */,
 				7B31C8EE2ED0959A00FEEDF7 /* DesignKit */,
 				7B31C8F42ED0AB1600FEEDF7 /* Settings */,
+				7BE081512EE5BDA8004BCD1F /* SharedAssets */,
 			);
 			productName = SwiftLeedsAppClip;
 			productReference = 0B4CB3C528EAF19000246E62 /* SwiftLeedsAppClip.app */;
@@ -1518,6 +1521,10 @@
 			productName = Settings;
 		};
 		7B8C3ECE2EE4A9F70089C6CF /* SharedAssets */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SharedAssets;
+		};
+		7BE081512EE5BDA8004BCD1F /* SharedAssets */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SharedAssets;
 		};

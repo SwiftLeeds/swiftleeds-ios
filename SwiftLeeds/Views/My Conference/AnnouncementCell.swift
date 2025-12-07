@@ -1,4 +1,5 @@
 import DesignKit
+import SharedAssets
 import SwiftUI
 
 struct AnnouncementCell: View {
@@ -57,7 +58,10 @@ struct AnnouncementCell_Previews: PreviewProvider {
                 label: "Leeds",
                 value: "26℃",
                 valueIcon: "cloud.sun.fill",
-                gradientColors: [.buyTicketGradientStart, .buyTicketGradientEnd]
+                gradientColors: [
+                    Color.buyTicketGradientStart,
+                    Color.buyTicketGradientEnd
+                ]
             )
             .previewDisplayName("Weather")
             
@@ -65,7 +69,10 @@ struct AnnouncementCell_Previews: PreviewProvider {
                 label: "Get your ticket now",
                 value: "69 days",
                 valueIcon: "calendar.circle",
-                gradientColors: [.buyTicketGradientStart, .buyTicketGradientEnd]
+                gradientColors: [
+                    Color.buyTicketGradientStart,
+                    Color.buyTicketGradientEnd
+                ]
             )
             .previewDisplayName("Buy Ticket")
         }

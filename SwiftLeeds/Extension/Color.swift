@@ -10,7 +10,4 @@ extension Color {
     static let cellBackground = Color("CellBackground")
     static let cellBorder = Color("CellBorder")
     static let cellForeground = Color("CellForeground")
-
-    static let buyTicketGradientStart = Color("BuyTicketGradientStart")
-    static let buyTicketGradientEnd = Color("BuyTicketGradientEnd")
 }
