@@ -8,5 +8,4 @@ extension Color {
     static let listBackground = Color("ListBackground")
 
     static let cellBackground = Color("CellBackground")
-    static let cellBorder = Color("CellBorder")
 }
