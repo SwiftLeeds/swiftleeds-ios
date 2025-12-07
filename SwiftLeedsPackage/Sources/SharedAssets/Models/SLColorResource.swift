@@ -33,7 +33,6 @@ extension SwiftUI.Color {
             return nil
         }
     }
-
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
@@ -45,7 +44,6 @@ extension SwiftUI.ShapeStyle where Self == SwiftUI.Color {
             return nil
         }
     }
-
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
@@ -54,7 +52,6 @@ public extension SwiftUI.Color {
     init(_ resource: SLColorResource) {
         self.init(resource.name, bundle: resource.bundle)
     }
-
 }
 #endif
 
@@ -70,7 +67,6 @@ public extension UIKit.UIColor {
         self.init()
 #endif
     }
-
 }
 #endif
 // swiftlint:enable all
