@@ -17,7 +17,14 @@ jobs:
       - name: Checkout iOS Repository
         uses: actions/checkout@v2
         
+      - name: Setup Ruby and install bundler
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
+          bundler-cache: true
+          
       - name: Build iOS Project via Fastlane
         uses: maierj/fastlane-action@v3.1.0
         with:
           lane: build_debug
+          skip-bundle-update: true
