@@ -1,5 +1,11 @@
 default_platform(:ios)
 
+# Workaround for CI terminal size detection issue
+if ENV['CI']
+  ENV['FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT'] = '180'
+  ENV['FASTLANE_XCODE_LIST_TIMEOUT'] = '180'
+end
+
 platform :ios do
   desc "Build SwiftLeeds scheme"
   lane :build do |options|

@@ -8,6 +8,8 @@ on:
 
 env:
   DEVELOPER_DIR: /Applications/Xcode_26.0.1.app/Contents/Developer
+  FASTLANE_SKIP_UPDATE_CHECK: true
+  CI: true
 
 jobs:
   build:
