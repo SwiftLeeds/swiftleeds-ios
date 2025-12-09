@@ -10,6 +10,9 @@ env:
   DEVELOPER_DIR: /Applications/Xcode_26.0.1.app/Contents/Developer
   FASTLANE_SKIP_UPDATE_CHECK: true
   CI: true
+  TERM: dumb
+  FASTLANE_DISABLE_COLORS: true
+  NO_COLOR: true
 
 jobs:
   build:
@@ -22,11 +25,8 @@ jobs:
       - name: Setup Ruby and install bundler
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '3.3'
+          ruby-version: '3.0'
           bundler-cache: true
           
       - name: Build iOS Project via Fastlane
-        uses: maierj/fastlane-action@v3.1.0
-        with:
-          lane: build_debug
-          skip-bundle-update: true
+        run: bundle exec fastlane build_debug
