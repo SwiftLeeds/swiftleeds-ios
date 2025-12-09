@@ -8,11 +8,6 @@ on:
 
 env:
   DEVELOPER_DIR: /Applications/Xcode_26.0.1.app/Contents/Developer
-  FASTLANE_SKIP_UPDATE_CHECK: true
-  CI: true
-  TERM: dumb
-  FASTLANE_DISABLE_COLORS: true
-  NO_COLOR: true
 
 jobs:
   build:
@@ -22,13 +17,13 @@ jobs:
       - name: Checkout iOS Repository
         uses: actions/checkout@v2
         
-      - name: Setup Ruby and install bundler
+      - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.0'
           bundler-cache: false
           
-      - name: Install dependencies
+      - name: Install Dependencies
         run: |
           gem install bundler
           bundle install
