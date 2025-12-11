@@ -9,12 +9,16 @@ platform :ios do
       scheme: "SwiftLeeds",
       clean: true,
       skip_archive: true,
-      skip_codesigning: true
+      skip_codesigning: true,
+      xcargs: "-skipPackagePluginValidation"
     )
   end
   
   desc "Build SwiftLeeds scheme with Debug Configuration"
   lane :build_debug do
-    build(configuration: 'Debug')
+    build(
+      configuration: 'Debug',
+      xcargs: "-skipPackagePluginValidation"
+    )
   end
 end
