@@ -18,6 +18,4 @@ jobs:
         uses: actions/checkout@v2
         
       - name: Build iOS Project via Fastlane
-        uses: maierj/fastlane-action@v3.1.0
-        with:
-          lane: build_debug
+        run: fastlane build_debug
