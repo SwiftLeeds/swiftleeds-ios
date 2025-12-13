@@ -74,7 +74,10 @@ let package = Package(
             ]
         ),
         .target(
-            name: "SharedViews"
+            name: "SharedViews",
+            dependencies: [
+                "SharedAssets",
+            ]
         ),
     ],
     // Set to v5 to avoid strict concurrency checking in pre swift 6 code
