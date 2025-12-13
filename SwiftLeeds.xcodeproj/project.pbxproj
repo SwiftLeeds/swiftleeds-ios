@@ -107,9 +107,6 @@
 		AE8C1B2B28C4B39A00AF7318 /* TokenDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8C1B2A28C4B39A00AF7318 /* TokenDetails.swift */; };
 		AE93678F2A93455400F2DB3F /* ScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE93678E2A93455400F2DB3F /* ScheduleView.swift */; };
 		AE9367902A93467500F2DB3F /* ScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE93678E2A93455400F2DB3F /* ScheduleView.swift */; };
-		AE9367962A9354CC00F2DB3F /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE9367952A9354CC00F2DB3F /* Helper.swift */; };
-		AE9367972A9354CC00F2DB3F /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE9367952A9354CC00F2DB3F /* Helper.swift */; };
-		AE9367982A9357D000F2DB3F /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE9367952A9354CC00F2DB3F /* Helper.swift */; };
 		AEB06BD128CF8D2100E51967 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB06BD028CF8D2100E51967 /* WebView.swift */; };
 		AECB295727417F9D00CDC983 /* SwiftLeedsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECB295627417F9D00CDC983 /* SwiftLeedsApp.swift */; };
 		AECB295927417F9D00CDC983 /* MyConferenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECB295827417F9D00CDC983 /* MyConferenceView.swift */; };
@@ -243,7 +240,6 @@
 		AE8C1B2A28C4B39A00AF7318 /* TokenDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenDetails.swift; sourceTree = "<group>"; };
 		AE8C1B2C28C4B8D800AF7318 /* SwiftLeeds.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SwiftLeeds.entitlements; sourceTree = "<group>"; };
 		AE93678E2A93455400F2DB3F /* ScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleView.swift; sourceTree = "<group>"; };
-		AE9367952A9354CC00F2DB3F /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		AEB06BD028CF8D2100E51967 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		AECB295327417F9D00CDC983 /* SwiftLeeds.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftLeeds.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AECB295627417F9D00CDC983 /* SwiftLeedsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftLeedsApp.swift; sourceTree = "<group>"; };
@@ -477,7 +473,6 @@
 			isa = PBXGroup;
 			children = (
 				AED26F7628676A9200E06064 /* About */,
-				FA57DE412875B03800911F03 /* Common */,
 				FA57DE422875B03B00911F03 /* Components */,
 				AED26F7528676A8E00E06064 /* Local */,
 				AEDC0DAF28675D060078A153 /* My Conference */,
@@ -545,14 +540,6 @@
 				AED26F73286764F000E06064 /* TalkCell.swift */,
 			);
 			path = "My Conference";
-			sourceTree = "<group>";
-		};
-		FA57DE412875B03800911F03 /* Common */ = {
-			isa = PBXGroup;
-			children = (
-				AE9367952A9354CC00F2DB3F /* Helper.swift */,
-			);
-			path = Common;
 			sourceTree = "<group>";
 		};
 		FA57DE422875B03B00911F03 /* Components */ = {
@@ -839,7 +826,6 @@
 				0B4CB3E928EAF5D200246E62 /* Local.swift in Sources */,
 				0B910A352A48FEC100648B32 /* SponsorTileView.swift in Sources */,
 				E3569B062E5B903800BC9556 /* ShimmerView.swift in Sources */,
-				AE9367972A9354CC00F2DB3F /* Helper.swift in Sources */,
 				0B4CB3E528EAF5B700246E62 /* Speaker.swift in Sources */,
 				0B4CB3E828EAF5CD00246E62 /* AnnouncementCell.swift in Sources */,
 				0B4CB3DD28EAF57900246E62 /* MyConferenceView.swift in Sources */,
@@ -865,7 +851,6 @@
 				74E62F7228CA98EA004422F9 /* SwiftLeedsSmallWidgetView.swift in Sources */,
 				7406572928E240720087F44F /* WidgetConstants.swift in Sources */,
 				0B59B5672E70E5D400820C3C /* TeamMember.swift in Sources */,
-				AE9367982A9357D000F2DB3F /* Helper.swift in Sources */,
 				74B14FB028CE21D7004C0A40 /* TimeineProvider.swift in Sources */,
 				74E62F7828CADBE0004422F9 /* Activity.swift in Sources */,
 				74E62F7A28CAE4DF004422F9 /* Speaker.swift in Sources */,
@@ -887,7 +872,6 @@
 				0B59B5692E70E5FE00820C3C /* TeamMemberView.swift in Sources */,
 				394653AB288BB7C800212E1C /* SpeakerView.swift in Sources */,
 				0B59B56F2E70EA4F00820C3C /* AboutViewModel.swift in Sources */,
-				AE9367962A9354CC00F2DB3F /* Helper.swift in Sources */,
 				AED26F7A28676AA300E06064 /* LocalView.swift in Sources */,
 				39ED0034288F113500AB337A /* LocalCell.swift in Sources */,
 				AEDC22552898288F00746247 /* Schedule.swift in Sources */,
