@@ -26,7 +26,6 @@
 		0B4CB3E928EAF5D200246E62 /* Local.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA534D8128A1909300A3BFBB /* Local.swift */; };
 		0B4CB3EB28EAF5E300246E62 /* TalkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AED26F73286764F000E06064 /* TalkCell.swift */; };
 		0B4CB3EC28EAF5E900246E62 /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5EFD74289E7CBF00464FE1 /* ActivityView.swift */; };
-		0B4CB3ED28EAF5F200246E62 /* SwiftLeedsContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE4A2875B06B00911F03 /* SwiftLeedsContainer.swift */; };
 		0B4CB3EE28EAF5FB00246E62 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1C800F289E9F3800996659 /* String.swift */; };
 		0B4CB3EF28EAF60200246E62 /* FancyHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3831112884A96600030002 /* FancyHeaderView.swift */; };
 		0B4CB3F028EAF60800246E62 /* SpeakerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394653AA288BB7C800212E1C /* SpeakerView.swift */; };
@@ -90,6 +89,9 @@
 		7B31C8F12ED0A7BF00FEEDF7 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = 7B31C8F02ED0A7BF00FEEDF7 /* Settings */; };
 		7B31C8F32ED0AB0E00FEEDF7 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = 7B31C8F22ED0AB0E00FEEDF7 /* Settings */; };
 		7B31C8F52ED0AB1600FEEDF7 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = 7B31C8F42ED0AB1600FEEDF7 /* Settings */; };
+		7B62789C2EEDDCED00DE1473 /* SharedViews in Frameworks */ = {isa = PBXBuildFile; productRef = 7B62789B2EEDDCED00DE1473 /* SharedViews */; };
+		7B62789E2EEDDCF300DE1473 /* SharedViews in Frameworks */ = {isa = PBXBuildFile; productRef = 7B62789D2EEDDCF300DE1473 /* SharedViews */; };
+		7B6278A02EEDDCF700DE1473 /* SharedViews in Frameworks */ = {isa = PBXBuildFile; productRef = 7B62789F2EEDDCF700DE1473 /* SharedViews */; };
 		7B8C3ECF2EE4A9F70089C6CF /* SharedAssets in Frameworks */ = {isa = PBXBuildFile; productRef = 7B8C3ECE2EE4A9F70089C6CF /* SharedAssets */; };
 		7BE081522EE5BDA8004BCD1F /* SharedAssets in Frameworks */ = {isa = PBXBuildFile; productRef = 7BE081512EE5BDA8004BCD1F /* SharedAssets */; };
 		7BE081542EE5BF13004BCD1F /* SharedAssets in Frameworks */ = {isa = PBXBuildFile; productRef = 7BE081532EE5BF13004BCD1F /* SharedAssets */; };
@@ -131,7 +133,6 @@
 		FA57DE462875B06500911F03 /* CommonTileButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE432875B06500911F03 /* CommonTileButton.swift */; };
 		FA57DE472875B06500911F03 /* CommonTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE442875B06500911F03 /* CommonTileView.swift */; };
 		FA57DE482875B06500911F03 /* StackedTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE452875B06500911F03 /* StackedTileView.swift */; };
-		FA57DE4B2875B06B00911F03 /* SwiftLeedsContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE4A2875B06B00911F03 /* SwiftLeedsContainer.swift */; };
 		FA57DE502875B09900911F03 /* SponsorTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE4E2875B09900911F03 /* SponsorTileView.swift */; };
 /* End PBXBuildFile section */
 
@@ -269,7 +270,6 @@
 		FA57DE432875B06500911F03 /* CommonTileButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonTileButton.swift; sourceTree = "<group>"; };
 		FA57DE442875B06500911F03 /* CommonTileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonTileView.swift; sourceTree = "<group>"; };
 		FA57DE452875B06500911F03 /* StackedTileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StackedTileView.swift; sourceTree = "<group>"; };
-		FA57DE4A2875B06B00911F03 /* SwiftLeedsContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftLeedsContainer.swift; sourceTree = "<group>"; };
 		FA57DE4E2875B09900911F03 /* SponsorTileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SponsorTileView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -279,6 +279,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7BE081522EE5BDA8004BCD1F /* SharedAssets in Frameworks */,
+				7B62789C2EEDDCED00DE1473 /* SharedViews in Frameworks */,
 				7B31C8E92ED08EEE00FEEDF7 /* Networking in Frameworks */,
 				7B31C8F52ED0AB1600FEEDF7 /* Settings in Frameworks */,
 				741ED8FB2A75829C00494B25 /* ReadabilityModifier in Frameworks */,
@@ -292,6 +293,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7BE081542EE5BF13004BCD1F /* SharedAssets in Frameworks */,
+				7B6278A02EEDDCF700DE1473 /* SharedViews in Frameworks */,
 				7B31C8E72ED08EE800FEEDF7 /* Networking in Frameworks */,
 				7B31C8F32ED0AB0E00FEEDF7 /* Settings in Frameworks */,
 				74A09FE128C6778C00E03F39 /* SwiftUI.framework in Frameworks */,
@@ -305,6 +307,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7B8C3ECF2EE4A9F70089C6CF /* SharedAssets in Frameworks */,
+				7B62789E2EEDDCF300DE1473 /* SharedViews in Frameworks */,
 				7B31C8E52ED08DD100FEEDF7 /* Networking in Frameworks */,
 				7B31C8F12ED0A7BF00FEEDF7 /* Settings in Frameworks */,
 				74F5EF8C2A4B4352008D9413 /* ReadabilityModifier in Frameworks */,
@@ -548,7 +551,6 @@
 			children = (
 				AE9367952A9354CC00F2DB3F /* Helper.swift */,
 				394653A8288BB47A00212E1C /* SectionHeader.swift */,
-				FA57DE4A2875B06B00911F03 /* SwiftLeedsContainer.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -622,6 +624,7 @@
 				7B31C8EE2ED0959A00FEEDF7 /* DesignKit */,
 				7B31C8F42ED0AB1600FEEDF7 /* Settings */,
 				7BE081512EE5BDA8004BCD1F /* SharedAssets */,
+				7B62789B2EEDDCED00DE1473 /* SharedViews */,
 			);
 			productName = SwiftLeedsAppClip;
 			productReference = 0B4CB3C528EAF19000246E62 /* SwiftLeedsAppClip.app */;
@@ -668,6 +671,7 @@
 				7B31C8EA2ED0959000FEEDF7 /* DesignKit */,
 				7B31C8F02ED0A7BF00FEEDF7 /* Settings */,
 				7B8C3ECE2EE4A9F70089C6CF /* SharedAssets */,
+				7B62789D2EEDDCF300DE1473 /* SharedViews */,
 			);
 			productName = SwiftLeeds;
 			productReference = AECB295327417F9D00CDC983 /* SwiftLeeds.app */;
@@ -824,7 +828,6 @@
 				0B4CB3F128EAF61000246E62 /* StackedTileView.swift in Sources */,
 				0B4CB3DE28EAF57E00246E62 /* MyConferenceViewModel.swift in Sources */,
 				AE9367902A93467500F2DB3F /* ScheduleView.swift in Sources */,
-				0B4CB3ED28EAF5F200246E62 /* SwiftLeedsContainer.swift in Sources */,
 				0B4CB3EC28EAF5E900246E62 /* ActivityView.swift in Sources */,
 				0B4CB3F228EAF61600246E62 /* WebView.swift in Sources */,
 				0B59B5712E70EA6600820C3C /* About.swift in Sources */,
@@ -895,7 +898,6 @@
 				AECB295927417F9D00CDC983 /* MyConferenceView.swift in Sources */,
 				AE8C1B2428BFCFC700AF7318 /* Presentation.swift in Sources */,
 				2A3831122884A96600030002 /* FancyHeaderView.swift in Sources */,
-				FA57DE4B2875B06B00911F03 /* SwiftLeedsContainer.swift in Sources */,
 				0B59B5722E70EA6600820C3C /* About.swift in Sources */,
 				0B59B56B2E70E6AC00820C3C /* CompactActionItem.swift in Sources */,
 				74F5EF892A49CECB008D9413 /* SidebarView.swift in Sources */,
@@ -1513,6 +1515,18 @@
 		7B31C8F42ED0AB1600FEEDF7 /* Settings */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Settings;
+		};
+		7B62789B2EEDDCED00DE1473 /* SharedViews */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SharedViews;
+		};
+		7B62789D2EEDDCF300DE1473 /* SharedViews */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SharedViews;
+		};
+		7B62789F2EEDDCF700DE1473 /* SharedViews */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SharedViews;
 		};
 		7B8C3ECE2EE4A9F70089C6CF /* SharedAssets */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -1,4 +1,5 @@
 import DesignKit
+import SharedViews
 import SwiftUI
 
 struct ActivityView: View {

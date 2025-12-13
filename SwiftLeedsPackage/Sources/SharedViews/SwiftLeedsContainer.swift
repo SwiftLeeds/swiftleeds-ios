@@ -1,14 +1,14 @@
 import SharedAssets
 import SwiftUI
 
-struct SwiftLeedsContainer<Content: View>: View {
+public struct SwiftLeedsContainer<Content: View>: View {
     private var content: () -> (Content)
 
-    init(@ViewBuilder content: @escaping () -> (Content)) {
+    public init(@ViewBuilder content: @escaping () -> (Content)) {
         self.content = content
     }
 
-    var body: some View {
+    public var body: some View {
         ZStack {
             Color.background.edgesIgnoringSafeArea(.all)
             content()
