@@ -8,11 +8,10 @@ struct ActivityView: View {
     @Environment(\.openURL) var openURL
 
     var body: some View {
-        SwiftLeedsContainer {
-            ScrollView {
-                content
-            }
+        ScrollView {
+            content
         }
+        .background(Color.background, ignoresSafeAreaEdges: .all)
         .edgesIgnoringSafeArea(.top)
     }
 

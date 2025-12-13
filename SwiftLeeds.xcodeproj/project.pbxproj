@@ -88,9 +88,6 @@
 		7B31C8F12ED0A7BF00FEEDF7 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = 7B31C8F02ED0A7BF00FEEDF7 /* Settings */; };
 		7B31C8F32ED0AB0E00FEEDF7 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = 7B31C8F22ED0AB0E00FEEDF7 /* Settings */; };
 		7B31C8F52ED0AB1600FEEDF7 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = 7B31C8F42ED0AB1600FEEDF7 /* Settings */; };
-		7B62789C2EEDDCED00DE1473 /* SharedViews in Frameworks */ = {isa = PBXBuildFile; productRef = 7B62789B2EEDDCED00DE1473 /* SharedViews */; };
-		7B62789E2EEDDCF300DE1473 /* SharedViews in Frameworks */ = {isa = PBXBuildFile; productRef = 7B62789D2EEDDCF300DE1473 /* SharedViews */; };
-		7B6278A02EEDDCF700DE1473 /* SharedViews in Frameworks */ = {isa = PBXBuildFile; productRef = 7B62789F2EEDDCF700DE1473 /* SharedViews */; };
 		7B6278A22EEDDE1B00DE1473 /* SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6278A12EEDDE1B00DE1473 /* SectionHeader.swift */; };
 		7B8C3ECF2EE4A9F70089C6CF /* SharedAssets in Frameworks */ = {isa = PBXBuildFile; productRef = 7B8C3ECE2EE4A9F70089C6CF /* SharedAssets */; };
 		7BE081522EE5BDA8004BCD1F /* SharedAssets in Frameworks */ = {isa = PBXBuildFile; productRef = 7BE081512EE5BDA8004BCD1F /* SharedAssets */; };
@@ -275,7 +272,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				7BE081522EE5BDA8004BCD1F /* SharedAssets in Frameworks */,
-				7B62789C2EEDDCED00DE1473 /* SharedViews in Frameworks */,
 				7B31C8E92ED08EEE00FEEDF7 /* Networking in Frameworks */,
 				7B31C8F52ED0AB1600FEEDF7 /* Settings in Frameworks */,
 				741ED8FB2A75829C00494B25 /* ReadabilityModifier in Frameworks */,
@@ -289,7 +285,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				7BE081542EE5BF13004BCD1F /* SharedAssets in Frameworks */,
-				7B6278A02EEDDCF700DE1473 /* SharedViews in Frameworks */,
 				7B31C8E72ED08EE800FEEDF7 /* Networking in Frameworks */,
 				7B31C8F32ED0AB0E00FEEDF7 /* Settings in Frameworks */,
 				74A09FE128C6778C00E03F39 /* SwiftUI.framework in Frameworks */,
@@ -303,7 +298,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				7B8C3ECF2EE4A9F70089C6CF /* SharedAssets in Frameworks */,
-				7B62789E2EEDDCF300DE1473 /* SharedViews in Frameworks */,
 				7B31C8E52ED08DD100FEEDF7 /* Networking in Frameworks */,
 				7B31C8F12ED0A7BF00FEEDF7 /* Settings in Frameworks */,
 				74F5EF8C2A4B4352008D9413 /* ReadabilityModifier in Frameworks */,
@@ -611,7 +605,6 @@
 				7B31C8EE2ED0959A00FEEDF7 /* DesignKit */,
 				7B31C8F42ED0AB1600FEEDF7 /* Settings */,
 				7BE081512EE5BDA8004BCD1F /* SharedAssets */,
-				7B62789B2EEDDCED00DE1473 /* SharedViews */,
 			);
 			productName = SwiftLeedsAppClip;
 			productReference = 0B4CB3C528EAF19000246E62 /* SwiftLeedsAppClip.app */;
@@ -658,7 +651,6 @@
 				7B31C8EA2ED0959000FEEDF7 /* DesignKit */,
 				7B31C8F02ED0A7BF00FEEDF7 /* Settings */,
 				7B8C3ECE2EE4A9F70089C6CF /* SharedAssets */,
-				7B62789D2EEDDCF300DE1473 /* SharedViews */,
 			);
 			productName = SwiftLeeds;
 			productReference = AECB295327417F9D00CDC983 /* SwiftLeeds.app */;
@@ -1499,18 +1491,6 @@
 		7B31C8F42ED0AB1600FEEDF7 /* Settings */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Settings;
-		};
-		7B62789B2EEDDCED00DE1473 /* SharedViews */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = SharedViews;
-		};
-		7B62789D2EEDDCF300DE1473 /* SharedViews */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = SharedViews;
-		};
-		7B62789F2EEDDCF700DE1473 /* SharedViews */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = SharedViews;
 		};
 		7B8C3ECE2EE4A9F70089C6CF /* SharedAssets */ = {
 			isa = XCSwiftPackageProductDependency;

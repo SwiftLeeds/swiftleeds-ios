@@ -38,12 +38,6 @@ let package = Package(
                 "SharedAssets",
             ]
         ),
-        .library(
-            name: "SharedViews",
-            targets: [
-                "SharedViews",
-            ]
-        ),
     ],
     dependencies: [
         .package(url: "https://github.com/shadone/SwiftGenPlugin", branch: "6.6.2+deriveddatafix"),
@@ -71,12 +65,6 @@ let package = Package(
             name: "SharedAssets",
             plugins: [
               .plugin(name: "SwiftGenPlugin", package: "SwiftGenPlugin"),
-            ]
-        ),
-        .target(
-            name: "SharedViews",
-            dependencies: [
-                "SharedAssets",
             ]
         ),
     ],
