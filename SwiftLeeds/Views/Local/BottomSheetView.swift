@@ -39,9 +39,11 @@ struct BottomSheetView: View {
             VStack {
                 VStack(spacing: Padding.cellGap) {
                     Spacer()
-                    SectionHeader(title: "Local",
-                                  fontStyle: .title2.weight(.semibold),
-                                  foregroundColor: .primary)
+                    SectionHeader(
+                        title: "Local",
+                        fontStyle: .title2.weight(.semibold),
+                        foregroundColor: .primary
+                    )
                     .fitToReadableContentGuide(type: .width)
                     ScrollView {
                         ForEach(categories) { category in
