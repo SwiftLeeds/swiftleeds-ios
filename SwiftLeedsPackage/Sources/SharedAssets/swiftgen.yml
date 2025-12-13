@@ -1,0 +1,9 @@
+input_dir: Resources
+output_dir: ${DERIVED_SOURCES_DIR}
+
+xcassets:
+  inputs:
+    - .
+  outputs:
+    - templatePath: Templates/assets.stencil
+      output: Assets+Generated.swift

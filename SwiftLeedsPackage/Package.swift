@@ -32,6 +32,15 @@ let package = Package(
                 "Settings",
             ]
         ),
+        .library(
+            name: "SharedAssets",
+            targets: [
+                "SharedAssets",
+            ]
+        )
+    ],
+    dependencies: [
+        .package(url: "https://github.com/shadone/SwiftGenPlugin", branch: "6.6.2+deriveddatafix"),
     ],
     targets: [
         .target(
@@ -51,7 +60,13 @@ let package = Package(
         ),
         .target(
             name: "ColorTheme"
-        )
+        ),
+        .target(
+            name: "SharedAssets",
+            plugins: [
+              .plugin(name: "SwiftGenPlugin", package: "SwiftGenPlugin"),
+            ]
+        ),
     ],
     // Set to v5 to avoid strict concurrency checking in pre swift 6 code
     swiftLanguageModes: [
