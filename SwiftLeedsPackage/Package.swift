@@ -37,7 +37,13 @@ let package = Package(
             targets: [
                 "SharedAssets",
             ]
-        )
+        ),
+        .library(
+            name: "SharedViews",
+            targets: [
+                "SharedViews",
+            ]
+        ),
     ],
     dependencies: [
         .package(url: "https://github.com/shadone/SwiftGenPlugin", branch: "6.6.2+deriveddatafix"),
@@ -66,6 +72,9 @@ let package = Package(
             plugins: [
               .plugin(name: "SwiftGenPlugin", package: "SwiftGenPlugin"),
             ]
+        ),
+        .target(
+            name: "SharedViews"
         ),
     ],
     // Set to v5 to avoid strict concurrency checking in pre swift 6 code
