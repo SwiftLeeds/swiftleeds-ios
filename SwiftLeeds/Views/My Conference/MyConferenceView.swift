@@ -1,3 +1,4 @@
+import SharedAssets
 import SwiftUI
 
 struct MyConferenceView: View {

@@ -1,3 +1,4 @@
+import SharedAssets
 import SwiftUI
 import WidgetKit
 

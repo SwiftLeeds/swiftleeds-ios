@@ -1,4 +1,5 @@
 import DesignKit
+import SharedAssets
 import SwiftUI
 
 /// Generic primary secondary view
@@ -133,13 +134,6 @@ struct CommonTileView_Previews: PreviewProvider {
                     primaryText: "Primary",
                     secondaryText: "Secondary",
                     backgroundStyle: .red
-                )
-                CommonTileView(
-                    primaryText: "Primary",
-                    secondaryText: "Secondary",
-                    primaryColor: .white,
-                    secondaryColor: .white.opacity(0.8),
-                    backgroundStyle: LinearGradient.weather
                 )
             }
             .padding()

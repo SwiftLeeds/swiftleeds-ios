@@ -1,5 +1,6 @@
 import DesignKit
 import ReadabilityModifier
+import SharedAssets
 import SwiftUI
 
 struct BottomSheetView: View {

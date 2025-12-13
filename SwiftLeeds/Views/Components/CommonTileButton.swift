@@ -1,4 +1,5 @@
 import DesignKit
+import SharedAssets
 import SwiftUI
 
 struct CommonTileButton<BackgroundType: ShapeStyle>: View {
@@ -100,14 +101,6 @@ struct CommonTileButtton_Previews: PreviewProvider {
                     primaryText: "Primary",
                     secondaryText: "Secondary",
                     backgroundStyle: .red,
-                    onTap: {}
-                )
-                CommonTileButton(
-                    primaryText: "Primary",
-                    secondaryText: "Secondary",
-                    primaryColor: .white,
-                    secondaryColor: .white.opacity(0.8),
-                    backgroundStyle: LinearGradient.weather,
                     onTap: {}
                 )
             }

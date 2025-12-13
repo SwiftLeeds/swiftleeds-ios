@@ -1,4 +1,5 @@
 import DesignKit
+import SharedAssets
 import SwiftUI
 
 struct AnnouncementCell: View {
@@ -53,11 +54,27 @@ struct AnnouncementCell: View {
 struct AnnouncementCell_Previews: PreviewProvider {
     static var previews: some View {
         VStack(spacing: Padding.cellGap) {
-            AnnouncementCell(label: "Leeds", value: "26℃", valueIcon: "cloud.sun.fill", gradientColors: [.weatherGradientStart, .weatherGradientEnd])
-                .previewDisplayName("Weather")
+            AnnouncementCell(
+                label: "Leeds",
+                value: "26℃",
+                valueIcon: "cloud.sun.fill",
+                gradientColors: [
+                    Color.buyTicketGradientStart,
+                    Color.buyTicketGradientEnd
+                ]
+            )
+            .previewDisplayName("Weather")
             
-            AnnouncementCell(label: "Get your ticket now", value: "69 days", valueIcon: "calendar.circle", gradientColors: [.buyTicketGradientStart, .buyTicketGradientEnd])
-                .previewDisplayName("Buy Ticket")
+            AnnouncementCell(
+                label: "Get your ticket now",
+                value: "69 days",
+                valueIcon: "calendar.circle",
+                gradientColors: [
+                    Color.buyTicketGradientStart,
+                    Color.buyTicketGradientEnd
+                ]
+            )
+            .previewDisplayName("Buy Ticket")
         }
         .padding(20)
     }

@@ -1,5 +1,6 @@
 import CachedAsyncImage
 import DesignKit
+import SharedAssets
 import SwiftUI
 
 struct TeamMemberView: View {

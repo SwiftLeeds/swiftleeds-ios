@@ -1,6 +1,7 @@
 import DesignKit
 import CachedAsyncImage
 import ReadabilityModifier
+import SharedAssets
 import SwiftUI
 
 struct AboutView: View {
