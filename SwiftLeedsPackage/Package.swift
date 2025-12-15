@@ -37,7 +37,7 @@ let package = Package(
             targets: [
                 "SharedAssets",
             ]
-        )
+        ),
     ],
     dependencies: [
         .package(url: "https://github.com/shadone/SwiftGenPlugin", branch: "6.6.2+deriveddatafix"),

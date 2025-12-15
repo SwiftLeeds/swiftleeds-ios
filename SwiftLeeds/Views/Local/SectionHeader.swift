@@ -1,19 +1,20 @@
 import SwiftUI
 
 struct SectionHeader: View {
-    let title: String
-    let fontStyle: Font
-    let foregroundColor: Color
-    let maxWidth: CGFloat
-    let alignment: Alignment
-    let accesibilityAddTraits: AccessibilityTraits
-    
-    internal init(title: String,
-                  fontStyle: Font = .callout.weight(.semibold),
-                  foregroundColor : Color = .secondary,
-                  maxWidth: CGFloat = .infinity,
-                  alignment: Alignment = .leading,
-                  accessbilityAddTraits: AccessibilityTraits = .isHeader
+    private let title: String
+    private let fontStyle: Font
+    private let foregroundColor: Color
+    private let maxWidth: CGFloat
+    private let alignment: Alignment
+    private let accesibilityAddTraits: AccessibilityTraits
+
+    init(
+        title: String,
+        fontStyle: Font = .callout.weight(.semibold),
+        foregroundColor : Color = .secondary,
+        maxWidth: CGFloat = .infinity,
+        alignment: Alignment = .leading,
+        accessbilityAddTraits: AccessibilityTraits = .isHeader
     ) {
         self.title = title
         self.fontStyle = fontStyle
