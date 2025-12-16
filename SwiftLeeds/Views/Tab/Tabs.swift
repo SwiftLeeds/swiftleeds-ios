@@ -1,3 +1,4 @@
+import ColorTheme
 import SwiftUI
 
 struct Tabs: View {
@@ -14,8 +15,8 @@ struct Tabs: View {
     }
 }
 
-struct Tabs_Previews: PreviewProvider {
-    static var previews: some View {
-        Tabs()
-    }
+#Preview {
+    Tabs()
+        .environmentObject(AppState())
+        .environmentObject(ThemeManager.shared)
 }

@@ -8,7 +8,7 @@ public struct SettingsView: View {
     public init() {}
 
     public var body: some View {
-        NavigationView {
+        NavigationStack {
             List {
                 Section("App Icon") {
                     LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 3), spacing: 16) {
@@ -24,7 +24,7 @@ public struct SettingsView: View {
                     }
                     .padding(.vertical, 8)
                 }
-                
+
                 Section("Appearance") {
                     Picker("Theme", selection: $themeManager.currentTheme) {
                         ForEach(ThemeOption.allCases, id: \.self) { theme in
@@ -35,7 +35,7 @@ public struct SettingsView: View {
                         themeManager.setTheme(newTheme)
                     }
                 }
-                
+
                 Section("About") {
                     HStack {
                         Text("Version")
@@ -43,11 +43,11 @@ public struct SettingsView: View {
                         Text(viewModel.appVersion)
                             .foregroundColor(.secondary)
                     }
-                    
+
                     Button("Contact Us") {
                         viewModel.openContactUs()
                     }
-                    
+
                     Button("Code of Conduct") {
                         viewModel.openCodeOfConduct()
                     }
