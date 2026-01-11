@@ -9,11 +9,12 @@ struct LocalCell: View {
     let labelFontStyle: Font
     let onTap: () -> ()
     
-    internal init(label : String,
-                  imageName: String,
-                  foregroundColor: Color = .cellForeground,
-                  labelFontStyle: Font = .headline.weight(.medium),
-                  onTap: @escaping () -> () = {}
+    internal init(
+        label : String,
+        imageName: String,
+        foregroundColor: Color = .cellForeground,
+        labelFontStyle: Font = .headline.weight(.medium),
+        onTap: @escaping () -> () = {}
     ){
         self.label = label
         self.imageName = imageName
