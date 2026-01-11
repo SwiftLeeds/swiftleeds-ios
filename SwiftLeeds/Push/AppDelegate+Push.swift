@@ -19,10 +19,10 @@ extension AppDelegate {
     func sendPushRegistrationDatails(to url: URL, deviceToken: Data) {
         var details = TokenDetails(token: deviceToken)
 
-#if DEBUG
+        #if DEBUG
         details.debug = true
         print("🚀", details)
-#endif
+        #endif
 
         var request = URLRequest(url: url)
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
