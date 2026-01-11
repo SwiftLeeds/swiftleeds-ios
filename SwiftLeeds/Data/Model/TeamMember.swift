@@ -39,12 +39,14 @@ struct TeamMember: Codable, Identifiable {
         }
     }
     
-    init(name: String,
-         role: String?,
-         linkedInURL: String?,
-         twitterURL: String?,
-         slackURL: String?,
-         photoURL: String?) {
+    init(
+        name: String,
+        role: String?,
+        linkedInURL: String?,
+        twitterURL: String?,
+        slackURL: String?,
+        photoURL: String?
+    ) {
         self.name = name
         self.role = role
         self.linkedInURL = linkedInURL
