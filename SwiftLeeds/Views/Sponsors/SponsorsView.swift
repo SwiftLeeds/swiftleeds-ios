@@ -10,20 +10,13 @@ struct SponsorsView: View {
     @State private var selectedSponsorLevel: SponsorLevel?
     
     var body: some View {
-        SwiftLeedsContainer {
-            content
-        }
-        .edgesIgnoringSafeArea(.top)
-    }
-    
-    private var content: some View {
         ScrollView {
             VStack(spacing: 0) {
                 FancyHeaderView(
                     title: "Sponsors",
                     foregroundImageName: Assets.Image.swiftLeedsIcon
                 )
-                
+
                 if isLoading {
                     loadingView
                         .padding(.top, Padding.screen)
@@ -35,6 +28,8 @@ struct SponsorsView: View {
                 }
             }
         }
+        .background(Color.background, ignoresSafeAreaEdges: .all)
+        .edgesIgnoringSafeArea(.top)
         .scrollIndicators(.hidden)
         .task {
             await loadSponsors()

@@ -28,11 +28,10 @@ struct AboutView: View {
     }
 
     var body: some View {
-        SwiftLeedsContainer {
-            ScrollView {
-                content
-            }
+        ScrollView {
+            content
         }
+        .background(Color.background, ignoresSafeAreaEdges: .all)
         .edgesIgnoringSafeArea(.top)
     }
     
@@ -191,5 +190,6 @@ struct AboutView: View {
 struct AboutView_Previews: PreviewProvider {
     static var previews: some View {
         AboutView()
+            .preferredColorScheme(.dark)
     }
 }
