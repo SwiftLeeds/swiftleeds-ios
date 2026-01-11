@@ -1,4 +1,5 @@
 import DesignKit
+import MapKit
 import ReadabilityModifier
 import SharedAssets
 import SwiftUI
@@ -19,7 +20,7 @@ struct BottomSheetView: View {
         isOpen ? 0 : maxHeight - minHeight
     }
     
-    internal init (
+    init (
         isOpen: Binding<Bool>,
         selectedCategory: Binding<Local.LocationCategory?>,
         categories: [Local.LocationCategory],
@@ -87,8 +88,38 @@ struct BottomSheetView: View {
 
 struct BottomSheet_Previews: PreviewProvider {
     static let items: [Local.LocationCategory] = [
-        Local.LocationCategory(id: UUID(), name: "Food", symbolName: "takeoutbag.and.cup.and.straw.fill", locations: [.init(id: UUID(), name: "Trinity Kitchen", url: URL(string: "https://trinityleeds.com/shops/trinity-kitchen")!, location: .init(latitude: 53.797378, longitude: -1.545209))]),
-        Local.LocationCategory(id: UUID(), name: "Drinks", symbolName: "wineglass.fill", locations: [.init(id: UUID(), name: "Brew Society", url: URL(string: "https://www.brewsociety.co.uk/")!, location: .init(latitude: 53.79584058588689, longitude: -1.550339186509128))])
+        Local.LocationCategory(
+            id: UUID(),
+            name: "Food",
+            symbolName: "takeoutbag.and.cup.and.straw.fill",
+            locations: [
+                Local.Location(
+                    id: UUID(),
+                    name: "Trinity Kitchen",
+                    url: URL(string: "https://trinityleeds.com/shops/trinity-kitchen")!,
+                    location: CLLocation(
+                        latitude: 53.797378,
+                        longitude: -1.545209
+                    )
+                )
+            ]
+        ),
+        Local.LocationCategory(
+            id: UUID(),
+            name: "Drinks",
+            symbolName: "wineglass.fill",
+            locations: [
+                Local.Location(
+                    id: UUID(),
+                    name: "Brew Society",
+                    url: URL(string: "https://www.brewsociety.co.uk/")!,
+                    location: CLLocation(
+                        latitude: 53.79584058588689,
+                        longitude: -1.550339186509128
+                    )
+                )
+            ]
+        ),
     ]
 
     static var previews: some View {
