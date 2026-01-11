@@ -10,7 +10,7 @@ struct Speaker: Codable, Identifiable {
 }
 
 // MARK: - Formatting helpers
-extension Array where Element == Speaker {
+extension [Speaker] {
     var joinedNames: String {
         ListFormatter.localizedString(byJoining: self.map { $0.name })
     }
