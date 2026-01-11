@@ -39,7 +39,12 @@ struct Schedule: Codable {
         let presentation: Presentation?
 
         private enum CodingKeys: CodingKey {
-            case id, activity, presentation, date, startTime, duration
+            case id
+            case activity
+            case presentation
+            case date
+            case startTime
+            case duration
         }
 
         static var timeFormat: DateFormatter = {
