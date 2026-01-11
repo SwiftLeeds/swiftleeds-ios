@@ -33,6 +33,10 @@ extension Local.Location {
     }
 
     private enum CodingKeys: String, CodingKey {
-        case id, name, latitude = "lat", longitude = "lon", url
+        case id
+        case name
+        case latitude = "lat"
+        case longitude = "lon"
+        case url
     }
 }
