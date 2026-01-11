@@ -1,7 +1,6 @@
 import DesignKit
 import ReadabilityModifier
 import SharedAssets
-import SharedViews
 import SwiftUI
 
 struct SponsorsView: View {

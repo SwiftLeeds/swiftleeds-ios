@@ -2,7 +2,6 @@ import DesignKit
 import CachedAsyncImage
 import ReadabilityModifier
 import SharedAssets
-import SharedViews
 import SwiftUI
 
 struct AboutView: View {
@@ -144,7 +143,7 @@ struct AboutView: View {
                 .ignoresSafeArea(edges: .bottom)
         }
         .sheet(isPresented: $isFullAboutShown) {
-            NavigationView {
+            NavigationStack {
                 ScrollView {
                     VStack(alignment: .leading, spacing: Padding.cellGap) {
                         Text(aboutSwiftLeeds)

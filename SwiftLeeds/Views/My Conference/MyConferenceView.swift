@@ -8,7 +8,7 @@ struct MyConferenceView: View {
     @Namespace private var namespace
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack(spacing: 0) {
                 Divider()
 
@@ -52,7 +52,6 @@ struct MyConferenceView: View {
                 }
             }
         }
-        .navigationViewStyle(.stack)
         .accentColor(.white)
         .task {
             try? await viewModel.loadSchedule()
