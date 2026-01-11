@@ -7,14 +7,27 @@ struct LocalView: View {
     @StateObject private var model = LocalViewModel()
 
     @State private var bottomSheetShown = true
-    @State private var mapRegion: MKCoordinateRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 53.78613099154973, longitude: -1.5461652186147719), span: MKCoordinateSpan(latitudeDelta: 0.04, longitudeDelta: 0.04))
+    @State private var mapRegion: MKCoordinateRegion = MKCoordinateRegion(
+        center: CLLocationCoordinate2D(
+            latitude: 53.78613099154973,
+            longitude: -1.5461652186147719
+        ),
+        span: MKCoordinateSpan(
+            latitudeDelta: 0.04,
+            longitudeDelta: 0.04
+        )
+    )
     @State private var selectedLocation: Local.Location?
 
     var body: some View {
         ZStack {
             GeometryReader{ geometry in
                 if let category = model.selectedCategory {
-                    Map(coordinateRegion: $mapRegion, showsUserLocation: true, annotationItems: model.selectedLocations) { location in
+                    Map(
+                        coordinateRegion: $mapRegion,
+                        showsUserLocation: true,
+                        annotationItems: model.selectedLocations
+                    ) { location in
                         MapAnnotation(coordinate: location.location.coordinate) {
                             Image(uiImage: UIImage(systemName: category.symbolName) ?? UIImage(imageLiteralResourceName: category.symbolName))
                                 .frame(width: 44, height: 44)
@@ -24,8 +37,7 @@ struct LocalView: View {
                                 )
                                 .onTapGesture {
                                     selectedLocation = location
-
-                                }
+                            }
                         }
                     }
                     .ignoresSafeArea()
@@ -39,9 +51,12 @@ struct LocalView: View {
                                 selectedLocation = nil
                             }
 
-                        locationInfoView(category: model.selectedCategory!, location: location)
-                            .padding(.bottom, bottomSheetShown ? geometry.size.height * Constants.maxHeightRatio: 0)
-                            .animation(.easeInOut, value: bottomSheetShown)
+                        locationInfoView(
+                            category: model.selectedCategory!,
+                            location: location
+                        )
+                        .padding(.bottom, bottomSheetShown ? geometry.size.height * Constants.maxHeightRatio: 0)
+                        .animation(.easeInOut, value: bottomSheetShown)
                     }
                 }
 
