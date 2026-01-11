@@ -1,3 +1,4 @@
+import Settings
 import SwiftUI
 
 struct SidebarView: View {
@@ -24,6 +25,12 @@ struct SidebarView: View {
                 appState.selectedTab = .sponsors
             }) {
                 Label("Sponsors", systemImage: "sparkles")
+            }
+
+            NavigationLink(destination: SettingsView().onAppear {
+                appState.selectedTab = .settings
+            }) {
+                Label("Settings", systemImage: "gearshape.fill")
             }
         }
         .listStyle(.sidebar)

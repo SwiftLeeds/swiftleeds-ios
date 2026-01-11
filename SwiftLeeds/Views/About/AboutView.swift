@@ -143,7 +143,7 @@ struct AboutView: View {
                 .ignoresSafeArea(edges: .bottom)
         }
         .sheet(isPresented: $isFullAboutShown) {
-            NavigationView {
+            NavigationStack {
                 ScrollView {
                     VStack(alignment: .leading, spacing: Padding.cellGap) {
                         Text(aboutSwiftLeeds)

@@ -21,6 +21,5 @@ struct SidebarMainView: View {
                 SettingsView()
             }
         }
-
     }
 }
