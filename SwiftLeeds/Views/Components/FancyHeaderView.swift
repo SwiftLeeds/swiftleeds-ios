@@ -13,8 +13,11 @@ struct FancyHeaderView: View {
 
     @State private var foregroundGroupViewHeight: CGFloat = .zero
 
-    // MARK: - Initialisers
-    init(title: String, foregroundImageURLs: [URL] = [], foregroundImage: Image? = nil) {
+    init(
+        title: String,
+        foregroundImageURLs: [URL] = [],
+        foregroundImage: Image? = nil
+    ) {
         self.title = title
         self.foregroundImageURLs = foregroundImageURLs
         self.foregroundImage = foregroundImage
