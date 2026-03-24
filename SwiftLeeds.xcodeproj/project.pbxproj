@@ -17,7 +17,6 @@
 		0B4CB3D428EAF19100246E62 /* SwiftLeedsAppClip.app in Embed App Clips */ = {isa = PBXBuildFile; fileRef = 0B4CB3C528EAF19000246E62 /* SwiftLeedsAppClip.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		0B4CB3DD28EAF57900246E62 /* MyConferenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECB295827417F9D00CDC983 /* MyConferenceView.swift */; };
 		0B4CB3DE28EAF57E00246E62 /* MyConferenceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEDC22522898281300746247 /* MyConferenceViewModel.swift */; };
-		0B4CB3DF28EAF58400246E62 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE32CDEF286CCF9D00DF0AFF /* Constants.swift */; };
 		0B4CB3E028EAF58A00246E62 /* Schedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEDC22542898288F00746247 /* Schedule.swift */; };
 		0B4CB3E328EAF5A200246E62 /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8C1B2128BFCF4700AF7318 /* Activity.swift */; };
 		0B4CB3E428EAF5AF00246E62 /* Presentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8C1B2328BFCFC700AF7318 /* Presentation.swift */; };
@@ -68,7 +67,6 @@
 		74B14FB028CE21D7004C0A40 /* TimeineProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B14FAF28CE21D7004C0A40 /* TimeineProvider.swift */; };
 		74B14FB228CE2221004C0A40 /* SwiftLeedsWidgetEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B14FB128CE2221004C0A40 /* SwiftLeedsWidgetEntry.swift */; };
 		74B14FB428CE2245004C0A40 /* SwiftLeedsWidgetEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B14FB328CE2245004C0A40 /* SwiftLeedsWidgetEntryView.swift */; };
-		74E62F7028CA68D2004422F9 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE32CDEF286CCF9D00DF0AFF /* Constants.swift */; };
 		74E62F7228CA98EA004422F9 /* SwiftLeedsSmallWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E62F7128CA98EA004422F9 /* SwiftLeedsSmallWidgetView.swift */; };
 		74E62F7428CAAB30004422F9 /* SwiftLeedsMediumWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E62F7328CAAB30004422F9 /* SwiftLeedsMediumWidgetView.swift */; };
 		74E62F7728CADBD8004422F9 /* Schedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEDC22542898288F00746247 /* Schedule.swift */; };
@@ -94,7 +92,6 @@
 		7BE081542EE5BF13004BCD1F /* SharedAssets in Frameworks */ = {isa = PBXBuildFile; productRef = 7BE081532EE5BF13004BCD1F /* SharedAssets */; };
 		AE1C8010289E9F3800996659 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1C800F289E9F3800996659 /* String.swift */; };
 		AE1C801428A7BCD000996659 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AE1C801328A7BCD000996659 /* Settings.bundle */; };
-		AE32CDF0286CCF9D00DF0AFF /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE32CDEF286CCF9D00DF0AFF /* Constants.swift */; };
 		AE5EFD73289DC1D000464FE1 /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = AE5EFD72289DC1D000464FE1 /* CachedAsyncImage */; };
 		AE5EFD75289E7CBF00464FE1 /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5EFD74289E7CBF00464FE1 /* ActivityView.swift */; };
 		AE8C1B2228BFCF4700AF7318 /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8C1B2128BFCF4700AF7318 /* Activity.swift */; };
@@ -228,7 +225,6 @@
 		7B8108412E5CA00E00CCB2F5 /* SwiftLeedsPackage */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SwiftLeedsPackage; sourceTree = "<group>"; };
 		AE1C800F289E9F3800996659 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		AE1C801328A7BCD000996659 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
-		AE32CDEF286CCF9D00DF0AFF /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		AE5EFD74289E7CBF00464FE1 /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
 		AE8C1B2128BFCF4700AF7318 /* Activity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Activity.swift; sourceTree = "<group>"; };
 		AE8C1B2328BFCFC700AF7318 /* Presentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Presentation.swift; sourceTree = "<group>"; };
@@ -479,7 +475,6 @@
 		AECB29862741AC5800CDC983 /* App */ = {
 			isa = PBXGroup;
 			children = (
-				AE32CDEF286CCF9D00DF0AFF /* Constants.swift */,
 				AECB29832741ABFD00CDC983 /* Info.plist */,
 				AECB295627417F9D00CDC983 /* SwiftLeedsApp.swift */,
 				740162D92A7053A000C2D1B3 /* AppState.swift */,
@@ -803,7 +798,6 @@
 			files = (
 				0B4CB3E028EAF58A00246E62 /* Schedule.swift in Sources */,
 				0B4CB3EE28EAF5FB00246E62 /* String.swift in Sources */,
-				0B4CB3DF28EAF58400246E62 /* Constants.swift in Sources */,
 				0B4CB3F128EAF61000246E62 /* StackedTileView.swift in Sources */,
 				0B4CB3DE28EAF57E00246E62 /* MyConferenceViewModel.swift in Sources */,
 				AE9367902A93467500F2DB3F /* ScheduleView.swift in Sources */,
@@ -848,7 +842,6 @@
 				74E62F7A28CAE4DF004422F9 /* Speaker.swift in Sources */,
 				74E62F7728CADBD8004422F9 /* Schedule.swift in Sources */,
 				74B14FB228CE2221004C0A40 /* SwiftLeedsWidgetEntry.swift in Sources */,
-				74E62F7028CA68D2004422F9 /* Constants.swift in Sources */,
 				74B14FB428CE2245004C0A40 /* SwiftLeedsWidgetEntryView.swift in Sources */,
 				0B59B5732E70EA6600820C3C /* About.swift in Sources */,
 			);
@@ -895,7 +888,6 @@
 				FA57DE482875B06500911F03 /* StackedTileView.swift in Sources */,
 				FA534D8228A1909300A3BFBB /* Local.swift in Sources */,
 				AE93678F2A93455400F2DB3F /* ScheduleView.swift in Sources */,
-				AE32CDF0286CCF9D00DF0AFF /* Constants.swift in Sources */,
 				FA57DE472875B06500911F03 /* CommonTileView.swift in Sources */,
 				FA57DE462875B06500911F03 /* CommonTileButton.swift in Sources */,
 				74F5EF852A49CE6A008D9413 /* TabsMainView.swift in Sources */,

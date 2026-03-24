@@ -1,9 +1,10 @@
+import SharedAssets
 import SwiftUI
 import WidgetKit
 
 struct SwiftLeedsSmallWidgetView: View {
     
-    // MARK: - Pivate Properties
+    // MARK: - Private Properties
     
     private let slot: Schedule.Slot
     
@@ -65,7 +66,7 @@ extension SwiftLeedsSmallWidgetView {
     }
     
     private var logoView: some View {
-        Image(Assets.Image.swiftLeedsIconWithNoBackground)
+        Image.swiftLeedsIcon
             .resizable()
             .aspectRatio(contentMode: .fill)
             .transition(.opacity)

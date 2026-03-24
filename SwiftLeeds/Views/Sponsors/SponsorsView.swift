@@ -14,7 +14,7 @@ struct SponsorsView: View {
             VStack(spacing: 0) {
                 FancyHeaderView(
                     title: "Sponsors",
-                    foregroundImageName: Assets.Image.swiftLeedsIcon
+                    foregroundImage: Image.swiftLeedsIcon
                 )
 
                 if isLoading {

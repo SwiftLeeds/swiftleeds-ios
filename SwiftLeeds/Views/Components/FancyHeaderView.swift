@@ -1,11 +1,12 @@
 import CachedAsyncImage
 import DesignKit
+import SharedAssets
 import SwiftUI
 
 struct FancyHeaderView: View {
     private let title: String
     private let foregroundImageURLs: [URL]
-    private let foregroundImageName: String?
+    private let foregroundImage: Image?
 
     private let foregroundImageWidth: Double = 160
     private let aspectRatio = 1.66
@@ -13,10 +14,10 @@ struct FancyHeaderView: View {
     @State private var foregroundGroupViewHeight: CGFloat = .zero
 
     // MARK: - Initialisers
-    init(title: String, foregroundImageURLs: [URL] = [], foregroundImageName: String? = nil) {
+    init(title: String, foregroundImageURLs: [URL] = [], foregroundImage: Image? = nil) {
         self.title = title
         self.foregroundImageURLs = foregroundImageURLs
-        self.foregroundImageName = foregroundImageName
+        self.foregroundImage = foregroundImage
     }
     
     var body: some View {
@@ -25,7 +26,7 @@ struct FancyHeaderView: View {
             .edgesIgnoringSafeArea(.top)
             .aspectRatio(aspectRatio, contentMode: .fill)
             .background(
-                createRectangleImage(for: Image(Assets.Image.leedsPlayhouse), aspectRatio: aspectRatio)
+                createRectangleImage(for: Image.leedsPlayhouse, aspectRatio: aspectRatio)
                 .aspectRatio(contentMode: .fill)
                 .accessibilityHidden(true)
             )
@@ -70,17 +71,17 @@ struct FancyHeaderView: View {
                             createRectangleImage(for: image)
                                 .accessibilityHidden(true)
                         case .failure(_):
-                            createRectangleImage(for: Image(Assets.Image.swiftLeedsIcon))
+                            createRectangleImage(for: Image.swiftLeedsIcon)
                         @unknown default:
                             loadingView()
                         }
                     }
                 }
             }
-        } else if let foregroundImageName = foregroundImageName {
-            createRectangleImage(for: Image(foregroundImageName))
+        } else if let foregroundImage = foregroundImage {
+            createRectangleImage(for: foregroundImage)
         } else {
-            createRectangleImage(for: Image(Assets.Image.swiftLeedsIcon))
+            createRectangleImage(for: Image.swiftLeedsIcon)
         }
     }
     
@@ -107,7 +108,7 @@ struct FancyHeaderView: View {
     }
 
     private var foregroundImageCount: Int {
-        let count = foregroundImageURLs.count + (foregroundImageName == nil ? 0 : 1)
+        let count = foregroundImageURLs.count + (foregroundImage == nil ? 0 : 1)
         // Ensure we always have at least 1 for the fallback image
         return count == 0 ? 1 : count
     }
@@ -122,22 +123,32 @@ struct FancyHeaderView_Previews: PreviewProvider {
         Group {
             VStack {
                 Text(verbatim: "Local Asset")
-                FancyHeaderView(title: "Some Long Text here",
-                                foregroundImageName: Assets.Image.swiftLeedsIcon)
+                FancyHeaderView(
+                    title: "Some Long Text here",
+                    foregroundImage: Image.swiftLeedsIcon
+                )
                 Text(verbatim: "Remote Data")
-                FancyHeaderView(title: "Swift Taylor",
-                                foregroundImageURLs: [URL(string: "https://cdn-az.allevents.in/events5/banners/458482c4fc7489448aa3d77f6e2cd5d0553fa5edd7178dbf18cf986d2172eaf2-rimg-w1200-h675-gmir.jpg?v=1655230338")!])
+                FancyHeaderView(
+                    title: "Swift Taylor",
+                    foregroundImageURLs: [URL(string: "https://cdn-az.allevents.in/events5/banners/458482c4fc7489448aa3d77f6e2cd5d0553fa5edd7178dbf18cf986d2172eaf2-rimg-w1200-h675-gmir.jpg?v=1655230338")!]
+                )
 
             }
             ScrollView {
                 Text(verbatim: "Local Asset")
                 VStack {
-                    FancyHeaderView(title: "Kannan Prasad",
-                                    foregroundImageName: Assets.Image.swiftLeedsIcon)
+                    FancyHeaderView(
+                        title: "Kannan Prasad",
+                        foregroundImage: Image.swiftLeedsIcon
+                    )
                 }
                 Text(verbatim: "Remote Data")
-                FancyHeaderView(title: "Swift Taylor",
-                                foregroundImageURLs: [URL(string: "https://cdn-az.allevents.in/events5/banners/458482c4fc7489448aa3d77f6e2cd5d0553fa5edd7178dbf18cf986d2172eaf2-rimg-w1200-h675-gmir.jpg?v=1655230338")!])
+                FancyHeaderView(
+                    title: "Swift Taylor",
+                    foregroundImageURLs: [
+                        URL(string: "https://cdn-az.allevents.in/events5/banners/458482c4fc7489448aa3d77f6e2cd5d0553fa5edd7178dbf18cf986d2172eaf2-rimg-w1200-h675-gmir.jpg?v=1655230338")!
+                    ]
+                )
             }
         }
     }

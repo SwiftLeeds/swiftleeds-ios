@@ -39,7 +39,7 @@ struct AboutView: View {
         VStack(spacing: Padding.cellGap) {
             FancyHeaderView(
                 title: "About",
-                foregroundImageName: Assets.Image.swiftLeedsIcon
+                foregroundImage: Image.swiftLeedsIcon
             )
 
             VStack(spacing: Padding.cellGap) {
