@@ -1,7 +1,7 @@
 {
   "urls": {
-    "venue": "https://swiftleeds.co.uk/#venue",
-    "codeOfConduct": "https://swiftleeds.co.uk/conduct",
+    "venue": "/#venue",
+    "codeOfConduct": "/conduct",
     "reportAProblem": "https://forms.gle/PJie9aRNAtzQUdUu9",
     "slack": "https://join.slack.com/t/swiftleedsworkspace/shared_invite/zt-3dex3vb3k-JNYQ~ollX6R619D_tZVfXQ",
     "youtube": "https://www.youtube.com/@swiftleeds"

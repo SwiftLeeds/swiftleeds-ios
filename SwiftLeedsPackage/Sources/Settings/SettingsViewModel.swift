@@ -10,10 +10,26 @@ final class SettingsViewModel: ObservableObject {
         Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0"
     }
     
+    private var contactEmail: String {
+        guard let email = Bundle.main.object(forInfoDictionaryKey: "ContactEmail") as? String, !email.isEmpty else {
+            assertionFailure("Missing Info.plist key: ContactEmail")
+            return ""
+        }
+        return email
+    }
+
+    private var codeOfConductHost: String {
+        guard let host = Bundle.main.object(forInfoDictionaryKey: "APIHost") as? String, !host.isEmpty else {
+            assertionFailure("Missing Info.plist key: APIHost")
+            return ""
+        }
+        return host
+    }
+
     init() {
         loadCurrentIcon()
     }
-    
+
     func changeAppIcon(to iconOption: AppIconOption) {
         guard UIApplication.shared.supportsAlternateIcons else {
             showingIconError = true
@@ -33,13 +49,13 @@ final class SettingsViewModel: ObservableObject {
     }
     
     func openContactUs() {
-        if let url = URL(string: "mailto:info@swiftleeds.co.uk") {
+        if let url = URL(string: "mailto:\(contactEmail)") {
             UIApplication.shared.open(url)
         }
     }
-    
+
     func openCodeOfConduct() {
-        if let url = URL(string: "https://swiftleeds.co.uk/conduct") {
+        if let url = URL(string: "https://\(codeOfConductHost)/conduct") {
             UIApplication.shared.open(url)
         }
     }

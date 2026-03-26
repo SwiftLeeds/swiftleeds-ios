@@ -1,0 +1,8 @@
+// KotlinLeeds Configuration
+
+PRODUCT_BUNDLE_IDENTIFIER = uk.co.kotlinleeds.KotlinLeeds
+PRODUCT_NAME = KotlinLeeds
+APP_DISPLAY_NAME = KotlinLeeds
+API_HOST = kotlinleeds.co.uk
+CONTACT_EMAIL = info@kotlinleeds.co.uk
+APP_GROUP_IDENTIFIER = group.uk.co.kotlinleeds

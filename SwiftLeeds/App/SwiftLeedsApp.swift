@@ -4,7 +4,7 @@ import SwiftUI
 @main
 struct SwiftLeedsApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
-    
+
     @StateObject private var appState = AppState()
     @StateObject private var themeManager = ThemeManager.shared
 
@@ -20,7 +20,7 @@ struct SwiftLeedsApp: App {
 
 // MARK: - AppDelegate
 final class AppDelegate: NSObject, UIApplicationDelegate {
-    static let pushURL: String = "https://www.swiftleeds.co.uk/push"
+    static var pushURL: String { ConferenceConfig.pushURL }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         URLCache.shared.diskCapacity = 100_000_000

@@ -33,7 +33,7 @@ struct TeamMember: Codable, Identifiable {
         slackURL = try container.decodeIfPresent(String.self, forKey: .slackURL)
         
         if let imageURL = try container.decodeIfPresent(String.self, forKey: .photoURL) {
-            photoURL = imageURL.hasPrefix("/") ? "https://swiftleeds.co.uk\(imageURL)" : imageURL
+            photoURL = imageURL.hasPrefix("/") ? "https://\(ConferenceConfig.apiHost)\(imageURL)" : imageURL
         } else {
             photoURL = nil
         }

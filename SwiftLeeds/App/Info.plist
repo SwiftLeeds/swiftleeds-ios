@@ -2,6 +2,14 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CFBundleDisplayName</key>
+	<string>$(APP_DISPLAY_NAME)</string>
+	<key>APIHost</key>
+	<string>$(API_HOST)</string>
+	<key>ContactEmail</key>
+	<string>$(CONTACT_EMAIL)</string>
+	<key>AppGroupIdentifier</key>
+	<string>$(APP_GROUP_IDENTIFIER)</string>
 	<key>UILaunchScreen</key>
 	<dict>
 		<key>UIColorName</key>

@@ -1,0 +1,8 @@
+// SwiftLeeds Configuration
+
+PRODUCT_BUNDLE_IDENTIFIER = uk.co.swiftleeds.SwiftLeeds
+PRODUCT_NAME = SwiftLeeds
+APP_DISPLAY_NAME = SwiftLeeds
+API_HOST = swiftleeds.co.uk
+CONTACT_EMAIL = info@swiftleeds.co.uk
+APP_GROUP_IDENTIFIER = group.uk.co.swiftleeds
