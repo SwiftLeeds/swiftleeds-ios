@@ -10,12 +10,22 @@ env:
   DEVELOPER_DIR: /Applications/Xcode_26.0.1.app/Contents/Developer
 
 jobs:
-  build:
+  build-swiftleeds:
     name: Build SwiftLeeds (DEBUG)
     runs-on: macos-latest
     steps:
       - name: Checkout iOS Repository
         uses: actions/checkout@v2
-        
-      - name: Build iOS Project via Fastlane
-        run: fastlane build_debug
+
+      - name: Build SwiftLeeds via Fastlane
+        run: fastlane build_swiftleeds
+
+  build-kotlinleeds:
+    name: Build KotlinLeeds (DEBUG)
+    runs-on: macos-latest
+    steps:
+      - name: Checkout iOS Repository
+        uses: actions/checkout@v2
+
+      - name: Build KotlinLeeds via Fastlane
+        run: fastlane build_kotlinleeds
