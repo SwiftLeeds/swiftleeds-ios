@@ -6,3 +6,7 @@ APP_DISPLAY_NAME = SwiftLeeds
 API_HOST = swiftleeds.co.uk
 CONTACT_EMAIL = info@swiftleeds.co.uk
 APP_GROUP_IDENTIFIER = group.uk.co.swiftleeds
+CODE_SIGN_ENTITLEMENTS = SwiftLeeds/SwiftLeeds.entitlements
+ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon
+EXCLUDED_SOURCE_FILE_NAMES = KotlinLeedsAssets.xcassets KotlinLeedsColors.xcassets
+WIDGET_KIND_NAME = SwiftLeedsWidget

@@ -29,5 +29,5 @@ struct Job: Decodable, Hashable, Identifiable {
     let location: String
     let url: String
 
-    static let sample = Job(id: UUID(), title: "Senior iOS Engineer", details: "Bringing all your Swift skills to the fore", location: "Leeds", url: "https://www.\(ConferenceConfig.apiHost)")
+    static let sample = Job(id: UUID(), title: "Senior iOS Engineer", details: "Bringing all your Swift skills to the fore", location: "Leeds", url: "https://example.com")
 }

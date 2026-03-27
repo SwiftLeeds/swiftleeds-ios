@@ -12,7 +12,6 @@
 		0B4B1A512A48FB6400ED7EA9 /* SponsorsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4B1A4C2A486EA800ED7EA9 /* SponsorsViewModel.swift */; };
 		0B4CB3C828EAF19100246E62 /* SwiftLeedsAppClipApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4CB3C728EAF19100246E62 /* SwiftLeedsAppClipApp.swift */; };
 		0B4CB3CA28EAF19100246E62 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4CB3C928EAF19100246E62 /* ContentView.swift */; };
-		0B4CB3CC28EAF19100246E62 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B4CB3CB28EAF19100246E62 /* Assets.xcassets */; };
 		0B4CB3CF28EAF19100246E62 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B4CB3CE28EAF19100246E62 /* Preview Assets.xcassets */; };
 		0B4CB3D428EAF19100246E62 /* SwiftLeedsAppClip.app in Embed App Clips */ = {isa = PBXBuildFile; fileRef = 0B4CB3C528EAF19000246E62 /* SwiftLeedsAppClip.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		0B4CB3DD28EAF57900246E62 /* MyConferenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECB295827417F9D00CDC983 /* MyConferenceView.swift */; };
@@ -33,8 +32,7 @@
 		0B4CB3F328EAF61B00246E62 /* CommonTileButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE432875B06500911F03 /* CommonTileButton.swift */; };
 		0B4CB3F428EAF62100246E62 /* CommonTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE442875B06500911F03 /* CommonTileView.swift */; };
 		0B4CB3FC28EAF7C500246E62 /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = 0B4CB3FB28EAF7C500246E62 /* CachedAsyncImage */; };
-		0B4CB3FD28EAF7FE00246E62 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AECB295A27417F9E00CDC983 /* Assets.xcassets */; };
-		0B4CB3FE28EAF80200246E62 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AECB29872741ACE000CDC983 /* Colors.xcassets */; };
+		0B4CB3FD28EAF7FE00246E62 /* BuildFile in Resources */ = {isa = PBXBuildFile; };
 		0B59B5652E70E5D400820C3C /* TeamMember.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B59B5642E70E5D400820C3C /* TeamMember.swift */; };
 		0B59B5662E70E5D400820C3C /* TeamMember.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B59B5642E70E5D400820C3C /* TeamMember.swift */; };
 		0B59B5672E70E5D400820C3C /* TeamMember.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B59B5642E70E5D400820C3C /* TeamMember.swift */; };
@@ -48,10 +46,18 @@
 		0B910A352A48FEC100648B32 /* SponsorTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE4E2875B09900911F03 /* SponsorTileView.swift */; };
 		0B910A372A49D07700648B32 /* Sponsor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B910A362A49D07700648B32 /* Sponsor.swift */; };
 		0B910A382A49D09300648B32 /* Sponsor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B910A362A49D07700648B32 /* Sponsor.swift */; };
+		13707030C1082B933C28151D /* SwiftLeedsAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4301D0D3F1C8979276E77084 /* SwiftLeedsAssets.xcassets */; };
+		1ED8FD9CBE313B23E73E8132 /* KotlinLeedsColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B3FFD994DBE3F62216150F8 /* KotlinLeedsColors.xcassets */; };
 		2A3831122884A96600030002 /* FancyHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3831112884A96600030002 /* FancyHeaderView.swift */; };
 		39345FDA288F17EE0031BCFF /* BottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39345FD9288F17EE0031BCFF /* BottomSheetView.swift */; };
 		394653AB288BB7C800212E1C /* SpeakerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394653AA288BB7C800212E1C /* SpeakerView.swift */; };
 		39ED0034288F113500AB337A /* LocalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39ED0033288F113500AB337A /* LocalCell.swift */; };
+		416468542E4365477789D792 /* SwiftLeedsColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 893A122D593379F84605F70C /* SwiftLeedsColors.xcassets */; };
+		4381E5366C2266F0DBECFDC6 /* KotlinLeedsAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40AEBC0F9109732F54C608A9 /* KotlinLeedsAssets.xcassets */; };
+		536B0D6E662499195E36CA15 /* SwiftLeedsColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 893A122D593379F84605F70C /* SwiftLeedsColors.xcassets */; };
+		6689C3857E75808C8395B496 /* SwiftLeedsAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EEFB1E37D5A542A1798C92D5 /* SwiftLeedsAssets.xcassets */; };
+		6C97E4AC99FE94C690FB23B4 /* KotlinLeedsAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40AEBC0F9109732F54C608A9 /* KotlinLeedsAssets.xcassets */; };
+		6E14A8EC04159C7E092C87D4 /* SwiftLeedsColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 893A122D593379F84605F70C /* SwiftLeedsColors.xcassets */; };
 		740162DA2A7053A000C2D1B3 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740162D92A7053A000C2D1B3 /* AppState.swift */; };
 		740162DB2A7053A000C2D1B3 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740162D92A7053A000C2D1B3 /* AppState.swift */; };
 		7406572928E240720087F44F /* WidgetConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7406572828E240720087F44F /* WidgetConstants.swift */; };
@@ -60,10 +66,9 @@
 		74A09FDF28C6778C00E03F39 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74A09FDE28C6778C00E03F39 /* WidgetKit.framework */; };
 		74A09FE128C6778C00E03F39 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74A09FE028C6778C00E03F39 /* SwiftUI.framework */; };
 		74A09FE428C6778C00E03F39 /* SwiftLeedsWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A09FE328C6778C00E03F39 /* SwiftLeedsWidget.swift */; };
-		74A09FE628C6779300E03F39 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 74A09FE528C6779300E03F39 /* Assets.xcassets */; };
 		74A09FEA28C6779300E03F39 /* SwiftLeedsWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 74A09FDD28C6778C00E03F39 /* SwiftLeedsWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		74A09FF028C688E700E03F39 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AECB295A27417F9E00CDC983 /* Assets.xcassets */; };
-		74A09FF128C688E700E03F39 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AECB29872741ACE000CDC983 /* Colors.xcassets */; };
+		74A09FF028C688E700E03F39 /* BuildFile in Resources */ = {isa = PBXBuildFile; };
+		74A09FF128C688E700E03F39 /* BuildFile in Resources */ = {isa = PBXBuildFile; };
 		74B14FB028CE21D7004C0A40 /* TimeineProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B14FAF28CE21D7004C0A40 /* TimeineProvider.swift */; };
 		74B14FB228CE2221004C0A40 /* SwiftLeedsWidgetEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B14FB128CE2221004C0A40 /* SwiftLeedsWidgetEntry.swift */; };
 		74B14FB428CE2245004C0A40 /* SwiftLeedsWidgetEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B14FB328CE2245004C0A40 /* SwiftLeedsWidgetEntryView.swift */; };
@@ -77,6 +82,8 @@
 		74F5EF872A49CE9D008D9413 /* SidebarMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F5EF862A49CE9D008D9413 /* SidebarMainView.swift */; };
 		74F5EF892A49CECB008D9413 /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F5EF882A49CECB008D9413 /* SidebarView.swift */; };
 		74F5EF8C2A4B4352008D9413 /* ReadabilityModifier in Frameworks */ = {isa = PBXBuildFile; productRef = 74F5EF8B2A4B4352008D9413 /* ReadabilityModifier */; };
+		7640E1784CFF7D166DA3E292 /* SwiftLeedsAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EEFB1E37D5A542A1798C92D5 /* SwiftLeedsAssets.xcassets */; };
+		79E3CB724EF853948BC7D906 /* ConferenceConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67624B7470D6BA62D4912236 /* ConferenceConfig.swift */; };
 		7B31C8E52ED08DD100FEEDF7 /* Networking in Frameworks */ = {isa = PBXBuildFile; productRef = 7B31C8E42ED08DD100FEEDF7 /* Networking */; };
 		7B31C8E72ED08EE800FEEDF7 /* Networking in Frameworks */ = {isa = PBXBuildFile; productRef = 7B31C8E62ED08EE800FEEDF7 /* Networking */; };
 		7B31C8E92ED08EEE00FEEDF7 /* Networking in Frameworks */ = {isa = PBXBuildFile; productRef = 7B31C8E82ED08EEE00FEEDF7 /* Networking */; };
@@ -90,6 +97,10 @@
 		7B8C3ECF2EE4A9F70089C6CF /* SharedAssets in Frameworks */ = {isa = PBXBuildFile; productRef = 7B8C3ECE2EE4A9F70089C6CF /* SharedAssets */; };
 		7BE081522EE5BDA8004BCD1F /* SharedAssets in Frameworks */ = {isa = PBXBuildFile; productRef = 7BE081512EE5BDA8004BCD1F /* SharedAssets */; };
 		7BE081542EE5BF13004BCD1F /* SharedAssets in Frameworks */ = {isa = PBXBuildFile; productRef = 7BE081532EE5BF13004BCD1F /* SharedAssets */; };
+		7DD216398B20B302618BCB90 /* SwiftLeedsAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3275AD6541323F056786E508 /* SwiftLeedsAssets.xcassets */; };
+		802D63D966D0A9337F66041C /* KotlinLeedsAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 75075F01455C8AD72C71783C /* KotlinLeedsAssets.xcassets */; };
+		920187EBD71395160F1059C1 /* KotlinLeedsColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B3FFD994DBE3F62216150F8 /* KotlinLeedsColors.xcassets */; };
+		A18F779A7E6FC79F59311319 /* KotlinLeedsColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B3FFD994DBE3F62216150F8 /* KotlinLeedsColors.xcassets */; };
 		AE1C8010289E9F3800996659 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1C800F289E9F3800996659 /* String.swift */; };
 		AE1C801428A7BCD000996659 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AE1C801328A7BCD000996659 /* Settings.bundle */; };
 		AE5EFD73289DC1D000464FE1 /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = AE5EFD72289DC1D000464FE1 /* CachedAsyncImage */; };
@@ -104,11 +115,9 @@
 		AEB06BD128CF8D2100E51967 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB06BD028CF8D2100E51967 /* WebView.swift */; };
 		AECB295727417F9D00CDC983 /* SwiftLeedsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECB295627417F9D00CDC983 /* SwiftLeedsApp.swift */; };
 		AECB295927417F9D00CDC983 /* MyConferenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECB295827417F9D00CDC983 /* MyConferenceView.swift */; };
-		AECB295B27417F9E00CDC983 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AECB295A27417F9E00CDC983 /* Assets.xcassets */; };
 		AECB296827417F9E00CDC983 /* SwiftLeedsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECB296727417F9E00CDC983 /* SwiftLeedsTests.swift */; };
 		AECB297227417F9E00CDC983 /* SwiftLeedsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECB297127417F9E00CDC983 /* SwiftLeedsUITests.swift */; };
 		AECB297427417F9E00CDC983 /* SwiftLeedsUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECB297327417F9E00CDC983 /* SwiftLeedsUITestsLaunchTests.swift */; };
-		AECB29882741ACE000CDC983 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AECB29872741ACE000CDC983 /* Colors.xcassets */; };
 		AED26F7028675DA000E06064 /* AnnouncementCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AED26F6F28675DA000E06064 /* AnnouncementCell.swift */; };
 		AED26F74286764F000E06064 /* TalkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AED26F73286764F000E06064 /* TalkCell.swift */; };
 		AED26F7828676A9900E06064 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AED26F7728676A9900E06064 /* AboutView.swift */; };
@@ -116,8 +125,13 @@
 		AEDC0DAE286759630078A153 /* Tabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEDC0DAD286759630078A153 /* Tabs.swift */; };
 		AEDC22532898281300746247 /* MyConferenceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEDC22522898281300746247 /* MyConferenceViewModel.swift */; };
 		AEDC22552898288F00746247 /* Schedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEDC22542898288F00746247 /* Schedule.swift */; };
+		B2A3D0194187CEC82CCD3F5D /* ConferenceConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67624B7470D6BA62D4912236 /* ConferenceConfig.swift */; };
+		B7E34B6C6CE38F48068FB98A /* SwiftLeedsAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EEFB1E37D5A542A1798C92D5 /* SwiftLeedsAssets.xcassets */; };
+		C88307224ADAA4C64A455D74 /* KotlinLeedsAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40AEBC0F9109732F54C608A9 /* KotlinLeedsAssets.xcassets */; };
+		D87582F568B0EFB6371B734B /* ConferenceConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67624B7470D6BA62D4912236 /* ConferenceConfig.swift */; };
 		E3569AEF2E5A1D0200BC9556 /* ShimmerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3569AED2E5A1D0200BC9556 /* ShimmerView.swift */; };
 		E3569B062E5B903800BC9556 /* ShimmerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3569AED2E5A1D0200BC9556 /* ShimmerView.swift */; };
+		EF223850DCFBB4DF1213DE38 /* KotlinLeedsAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ED1AFB8A37EDA9676DB1C998 /* KotlinLeedsAssets.xcassets */; };
 		FA1F7EF7287CB71600E12F8C /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1F7EF6287CB71600E12F8C /* HeaderView.swift */; };
 		FA534D8228A1909300A3BFBB /* Local.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA534D8128A1909300A3BFBB /* Local.swift */; };
 		FA534D8828A1939500A3BFBB /* LocalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA534D8728A1939500A3BFBB /* LocalViewModel.swift */; };
@@ -184,12 +198,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0B3FFD994DBE3F62216150F8 /* KotlinLeedsColors.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = KotlinLeedsColors.xcassets; sourceTree = "<group>"; };
 		0B4B1A4A2A4858F600ED7EA9 /* SponsorsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsorsView.swift; sourceTree = "<group>"; };
 		0B4B1A4C2A486EA800ED7EA9 /* SponsorsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsorsViewModel.swift; sourceTree = "<group>"; };
 		0B4CB3C528EAF19000246E62 /* SwiftLeedsAppClip.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftLeedsAppClip.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B4CB3C728EAF19100246E62 /* SwiftLeedsAppClipApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftLeedsAppClipApp.swift; sourceTree = "<group>"; };
 		0B4CB3C928EAF19100246E62 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		0B4CB3CB28EAF19100246E62 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0B4CB3CE28EAF19100246E62 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		0B4CB3D028EAF19100246E62 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0B4CB3D128EAF19100246E62 /* SwiftLeedsAppClip.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SwiftLeedsAppClip.entitlements; sourceTree = "<group>"; };
@@ -200,17 +214,23 @@
 		0B59B56D2E70EA4F00820C3C /* AboutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewModel.swift; sourceTree = "<group>"; };
 		0B59B5702E70EA6600820C3C /* About.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = About.swift; sourceTree = "<group>"; };
 		0B910A362A49D07700648B32 /* Sponsor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sponsor.swift; sourceTree = "<group>"; };
+		0BB52A782A5FDC2614FF7243 /* KotlinLeedsAppClip.entitlements */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.entitlements; path = KotlinLeedsAppClip.entitlements; sourceTree = "<group>"; };
+		1AA9B4909D551477D0C04106 /* KotlinLeeds.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = KotlinLeeds.xcconfig; sourceTree = "<group>"; };
 		2A3831112884A96600030002 /* FancyHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FancyHeaderView.swift; sourceTree = "<group>"; };
+		3275AD6541323F056786E508 /* SwiftLeedsAssets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = SwiftLeedsAssets.xcassets; sourceTree = "<group>"; };
 		39345FD9288F17EE0031BCFF /* BottomSheetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BottomSheetView.swift; sourceTree = "<group>"; };
 		394653AA288BB7C800212E1C /* SpeakerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakerView.swift; sourceTree = "<group>"; };
 		39ED0033288F113500AB337A /* LocalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalCell.swift; sourceTree = "<group>"; };
+		40AEBC0F9109732F54C608A9 /* KotlinLeedsAssets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = KotlinLeedsAssets.xcassets; sourceTree = "<group>"; };
+		4301D0D3F1C8979276E77084 /* SwiftLeedsAssets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = SwiftLeedsAssets.xcassets; sourceTree = "<group>"; };
+		5F9FC40FEADC49E608696F7A /* SwiftLeeds.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SwiftLeeds.xcconfig; sourceTree = "<group>"; };
+		67624B7470D6BA62D4912236 /* ConferenceConfig.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ConferenceConfig.swift; sourceTree = "<group>"; };
 		740162D92A7053A000C2D1B3 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		7406572828E240720087F44F /* WidgetConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetConstants.swift; sourceTree = "<group>"; };
 		74A09FDD28C6778C00E03F39 /* SwiftLeedsWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SwiftLeedsWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		74A09FDE28C6778C00E03F39 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		74A09FE028C6778C00E03F39 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		74A09FE328C6778C00E03F39 /* SwiftLeedsWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftLeedsWidget.swift; sourceTree = "<group>"; };
-		74A09FE528C6779300E03F39 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		74A09FE728C6779300E03F39 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		74B14FAD28CB22B4004C0A40 /* SwiftLeedsWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SwiftLeedsWidgetExtension.entitlements; sourceTree = "<group>"; };
 		74B14FAF28CE21D7004C0A40 /* TimeineProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeineProvider.swift; sourceTree = "<group>"; };
@@ -221,8 +241,11 @@
 		74F5EF842A49CE6A008D9413 /* TabsMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabsMainView.swift; sourceTree = "<group>"; };
 		74F5EF862A49CE9D008D9413 /* SidebarMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarMainView.swift; sourceTree = "<group>"; };
 		74F5EF882A49CECB008D9413 /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
+		75075F01455C8AD72C71783C /* KotlinLeedsAssets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = KotlinLeedsAssets.xcassets; sourceTree = "<group>"; };
+		7804F8767E529D8F3A0D8BE4 /* KotlinLeeds.entitlements */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.entitlements; path = KotlinLeeds.entitlements; sourceTree = "<group>"; };
 		7B6278A12EEDDE1B00DE1473 /* SectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeader.swift; sourceTree = "<group>"; };
 		7B8108412E5CA00E00CCB2F5 /* SwiftLeedsPackage */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SwiftLeedsPackage; sourceTree = "<group>"; };
+		893A122D593379F84605F70C /* SwiftLeedsColors.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = SwiftLeedsColors.xcassets; sourceTree = "<group>"; };
 		AE1C800F289E9F3800996659 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		AE1C801328A7BCD000996659 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		AE5EFD74289E7CBF00464FE1 /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
@@ -237,14 +260,12 @@
 		AECB295327417F9D00CDC983 /* SwiftLeeds.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftLeeds.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AECB295627417F9D00CDC983 /* SwiftLeedsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftLeedsApp.swift; sourceTree = "<group>"; };
 		AECB295827417F9D00CDC983 /* MyConferenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyConferenceView.swift; sourceTree = "<group>"; };
-		AECB295A27417F9E00CDC983 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AECB296327417F9E00CDC983 /* SwiftLeedsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftLeedsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AECB296727417F9E00CDC983 /* SwiftLeedsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftLeedsTests.swift; sourceTree = "<group>"; };
 		AECB296D27417F9E00CDC983 /* SwiftLeedsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftLeedsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AECB297127417F9E00CDC983 /* SwiftLeedsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftLeedsUITests.swift; sourceTree = "<group>"; };
 		AECB297327417F9E00CDC983 /* SwiftLeedsUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftLeedsUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		AECB29832741ABFD00CDC983 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		AECB29872741ACE000CDC983 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		AED26F6F28675DA000E06064 /* AnnouncementCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementCell.swift; sourceTree = "<group>"; };
 		AED26F73286764F000E06064 /* TalkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TalkCell.swift; sourceTree = "<group>"; };
 		AED26F7728676A9900E06064 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
@@ -252,7 +273,10 @@
 		AEDC0DAD286759630078A153 /* Tabs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tabs.swift; sourceTree = "<group>"; };
 		AEDC22522898281300746247 /* MyConferenceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyConferenceViewModel.swift; sourceTree = "<group>"; };
 		AEDC22542898288F00746247 /* Schedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Schedule.swift; sourceTree = "<group>"; };
+		C1725A0182E1989D761551B2 /* KotlinLeedsWidgetExtension.entitlements */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.entitlements; path = KotlinLeedsWidgetExtension.entitlements; sourceTree = "<group>"; };
 		E3569AED2E5A1D0200BC9556 /* ShimmerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerView.swift; sourceTree = "<group>"; };
+		ED1AFB8A37EDA9676DB1C998 /* KotlinLeedsAssets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = KotlinLeedsAssets.xcassets; sourceTree = "<group>"; };
+		EEFB1E37D5A542A1798C92D5 /* SwiftLeedsAssets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = SwiftLeedsAssets.xcassets; sourceTree = "<group>"; };
 		FA1F7EF6287CB71600E12F8C /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		FA534D8128A1909300A3BFBB /* Local.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Local.swift; sourceTree = "<group>"; };
 		FA534D8728A1939500A3BFBB /* LocalViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalViewModel.swift; sourceTree = "<group>"; };
@@ -334,10 +358,12 @@
 			children = (
 				0B4CB3C728EAF19100246E62 /* SwiftLeedsAppClipApp.swift */,
 				0B4CB3C928EAF19100246E62 /* ContentView.swift */,
-				0B4CB3CB28EAF19100246E62 /* Assets.xcassets */,
 				0B4CB3D028EAF19100246E62 /* Info.plist */,
 				0B4CB3D128EAF19100246E62 /* SwiftLeedsAppClip.entitlements */,
+				0BB52A782A5FDC2614FF7243 /* KotlinLeedsAppClip.entitlements */,
 				0B4CB3CD28EAF19100246E62 /* Preview Content */,
+				4301D0D3F1C8979276E77084 /* SwiftLeedsAssets.xcassets */,
+				75075F01455C8AD72C71783C /* KotlinLeedsAssets.xcassets */,
 			);
 			path = SwiftLeedsAppClip;
 			sourceTree = "<group>";
@@ -358,8 +384,9 @@
 				74E62F7128CA98EA004422F9 /* SwiftLeedsSmallWidgetView.swift */,
 				74B14FB328CE2245004C0A40 /* SwiftLeedsWidgetEntryView.swift */,
 				74A09FE328C6778C00E03F39 /* SwiftLeedsWidget.swift */,
-				74A09FE528C6779300E03F39 /* Assets.xcassets */,
 				74A09FE728C6779300E03F39 /* Info.plist */,
+				3275AD6541323F056786E508 /* SwiftLeedsAssets.xcassets */,
+				ED1AFB8A37EDA9676DB1C998 /* KotlinLeedsAssets.xcassets */,
 			);
 			path = SwiftLeedsWidget;
 			sourceTree = "<group>";
@@ -372,6 +399,15 @@
 				7406572828E240720087F44F /* WidgetConstants.swift */,
 			);
 			path = WidgetSetup;
+			sourceTree = "<group>";
+		};
+		7D158F62E4F9CC9BE188EB59 /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				5F9FC40FEADC49E608696F7A /* SwiftLeeds.xcconfig */,
+				1AA9B4909D551477D0C04106 /* KotlinLeeds.xcconfig */,
+			);
+			path = Configuration;
 			sourceTree = "<group>";
 		};
 		AE8C1B2928C4B38400AF7318 /* Push */ = {
@@ -388,6 +424,7 @@
 			children = (
 				7B8108412E5CA00E00CCB2F5 /* SwiftLeedsPackage */,
 				74B14FAD28CB22B4004C0A40 /* SwiftLeedsWidgetExtension.entitlements */,
+				C1725A0182E1989D761551B2 /* KotlinLeedsWidgetExtension.entitlements */,
 				AECB295527417F9D00CDC983 /* SwiftLeeds */,
 				AE1C801328A7BCD000996659 /* Settings.bundle */,
 				AECB296627417F9E00CDC983 /* SwiftLeedsTests */,
@@ -396,6 +433,7 @@
 				0B4CB3C628EAF19100246E62 /* SwiftLeedsAppClip */,
 				AECB295427417F9D00CDC983 /* Products */,
 				FAF74EDA288B44BE00A0926C /* Frameworks */,
+				7D158F62E4F9CC9BE188EB59 /* Configuration */,
 			);
 			sourceTree = "<group>";
 		};
@@ -421,6 +459,7 @@
 				AECB29842741AC2500CDC983 /* Resources */,
 				AE8C1B2C28C4B8D800AF7318 /* SwiftLeeds.entitlements */,
 				AECB29852741AC4B00CDC983 /* Views */,
+				7804F8767E529D8F3A0D8BE4 /* KotlinLeeds.entitlements */,
 			);
 			path = SwiftLeeds;
 			sourceTree = "<group>";
@@ -453,8 +492,10 @@
 		AECB29842741AC2500CDC983 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				AECB295A27417F9E00CDC983 /* Assets.xcassets */,
-				AECB29872741ACE000CDC983 /* Colors.xcassets */,
+				EEFB1E37D5A542A1798C92D5 /* SwiftLeedsAssets.xcassets */,
+				893A122D593379F84605F70C /* SwiftLeedsColors.xcassets */,
+				40AEBC0F9109732F54C608A9 /* KotlinLeedsAssets.xcassets */,
+				0B3FFD994DBE3F62216150F8 /* KotlinLeedsColors.xcassets */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -478,6 +519,7 @@
 				AECB29832741ABFD00CDC983 /* Info.plist */,
 				AECB295627417F9D00CDC983 /* SwiftLeedsApp.swift */,
 				740162D92A7053A000C2D1B3 /* AppState.swift */,
+				67624B7470D6BA62D4912236 /* ConferenceConfig.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -748,9 +790,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				0B4CB3CF28EAF19100246E62 /* Preview Assets.xcassets in Resources */,
-				0B4CB3FE28EAF80200246E62 /* Colors.xcassets in Resources */,
-				0B4CB3FD28EAF7FE00246E62 /* Assets.xcassets in Resources */,
-				0B4CB3CC28EAF19100246E62 /* Assets.xcassets in Resources */,
+				0B4CB3FD28EAF7FE00246E62 /* BuildFile in Resources */,
+				7640E1784CFF7D166DA3E292 /* SwiftLeedsAssets.xcassets in Resources */,
+				536B0D6E662499195E36CA15 /* SwiftLeedsColors.xcassets in Resources */,
+				4381E5366C2266F0DBECFDC6 /* KotlinLeedsAssets.xcassets in Resources */,
+				920187EBD71395160F1059C1 /* KotlinLeedsColors.xcassets in Resources */,
+				6689C3857E75808C8395B496 /* SwiftLeedsAssets.xcassets in Resources */,
+				416468542E4365477789D792 /* SwiftLeedsColors.xcassets in Resources */,
+				6C97E4AC99FE94C690FB23B4 /* KotlinLeedsAssets.xcassets in Resources */,
+				A18F779A7E6FC79F59311319 /* KotlinLeedsColors.xcassets in Resources */,
+				13707030C1082B933C28151D /* SwiftLeedsAssets.xcassets in Resources */,
+				802D63D966D0A9337F66041C /* KotlinLeedsAssets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -758,9 +808,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				74A09FF128C688E700E03F39 /* Colors.xcassets in Resources */,
-				74A09FF028C688E700E03F39 /* Assets.xcassets in Resources */,
-				74A09FE628C6779300E03F39 /* Assets.xcassets in Resources */,
+				74A09FF128C688E700E03F39 /* BuildFile in Resources */,
+				74A09FF028C688E700E03F39 /* BuildFile in Resources */,
+				7DD216398B20B302618BCB90 /* SwiftLeedsAssets.xcassets in Resources */,
+				EF223850DCFBB4DF1213DE38 /* KotlinLeedsAssets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -769,9 +820,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				AE1C801428A7BCD000996659 /* Settings.bundle in Resources */,
-				AECB29882741ACE000CDC983 /* Colors.xcassets in Resources */,
 				0B59B56E2E70EA4F00820C3C /* about.json in Resources */,
-				AECB295B27417F9E00CDC983 /* Assets.xcassets in Resources */,
+				B7E34B6C6CE38F48068FB98A /* SwiftLeedsAssets.xcassets in Resources */,
+				6E14A8EC04159C7E092C87D4 /* SwiftLeedsColors.xcassets in Resources */,
+				C88307224ADAA4C64A455D74 /* KotlinLeedsAssets.xcassets in Resources */,
+				1ED8FD9CBE313B23E73E8132 /* KotlinLeedsColors.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -824,6 +877,7 @@
 				0B4CB3F428EAF62100246E62 /* CommonTileView.swift in Sources */,
 				0B4CB3C828EAF19100246E62 /* SwiftLeedsAppClipApp.swift in Sources */,
 				0B4CB3F328EAF61B00246E62 /* CommonTileButton.swift in Sources */,
+				79E3CB724EF853948BC7D906 /* ConferenceConfig.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -844,6 +898,7 @@
 				74B14FB228CE2221004C0A40 /* SwiftLeedsWidgetEntry.swift in Sources */,
 				74B14FB428CE2245004C0A40 /* SwiftLeedsWidgetEntryView.swift in Sources */,
 				0B59B5732E70EA6600820C3C /* About.swift in Sources */,
+				D87582F568B0EFB6371B734B /* ConferenceConfig.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -894,6 +949,7 @@
 				39345FDA288F17EE0031BCFF /* BottomSheetView.swift in Sources */,
 				740162DA2A7053A000C2D1B3 /* AppState.swift in Sources */,
 				74F5EF872A49CE9D008D9413 /* SidebarMainView.swift in Sources */,
+				B2A3D0194187CEC82CCD3F5D /* ConferenceConfig.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -942,9 +998,9 @@
 /* Begin XCBuildConfiguration section */
 		0B4CB3D628EAF19100246E62 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5F9FC40FEADC49E608696F7A /* SwiftLeeds.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIcon-Space AppIcon-Olympics";
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_ENTITLEMENTS = SwiftLeedsAppClip/SwiftLeedsAppClip.entitlements;
@@ -980,9 +1036,9 @@
 		};
 		0B4CB3D728EAF19100246E62 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5F9FC40FEADC49E608696F7A /* SwiftLeeds.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIcon-Space AppIcon-Olympics";
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_ENTITLEMENTS = SwiftLeedsAppClip/SwiftLeedsAppClip.entitlements;
@@ -1016,8 +1072,63 @@
 			};
 			name = Release;
 		};
+		2014F1FBBBA61BB8B879C841 /* Debug-KotlinLeeds */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1AA9B4909D551477D0C04106 /* KotlinLeeds.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = KotlinLeedsWidgetExtension.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 0;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SwiftLeedsWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = KotlinLeedsWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.5.0;
+				PRODUCT_BUNDLE_IDENTIFIER = uk.co.kotlinleeds.KotlinLeeds.KotlinLeedsWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = "Debug-KotlinLeeds";
+		};
+		655E3983F369B83929052804 /* Release-KotlinLeeds */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = uk.co.kotlinleeds.KotlinLeedsTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SwiftLeeds.app/SwiftLeeds";
+			};
+			name = "Release-KotlinLeeds";
+		};
 		74A09FEC28C6779300E03F39 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5F9FC40FEADC49E608696F7A /* SwiftLeeds.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
@@ -1048,6 +1159,7 @@
 		};
 		74A09FED28C6779300E03F39 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5F9FC40FEADC49E608696F7A /* SwiftLeeds.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
@@ -1076,8 +1188,159 @@
 			};
 			name = Release;
 		};
+		85E3F86534CB7D5739F96A1C /* Release-KotlinLeeds */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1AA9B4909D551477D0C04106 /* KotlinLeeds.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIcon-Space AppIcon-Olympics";
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 0;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SwiftLeeds/App/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.5.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = "Release-KotlinLeeds";
+		};
+		906642F1D5557A45A0D9FB1A /* Debug-KotlinLeeds */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1AA9B4909D551477D0C04106 /* KotlinLeeds.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIcon-Space AppIcon-Olympics";
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_ENTITLEMENTS = SwiftLeedsAppClip/KotlinLeedsAppClip.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 0;
+				DEVELOPMENT_ASSET_PATHS = "\"SwiftLeedsAppClip/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SwiftLeedsAppClip/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = KotlinLeeds;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.5.0;
+				PRODUCT_BUNDLE_IDENTIFIER = uk.co.kotlinleeds.KotlinLeeds.Clip;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = "Debug-KotlinLeeds";
+		};
+		9E7FC0DEE0511AE09933E16D /* Release-KotlinLeeds */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = uk.co.kotlinleeds.KotlinLeedsUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = SwiftLeeds;
+			};
+			name = "Release-KotlinLeeds";
+		};
+		A38060880D523A66B65603E3 /* Release-KotlinLeeds */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1AA9B4909D551477D0C04106 /* KotlinLeeds.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = K33K6V7FBA;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = "Release-KotlinLeeds";
+		};
 		AECB297527417F9E00CDC983 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5F9FC40FEADC49E608696F7A /* SwiftLeeds.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1142,6 +1405,7 @@
 		};
 		AECB297627417F9E00CDC983 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5F9FC40FEADC49E608696F7A /* SwiftLeeds.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1200,11 +1464,10 @@
 		};
 		AECB297827417F9E00CDC983 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5F9FC40FEADC49E608696F7A /* SwiftLeeds.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIcon-Space AppIcon-Olympics";
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = SwiftLeeds/SwiftLeeds.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 0;
@@ -1223,7 +1486,6 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.5.0;
-				PRODUCT_BUNDLE_IDENTIFIER = uk.co.swiftleeds.SwiftLeeds;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1234,11 +1496,10 @@
 		};
 		AECB297927417F9E00CDC983 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5F9FC40FEADC49E608696F7A /* SwiftLeeds.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIcon-Space AppIcon-Olympics";
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = SwiftLeeds/SwiftLeeds.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 0;
@@ -1257,7 +1518,6 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.5.0;
-				PRODUCT_BUNDLE_IDENTIFIER = uk.co.swiftleeds.SwiftLeeds;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1354,6 +1614,216 @@
 			};
 			name = Release;
 		};
+		B0A72D7F43CF6E1426D3DEF4 /* Release-KotlinLeeds */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1AA9B4909D551477D0C04106 /* KotlinLeeds.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIcon-Space AppIcon-Olympics";
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_ENTITLEMENTS = SwiftLeedsAppClip/KotlinLeedsAppClip.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 0;
+				DEVELOPMENT_ASSET_PATHS = "\"SwiftLeedsAppClip/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SwiftLeedsAppClip/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = KotlinLeeds;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.5.0;
+				PRODUCT_BUNDLE_IDENTIFIER = uk.co.kotlinleeds.KotlinLeeds.Clip;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = "Release-KotlinLeeds";
+		};
+		CA02A67F16FAEB1F469D90E7 /* Debug-KotlinLeeds */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = uk.co.kotlinleeds.KotlinLeedsTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SwiftLeeds.app/SwiftLeeds";
+			};
+			name = "Debug-KotlinLeeds";
+		};
+		CD001671DE923FBC5EEFDBF7 /* Debug-KotlinLeeds */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = uk.co.kotlinleeds.KotlinLeedsUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = SwiftLeeds;
+			};
+			name = "Debug-KotlinLeeds";
+		};
+		D5C3DEA64235AB9468B871B4 /* Release-KotlinLeeds */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1AA9B4909D551477D0C04106 /* KotlinLeeds.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = KotlinLeedsWidgetExtension.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 0;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SwiftLeedsWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = KotlinLeedsWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.5.0;
+				PRODUCT_BUNDLE_IDENTIFIER = uk.co.kotlinleeds.KotlinLeeds.KotlinLeedsWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = "Release-KotlinLeeds";
+		};
+		F407709FF578F921B9E6D438 /* Debug-KotlinLeeds */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1AA9B4909D551477D0C04106 /* KotlinLeeds.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = K33K6V7FBA;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = "Debug-KotlinLeeds";
+		};
+		F4CFF55E07C8EE1E8EFFD505 /* Debug-KotlinLeeds */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1AA9B4909D551477D0C04106 /* KotlinLeeds.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIcon-Space AppIcon-Olympics";
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 0;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SwiftLeeds/App/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.5.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = "Debug-KotlinLeeds";
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1362,6 +1832,8 @@
 			buildConfigurations = (
 				0B4CB3D628EAF19100246E62 /* Debug */,
 				0B4CB3D728EAF19100246E62 /* Release */,
+				906642F1D5557A45A0D9FB1A /* Debug-KotlinLeeds */,
+				B0A72D7F43CF6E1426D3DEF4 /* Release-KotlinLeeds */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1371,6 +1843,8 @@
 			buildConfigurations = (
 				74A09FEC28C6779300E03F39 /* Debug */,
 				74A09FED28C6779300E03F39 /* Release */,
+				2014F1FBBBA61BB8B879C841 /* Debug-KotlinLeeds */,
+				D5C3DEA64235AB9468B871B4 /* Release-KotlinLeeds */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1380,6 +1854,8 @@
 			buildConfigurations = (
 				AECB297527417F9E00CDC983 /* Debug */,
 				AECB297627417F9E00CDC983 /* Release */,
+				F407709FF578F921B9E6D438 /* Debug-KotlinLeeds */,
+				A38060880D523A66B65603E3 /* Release-KotlinLeeds */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1389,6 +1865,8 @@
 			buildConfigurations = (
 				AECB297827417F9E00CDC983 /* Debug */,
 				AECB297927417F9E00CDC983 /* Release */,
+				F4CFF55E07C8EE1E8EFFD505 /* Debug-KotlinLeeds */,
+				85E3F86534CB7D5739F96A1C /* Release-KotlinLeeds */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1398,6 +1876,8 @@
 			buildConfigurations = (
 				AECB297B27417F9E00CDC983 /* Debug */,
 				AECB297C27417F9E00CDC983 /* Release */,
+				CA02A67F16FAEB1F469D90E7 /* Debug-KotlinLeeds */,
+				655E3983F369B83929052804 /* Release-KotlinLeeds */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1407,6 +1887,8 @@
 			buildConfigurations = (
 				AECB297E27417F9E00CDC983 /* Debug */,
 				AECB297F27417F9E00CDC983 /* Release */,
+				CD001671DE923FBC5EEFDBF7 /* Debug-KotlinLeeds */,
+				9E7FC0DEE0511AE09933E16D /* Release-KotlinLeeds */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
