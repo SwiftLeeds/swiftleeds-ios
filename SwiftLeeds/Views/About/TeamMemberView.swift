@@ -114,7 +114,7 @@ struct TeamMemberView_Previews: PreviewProvider {
                 linkedInURL: "https://www.linkedin.com/in/swiftlyrush/",
                 twitterURL: "https://twitter.com/Adam9Rush",
                 slackURL: "https://swiftleedsworkspace.slack.com/archives/D02ELG76VC0",
-                photoURL: "https://swiftleeds.co.uk/img/team/rush.jpg"
+                photoURL: "https://\(ConferenceConfig.apiHost)/img/team/rush.jpg"
             ))
             .previewDisplayName("With Role & All Links")
             
@@ -125,7 +125,7 @@ struct TeamMemberView_Previews: PreviewProvider {
                 linkedInURL: "https://www.linkedin.com/in/adam-oxley-41183a82/",
                 twitterURL: "https://twitter.com/admoxly",
                 slackURL: "https://swiftleedsworkspace.slack.com/team/U02DRL7KUCS",
-                photoURL: "https://swiftleeds.co.uk/img/team/oxley.jpg"
+                photoURL: "https://\(ConferenceConfig.apiHost)/img/team/oxley.jpg"
             ))
             .previewDisplayName("No Role")
             
@@ -148,7 +148,7 @@ struct TeamMemberView_Previews: PreviewProvider {
                     linkedInURL: "https://www.linkedin.com/in/jamessherlockdeveloper/",
                     twitterURL: "https://twitter.com/JamesSherlouk",
                     slackURL: "https://swiftleedsworkspace.slack.com/archives/D05RK6AAV29",
-                    photoURL: "https://swiftleeds.co.uk/img/team/sherlock.jpg"
+                    photoURL: "https://\(ConferenceConfig.apiHost)/img/team/sherlock.jpg"
                 ))
                 
                 TeamMemberView(member: TeamMember(
@@ -157,7 +157,7 @@ struct TeamMemberView_Previews: PreviewProvider {
                     linkedInURL: "https://www.linkedin.com/in/joe-williams-1676b871/",
                     twitterURL: "https://twitter.com/joedub_dev",
                     slackURL: "https://swiftleedsworkspace.slack.com/archives/C05N7JZE2NP",
-                    photoURL: "https://swiftleeds.co.uk/img/team/joe.jpg"
+                    photoURL: "https://\(ConferenceConfig.apiHost)/img/team/joe.jpg"
                 ))
             }
             .padding()

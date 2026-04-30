@@ -10,13 +10,13 @@ class AboutViewModel: ObservableObject {
     @Published var errorMessage: String?
     
     var venueURL: URL? {
-        guard let urlString = aboutContent?.urls.venue else { return nil }
-        return URL(string: urlString)
+        guard let path = aboutContent?.urls.venue else { return nil }
+        return URL(string: "https://\(ConferenceConfig.apiHost)\(path)")
     }
-    
+
     var codeOfConductURL: URL? {
-        guard let urlString = aboutContent?.urls.codeOfConduct else { return nil }
-        return URL(string: urlString)
+        guard let path = aboutContent?.urls.codeOfConduct else { return nil }
+        return URL(string: "https://\(ConferenceConfig.apiHost)\(path)")
     }
     
     var reportAProblemLink: String {

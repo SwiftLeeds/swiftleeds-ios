@@ -21,7 +21,7 @@ class MyConferenceViewModel: ObservableObject {
 
             do {
                 let data = try PropertyListEncoder().encode(schedule)
-                UserDefaults(suiteName: "group.uk.co.swiftleeds")?.setValue(data, forKey: "Schedule")
+                UserDefaults(suiteName: ConferenceConfig.appGroupIdentifier)?.setValue(data, forKey: "Schedule")
             } catch {
                 throw(error)
             }
