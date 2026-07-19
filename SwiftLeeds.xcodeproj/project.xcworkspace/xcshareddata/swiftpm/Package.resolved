@@ -1,5 +1,5 @@
 {
-  "originHash" : "e63c4fbeca3313e20aef6efbbcf4a199930615ad52bd2a8b32bbc01f5c4c7d57",
+  "originHash" : "2e75df633672401d17f0a38c094d468776c4c40d064c28051e7d6898c5950492",
   "pins" : [
     {
       "identity" : "combine-schedulers",
@@ -44,6 +44,15 @@
       "state" : {
         "revision" : "8dc1fbf2f6255a73dec53b4648164884898db4c5",
         "version" : "1.14.1"
+      }
+    },
+    {
+      "identity" : "swift-http-types",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-http-types.git",
+      "state" : {
+        "revision" : "db774a277f60063a32d854f2980299caf06da041",
+        "version" : "1.6.0"
       }
     },
     {
