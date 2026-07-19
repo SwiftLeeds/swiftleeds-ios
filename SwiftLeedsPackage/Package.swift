@@ -5,7 +5,7 @@ import PackageDescription
 let package = Package(
     name: "SwiftLeedsPackage",
     platforms: [
-        .iOS(.v16),
+        .iOS(.v17),
     ],
     products: [
         .library(
@@ -61,6 +61,7 @@ let package = Package(
             name: "FeatureLogin",
             dependencies: [
                 "Networking",
+                .product(name: "Dependencies", package: "swift-dependencies"),
             ]
         ),
         .target(

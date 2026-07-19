@@ -32,7 +32,7 @@
 		0B4CB3F328EAF61B00246E62 /* CommonTileButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE432875B06500911F03 /* CommonTileButton.swift */; };
 		0B4CB3F428EAF62100246E62 /* CommonTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE442875B06500911F03 /* CommonTileView.swift */; };
 		0B4CB3FC28EAF7C500246E62 /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = 0B4CB3FB28EAF7C500246E62 /* CachedAsyncImage */; };
-		0B4CB3FD28EAF7FE00246E62 /* BuildFile in Resources */ = {isa = PBXBuildFile; };
+		0B4CB3FD28EAF7FE00246E62 /* (null) in Resources */ = {isa = PBXBuildFile; };
 		0B59B5652E70E5D400820C3C /* TeamMember.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B59B5642E70E5D400820C3C /* TeamMember.swift */; };
 		0B59B5662E70E5D400820C3C /* TeamMember.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B59B5642E70E5D400820C3C /* TeamMember.swift */; };
 		0B59B5672E70E5D400820C3C /* TeamMember.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B59B5642E70E5D400820C3C /* TeamMember.swift */; };
@@ -67,8 +67,8 @@
 		74A09FE128C6778C00E03F39 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74A09FE028C6778C00E03F39 /* SwiftUI.framework */; };
 		74A09FE428C6778C00E03F39 /* SwiftLeedsWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A09FE328C6778C00E03F39 /* SwiftLeedsWidget.swift */; };
 		74A09FEA28C6779300E03F39 /* SwiftLeedsWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 74A09FDD28C6778C00E03F39 /* SwiftLeedsWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		74A09FF028C688E700E03F39 /* BuildFile in Resources */ = {isa = PBXBuildFile; };
-		74A09FF128C688E700E03F39 /* BuildFile in Resources */ = {isa = PBXBuildFile; };
+		74A09FF028C688E700E03F39 /* (null) in Resources */ = {isa = PBXBuildFile; };
+		74A09FF128C688E700E03F39 /* (null) in Resources */ = {isa = PBXBuildFile; };
 		74B14FB028CE21D7004C0A40 /* TimeineProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B14FAF28CE21D7004C0A40 /* TimeineProvider.swift */; };
 		74B14FB228CE2221004C0A40 /* SwiftLeedsWidgetEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B14FB128CE2221004C0A40 /* SwiftLeedsWidgetEntry.swift */; };
 		74B14FB428CE2245004C0A40 /* SwiftLeedsWidgetEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B14FB328CE2245004C0A40 /* SwiftLeedsWidgetEntryView.swift */; };
@@ -790,7 +790,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0B4CB3CF28EAF19100246E62 /* Preview Assets.xcassets in Resources */,
-				0B4CB3FD28EAF7FE00246E62 /* BuildFile in Resources */,
+				0B4CB3FD28EAF7FE00246E62 /* (null) in Resources */,
 				7640E1784CFF7D166DA3E292 /* SwiftLeedsAssets.xcassets in Resources */,
 				536B0D6E662499195E36CA15 /* SwiftLeedsColors.xcassets in Resources */,
 				4381E5366C2266F0DBECFDC6 /* KotlinLeedsAssets.xcassets in Resources */,
@@ -808,8 +808,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				74A09FF128C688E700E03F39 /* BuildFile in Resources */,
-				74A09FF028C688E700E03F39 /* BuildFile in Resources */,
+				74A09FF128C688E700E03F39 /* (null) in Resources */,
+				74A09FF028C688E700E03F39 /* (null) in Resources */,
 				7DD216398B20B302618BCB90 /* SwiftLeedsAssets.xcassets in Resources */,
 				EF223850DCFBB4DF1213DE38 /* KotlinLeedsAssets.xcassets in Resources */,
 			);
@@ -1019,7 +1019,7 @@
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1057,7 +1057,7 @@
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1086,7 +1086,7 @@
 				INFOPLIST_FILE = SwiftLeedsWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = KotlinLeedsWidget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1140,7 +1140,7 @@
 				INFOPLIST_FILE = SwiftLeedsWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = SwiftLeedsWidget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1171,7 +1171,7 @@
 				INFOPLIST_FILE = SwiftLeedsWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = SwiftLeedsWidget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1206,7 +1206,7 @@
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1243,7 +1243,7 @@
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1480,7 +1480,7 @@
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1512,7 +1512,7 @@
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1637,7 +1637,7 @@
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1710,7 +1710,7 @@
 				INFOPLIST_FILE = SwiftLeedsWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = KotlinLeedsWidget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1810,7 +1810,7 @@
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
