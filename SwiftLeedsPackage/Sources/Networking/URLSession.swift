@@ -11,9 +11,13 @@ public extension URLSession {
         return URLSession(configuration: configuration)
     }()
 
-    func cached<Response: Decodable>(_ request: Request<Response>, using decoder: JSONDecoder = .init(),
-                                     dateDecodingStrategy: JSONDecoder.DateDecodingStrategy = .deferredToDate,
-                                     fileManager: FileManager = .default, filename: String? = nil) async throws -> Response {
+    func cached<Response: Decodable>(
+        _ request: Request<Response>,
+        using decoder: JSONDecoder = .init(),
+        dateDecodingStrategy: JSONDecoder.DateDecodingStrategy = .deferredToDate,
+        fileManager: FileManager = .default,
+        filename: String? = nil
+    ) async throws -> Response {
         let filename = filename ?? request.url.lastPathComponent
         let path = fileManager.temporaryDirectory.appendingPathComponent(filename)
 
@@ -28,9 +32,13 @@ public extension URLSession {
         return try await decoded.value
     }
 
-    func decode<Response: Decodable>(_ request: Request<Response>, using decoder: JSONDecoder = .init(),
-                                     dateDecodingStrategy: JSONDecoder.DateDecodingStrategy?,
-                                     fileManager: FileManager = .default, filename: String? = nil) async throws -> Response {
+    func decode<Response: Decodable>(
+        _ request: Request<Response>,
+        using decoder: JSONDecoder = .init(),
+        dateDecodingStrategy: JSONDecoder.DateDecodingStrategy? = nil,
+        fileManager: FileManager = .default,
+        filename: String? = nil
+    ) async throws -> Response {
         let filename = filename ?? request.url.lastPathComponent
         let path = fileManager.temporaryDirectory.appendingPathComponent(filename).appendingPathExtension("json")
 
@@ -58,7 +66,16 @@ public extension URLSession {
                     decoder.dateDecodingStrategy = dateDecodingStrategy
                 }
 
-                return try decoder.decode(Response.self, from: data)
+                print("Data: \(data)")
+
+                if let obj = try? decoder.decode(Response.self, from: data) {
+                    return obj
+                }
+                else {
+                    let obj = String(decoding: data, as: UTF8.self)
+                    print("Decoded: \(obj)")
+                    return obj as! Response
+                }
             } catch {
                 let nsError = error as NSError
 
