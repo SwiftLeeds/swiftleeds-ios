@@ -47,6 +47,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/shadone/SwiftGenPlugin", branch: "6.6.2+deriveddatafix"),
+        .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.0.0"),
     ],
     targets: [
         .target(
@@ -59,7 +60,6 @@ let package = Package(
             name: "FeatureLogin",
             dependencies: [
                 "Networking",
-//                .product(name: "Dependencies", package: "swift-dependencies"),
             ]
         ),
         .target(
