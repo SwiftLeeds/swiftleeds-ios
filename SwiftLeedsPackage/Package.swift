@@ -9,21 +9,21 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "SwiftLeeds",
+            name: "DesignKit",
             targets: [
-                "SwiftLeedsCore",
+                "DesignKit"
+            ]
+        ),
+        .library(
+            name: "FeatureLogin",
+            targets: [
+                "FeatureLogin",
             ]
         ),
         .library(
             name: "Networking",
             targets: [
                 "Networking",
-            ]
-        ),
-        .library(
-            name: "DesignKit",
-            targets: [
-                "DesignKit"
             ]
         ),
         .library(
@@ -38,34 +38,48 @@ let package = Package(
                 "SharedAssets",
             ]
         ),
+        .library(
+            name: "SwiftLeeds",
+            targets: [
+                "SwiftLeedsCore",
+            ]
+        ),
     ],
     dependencies: [
         .package(url: "https://github.com/shadone/SwiftGenPlugin", branch: "6.6.2+deriveddatafix"),
     ],
     targets: [
         .target(
-            name: "SwiftLeedsCore"
-        ),
-        .target(
-            name: "Networking"
+            name: "ColorTheme"
         ),
         .target(
             name: "DesignKit"
         ),
         .target(
-            name: "Settings",
+            name: "FeatureLogin",
             dependencies: [
-                "ColorTheme",
+                "Networking",
+//                .product(name: "Dependencies", package: "swift-dependencies"),
             ]
         ),
         .target(
-            name: "ColorTheme"
+            name: "Networking"
+        ),
+        .target(
+            name: "Settings",
+            dependencies: [
+                "ColorTheme",
+                "FeatureLogin",
+            ]
         ),
         .target(
             name: "SharedAssets",
             plugins: [
               .plugin(name: "SwiftGenPlugin", package: "SwiftGenPlugin"),
             ]
+        ),
+        .target(
+            name: "SwiftLeedsCore"
         ),
     ],
     // Set to v5 to avoid strict concurrency checking in pre swift 6 code
