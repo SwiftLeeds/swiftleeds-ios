@@ -1,4 +1,4 @@
-public struct SecureStoreKey: Equatable, Hashable, Sendable {
+public struct SecureStorageKey: Equatable, Hashable, Sendable {
     public var stringValue: String { rawValue }
 
     private let rawValue: String

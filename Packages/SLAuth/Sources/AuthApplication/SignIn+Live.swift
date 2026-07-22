@@ -1,5 +1,5 @@
 import Dependencies
-import IdentityAndAccessDomain
+import AuthDomain
 
 extension SignIn: DependencyKey {
     public static var liveValue: Self {

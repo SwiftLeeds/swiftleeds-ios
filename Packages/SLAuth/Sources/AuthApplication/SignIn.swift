@@ -1,5 +1,5 @@
 #warning("Can maybe remove this import once `EmailAddress` and `TicketReference` are moved to a different target")
-import IdentityAndAccessDomain
+import AuthDomain
 
 public struct SignIn: Sendable {
     public typealias Input = @Sendable (_ emailAddress: EmailAddress, _ ticketReference: TicketReference) async throws -> Void

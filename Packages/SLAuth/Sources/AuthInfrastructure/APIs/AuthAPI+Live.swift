@@ -1,6 +1,7 @@
+import AuthDomain
 import Dependencies
-import IdentityAndAccessDomain
 import Foundation
+#warning("Remove this dependency when replacing with HTTPClient")
 import Networking
 
 extension AuthAPI: DependencyKey {
@@ -11,7 +12,7 @@ extension AuthAPI: DependencyKey {
             signIn: { emailAddress, ticketReference in
 //                @Dependency(\.httpClient) var httpClient
 
-                let response = try await URLSession.awaitConnectivity.decode(
+                let response = try await URLSession.shared.decode(
                     Requests.login(
                         emailAddress: emailAddress,
                         ticketReference: ticketReference
@@ -24,13 +25,6 @@ extension AuthAPI: DependencyKey {
                 }
 
                 print(">>> Token: \(token)")
-
-                #warning("Replace all of this claims stuff")
-//                guard let claims = decodeJWTClaims(token) else { // Should we not be using this?
-//                    throw SignInError.server
-//                }
-//
-//                print(">>> Claims: \(claims)")
 
                 return token
             }

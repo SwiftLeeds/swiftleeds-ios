@@ -1,17 +1,17 @@
+import AuthDomain
 import Dependencies
-import IdentityAndAccessDomain
-import SecureStore
+import SecureStorage
 import SessionAccess
 
 extension SessionReader: DependencyKey {
     public static var liveValue: Self {
         SessionReader(
             current: {
-                @Dependency(\.secureStore) var secureStore
+                @Dependency(\.secureStorage) var secureStorage
                 @Dependency(\.date.now) var now
 
                 guard
-                    let data = try? await secureStore.data(.authToken),
+                    let data = try? await secureStorage.data(.authToken),
                     let raw = String(data: data, encoding: .utf8),
                     let jwt = JWT(raw)
                 else {
@@ -21,9 +21,9 @@ extension SessionReader: DependencyKey {
                 return Session()
             },
             isSignedIn: {
-                @Dependency(\.secureStore) var secureStore
+                @Dependency(\.secureStorage) var secureStorage
 
-                let data = try? await secureStore.data(.authToken)
+                let data = try? await secureStorage.data(.authToken)
                 return data != nil
             }
         )

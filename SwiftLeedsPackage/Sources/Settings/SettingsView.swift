@@ -1,6 +1,6 @@
+import AuthUI
 import ColorTheme
 import FeatureLogin
-import IdentityAndAccessUI
 import SwiftUI
 
 public struct SettingsView: View {

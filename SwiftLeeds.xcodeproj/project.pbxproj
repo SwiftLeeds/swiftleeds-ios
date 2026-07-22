@@ -97,7 +97,7 @@
 		7B8C3ECF2EE4A9F70089C6CF /* SharedAssets in Frameworks */ = {isa = PBXBuildFile; productRef = 7B8C3ECE2EE4A9F70089C6CF /* SharedAssets */; };
 		7BE081522EE5BDA8004BCD1F /* SharedAssets in Frameworks */ = {isa = PBXBuildFile; productRef = 7BE081512EE5BDA8004BCD1F /* SharedAssets */; };
 		7BE081542EE5BF13004BCD1F /* SharedAssets in Frameworks */ = {isa = PBXBuildFile; productRef = 7BE081532EE5BF13004BCD1F /* SharedAssets */; };
-		7BFC7F12301036CB00B48F3F /* IdentityAndAccessInfrastructure in Frameworks */ = {isa = PBXBuildFile; productRef = 7BFC7F11301036CB00B48F3F /* IdentityAndAccessInfrastructure */; };
+		7BFC7F283010E19000B48F3F /* AuthInfrastructure in Frameworks */ = {isa = PBXBuildFile; productRef = 7BFC7F273010E19000B48F3F /* AuthInfrastructure */; };
 		7DD216398B20B302618BCB90 /* SwiftLeedsAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3275AD6541323F056786E508 /* SwiftLeedsAssets.xcassets */; };
 		802D63D966D0A9337F66041C /* KotlinLeedsAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 75075F01455C8AD72C71783C /* KotlinLeedsAssets.xcassets */; };
 		920187EBD71395160F1059C1 /* KotlinLeedsColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B3FFD994DBE3F62216150F8 /* KotlinLeedsColors.xcassets */; };
@@ -246,6 +246,13 @@
 		7804F8767E529D8F3A0D8BE4 /* KotlinLeeds.entitlements */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.entitlements; path = KotlinLeeds.entitlements; sourceTree = "<group>"; };
 		7B6278A12EEDDE1B00DE1473 /* SectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeader.swift; sourceTree = "<group>"; };
 		7B8108412E5CA00E00CCB2F5 /* SwiftLeedsPackage */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SwiftLeedsPackage; sourceTree = "<group>"; };
+		7BFC7F163010DC7400B48F3F /* SLAuth */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SLAuth; sourceTree = "<group>"; };
+		7BFC7F183010DC7400B48F3F /* SLSecureStorage */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SLSecureStorage; sourceTree = "<group>"; };
+		7BFC7F203010DCEF00B48F3F /* HttpMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpMethod.swift; sourceTree = "<group>"; };
+		7BFC7F213010DCEF00B48F3F /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
+		7BFC7F223010DCEF00B48F3F /* Requests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Requests.swift; sourceTree = "<group>"; };
+		7BFC7F233010DCEF00B48F3F /* URLSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSession.swift; sourceTree = "<group>"; };
+		7BFC7F263010DE8F00B48F3F /* SLNetwork */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SLNetwork; sourceTree = "<group>"; };
 		893A122D593379F84605F70C /* SwiftLeedsColors.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = SwiftLeedsColors.xcassets; sourceTree = "<group>"; };
 		AE1C800F289E9F3800996659 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		AE1C801328A7BCD000996659 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
@@ -319,10 +326,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				7B8C3ECF2EE4A9F70089C6CF /* SharedAssets in Frameworks */,
-				7BFC7F12301036CB00B48F3F /* IdentityAndAccessInfrastructure in Frameworks */,
 				7B31C8E52ED08DD100FEEDF7 /* Networking in Frameworks */,
 				7B31C8F12ED0A7BF00FEEDF7 /* Settings in Frameworks */,
 				74F5EF8C2A4B4352008D9413 /* ReadabilityModifier in Frameworks */,
+				7BFC7F283010E19000B48F3F /* AuthInfrastructure in Frameworks */,
 				AE5EFD73289DC1D000464FE1 /* CachedAsyncImage in Frameworks */,
 				7B31C8EB2ED0959000FEEDF7 /* DesignKit in Frameworks */,
 			);
@@ -403,6 +410,36 @@
 			path = WidgetSetup;
 			sourceTree = "<group>";
 		};
+		7BFC7F193010DC7400B48F3F /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				7BFC7F263010DE8F00B48F3F /* SLNetwork */,
+				7BFC7F163010DC7400B48F3F /* SLAuth */,
+				7BFC7F183010DC7400B48F3F /* SLSecureStorage */,
+			);
+			path = Packages;
+			sourceTree = "<group>";
+		};
+		7BFC7F243010DCEF00B48F3F /* Deprecated */ = {
+			isa = PBXGroup;
+			children = (
+				7BFC7F203010DCEF00B48F3F /* HttpMethod.swift */,
+				7BFC7F213010DCEF00B48F3F /* Request.swift */,
+				7BFC7F223010DCEF00B48F3F /* Requests.swift */,
+				7BFC7F233010DCEF00B48F3F /* URLSession.swift */,
+			);
+			path = Deprecated;
+			sourceTree = "<group>";
+		};
+		7BFC7F253010DCEF00B48F3F /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				7BFC7F243010DCEF00B48F3F /* Deprecated */,
+			);
+			name = Networking;
+			path = SwiftLeedsPackage/Sources/Networking;
+			sourceTree = "<group>";
+		};
 		7D158F62E4F9CC9BE188EB59 /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
@@ -424,6 +461,7 @@
 		AECB294A27417F9D00CDC983 = {
 			isa = PBXGroup;
 			children = (
+				7BFC7F193010DC7400B48F3F /* Packages */,
 				7B8108412E5CA00E00CCB2F5 /* SwiftLeedsPackage */,
 				74B14FAD28CB22B4004C0A40 /* SwiftLeedsWidgetExtension.entitlements */,
 				C1725A0182E1989D761551B2 /* KotlinLeedsWidgetExtension.entitlements */,
@@ -615,6 +653,7 @@
 		FAF74EDA288B44BE00A0926C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7BFC7F253010DCEF00B48F3F /* Networking */,
 				74A09FDE28C6778C00E03F39 /* WidgetKit.framework */,
 				74A09FE028C6778C00E03F39 /* SwiftUI.framework */,
 			);
@@ -690,7 +729,7 @@
 				7B31C8EA2ED0959000FEEDF7 /* DesignKit */,
 				7B31C8F02ED0A7BF00FEEDF7 /* Settings */,
 				7B8C3ECE2EE4A9F70089C6CF /* SharedAssets */,
-				7BFC7F11301036CB00B48F3F /* IdentityAndAccessInfrastructure */,
+				7BFC7F273010E19000B48F3F /* AuthInfrastructure */,
 			);
 			productName = SwiftLeeds;
 			productReference = AECB295327417F9D00CDC983 /* SwiftLeeds.app */;
@@ -1981,9 +2020,9 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = SharedAssets;
 		};
-		7BFC7F11301036CB00B48F3F /* IdentityAndAccessInfrastructure */ = {
+		7BFC7F273010E19000B48F3F /* AuthInfrastructure */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = IdentityAndAccessInfrastructure;
+			productName = AuthInfrastructure;
 		};
 		AE5EFD72289DC1D000464FE1 /* CachedAsyncImage */ = {
 			isa = XCSwiftPackageProductDependency;

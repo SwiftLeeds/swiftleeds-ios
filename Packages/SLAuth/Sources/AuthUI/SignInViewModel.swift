@@ -1,10 +1,11 @@
 import Dependencies
 import Foundation
-import IdentityAndAccessApplication
-import IdentityAndAccessDomain
+import AuthApplication
+import AuthDomain
 import SessionAccess
 
 extension SignInView {
+    @MainActor
     @Observable
     class ViewModel {
         @ObservationIgnored
@@ -28,8 +29,6 @@ extension SignInView {
                     emailAddress: EmailAddress(emailAddress),
                     ticketReference: TicketReference(ticketReference)
                 )
-
-                await self.isSignedIn = sessionReader.isSignedIn()
             }
         }
     }

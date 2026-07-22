@@ -12,46 +12,46 @@ let package = Package(
             name: "DesignKit",
             targets: [
                 "DesignKit"
-            ]
+            ],
         ),
         .library(
             name: "FeatureLogin",
             targets: [
                 "FeatureLogin",
-            ]
-        ),
-        .library(
-            name: "IdentityAndAccessInfrastructure",
-            targets: [
-                "IdentityAndAccessInfrastructure",
-            ]
+            ],
         ),
         .library(
             name: "Networking",
             targets: [
                 "Networking",
-            ]
+            ],
         ),
         .library(
             name: "Settings",
             targets: [
                 "Settings",
-            ]
+            ],
         ),
         .library(
             name: "SharedAssets",
             targets: [
                 "SharedAssets",
-            ]
+            ],
         ),
         .library(
             name: "SwiftLeeds",
             targets: [
                 "SwiftLeedsCore",
-            ]
+            ],
         ),
     ],
     dependencies: [
+        // Internal
+        .package(path: "../Packages/SLNetwork"),
+        .package(path: "../Packages/SLSecureStorage"),
+        .package(path: "../Packages/SLAuth"),
+
+        // External
         .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.0.0"),
         .package(url: "https://github.com/shadone/SwiftGenPlugin", branch: "6.6.2+deriveddatafix"),
         .package(url: "https://github.com/apple/swift-http-types.git", from: "1.0.0"),
@@ -68,70 +68,24 @@ let package = Package(
             dependencies: [
                 "Networking",
                 .product(name: "Dependencies", package: "swift-dependencies"),
-            ]
-        ),
-        // -- BoundedContext: Identity & Access ("Auth") --
-        .target(
-            name: "IdentityAndAccessUI",
-            dependencies: [
-                "IdentityAndAccessApplication",
-                "SessionAccess",
-                .product(name: "Dependencies", package: "swift-dependencies"),
             ],
         ),
-        .target(
-            name: "IdentityAndAccessApplication",
-            dependencies: [
-                "IdentityAndAccessDomain",
-                .product(name: "Dependencies", package: "swift-dependencies"),
-            ],
-        ),
-        .target(
-            name: "IdentityAndAccessDomain",
-            dependencies: [
-                .product(name: "Dependencies", package: "swift-dependencies"),
-            ],
-        ),
-        .target(
-            name: "IdentityAndAccessInfrastructure",
-            dependencies: [
-                "IdentityAndAccessDomain",
-                "Networking",
-                "SecureStore",
-                "SessionAccess",
-                .product(name: "Dependencies", package: "swift-dependencies"),
-            ],
-        ),
-//        .target(
-//            name: "IdentityAndAccessInterface"
-//        ),
-
-        // -- Capability: Networking --
         .target(
             name: "Networking"
         ),
-        // -- Capability: Secure Store --
-        .target(
-            name: "SecureStore",
-        ),
-        // -- Capability: Session Access --
-        .target(
-            name: "SessionAccess",
-        ),
-
         .target(
             name: "Settings",
             dependencies: [
                 "ColorTheme",
                 "FeatureLogin",
-                "IdentityAndAccessUI",
-            ]
+                .product(name: "AuthUI", package: "SLAuth"),
+            ],
         ),
         .target(
             name: "SharedAssets",
             plugins: [
               .plugin(name: "SwiftGenPlugin", package: "SwiftGenPlugin"),
-            ]
+            ],
         ),
         .target(
             name: "SwiftLeedsCore"
@@ -140,5 +94,5 @@ let package = Package(
     // Set to v5 to avoid strict concurrency checking in pre swift 6 code
     swiftLanguageModes: [
         .v5,
-    ]
+    ],
 )
