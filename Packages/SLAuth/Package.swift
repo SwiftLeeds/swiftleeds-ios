@@ -21,9 +21,9 @@ let package = Package(
             ],
         ),
         .library(
-            name: "AuthInfrastructure",
+            name: "AuthInfra",
             targets: [
-                "AuthInfrastructure",
+                "AuthInfra",
             ],
         ),
     ],
@@ -64,7 +64,7 @@ let package = Package(
             ],
         ),
         .target(
-            name: "AuthInfrastructure",
+            name: "AuthInfra",
             dependencies: [
                 // Local
                 "AuthDomain",

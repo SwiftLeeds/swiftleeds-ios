@@ -97,7 +97,7 @@
 		7B8C3ECF2EE4A9F70089C6CF /* SharedAssets in Frameworks */ = {isa = PBXBuildFile; productRef = 7B8C3ECE2EE4A9F70089C6CF /* SharedAssets */; };
 		7BE081522EE5BDA8004BCD1F /* SharedAssets in Frameworks */ = {isa = PBXBuildFile; productRef = 7BE081512EE5BDA8004BCD1F /* SharedAssets */; };
 		7BE081542EE5BF13004BCD1F /* SharedAssets in Frameworks */ = {isa = PBXBuildFile; productRef = 7BE081532EE5BF13004BCD1F /* SharedAssets */; };
-		7BFC7F283010E19000B48F3F /* AuthInfrastructure in Frameworks */ = {isa = PBXBuildFile; productRef = 7BFC7F273010E19000B48F3F /* AuthInfrastructure */; };
+		7BFC7F2A30111D0700B48F3F /* AuthInfra in Frameworks */ = {isa = PBXBuildFile; productRef = 7BFC7F2930111D0700B48F3F /* AuthInfra */; };
 		7DD216398B20B302618BCB90 /* SwiftLeedsAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3275AD6541323F056786E508 /* SwiftLeedsAssets.xcassets */; };
 		802D63D966D0A9337F66041C /* KotlinLeedsAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 75075F01455C8AD72C71783C /* KotlinLeedsAssets.xcassets */; };
 		920187EBD71395160F1059C1 /* KotlinLeedsColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B3FFD994DBE3F62216150F8 /* KotlinLeedsColors.xcassets */; };
@@ -327,9 +327,9 @@
 			files = (
 				7B8C3ECF2EE4A9F70089C6CF /* SharedAssets in Frameworks */,
 				7B31C8E52ED08DD100FEEDF7 /* Networking in Frameworks */,
+				7BFC7F2A30111D0700B48F3F /* AuthInfra in Frameworks */,
 				7B31C8F12ED0A7BF00FEEDF7 /* Settings in Frameworks */,
 				74F5EF8C2A4B4352008D9413 /* ReadabilityModifier in Frameworks */,
-				7BFC7F283010E19000B48F3F /* AuthInfrastructure in Frameworks */,
 				AE5EFD73289DC1D000464FE1 /* CachedAsyncImage in Frameworks */,
 				7B31C8EB2ED0959000FEEDF7 /* DesignKit in Frameworks */,
 			);
@@ -729,7 +729,7 @@
 				7B31C8EA2ED0959000FEEDF7 /* DesignKit */,
 				7B31C8F02ED0A7BF00FEEDF7 /* Settings */,
 				7B8C3ECE2EE4A9F70089C6CF /* SharedAssets */,
-				7BFC7F273010E19000B48F3F /* AuthInfrastructure */,
+				7BFC7F2930111D0700B48F3F /* AuthInfra */,
 			);
 			productName = SwiftLeeds;
 			productReference = AECB295327417F9D00CDC983 /* SwiftLeeds.app */;
@@ -2020,9 +2020,9 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = SharedAssets;
 		};
-		7BFC7F273010E19000B48F3F /* AuthInfrastructure */ = {
+		7BFC7F2930111D0700B48F3F /* AuthInfra */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = AuthInfrastructure;
+			productName = AuthInfra;
 		};
 		AE5EFD72289DC1D000464FE1 /* CachedAsyncImage */ = {
 			isa = XCSwiftPackageProductDependency;

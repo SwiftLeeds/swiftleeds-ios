@@ -1,6 +1,6 @@
 import ColorTheme
 import Dependencies
-import AuthInfrastructure
+import AuthInfra
 import SwiftUI
 
 @main
