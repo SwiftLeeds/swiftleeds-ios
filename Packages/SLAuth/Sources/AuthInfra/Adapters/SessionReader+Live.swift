@@ -1,4 +1,4 @@
-import AuthDomain
+import TicketAuthDomain
 import Dependencies
 import SessionAccess
 
@@ -10,12 +10,6 @@ extension SessionReader: DependencyKey {
 
                 return try? await sessionStore.currentSession()
             },
-            isSignedIn: {
-                @Dependency(\.sessionStore) var sessionStore
-
-                let session = try? await sessionStore.currentSession()
-                return session != nil
-            }
         )
     }
 }

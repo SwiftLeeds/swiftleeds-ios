@@ -1,7 +1,7 @@
 import Dependencies
 import Foundation
 import AuthApplication
-import AuthDomain
+import TicketAuthDomain
 import SessionAccess
 
 extension SignInView {
@@ -30,7 +30,7 @@ extension SignInView {
                     ticketReference: TicketReference(ticketReference)
                 )
 
-                self.isSignedIn = await sessionReader.isSignedIn()
+                self.isSignedIn = await sessionReader.isSignedIn
             }
         }
     }

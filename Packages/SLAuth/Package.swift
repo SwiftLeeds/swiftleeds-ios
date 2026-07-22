@@ -36,6 +36,14 @@ let package = Package(
         .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.0.0"),
     ],
     targets: [
+        // Generic
+        .target(
+            name: "SessionAccess",
+            dependencies: [
+                .product(name: "Dependencies", package: "swift-dependencies"),
+            ],
+        ),
+
         .target(
             name: "AuthUI",
             dependencies: [
@@ -50,7 +58,7 @@ let package = Package(
             name: "AuthApplication",
             dependencies: [
                 // Local
-                "AuthDomain",
+                "TicketAuthDomain",
                 "SessionAccess",
 
                 // External
@@ -58,7 +66,7 @@ let package = Package(
             ],
         ),
         .target(
-            name: "AuthDomain",
+            name: "TicketAuthDomain",
             dependencies: [
                 .product(name: "Dependencies", package: "swift-dependencies"),
             ],
@@ -67,18 +75,12 @@ let package = Package(
             name: "AuthInfra",
             dependencies: [
                 // Local
-                "AuthDomain",
+                "TicketAuthDomain",
                 "SessionAccess",
 
                 // Internal
                 .product(name: "SLNetwork", package: "SLNetwork"),
                 .product(name: "SecureStorage", package: "SLSecureStorage"),
-                .product(name: "Dependencies", package: "swift-dependencies"),
-            ],
-        ),
-        .target(
-            name: "SessionAccess",
-            dependencies: [
                 .product(name: "Dependencies", package: "swift-dependencies"),
             ],
         ),

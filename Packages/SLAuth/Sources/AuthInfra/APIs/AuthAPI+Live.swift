@@ -1,4 +1,4 @@
-import AuthDomain
+import TicketAuthDomain
 import Dependencies
 import Foundation
 

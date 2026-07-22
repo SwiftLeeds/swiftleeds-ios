@@ -1,5 +1,5 @@
 #warning("Can maybe remove this import once `EmailAddress` and `TicketReference` are moved to a different target")
-import AuthDomain
+import TicketAuthDomain
 
 #warning("TODO: Add `SignOut` use case")
 public struct SignIn: Sendable {
