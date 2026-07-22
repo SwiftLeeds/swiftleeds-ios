@@ -1,15 +1,15 @@
 package struct SessionStore: Sendable {
-    package var set: @Sendable (SessionToken) async throws -> Void
+    package var establish: @Sendable (SessionToken) async throws -> Void
     package var clear: @Sendable () async throws -> Void
-    package var currentToken: @Sendable () async throws -> SessionToken? // for the auth-header interceptor
+    package var currentSession: @Sendable () async throws -> Session? // for the auth-header interceptor
 
     package init(
-        set: @Sendable @escaping (SessionToken) async throws -> Void,
+        establish: @Sendable @escaping (SessionToken) async throws -> Void,
         clear: @Sendable @escaping () async throws -> Void,
-        currentToken: @Sendable @escaping () async throws -> SessionToken?
+        currentSession: @Sendable @escaping () async throws -> Session?
     ) {
-        self.set = set
+        self.establish = establish
         self.clear = clear
-        self.currentToken = currentToken
+        self.currentSession = currentSession
     }
 }

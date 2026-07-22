@@ -3,9 +3,9 @@ import Dependencies
 extension SessionStore: TestDependencyKey {
     public static var testValue: Self {
         SessionStore(
-            set: { _ in unimplemented("SessionStore.set is unimplemented") },
+            establish: { _ in unimplemented("SessionStore.establish is unimplemented") },
             clear: { unimplemented("SessionStore.clear is unimplemented") },
-            currentToken: { unimplemented("SessionStore.currentToken is unimplemented", placeholder: nil) },
+            currentSession: { unimplemented("SessionStore.currentSession is unimplemented", placeholder: nil) },
         )
     }
 }

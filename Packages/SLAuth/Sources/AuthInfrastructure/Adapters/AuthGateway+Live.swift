@@ -11,7 +11,8 @@ extension AuthGateway: DependencyKey {
 
                 do {
                     let token = try await authAPI.signIn(emailAddress.stringValue, ticketReference.stringValue)
-                    try await sessionStore.set(SessionToken(token.stringValue))
+                    let sessionToken = try SessionToken(token.stringValue, strategy: .jwt)
+                    try await sessionStore.establish(sessionToken)
                 } catch {
                     #warning("TODO: Not an accurate error; needs updating")
                     throw SignInError.server

@@ -8,12 +8,12 @@ extension SessionReader: DependencyKey {
             current: {
                 @Dependency(\.sessionStore) var sessionStore
 
-                return try? await sessionStore.currentToken().map(Session.init)
+                return try? await sessionStore.currentSession()
             },
             isSignedIn: {
                 @Dependency(\.sessionStore) var sessionStore
 
-                let session = try? await sessionStore.currentToken()
+                let session = try? await sessionStore.currentSession()
                 return session != nil
             }
         )
