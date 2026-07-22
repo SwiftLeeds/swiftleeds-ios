@@ -4,6 +4,8 @@ public struct HTTPClient: Sendable {
     public var send: @Sendable (HTTPRequest) async throws -> HTTPResponse
 }
 
+#warning("TODO: Have `HTTPClient+Dependencies file to separate out `Dependencies` import")
+
 extension HTTPClient: TestDependencyKey {
     public static var testValue: Self {
         HTTPClient(
@@ -22,6 +24,7 @@ extension DependencyValues {
 }
 
 #warning("Consider replacing with Apple HTTP types")
+#warning("Move to own files")
 
 import Foundation
 

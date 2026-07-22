@@ -20,12 +20,6 @@ let package = Package(
                 "AuthUI",
             ],
         ),
-//        .library(
-//            name: "AuthApplication",
-//            targets: [
-//                "AuthApplication",
-//            ],
-//        ),
         .library(
             name: "AuthInfrastructure",
             targets: [
@@ -88,5 +82,8 @@ let package = Package(
                 .product(name: "Dependencies", package: "swift-dependencies"),
             ],
         ),
+    ],
+    swiftLanguageModes: [
+        .v5,
     ],
 )

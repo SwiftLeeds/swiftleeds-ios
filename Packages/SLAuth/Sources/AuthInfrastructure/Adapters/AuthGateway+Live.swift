@@ -1,6 +1,7 @@
-import Dependencies
 import AuthDomain
-import SecureStorage
+import Dependencies
+
+internal import SecureStorage
 
 extension AuthGateway: DependencyKey {
     public static var liveValue: Self {

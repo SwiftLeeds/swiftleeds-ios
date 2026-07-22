@@ -7,7 +7,7 @@ struct JWT: Equatable, Hashable, Sendable {
 
     private let rawValue: String
 
-    #warning("Handle parsing in init, not `decodeJWTClaims()`")
+    #warning("Handle parsing in init")
     init?(_ stringValue: String) {
         self.rawValue = stringValue
     }
