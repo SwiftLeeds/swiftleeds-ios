@@ -29,6 +29,8 @@ extension SignInView {
                     emailAddress: EmailAddress(emailAddress),
                     ticketReference: TicketReference(ticketReference)
                 )
+
+                self.isSignedIn = await sessionReader.isSignedIn()
             }
         }
     }

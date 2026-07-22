@@ -1,22 +1,21 @@
 import AuthDomain
 import Dependencies
-
-internal import SecureStorage
+import SessionAccess
 
 extension AuthGateway: DependencyKey {
     public static var liveValue: Self {
         AuthGateway(
             signIn: { (emailAddress, ticketReference) async throws(SignInError) -> Void in
                 @Dependency(\.authAPI) var authAPI
-                @Dependency(\.secureStorage) var secureStorage
+                @Dependency(\.sessionStore) var sessionStore
 
-                let token: JWT
-
-                do { token = try await authAPI.signIn(emailAddress.stringValue, ticketReference.stringValue) }
-                catch { throw SignInError.server }
-
-                do { try await secureStorage.set(token.dataValue, .authToken) }
-                catch { throw SignInError.server /* Not accurate, needs updating */ }
+                do {
+                    let token = try await authAPI.signIn(emailAddress.stringValue, ticketReference.stringValue)
+                    try await sessionStore.set(SessionToken(token.stringValue))
+                } catch {
+                    #warning("TODO: Not an accurate error; needs updating")
+                    throw SignInError.server
+                }
             }
         )
     }

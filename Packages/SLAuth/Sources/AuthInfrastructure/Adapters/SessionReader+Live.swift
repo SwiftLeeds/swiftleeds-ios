@@ -2,35 +2,19 @@ import AuthDomain
 import Dependencies
 import SessionAccess
 
-internal import SecureStorage
-
-extension SecureStorageKey {
-    static let authToken = SecureStorageKey("identity.authToken")
-}
-
 extension SessionReader: DependencyKey {
     public static var liveValue: Self {
         SessionReader(
             current: {
-                @Dependency(\.secureStorage) var secureStorage
-                @Dependency(\.date.now) var now
+                @Dependency(\.sessionStore) var sessionStore
 
-                #warning("Should only return session if we have a JWT?")
-                guard
-                    let data = try? await secureStorage.data(.authToken),
-                    let raw = String(data: data, encoding: .utf8),
-                    let jwt = JWT(raw)
-                else {
-                    return nil
-                }
-
-                return Session()
+                return try? await sessionStore.currentToken().map(Session.init)
             },
             isSignedIn: {
-                @Dependency(\.secureStorage) var secureStorage
+                @Dependency(\.sessionStore) var sessionStore
 
-                let data = try? await secureStorage.data(.authToken)
-                return data != nil
+                let session = try? await sessionStore.currentToken()
+                return session != nil
             }
         )
     }
