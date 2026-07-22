@@ -1,6 +1,7 @@
 #warning("Can maybe remove this import once `EmailAddress` and `TicketReference` are moved to a different target")
 import AuthDomain
 
+#warning("TODO: Add `SignOut` use case")
 public struct SignIn: Sendable {
     public typealias Input = @Sendable (_ emailAddress: EmailAddress, _ ticketReference: TicketReference) async throws -> Void
 

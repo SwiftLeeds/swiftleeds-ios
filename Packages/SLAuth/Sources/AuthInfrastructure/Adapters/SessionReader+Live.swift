@@ -4,6 +4,10 @@ import SessionAccess
 
 internal import SecureStorage
 
+extension SecureStorageKey {
+    static let authToken = SecureStorageKey("identity.authToken")
+}
+
 extension SessionReader: DependencyKey {
     public static var liveValue: Self {
         SessionReader(

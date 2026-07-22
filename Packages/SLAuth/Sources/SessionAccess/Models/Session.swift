@@ -1,5 +1,3 @@
-import Foundation
-
 public struct Session: Equatable, Hashable, Sendable {
     // `init` is intentionally internal to prevent creation
     // of a `Session` outside of the `SessionAccess` module.
