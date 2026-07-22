@@ -2,6 +2,7 @@ import Dependencies
 import Foundation
 import IdentityAndAccessApplication
 import IdentityAndAccessDomain
+import SessionAccess
 
 extension SignInView {
     @Observable

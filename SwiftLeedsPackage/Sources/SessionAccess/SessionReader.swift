@@ -1,9 +1,8 @@
-#warning("Move to own `SessionAccess` target")
-
 import Dependencies
 
 public struct SessionReader: Sendable {
     public var current: @Sendable () async -> Session?
+    #warning("Remove `isSignedIn. No longer relevant as existence of `Session` indicates signed-in state")
     public var isSignedIn: @Sendable () async -> Bool
 
     public init(

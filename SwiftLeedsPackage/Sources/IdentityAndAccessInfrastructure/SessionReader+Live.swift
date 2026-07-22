@@ -1,5 +1,7 @@
 import Dependencies
 import IdentityAndAccessDomain
+import SecureStore
+import SessionAccess
 
 extension SessionReader: DependencyKey {
     public static var liveValue: Self {
@@ -11,14 +13,12 @@ extension SessionReader: DependencyKey {
                 guard
                     let data = try? await secureStore.data(.authToken),
                     let raw = String(data: data, encoding: .utf8),
-                    let jwt = JWT(raw),
-                    let claims = decodeJWTClaims(jwt),
-                    claims.expiresAt > now // Does not belong here -- business logic!
+                    let jwt = JWT(raw)
                 else {
                     return nil
                 }
 
-                return Session(expiresAt: claims.expiresAt)
+                return Session()
             },
             isSignedIn: {
                 @Dependency(\.secureStore) var secureStore

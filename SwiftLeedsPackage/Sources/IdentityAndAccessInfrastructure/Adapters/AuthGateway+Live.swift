@@ -1,5 +1,6 @@
 import Dependencies
 import IdentityAndAccessDomain
+import SecureStore
 
 extension AuthGateway: DependencyKey {
     public static var liveValue: Self {
@@ -19,4 +20,3 @@ extension AuthGateway: DependencyKey {
         )
     }
 }
-

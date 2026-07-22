@@ -75,6 +75,7 @@ let package = Package(
             name: "IdentityAndAccessUI",
             dependencies: [
                 "IdentityAndAccessApplication",
+                "SessionAccess",
                 .product(name: "Dependencies", package: "swift-dependencies"),
             ],
         ),
@@ -96,6 +97,8 @@ let package = Package(
             dependencies: [
                 "IdentityAndAccessDomain",
                 "Networking",
+                "SecureStore",
+                "SessionAccess",
                 .product(name: "Dependencies", package: "swift-dependencies"),
             ],
         ),
@@ -107,6 +110,15 @@ let package = Package(
         .target(
             name: "Networking"
         ),
+        // -- Capability: Secure Store --
+        .target(
+            name: "SecureStore",
+        ),
+        // -- Capability: Session Access --
+        .target(
+            name: "SessionAccess",
+        ),
+
         .target(
             name: "Settings",
             dependencies: [
