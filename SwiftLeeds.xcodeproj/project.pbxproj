@@ -97,6 +97,7 @@
 		7B8C3ECF2EE4A9F70089C6CF /* SharedAssets in Frameworks */ = {isa = PBXBuildFile; productRef = 7B8C3ECE2EE4A9F70089C6CF /* SharedAssets */; };
 		7BE081522EE5BDA8004BCD1F /* SharedAssets in Frameworks */ = {isa = PBXBuildFile; productRef = 7BE081512EE5BDA8004BCD1F /* SharedAssets */; };
 		7BE081542EE5BF13004BCD1F /* SharedAssets in Frameworks */ = {isa = PBXBuildFile; productRef = 7BE081532EE5BF13004BCD1F /* SharedAssets */; };
+		7BFC7F12301036CB00B48F3F /* IdentityAndAccessInfrastructure in Frameworks */ = {isa = PBXBuildFile; productRef = 7BFC7F11301036CB00B48F3F /* IdentityAndAccessInfrastructure */; };
 		7DD216398B20B302618BCB90 /* SwiftLeedsAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3275AD6541323F056786E508 /* SwiftLeedsAssets.xcassets */; };
 		802D63D966D0A9337F66041C /* KotlinLeedsAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 75075F01455C8AD72C71783C /* KotlinLeedsAssets.xcassets */; };
 		920187EBD71395160F1059C1 /* KotlinLeedsColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B3FFD994DBE3F62216150F8 /* KotlinLeedsColors.xcassets */; };
@@ -318,6 +319,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7B8C3ECF2EE4A9F70089C6CF /* SharedAssets in Frameworks */,
+				7BFC7F12301036CB00B48F3F /* IdentityAndAccessInfrastructure in Frameworks */,
 				7B31C8E52ED08DD100FEEDF7 /* Networking in Frameworks */,
 				7B31C8F12ED0A7BF00FEEDF7 /* Settings in Frameworks */,
 				74F5EF8C2A4B4352008D9413 /* ReadabilityModifier in Frameworks */,
@@ -688,6 +690,7 @@
 				7B31C8EA2ED0959000FEEDF7 /* DesignKit */,
 				7B31C8F02ED0A7BF00FEEDF7 /* Settings */,
 				7B8C3ECE2EE4A9F70089C6CF /* SharedAssets */,
+				7BFC7F11301036CB00B48F3F /* IdentityAndAccessInfrastructure */,
 			);
 			productName = SwiftLeeds;
 			productReference = AECB295327417F9D00CDC983 /* SwiftLeeds.app */;
@@ -1977,6 +1980,10 @@
 		7BE081532EE5BF13004BCD1F /* SharedAssets */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SharedAssets;
+		};
+		7BFC7F11301036CB00B48F3F /* IdentityAndAccessInfrastructure */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = IdentityAndAccessInfrastructure;
 		};
 		AE5EFD72289DC1D000464FE1 /* CachedAsyncImage */ = {
 			isa = XCSwiftPackageProductDependency;

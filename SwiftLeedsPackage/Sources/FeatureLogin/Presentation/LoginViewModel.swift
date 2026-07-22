@@ -6,8 +6,9 @@ extension LoginView {
     @Observable
     class ViewModel {
         @ObservationIgnored
-        @Dependency(\.logIn) private var logIn
+        @Dependency(\.logIn) private var logIn: LogInUseCase
 
+        // TODO: Add continuous parsing through separate func
         var emailAddress: String = ""
         var ticketReference: String = ""
 
@@ -26,29 +27,6 @@ extension LoginView {
 
                 self.jwt = token.stringValue
             }
-
-//            Task {
-//                print("Log in tapped")
-//                // 1. Send URL Request with email + token
-//                guard let response = try? await URLSession.awaitConnectivity.decode(
-//                    Requests.login(
-//                        emailAddress: self.emailAddress,
-//                        ticketReference: self.ticketReference
-//                    ),
-//                    dateDecodingStrategy: nil
-//                ) else {
-//                    print("Response was nil :(")
-//                    return
-//                }
-//
-//                print("Response: \(response)")
-//
-//                self.jwt = response
-//            }
-//
-//            // 2. If success, save token somewhere safe
-//
-//            // 3. Use token in URLRequest to get user info
         }
     }
 }

@@ -1,4 +1,6 @@
 import ColorTheme
+import Dependencies
+import IdentityAndAccessInfrastructure
 import SwiftUI
 
 @main

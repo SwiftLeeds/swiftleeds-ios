@@ -1,7 +1,6 @@
 import SwiftUI
 
-// TODO: Rename to `LogInView`
-public struct LoginView: View {
+public struct SignInView: View {
     @State private var viewModel = ViewModel()
 
     public init() {}
@@ -10,7 +9,7 @@ public struct LoginView: View {
         List {
             Section(
                 content: {
-                    Text("JWT: \(viewModel.jwt ?? "Nil")")
+                    Text("Signed In: \(viewModel.isSignedIn.description)")
                 }
             )
 
@@ -42,8 +41,8 @@ public struct LoginView: View {
             )
 
             Section {
-                Button("Log in") {
-                    viewModel.logInTapped()
+                Button("Sign in") {
+                    viewModel.signInTapped()
                 }
             }
         }
@@ -52,7 +51,7 @@ public struct LoginView: View {
 
 #Preview {
     NavigationStack {
-        LoginView()
-            .navigationTitle("Log in")
+        SignInView()
+            .navigationTitle("Sign in")
     }
 }

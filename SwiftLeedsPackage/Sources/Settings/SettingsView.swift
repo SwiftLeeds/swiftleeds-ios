@@ -1,5 +1,6 @@
 import ColorTheme
 import FeatureLogin
+import IdentityAndAccessUI
 import SwiftUI
 
 public struct SettingsView: View {
@@ -12,10 +13,10 @@ public struct SettingsView: View {
         NavigationStack {
             List {
                 Section("Account") {
-                    NavigationLink("Log in") {
-                        LoginView()
+                    NavigationLink("Sign in") {
+                        SignInView()
                             .toolbar(.hidden, for: .tabBar)
-                            .navigationTitle("Log in")
+                            .navigationTitle("Sign in")
                     }
                 }
 

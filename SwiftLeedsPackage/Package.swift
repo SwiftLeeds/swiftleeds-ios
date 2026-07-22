@@ -21,6 +21,12 @@ let package = Package(
             ]
         ),
         .library(
+            name: "IdentityAndAccessInfrastructure",
+            targets: [
+                "IdentityAndAccessInfrastructure",
+            ]
+        ),
+        .library(
             name: "Networking",
             targets: [
                 "Networking",
@@ -64,6 +70,40 @@ let package = Package(
                 .product(name: "Dependencies", package: "swift-dependencies"),
             ]
         ),
+        // -- BoundedContext: Identity & Access ("Auth") --
+        .target(
+            name: "IdentityAndAccessUI",
+            dependencies: [
+                "IdentityAndAccessApplication",
+                .product(name: "Dependencies", package: "swift-dependencies"),
+            ],
+        ),
+        .target(
+            name: "IdentityAndAccessApplication",
+            dependencies: [
+                "IdentityAndAccessDomain",
+                .product(name: "Dependencies", package: "swift-dependencies"),
+            ],
+        ),
+        .target(
+            name: "IdentityAndAccessDomain",
+            dependencies: [
+                .product(name: "Dependencies", package: "swift-dependencies"),
+            ],
+        ),
+        .target(
+            name: "IdentityAndAccessInfrastructure",
+            dependencies: [
+                "IdentityAndAccessDomain",
+                "Networking",
+                .product(name: "Dependencies", package: "swift-dependencies"),
+            ],
+        ),
+//        .target(
+//            name: "IdentityAndAccessInterface"
+//        ),
+
+        // -- Capability: Networking --
         .target(
             name: "Networking"
         ),
@@ -72,6 +112,7 @@ let package = Package(
             dependencies: [
                 "ColorTheme",
                 "FeatureLogin",
+                "IdentityAndAccessUI",
             ]
         ),
         .target(
