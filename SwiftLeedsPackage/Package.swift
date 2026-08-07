@@ -15,12 +15,6 @@ let package = Package(
             ],
         ),
         .library(
-            name: "FeatureLogin",
-            targets: [
-                "FeatureLogin",
-            ],
-        ),
-        .library(
             name: "Networking",
             targets: [
                 "Networking",
@@ -47,6 +41,7 @@ let package = Package(
     ],
     dependencies: [
         // Internal
+        .package(path: "../Packages/LoginFeature"),
         .package(path: "../Packages/SLNetwork"),
         .package(path: "../Packages/SLSecureStorage"),
         .package(path: "../Packages/SLAuth"),
@@ -64,21 +59,13 @@ let package = Package(
             name: "DesignKit"
         ),
         .target(
-            name: "FeatureLogin",
-            dependencies: [
-                "Networking",
-                .product(name: "Dependencies", package: "swift-dependencies"),
-            ],
-        ),
-        .target(
             name: "Networking"
         ),
         .target(
             name: "Settings",
             dependencies: [
                 "ColorTheme",
-                "FeatureLogin",
-                .product(name: "AuthUI", package: "SLAuth"),
+                "LoginFeature",
             ],
         ),
         .target(

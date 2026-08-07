@@ -1,6 +1,7 @@
 import Dependencies
 
 public struct AuthGateway: Sendable {
+    #warning("TODO: Rename to `authenticate()`")
     public var signIn: @Sendable (EmailAddress, TicketReference) async throws(SignInError) -> Void
 
     public init(

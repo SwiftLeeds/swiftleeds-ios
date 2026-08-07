@@ -15,12 +15,6 @@ let package = Package(
             ],
         ),
         .library(
-            name: "AuthUI",
-            targets: [
-                "AuthUI",
-            ],
-        ),
-        .library(
             name: "AuthInfra",
             targets: [
                 "AuthInfra",
@@ -40,17 +34,6 @@ let package = Package(
         .target(
             name: "SessionAccess",
             dependencies: [
-                .product(name: "Dependencies", package: "swift-dependencies"),
-            ],
-        ),
-
-        .target(
-            name: "AuthUI",
-            dependencies: [
-                // Local
-                "AuthApplication",
-
-                // External
                 .product(name: "Dependencies", package: "swift-dependencies"),
             ],
         ),

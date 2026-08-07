@@ -1,9 +1,7 @@
 import TicketAuthDomain
 import Dependencies
 import Foundation
-
-#warning("Remove this dependency when replacing with HTTPClient")
-import Networking
+import Network
 
 extension AuthAPI: DependencyKey {
     static var liveValue: AuthAPI { .tito }
@@ -11,8 +9,6 @@ extension AuthAPI: DependencyKey {
     static var tito: AuthAPI {
         AuthAPI(
             signIn: { emailAddress, ticketReference in
-//                @Dependency(\.httpClient) var httpClient
-
                 let response = try await URLSession.shared.decode(
                     Requests.login(
                         emailAddress: emailAddress,

@@ -1,4 +1,6 @@
 public struct Session: Equatable, Hashable, Sendable {
+    package let token: SessionToken
+
     // `init` is intentionally `package` access control to prevent
     // creation of a `Session` outside of the `SessionAccess`
     // module.
@@ -8,6 +10,8 @@ public struct Session: Equatable, Hashable, Sendable {
     //
     // DO NOT MAKE THIS INIT PUBLIC
     package init(
-        _ token: SessionToken // blackhole param as proof of login
-    ) {}
+        _ token: SessionToken
+    ) {
+        self.token = token
+    }
 }

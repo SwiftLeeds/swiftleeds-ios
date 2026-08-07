@@ -14,7 +14,6 @@ extension SignInView {
         @ObservationIgnored
         @Dependency(\.sessionReader) private var sessionReader: SessionReader
 
-        // TODO: Add continuous parsing through separate func
         var emailAddress: String = ""
         var ticketReference: String = ""
 
