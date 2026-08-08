@@ -9,7 +9,7 @@ public struct TicketReference: Hashable, Sendable {
     /// - Parameter value: The ticket reference.
     /// - Throws: ``ParsingError/invalidFormat`` if `value` is not a valid ticket reference.
     public init(_ value: String) throws(ParsingError) {
-        guard value.wholeMatch(of: /[A-Z0-9]{4}-[0-9]/) != nil else {
+        guard value.wholeMatch(of: /[A-Z0-9]{4}-[0-9]{1,2}/) != nil else {
             throw .invalidFormat
         }
         self.storage = value
