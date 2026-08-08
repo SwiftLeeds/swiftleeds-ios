@@ -11,8 +11,16 @@ let package = Package(
     products: [
         .library(name: "AuthenticationFeature", targets: ["AuthenticationFeature"]),
     ],
+    dependencies: [
+        .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.0.0"),
+    ],
     targets: [
-        .target(name: "AuthenticationFeature"),
+        .target(
+            name: "AuthenticationFeature",
+            dependencies: [
+                .product(name: "Dependencies", package: "swift-dependencies"),
+            ]
+        ),
         .testTarget(
             name: "AuthenticationFeatureTests",
             dependencies: ["AuthenticationFeature"]
