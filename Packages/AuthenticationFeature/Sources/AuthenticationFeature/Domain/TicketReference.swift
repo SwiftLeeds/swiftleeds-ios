@@ -31,3 +31,9 @@ extension String {
         self = ticketReference.stringValue
     }
 }
+
+// Redacted so the reference can't leak via logs, interpolation, or reflection.
+extension TicketReference: CustomStringConvertible, CustomDebugStringConvertible {
+    public var description: String { "•••" }
+    public var debugDescription: String { description }
+}

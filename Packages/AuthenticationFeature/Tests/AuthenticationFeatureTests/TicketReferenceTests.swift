@@ -36,4 +36,9 @@ import Testing
             try TicketReference(input)
         }
     }
+
+    @Test func whenDescribed_shouldRedactValue() throws {
+        let reference = try TicketReference("ABCD-1")
+        #expect(!String(describing: reference).contains("ABCD-1"))
+    }
 }
