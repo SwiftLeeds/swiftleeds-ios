@@ -29,6 +29,10 @@ playground.xcworkspace
 # hence it is not needed unless you have added a package configuration file to your project
 # .swiftpm
 
+# Local library packages resolve against the app's workspace Package.resolved,
+# so their own resolved files are redundant and cause churn.
+Packages/*/Package.resolved
+
 .build/
 *.DS_Store
 
