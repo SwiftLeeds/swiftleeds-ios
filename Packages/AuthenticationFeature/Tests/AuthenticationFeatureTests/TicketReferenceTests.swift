@@ -24,4 +24,9 @@ import Testing
         let reference = try TicketReference("abcd-1")
         #expect(String(reference) == "ABCD-1")
     }
+
+    @Test func whenParsingReferenceWithSurroundingWhitespace_shouldTrim() throws {
+        let reference = try TicketReference("  ABCD-1  ")
+        #expect(String(reference) == "ABCD-1")
+    }
 }
