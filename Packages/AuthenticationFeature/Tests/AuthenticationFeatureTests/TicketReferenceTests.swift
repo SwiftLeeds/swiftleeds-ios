@@ -19,4 +19,9 @@ import Testing
         let reference = try TicketReference(input)
         #expect(String(reference) == expected)
     }
+
+    @Test func whenParsingLowercaseReference_shouldUppercase() throws {
+        let reference = try TicketReference("abcd-1")
+        #expect(String(reference) == "ABCD-1")
+    }
 }
