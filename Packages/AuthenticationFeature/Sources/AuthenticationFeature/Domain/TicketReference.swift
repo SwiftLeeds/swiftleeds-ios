@@ -5,14 +5,18 @@ public struct TicketReference: Hashable, Sendable {
 
     private let storage: String
 
-    /// Creates a ticket reference from the given string.
+    /// Creates a ticket reference from the given string, normalising it to the
+    /// canonical `XXXX-#` form. The hyphen is optional in the input.
     /// - Parameter value: The ticket reference.
     /// - Throws: ``ParsingError/invalidFormat`` if `value` is not a valid ticket reference.
     public init(_ value: String) throws(ParsingError) {
-        guard value.wholeMatch(of: /[A-Z0-9]{4}-[0-9]{1,2}/) != nil else {
-            throw .invalidFormat
-        }
-        self.storage = value
+        let canonical = value
+            .wholeMatch(of: /([A-Z0-9]{4})-?([0-9]{1,2})/)
+            .map { match in "\(match.output.1)-\(match.output.2)" }
+
+        guard let canonical else { throw .invalidFormat }
+
+        self.storage = canonical
     }
 
     fileprivate var stringValue: String { storage }
