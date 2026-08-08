@@ -10,13 +10,10 @@ public struct TicketReference: Hashable, Sendable {
     /// - Parameter value: The ticket reference.
     /// - Throws: ``ParsingError/invalidFormat`` if `value` is not a valid ticket reference.
     public init(_ value: String) throws(ParsingError) {
-        let canonical = value
+        self.storage = try value
             .wholeMatch(of: /([A-Z0-9]{4})-?([0-9]{1,2})/)
             .map { match in "\(match.output.1)-\(match.output.2)" }
-
-        guard let canonical else { throw .invalidFormat }
-
-        self.storage = canonical
+            .unwrap(orThrow: ParsingError.invalidFormat)
     }
 
     fileprivate var stringValue: String { storage }
