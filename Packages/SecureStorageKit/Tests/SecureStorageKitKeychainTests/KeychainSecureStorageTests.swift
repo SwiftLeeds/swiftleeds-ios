@@ -1,8 +1,7 @@
 import Foundation
-import Testing
-
 import SecureStorageKit
 import SecureStorageKitKeychain
+import Testing
 
 /// Exercises the real Keychain adapter through its public API. Each test uses a
 /// unique service (`SecureStorage.uniqueKeychain`) so runs don't collide, and

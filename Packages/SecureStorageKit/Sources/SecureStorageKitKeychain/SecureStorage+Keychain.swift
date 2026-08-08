@@ -1,6 +1,6 @@
 import Foundation
-import Security
 import SecureStorageKit
+import Security
 
 extension SecureStorage {
     /// A `SecureStorage` backed by the Keychain (generic-password items),
