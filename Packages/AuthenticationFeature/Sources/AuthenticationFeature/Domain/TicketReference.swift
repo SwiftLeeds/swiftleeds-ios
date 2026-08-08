@@ -1,3 +1,5 @@
+import Foundation
+
 public struct TicketReference: Hashable, Sendable {
     public enum ParsingError: Error, Equatable {
         case invalidFormat
@@ -6,11 +8,12 @@ public struct TicketReference: Hashable, Sendable {
     private let storage: String
 
     /// Creates a ticket reference from the given string, normalising it to the
-    /// canonical `XXXX-#` form. The hyphen is optional in the input.
+    /// canonical `XXXX-#` form. The hyphen is optional and the input is case-insensitive.
     /// - Parameter value: The ticket reference.
     /// - Throws: ``ParsingError/invalidFormat`` if `value` is not a valid ticket reference.
     public init(_ value: String) throws(ParsingError) {
         self.storage = try value
+            .uppercased()
             .wholeMatch(of: /([A-Z0-9]{4})-?([0-9]{1,2})/)
             .map { match in "\(match.output.1)-\(match.output.2)" }
             .unwrap(orThrow: ParsingError.invalidFormat)
