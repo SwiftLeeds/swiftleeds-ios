@@ -26,3 +26,9 @@ extension String {
         self = email.stringValue
     }
 }
+
+// Redacted so the address can't leak via logs, interpolation, or reflection.
+extension EmailAddress: CustomStringConvertible, CustomDebugStringConvertible {
+    public var description: String { "•••" }
+    public var debugDescription: String { description }
+}
