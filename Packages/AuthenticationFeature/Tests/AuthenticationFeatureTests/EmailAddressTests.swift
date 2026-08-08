@@ -2,7 +2,7 @@ import AuthenticationFeature
 import Testing
 
 @Suite struct EmailAddressTests {
-    @Test func whenParsingValidEmail_shouldNotThrow() throws {
+    @Test func whenParsingValidEmailAddress_shouldReturnEmailAddress() throws {
         _ = try EmailAddress("person@example.com")
     }
 
