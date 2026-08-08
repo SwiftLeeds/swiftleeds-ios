@@ -12,7 +12,7 @@ import Testing
         }
     }
 
-    @Test func whenParsingEmailWithSurroundingWhitespace_shouldTrim() throws {
+    @Test func whenParsingEmailAddressWithSurroundingWhitespace_shouldTrim() throws {
         let email = try EmailAddress("  person@example.com  ")
         #expect(String(email) == "person@example.com")
     }
