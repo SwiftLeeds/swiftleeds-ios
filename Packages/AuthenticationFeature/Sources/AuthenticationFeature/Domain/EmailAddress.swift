@@ -1,6 +1,6 @@
 import Foundation
 
-public struct EmailAddress: Hashable, Sendable {
+public struct EmailAddress: Equatable, Hashable, Sendable {
     public enum ParsingError: Error, Equatable {
         case empty
     }

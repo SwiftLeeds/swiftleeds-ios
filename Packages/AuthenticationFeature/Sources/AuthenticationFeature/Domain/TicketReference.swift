@@ -1,6 +1,6 @@
 import Foundation
 
-public struct TicketReference: Hashable, Sendable {
+public struct TicketReference: Equatable, Hashable, Sendable {
     public enum ParsingError: Error, Equatable {
         case invalidFormat
     }
