@@ -29,4 +29,11 @@ import Testing
         let reference = try TicketReference("  ABCD-1  ")
         #expect(String(reference) == "ABCD-1")
     }
+
+    @Test(arguments: ["ABC-1", "ABCDE-1", "ABCD-123", "ABCD-", "ABCD", ""])
+    func whenParsingMalformedReference_shouldThrowInvalidFormat(_ input: String) {
+        #expect(throws: TicketReference.ParsingError.invalidFormat) {
+            try TicketReference(input)
+        }
+    }
 }
