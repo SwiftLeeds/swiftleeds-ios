@@ -1,6 +1,10 @@
 import Foundation
 
 public struct EmailAddress: Hashable, Sendable {
+    public enum ParsingError: Error, Equatable {
+        case empty
+    }
+
     private let storage: String
 
     /// Creates an email address from the given string, trimming surrounding whitespace.
@@ -13,10 +17,6 @@ public struct EmailAddress: Hashable, Sendable {
     }
 
     fileprivate var stringValue: String { storage }
-
-    public enum ParsingError: Error, Equatable {
-        case empty
-    }
 }
 
 extension String {
