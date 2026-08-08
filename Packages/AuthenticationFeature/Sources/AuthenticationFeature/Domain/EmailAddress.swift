@@ -1,12 +1,15 @@
+import Foundation
+
 public struct EmailAddress: Hashable, Sendable {
     private let storage: String
 
-    /// Creates an email address from the given string.
+    /// Creates an email address from the given string, trimming surrounding whitespace.
     /// - Parameter value: The email address.
-    /// - Throws: ``ParsingError/empty`` if `value` is empty.
+    /// - Throws: ``ParsingError/empty`` if `value` is empty once trimmed.
     public init(_ value: String) throws(ParsingError) {
-        guard !value.isEmpty else { throw .empty }
-        self.storage = value
+        let trimmed = value.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else { throw .empty }
+        self.storage = trimmed
     }
 
     fileprivate var stringValue: String { storage }
