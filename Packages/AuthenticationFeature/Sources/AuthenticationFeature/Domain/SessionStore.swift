@@ -5,6 +5,16 @@ package struct SessionStore: Sendable {
     package var establish: @Sendable (Session) async throws -> Void
     package var clear: @Sendable () async throws -> Void
     package var current: @Sendable () async throws -> Session?
+
+    package init(
+        establish: @escaping @Sendable (Session) async throws -> Void,
+        clear: @escaping @Sendable () async throws -> Void,
+        current: @escaping @Sendable () async throws -> Session?
+    ) {
+        self.establish = establish
+        self.clear = clear
+        self.current = current
+    }
 }
 
 extension SessionStore: TestDependencyKey {
