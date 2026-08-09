@@ -12,6 +12,7 @@ let package = Package(
         .library(name: "AuthenticationFeature", targets: ["AuthenticationFeature"]),
     ],
     dependencies: [
+        .package(path: "../SecureStorageKit"),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.0.0"),
     ],
     targets: [
@@ -19,11 +20,16 @@ let package = Package(
             name: "AuthenticationFeature",
             dependencies: [
                 .product(name: "Dependencies", package: "swift-dependencies"),
+                .product(name: "SecureStorageKit", package: "SecureStorageKit"),
             ]
         ),
         .testTarget(
             name: "AuthenticationFeatureTests",
-            dependencies: ["AuthenticationFeature"]
+            dependencies: [
+                "AuthenticationFeature",
+                .product(name: "Dependencies", package: "swift-dependencies"),
+                .product(name: "SecureStorageKit", package: "SecureStorageKit"),
+            ]
         ),
     ]
 )
