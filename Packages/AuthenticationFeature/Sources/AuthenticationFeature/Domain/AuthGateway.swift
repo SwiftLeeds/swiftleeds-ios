@@ -3,6 +3,10 @@ import Dependencies
 /// Authenticates a credential and returns a session token, throwing if authentication fails.
 package struct AuthGateway: Sendable {
     package var authenticate: @Sendable (Credential) async throws -> SessionToken
+
+    package init(authenticate: @escaping @Sendable (Credential) async throws -> SessionToken) {
+        self.authenticate = authenticate
+    }
 }
 
 extension AuthGateway: TestDependencyKey {
