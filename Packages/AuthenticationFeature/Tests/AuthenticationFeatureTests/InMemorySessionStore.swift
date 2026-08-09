@@ -3,6 +3,10 @@ import AuthenticationFeature
 actor InMemorySessionStore {
     private(set) var stored: Session?
 
+    init(stored: Session? = nil) {
+        self.stored = stored
+    }
+
     nonisolated var sessionStore: SessionStore {
         SessionStore(
             establish: { await self.store($0) },
