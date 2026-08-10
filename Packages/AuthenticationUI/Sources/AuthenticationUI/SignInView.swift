@@ -20,7 +20,7 @@ public struct SignInView: View {
             }
 
             Section {
-                TextField("Ticket Reference", text: $viewModel.ticketReference)
+                TextField("Ticket reference", text: $viewModel.ticketReference)
                     .ticketReferenceFieldStyle()
             } header: {
                 Text("Ticket Reference")
@@ -29,9 +29,10 @@ public struct SignInView: View {
                     .font(.footnote)
             }
 
-            if case let .failed(error) = viewModel.phase {
+            if case .failed(.invalidCredentials) = viewModel.phase {
                 Section {
-                    Text(error.message).foregroundStyle(.red)
+                    Text("We couldn't find a ticket for that email and reference. Please check them and try again.")
+                        .foregroundStyle(.red)
                 }
             }
 
@@ -52,17 +53,22 @@ public struct SignInView: View {
             }
         }
         .disabled(viewModel.isSubmitting)
-    }
-}
-
-private extension AuthenticationError {
-    var message: String {
-        switch self {
-        case .invalidCredentials:
-            "We couldn't find a ticket for that email and reference. Please check them and try again."
-        case .unknown:
-            "Something went wrong. Please try again."
+        .alert("Something went wrong", isPresented: presentingUnknownError) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text("Please try again.")
         }
+    }
+
+    private var presentingUnknownError: Binding<Bool> {
+        Binding(
+            get: { viewModel.phase == .failed(.unknown) },
+            set: { isPresented in
+                if !isPresented {
+                    viewModel.dismissError()
+                }
+            }
+        )
     }
 }
 

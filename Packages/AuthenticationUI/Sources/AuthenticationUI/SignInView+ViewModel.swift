@@ -48,5 +48,10 @@ extension SignInView {
                 phase = .failed(.unknown)
             }
         }
+
+        package func dismissError() {
+            guard case .failed = phase else { return }
+            phase = .editing
+        }
     }
 }
