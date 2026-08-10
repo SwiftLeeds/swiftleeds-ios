@@ -1,3 +1,4 @@
+import AuthenticationUI
 import Settings
 import SwiftUI
 
@@ -18,7 +19,9 @@ struct SidebarMainView: View {
             case .sponsors:
                 SponsorsView()
             case .settings:
-                SettingsView()
+                SettingsView {
+                    Section("Account") { AccountView() }
+                }
             }
         }
     }
