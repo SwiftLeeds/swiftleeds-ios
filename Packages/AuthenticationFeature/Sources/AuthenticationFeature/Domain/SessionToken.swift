@@ -1,8 +1,10 @@
+import Foundation
+
 package struct SessionToken: Equatable, Hashable, Sendable {
     private let storage: String
 
     package init(_ value: String) {
-        self.storage = value
+        storage = value.trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
     fileprivate var stringValue: String { storage }
