@@ -66,11 +66,14 @@ private enum StubError: Error { case transport }
 
 private let attendeeJSON = Data("""
 {
-    "name": "Ada Lovelace",
-    "email": "ada@example.com",
-    "avatar_url": "https://example.com/avatar.png",
-    "qr_url": "https://example.com/qr.png",
-    "reference": "ABCD-12"
+    "ticket": {
+        "first_name": "Ada",
+        "last_name": "Lovelace",
+        "email": "ada@example.com",
+        "avatar_url": "https://example.com/avatar.png",
+        "qr_url": "https://example.com/qr.png",
+        "reference": "ABCD-12"
+    }
 }
 """.utf8)
 
