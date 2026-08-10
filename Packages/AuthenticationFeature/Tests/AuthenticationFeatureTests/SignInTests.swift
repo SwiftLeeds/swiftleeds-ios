@@ -10,7 +10,7 @@ import Testing
             $0.authGateway = .returning(SessionToken("jwt-abc-123"))
             $0.sessionStore = store.sessionStore
         } operation: {
-            let sut = SignIn.live
+            let sut = SignIn.liveValue
             try await sut(credential())
         }
 
@@ -21,7 +21,7 @@ import Testing
         try await withDependencies {
             $0.authGateway = .failing(with: StubError.authenticationFailed)
         } operation: {
-            let sut = SignIn.live
+            let sut = SignIn.liveValue
             await #expect(throws: StubError.authenticationFailed) {
                 try await sut(credential())
             }
@@ -35,7 +35,7 @@ import Testing
             $0.authGateway = .failing(with: StubError.authenticationFailed)
             $0.sessionStore = store.sessionStore
         } operation: {
-            let sut = SignIn.live
+            let sut = SignIn.liveValue
             _ = try? await sut(credential())
         }
 

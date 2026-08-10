@@ -9,7 +9,7 @@ import Testing
         try await withDependencies {
             $0.sessionStore = store.sessionStore
         } operation: {
-            let sut = SignOut.live
+            let sut = SignOut.liveValue
             try await sut()
         }
 
