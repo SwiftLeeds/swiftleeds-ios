@@ -1,5 +1,6 @@
 /// A token-free, un-forgeable capability proving its holder is signed in.
-/// Only `AuthenticationFeature` can mint one (the `init` is `package`), so possession is proof.
+/// Minting requires a `Session` — evidence of a real sign-in, which only `AuthenticationFeature`
+/// can produce — but the session is not retained, so the proof carries no token.
 public struct SignedInProof: Equatable, Hashable, Sendable {
-    package init() {}
+    package init(_: Session) {}
 }
