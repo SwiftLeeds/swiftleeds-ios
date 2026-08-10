@@ -79,7 +79,7 @@ private let attendeeJSON = Data("""
 
 private func expectedAttendee() throws -> Attendee {
     Attendee(
-        name: AttendeeName("Ada Lovelace"),
+        name: PersonNameComponents(givenName: "Ada", familyName: "Lovelace"),
         emailAddress: try EmailAddress("ada@example.com"),
         avatarURL: AvatarURL(URL(string: "https://example.com/avatar.png")!),
         qrCodeURL: QRCodeURL(URL(string: "https://example.com/qr.png")!),

@@ -60,7 +60,7 @@ import Testing
 
     private func makeProfile() -> Profile {
         Profile(
-            name: "Ada Lovelace",
+            name: PersonNameComponents(givenName: "Ada", familyName: "Lovelace"),
             emailAddress: "ada@example.com",
             avatarURL: URL(string: "https://example.com/avatar.png")!,
             qrCodeURL: URL(string: "https://example.com/qr.png")!,

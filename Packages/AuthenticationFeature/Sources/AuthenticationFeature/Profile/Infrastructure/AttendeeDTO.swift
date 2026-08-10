@@ -24,7 +24,7 @@ struct AttendeeDTO: Decodable {
 extension AttendeeDTO {
     func attendee() throws -> Attendee {
         Attendee(
-            name: AttendeeName("\(ticket.firstName) \(ticket.lastName)"),
+            name: PersonNameComponents(givenName: ticket.firstName, familyName: ticket.lastName),
             emailAddress: try EmailAddress(ticket.email),
             avatarURL: AvatarURL(ticket.avatarURL),
             qrCodeURL: QRCodeURL(ticket.qrCodeURL),

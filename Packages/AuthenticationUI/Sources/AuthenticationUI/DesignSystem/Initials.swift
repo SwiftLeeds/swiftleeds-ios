@@ -1,6 +1,10 @@
 import Foundation
 
 package enum Initials {
+    package static func from(_ name: PersonNameComponents) -> String {
+        name.formatted(.name(style: .abbreviated))
+    }
+
     package static func from(_ name: String) -> String {
         let components = name.split(whereSeparator: \.isWhitespace)
 

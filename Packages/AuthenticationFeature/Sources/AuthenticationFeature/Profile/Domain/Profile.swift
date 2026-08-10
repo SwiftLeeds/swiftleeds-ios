@@ -1,14 +1,14 @@
 import Foundation
 
 public struct Profile: Equatable, Hashable, Sendable {
-    public let name: String
+    public let name: PersonNameComponents
     public let emailAddress: String
     public let avatarURL: URL
     public let qrCodeURL: URL
     public let ticketReference: String
 
     public init(
-        name: String,
+        name: PersonNameComponents,
         emailAddress: String,
         avatarURL: URL,
         qrCodeURL: URL,
@@ -25,7 +25,7 @@ public struct Profile: Equatable, Hashable, Sendable {
 extension Profile {
     package init(_ attendee: Attendee) {
         self.init(
-            name: String(attendee.name),
+            name: attendee.name,
             emailAddress: String(attendee.emailAddress),
             avatarURL: URL(attendee.avatarURL),
             qrCodeURL: URL(attendee.qrCodeURL),
