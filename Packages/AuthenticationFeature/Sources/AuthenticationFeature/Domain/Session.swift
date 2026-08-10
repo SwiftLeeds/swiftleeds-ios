@@ -2,7 +2,7 @@
 package struct Session: Equatable, Hashable, Sendable {
     package let token: SessionToken
 
-    package init(_ token: SessionToken) {
+    package init(token: SessionToken) {
         self.token = token
     }
 }

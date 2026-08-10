@@ -18,7 +18,7 @@ extension SignIn {
             @Dependency(\.authGateway) var authGateway
             @Dependency(\.sessionStore) var sessionStore
             let token = try await authGateway.authenticate(credential)
-            try await sessionStore.establish(Session(token))
+            try await sessionStore.establish(Session(token: token))
         }
     }
 }

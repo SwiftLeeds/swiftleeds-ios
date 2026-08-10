@@ -10,6 +10,6 @@ extension CachedSession {
     }
 
     var session: Session {
-        Session(SessionToken(token))
+        Session(token: SessionToken(token))
     }
 }
