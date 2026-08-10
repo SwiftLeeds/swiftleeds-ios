@@ -1,7 +1,7 @@
 import Dependencies
 import Foundation
 
-package struct HTTPClient: Sendable {
+public struct HTTPClient: Sendable {
     package var send: @Sendable (URLRequest) async throws -> (Data, HTTPURLResponse)
 
     package init(send: @escaping @Sendable (URLRequest) async throws -> (Data, HTTPURLResponse)) {
@@ -10,11 +10,11 @@ package struct HTTPClient: Sendable {
 }
 
 extension HTTPClient: TestDependencyKey {
-    package static let testValue = HTTPClient(send: unimplemented("HTTPClient.send"))
+    public static let testValue = HTTPClient(send: unimplemented("HTTPClient.send"))
 }
 
 extension DependencyValues {
-    package var httpClient: HTTPClient {
+    public var httpClient: HTTPClient {
         get { self[HTTPClient.self] }
         set { self[HTTPClient.self] = newValue }
     }
