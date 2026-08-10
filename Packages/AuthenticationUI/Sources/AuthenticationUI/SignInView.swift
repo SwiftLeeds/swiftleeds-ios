@@ -3,9 +3,13 @@ import Dependencies
 import SwiftUI
 
 public struct SignInView: View {
-    @State private var viewModel = ViewModel()
+    @State private var viewModel: ViewModel
 
-    public init() {}
+    public init(onSignedIn: @escaping @MainActor () -> Void) {
+        let viewModel = ViewModel()
+        viewModel.onSignedIn = onSignedIn
+        _viewModel = State(wrappedValue: viewModel)
+    }
 
     public var body: some View {
         List {
@@ -95,7 +99,7 @@ private extension View {
 
 #Preview {
     NavigationStack {
-        SignInView()
+        SignInView(onSignedIn: {})
             .navigationTitle("Sign in")
     }
 }
