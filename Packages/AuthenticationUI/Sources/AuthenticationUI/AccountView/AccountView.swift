@@ -26,7 +26,7 @@ public struct AccountView: View {
         NavigationLink {
             SignInDestination(onSignedIn: { Task { await viewModel.load() } })
         } label: {
-            Nameplate(Text("Sign in"), role: .unresolved) {
+            Nameplate(Text("Sign In"), role: .unresolved) {
                 Avatar(url: nil) {
                     Image(systemName: "person")
                 }
@@ -45,7 +45,7 @@ private struct SignInDestination: View {
             onSignedIn()
             dismiss()
         })
-        .navigationTitle("Sign in")
+        .navigationTitle("Sign In")
     }
 }
 

@@ -156,7 +156,7 @@ struct ComponentSnapshotTests {
 
             Divider()
 
-            Nameplate(Text("Sign in"), role: .unresolved) {
+            Nameplate(Text("Sign In"), role: .unresolved) {
                 personAvatar
             }
 

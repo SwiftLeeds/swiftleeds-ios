@@ -66,7 +66,7 @@ private let previewAvatarURL = URL(string: "https://example.com/missing.png")
                 }
             }
 
-            Nameplate(Text("Sign in"), role: .unresolved) {
+            Nameplate(Text("Sign In"), role: .unresolved) {
                 Avatar(url: nil) {
                     Image(systemName: "person").font(.title)
                 }
@@ -90,7 +90,7 @@ private let previewAvatarURL = URL(string: "https://example.com/missing.png")
                 }
             }
 
-            Nameplate(Text("Sign in"), role: .unresolved) {
+            Nameplate(Text("Sign In"), role: .unresolved) {
                 Avatar(url: nil) {
                     Image(systemName: "person")
                 }

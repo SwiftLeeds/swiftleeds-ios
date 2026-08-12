@@ -46,9 +46,9 @@ public struct SignInView: View {
                 } label: {
                     switch viewModel.phase {
                     case .editing:
-                        Text("Sign in")
+                        Text("Sign In")
                     case .failed:
-                        Text("Sign in")
+                        Text("Sign In")
                     case .submitting:
                         ProgressView()
                     }
@@ -100,6 +100,6 @@ private extension View {
 #Preview {
     NavigationStack {
         SignInView(onSignedIn: {})
-            .navigationTitle("Sign in")
+            .navigationTitle("Sign In")
     }
 }
