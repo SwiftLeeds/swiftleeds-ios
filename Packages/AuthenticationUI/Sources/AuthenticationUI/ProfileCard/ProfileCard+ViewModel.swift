@@ -6,18 +6,12 @@ extension ProfileCard {
     @MainActor
     @Observable
     package final class ViewModel {
-        package enum State: Equatable {
-            case loading
-            case loaded(Profile)
-            case failed
-        }
-
         @ObservationIgnored
         @Dependency(\.fetchProfile) private var fetchProfile
         @ObservationIgnored
         @Dependency(\.signOut) private var signOut
 
-        package private(set) var state: State = .loading
+        package private(set) var state: ProfileCardState = .loading
         private let onSignOut: @MainActor () -> Void
 
         package init(onSignOut: @escaping @MainActor () -> Void) {
