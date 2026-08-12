@@ -40,25 +40,24 @@ package struct ProminentNameplateStyle: NameplateStyle {
     package init() {}
 
     package func makeBody(configuration: NameplateStyleConfiguration) -> some View {
-        HStack(spacing: 12) {
-            configuration.icon
-                .font(.title2.weight(.semibold))
-                .foregroundStyle(Color.accentColor)
-                .frame(width: 56, height: 56)
+        ProminentBody(configuration: configuration)
+    }
 
-            VStack(alignment: .leading, spacing: 2) {
-                configuration.title
-                    .font(.title3.weight(.semibold))
-                    .foregroundStyle(.primary)
+    private struct ProminentBody: View {
+        @ScaledMetric(relativeTo: .title3) private var iconSize: CGFloat = 56
 
-                configuration.detail
-                    .font(.subheadline)
-                    .foregroundStyle(configuration.role.detailStyle)
-            }
+        let configuration: NameplateStyleConfiguration
 
-            Spacer(minLength: 0)
+        var body: some View {
+            NameplateLayout(
+                configuration: configuration,
+                iconSize: min(iconSize, 96),
+                spacing: 12,
+                titleFont: .title3.weight(.semibold),
+                detailFont: .subheadline
+            )
+            .padding(.vertical, 8)
         }
-        .padding(.vertical, 8)
     }
 }
 
@@ -66,19 +65,49 @@ package struct CompactNameplateStyle: NameplateStyle {
     package init() {}
 
     package func makeBody(configuration: NameplateStyleConfiguration) -> some View {
-        HStack(spacing: 10) {
-            configuration.icon
-                .font(.subheadline.weight(.semibold))
-                .foregroundStyle(Color.accentColor)
-                .frame(width: 40, height: 40)
+        CompactBody(configuration: configuration)
+    }
 
-            VStack(alignment: .leading, spacing: 1) {
+    private struct CompactBody: View {
+        @ScaledMetric(relativeTo: .subheadline) private var iconSize: CGFloat = 40
+
+        let configuration: NameplateStyleConfiguration
+
+        var body: some View {
+            NameplateLayout(
+                configuration: configuration,
+                iconSize: min(iconSize, 72),
+                spacing: 10,
+                titleFont: .subheadline.weight(.semibold),
+                detailFont: .footnote
+            )
+        }
+    }
+}
+
+private struct NameplateLayout: View {
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+
+    let configuration: NameplateStyleConfiguration
+    let iconSize: CGFloat
+    let spacing: CGFloat
+    let titleFont: Font
+    let detailFont: Font
+
+    var body: some View {
+        HStack(alignment: dynamicTypeSize.isAccessibilitySize ? .top : .center, spacing: spacing) {
+            configuration.icon
+                .font(titleFont)
+                .foregroundStyle(Color.accentColor)
+                .frame(width: iconSize, height: iconSize)
+
+            VStack(alignment: .leading, spacing: 2) {
                 configuration.title
-                    .font(.subheadline.weight(.semibold))
+                    .font(titleFont)
                     .foregroundStyle(.primary)
 
                 configuration.detail
-                    .font(.footnote)
+                    .font(detailFont)
                     .foregroundStyle(configuration.role.detailStyle)
             }
 
