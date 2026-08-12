@@ -29,23 +29,6 @@ import Testing
         }
     }
 
-    @Test func whenSignInPresented_shouldPresentSignIn() {
-        let sut = AccountView.ViewModel()
-
-        sut.presentSignIn()
-
-        #expect(sut.isPresentingSignIn)
-    }
-
-    @Test func whenSignInDismissed_shouldNotPresentSignIn() {
-        let sut = AccountView.ViewModel()
-        sut.presentSignIn()
-
-        sut.dismissSignIn()
-
-        #expect(!sut.isPresentingSignIn)
-    }
-
     @Test func whenLoading_shouldNotLeak() async {
         weak var weakSUT: AccountView.ViewModel?
         await withDependencies {

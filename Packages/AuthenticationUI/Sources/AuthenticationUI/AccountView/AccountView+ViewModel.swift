@@ -16,7 +16,6 @@ extension AccountView {
         @Dependency(\.authStatus) private var authStatus
 
         package private(set) var state: State = .loading
-        package var isPresentingSignIn = false
 
         package init() {}
 
@@ -27,14 +26,6 @@ extension AccountView {
             case .signedOut:
                 state = .signedOut
             }
-        }
-
-        package func presentSignIn() {
-            isPresentingSignIn = true
-        }
-
-        package func dismissSignIn() {
-            isPresentingSignIn = false
         }
     }
 }
