@@ -15,7 +15,9 @@ package protocol BarcodeSymbology: Sendable {
 /// Turns a generator's output into a bitmap, adding a quiet zone where the generator omits one.
 @MainActor
 enum BarcodeImage {
-    private static let context = CIContext()
+    // Software rendering: barcodes are a few thousand pixels at most, and standing up a
+    // GPU-backed context costs far more than drawing one.
+    private static let context = CIContext(options: [.useSoftwareRenderer: true])
 
     /// Renders `image`, widening its light margin by `modules` on every side.
     static func render(_ image: CIImage, addingQuietZoneOf modules: CGFloat) -> CGImage? {
