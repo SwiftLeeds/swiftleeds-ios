@@ -27,6 +27,23 @@ import Testing
             }
         }
     }
+
+    @Test func whenRepositoryFails_shouldThrowExhaustivelyCatchableError() async {
+        var caught: AttendeeFetchError?
+
+        await withDependencies {
+            $0.attendeeRepository = .failing(with: .unauthorized)
+        } operation: {
+            let sut = FetchProfile.liveValue
+            do throws(AttendeeFetchError) {
+                _ = try await sut()
+            } catch {
+                caught = error
+            }
+        }
+
+        #expect(caught == .unauthorized)
+    }
 }
 
 private func makeAttendee() throws -> Attendee {
