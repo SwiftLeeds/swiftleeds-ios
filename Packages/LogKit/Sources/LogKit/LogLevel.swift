@@ -10,4 +10,22 @@ public enum LogLevel: Int, Comparable, Sendable, CaseIterable {
     public static func < (lhs: LogLevel, rhs: LogLevel) -> Bool {
         lhs.rawValue < rhs.rawValue
     }
+
+    /// The level's name, for destinations that record it as text.
+    public var name: String {
+        switch self {
+        case .debug:
+            "debug"
+        case .info:
+            "info"
+        case .notice:
+            "notice"
+        case .warning:
+            "warning"
+        case .error:
+            "error"
+        case .critical:
+            "critical"
+        }
+    }
 }

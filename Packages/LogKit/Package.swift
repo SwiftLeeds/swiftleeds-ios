@@ -10,12 +10,21 @@ let package = Package(
     ],
     products: [
         .library(name: "LogKit", targets: ["LogKit"]),
+        .library(name: "LogKitUnified", targets: ["LogKitUnified"]),
     ],
     targets: [
         .target(name: "LogKit"),
+        .target(
+            name: "LogKitUnified",
+            dependencies: ["LogKit"]
+        ),
         .testTarget(
             name: "LogKitTests",
             dependencies: ["LogKit"]
+        ),
+        .testTarget(
+            name: "LogKitUnifiedTests",
+            dependencies: ["LogKitUnified"]
         ),
     ]
 )
