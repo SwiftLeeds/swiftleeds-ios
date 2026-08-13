@@ -10,6 +10,7 @@ extension AccountView {
         @Dependency(\.authStatus) private var authStatus
 
         package private(set) var state: AccountViewState = .loading
+        private var signInRequired = false
 
         package init() {}
 
@@ -18,8 +19,18 @@ extension AccountView {
             case .signedIn(let proof):
                 state = .signedIn(proof)
             case .signedOut:
-                state = .signedOut
+                state = .signedOut(signInRequired: signInRequired)
             }
+        }
+
+        package func signedOut(_ reason: SignOutReason) async {
+            signInRequired = reason == .signInRequired
+            await load()
+        }
+
+        package func signedIn() async {
+            signInRequired = false
+            await load()
         }
     }
 }

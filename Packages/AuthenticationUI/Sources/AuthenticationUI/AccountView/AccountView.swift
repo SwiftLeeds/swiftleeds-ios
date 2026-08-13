@@ -9,8 +9,8 @@ public struct AccountView: View {
     public var body: some View {
         AccountViewContent(
             state: viewModel.state,
-            onSignOut: { _ in Task { await viewModel.load() } },
-            onSignedIn: { Task { await viewModel.load() } }
+            onSignOut: { reason in Task { await viewModel.signedOut(reason) } },
+            onSignedIn: { Task { await viewModel.signedIn() } }
         )
         .task { await viewModel.load() }
     }

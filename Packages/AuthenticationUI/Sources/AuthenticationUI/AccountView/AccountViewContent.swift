@@ -17,6 +17,19 @@ package struct AccountViewContent: View {
     }
 
     package var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            content
+
+            if case .signedOut(signInRequired: true) = state {
+                Text("Your sign-in expired. Sign in again to see your account details.")
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+        }
+    }
+
+    @ViewBuilder private var content: some View {
         switch state {
         case .loading:
             NameplatePlaceholder()
@@ -58,7 +71,8 @@ private struct SignInDestination: View {
     NavigationStack {
         List {
             AccountViewContent(state: .loading, onSignOut: { _ in }, onSignedIn: {})
-            AccountViewContent(state: .signedOut, onSignOut: { _ in }, onSignedIn: {})
+            AccountViewContent(state: .signedOut(signInRequired: false), onSignOut: { _ in }, onSignedIn: {})
+            AccountViewContent(state: .signedOut(signInRequired: true), onSignOut: { _ in }, onSignedIn: {})
         }
     }
 }
@@ -66,7 +80,7 @@ private struct SignInDestination: View {
 #Preview("Signed out, compact") {
     NavigationStack {
         List {
-            AccountViewContent(state: .signedOut, onSignOut: { _ in }, onSignedIn: {})
+            AccountViewContent(state: .signedOut(signInRequired: true), onSignOut: { _ in }, onSignedIn: {})
         }
         .nameplateStyle(.compact)
     }
