@@ -10,11 +10,12 @@ struct AttendeeDTO: Decodable {
         let avatarURL: URL
         let qrCodeURL: URL
         let reference: String
+        let slug: String
 
         enum CodingKeys: String, CodingKey {
             case firstName = "first_name"
             case lastName = "last_name"
-            case email, reference
+            case email, reference, slug
             case avatarURL = "avatar_url"
             case qrCodeURL = "qr_url"
         }
@@ -28,7 +29,8 @@ extension AttendeeDTO {
             emailAddress: try EmailAddress(ticket.email),
             avatarURL: AvatarURL(ticket.avatarURL),
             qrCodeURL: QRCodeURL(ticket.qrCodeURL),
-            ticketReference: try TicketReference(ticket.reference)
+            ticketReference: try TicketReference(ticket.reference),
+            ticketSlug: try TicketSlug(ticket.slug)
         )
     }
 }

@@ -52,7 +52,8 @@ private func makeAttendee() throws -> Attendee {
         emailAddress: try EmailAddress("ada@example.com"),
         avatarURL: AvatarURL(URL(string: "https://example.com/avatar.png")!),
         qrCodeURL: QRCodeURL(URL(string: "https://example.com/qr.png")!),
-        ticketReference: try TicketReference("ABCD-12")
+        ticketReference: try TicketReference("ABCD-12"),
+        ticketSlug: try TicketSlug("ti_abc")
     )
 }
 
@@ -62,6 +63,7 @@ private func expectedProfile() -> Profile {
         emailAddress: "ada@example.com",
         avatarURL: URL(string: "https://example.com/avatar.png")!,
         qrCodeURL: URL(string: "https://example.com/qr.png")!,
-        ticketReference: "ABCD-12"
+        ticketReference: "ABCD-12",
+        ticketSlug: try! TicketSlug("ti_abc")
     )
 }
