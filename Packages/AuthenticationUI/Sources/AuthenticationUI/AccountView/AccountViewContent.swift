@@ -1,0 +1,73 @@
+import AuthenticationFeature
+import SwiftUI
+
+package struct AccountViewContent: View {
+    private let state: AccountViewState
+    private let onSignOut: @MainActor () -> Void
+    private let onSignedIn: @MainActor () -> Void
+
+    package init(
+        state: AccountViewState,
+        onSignOut: @escaping @MainActor () -> Void,
+        onSignedIn: @escaping @MainActor () -> Void
+    ) {
+        self.state = state
+        self.onSignOut = onSignOut
+        self.onSignedIn = onSignedIn
+    }
+
+    package var body: some View {
+        switch state {
+        case .loading:
+            NameplatePlaceholder()
+        case .signedOut:
+            signedOut
+        case .signedIn:
+            ProfileCard(onSignOut: onSignOut)
+        }
+    }
+
+    private var signedOut: some View {
+        NavigationLink {
+            SignInDestination(onSignedIn: onSignedIn)
+        } label: {
+            Nameplate(Text("Sign In"), role: .unresolved) {
+                Avatar(url: nil) {
+                    Image(systemName: "person")
+                }
+            }
+        }
+    }
+}
+
+private struct SignInDestination: View {
+    @Environment(\.dismiss) private var dismiss
+
+    let onSignedIn: @MainActor () -> Void
+
+    var body: some View {
+        SignInView(onSignedIn: {
+            onSignedIn()
+            dismiss()
+        })
+        .navigationTitle("Sign In")
+    }
+}
+
+#Preview("Every state") {
+    NavigationStack {
+        List {
+            AccountViewContent(state: .loading, onSignOut: {}, onSignedIn: {})
+            AccountViewContent(state: .signedOut, onSignOut: {}, onSignedIn: {})
+        }
+    }
+}
+
+#Preview("Signed out, compact") {
+    NavigationStack {
+        List {
+            AccountViewContent(state: .signedOut, onSignOut: {}, onSignedIn: {})
+        }
+        .nameplateStyle(.compact)
+    }
+}

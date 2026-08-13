@@ -7,49 +7,15 @@ public struct AccountView: View {
     public init() {}
 
     public var body: some View {
-        content
-            .task { await viewModel.load() }
-    }
-
-    @ViewBuilder private var content: some View {
-        switch viewModel.state {
-        case .loading:
-            NameplatePlaceholder()
-        case .signedOut:
-            signedOut
-        case .signedIn:
-            ProfileCard(onSignOut: { Task { await viewModel.load() } })
-        }
-    }
-
-    private var signedOut: some View {
-        NavigationLink {
-            SignInDestination(onSignedIn: { Task { await viewModel.load() } })
-        } label: {
-            Nameplate(Text("Sign In"), role: .unresolved) {
-                Avatar(url: nil) {
-                    Image(systemName: "person")
-                }
-            }
-        }
+        AccountViewContent(
+            state: viewModel.state,
+            onSignOut: { Task { await viewModel.load() } },
+            onSignedIn: { Task { await viewModel.load() } }
+        )
+        .task { await viewModel.load() }
     }
 }
 
-private struct SignInDestination: View {
-    @Environment(\.dismiss) private var dismiss
-
-    let onSignedIn: @MainActor () -> Void
-
-    var body: some View {
-        SignInView(onSignedIn: {
-            onSignedIn()
-            dismiss()
-        })
-        .navigationTitle("Sign In")
-    }
-}
-
-#if DEBUG
 #Preview {
     NavigationStack {
         List {
@@ -57,4 +23,3 @@ private struct SignInDestination: View {
         }
     }
 }
-#endif
