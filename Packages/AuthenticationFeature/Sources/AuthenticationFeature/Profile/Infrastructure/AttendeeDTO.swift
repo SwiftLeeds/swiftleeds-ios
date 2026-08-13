@@ -8,7 +8,6 @@ struct AttendeeDTO: Decodable {
         let lastName: String
         let email: String
         let avatarURL: URL
-        let qrCodeURL: URL
         let reference: String
         let slug: String
 
@@ -17,7 +16,6 @@ struct AttendeeDTO: Decodable {
             case lastName = "last_name"
             case email, reference, slug
             case avatarURL = "avatar_url"
-            case qrCodeURL = "qr_url"
         }
     }
 }
@@ -28,7 +26,6 @@ extension AttendeeDTO {
             name: PersonNameComponents(givenName: ticket.firstName, familyName: ticket.lastName),
             emailAddress: try EmailAddress(ticket.email),
             avatarURL: AvatarURL(ticket.avatarURL),
-            qrCodeURL: QRCodeURL(ticket.qrCodeURL),
             ticketReference: try TicketReference(ticket.reference),
             ticketSlug: try TicketSlug(ticket.slug)
         )
