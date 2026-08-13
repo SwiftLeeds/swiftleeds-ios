@@ -9,7 +9,7 @@ extension ProfileCard {
         @ObservationIgnored
         @Dependency(\.fetchProfile) private var fetchProfile
         @ObservationIgnored
-        @Dependency(\.signOut) private var signOut
+        @Dependency(\.signOut) private var _signOut
 
         package private(set) var state: ProfileCardState = .loading
         private let onSignOut: @MainActor () -> Void
@@ -27,8 +27,8 @@ extension ProfileCard {
             }
         }
 
-        package func performSignOut() async {
-            try? await signOut()
+        package func signOut() async {
+            try? await _signOut()
             onSignOut()
         }
     }

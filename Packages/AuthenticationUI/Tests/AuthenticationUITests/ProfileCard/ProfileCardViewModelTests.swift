@@ -40,7 +40,7 @@ import Testing
             } operation: {
                 let sut = ProfileCard.ViewModel(onSignOut: { signedOut() })
 
-                await sut.performSignOut()
+                await sut.signOut()
             }
         }
     }
