@@ -1,17 +1,22 @@
 extension Log {
-    /// A log that accepts every event and writes it nowhere.
+    /// A log that writes nowhere and accepts nothing.
     ///
     /// Use it to include a destination conditionally without branching, or to
     /// silence logging entirely. Combining with it changes nothing.
-    public static let none = Log { _ in }
+    public static let none = Log(accepts: { _, _ in false }, write: { _ in })
 
     /// Writes each event to every given log, in order.
     public static func combine(_ logs: [Log]) -> Log {
-        Log { event in
-            for log in logs {
-                log.write(event)
+        Log(
+            accepts: { level, category in
+                logs.contains { $0.accepts(level, category) }
+            },
+            write: { event in
+                for log in logs {
+                    log.write(event)
+                }
             }
-        }
+        )
     }
 
     /// Writes each event to both logs.
