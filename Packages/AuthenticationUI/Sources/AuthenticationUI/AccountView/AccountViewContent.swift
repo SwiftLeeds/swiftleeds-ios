@@ -3,12 +3,12 @@ import SwiftUI
 
 package struct AccountViewContent: View {
     private let state: AccountViewState
-    private let onSignOut: @MainActor () -> Void
+    private let onSignOut: @MainActor (SignOutReason) -> Void
     private let onSignedIn: @MainActor () -> Void
 
     package init(
         state: AccountViewState,
-        onSignOut: @escaping @MainActor () -> Void,
+        onSignOut: @escaping @MainActor (SignOutReason) -> Void,
         onSignedIn: @escaping @MainActor () -> Void
     ) {
         self.state = state
@@ -57,8 +57,8 @@ private struct SignInDestination: View {
 #Preview("Every state") {
     NavigationStack {
         List {
-            AccountViewContent(state: .loading, onSignOut: {}, onSignedIn: {})
-            AccountViewContent(state: .signedOut, onSignOut: {}, onSignedIn: {})
+            AccountViewContent(state: .loading, onSignOut: { _ in }, onSignedIn: {})
+            AccountViewContent(state: .signedOut, onSignOut: { _ in }, onSignedIn: {})
         }
     }
 }
@@ -66,7 +66,7 @@ private struct SignInDestination: View {
 #Preview("Signed out, compact") {
     NavigationStack {
         List {
-            AccountViewContent(state: .signedOut, onSignOut: {}, onSignedIn: {})
+            AccountViewContent(state: .signedOut, onSignOut: { _ in }, onSignedIn: {})
         }
         .nameplateStyle(.compact)
     }

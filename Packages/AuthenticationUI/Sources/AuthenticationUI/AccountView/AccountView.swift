@@ -9,7 +9,7 @@ public struct AccountView: View {
     public var body: some View {
         AccountViewContent(
             state: viewModel.state,
-            onSignOut: { Task { await viewModel.load() } },
+            onSignOut: { _ in Task { await viewModel.load() } },
             onSignedIn: { Task { await viewModel.load() } }
         )
         .task { await viewModel.load() }

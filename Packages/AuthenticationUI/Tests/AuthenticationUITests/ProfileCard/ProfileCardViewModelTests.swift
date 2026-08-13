@@ -11,7 +11,7 @@ import Testing
         await withDependencies {
             $0.fetchProfile = FetchProfile { profile }
         } operation: {
-            let sut = ProfileCard.ViewModel(onSignOut: {})
+            let sut = ProfileCard.ViewModel(onSignOut: { _ in })
 
             await sut.load()
 
@@ -25,7 +25,7 @@ import Testing
                 throw .unknown
             }
         } operation: {
-            let sut = ProfileCard.ViewModel(onSignOut: {})
+            let sut = ProfileCard.ViewModel(onSignOut: { _ in })
 
             await sut.load()
 
@@ -33,16 +33,53 @@ import Testing
         }
     }
 
-    @Test func whenSignOutRequested_shouldSignalSignOut() async {
-        await confirmation("signals sign out") { signedOut in
+    @Test func whenCredentialsAreRejected_shouldRequireSignIn() async {
+        var captured: SignOutReason?
+
+        await withDependencies {
+            $0.fetchProfile = FetchProfile { () async throws(AttendeeFetchError) -> Profile in
+                throw .unauthorized
+            }
+        } operation: {
+            let sut = ProfileCard.ViewModel(onSignOut: { captured = $0 })
+
+            await sut.load()
+
+            #expect(sut.state != .failed)
+        }
+
+        #expect(captured == .signInRequired)
+    }
+
+    @Test func whenCredentialsAreRejected_shouldNotSignOutAgain() async {
+        await confirmation("signs out", expectedCount: 0) { signedOut in
             await withDependencies {
-                $0.signOut = SignOut {}
+                $0.fetchProfile = FetchProfile { () async throws(AttendeeFetchError) -> Profile in
+                    throw .unauthorized
+                }
+                $0.signOut = SignOut { signedOut() }
             } operation: {
-                let sut = ProfileCard.ViewModel(onSignOut: { signedOut() })
+                let sut = ProfileCard.ViewModel(onSignOut: { _ in })
+
+                await sut.load()
+            }
+        }
+    }
+
+    @Test func whenSignOutRequested_shouldSignalUserRequestedSignOut() async {
+        var captured: SignOutReason?
+
+        await confirmation("signs out") { signedOut in
+            await withDependencies {
+                $0.signOut = SignOut { signedOut() }
+            } operation: {
+                let sut = ProfileCard.ViewModel(onSignOut: { captured = $0 })
 
                 await sut.signOut()
             }
         }
+
+        #expect(captured == .userRequested)
     }
 
     @Test func whenLoading_shouldNotLeak() async {
@@ -51,7 +88,7 @@ import Testing
         await withDependencies {
             $0.fetchProfile = FetchProfile { profile }
         } operation: {
-            let sut = ProfileCard.ViewModel(onSignOut: {})
+            let sut = ProfileCard.ViewModel(onSignOut: { _ in })
             weakSUT = sut
             await sut.load()
         }

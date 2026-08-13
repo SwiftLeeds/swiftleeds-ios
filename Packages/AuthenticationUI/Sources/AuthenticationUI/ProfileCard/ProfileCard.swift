@@ -4,7 +4,7 @@ import SwiftUI
 package struct ProfileCard: View {
     @State private var viewModel: ViewModel
 
-    package init(onSignOut: @escaping @MainActor () -> Void) {
+    package init(onSignOut: @escaping @MainActor (SignOutReason) -> Void) {
         _viewModel = State(wrappedValue: ViewModel(onSignOut: onSignOut))
     }
 
