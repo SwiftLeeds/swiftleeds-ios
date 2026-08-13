@@ -7,8 +7,10 @@ package struct ScreenBrightness: Sendable {
         private let storage: Double
 
         /// Creates a level, pinning `value` to the range the display accepts.
+        ///
+        /// A value that is not a number is treated as the dimmest setting.
         package init(_ value: Double) {
-            storage = min(max(value, 0), 1)
+            storage = value.isNaN ? 0 : min(max(value, 0), 1)
         }
 
         package init(floatLiteral value: Double) {
