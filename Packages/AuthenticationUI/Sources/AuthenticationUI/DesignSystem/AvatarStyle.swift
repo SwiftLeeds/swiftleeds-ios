@@ -27,7 +27,8 @@ package struct CircularAvatarStyle: AvatarStyle {
     package init() {}
 
     package func makeBody(configuration: AvatarStyleConfiguration) -> some View {
-        configuration.kind.fill
+        Color.clear
+            .background(configuration.kind.fill)
             .overlay { configuration.content }
             .clipShape(Circle())
     }
@@ -41,17 +42,18 @@ package struct RoundedAvatarStyle: AvatarStyle {
     }
 
     package func makeBody(configuration: AvatarStyleConfiguration) -> some View {
-        configuration.kind.fill
+        Color.clear
+            .background(configuration.kind.fill)
             .overlay { configuration.content }
             .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
     }
 }
 
 package extension AvatarContentKind {
-    var fill: Color {
+    var fill: AnyShapeStyle {
         switch self {
-        case .image: Color.clear
-        case .placeholder, .failure: Color.accentColor.opacity(0.15)
+        case .image: AnyShapeStyle(.clear)
+        case .placeholder, .failure: AnyShapeStyle(.tint.opacity(0.15))
         }
     }
 }

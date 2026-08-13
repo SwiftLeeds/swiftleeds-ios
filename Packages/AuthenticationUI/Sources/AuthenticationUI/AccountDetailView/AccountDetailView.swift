@@ -22,7 +22,7 @@ package struct AccountDetailView: View {
                         Text(verbatim: Initials.from(profile.name))
                     }
                     .font(.largeTitle.weight(.semibold))
-                    .foregroundStyle(Color.accentColor)
+                    .foregroundStyle(.tint)
                     .frame(width: 88, height: 88)
 
                     Text(verbatim: profile.name.formatted())
