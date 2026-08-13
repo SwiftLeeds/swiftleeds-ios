@@ -90,7 +90,6 @@ package extension Avatar where Content == AvatarImage, Placeholder == Failure {
     }
 }
 
-#if DEBUG
 #Preview("Avatar styles") {
     VStack(spacing: 24) {
         HStack(spacing: 16) {
@@ -122,4 +121,3 @@ package extension Avatar where Content == AvatarImage, Placeholder == Failure {
     }
     .padding()
 }
-#endif

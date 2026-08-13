@@ -54,7 +54,6 @@ package extension Nameplate where Title == Text, Detail == EmptyView {
     }
 }
 
-#if DEBUG
 private let previewAvatarURL = URL(string: "https://example.com/missing.png")
 
 #Preview("Prominent") {
@@ -116,4 +115,3 @@ private let previewAvatarURL = URL(string: "https://example.com/missing.png")
         }
     }
 }
-#endif
