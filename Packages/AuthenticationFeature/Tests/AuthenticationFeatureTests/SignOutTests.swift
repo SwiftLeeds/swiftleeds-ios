@@ -4,12 +4,12 @@ import Testing
 
 @Suite struct SignOutTests {
     @Test func whenSignedOut_shouldClearStoredSession() async throws {
-        let store = InMemorySessionStore(stored: Session(SessionToken("jwt-abc-123")))
+        let store = InMemorySessionStore(stored: Session(token: SessionToken("jwt-abc-123")))
 
         try await withDependencies {
             $0.sessionStore = store.sessionStore
         } operation: {
-            let sut = SignOut.live
+            let sut = SignOut.liveValue
             try await sut()
         }
 

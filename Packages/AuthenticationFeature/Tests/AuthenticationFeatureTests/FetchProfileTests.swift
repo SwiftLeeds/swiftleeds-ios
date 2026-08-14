@@ -4,17 +4,17 @@ import Foundation
 import Testing
 
 @Suite struct FetchProfileTests {
-    @Test func whenRepositoryReturnsAttendee_shouldReturnSameAttendee() async throws {
-        let expected = try makeAttendee()
+    @Test func whenRepositoryReturnsAttendee_shouldReturnMappedProfile() async throws {
+        let attendee = try makeAttendee()
 
-        let attendee = try await withDependencies {
-            $0.attendeeRepository = .returning(expected)
+        let profile = try await withDependencies {
+            $0.attendeeRepository = .returning(attendee)
         } operation: {
-            let sut = FetchProfile.live
+            let sut = FetchProfile.liveValue
             return try await sut()
         }
 
-        #expect(attendee == expected)
+        #expect(profile == expectedProfile())
     }
 
     @Test func whenRepositoryFails_shouldRethrowError() async throws {
@@ -22,7 +22,7 @@ import Testing
             try await withDependencies {
                 $0.attendeeRepository = .failing(with: .unauthorized)
             } operation: {
-                let sut = FetchProfile.live
+                let sut = FetchProfile.liveValue
                 return try await sut()
             }
         }
@@ -36,5 +36,15 @@ private func makeAttendee() throws -> Attendee {
         avatarURL: AvatarURL(URL(string: "https://example.com/avatar.png")!),
         qrCodeURL: QRCodeURL(URL(string: "https://example.com/qr.png")!),
         ticketReference: try TicketReference("ABCD-12")
+    )
+}
+
+private func expectedProfile() -> Profile {
+    Profile(
+        name: "Ada Lovelace",
+        emailAddress: "ada@example.com",
+        avatarURL: URL(string: "https://example.com/avatar.png")!,
+        qrCodeURL: URL(string: "https://example.com/qr.png")!,
+        ticketReference: "ABCD-12"
     )
 }
