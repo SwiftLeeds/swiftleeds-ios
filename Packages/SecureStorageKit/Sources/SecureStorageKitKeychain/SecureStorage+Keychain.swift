@@ -18,7 +18,13 @@ extension SecureStorage {
                 )
                 switch status {
                 case errSecSuccess:
-                    return result as? Data
+                    // An item that exists but is not readable is a fault, not an
+                    // absence: reporting nil would look like "never signed in"
+                    // and silently sign the user out.
+                    guard let data = result as? Data else {
+                        throw KeychainError.unreadableValue
+                    }
+                    return data
                 case errSecItemNotFound:
                     return nil
                 default:
