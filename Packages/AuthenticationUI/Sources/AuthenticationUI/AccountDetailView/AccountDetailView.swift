@@ -3,6 +3,8 @@ import Foundation
 import SwiftUI
 
 package struct AccountDetailView: View {
+    @Environment(\.dismiss) private var dismiss
+
     private let profile: Profile
     private let signOut: @MainActor () async -> Void
 
@@ -42,7 +44,10 @@ package struct AccountDetailView: View {
             }
 
             Section {
-                SignOutButton(signOut: signOut)
+                SignOutButton {
+                    await signOut()
+                    dismiss()
+                }
             }
         }
         .navigationTitle(profile.name.formatted())

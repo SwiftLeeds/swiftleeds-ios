@@ -12,24 +12,29 @@ extension ProfileCard {
         @Dependency(\.signOut) private var _signOut
 
         package private(set) var state: ProfileCardState = .loading
-        private let onSignOut: @MainActor () -> Void
+        private let onSignOut: @MainActor (SignOutReason) -> Void
 
-        package init(onSignOut: @escaping @MainActor () -> Void) {
+        package init(onSignOut: @escaping @MainActor (SignOutReason) -> Void) {
             self.onSignOut = onSignOut
         }
 
         package func load() async {
             state = .loading
-            do {
+            do throws(AttendeeFetchError) {
                 state = .loaded(try await fetchProfile())
             } catch {
-                state = .failed
+                switch error {
+                case .unauthorized:
+                    onSignOut(.signInRequired)
+                case .unknown:
+                    state = .failed
+                }
             }
         }
 
         package func signOut() async {
             try? await _signOut()
-            onSignOut()
+            onSignOut(.userRequested)
         }
     }
 }

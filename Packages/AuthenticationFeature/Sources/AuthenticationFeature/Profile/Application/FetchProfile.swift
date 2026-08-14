@@ -7,7 +7,7 @@ public struct FetchProfile: Sendable {
         self.perform = perform
     }
 
-    public func callAsFunction() async throws -> Profile {
+    public func callAsFunction() async throws(AttendeeFetchError) -> Profile {
         try await perform()
     }
 }

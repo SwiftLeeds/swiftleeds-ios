@@ -25,7 +25,45 @@ import Testing
 
             await sut.load()
 
-            #expect(sut.state == .signedOut)
+            #expect(sut.state == .signedOut(signInRequired: false))
+        }
+    }
+
+    @Test func whenSignedOutBecauseSignInIsRequired_shouldRequireSignIn() async {
+        await withDependencies {
+            $0.authStatus = AuthStatus { .signedOut }
+        } operation: {
+            let sut = AccountView.ViewModel()
+
+            await sut.signedOut(.signInRequired)
+
+            #expect(sut.state == .signedOut(signInRequired: true))
+        }
+    }
+
+    @Test func whenUserRequestedSignOut_shouldNotRequireSignIn() async {
+        await withDependencies {
+            $0.authStatus = AuthStatus { .signedOut }
+        } operation: {
+            let sut = AccountView.ViewModel()
+
+            await sut.signedOut(.userRequested)
+
+            #expect(sut.state == .signedOut(signInRequired: false))
+        }
+    }
+
+    @Test func whenSignedInAgain_shouldStopRequiringSignIn() async {
+        let proof = SignedInProof()
+        await withDependencies {
+            $0.authStatus = AuthStatus { .signedIn(proof) }
+        } operation: {
+            let sut = AccountView.ViewModel()
+            await sut.signedOut(.signInRequired)
+
+            await sut.signedIn()
+
+            #expect(sut.state == .signedIn(proof))
         }
     }
 
