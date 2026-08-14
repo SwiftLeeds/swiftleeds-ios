@@ -245,6 +245,7 @@
 		7804F8767E529D8F3A0D8BE4 /* KotlinLeeds.entitlements */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.entitlements; path = KotlinLeeds.entitlements; sourceTree = "<group>"; };
 		7B6278A12EEDDE1B00DE1473 /* SectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeader.swift; sourceTree = "<group>"; };
 		7B8108412E5CA00E00CCB2F5 /* SwiftLeedsPackage */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SwiftLeedsPackage; sourceTree = "<group>"; };
+		A11CE57000000000000000A1 /* SecureStorageKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SecureStorageKit; sourceTree = "<group>"; };
 		893A122D593379F84605F70C /* SwiftLeedsColors.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = SwiftLeedsColors.xcassets; sourceTree = "<group>"; };
 		AE1C800F289E9F3800996659 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		AE1C801328A7BCD000996659 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
@@ -419,10 +420,19 @@
 			path = Push;
 			sourceTree = "<group>";
 		};
+		A11CE57000000000000000B2 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				A11CE57000000000000000A1 /* SecureStorageKit */,
+			);
+			path = Packages;
+			sourceTree = "<group>";
+		};
 		AECB294A27417F9D00CDC983 = {
 			isa = PBXGroup;
 			children = (
 				7B8108412E5CA00E00CCB2F5 /* SwiftLeedsPackage */,
+				A11CE57000000000000000B2 /* Packages */,
 				74B14FAD28CB22B4004C0A40 /* SwiftLeedsWidgetExtension.entitlements */,
 				C1725A0182E1989D761551B2 /* KotlinLeedsWidgetExtension.entitlements */,
 				AECB295527417F9D00CDC983 /* SwiftLeeds */,
