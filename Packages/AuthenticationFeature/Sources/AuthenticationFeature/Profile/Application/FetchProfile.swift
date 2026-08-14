@@ -3,7 +3,7 @@ import Dependencies
 public struct FetchProfile: Sendable {
     private var perform: @Sendable () async throws(AttendeeFetchError) -> Profile
 
-    private init(perform: @escaping @Sendable () async throws(AttendeeFetchError) -> Profile) {
+    public init(perform: @escaping @Sendable () async throws(AttendeeFetchError) -> Profile) {
         self.perform = perform
     }
 
