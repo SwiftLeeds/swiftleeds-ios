@@ -1,12 +1,9 @@
 extension Log {
-    /// Rewrites each event on its way in.
+    /// Rewrites each event on its way in. A log consumes events rather than producing them,
+    /// so the transform runs before this log sees anything.
     ///
-    /// A log consumes events rather than producing them, so mapping runs
-    /// against the input: the transform happens before this log sees anything.
-    ///
-    /// The transform may change level or category, which cannot be known ahead
-    /// of the event, so the result accepts everything and lets `write` decide.
-    /// Use ``mappingFields(_:)`` when only fields change.
+    /// The transform may change level or category, so the result accepts everything and lets
+    /// `write` decide. Use ``mappingFields(_:)`` when only fields change.
     public func pullback(_ transform: @escaping @Sendable (LogEvent) -> LogEvent) -> Log {
         Log { event in write(transform(event)) }
     }

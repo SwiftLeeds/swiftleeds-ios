@@ -2,10 +2,8 @@ import Foundation
 
 /// Mixed into hashed values so their tokens cannot be reversed by guessing.
 ///
-/// Required rather than defaulted: an unsalted token is guessable for the small
-/// value spaces we log, so the choice of lifetime belongs to whoever composes
-/// the destination. A salt generated per run correlates within one launch; a
-/// stored salt correlates across launches on one device.
+/// Required rather than defaulted, because the lifetime is a decision: a salt generated per run
+/// correlates within one launch, a stored salt correlates across launches on one device.
 public struct LogSalt: Hashable, Sendable {
     private let storage: Data
 
