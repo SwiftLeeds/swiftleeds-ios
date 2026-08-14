@@ -1,3 +1,4 @@
+import AuthenticationUI
 import Settings
 import SwiftUI
 import ReadabilityModifier
@@ -30,11 +31,13 @@ struct TabsMainView: View {
                 }
                 .tag(TabItems.sponsors)
             
-            SettingsView()
-                .tabItem {
-                    Label("Settings", systemImage: "gearshape.fill")
-                }
-                .tag(TabItems.settings)
+            SettingsView {
+                Section("Account") { AccountView() }
+            }
+            .tabItem {
+                Label("Settings", systemImage: "gearshape.fill")
+            }
+            .tag(TabItems.settings)
         }
     }
 }

@@ -91,6 +91,11 @@
 		7B31C8ED2ED0959600FEEDF7 /* DesignKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7B31C8EC2ED0959600FEEDF7 /* DesignKit */; };
 		7B31C8EF2ED0959A00FEEDF7 /* DesignKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7B31C8EE2ED0959A00FEEDF7 /* DesignKit */; };
 		7B31C8F12ED0A7BF00FEEDF7 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = 7B31C8F02ED0A7BF00FEEDF7 /* Settings */; };
+		A11CE57000000000000000D1 /* AuthenticationUI in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C1 /* AuthenticationUI */; };
+		A11CE57000000000000000D2 /* AuthenticationFeature in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C2 /* AuthenticationFeature */; };
+		A11CE57000000000000000D3 /* SecureStorageKit in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C3 /* SecureStorageKit */; };
+		A11CE57000000000000000D4 /* SecureStorageKitKeychain in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C4 /* SecureStorageKitKeychain */; };
+		A11CE57000000000000000D5 /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C5 /* Dependencies */; };
 		7B31C8F32ED0AB0E00FEEDF7 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = 7B31C8F22ED0AB0E00FEEDF7 /* Settings */; };
 		7B31C8F52ED0AB1600FEEDF7 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = 7B31C8F42ED0AB1600FEEDF7 /* Settings */; };
 		7B6278A22EEDDE1B00DE1473 /* SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6278A12EEDDE1B00DE1473 /* SectionHeader.swift */; };
@@ -326,6 +331,11 @@
 				74F5EF8C2A4B4352008D9413 /* ReadabilityModifier in Frameworks */,
 				AE5EFD73289DC1D000464FE1 /* CachedAsyncImage in Frameworks */,
 				7B31C8EB2ED0959000FEEDF7 /* DesignKit in Frameworks */,
+				A11CE57000000000000000D1 /* AuthenticationUI in Frameworks */,
+				A11CE57000000000000000D2 /* AuthenticationFeature in Frameworks */,
+				A11CE57000000000000000D3 /* SecureStorageKit in Frameworks */,
+				A11CE57000000000000000D4 /* SecureStorageKitKeychain in Frameworks */,
+				A11CE57000000000000000D5 /* Dependencies in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -702,6 +712,11 @@
 				7B31C8EA2ED0959000FEEDF7 /* DesignKit */,
 				7B31C8F02ED0A7BF00FEEDF7 /* Settings */,
 				7B8C3ECE2EE4A9F70089C6CF /* SharedAssets */,
+				A11CE57000000000000000C1 /* AuthenticationUI */,
+				A11CE57000000000000000C2 /* AuthenticationFeature */,
+				A11CE57000000000000000C3 /* SecureStorageKit */,
+				A11CE57000000000000000C4 /* SecureStorageKitKeychain */,
+				A11CE57000000000000000C5 /* Dependencies */,
 			);
 			productName = SwiftLeeds;
 			productReference = AECB295327417F9D00CDC983 /* SwiftLeeds.app */;
@@ -784,6 +799,7 @@
 			packageReferences = (
 				AE5EFD71289DC1D000464FE1 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */,
 				74F5EF8A2A4B4352008D9413 /* XCRemoteSwiftPackageReference "ReadabilityModifier" */,
+				A11CE57000000000000000E1 /* XCRemoteSwiftPackageReference "swift-dependencies" */,
 			);
 			productRefGroup = AECB295427417F9D00CDC983 /* Products */;
 			projectDirPath = "";
@@ -1124,7 +1140,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1220,7 +1236,7 @@
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1494,7 +1510,7 @@
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1526,7 +1542,7 @@
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1547,7 +1563,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1570,7 +1586,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1673,7 +1689,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1824,7 +1840,7 @@
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1910,6 +1926,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		A11CE57000000000000000E1 /* XCRemoteSwiftPackageReference "swift-dependencies" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-dependencies";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		74F5EF8A2A4B4352008D9413 /* XCRemoteSwiftPackageReference "ReadabilityModifier" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/yazio/ReadabilityModifier";
@@ -1971,6 +1995,27 @@
 		7B31C8F02ED0A7BF00FEEDF7 /* Settings */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Settings;
+		};
+		A11CE57000000000000000C1 /* AuthenticationUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AuthenticationUI;
+		};
+		A11CE57000000000000000C2 /* AuthenticationFeature */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AuthenticationFeature;
+		};
+		A11CE57000000000000000C3 /* SecureStorageKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SecureStorageKit;
+		};
+		A11CE57000000000000000C4 /* SecureStorageKitKeychain */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SecureStorageKitKeychain;
+		};
+		A11CE57000000000000000C5 /* Dependencies */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A11CE57000000000000000E1 /* XCRemoteSwiftPackageReference "swift-dependencies" */;
+			productName = Dependencies;
 		};
 		7B31C8F22ED0AB0E00FEEDF7 /* Settings */ = {
 			isa = XCSwiftPackageProductDependency;

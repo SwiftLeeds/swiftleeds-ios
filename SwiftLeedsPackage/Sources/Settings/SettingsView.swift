@@ -1,15 +1,20 @@
 import ColorTheme
 import SwiftUI
 
-public struct SettingsView: View {
+public struct SettingsView<Header: View>: View {
     @EnvironmentObject var themeManager: ThemeManager
     @StateObject private var viewModel = SettingsViewModel()
+    private let header: Header
 
-    public init() {}
+    public init(@ViewBuilder header: () -> Header = { EmptyView() }) {
+        self.header = header()
+    }
 
     public var body: some View {
         NavigationStack {
             List {
+                header
+
                 Section("App Icon") {
                     LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 3), spacing: 16) {
                         ForEach(AppIconOption.allCases, id: \.self) { iconOption in

@@ -31,7 +31,7 @@ import Testing
 
 private func makeAttendee() throws -> Attendee {
     Attendee(
-        name: AttendeeName("Ada Lovelace"),
+        name: PersonNameComponents(givenName: "Ada", familyName: "Lovelace"),
         emailAddress: try EmailAddress("ada@example.com"),
         avatarURL: AvatarURL(URL(string: "https://example.com/avatar.png")!),
         qrCodeURL: QRCodeURL(URL(string: "https://example.com/qr.png")!),
@@ -41,7 +41,7 @@ private func makeAttendee() throws -> Attendee {
 
 private func expectedProfile() -> Profile {
     Profile(
-        name: "Ada Lovelace",
+        name: PersonNameComponents(givenName: "Ada", familyName: "Lovelace"),
         emailAddress: "ada@example.com",
         avatarURL: URL(string: "https://example.com/avatar.png")!,
         qrCodeURL: URL(string: "https://example.com/qr.png")!,

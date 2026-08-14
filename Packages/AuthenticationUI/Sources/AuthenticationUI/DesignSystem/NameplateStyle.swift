@@ -98,13 +98,12 @@ private struct NameplateLayout: View {
         HStack(alignment: dynamicTypeSize.isAccessibilitySize ? .top : .center, spacing: spacing) {
             configuration.icon
                 .font(titleFont)
-                .foregroundStyle(Color.accentColor)
+                .foregroundStyle(.tint)
                 .frame(width: iconSize, height: iconSize)
 
             VStack(alignment: .leading, spacing: 2) {
                 configuration.title
                     .font(titleFont)
-                    .foregroundStyle(.primary)
 
                 configuration.detail
                     .font(detailFont)

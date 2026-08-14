@@ -1,4 +1,9 @@
+import AuthenticationFeature
 import ColorTheme
+import Dependencies
+import Foundation
+import SecureStorageKit
+import SecureStorageKitKeychain
 import SwiftUI
 
 @main
@@ -7,6 +12,17 @@ struct SwiftLeedsApp: App {
 
     @StateObject private var appState = AppState()
     @StateObject private var themeManager = ThemeManager.shared
+
+    init() {
+        prepareDependencies {
+            $0.secureStorage = .keychain(service: KeychainService("uk.co.swiftleeds.authentication"))
+            $0.apiConfiguration = APIConfiguration(baseURL: URL(string: "https://\(ConferenceConfig.apiHost)")!)
+            $0.httpClient = .live(onSessionExpiry: {
+                @Dependency(\.signOut) var signOut
+                try? await signOut()
+            })
+        }
+    }
 
     var body: some Scene {
         WindowGroup {

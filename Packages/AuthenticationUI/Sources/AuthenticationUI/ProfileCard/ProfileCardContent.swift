@@ -1,4 +1,5 @@
 import AuthenticationFeature
+import Foundation
 import SwiftUI
 
 package struct ProfileCardContent: View {
@@ -32,7 +33,7 @@ package struct ProfileCardContent: View {
             AccountDetailView(profile: profile, signOut: signOut)
         } label: {
             Nameplate(
-                Text(verbatim: profile.name),
+                Text(verbatim: profile.name.formatted()),
                 detail: Text(verbatim: profile.emailAddress)
             ) {
                 Avatar(url: profile.avatarURL) {

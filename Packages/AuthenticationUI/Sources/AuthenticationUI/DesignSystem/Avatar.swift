@@ -104,7 +104,7 @@ package extension Avatar where Content == AvatarImage, Placeholder == Failure {
                 .frame(width: 40, height: 40)
         }
         .font(.title2.weight(.semibold))
-        .foregroundStyle(Color.accentColor)
+        .foregroundStyle(.tint)
 
         HStack(spacing: 16) {
             Avatar(url: nil) { Text(verbatim: "AL") }
@@ -117,7 +117,7 @@ package extension Avatar where Content == AvatarImage, Placeholder == Failure {
                 .frame(width: 40, height: 40)
         }
         .font(.title2.weight(.semibold))
-        .foregroundStyle(Color.accentColor)
+        .foregroundStyle(.tint)
         .avatarStyle(.rounded)
     }
     .padding()

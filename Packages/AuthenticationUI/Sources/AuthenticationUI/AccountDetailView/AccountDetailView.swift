@@ -1,4 +1,5 @@
 import AuthenticationFeature
+import Foundation
 import SwiftUI
 
 package struct AccountDetailView: View {
@@ -21,10 +22,10 @@ package struct AccountDetailView: View {
                         Text(verbatim: Initials.from(profile.name))
                     }
                     .font(.largeTitle.weight(.semibold))
-                    .foregroundStyle(Color.accentColor)
+                    .foregroundStyle(.tint)
                     .frame(width: 88, height: 88)
 
-                    Text(verbatim: profile.name)
+                    Text(verbatim: profile.name.formatted())
                         .font(.title2.weight(.semibold))
                 }
                 .frame(maxWidth: .infinity)
@@ -44,7 +45,7 @@ package struct AccountDetailView: View {
                 SignOutButton(signOut: signOut)
             }
         }
-        .navigationTitle(profile.name)
+        .navigationTitle(profile.name.formatted())
         .inlineNavigationTitle()
     }
 }
