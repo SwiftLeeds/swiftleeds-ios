@@ -5,7 +5,7 @@ import Testing
 
 @Suite struct SessionStoreTests {
     @Test func whenSessionEstablished_shouldReadBackSameSession() async throws {
-        let session = Session(SessionToken("jwt-abc-123"))
+        let session = Session(token: SessionToken("jwt-abc-123"))
 
         try await withDependencies {
             $0.secureStorage = SecureStorageSpy().secureStorage
