@@ -5,7 +5,7 @@ import Testing
 
 /// Exercises the real Keychain adapter through its public API. Each test uses a
 /// unique service (`SecureStorage.uniqueKeychain`) so runs don't collide, and
-/// cleans up after itself.
+/// removes what it stored before finishing.
 @Suite struct KeychainSecureStorageTests {
     @Test func whenSettingThenReading_shouldReturnTheStoredValue() async throws {
         let storage = SecureStorage.uniqueKeychain
@@ -13,20 +13,22 @@ import Testing
         let token = Data("jwt-abc-123".utf8)
 
         try await storage.set(token, key)
-        defer { Task { try? await storage.remove(key) } }
+        let stored = try await storage.data(key)
+        try await storage.remove(key)
 
-        #expect(try await storage.data(key) == token)
+        #expect(stored == token)
     }
 
     @Test func whenSettingAnExistingKey_shouldOverwriteTheValue() async throws {
         let storage = SecureStorage.uniqueKeychain
         let key = SecureStorageKey("auth.token")
-        defer { Task { try? await storage.remove(key) } }
 
         try await storage.set(Data("first".utf8), key)
         try await storage.set(Data("second".utf8), key)
+        let stored = try await storage.data(key)
+        try await storage.remove(key)
 
-        #expect(try await storage.data(key) == Data("second".utf8))
+        #expect(stored == Data("second".utf8))
     }
 
     @Test func whenReadingAMissingKey_shouldReturnNil() async throws {
