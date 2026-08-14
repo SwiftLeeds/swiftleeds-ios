@@ -3,6 +3,8 @@ import Foundation
 import SwiftUI
 
 package struct ProfileCardContent: View {
+    @State private var isShowingTicket = false
+
     private let state: ProfileCardState
     private let retry: @MainActor () async -> Void
     private let signOut: @MainActor () async -> Void
@@ -32,14 +34,32 @@ package struct ProfileCardContent: View {
         NavigationLink {
             AccountDetailView(profile: profile, signOut: signOut)
         } label: {
-            Nameplate(
-                Text(verbatim: profile.name.formatted()),
-                detail: Text(verbatim: profile.emailAddress)
-            ) {
-                Avatar(url: profile.avatarURL) {
-                    Text(verbatim: Initials.from(profile.name))
+            HStack(spacing: 12) {
+                Nameplate(
+                    Text(verbatim: profile.name.formatted()),
+                    detail: Text(verbatim: profile.emailAddress)
+                ) {
+                    Avatar(url: profile.avatarURL) {
+                        Text(verbatim: Initials.from(profile.name))
+                    }
                 }
+
+                Button {
+                    isShowingTicket = true
+                } label: {
+                    Image(systemName: "qrcode")
+                        .font(.title2)
+                }
+                .buttonStyle(.borderless)
+                .accessibilityLabel("Show Ticket")
             }
+        }
+        .sheet(isPresented: $isShowingTicket) {
+            TicketView(
+                slug: profile.ticketSlug,
+                reference: profile.ticketReference,
+                name: profile.name
+            )
         }
     }
 

@@ -72,7 +72,8 @@ private let attendeeJSON = Data("""
         "email": "ada@example.com",
         "avatar_url": "https://example.com/avatar.png",
         "qr_url": "https://example.com/qr.png",
-        "reference": "ABCD-12"
+        "reference": "ABCD-12",
+        "slug": "ti_pxqFKr9pPWd6VeYKvMBKpjQ"
     }
 }
 """.utf8)
@@ -83,6 +84,7 @@ private func expectedAttendee() throws -> Attendee {
         emailAddress: try EmailAddress("ada@example.com"),
         avatarURL: AvatarURL(URL(string: "https://example.com/avatar.png")!),
         qrCodeURL: QRCodeURL(URL(string: "https://example.com/qr.png")!),
-        ticketReference: try TicketReference("ABCD-12")
+        ticketReference: try TicketReference("ABCD-12"),
+        ticketSlug: try TicketSlug("ti_pxqFKr9pPWd6VeYKvMBKpjQ")
     )
 }
