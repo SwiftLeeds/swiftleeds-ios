@@ -5,15 +5,17 @@ import Security
 extension SecureStorage {
     /// A `SecureStorage` backed by the Keychain (generic-password items),
     /// scoped to `service`. The Keychain encrypts values at rest.
+    ///
+    /// Items are stored `WhenUnlockedThisDeviceOnly`, so they are readable only
+    /// while the device is unlocked and never travel in a backup.
     public static func keychain(service: KeychainService) -> SecureStorage {
         SecureStorage(
             data: { key in
-                var query = baseQuery(service: service, key: key)
-                query[kSecReturnData as String] = true
-                query[kSecMatchLimit as String] = kSecMatchLimitOne
-
                 var result: CFTypeRef?
-                let status = SecItemCopyMatching(query as CFDictionary, &result)
+                let status = SecItemCopyMatching(
+                    KeychainQuery.read(service: service, key: key) as CFDictionary,
+                    &result
+                )
                 switch status {
                 case errSecSuccess:
                     return result as? Data
@@ -24,18 +26,19 @@ extension SecureStorage {
                 }
             },
             set: { data, key in
-                let query = baseQuery(service: service, key: key)
+                let identity = KeychainQuery.identity(service: service, key: key)
                 let updateStatus = SecItemUpdate(
-                    query as CFDictionary,
-                    [kSecValueData as String: data] as CFDictionary
+                    identity as CFDictionary,
+                    KeychainQuery.update(data: data) as CFDictionary
                 )
                 switch updateStatus {
                 case errSecSuccess:
                     return
                 case errSecItemNotFound:
-                    var addQuery = query
-                    addQuery[kSecValueData as String] = data
-                    let addStatus = SecItemAdd(addQuery as CFDictionary, nil)
+                    let addStatus = SecItemAdd(
+                        KeychainQuery.add(service: service, key: key, data: data) as CFDictionary,
+                        nil
+                    )
                     guard addStatus == errSecSuccess else {
                         throw KeychainError(status: addStatus)
                     }
@@ -44,7 +47,9 @@ extension SecureStorage {
                 }
             },
             remove: { key in
-                let status = SecItemDelete(baseQuery(service: service, key: key) as CFDictionary)
+                let status = SecItemDelete(
+                    KeychainQuery.identity(service: service, key: key) as CFDictionary
+                )
                 switch status {
                 case errSecSuccess, errSecItemNotFound:
                     return
@@ -54,12 +59,4 @@ extension SecureStorage {
             }
         )
     }
-}
-
-private func baseQuery(service: KeychainService, key: SecureStorageKey) -> [String: Any] {
-    [
-        kSecClass as String: kSecClassGenericPassword,
-        kSecAttrService as String: String(service),
-        kSecAttrAccount as String: String(key),
-    ]
 }
