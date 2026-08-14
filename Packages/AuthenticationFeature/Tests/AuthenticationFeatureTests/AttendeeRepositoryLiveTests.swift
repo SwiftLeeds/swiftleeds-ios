@@ -83,7 +83,6 @@ private func expectedAttendee() throws -> Attendee {
         name: PersonNameComponents(givenName: "Ada", familyName: "Lovelace"),
         emailAddress: try EmailAddress("ada@example.com"),
         avatarURL: AvatarURL(URL(string: "https://example.com/avatar.png")!),
-        qrCodeURL: QRCodeURL(URL(string: "https://example.com/qr.png")!),
         ticketReference: try TicketReference("ABCD-12"),
         ticketSlug: try TicketSlug("ti_pxqFKr9pPWd6VeYKvMBKpjQ")
     )
