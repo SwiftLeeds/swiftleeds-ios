@@ -14,7 +14,17 @@ extension SecureStorage {
         during body: () async throws -> T
     ) async throws -> T {
         try await set(data, key)
+        return try await removingAfterwards(key, during: body)
+    }
 
+    /// Runs `body`, then removes `key` whether or not it threw.
+    ///
+    /// For tests that must start with nothing stored, so they cannot use
+    /// ``storing(_:at:during:)`` but still have to clean up on failure.
+    func removingAfterwards<T>(
+        _ key: SecureStorageKey,
+        during body: () async throws -> T
+    ) async throws -> T {
         do {
             let result = try await body()
             try await remove(key)

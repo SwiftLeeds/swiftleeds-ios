@@ -5,22 +5,20 @@ import Foundation
 /// The named cases are the ones a caller can act on. Everything else keeps its
 /// `OSStatus` so a failure is still diagnosable.
 public enum KeychainError: Error, Equatable {
-    /// The device is locked, or the item's protection class does not permit
-    /// access right now. Transient: the same call can succeed later, so this is
-    /// not a reason to discard the stored value.
+    /// The item is not accessible in the device's current lock state.
+    /// Transient: the same call can succeed later.
     case deviceLocked
 
     /// The user could not be authenticated for an item that required it.
     case authenticationFailed
 
-    /// The process is not entitled to reach this item. Usually a missing
-    /// keychain access group, or an unsigned test process.
+    /// The process is not entitled to reach this item.
     case missingEntitlement
 
-    /// An item exists but its value is not readable as `Data`.
+    /// An item exists but its value is not `Data`.
     case unreadableValue
 
-    /// Anything else, kept verbatim rather than flattened away.
+    /// Any other status, kept for diagnosis.
     case unexpected(OSStatus)
 
     package init(status: OSStatus) {

@@ -1,6 +1,5 @@
 import Foundation
 import SecureStorageKit
-import Security
 
 extension SecureStorage {
     /// A `SecureStorage` backed by the Keychain (generic-password items),
@@ -9,60 +8,12 @@ extension SecureStorage {
     /// Items are stored `WhenUnlockedThisDeviceOnly`, so they are readable only
     /// while the device is unlocked and never travel in a backup.
     public static func keychain(service: KeychainService) -> SecureStorage {
-        SecureStorage(
-            data: { key in
-                var result: CFTypeRef?
-                let status = SecItemCopyMatching(
-                    KeychainQuery.read(service: service, key: key) as CFDictionary,
-                    &result
-                )
-                switch status {
-                case errSecSuccess:
-                    // An item that exists but is not readable is a fault, not an
-                    // absence: reporting nil would look like "never signed in"
-                    // and silently sign the user out.
-                    guard let data = result as? Data else {
-                        throw KeychainError.unreadableValue
-                    }
-                    return data
-                case errSecItemNotFound:
-                    return nil
-                default:
-                    throw KeychainError(status: status)
-                }
-            },
-            set: { data, key in
-                let identity = KeychainQuery.identity(service: service, key: key)
-                let updateStatus = SecItemUpdate(
-                    identity as CFDictionary,
-                    KeychainQuery.update(data: data) as CFDictionary
-                )
-                switch updateStatus {
-                case errSecSuccess:
-                    return
-                case errSecItemNotFound:
-                    let addStatus = SecItemAdd(
-                        KeychainQuery.add(service: service, key: key, data: data) as CFDictionary,
-                        nil
-                    )
-                    guard addStatus == errSecSuccess else {
-                        throw KeychainError(status: addStatus)
-                    }
-                default:
-                    throw KeychainError(status: updateStatus)
-                }
-            },
-            remove: { key in
-                let status = SecItemDelete(
-                    KeychainQuery.identity(service: service, key: key) as CFDictionary
-                )
-                switch status {
-                case errSecSuccess, errSecItemNotFound:
-                    return
-                default:
-                    throw KeychainError(status: status)
-                }
-            }
+        let store = KeychainStore(service: service)
+
+        return SecureStorage(
+            data: { key in try await store.data(for: key) },
+            set: { data, key in try await store.set(data, for: key) },
+            remove: { key in try await store.remove(key) }
         )
     }
 }

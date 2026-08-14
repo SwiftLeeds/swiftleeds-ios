@@ -4,15 +4,12 @@ import Security
 
 /// Builds the dictionaries handed to the Keychain.
 ///
-/// Separated from the calls themselves so the attributes can be asserted
-/// directly. The protection class in particular cannot be checked by storing
-/// and reading back: the legacy macOS keychain, which is what unit tests run
-/// against, discards `kSecAttrAccessible` entirely.
+/// Separate from the calls so the attributes can be asserted directly.
 package enum KeychainQuery {
-    /// Identifies one item. Used to search, update and delete.
+    /// Identifies one item, for searching, updating and deleting.
     ///
-    /// Deliberately carries no value and no attributes, because `SecItemUpdate`
-    /// requires a search query without `kSecValueData`.
+    /// Carries no value: `SecItemUpdate` rejects a search query containing
+    /// `kSecValueData`.
     static func identity(service: KeychainService, key: SecureStorageKey) -> [String: Any] {
         [
             kSecClass as String: kSecClassGenericPassword,
@@ -21,12 +18,8 @@ package enum KeychainQuery {
         ]
     }
 
-    /// Creates an item, bound to this device and readable only while unlocked.
-    ///
-    /// `ThisDeviceOnly` keeps the session token out of encrypted backups, so it
-    /// cannot ride a restore onto another device. Re-authenticating costs an
-    /// email address and a ticket reference, so there is nothing to gain by
-    /// letting a bearer credential migrate.
+    /// Creates an item readable only while the device is unlocked, and bound to
+    /// this device so it is excluded from backups and device transfer.
     package static func add(
         service: KeychainService,
         key: SecureStorageKey,
