@@ -3,7 +3,7 @@ import Dependencies
 public struct SignOut: Sendable {
     private var perform: @Sendable () async throws -> Void
 
-    private init(perform: @escaping @Sendable () async throws -> Void) {
+    public init(perform: @escaping @Sendable () async throws -> Void) {
         self.perform = perform
     }
 

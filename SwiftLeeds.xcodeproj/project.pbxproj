@@ -247,6 +247,7 @@
 		7B8108412E5CA00E00CCB2F5 /* SwiftLeedsPackage */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SwiftLeedsPackage; sourceTree = "<group>"; };
 		A11CE57000000000000000A1 /* SecureStorageKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SecureStorageKit; sourceTree = "<group>"; };
 		A11CE57000000000000000A2 /* AuthenticationFeature */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = AuthenticationFeature; sourceTree = "<group>"; };
+		A11CE57000000000000000A3 /* AuthenticationUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = AuthenticationUI; sourceTree = "<group>"; };
 		893A122D593379F84605F70C /* SwiftLeedsColors.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = SwiftLeedsColors.xcassets; sourceTree = "<group>"; };
 		AE1C800F289E9F3800996659 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		AE1C801328A7BCD000996659 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
@@ -426,6 +427,7 @@
 			children = (
 				A11CE57000000000000000A1 /* SecureStorageKit */,
 				A11CE57000000000000000A2 /* AuthenticationFeature */,
+				A11CE57000000000000000A3 /* AuthenticationUI */,
 			);
 			path = Packages;
 			sourceTree = "<group>";
