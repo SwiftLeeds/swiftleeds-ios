@@ -25,8 +25,29 @@ extension LogValue {
 }
 
 extension Sequence<LogField> {
-    /// Renders fields as `name=value` pairs, keeping the order they were written.
-    var rendered: String {
-        map { "\(String($0.name))=\($0.value.rendered)" }.joined(separator: " ")
+    /// Renders fields as `name=value` pairs in the order they were written,
+    /// replacing hashed values with their correlation token.
+    ///
+    /// Secrets are excluded: they are rendered separately so unified logging
+    /// can redact them.
+    func rendered(salt: LogSalt) -> String {
+        compactMap { field in
+            switch field.sensitivity {
+            case .open:
+                "\(String(field.name))=\(field.value.rendered)"
+            case .hashed:
+                "\(String(field.name))=\(String(CorrelationToken(field.value.rendered, salt: salt)))"
+            case .secret:
+                nil
+            }
+        }
+        .joined(separator: " ")
+    }
+
+    /// Renders only the secret values, for an interpolation the system redacts.
+    var renderedSecrets: String {
+        filter { $0.sensitivity == .secret }
+            .map { "\(String($0.name))=\($0.value.rendered)" }
+            .joined(separator: " ")
     }
 }

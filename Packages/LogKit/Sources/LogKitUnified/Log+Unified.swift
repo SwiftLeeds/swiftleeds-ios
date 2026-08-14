@@ -4,11 +4,15 @@ import os
 extension Log {
     /// Writes to Apple's unified logging system.
     ///
-    /// Fields are grouped by sensitivity and each group is interpolated once,
-    /// because `OSLogMessage` must be a literal at the call site and cannot be
-    /// assembled from runtime data. Within a group, fields keep the order they
-    /// were written.
-    public static func unified(subsystem: LogSubsystem) -> Log {
+    /// Hashed values are replaced with a salted token computed per field, so
+    /// one value keeps the same token when its neighbours change. Because the
+    /// tokens are already non-reversible, every non-secret field is rendered in
+    /// one pass and keeps the order it was written. Secrets go in a separate
+    /// interpolation the system redacts.
+    ///
+    /// `OSLogMessage` must be a literal at the call site, so the number of
+    /// interpolations is fixed and fields cannot be interpolated individually.
+    public static func unified(subsystem: LogSubsystem, salt: LogSalt) -> Log {
         // One Logger per category, kept because creating one is not free and
         // categories are few and long-lived.
         let loggers = LoggerCache(subsystem: String(subsystem))
@@ -16,21 +20,19 @@ extension Log {
         return Log { event in
             let logger = loggers.logger(for: event.category)
 
-            // Recorded explicitly because OSLogType has no warning: notice and
-            // warning would otherwise both read as `default` in Console.
+            // Written out because OSLogType has no warning: notice and warning
+            // would otherwise both read as `default` in Console.
             let level = "[\(event.level.name)]"
-            let open = event.fields.filter { $0.sensitivity == .open }.rendered
-            let hashed = event.fields.filter { $0.sensitivity == .hashed }.rendered
-            let secret = event.fields.filter { $0.sensitivity == .secret }.rendered
+            let fields = event.fields.rendered(salt: salt)
+            let secrets = event.fields.renderedSecrets
 
             logger.log(
                 level: event.level.osLogType,
                 """
                 \(level, privacy: .public) \
                 \(String(event.message), privacy: .public) \
-                \(open, privacy: .public) \
-                \(hashed, privacy: .private(mask: .hash)) \
-                \(secret, privacy: .sensitive)
+                \(fields, privacy: .public) \
+                \(secrets, privacy: .sensitive)
                 """
             )
         }
