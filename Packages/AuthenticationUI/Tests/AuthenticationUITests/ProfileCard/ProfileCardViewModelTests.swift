@@ -6,8 +6,8 @@ import Testing
 
 @MainActor
 @Suite struct ProfileCardViewModelTests {
-    @Test func whenProfileLoads_shouldBeLoaded() async {
-        let profile = makeProfile()
+    @Test func whenProfileLoads_shouldBeLoaded() async throws {
+        let profile = try makeProfile()
         await withDependencies {
             $0.fetchProfile = FetchProfile { profile }
         } operation: {
@@ -100,8 +100,8 @@ import Testing
         #expect(captured == .userRequested)
     }
 
-    @Test func whenLoading_shouldNotLeak() async {
-        let profile = makeProfile()
+    @Test func whenLoading_shouldNotLeak() async throws {
+        let profile = try makeProfile()
         weak var weakSUT: ProfileCard.ViewModel?
         await withDependencies {
             $0.fetchProfile = FetchProfile { profile }
@@ -113,13 +113,13 @@ import Testing
         #expect(weakSUT == nil)
     }
 
-    private func makeProfile() -> Profile {
+    private func makeProfile() throws -> Profile {
         Profile(
             name: PersonNameComponents(givenName: "Ada", familyName: "Lovelace"),
             emailAddress: "ada@example.com",
-            avatarURL: URL(string: "https://example.com/avatar.png")!,
+            avatarURL: try #require(URL(string: "https://example.com/avatar.png")),
             ticketReference: "ABCD-1",
-            ticketSlug: try! TicketSlug("ti_abc")
+            ticketSlug: try TicketSlug("ti_abc")
         )
     }
 }

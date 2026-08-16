@@ -3,7 +3,11 @@ import Foundation
 import Testing
 
 @Suite struct HTTPClientSessionExpiryTests {
-    private let url = URL(string: "https://example.com")!
+    private let url: URL
+
+    init() throws {
+        url = try #require(URL(string: "https://example.com"))
+    }
 
     @Test func when401OnBearerRequest_shouldInvokeReaction() async throws {
         let reaction = ReactionSpy()

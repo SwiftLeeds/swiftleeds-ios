@@ -4,7 +4,11 @@ import Foundation
 import Testing
 
 @Suite struct HTTPClientAuthenticatedTests {
-    private let url = URL(string: "https://example.com")!
+    private let url: URL
+
+    init() throws {
+        url = try #require(URL(string: "https://example.com"))
+    }
 
     @Test func whenSessionExists_shouldAttachBearer() async throws {
         let spy = HTTPClientSpy(respondingWith: Data(), statusCode: 200)

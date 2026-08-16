@@ -109,7 +109,7 @@ private func expectedAttendee() throws -> Attendee {
     Attendee(
         name: PersonNameComponents(givenName: "Ada", familyName: "Lovelace"),
         emailAddress: try EmailAddress("ada@example.com"),
-        avatarURL: AvatarURL(URL(string: "https://example.com/avatar.png")!),
+        avatarURL: AvatarURL(try #require(URL(string: "https://example.com/avatar.png"))),
         ticketReference: try TicketReference("ABCD-12"),
         ticketSlug: try TicketSlug("ti_pxqFKr9pPWd6VeYKvMBKpjQ")
     )
