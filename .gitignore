@@ -29,9 +29,9 @@ playground.xcworkspace
 # hence it is not needed unless you have added a package configuration file to your project
 # .swiftpm
 
-# Local library packages resolve against the app's workspace Package.resolved,
-# so their own resolved files are redundant and cause churn.
-Packages/*/Package.resolved
+# Packages/*/Package.resolved is committed. Xcode ignores it in favour of the app's
+# workspace resolution, but `swift test` uses it, so without it CI resolves fresh and
+# tests different versions than the app ships.
 
 .build/
 .build-shared/
