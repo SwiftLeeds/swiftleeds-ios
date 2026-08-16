@@ -16,7 +16,7 @@ import Testing
         #expect(level == .brightest)
     }
 
-    @Test(arguments: [-0.0001, -1, -100, -.infinity])
+    @Test(arguments: [-0.0001, -1, -100, -Double.infinity])
     func whenLevelIsBelowRange_shouldPinToDimmest(_ value: Double) {
         let level = ScreenBrightness.Level(value)
 

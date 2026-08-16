@@ -35,3 +35,37 @@ jobs:
 
       - name: Build KotlinLeeds via Fastlane
         run: fastlane build_kotlinleeds
+
+  test-packages:
+    name: Test Swift Packages
+    runs-on: macos-26
+    steps:
+      - name: Checkout iOS Repository
+        uses: actions/checkout@v4
+
+      - name: Select Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: '26.5'
+
+      - name: Run every package test suite
+        run: |
+          set -uo pipefail
+          count=0
+          failed=()
+          for dir in Packages/*/; do
+            [ -f "${dir}Package.swift" ] || continue
+            echo "::group::${dir%/}"
+            (cd "$dir" && swift test) || failed+=("${dir%/}")
+            echo "::endgroup::"
+            count=$((count + 1))
+          done
+          if [ "$count" -eq 0 ]; then
+            echo "No Swift packages found under Packages/" >&2
+            exit 1
+          fi
+          if [ ${#failed[@]} -gt 0 ]; then
+            echo "::error::Failing packages: ${failed[*]}"
+            exit 1
+          fi
+          echo "Tested $count package(s)"
