@@ -17,8 +17,8 @@ import Testing
         #expect(await store.stored != nil)
     }
 
-    @Test func whenAuthenticationFails_shouldRethrowFailure() async throws {
-        try await withDependencies {
+    @Test func whenAuthenticationFails_shouldRethrowFailure() async {
+        await withDependencies {
             $0.authGateway = .failing(with: StubError.authenticationFailed)
         } operation: {
             let sut = SignIn.liveValue
@@ -28,10 +28,10 @@ import Testing
         }
     }
 
-    @Test func whenAuthenticationFails_shouldNotStoreSession() async throws {
+    @Test func whenAuthenticationFails_shouldNotStoreSession() async {
         let store = InMemorySessionStore()
 
-        try await withDependencies {
+        await withDependencies {
             $0.authGateway = .failing(with: StubError.authenticationFailed)
             $0.sessionStore = store.sessionStore
         } operation: {
