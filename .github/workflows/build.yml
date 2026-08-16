@@ -48,6 +48,18 @@ jobs:
         with:
           xcode-version: '26.5'
 
+      # Only dependency sources, never build products. Package.resolved pins exact
+      # revisions, so a restored checkout cannot differ from a fresh one.
+      - name: Cache dependency sources
+        uses: actions/cache@v4
+        with:
+          path: |
+            .build-shared/repositories
+            .build-shared/checkouts
+          key: spm-deps-${{ runner.os }}-${{ hashFiles('Packages/*/Package.resolved') }}
+          restore-keys: |
+            spm-deps-${{ runner.os }}-
+
       - name: Run every package test suite
         run: |
           set -uo pipefail
