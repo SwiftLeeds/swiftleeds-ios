@@ -51,12 +51,13 @@ jobs:
       - name: Run every package test suite
         run: |
           set -uo pipefail
+          scratch="$PWD/.build-shared"
           count=0
           failed=()
           for dir in Packages/*/; do
             [ -f "${dir}Package.swift" ] || continue
             echo "::group::${dir%/}"
-            (cd "$dir" && swift test) || failed+=("${dir%/}")
+            (cd "$dir" && swift test --scratch-path "$scratch") || failed+=("${dir%/}")
             echo "::endgroup::"
             count=$((count + 1))
           done
