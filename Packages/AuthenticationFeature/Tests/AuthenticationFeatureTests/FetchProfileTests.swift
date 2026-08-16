@@ -14,7 +14,7 @@ import Testing
             return try await sut()
         }
 
-        #expect(profile == expectedProfile())
+        #expect(profile == (try expectedProfile()))
     }
 
     @Test func whenRepositoryFails_shouldRethrowError() async throws {
@@ -50,18 +50,18 @@ private func makeAttendee() throws -> Attendee {
     Attendee(
         name: PersonNameComponents(givenName: "Ada", familyName: "Lovelace"),
         emailAddress: try EmailAddress("ada@example.com"),
-        avatarURL: AvatarURL(URL(string: "https://example.com/avatar.png")!),
+        avatarURL: AvatarURL(try #require(URL(string: "https://example.com/avatar.png"))),
         ticketReference: try TicketReference("ABCD-12"),
         ticketSlug: try TicketSlug("ti_abc")
     )
 }
 
-private func expectedProfile() -> Profile {
+private func expectedProfile() throws -> Profile {
     Profile(
         name: PersonNameComponents(givenName: "Ada", familyName: "Lovelace"),
         emailAddress: "ada@example.com",
-        avatarURL: URL(string: "https://example.com/avatar.png")!,
+        avatarURL: try #require(URL(string: "https://example.com/avatar.png")),
         ticketReference: "ABCD-12",
-        ticketSlug: try! TicketSlug("ti_abc")
+        ticketSlug: try TicketSlug("ti_abc")
     )
 }

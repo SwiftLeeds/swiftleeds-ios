@@ -12,12 +12,19 @@ actor HTTPClientSpy {
     }
 
     nonisolated var httpClient: HTTPClient {
-        HTTPClient { request in await self.handle(request) }
+        HTTPClient { request in try await self.handle(request) }
     }
 
-    private func handle(_ request: URLRequest) -> (Data, HTTPURLResponse) {
+    private func handle(_ request: URLRequest) throws -> (Data, HTTPURLResponse) {
         requests.append(request)
-        let response = HTTPURLResponse(url: request.url!, statusCode: statusCode, httpVersion: nil, headerFields: nil)!
+        guard let url = request.url,
+              let response = HTTPURLResponse(
+                  url: url,
+                  statusCode: statusCode,
+                  httpVersion: nil,
+                  headerFields: nil
+              )
+        else { throw StubFailure.couldNotBuildResponse }
         return (data, response)
     }
 }

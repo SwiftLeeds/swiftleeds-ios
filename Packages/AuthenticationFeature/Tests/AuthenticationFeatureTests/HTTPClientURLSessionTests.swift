@@ -4,13 +4,19 @@ import Testing
 
 @Suite(.serialized)
 struct HTTPClientURLSessionTests {
-    private let url = URL(string: "https://example.com")!
+    private let url: URL
+
+    init() throws {
+        url = try #require(URL(string: "https://example.com"))
+    }
 
     @Test func whenServerResponds_shouldReturnDataAndHTTPResponse() async throws {
         let expected = Data("hello".utf8)
         URLProtocolStub.stub(
             data: expected,
-            response: HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)!,
+            response: try #require(
+                HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)
+            ),
             error: nil
         )
         let sut = HTTPClient.urlSession(URLProtocolStub.session())
