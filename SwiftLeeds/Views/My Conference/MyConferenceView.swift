@@ -31,7 +31,7 @@ struct MyConferenceView: View {
             .background(Color.listBackground)
             .navigationTitle("Schedule")
             .toolbar {
-                if let currentEvent = viewModel.currentEvent {
+                if let currentEvent = viewModel.currentEvent, viewModel.events.count > 1 {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Menu {
                             ForEach(viewModel.events) { event in
@@ -44,7 +44,6 @@ struct MyConferenceView: View {
                                 Text(currentEvent.name)
                                 Image(systemName: "chevron.up.chevron.down")
                                     .font(.caption)
-
                             }
                         }
                         .accentColor(Color("AccentColor"))
