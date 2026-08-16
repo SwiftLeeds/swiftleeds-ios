@@ -12,8 +12,16 @@ let package = Package(
         .library(name: "LogKit", targets: ["LogKit"]),
         .library(name: "LogKitUnified", targets: ["LogKitUnified"]),
     ],
+    dependencies: [
+        .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.0.0"),
+    ],
     targets: [
-        .target(name: "LogKit"),
+        .target(
+            name: "LogKit",
+            dependencies: [
+                .product(name: "Dependencies", package: "swift-dependencies"),
+            ]
+        ),
         .target(
             name: "LogKitUnified",
             dependencies: ["LogKit"]
