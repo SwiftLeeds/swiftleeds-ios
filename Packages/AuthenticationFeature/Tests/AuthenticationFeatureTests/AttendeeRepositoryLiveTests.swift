@@ -8,7 +8,7 @@ import Testing
         let expected = try expectedAttendee()
 
         let attendee = try await withDependencies {
-            $0.httpClient = .responding(with: attendeeJSON, statusCode: 200)
+            $0.httpClient = .responding(with: attendeeJSON(), statusCode: 200)
         } operation: {
             let sut = AttendeeRepository.liveValue
             return try await sut.fetch()
@@ -20,7 +20,7 @@ import Testing
     @Test func whenServerReturnsUnauthorized_shouldThrowUnauthorized() async throws {
         await #expect(throws: AttendeeFetchError.unauthorized) {
             try await withDependencies {
-                $0.httpClient = .responding(with: attendeeJSON, statusCode: 401)
+                $0.httpClient = .responding(with: attendeeJSON(), statusCode: 401)
             } operation: {
                 let sut = AttendeeRepository.liveValue
                 return try await sut.fetch()
@@ -31,7 +31,7 @@ import Testing
     @Test func whenServerReturnsOtherStatus_shouldThrowUnknown() async throws {
         await #expect(throws: AttendeeFetchError.unknown) {
             try await withDependencies {
-                $0.httpClient = .responding(with: attendeeJSON, statusCode: 500)
+                $0.httpClient = .responding(with: attendeeJSON(), statusCode: 500)
             } operation: {
                 let sut = AttendeeRepository.liveValue
                 return try await sut.fetch()
@@ -39,10 +39,32 @@ import Testing
         }
     }
 
-    @Test func whenServerReturnsInvalidJSON_shouldThrowUnknown() async throws {
-        await #expect(throws: AttendeeFetchError.unknown) {
+    @Test func whenServerReturnsInvalidJSON_shouldThrowInvalidResponse() async throws {
+        await #expect(throws: AttendeeFetchError.invalidResponse) {
             try await withDependencies {
                 $0.httpClient = .responding(with: Data("not json".utf8), statusCode: 200)
+            } operation: {
+                let sut = AttendeeRepository.liveValue
+                return try await sut.fetch()
+            }
+        }
+    }
+
+    @Test func whenServerReturnsUnparsableTicketReference_shouldThrowInvalidResponse() async throws {
+        await #expect(throws: AttendeeFetchError.invalidResponse) {
+            try await withDependencies {
+                $0.httpClient = .responding(with: attendeeJSON(reference: "!!!"), statusCode: 200)
+            } operation: {
+                let sut = AttendeeRepository.liveValue
+                return try await sut.fetch()
+            }
+        }
+    }
+
+    @Test func whenServerReturnsUnparsableEmailAddress_shouldThrowInvalidResponse() async throws {
+        await #expect(throws: AttendeeFetchError.invalidResponse) {
+            try await withDependencies {
+                $0.httpClient = .responding(with: attendeeJSON(email: ""), statusCode: 200)
             } operation: {
                 let sut = AttendeeRepository.liveValue
                 return try await sut.fetch()
@@ -64,19 +86,24 @@ import Testing
 
 private enum StubError: Error { case transport }
 
-private let attendeeJSON = Data("""
-{
-    "ticket": {
-        "first_name": "Ada",
-        "last_name": "Lovelace",
-        "email": "ada@example.com",
-        "avatar_url": "https://example.com/avatar.png",
-        "qr_url": "https://example.com/qr.png",
-        "reference": "ABCD-12",
-        "slug": "ti_pxqFKr9pPWd6VeYKvMBKpjQ"
+private func attendeeJSON(
+    email: String = "ada@example.com",
+    reference: String = "ABCD-12"
+) -> Data {
+    Data("""
+    {
+        "ticket": {
+            "first_name": "Ada",
+            "last_name": "Lovelace",
+            "email": "\(email)",
+            "avatar_url": "https://example.com/avatar.png",
+            "qr_url": "https://example.com/qr.png",
+            "reference": "\(reference)",
+            "slug": "ti_pxqFKr9pPWd6VeYKvMBKpjQ"
+        }
     }
+    """.utf8)
 }
-""".utf8)
 
 private func expectedAttendee() throws -> Attendee {
     Attendee(

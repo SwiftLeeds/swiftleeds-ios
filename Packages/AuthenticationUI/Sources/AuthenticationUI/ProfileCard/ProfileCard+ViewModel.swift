@@ -26,7 +26,7 @@ extension ProfileCard {
                 switch error {
                 case .unauthorized:
                     onSignOut(.signInRequired)
-                case .unknown:
+                case .invalidResponse, .unknown:
                     state = .failed
                 }
             }

@@ -4,10 +4,11 @@ enum AttendeeMapper {
     static func map(_ data: Data, _ response: HTTPURLResponse) throws(AttendeeFetchError) -> Attendee {
         switch response.statusCode {
         case 200:
-            guard let dto = try? JSONDecoder().decode(AttendeeDTO.self, from: data),
-                  let attendee = try? dto.attendee()
-            else { throw .unknown }
-            return attendee
+            do {
+                return try JSONDecoder().decode(AttendeeDTO.self, from: data).attendee()
+            } catch {
+                throw .invalidResponse
+            }
         case 401:
             throw .unauthorized
         default:

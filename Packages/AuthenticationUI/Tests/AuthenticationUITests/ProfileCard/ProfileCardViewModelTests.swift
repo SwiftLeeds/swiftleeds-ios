@@ -33,6 +33,24 @@ import Testing
         }
     }
 
+    @Test func whenResponseIsInvalid_shouldReportFailureWithoutSigningOut() async {
+        var captured: SignOutReason?
+
+        await withDependencies {
+            $0.fetchProfile = FetchProfile { () async throws(AttendeeFetchError) -> Profile in
+                throw .invalidResponse
+            }
+        } operation: {
+            let sut = ProfileCard.ViewModel(onSignOut: { captured = $0 })
+
+            await sut.load()
+
+            #expect(sut.state == .failed)
+        }
+
+        #expect(captured == nil)
+    }
+
     @Test func whenCredentialsAreRejected_shouldRequireSignIn() async {
         var captured: SignOutReason?
 
