@@ -33,8 +33,6 @@ extension Log {
         _ fields: LogFields,
         _ source: SourceLocation
     ) {
-        guard accepts(level, category) else { return }
-
         write(
             LogEvent(
                 level: level,

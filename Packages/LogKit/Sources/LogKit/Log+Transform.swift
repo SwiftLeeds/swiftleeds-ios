@@ -2,62 +2,40 @@ extension Log {
     /// Rewrites each event on its way in. A log consumes events rather than producing them,
     /// so the transform runs before this log sees anything.
     ///
-    /// The transform may change level or category, so the result accepts everything and lets
-    /// `write` decide. Use ``mappingFields(_:)`` when only fields change.
+    /// Use ``mappingFields(_:)`` when only fields change.
     public func pullback(_ transform: @escaping @Sendable (LogEvent) -> LogEvent) -> Log {
         Log { event in write(transform(event)) }
     }
 
-    /// Rewrites only the fields, keeping the level and category, so the cheap
-    /// pre-check still applies.
+    /// Rewrites only the fields, keeping the level and category.
     public func mappingFields(_ transform: @escaping @Sendable (LogFields) -> LogFields) -> Log {
-        Log(accepts: accepts) { event in
-            write(
-                LogEvent(
-                    level: event.level,
-                    category: event.category,
-                    message: event.message,
-                    fields: transform(event.fields),
-                    source: event.source
-                )
+        pullback { event in
+            LogEvent(
+                level: event.level,
+                category: event.category,
+                message: event.message,
+                fields: transform(event.fields),
+                source: event.source
             )
         }
     }
 
     /// Passes on only the events satisfying the predicate.
-    ///
-    /// The predicate needs a whole event, so it cannot inform the pre-check.
     public func filtered(by isIncluded: @escaping @Sendable (LogEvent) -> Bool) -> Log {
-        Log(accepts: accepts) { event in
+        Log { event in
             guard isIncluded(event) else { return }
             write(event)
         }
     }
 
-    /// Drops anything less severe than `level`, before the event is built.
+    /// Drops anything less severe than `level`.
     public func atLeast(_ level: LogLevel) -> Log {
-        Log(
-            accepts: { eventLevel, category in
-                eventLevel >= level && accepts(eventLevel, category)
-            },
-            write: { event in
-                guard event.level >= level else { return }
-                write(event)
-            }
-        )
+        filtered { $0.level >= level }
     }
 
-    /// Passes on only the given categories, before the event is built.
+    /// Passes on only the given categories.
     public func only(_ categories: Set<LogCategory>) -> Log {
-        Log(
-            accepts: { level, category in
-                categories.contains(category) && accepts(level, category)
-            },
-            write: { event in
-                guard categories.contains(event.category) else { return }
-                write(event)
-            }
-        )
+        filtered { categories.contains($0.category) }
     }
 
     /// Removes secret fields before this log sees them.
@@ -76,17 +54,8 @@ extension Log {
 
     /// Writes only while consent is given.
     ///
-    /// Checked per event, so withdrawing consent takes effect immediately, and
-    /// checked in the pre-check too, so a withheld consent costs nothing.
+    /// Checked per event, so withdrawing consent takes effect immediately.
     public func consented(by isGranted: @escaping @Sendable () -> Bool) -> Log {
-        Log(
-            accepts: { level, category in
-                isGranted() && accepts(level, category)
-            },
-            write: { event in
-                guard isGranted() else { return }
-                write(event)
-            }
-        )
+        filtered { _ in isGranted() }
     }
 }

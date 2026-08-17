@@ -29,25 +29,6 @@ import Testing
         #expect(recorder.events.isEmpty)
     }
 
-    @Test func whenWritingToNone_shouldNotWrite() {
-        let recorder = LogRecorder()
-
-        Log.none(.critical, "push", "nowhere")
-
-        #expect(recorder.events.isEmpty)
-    }
-
-    /// The filtering tests above pass through destinations that filter again inside `write`, so
-    /// they cannot see the `accepts` pre-check. This isolates it: `write` here records everything.
-    @Test func whenAcceptsRefuses_shouldNotReachWrite() {
-        let recorder = LogRecorder()
-        let sut = Log(accepts: { _, _ in false }, write: recorder.log.write)
-
-        sut(.error, "push", "ignored")
-
-        #expect(recorder.events.isEmpty)
-    }
-
     @Test func whenCombined_shouldWriteToEveryDestinationOnce() {
         let first = LogRecorder()
         let second = LogRecorder()
