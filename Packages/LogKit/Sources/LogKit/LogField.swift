@@ -14,17 +14,17 @@ public struct LogField: Hashable, Sendable {
     }
 
     /// A value safe to store or transmit anywhere.
-    public static func open(_ name: FieldName, _ value: LogValue) -> LogField {
-        LogField(name: name, value: value, sensitivity: .open)
+    public static func open(_ name: FieldName, _ value: some LogValueRepresentable) -> LogField {
+        LogField(name: name, value: value.logValue, sensitivity: .open)
     }
 
     /// A value that may be correlated but never read.
-    public static func hashed(_ name: FieldName, _ value: LogValue) -> LogField {
-        LogField(name: name, value: value, sensitivity: .hashed)
+    public static func hashed(_ name: FieldName, _ value: some LogValueRepresentable) -> LogField {
+        LogField(name: name, value: value.logValue, sensitivity: .hashed)
     }
 
     /// A value that must never leave the device.
-    public static func secret(_ name: FieldName, _ value: LogValue) -> LogField {
-        LogField(name: name, value: value, sensitivity: .secret)
+    public static func secret(_ name: FieldName, _ value: some LogValueRepresentable) -> LogField {
+        LogField(name: name, value: value.logValue, sensitivity: .secret)
     }
 }
