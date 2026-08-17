@@ -1,6 +1,5 @@
 import CryptoKit
 import Foundation
-import LogKit
 
 /// A short, stable stand-in for a value that must not be readable.
 ///
