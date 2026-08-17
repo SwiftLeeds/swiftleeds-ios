@@ -2,14 +2,14 @@
 public struct LogEvent: Hashable, Sendable {
     public let level: LogLevel
     public let category: LogCategory
-    public let message: LogMessage
+    public let message: MessageTemplate
     public let fields: LogFields
     public let source: SourceLocation
 
     public init(
         level: LogLevel,
         category: LogCategory,
-        message: LogMessage,
+        message: MessageTemplate,
         fields: LogFields = LogFields(),
         source: SourceLocation = .here()
     ) {

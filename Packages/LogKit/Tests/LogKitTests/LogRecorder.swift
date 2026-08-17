@@ -24,7 +24,7 @@ final class LogRecorder: @unchecked Sendable {
 
 extension LogEvent {
     static func stub(
-        _ message: LogMessage = "event",
+        _ message: MessageTemplate = "event",
         level: LogLevel = .info,
         category: LogCategory = "test"
     ) -> LogEvent {

@@ -37,7 +37,7 @@ extension Log {
             LogEvent(
                 level: level,
                 category: category,
-                message: message,
+                message: message.template,
                 fields: fields,
                 source: source
             )

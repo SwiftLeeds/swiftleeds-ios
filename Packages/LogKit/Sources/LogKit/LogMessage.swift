@@ -26,6 +26,13 @@ public struct LogMessage: Hashable, Sendable, ExpressibleByStringLiteral {
     fileprivate var staticValue: StaticString { storage }
 }
 
+extension LogMessage {
+    /// The template an event stores for this message.
+    package var template: MessageTemplate {
+        MessageTemplate(leadingText: storage.description)
+    }
+}
+
 extension StaticString {
     public init(_ message: LogMessage) {
         self = message.staticValue
