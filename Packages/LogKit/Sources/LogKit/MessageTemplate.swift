@@ -32,19 +32,23 @@ extension MessageTemplate {
     /// Stands in for a value the destination was not trusted to see.
     package static let redactionMarker = "<redacted>"
 
-    /// Fills each gap with the matching field's value, in the order they were written.
-    ///
-    /// A gap whose field is absent renders as ``redactionMarker``. That is the normal outcome for a
-    /// secret: classification removes it before the destination is handed the event.
+    /// Fills each gap from its own field, in the order they were written.
     package func rendered(with fields: LogFields) -> String {
-        let valuesByName = Dictionary(
-            fields.map { ($0.name, $0.value.rendered) },
-            uniquingKeysWith: { first, _ in first }
-        )
-
-        return gaps.reduce(into: leadingText) { text, gap in
-            text += valuesByName[gap.placeholder] ?? Self.redactionMarker
+        gaps.reduce(into: leadingText) { text, gap in
+            text += Self.text(for: gap.placeholder, in: fields)
             text += gap.trailingText
         }
+    }
+
+    /// A secret never reaches the sentence, whether or not its field survived classification.
+    ///
+    /// A destination trusted to hold secrets still receives the value, through whatever channel it
+    /// redacts. The sentence is not that channel: `Log.unified` writes it as public.
+    private static func text(for placeholder: FieldName, in fields: LogFields) -> String {
+        guard let field = fields.first(where: { $0.name == placeholder }) else {
+            return redactionMarker
+        }
+
+        return field.sensitivity == .secret ? redactionMarker : field.value.rendered
     }
 }

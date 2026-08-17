@@ -1,46 +1,70 @@
-/// The fixed part of a logged event.
+/// A message as it was written at the call site.
 ///
-/// Backed by `StaticString` so it can never carry interpolated data. That keeps
-/// messages searchable, and lets a destination treat them as safe to show in full.
-public struct LogMessage: Hashable, Sendable, ExpressibleByStringLiteral {
-    public typealias StringLiteralType = StaticString
+/// Built only from a string literal or an interpolation, so its literal text always comes from
+/// source. There is deliberately no initialiser taking a runtime `String`: that is the single door
+/// keeping data out of the message itself. Interpolated values do not stay here, they become
+/// fields, where classification reaches them.
+public struct LogMessage: Sendable, ExpressibleByStringInterpolation {
+    package let template: MessageTemplate
+    package let values: LogFields
 
-    private let storage: StaticString
-
-    public init(_ value: StaticString) {
-        self.storage = value
+    public init(stringLiteral value: String) {
+        template = MessageTemplate(leadingText: value)
+        values = LogFields()
     }
 
-    public init(stringLiteral value: StaticString) {
-        self.init(value)
+    public init(stringInterpolation: Interpolation) {
+        template = MessageTemplate(
+            leadingText: stringInterpolation.leadingText,
+            gaps: stringInterpolation.gaps
+        )
+        values = LogFields(stringInterpolation.values)
     }
-
-    public static func == (lhs: LogMessage, rhs: LogMessage) -> Bool {
-        lhs.storage.description == rhs.storage.description
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(storage.description)
-    }
-
-    fileprivate var staticValue: StaticString { storage }
 }
 
 extension LogMessage {
-    /// The template an event stores for this message.
-    package var template: MessageTemplate {
-        MessageTemplate(leadingText: storage.description)
-    }
-}
+    /// Collects the literal text and the interpolated values as the compiler walks the message.
+    public struct Interpolation: StringInterpolationProtocol {
+        public typealias StringLiteralType = String
 
-extension StaticString {
-    public init(_ message: LogMessage) {
-        self = message.staticValue
-    }
-}
+        package var leadingText = ""
+        package var gaps: [MessageTemplate.Gap] = []
+        package var values: [LogField] = []
 
-extension String {
-    public init(_ message: LogMessage) {
-        self = message.staticValue.description
+        public init(literalCapacity: Int, interpolationCount: Int) {
+            gaps.reserveCapacity(interpolationCount)
+            values.reserveCapacity(interpolationCount)
+        }
+
+        public mutating func appendLiteral(_ literal: String) {
+            guard let last = gaps.indices.last else {
+                leadingText += literal
+                return
+            }
+
+            gaps[last] = MessageTemplate.Gap(
+                placeholder: gaps[last].placeholder,
+                trailingText: gaps[last].trailingText + literal
+            )
+        }
+
+        /// Records an interpolated value.
+        ///
+        /// - Parameters:
+        ///   - value: The value to log.
+        ///   - name: What a destination recording fields separately should call it. Display only:
+        ///     the gap's identity is its position, so two values sharing a name stay distinct.
+        ///   - privacy: How freely the value may travel. Deliberately has no default, so a value
+        ///     cannot be published by forgetting to classify it.
+        public mutating func appendInterpolation(
+            _ value: some LogValueRepresentable,
+            name: String? = nil,
+            privacy: Sensitivity
+        ) {
+            let placeholder = FieldName.positional(GapIndex(gaps.count), label: name)
+
+            gaps.append(MessageTemplate.Gap(placeholder: placeholder, trailingText: ""))
+            values.append(LogField(placeholder, value, privacy))
+        }
     }
 }

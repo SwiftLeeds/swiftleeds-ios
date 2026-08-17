@@ -38,7 +38,7 @@ extension Log {
                 level: level,
                 category: category,
                 message: message.template,
-                fields: fields,
+                fields: message.values.appending(contentsOf: fields),
                 source: source
             )
         )
