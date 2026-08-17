@@ -86,6 +86,26 @@ import Testing
         #expect(recorder.events.map(\.level) == [.error])
     }
 
+    @Test func whenFieldIsMissing_shouldLogItsPath() async throws {
+        let recorder = LogRecorder()
+        let missingLastName = Data(#"{"ticket": {"first_name": "Ada"}}"#.utf8)
+
+        try? await withDependencies {
+            $0.httpClient = .responding(with: missingLastName, statusCode: 200)
+            $0.log = recorder.log
+        } operation: {
+            let sut = AttendeeRepository.liveValue
+            _ = try await sut.fetch()
+        }
+
+        let reason = try #require(recorder.events.first?.fields.first { $0.name == "reason" })
+        guard case let .string(text) = reason.value else {
+            Issue.record("expected the reason to be a string, got \(reason.value)")
+            return
+        }
+        #expect(text == "couldNotRead(keyNotFound ticket.last_name)")
+    }
+
     @Test func whenResponseIsValid_shouldLogNothing() async throws {
         let recorder = LogRecorder()
 

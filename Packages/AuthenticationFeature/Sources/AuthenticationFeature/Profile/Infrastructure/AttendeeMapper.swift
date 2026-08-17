@@ -28,8 +28,6 @@ extension AttendeeMapper {
 
 private enum AttendeeMapperKey: DependencyKey {
     static var liveValue: AttendeeMapper { .live.loggingFailures() }
-    /// Mapping is pure, so a test exercises the real thing. Logging still goes to `\.log`, which
-    /// defaults to writing nothing.
     static var testValue: AttendeeMapper { liveValue }
 }
 
