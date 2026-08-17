@@ -43,8 +43,6 @@ struct SwiftLeedsApp: App {
 
 // MARK: - AppDelegate
 final class AppDelegate: NSObject, UIApplicationDelegate {
-    static var pushURL: String { ConferenceConfig.pushURL }
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         URLCache.shared.diskCapacity = 100_000_000
 
@@ -57,9 +55,9 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         @Dependency(\.log) var log
-        guard let url = URL(string: Self.pushURL) else {
+        guard let url = URL(string: ConferenceConfig.pushURL) else {
             log(.error, "push", "The push URL is not a valid URL", fields: [
-                .open("pushURL", .string(Self.pushURL))
+                .open("pushURL", .string(ConferenceConfig.pushURL))
             ])
             return
         }
