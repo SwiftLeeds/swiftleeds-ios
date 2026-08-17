@@ -16,7 +16,7 @@ extension AppDelegate {
             }
             if let error {
                 log(.error, push, "Could not request notification permission", fields: [
-                    .open("error", .string("\(error)"))
+                    .open("error", error)
                 ])
                 return
             }
@@ -38,7 +38,7 @@ extension AppDelegate {
 #endif
 
         log(.debug, push, "Registering for push", fields: [
-            .hashed("deviceToken", .string(deviceToken.map { String(format: "%02x", $0) }.joined()))
+            .hashed("deviceToken", deviceToken.map { String(format: "%02x", $0) }.joined())
         ])
 
         var request = URLRequest(url: url)
@@ -52,13 +52,13 @@ extension AppDelegate {
 
                 guard let statusCode = (response as? HTTPURLResponse)?.statusCode, 200..<399 ~= statusCode else {
                     log(.error, push, "Push registration was rejected", fields: [
-                        .open("statusCode", .integer((response as? HTTPURLResponse)?.statusCode ?? -1))
+                        .open("statusCode", (response as? HTTPURLResponse)?.statusCode ?? -1)
                     ])
                     return
                 }
             } catch {
                 log(.error, push, "Push registration could not reach the server", fields: [
-                    .open("error", .string("\(error)"))
+                    .open("error", error)
                 ])
             }
         }
@@ -67,7 +67,7 @@ extension AppDelegate {
     func handleFailedRegistration(application: UIApplication, error: Error) {
         @Dependency(\.log) var log
         log(.error, push, "The system refused push registration", fields: [
-            .open("error", .string("\(error)"))
+            .open("error", error)
         ])
     }
 }
