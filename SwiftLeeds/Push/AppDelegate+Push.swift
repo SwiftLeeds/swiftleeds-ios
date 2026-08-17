@@ -15,9 +15,8 @@ extension AppDelegate {
                 return
             }
             if let error {
-                log(.error, push, "Could not request notification permission", fields: [
-                    .open("error", error)
-                ])
+                log(.error, push, "Could not request notification permission",
+                    .open("error", error))
                 return
             }
 
@@ -37,9 +36,8 @@ extension AppDelegate {
         details.debug = true
 #endif
 
-        log(.debug, push, "Registering for push", fields: [
-            .hashed("deviceToken", deviceToken.map { String(format: "%02x", $0) }.joined())
-        ])
+        log(.debug, push, "Registering for push",
+            .hashed("deviceToken", deviceToken.map { String(format: "%02x", $0) }.joined()))
 
         var request = URLRequest(url: url)
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -51,24 +49,21 @@ extension AppDelegate {
                 let (_, response) = try await URLSession.shared.data(for: request)
 
                 guard let statusCode = (response as? HTTPURLResponse)?.statusCode, 200..<399 ~= statusCode else {
-                    log(.error, push, "Push registration was rejected", fields: [
-                        .open("statusCode", (response as? HTTPURLResponse)?.statusCode ?? -1)
-                    ])
+                    log(.error, push, "Push registration was rejected",
+                        .open("statusCode", (response as? HTTPURLResponse)?.statusCode ?? -1))
                     return
                 }
             } catch {
-                log(.error, push, "Push registration could not reach the server", fields: [
-                    .open("error", error)
-                ])
+                log(.error, push, "Push registration could not reach the server",
+                    .open("error", error))
             }
         }
     }
 
     func handleFailedRegistration(application: UIApplication, error: Error) {
         @Dependency(\.log) var log
-        log(.error, push, "The system refused push registration", fields: [
-            .open("error", error)
-        ])
+        log(.error, push, "The system refused push registration",
+            .open("error", error))
     }
 }
 

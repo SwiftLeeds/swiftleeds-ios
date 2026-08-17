@@ -1,54 +1,43 @@
-import Foundation
 import LogKit
 import Testing
 
 @Suite struct LogWriteTests {
-    @Test func whenLevelIsBelowMinimum_shouldNotBuildFields() {
+    @Test func whenLevelIsBelowMinimum_shouldNotWrite() {
         let recorder = LogRecorder()
-        let counter = CallCounter()
         let sut = recorder.log.atLeast(.error)
 
-        sut(.debug, "push", "ignored", fields: counter.record())
+        sut(.debug, "push", "ignored")
 
-        #expect(counter.count == 0)
         #expect(recorder.events.isEmpty)
     }
 
-    @Test func whenCategoryIsNotListed_shouldNotBuildFields() {
+    @Test func whenCategoryIsNotListed_shouldNotWrite() {
         let recorder = LogRecorder()
-        let counter = CallCounter()
         let sut = recorder.log.only(["push"])
 
-        sut(.error, "theme", "ignored", fields: counter.record())
+        sut(.error, "theme", "ignored")
 
-        #expect(counter.count == 0)
+        #expect(recorder.events.isEmpty)
     }
 
-    @Test func whenConsentIsWithheld_shouldNotBuildFields() {
+    @Test func whenConsentIsWithheld_shouldNotWrite() {
         let recorder = LogRecorder()
-        let counter = CallCounter()
         let sut = recorder.log.consented { false }
 
-        sut(.error, "push", "ignored", fields: counter.record())
+        sut(.error, "push", "ignored")
 
-        #expect(counter.count == 0)
+        #expect(recorder.events.isEmpty)
     }
 
-    @Test func whenEventIsAccepted_shouldBuildFieldsExactlyOnce() {
-        let counter = CallCounter()
-        let sut = Log.combine([LogRecorder().log, LogRecorder().log, LogRecorder().log])
+    @Test func whenCombined_shouldWriteToEveryDestinationOnce() {
+        let first = LogRecorder()
+        let second = LogRecorder()
+        let sut = Log.combine([first.log, second.log])
 
-        sut(.error, "push", "kept", fields: counter.record())
+        sut(.error, "push", "kept")
 
-        #expect(counter.count == 1)
-    }
-
-    @Test func whenWritingToNone_shouldNotBuildFields() {
-        let counter = CallCounter()
-
-        Log.none(.critical, "push", "nowhere", fields: counter.record())
-
-        #expect(counter.count == 0)
+        #expect(first.events.count == 1)
+        #expect(second.events.count == 1)
     }
 
     @Test func whenOneOfManyDestinationsAccepts_shouldStillWrite() {
@@ -62,29 +51,19 @@ import Testing
         #expect(loud.events.map(\.message) == ["partial"])
     }
 
+    @Test func whenGivenSeveralFields_shouldKeepThemInWrittenOrder() {
+        let recorder = LogRecorder()
+
+        recorder.log(.error, "push", "ordered", .open("first", 1), .hashed("second", "x"), .secret("third", true))
+
+        #expect(recorder.events.first?.fields.map(\.name) == ["first", "second", "third"])
+    }
+
     @Test func whenRecordingEvent_shouldCaptureCallSite() {
         let recorder = LogRecorder()
 
         recorder.log(.info, "push", "located")
 
         #expect(recorder.events.first?.source.file.hasSuffix("LogWriteTests.swift") == true)
-    }
-}
-
-private final class CallCounter: @unchecked Sendable {
-    private let lock = NSLock()
-    private var storage = 0
-
-    var count: Int {
-        lock.lock()
-        defer { lock.unlock() }
-        return storage
-    }
-
-    func record() -> LogFields {
-        lock.lock()
-        defer { lock.unlock() }
-        storage += 1
-        return [.open("built", true)]
     }
 }

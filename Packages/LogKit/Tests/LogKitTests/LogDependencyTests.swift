@@ -3,10 +3,12 @@ import LogKit
 import Testing
 
 @Suite struct LogDependencyTests {
-    @Test func whenNotConfigured_shouldWriteNothing() {
+    /// The default is `Log.none`, so a test that forgets to override gets silence rather than
+    /// real output. That it writes nowhere is covered by `LogCombineTests`.
+    @Test func whenNotConfigured_shouldNotTrap() {
         @Dependency(\.log) var log
 
-        #expect(log.accepts(.critical, "any") == false)
+        log(.critical, "any", "goes nowhere")
     }
 
     @Test func whenConfigured_shouldUseTheGivenDestination() {
