@@ -56,7 +56,7 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         @Dependency(\.log) var log
         guard let url = URL(string: ConferenceConfig.pushURL) else {
-            log(.error, "push", "The push URL is not a valid URL",
+            log.error("The push URL is not a valid URL", in: .push,
                 .open("pushURL", ConferenceConfig.pushURL))
             return
         }
