@@ -11,7 +11,7 @@ extension Log {
         function: String = #function,
         line: Int = #line
     ) {
-        self(.debug, category, message, fields: LogFields(fields), file: file, function: function, line: line)
+        record(.debug, category, message, LogFields(fields), SourceLocation(file: file, function: function, line: line))
     }
 
     /// Records an informational event.
@@ -23,7 +23,7 @@ extension Log {
         function: String = #function,
         line: Int = #line
     ) {
-        self(.info, category, message, fields: LogFields(fields), file: file, function: function, line: line)
+        record(.info, category, message, LogFields(fields), SourceLocation(file: file, function: function, line: line))
     }
 
     /// Records an event worth noticing but not acting on.
@@ -35,7 +35,7 @@ extension Log {
         function: String = #function,
         line: Int = #line
     ) {
-        self(.notice, category, message, fields: LogFields(fields), file: file, function: function, line: line)
+        record(.notice, category, message, LogFields(fields), SourceLocation(file: file, function: function, line: line))
     }
 
     /// Records an event that may lead to a failure.
@@ -47,7 +47,7 @@ extension Log {
         function: String = #function,
         line: Int = #line
     ) {
-        self(.warning, category, message, fields: LogFields(fields), file: file, function: function, line: line)
+        record(.warning, category, message, LogFields(fields), SourceLocation(file: file, function: function, line: line))
     }
 
     /// Records a failure.
@@ -59,7 +59,7 @@ extension Log {
         function: String = #function,
         line: Int = #line
     ) {
-        self(.error, category, message, fields: LogFields(fields), file: file, function: function, line: line)
+        record(.error, category, message, LogFields(fields), SourceLocation(file: file, function: function, line: line))
     }
 
     /// Records a failure that leaves the app unable to continue as intended.
@@ -71,6 +71,6 @@ extension Log {
         function: String = #function,
         line: Int = #line
     ) {
-        self(.critical, category, message, fields: LogFields(fields), file: file, function: function, line: line)
+        record(.critical, category, message, LogFields(fields), SourceLocation(file: file, function: function, line: line))
     }
 }

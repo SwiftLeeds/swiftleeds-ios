@@ -23,12 +23,10 @@ import Testing
                 level,
                 "push",
                 "exercised every sensitivity",
-                fields: [
-                    .open("category", "registration"),
-                    .hashed("email", "ada@example.com"),
-                    .hashed("reference", "ABCD-1"),
-                    .secret("token", "abc123"),
-                ]
+                .open("category", "registration"),
+                .hashed("email", "ada@example.com"),
+                .hashed("reference", "ABCD-1"),
+                .secret("token", "abc123")
             )
         }
 
