@@ -19,7 +19,11 @@ extension AuthGateway: DependencyKey {
             } catch {
                 throw AuthenticationError.unknown
             }
-            return try LoginMapper.map(data, response)
+            do throws(LoginResponseFailure) {
+                return try LoginMapper.map(data, response)
+            } catch {
+                throw AuthenticationError(error)
+            }
         }
     }
 }
