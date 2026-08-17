@@ -6,6 +6,7 @@ extension AuthGateway: DependencyKey {
         AuthGateway { credential in
             @Dependency(\.httpClient) var httpClient
             @Dependency(\.apiConfiguration) var apiConfiguration
+            @Dependency(\.loginMapper) var loginMapper
 
             var request = URLRequest(url: Endpoint.login.url(baseURL: apiConfiguration.baseURL))
             request.httpMethod = "POST"
@@ -20,7 +21,7 @@ extension AuthGateway: DependencyKey {
                 throw AuthenticationError.unknown
             }
             do throws(LoginResponseFailure) {
-                return try LoginMapper.map(data, response)
+                return try loginMapper.map(data, response)
             } catch {
                 throw AuthenticationError(error)
             }
