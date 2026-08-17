@@ -5,19 +5,20 @@ extension Log {
     /// Writes to Apple's unified logging system.
     ///
     /// Non-secret fields render in one pass and keep their written order; secrets go in a
-    /// separate interpolation the system redacts.
+    /// separate interpolation the system redacts, which is why this is one of the few
+    /// destinations that may hold them.
     ///
     /// `OSLogMessage` must be a literal at the call site, so the number of interpolations is
     /// fixed and fields cannot be interpolated individually.
     public static func unified(subsystem: LogSubsystem, salt: LogSalt) -> Log {
         let loggers = LoggerCache(subsystem: String(subsystem))
 
-        return Log { event in
+        return .destination(salt: salt, secrets: .passThrough) { event in
             let logger = loggers.logger(for: event.category)
 
             // OSLogType has no warning, so notice and warning would both read as `default`.
             let level = "[\(event.level.name)]"
-            let fields = event.fields.rendered(salt: salt)
+            let fields = event.fields.renderedWithoutSecrets
             let secrets = event.fields.renderedSecrets
 
             logger.log(
