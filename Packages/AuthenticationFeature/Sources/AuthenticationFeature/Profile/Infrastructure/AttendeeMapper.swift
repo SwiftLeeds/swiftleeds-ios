@@ -1,18 +1,39 @@
+import Dependencies
 import Foundation
 
-enum AttendeeMapper {
-    static func map(_ data: Data, _ response: HTTPURLResponse) throws(AttendeeFetchError) -> Attendee {
+struct AttendeeMapper: Sendable {
+    var map: @Sendable (Data, HTTPURLResponse) throws(AttendeeResponseFailure) -> Attendee
+
+    init(map: @escaping @Sendable (Data, HTTPURLResponse) throws(AttendeeResponseFailure) -> Attendee) {
+        self.map = map
+    }
+}
+
+extension AttendeeMapper {
+    static let live = AttendeeMapper { data, response throws(AttendeeResponseFailure) in
         switch response.statusCode {
         case 200:
             do {
                 return try JSONDecoder().decode(AttendeeDTO.self, from: data).attendee()
             } catch {
-                throw .invalidResponse
+                throw .couldNotRead(error)
             }
         case 401:
             throw .unauthorized
         default:
-            throw .unknown
+            throw .unexpectedStatus(response.statusCode)
         }
+    }
+}
+
+private enum AttendeeMapperKey: DependencyKey {
+    static var liveValue: AttendeeMapper { .live.loggingFailures() }
+    static var testValue: AttendeeMapper { liveValue }
+}
+
+extension DependencyValues {
+    var attendeeMapper: AttendeeMapper {
+        get { self[AttendeeMapperKey.self] }
+        set { self[AttendeeMapperKey.self] = newValue }
     }
 }

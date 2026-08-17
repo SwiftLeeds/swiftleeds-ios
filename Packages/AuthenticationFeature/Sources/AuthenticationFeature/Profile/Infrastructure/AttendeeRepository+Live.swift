@@ -6,6 +6,7 @@ extension AttendeeRepository: DependencyKey {
         AttendeeRepository { () async throws(AttendeeFetchError) -> Attendee in
             @Dependency(\.httpClient) var httpClient
             @Dependency(\.apiConfiguration) var apiConfiguration
+            @Dependency(\.attendeeMapper) var attendeeMapper
             let request = URLRequest(url: Endpoint.profile.url(baseURL: apiConfiguration.baseURL))
             let data: Data
             let response: HTTPURLResponse
@@ -14,7 +15,11 @@ extension AttendeeRepository: DependencyKey {
             } catch {
                 throw AttendeeFetchError.unknown
             }
-            return try AttendeeMapper.map(data, response)
+            do throws(AttendeeResponseFailure) {
+                return try attendeeMapper.map(data, response)
+            } catch {
+                throw AttendeeFetchError(error)
+            }
         }
     }
 }

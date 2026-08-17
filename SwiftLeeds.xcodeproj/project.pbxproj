@@ -93,6 +93,8 @@
 		7B31C8F12ED0A7BF00FEEDF7 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = 7B31C8F02ED0A7BF00FEEDF7 /* Settings */; };
 		A11CE57000000000000000D1 /* AuthenticationUI in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C1 /* AuthenticationUI */; };
 		A11CE57000000000000000D2 /* AuthenticationFeature in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C2 /* AuthenticationFeature */; };
+		A11CE57000000000000000D5 /* LogKit in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C5 /* LogKit */; };
+		A11CE57000000000000000D6 /* LogKitUnified in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C6 /* LogKitUnified */; };
 		A11CE57000000000000000D3 /* SecureStorageKit in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C3 /* SecureStorageKit */; };
 		A11CE57000000000000000D4 /* SecureStorageKitKeychain in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C4 /* SecureStorageKitKeychain */; };
 		A11CE57000000000000000D5 /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C5 /* Dependencies */; };
@@ -252,6 +254,7 @@
 		7B8108412E5CA00E00CCB2F5 /* SwiftLeedsPackage */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SwiftLeedsPackage; sourceTree = "<group>"; };
 		A11CE57000000000000000A1 /* SecureStorageKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SecureStorageKit; sourceTree = "<group>"; };
 		A11CE57000000000000000A2 /* AuthenticationFeature */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = AuthenticationFeature; sourceTree = "<group>"; };
+		A11CE57000000000000000A5 /* LogKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = LogKit; sourceTree = "<group>"; };
 		A11CE57000000000000000A3 /* AuthenticationUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = AuthenticationUI; sourceTree = "<group>"; };
 		893A122D593379F84605F70C /* SwiftLeedsColors.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = SwiftLeedsColors.xcassets; sourceTree = "<group>"; };
 		AE1C800F289E9F3800996659 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
@@ -333,6 +336,8 @@
 				7B31C8EB2ED0959000FEEDF7 /* DesignKit in Frameworks */,
 				A11CE57000000000000000D1 /* AuthenticationUI in Frameworks */,
 				A11CE57000000000000000D2 /* AuthenticationFeature in Frameworks */,
+				A11CE57000000000000000D5 /* LogKit in Frameworks */,
+				A11CE57000000000000000D6 /* LogKitUnified in Frameworks */,
 				A11CE57000000000000000D3 /* SecureStorageKit in Frameworks */,
 				A11CE57000000000000000D4 /* SecureStorageKitKeychain in Frameworks */,
 				A11CE57000000000000000D5 /* Dependencies in Frameworks */,
@@ -437,6 +442,7 @@
 			children = (
 				A11CE57000000000000000A1 /* SecureStorageKit */,
 				A11CE57000000000000000A2 /* AuthenticationFeature */,
+				A11CE57000000000000000A5 /* LogKit */,
 				A11CE57000000000000000A3 /* AuthenticationUI */,
 			);
 			path = Packages;
@@ -714,6 +720,8 @@
 				7B8C3ECE2EE4A9F70089C6CF /* SharedAssets */,
 				A11CE57000000000000000C1 /* AuthenticationUI */,
 				A11CE57000000000000000C2 /* AuthenticationFeature */,
+				A11CE57000000000000000C5 /* LogKit */,
+				A11CE57000000000000000C6 /* LogKitUnified */,
 				A11CE57000000000000000C3 /* SecureStorageKit */,
 				A11CE57000000000000000C4 /* SecureStorageKitKeychain */,
 				A11CE57000000000000000C5 /* Dependencies */,
@@ -2003,6 +2011,14 @@
 		A11CE57000000000000000C2 /* AuthenticationFeature */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = AuthenticationFeature;
+		};
+		A11CE57000000000000000C5 /* LogKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = LogKit;
+		};
+		A11CE57000000000000000C6 /* LogKitUnified */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = LogKitUnified;
 		};
 		A11CE57000000000000000C3 /* SecureStorageKit */ = {
 			isa = XCSwiftPackageProductDependency;

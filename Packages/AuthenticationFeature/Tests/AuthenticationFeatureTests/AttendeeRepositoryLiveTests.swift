@@ -72,6 +72,54 @@ import Testing
         }
     }
 
+    @Test func whenResponseIsInvalid_shouldLogTheReason() async throws {
+        let recorder = LogRecorder()
+
+        try? await withDependencies {
+            $0.httpClient = .responding(with: attendeeJSON(reference: "!!!"), statusCode: 200)
+            $0.log = recorder.log
+        } operation: {
+            let sut = AttendeeRepository.liveValue
+            _ = try await sut.fetch()
+        }
+
+        #expect(recorder.events.map(\.level) == [.error])
+    }
+
+    @Test func whenFieldIsMissing_shouldLogItsPath() async throws {
+        let recorder = LogRecorder()
+        let missingLastName = Data(#"{"ticket": {"first_name": "Ada"}}"#.utf8)
+
+        try? await withDependencies {
+            $0.httpClient = .responding(with: missingLastName, statusCode: 200)
+            $0.log = recorder.log
+        } operation: {
+            let sut = AttendeeRepository.liveValue
+            _ = try await sut.fetch()
+        }
+
+        let reason = try #require(recorder.events.first?.fields.first { $0.name == "reason" })
+        guard case let .string(text) = reason.value else {
+            Issue.record("expected the reason to be a string, got \(reason.value)")
+            return
+        }
+        #expect(text == "couldNotRead(keyNotFound ticket.last_name)")
+    }
+
+    @Test func whenResponseIsValid_shouldLogNothing() async throws {
+        let recorder = LogRecorder()
+
+        _ = try await withDependencies {
+            $0.httpClient = .responding(with: attendeeJSON(), statusCode: 200)
+            $0.log = recorder.log
+        } operation: {
+            let sut = AttendeeRepository.liveValue
+            return try await sut.fetch()
+        }
+
+        #expect(recorder.events.isEmpty)
+    }
+
     @Test func whenTransportFails_shouldThrowUnknown() async throws {
         await #expect(throws: AttendeeFetchError.unknown) {
             try await withDependencies {

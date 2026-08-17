@@ -2,6 +2,8 @@ import AuthenticationFeature
 import ColorTheme
 import Dependencies
 import Foundation
+import LogKit
+import LogKitUnified
 import SecureStorageKit
 import SecureStorageKitKeychain
 import SwiftUI
@@ -15,6 +17,12 @@ struct SwiftLeedsApp: App {
 
     init() {
         prepareDependencies {
+            // A fresh salt each launch, so hashed values correlate within a session but never
+            // between them. Without a bundle identifier there is no honest subsystem — this
+            // ships as two apps — so nothing is written rather than guessing at one.
+            $0.log = Bundle.main.bundleIdentifier
+                .map { Log.unified(subsystem: LogSubsystem($0), salt: .random()) }
+                ?? .none
             $0.secureStorage = .keychain(service: KeychainService("uk.co.swiftleeds.authentication"))
             $0.apiConfiguration = APIConfiguration(baseURL: URL(string: "https://\(ConferenceConfig.apiHost)")!)
             $0.httpClient = .live(onSessionExpiry: {
@@ -35,8 +43,6 @@ struct SwiftLeedsApp: App {
 
 // MARK: - AppDelegate
 final class AppDelegate: NSObject, UIApplicationDelegate {
-    static var pushURL: String { ConferenceConfig.pushURL }
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         URLCache.shared.diskCapacity = 100_000_000
 
@@ -48,12 +54,17 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
     }
 
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        guard let url = URL(string: Self.pushURL) else { print("⛔️ Invalid push URL"); return }
+        @Dependency(\.log) var log
+        guard let url = URL(string: ConferenceConfig.pushURL) else {
+            log(.error, "push", "The push URL is not a valid URL", fields: [
+                .open("pushURL", .string(ConferenceConfig.pushURL))
+            ])
+            return
+        }
         sendPushRegistrationDatails(to: url, deviceToken: deviceToken)
     }
 
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
-        print("⛔️ Push registration failed:", error)
         handleFailedRegistration(application: application, error: error)
     }
 }
