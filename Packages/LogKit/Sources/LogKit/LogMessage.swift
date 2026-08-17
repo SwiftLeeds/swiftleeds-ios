@@ -61,6 +61,25 @@ extension LogMessage {
             name: String? = nil,
             privacy: Sensitivity
         ) {
+            append(value, name: name, privacy: privacy)
+        }
+
+        /// Records an interpolated error, described by ``LogDescribable`` where it conforms.
+        ///
+        /// A separate overload because `any Error` cannot conform to `LogValueRepresentable`.
+        public mutating func appendInterpolation(
+            _ error: any Error,
+            name: String? = nil,
+            privacy: Sensitivity
+        ) {
+            append(String(logDescribing: error), name: name, privacy: privacy)
+        }
+
+        private mutating func append(
+            _ value: some LogValueRepresentable,
+            name: String?,
+            privacy: Sensitivity
+        ) {
             let placeholder = FieldName.positional(GapIndex(gaps.count), label: name)
 
             gaps.append(MessageTemplate.Gap(placeholder: placeholder, trailingText: ""))

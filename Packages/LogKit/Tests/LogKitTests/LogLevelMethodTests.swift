@@ -28,9 +28,12 @@ import Testing
     @Test func whenGivenSeveralFields_shouldKeepThemInWrittenOrder() {
         let recorder = LogRecorder()
 
-        recorder.log.error("ordered", in: "push", .open("first", 1), .hashed("second", "x"), .secret("third", true))
+        recorder.log.error(
+            "\(1, name: "first", privacy: .open) \("x", name: "second", privacy: .hashed) \(true, name: "third", privacy: .secret)",
+            in: "push"
+        )
 
-        #expect(recorder.events.first?.fields.map(\.name) == ["first", "second", "third"])
+        #expect(recorder.events.first?.fields.map { String($0.name) } == ["first", "second", "third"])
     }
 
     /// The literals must expand where the developer wrote the call, not inside the level method.

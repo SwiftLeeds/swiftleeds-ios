@@ -54,9 +54,13 @@ import Testing
     @Test func whenGivenSeveralFields_shouldKeepThemInWrittenOrder() {
         let recorder = LogRecorder()
 
-        recorder.log(.error, "push", "ordered", .open("first", 1), .hashed("second", "x"), .secret("third", true))
+        recorder.log(
+            .error,
+            "push",
+            "\(1, name: "first", privacy: .open) \("x", name: "second", privacy: .hashed) \(true, name: "third", privacy: .secret)"
+        )
 
-        #expect(recorder.events.first?.fields.map(\.name) == ["first", "second", "third"])
+        #expect(recorder.events.first?.fields.map { String($0.name) } == ["first", "second", "third"])
     }
 
     @Test func whenRecordingEvent_shouldCaptureCallSite() {
