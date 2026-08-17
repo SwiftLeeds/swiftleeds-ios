@@ -13,7 +13,7 @@ extension AttendeeMapper {
                 // Resolved per call, so a test overriding \.log is honoured. Resolving it while
                 // building liveValue would capture whichever log existed first.
                 @Dependency(\.log) var log
-                log(.error, "profile", "The attendee response was rejected",
+                log.error("The attendee response was rejected", in: .profile,
                     .open("reason", error))
                 throw error
             }

@@ -3,19 +3,17 @@ import LogKit
 import UIKit
 import UserNotifications
 
-private let push: LogCategory = "push"
-
 extension AppDelegate {
     func requestPushAuthorization(application: UIApplication) {
         @Dependency(\.log) var log
         let notificatioNCenter = UNUserNotificationCenter.current()
         notificatioNCenter.requestAuthorization(options: [.badge, .sound, .alert]) { [weak self] isGranted, error in
             guard isGranted else {
-                log(.notice, push, "Notification permission was declined")
+                log.notice("Notification permission was declined", in: .push)
                 return
             }
             if let error {
-                log(.error, push, "Could not request notification permission",
+                log.error("Could not request notification permission", in: .push,
                     .open("error", error))
                 return
             }
@@ -36,7 +34,7 @@ extension AppDelegate {
         details.debug = true
 #endif
 
-        log(.debug, push, "Registering for push",
+        log.debug("Registering for push", in: .push,
             .hashed("deviceToken", deviceToken.map { String(format: "%02x", $0) }.joined()))
 
         var request = URLRequest(url: url)
@@ -49,12 +47,12 @@ extension AppDelegate {
                 let (_, response) = try await URLSession.shared.data(for: request)
 
                 guard let statusCode = (response as? HTTPURLResponse)?.statusCode, 200..<399 ~= statusCode else {
-                    log(.error, push, "Push registration was rejected",
+                    log.error("Push registration was rejected", in: .push,
                         .open("statusCode", (response as? HTTPURLResponse)?.statusCode ?? -1))
                     return
                 }
             } catch {
-                log(.error, push, "Push registration could not reach the server",
+                log.error("Push registration could not reach the server", in: .push,
                     .open("error", error))
             }
         }
@@ -62,7 +60,7 @@ extension AppDelegate {
 
     func handleFailedRegistration(application: UIApplication, error: Error) {
         @Dependency(\.log) var log
-        log(.error, push, "The system refused push registration",
+        log.error("The system refused push registration", in: .push,
             .open("error", error))
     }
 }
