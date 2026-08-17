@@ -7,7 +7,6 @@ extension Log {
         _ level: LogLevel,
         _ category: LogCategory,
         _ message: LogMessage,
-        _ fields: LogField...,
         file: String = #fileID,
         function: String = #function,
         line: Int = #line
@@ -16,7 +15,6 @@ extension Log {
             level,
             category,
             message,
-            LogFields(fields),
             SourceLocation(file: file, function: function, line: line)
         )
     }
@@ -24,21 +22,19 @@ extension Log {
     /// The shared body behind every entry point.
     ///
     /// Takes the source location as a value rather than defaulting it, so the literals stay at
-    /// the call site. Fields arrive already collected because Swift cannot forward one variadic
-    /// parameter into another.
+    /// the call site.
     func record(
         _ level: LogLevel,
         _ category: LogCategory,
         _ message: LogMessage,
-        _ fields: LogFields,
         _ source: SourceLocation
     ) {
         write(
             LogEvent(
                 level: level,
                 category: category,
-                message: message,
-                fields: fields,
+                message: message.template,
+                fields: message.values,
                 source: source
             )
         )

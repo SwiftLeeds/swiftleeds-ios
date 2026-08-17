@@ -17,11 +17,12 @@ import Testing
             sut(
                 level,
                 "push",
-                "exercised every sensitivity",
-                .open("category", "registration"),
-                .hashed("email", "ada@example.com"),
-                .hashed("reference", "ABCD-1"),
-                .secret("token", "abc123")
+                """
+                exercised \("registration", name: "category", privacy: .open) \
+                for \("ada@example.com", name: "email", privacy: .hashed) \
+                ref \("ABCD-1", name: "reference", privacy: .hashed) \
+                token \("abc123", name: "token", privacy: .secret)
+                """
             )
         }
     }

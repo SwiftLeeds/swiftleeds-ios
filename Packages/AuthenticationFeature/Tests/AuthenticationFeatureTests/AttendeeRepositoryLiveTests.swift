@@ -98,7 +98,7 @@ import Testing
             _ = try await sut.fetch()
         }
 
-        let reason = try #require(recorder.events.first?.fields.first { $0.name == "reason" })
+        let reason = try #require(recorder.events.first?.fields.first { String($0.name) == "reason" })
         guard case let .string(text) = reason.value else {
             Issue.record("expected the reason to be a string, got \(reason.value)")
             return

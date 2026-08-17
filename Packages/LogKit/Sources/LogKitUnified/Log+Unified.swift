@@ -18,6 +18,7 @@ extension Log {
 
             // OSLogType has no warning, so notice and warning would both read as `default`.
             let level = "[\(event.level.name)]"
+            let message = event.message.rendered(with: event.fields)
             let fields = event.fields.renderedWithoutSecrets
             let secrets = event.fields.renderedSecrets
 
@@ -25,7 +26,7 @@ extension Log {
                 level: event.level.osLogType,
                 """
                 \(level, privacy: .public) \
-                \(String(event.message), privacy: .public) \
+                \(message, privacy: .public) \
                 \(fields, privacy: .public) \
                 \(secrets, privacy: .sensitive)
                 """

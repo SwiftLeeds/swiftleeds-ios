@@ -13,8 +13,7 @@ extension AppDelegate {
                 return
             }
             if let error {
-                log.error("Could not request notification permission", in: .push,
-                    .open("error", error))
+                log.error("Could not request notification permission: \(error, privacy: .open)", in: .push)
                 return
             }
 
@@ -34,8 +33,10 @@ extension AppDelegate {
         details.debug = true
 #endif
 
-        log.debug("Registering for push", in: .push,
-            .hashed("deviceToken", deviceToken.map { String(format: "%02x", $0) }.joined()))
+        log.debug(
+            "Registering for push with token \(deviceToken.map { String(format: "%02x", $0) }.joined(), name: "deviceToken", privacy: .hashed)",
+            in: .push
+        )
 
         var request = URLRequest(url: url)
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -46,22 +47,24 @@ extension AppDelegate {
             do {
                 let (_, response) = try await URLSession.shared.data(for: request)
 
-                guard let statusCode = (response as? HTTPURLResponse)?.statusCode, 200..<399 ~= statusCode else {
-                    log.error("Push registration was rejected", in: .push,
-                        .open("statusCode", (response as? HTTPURLResponse)?.statusCode ?? -1))
+                let statusCode = (response as? HTTPURLResponse)?.statusCode
+
+                guard let statusCode, 200..<399 ~= statusCode else {
+                    log.error(
+                        "Push registration was rejected with status \(statusCode.map(String.init) ?? "none", name: "statusCode", privacy: .open)",
+                        in: .push
+                    )
                     return
                 }
             } catch {
-                log.error("Push registration could not reach the server", in: .push,
-                    .open("error", error))
+                log.error("Push registration could not reach the server: \(error, privacy: .open)", in: .push)
             }
         }
     }
 
     func handleFailedRegistration(application: UIApplication, error: Error) {
         @Dependency(\.log) var log
-        log.error("The system refused push registration", in: .push,
-            .open("error", error))
+        log.error("The system refused push registration: \(error, privacy: .open)", in: .push)
     }
 }
 
