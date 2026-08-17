@@ -24,7 +24,7 @@ extension LogField {
     ///   - name: The field's name.
     ///   - error: The error to describe.
     public static func open(_ name: FieldName, _ error: any Error) -> LogField {
-        .open(name, .string(String(logDescribing: error)))
+        .open(name, String(logDescribing: error))
     }
 
     /// A field carrying an error that may be correlated but never read.
@@ -33,7 +33,7 @@ extension LogField {
     ///   - name: The field's name.
     ///   - error: The error to describe.
     public static func hashed(_ name: FieldName, _ error: any Error) -> LogField {
-        .hashed(name, .string(String(logDescribing: error)))
+        .hashed(name, String(logDescribing: error))
     }
 
     /// A field carrying an error that must never leave the device.
@@ -42,6 +42,6 @@ extension LogField {
     ///   - name: The field's name.
     ///   - error: The error to describe.
     public static func secret(_ name: FieldName, _ error: any Error) -> LogField {
-        .secret(name, .string(String(logDescribing: error)))
+        .secret(name, String(logDescribing: error))
     }
 }

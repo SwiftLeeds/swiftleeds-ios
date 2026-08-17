@@ -57,7 +57,7 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
         @Dependency(\.log) var log
         guard let url = URL(string: ConferenceConfig.pushURL) else {
             log(.error, "push", "The push URL is not a valid URL", fields: [
-                .open("pushURL", .string(ConferenceConfig.pushURL))
+                .open("pushURL", ConferenceConfig.pushURL)
             ])
             return
         }

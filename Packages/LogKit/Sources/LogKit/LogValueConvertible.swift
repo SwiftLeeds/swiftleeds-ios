@@ -3,8 +3,8 @@
 /// Conform a type once and every field built from it is classified the same
 /// way. Standard library types deliberately do not conform: a `String` or `URL`
 /// has no inherent sensitivity, so those must be classified at the call site.
-public protocol LogValueConvertible {
-    var logValue: LogValue { get }
+/// They conform to ``LogValueRepresentable`` alone.
+public protocol LogValueConvertible: LogValueRepresentable {
     var sensitivity: Sensitivity { get }
 }
 
