@@ -2,15 +2,15 @@ import Dependencies
 import Foundation
 
 struct LoginMapper: Sendable {
-    var map: @Sendable (Data, HTTPURLResponse) throws(LoginResponseFailure) -> SessionToken
+    var map: @Sendable (Data, HTTPURLResponse) throws(ResponseError) -> SessionToken
 
-    init(map: @escaping @Sendable (Data, HTTPURLResponse) throws(LoginResponseFailure) -> SessionToken) {
+    init(map: @escaping @Sendable (Data, HTTPURLResponse) throws(ResponseError) -> SessionToken) {
         self.map = map
     }
 }
 
 extension LoginMapper {
-    static let live = LoginMapper { data, response throws(LoginResponseFailure) in
+    static let live = LoginMapper { data, response throws(ResponseError) in
         switch response.statusCode {
         case 200:
             do throws(SessionToken.ParsingError) {

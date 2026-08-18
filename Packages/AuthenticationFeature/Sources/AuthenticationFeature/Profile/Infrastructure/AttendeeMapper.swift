@@ -2,15 +2,15 @@ import Dependencies
 import Foundation
 
 struct AttendeeMapper: Sendable {
-    var map: @Sendable (Data, HTTPURLResponse) throws(AttendeeResponseFailure) -> Attendee
+    var map: @Sendable (Data, HTTPURLResponse) throws(ResponseError) -> Attendee
 
-    init(map: @escaping @Sendable (Data, HTTPURLResponse) throws(AttendeeResponseFailure) -> Attendee) {
+    init(map: @escaping @Sendable (Data, HTTPURLResponse) throws(ResponseError) -> Attendee) {
         self.map = map
     }
 }
 
 extension AttendeeMapper {
-    static let live = AttendeeMapper { data, response throws(AttendeeResponseFailure) in
+    static let live = AttendeeMapper { data, response throws(ResponseError) in
         switch response.statusCode {
         case 200:
             do {

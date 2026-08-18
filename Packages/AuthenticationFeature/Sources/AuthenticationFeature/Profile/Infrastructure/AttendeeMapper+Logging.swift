@@ -6,8 +6,8 @@ extension AttendeeMapper {
     /// Wraps the mapper rather than the repository, which has already narrowed the failure to
     /// `AttendeeFetchError` and lost the reason.
     func loggingFailures() -> AttendeeMapper {
-        AttendeeMapper { data, response throws(AttendeeResponseFailure) in
-            do throws(AttendeeResponseFailure) {
+        AttendeeMapper { data, response throws(ResponseError) in
+            do throws(ResponseError) {
                 return try map(data, response)
             } catch {
                 // Resolved per call, so a test overriding \.log is honoured. Resolving it while
