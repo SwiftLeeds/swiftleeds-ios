@@ -11,13 +11,24 @@ import Testing
             try await AuthGateway.liveValue.authenticate(credential())
         }
 
-        #expect(token == SessionToken("jwt-abc-123"))
+        #expect(try token == SessionToken("jwt-abc-123"))
     }
 
     @Test func whenServerReturnsUnauthorized_shouldThrowInvalidCredentials() async throws {
         await #expect(throws: SignInError.invalidCredentials) {
             try await withDependencies {
                 $0.httpClient = .responding(with: Data(), statusCode: 401)
+            } operation: {
+                try await AuthGateway.liveValue.authenticate(credential())
+            }
+        }
+    }
+
+    /// A 200 carrying nothing is a server contract violation, not a session.
+    @Test func whenServerReturnsEmptyBody_shouldThrowUnknown() async throws {
+        await #expect(throws: SignInError.unknown) {
+            try await withDependencies {
+                $0.httpClient = .responding(with: Data(), statusCode: 200)
             } operation: {
                 try await AuthGateway.liveValue.authenticate(credential())
             }

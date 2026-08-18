@@ -7,7 +7,7 @@ import Testing
         let store = InMemorySessionStore()
 
         try await withDependencies {
-            $0.authGateway = .returning(SessionToken("jwt-abc-123"))
+            $0.authGateway = .returning(try SessionToken("jwt-abc-123"))
             $0.sessionStore = store.sessionStore
         } operation: {
             let sut = SignIn.liveValue

@@ -17,7 +17,7 @@ extension SessionStore: DependencyKey {
             current: {
                 @Dependency(\.secureStorage) var secureStorage
                 return try await secureStorage.data(key)
-                    .map { try JSONDecoder().decode(CachedSession.self, from: $0).session }
+                    .flatMap { try JSONDecoder().decode(CachedSession.self, from: $0).session }
             }
         )
     }

@@ -13,7 +13,11 @@ extension LoginMapper {
     static let live = LoginMapper { data, response throws(LoginResponseFailure) in
         switch response.statusCode {
         case 200:
-            return SessionToken(String(decoding: data, as: UTF8.self))
+            do throws(SessionToken.ParsingError) {
+                return try SessionToken(String(decoding: data, as: UTF8.self))
+            } catch {
+                throw .invalidToken(error)
+            }
         case 401:
             throw .invalidCredentials
         default:

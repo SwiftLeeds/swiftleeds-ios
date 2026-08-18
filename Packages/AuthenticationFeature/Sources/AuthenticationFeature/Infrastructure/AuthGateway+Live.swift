@@ -2,16 +2,13 @@ import Dependencies
 import Foundation
 
 extension AuthGateway: DependencyKey {
-    /// Order is load-bearing: logging must sit inside the narrowing, or it would see only
-    /// `SignInError` and the reason would already be gone.
     package static var liveValue: AuthGateway {
         live.loggingRequestFailures().narrowingFailures()
     }
 }
 
 extension AuthGateway {
-    /// Throws `LoginRequestFailure` for anything that stops a response arriving, and lets the
-    /// mapper's own `LoginResponseFailure` pass through.
+    /// Throws ``LoginRequestFailure`` or ``LoginResponseFailure``.
     static var live: AuthGateway {
         AuthGateway { credential in
             @Dependency(\.httpClient) var httpClient

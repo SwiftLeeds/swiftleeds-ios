@@ -1,11 +1,6 @@
 import LogKit
 
 /// How a login failure reads in a log.
-///
-/// A mapped projection, in the same spirit as `CachedSession` for storage: the failure types stay
-/// free of LogKit, and every decision about how they are recorded lives here. Each failure gets its
-/// own message, because a message is what a destination groups and filters by; one shared message
-/// with the cause in a field cannot be filtered at all.
 struct LoggedLoginFailure {
     let level: LogLevel
     let message: LogMessage
@@ -30,6 +25,9 @@ struct LoggedLoginFailure {
         case let .unexpectedStatus(code):
             level = .error
             message = "Sign-in got an unexpected status \(code, name: "statusCode", privacy: .open)"
+        case let .invalidToken(reason):
+            level = .error
+            message = "The server's sign-in token was rejected: \(reason, name: "reason", privacy: .open)"
         }
     }
 }
