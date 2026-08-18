@@ -4,7 +4,7 @@ import Foundation
 import LogKit
 import Testing
 
-/// The public `AuthenticationError` is deliberately bare, so these assert the reason survives to the
+/// The public `SignInError` is deliberately bare, so these assert the reason survives to the
 /// log even though the caller never sees it.
 @Suite struct AuthGatewayLoggingTests {
     @Test func whenCredentialsAreRejected_shouldSayTheyWereRejected() async throws {

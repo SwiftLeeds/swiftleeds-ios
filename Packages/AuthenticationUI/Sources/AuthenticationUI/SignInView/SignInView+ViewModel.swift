@@ -9,7 +9,7 @@ extension SignInView {
         package enum Phase: Equatable {
             case editing
             case submitting
-            case failed(AuthenticationError)
+            case failed(SignInError)
         }
 
         @ObservationIgnored
@@ -42,7 +42,7 @@ extension SignInView {
                 try await signIn(credential)
                 phase = .editing
                 onSignedIn()
-            } catch let error as AuthenticationError {
+            } catch let error as SignInError {
                 phase = .failed(error)
             } catch {
                 phase = .failed(.unknown)

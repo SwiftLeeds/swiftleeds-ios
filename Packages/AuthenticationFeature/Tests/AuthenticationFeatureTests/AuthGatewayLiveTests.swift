@@ -15,7 +15,7 @@ import Testing
     }
 
     @Test func whenServerReturnsUnauthorized_shouldThrowInvalidCredentials() async throws {
-        await #expect(throws: AuthenticationError.invalidCredentials) {
+        await #expect(throws: SignInError.invalidCredentials) {
             try await withDependencies {
                 $0.httpClient = .responding(with: Data(), statusCode: 401)
             } operation: {
@@ -25,7 +25,7 @@ import Testing
     }
 
     @Test func whenServerReturnsOtherStatus_shouldThrowUnknown() async throws {
-        await #expect(throws: AuthenticationError.unknown) {
+        await #expect(throws: SignInError.unknown) {
             try await withDependencies {
                 $0.httpClient = .responding(with: Data(), statusCode: 500)
             } operation: {

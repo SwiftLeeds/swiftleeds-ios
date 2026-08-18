@@ -48,7 +48,7 @@ import Testing
 
     @Test func whenSignInFailsWithInvalidCredentials_shouldReportInvalidCredentials() async {
         await withDependencies {
-            $0.signIn = SignIn { _ in throw AuthenticationError.invalidCredentials }
+            $0.signIn = SignIn { _ in throw SignInError.invalidCredentials }
         } operation: {
             let sut = SignInView.ViewModel()
             sut.email = "attendee@example.com"
@@ -76,7 +76,7 @@ import Testing
 
     @Test func whenErrorDismissed_shouldReturnToEditing() async {
         await withDependencies {
-            $0.signIn = SignIn { _ in throw AuthenticationError.unknown }
+            $0.signIn = SignIn { _ in throw SignInError.unknown }
         } operation: {
             let sut = SignInView.ViewModel()
             sut.email = "attendee@example.com"

@@ -3,7 +3,7 @@ import Foundation
 
 extension AuthGateway: DependencyKey {
     /// Order is load-bearing: logging must sit inside the narrowing, or it would see only
-    /// `AuthenticationError` and the reason would already be gone.
+    /// `SignInError` and the reason would already be gone.
     package static var liveValue: AuthGateway {
         live.loggingRequestFailures().narrowingFailures()
     }
@@ -46,9 +46,9 @@ extension AuthGateway {
             do {
                 return try await authenticate(credential)
             } catch let failure as LoginRequestFailure {
-                throw AuthenticationError(failure)
+                throw SignInError(failure)
             } catch let failure as LoginResponseFailure {
-                throw AuthenticationError(failure)
+                throw SignInError(failure)
             }
         }
     }

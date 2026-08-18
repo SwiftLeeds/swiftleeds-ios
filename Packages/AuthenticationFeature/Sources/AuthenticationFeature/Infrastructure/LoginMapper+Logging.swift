@@ -3,7 +3,7 @@ import LogKit
 
 extension LoginMapper {
     /// Wraps the mapper rather than the gateway, which has already narrowed the failure to
-    /// `AuthenticationError` and lost the reason.
+    /// `SignInError` and lost the reason.
     func loggingFailures() -> LoginMapper {
         LoginMapper { data, response throws(LoginResponseFailure) in
             do throws(LoginResponseFailure) {
