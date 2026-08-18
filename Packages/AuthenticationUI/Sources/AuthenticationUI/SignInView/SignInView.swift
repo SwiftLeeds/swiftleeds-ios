@@ -57,16 +57,21 @@ public struct SignInView: View {
             }
         }
         .disabled(viewModel.isSubmitting)
-        .alert("Something went wrong", isPresented: presentingUnknownError) {
+        .alert("Can't connect", isPresented: presenting(.cannotConnect)) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text("Check your connection and try again.")
+        }
+        .alert("Something went wrong", isPresented: presenting(.unexpected)) {
             Button("OK", role: .cancel) {}
         } message: {
             Text("Please try again.")
         }
     }
 
-    private var presentingUnknownError: Binding<Bool> {
+    private func presenting(_ alert: ViewModel.Alert) -> Binding<Bool> {
         Binding(
-            get: { viewModel.phase == .failed(.unknown) },
+            get: { viewModel.alert == alert },
             set: { isPresented in
                 if !isPresented {
                     viewModel.dismissError()
