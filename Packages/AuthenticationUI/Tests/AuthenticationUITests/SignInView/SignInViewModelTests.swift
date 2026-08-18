@@ -48,7 +48,7 @@ import Testing
 
     @Test func whenSignInFailsWithInvalidCredentials_shouldReportInvalidCredentials() async {
         await withDependencies {
-            $0.signIn = SignIn { _ in throw AuthenticationError.invalidCredentials }
+            $0.signIn = SignIn { _ in throw SignInError.invalidCredentials }
         } operation: {
             let sut = SignInView.ViewModel()
             sut.email = "attendee@example.com"
@@ -57,6 +57,20 @@ import Testing
             await sut.submit()
 
             #expect(sut.phase == .failed(.invalidCredentials))
+        }
+    }
+
+    @Test func whenServerCannotBeReached_shouldReportCouldNotReachServer() async {
+        await withDependencies {
+            $0.signIn = SignIn { _ in throw SignInError.couldNotReachServer }
+        } operation: {
+            let sut = SignInView.ViewModel()
+            sut.email = "attendee@example.com"
+            sut.ticketReference = "ABCD-12"
+
+            await sut.submit()
+
+            #expect(sut.phase == .failed(.couldNotReachServer))
         }
     }
 
@@ -74,9 +88,52 @@ import Testing
         }
     }
 
+    @Test func whenServerCannotBeReached_shouldAlertAboutTheConnection() async {
+        await withDependencies {
+            $0.signIn = SignIn { _ in throw SignInError.couldNotReachServer }
+        } operation: {
+            let sut = SignInView.ViewModel()
+            sut.email = "attendee@example.com"
+            sut.ticketReference = "ABCD-12"
+
+            await sut.submit()
+
+            #expect(sut.alert == .cannotConnect)
+        }
+    }
+
+    @Test func whenSignInFailsUnexpectedly_shouldAlertGenerically() async {
+        await withDependencies {
+            $0.signIn = SignIn { _ in throw SignInError.unknown }
+        } operation: {
+            let sut = SignInView.ViewModel()
+            sut.email = "attendee@example.com"
+            sut.ticketReference = "ABCD-12"
+
+            await sut.submit()
+
+            #expect(sut.alert == .unexpected)
+        }
+    }
+
+    /// Shown beside the field the user must correct, so an alert would be in the way.
+    @Test func whenCredentialsAreRejected_shouldNotAlert() async {
+        await withDependencies {
+            $0.signIn = SignIn { _ in throw SignInError.invalidCredentials }
+        } operation: {
+            let sut = SignInView.ViewModel()
+            sut.email = "attendee@example.com"
+            sut.ticketReference = "ABCD-12"
+
+            await sut.submit()
+
+            #expect(sut.alert == nil)
+        }
+    }
+
     @Test func whenErrorDismissed_shouldReturnToEditing() async {
         await withDependencies {
-            $0.signIn = SignIn { _ in throw AuthenticationError.unknown }
+            $0.signIn = SignIn { _ in throw SignInError.unknown }
         } operation: {
             let sut = SignInView.ViewModel()
             sut.email = "attendee@example.com"

@@ -7,13 +7,13 @@ enum LoginRequestFailure: Error {
     case transportFailed(any Error)
 }
 
-extension AuthenticationError {
+extension SignInError {
     init(_ failure: LoginRequestFailure) {
         switch failure {
         case .couldNotEncodeRequest:
             self = .unknown
         case .transportFailed:
-            self = .unknown
+            self = .couldNotReachServer
         }
     }
 }

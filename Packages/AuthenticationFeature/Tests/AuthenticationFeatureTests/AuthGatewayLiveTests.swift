@@ -15,7 +15,7 @@ import Testing
     }
 
     @Test func whenServerReturnsUnauthorized_shouldThrowInvalidCredentials() async throws {
-        await #expect(throws: AuthenticationError.invalidCredentials) {
+        await #expect(throws: SignInError.invalidCredentials) {
             try await withDependencies {
                 $0.httpClient = .responding(with: Data(), statusCode: 401)
             } operation: {
@@ -24,8 +24,18 @@ import Testing
         }
     }
 
+    @Test func whenRequestCannotReachServer_shouldThrowCouldNotReachServer() async throws {
+        await #expect(throws: SignInError.couldNotReachServer) {
+            try await withDependencies {
+                $0.httpClient = .failing(with: StubFailure.couldNotBuildResponse)
+            } operation: {
+                try await AuthGateway.liveValue.authenticate(credential())
+            }
+        }
+    }
+
     @Test func whenServerReturnsOtherStatus_shouldThrowUnknown() async throws {
-        await #expect(throws: AuthenticationError.unknown) {
+        await #expect(throws: SignInError.unknown) {
             try await withDependencies {
                 $0.httpClient = .responding(with: Data(), statusCode: 500)
             } operation: {

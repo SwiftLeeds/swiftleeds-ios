@@ -9,7 +9,7 @@ extension SignInView {
         package enum Phase: Equatable {
             case editing
             case submitting
-            case failed(AuthenticationError)
+            case failed(SignInError)
         }
 
         @ObservationIgnored
@@ -21,6 +21,31 @@ extension SignInView {
         package var onSignedIn: @MainActor () -> Void = {}
 
         package init() {}
+
+        /// Which alert a failure warrants, if any.
+        ///
+        /// Names the alert rather than carrying its words: the words are literals in the view, so
+        /// there is no title that could be absent. A rejected ticket reference deliberately has no
+        /// alert, because it is shown next to the field the user needs to correct.
+        package enum Alert: Equatable {
+            case cannotConnect
+            case unexpected
+        }
+
+        package var alert: Alert? {
+            switch phase {
+            case .failed(.couldNotReachServer):
+                .cannotConnect
+            case .failed(.unknown):
+                .unexpected
+            case .failed(.invalidCredentials):
+                nil
+            case .editing:
+                nil
+            case .submitting:
+                nil
+            }
+        }
 
         package var credential: Credential? {
             try? Credential(
@@ -42,7 +67,7 @@ extension SignInView {
                 try await signIn(credential)
                 phase = .editing
                 onSignedIn()
-            } catch let error as AuthenticationError {
+            } catch let error as SignInError {
                 phase = .failed(error)
             } catch {
                 phase = .failed(.unknown)
