@@ -2,8 +2,6 @@ import Dependencies
 import LogKit
 
 extension AuthGateway {
-    /// Records only this seam's own failures. A response failure has already been logged by the
-    /// mapper's decorator, so it passes through untouched rather than being logged twice.
     func loggingRequestFailures() -> AuthGateway {
         AuthGateway { credential in
             do {
