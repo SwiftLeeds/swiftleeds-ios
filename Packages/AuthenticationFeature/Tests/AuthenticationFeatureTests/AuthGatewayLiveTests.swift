@@ -24,6 +24,16 @@ import Testing
         }
     }
 
+    @Test func whenRequestCannotReachServer_shouldThrowCouldNotReachServer() async throws {
+        await #expect(throws: SignInError.couldNotReachServer) {
+            try await withDependencies {
+                $0.httpClient = .failing(with: StubFailure.couldNotBuildResponse)
+            } operation: {
+                try await AuthGateway.liveValue.authenticate(credential())
+            }
+        }
+    }
+
     @Test func whenServerReturnsOtherStatus_shouldThrowUnknown() async throws {
         await #expect(throws: SignInError.unknown) {
             try await withDependencies {

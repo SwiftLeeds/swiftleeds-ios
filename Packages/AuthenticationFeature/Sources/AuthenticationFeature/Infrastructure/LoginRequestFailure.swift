@@ -13,7 +13,7 @@ extension SignInError {
         case .couldNotEncodeRequest:
             self = .unknown
         case .transportFailed:
-            self = .unknown
+            self = .couldNotReachServer
         }
     }
 }
