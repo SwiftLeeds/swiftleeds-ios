@@ -1,5 +1,4 @@
 import Dependencies
-import Foundation
 import LogKit
 
 extension LoginMapper {
@@ -13,21 +12,10 @@ extension LoginMapper {
                 // Resolved per call, so a test overriding \.log is honoured. Resolving it while
                 // building liveValue would capture whichever log existed first.
                 @Dependency(\.log) var log
-                log(error.level, .auth, "Sign-in was refused: \(error, name: "reason", privacy: .open)")
+                let entry = LoggedLoginFailure(error)
+                log(entry.level, .auth, entry.message)
                 throw error
             }
-        }
-    }
-}
-
-extension LoginResponseFailure {
-    /// A rejected credential is an expected outcome, not a fault in the app; anything else is.
-    var level: LogLevel {
-        switch self {
-        case .invalidCredentials:
-            .notice
-        case .unexpectedStatus:
-            .error
         }
     }
 }
