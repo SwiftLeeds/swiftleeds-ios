@@ -3,8 +3,8 @@ import Dependencies
 import Testing
 
 @Suite struct AuthStatusTests {
-    @Test func whenSessionExists_shouldReportSignedIn() async {
-        let session = Session(token: SessionToken("jwt-abc-123"))
+    @Test func whenSessionExists_shouldReportSignedIn() async throws {
+        let session = try Session(token: SessionToken("jwt-abc-123"))
         let store = InMemorySessionStore(stored: session)
 
         let state = await withDependencies {

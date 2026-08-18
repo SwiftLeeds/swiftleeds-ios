@@ -12,7 +12,7 @@ import Testing
 
     @Test func whenSessionExists_shouldAttachBearer() async throws {
         let spy = HTTPClientSpy(respondingWith: Data(), statusCode: 200)
-        let store = InMemorySessionStore(stored: Session(token: SessionToken("jwt-abc-123")))
+        let store = InMemorySessionStore(stored: Session(token: try SessionToken("jwt-abc-123")))
 
         _ = try await withDependencies {
             $0.sessionStore = store.sessionStore
