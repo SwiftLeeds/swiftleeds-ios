@@ -27,12 +27,32 @@ import Testing
         #expect(event.fields.first { String($0.name) == "statusCode" }?.value == .integer(503))
     }
 
-    @Test func whenTransportFails_shouldLogTheCause() async throws {
-        let event = try #require(await attempt(failingWith: StubFailure.couldNotBuildResponse))
+    /// Transport failures belong to the transport seam, which logs them for every request in the
+    /// app. Logging them here too would produce two lines for one failure.
+    @Test func whenTransportFails_shouldLogNothingHere() async throws {
+        let recorder = LogRecorder()
 
-        #expect(event.level == .error)
-        let reason = try #require(event.fields.first { String($0.name) == "reason" })
-        #expect(reason.value == .string("couldNotBuildResponse"))
+        try? await withDependencies {
+            $0.httpClient = .failing(with: StubFailure.couldNotBuildResponse)
+            $0.log = recorder.log
+        } operation: {
+            _ = try await AuthGateway.liveValue.authenticate(credential())
+        }
+
+        #expect(recorder.events.isEmpty)
+    }
+
+    @Test func whenTransportFails_shouldLogOnlyOnceAcrossTheChain() async throws {
+        let recorder = LogRecorder()
+
+        try? await withDependencies {
+            $0.httpClient = .failing(with: StubFailure.couldNotBuildResponse).loggingFailures()
+            $0.log = recorder.log
+        } operation: {
+            _ = try await AuthGateway.liveValue.authenticate(credential())
+        }
+
+        #expect(recorder.events.count == 1)
     }
 
     /// The point of a projection per failure: a destination groups by message, so two causes sharing
@@ -40,14 +60,11 @@ import Testing
     @Test func whenCausesDiffer_shouldLogDifferentMessages() async throws {
         let rejected = try #require(await attempt(statusCode: 401))
         let unexpected = try #require(await attempt(statusCode: 503))
-        let transport = try #require(await attempt(failingWith: StubFailure.couldNotBuildResponse))
 
         #expect(rejected.message != unexpected.message)
-        #expect(unexpected.message != transport.message)
-        #expect(transport.message != rejected.message)
     }
 
-    @Test func whenTransportFailsAndResponseIsFine_shouldLogOnlyOnce() async throws {
+    @Test func whenResponseIsRejected_shouldLogOnlyOnce() async throws {
         let recorder = LogRecorder()
 
         try? await withDependencies {
@@ -79,19 +96,6 @@ private func attempt(statusCode: Int) async -> LogEvent? {
 
     try? await withDependencies {
         $0.httpClient = .responding(with: Data(), statusCode: statusCode)
-        $0.log = recorder.log
-    } operation: {
-        _ = try await AuthGateway.liveValue.authenticate(credential())
-    }
-
-    return recorder.events.first
-}
-
-private func attempt(failingWith error: some Error & Sendable) async -> LogEvent? {
-    let recorder = LogRecorder()
-
-    try? await withDependencies {
-        $0.httpClient = .failing(with: error)
         $0.log = recorder.log
     } operation: {
         _ = try await AuthGateway.liveValue.authenticate(credential())

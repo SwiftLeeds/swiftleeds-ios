@@ -4,5 +4,6 @@ import LogKit
 /// category and split a filter in two.
 extension LogCategory {
     static let auth: Self = "auth"
+    static let network: Self = "network"
     static let profile: Self = "profile"
 }
