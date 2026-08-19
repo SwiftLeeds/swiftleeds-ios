@@ -3,12 +3,13 @@ import Dependencies
 import Foundation
 import Testing
 
-@Suite struct AuthGatewayLiveTests {
+/// Drives the live composition, stubbing only the transport.
+@Suite struct AuthGatewayIntegrationTests {
     @Test func whenServerReturnsJWT_shouldReturnSessionToken() async throws {
         let token = try await withDependencies {
             $0.httpClient = .responding(with: Data("jwt-abc-123".utf8), statusCode: 200)
         } operation: {
-            try await AuthGateway.liveValue.authenticate(credential())
+            try await AuthGateway.liveValue.authenticate(Credential.fixture)
         }
 
         #expect(try token == SessionToken("jwt-abc-123"))
@@ -19,7 +20,7 @@ import Testing
             try await withDependencies {
                 $0.httpClient = .responding(with: Data(), statusCode: 401)
             } operation: {
-                try await AuthGateway.liveValue.authenticate(credential())
+                try await AuthGateway.liveValue.authenticate(Credential.fixture)
             }
         }
     }
@@ -30,7 +31,7 @@ import Testing
             try await withDependencies {
                 $0.httpClient = .responding(with: Data(), statusCode: 200)
             } operation: {
-                try await AuthGateway.liveValue.authenticate(credential())
+                try await AuthGateway.liveValue.authenticate(Credential.fixture)
             }
         }
     }
@@ -40,7 +41,7 @@ import Testing
             try await withDependencies {
                 $0.httpClient = .failing(with: StubFailure.couldNotBuildResponse)
             } operation: {
-                try await AuthGateway.liveValue.authenticate(credential())
+                try await AuthGateway.liveValue.authenticate(Credential.fixture)
             }
         }
     }
@@ -50,7 +51,7 @@ import Testing
             try await withDependencies {
                 $0.httpClient = .responding(with: Data(), statusCode: 500)
             } operation: {
-                try await AuthGateway.liveValue.authenticate(credential())
+                try await AuthGateway.liveValue.authenticate(Credential.fixture)
             }
         }
     }
@@ -61,7 +62,7 @@ import Testing
         _ = try await withDependencies {
             $0.httpClient = spy.httpClient
         } operation: {
-            try await AuthGateway.liveValue.authenticate(credential())
+            try await AuthGateway.liveValue.authenticate(Credential.fixture)
         }
 
         let request = try #require(await spy.requests.first)
@@ -71,11 +72,31 @@ import Testing
         #expect(body?["ticket"] as? String == "ABCD-12")
         #expect(body?["event"] is NSNull)
     }
-}
+    @Test func whenTransportFails_shouldLogOnlyOnceAcrossChain() async throws {
+        let recorder = LogRecorder()
 
-private func credential() throws -> Credential {
-    try Credential(
-        email: EmailAddress("attendee@example.com"),
-        ticketReference: TicketReference("ABCD-12")
-    )
+        try? await withDependencies {
+            $0.httpClient = .failing(with: StubFailure.couldNotBuildResponse).loggingFailures()
+            $0.log = recorder.log
+        } operation: {
+            let sut = AuthGateway.liveValue
+            _ = try await sut.authenticate(Credential.fixture)
+        }
+
+        #expect(recorder.events.count == 1)
+    }
+
+    @Test func whenResponseIsRejected_shouldLogOnlyOnce() async throws {
+        let recorder = LogRecorder()
+
+        try? await withDependencies {
+            $0.httpClient = .responding(with: Data(), statusCode: 503)
+            $0.log = recorder.log
+        } operation: {
+            let sut = AuthGateway.liveValue
+            _ = try await sut.authenticate(Credential.fixture)
+        }
+
+        #expect(recorder.events.count == 1)
+    }
 }

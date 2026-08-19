@@ -15,7 +15,7 @@ extension AttendeeRepository: DependencyKey {
             } catch {
                 throw AttendeeFetchError.unknown
             }
-            do throws(AttendeeResponseFailure) {
+            do throws(AttendeeMapper.ResponseError) {
                 return try attendeeMapper.map(data, response)
             } catch {
                 throw AttendeeFetchError(error)

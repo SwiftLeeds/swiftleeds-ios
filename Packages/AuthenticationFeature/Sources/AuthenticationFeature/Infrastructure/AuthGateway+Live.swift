@@ -8,7 +8,7 @@ extension AuthGateway: DependencyKey {
 }
 
 extension AuthGateway {
-    /// Throws ``LoginRequestFailure`` or ``LoginResponseFailure``.
+    /// Throws ``LoginRequestError`` or ``LoginMapper/ResponseError``.
     static var live: AuthGateway {
         AuthGateway { credential in
             @Dependency(\.httpClient) var httpClient
@@ -22,7 +22,7 @@ extension AuthGateway {
             do {
                 request.httpBody = try JSONEncoder().encode(LoginRequestDTO(credential))
             } catch {
-                throw LoginRequestFailure.couldNotEncodeRequest(error)
+                throw LoginRequestError.couldNotEncodeRequest(error)
             }
 
             let data: Data
@@ -30,7 +30,7 @@ extension AuthGateway {
             do {
                 (data, response) = try await httpClient.send(request)
             } catch {
-                throw LoginRequestFailure.transportFailed(error)
+                throw LoginRequestError.transportFailed(error)
             }
 
             return try loginMapper.map(data, response)
@@ -42,10 +42,10 @@ extension AuthGateway {
         AuthGateway { credential in
             do {
                 return try await authenticate(credential)
-            } catch let failure as LoginRequestFailure {
-                throw SignInError(failure)
-            } catch let failure as LoginResponseFailure {
-                throw SignInError(failure)
+            } catch let error as LoginRequestError {
+                throw SignInError(error)
+            } catch let error as LoginMapper.ResponseError {
+                throw SignInError(error)
             }
         }
     }
