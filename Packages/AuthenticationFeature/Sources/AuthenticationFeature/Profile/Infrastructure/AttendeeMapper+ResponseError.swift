@@ -1,6 +1,7 @@
 extension AttendeeMapper {
     package enum ResponseError: Error {
-        case couldNotRead(any Error)
+        case couldNotDecode(any Error)
+        case invalidField(AttendeeDTO.FieldError)
         case unauthorized
         case unexpectedStatus(Int)
     }
@@ -9,7 +10,9 @@ extension AttendeeMapper {
 extension AttendeeFetchError {
     init(_ error: AttendeeMapper.ResponseError) {
         switch error {
-        case .couldNotRead:
+        case .couldNotDecode:
+            self = .invalidResponse
+        case .invalidField:
             self = .invalidResponse
         case .unauthorized:
             self = .unauthorized

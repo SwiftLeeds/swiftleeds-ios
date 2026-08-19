@@ -37,6 +37,25 @@ import Testing
         #expect(event.fields.first { String($0.name) == "statusCode" }?.value == .integer(503))
     }
 
+    @Test func whenEmailIsInvalid_shouldLogEmailField() throws {
+        let event = try #require(try logEvent(forBody: attendeeJSON(email: "")))
+
+        #expect(event.fields.first { String($0.name) == "field" }?.value == .string("email"))
+    }
+
+    @Test func whenReferenceIsInvalid_shouldLogReferenceField() throws {
+        let event = try #require(try logEvent(forBody: attendeeJSON(reference: "!!!")))
+
+        #expect(event.fields.first { String($0.name) == "field" }?.value == .string("reference"))
+    }
+
+    @Test func whenBodyIsNotJSON_shouldLogDifferentMessageThanInvalidField() throws {
+        let malformed = try #require(try logEvent(forBody: Data("not json".utf8)))
+        let invalidField = try #require(try logEvent(forBody: attendeeJSON(reference: "!!!")))
+
+        #expect(malformed.message != invalidField.message)
+    }
+
     /// A destination groups by message, so two causes sharing one message could never be told apart
     /// when filtering.
     @Test func whenCausesDiffer_shouldLogDifferentMessages() throws {

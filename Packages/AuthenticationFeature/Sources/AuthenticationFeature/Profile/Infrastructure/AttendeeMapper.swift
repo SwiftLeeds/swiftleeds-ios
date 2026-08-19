@@ -13,10 +13,16 @@ extension AttendeeMapper {
     package static let live = AttendeeMapper { data, response throws(ResponseError) in
         switch response.statusCode {
         case 200:
+            let dto: AttendeeDTO
             do {
-                return try JSONDecoder().decode(AttendeeDTO.self, from: data).attendee()
+                dto = try JSONDecoder().decode(AttendeeDTO.self, from: data)
             } catch {
-                throw .couldNotRead(error)
+                throw .couldNotDecode(error)
+            }
+            do throws(AttendeeDTO.FieldError) {
+                return try dto.attendee()
+            } catch {
+                throw .invalidField(error)
             }
         case 401:
             throw .unauthorized

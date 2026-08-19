@@ -7,9 +7,15 @@ struct LoggedAttendeeFetchError {
 
     init(_ error: AttendeeMapper.ResponseError) {
         switch error {
-        case let .couldNotRead(cause):
+        case let .couldNotDecode(cause):
             level = .error
-            message = "The attendee response could not be read: \(cause, name: "reason", privacy: .open)"
+            message = "The attendee response could not be decoded: \(cause, name: "reason", privacy: .open)"
+        case let .invalidField(invalid):
+            level = .error
+            message = """
+            The attendee response had an invalid \(invalid.field.rawValue, name: "field", privacy: .open): \
+            \(invalid.reason, name: "reason", privacy: .open)
+            """
         case .unauthorized:
             // Expected: the session expired or was revoked. Not a fault in the app.
             level = .notice
