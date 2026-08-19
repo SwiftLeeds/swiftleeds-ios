@@ -4,109 +4,49 @@ import Foundation
 import LogKit
 import Testing
 
-/// The public `SignInError` is deliberately bare, so these assert the reason survives to the
-/// log even though the caller never sees it.
 @Suite struct AuthGatewayLoggingTests {
-    @Test func whenCredentialsAreRejected_shouldSayTheyWereRejected() async throws {
-        let event = try #require(await logEvent(statusCode: 401))
+    @Test func whenRequestCannotBeEncoded_shouldLogReason() async throws {
+        let failure = LoginRequestError.couldNotEncodeRequest(StubFailure.couldNotBuildResponse)
 
-        #expect(event.message == "The sign-in credentials were rejected")
-    }
-
-    /// A mistyped ticket reference is an expected outcome, not a fault in the app.
-    @Test func whenCredentialsAreRejected_shouldLogAtNoticeRatherThanError() async throws {
-        let event = try #require(await logEvent(statusCode: 401))
-
-        #expect(event.level == .notice)
-    }
-
-    @Test func whenServerReturnsUnexpectedStatus_shouldLogTheStatus() async throws {
-        let event = try #require(await logEvent(statusCode: 503))
+        let event = try #require(await logEvent(forFailure: failure))
 
         #expect(event.level == .error)
-        #expect(event.fields.first { String($0.name) == "statusCode" }?.value == .integer(503))
+        let reason = try #require(event.fields.first { String($0.name) == "reason" })
+        #expect(reason.value == .string("couldNotBuildResponse"))
     }
 
-    /// Transport failures belong to the transport seam, which logs them for every request in the
-    /// app. Logging them here too would produce two lines for one failure.
-    @Test func whenTransportFails_shouldLogNothingAtGateway() async throws {
-        let recorder = LogRecorder()
+    /// Transport failures are logged once, by the decorator on `HTTPClient`.
+    @Test func whenTransportFails_shouldLogNothing() async throws {
+        let failure = LoginRequestError.transportFailed(StubFailure.couldNotBuildResponse)
 
-        try? await withDependencies {
-            $0.httpClient = .failing(with: StubFailure.couldNotBuildResponse)
-            $0.log = recorder.log
-        } operation: {
-            _ = try await AuthGateway.liveValue.authenticate(credential())
-        }
+        let event = await logEvent(forFailure: failure)
 
-        #expect(recorder.events.isEmpty)
+        #expect(event == nil)
     }
 
-    @Test func whenTransportFails_shouldLogOnlyOnceAcrossChain() async throws {
-        let recorder = LogRecorder()
-
-        try? await withDependencies {
-            $0.httpClient = .failing(with: StubFailure.couldNotBuildResponse).loggingFailures()
-            $0.log = recorder.log
-        } operation: {
-            _ = try await AuthGateway.liveValue.authenticate(credential())
-        }
-
-        #expect(recorder.events.count == 1)
-    }
-
-    /// The point of a projection per failure: a destination groups by message, so two causes sharing
-    /// one message could never be told apart when filtering.
-    @Test func whenCausesDiffer_shouldLogDifferentMessages() async throws {
-        let rejected = try #require(await logEvent(statusCode: 401))
-        let unexpected = try #require(await logEvent(statusCode: 503))
-
-        #expect(rejected.message != unexpected.message)
-    }
-
-    @Test func whenResponseIsRejected_shouldLogOnlyOnce() async throws {
-        let recorder = LogRecorder()
-
-        try? await withDependencies {
-            $0.httpClient = .responding(with: Data(), statusCode: 503)
-            $0.log = recorder.log
-        } operation: {
-            _ = try await AuthGateway.liveValue.authenticate(credential())
-        }
-
-        #expect(recorder.events.count == 1)
-    }
-
-    @Test func whenServerReturnsToken_shouldLogNothing() async throws {
+    @Test func whenGatewaySucceeds_shouldLogNothing() async throws {
         let recorder = LogRecorder()
 
         _ = try await withDependencies {
-            $0.httpClient = .responding(with: Data("jwt-abc-123".utf8), statusCode: 200)
             $0.log = recorder.log
         } operation: {
-            try await AuthGateway.liveValue.authenticate(credential())
+            let sut = AuthGateway { _ in try SessionToken("jwt-abc-123") }.loggingRequestFailures()
+            return try await sut.authenticate(Credential.fixture)
         }
 
         #expect(recorder.events.isEmpty)
     }
 }
 
-private func logEvent(statusCode: Int) async -> LogEvent? {
+private func logEvent(forFailure error: LoginRequestError) async -> LogEvent? {
     let recorder = LogRecorder()
 
     try? await withDependencies {
-        $0.httpClient = .responding(with: Data(), statusCode: statusCode)
         $0.log = recorder.log
     } operation: {
-        _ = try await AuthGateway.liveValue.authenticate(credential())
+        let sut = AuthGateway { _ in throw error }.loggingRequestFailures()
+        _ = try await sut.authenticate(Credential.fixture)
     }
 
     return recorder.events.first
-}
-
-private func credential() throws -> Credential {
-    try Credential(
-        email: EmailAddress("attendee@example.com"),
-        ticketReference: TicketReference("ABCD-12")
-    )
 }

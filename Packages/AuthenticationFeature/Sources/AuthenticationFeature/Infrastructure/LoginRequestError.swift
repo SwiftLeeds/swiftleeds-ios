@@ -1,5 +1,5 @@
 /// Why a login request never got a response.
-enum LoginRequestError: Error {
+package enum LoginRequestError: Error {
     case couldNotEncodeRequest(any Error)
     case transportFailed(any Error)
 }

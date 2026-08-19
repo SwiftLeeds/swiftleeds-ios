@@ -1,6 +1,6 @@
 extension LoginMapper {
     /// Why a login response could not be turned into a session.
-    enum ResponseError: Error {
+    package enum ResponseError: Error {
         case invalidCredentials
         case unexpectedStatus(Int)
         case invalidToken(SessionToken.ParsingError)

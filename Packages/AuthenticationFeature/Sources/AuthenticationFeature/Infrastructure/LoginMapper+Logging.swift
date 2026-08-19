@@ -2,7 +2,7 @@ import Dependencies
 import LogKit
 
 extension LoginMapper {
-    func loggingFailures() -> LoginMapper {
+    package func loggingFailures() -> LoginMapper {
         LoginMapper { data, response throws(ResponseError) in
             do throws(ResponseError) {
                 return try map(data, response)
