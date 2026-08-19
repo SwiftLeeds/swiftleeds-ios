@@ -8,20 +8,20 @@ import Testing
 /// log even though the caller never sees it.
 @Suite struct AuthGatewayLoggingTests {
     @Test func whenCredentialsAreRejected_shouldSayTheyWereRejected() async throws {
-        let event = try #require(await attempt(statusCode: 401))
+        let event = try #require(await logEvent(statusCode: 401))
 
         #expect(event.message == "The sign-in credentials were rejected")
     }
 
     /// A mistyped ticket reference is an expected outcome, not a fault in the app.
     @Test func whenCredentialsAreRejected_shouldLogAtNoticeRatherThanError() async throws {
-        let event = try #require(await attempt(statusCode: 401))
+        let event = try #require(await logEvent(statusCode: 401))
 
         #expect(event.level == .notice)
     }
 
     @Test func whenServerReturnsUnexpectedStatus_shouldLogTheStatus() async throws {
-        let event = try #require(await attempt(statusCode: 503))
+        let event = try #require(await logEvent(statusCode: 503))
 
         #expect(event.level == .error)
         #expect(event.fields.first { String($0.name) == "statusCode" }?.value == .integer(503))
@@ -29,7 +29,7 @@ import Testing
 
     /// Transport failures belong to the transport seam, which logs them for every request in the
     /// app. Logging them here too would produce two lines for one failure.
-    @Test func whenTransportFails_shouldLogNothingHere() async throws {
+    @Test func whenTransportFails_shouldLogNothingAtGateway() async throws {
         let recorder = LogRecorder()
 
         try? await withDependencies {
@@ -42,7 +42,7 @@ import Testing
         #expect(recorder.events.isEmpty)
     }
 
-    @Test func whenTransportFails_shouldLogOnlyOnceAcrossTheChain() async throws {
+    @Test func whenTransportFails_shouldLogOnlyOnceAcrossChain() async throws {
         let recorder = LogRecorder()
 
         try? await withDependencies {
@@ -58,8 +58,8 @@ import Testing
     /// The point of a projection per failure: a destination groups by message, so two causes sharing
     /// one message could never be told apart when filtering.
     @Test func whenCausesDiffer_shouldLogDifferentMessages() async throws {
-        let rejected = try #require(await attempt(statusCode: 401))
-        let unexpected = try #require(await attempt(statusCode: 503))
+        let rejected = try #require(await logEvent(statusCode: 401))
+        let unexpected = try #require(await logEvent(statusCode: 503))
 
         #expect(rejected.message != unexpected.message)
     }
@@ -91,7 +91,7 @@ import Testing
     }
 }
 
-private func attempt(statusCode: Int) async -> LogEvent? {
+private func logEvent(statusCode: Int) async -> LogEvent? {
     let recorder = LogRecorder()
 
     try? await withDependencies {

@@ -1,16 +1,16 @@
 import Dependencies
 import Foundation
 
-struct AttendeeMapper: Sendable {
-    var map: @Sendable (Data, HTTPURLResponse) throws(ResponseError) -> Attendee
+package struct AttendeeMapper: Sendable {
+    package var map: @Sendable (Data, HTTPURLResponse) throws(ResponseError) -> Attendee
 
-    init(map: @escaping @Sendable (Data, HTTPURLResponse) throws(ResponseError) -> Attendee) {
+    package init(map: @escaping @Sendable (Data, HTTPURLResponse) throws(ResponseError) -> Attendee) {
         self.map = map
     }
 }
 
 extension AttendeeMapper {
-    static let live = AttendeeMapper { data, response throws(ResponseError) in
+    package static let live = AttendeeMapper { data, response throws(ResponseError) in
         switch response.statusCode {
         case 200:
             do {
