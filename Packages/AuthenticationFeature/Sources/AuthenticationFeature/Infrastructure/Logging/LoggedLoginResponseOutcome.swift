@@ -1,12 +1,11 @@
 import LogKit
 
-/// How the outcome of mapping a sign-in response reads in a log.
 struct LoggedLoginResponseOutcome {
     let level: LogLevel
     let message: LogMessage
 
-    /// Carries no field. The accepted value is a session token, and nothing about it belongs in a
-    /// log line saying the response parsed.
+    // Carries no field. The accepted value is a session token, and nothing about it belongs in a
+    // log line saying the response parsed.
     static let success = LoggedLoginResponseOutcome(
         level: .debug,
         message: "The sign-in response was accepted"

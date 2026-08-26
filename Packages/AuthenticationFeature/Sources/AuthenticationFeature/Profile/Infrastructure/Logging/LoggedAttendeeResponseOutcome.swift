@@ -1,11 +1,10 @@
 import LogKit
 
-/// How the outcome of mapping an attendee response reads in a log.
 struct LoggedAttendeeResponseOutcome {
     let level: LogLevel
     let message: LogMessage
 
-    /// Carries no field. The accepted value holds a name, an email address and a ticket reference.
+    // Carries no field. The accepted value holds a name, an email address and a ticket reference.
     static let success = LoggedAttendeeResponseOutcome(
         level: .debug,
         message: "The attendee response was accepted"
@@ -30,7 +29,7 @@ struct LoggedAttendeeResponseOutcome {
             // Expected: the session expired or was revoked. Not a fault in the app.
             LoggedAttendeeResponseOutcome(
                 level: .notice,
-                message: "The attendee request was not authorised"
+                message: "The attendee request was not authorized"
             )
         case let .unexpectedStatus(code):
             LoggedAttendeeResponseOutcome(
