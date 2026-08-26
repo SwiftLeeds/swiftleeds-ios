@@ -12,7 +12,7 @@ import Testing
             $0.log = recorder.log
             $0.sessionStore = .failing(with: StubFailure.couldNotBuildResponse)
         } operation: {
-            let sut = SignOut.liveValue.loggingFailedOutcomes()
+            let sut = SignOut.liveValue.logging()
             _ = try? await sut()
         }
 
@@ -25,7 +25,7 @@ import Testing
             $0.log = LogRecorder().log
             $0.sessionStore = .failing(with: StubFailure.couldNotBuildResponse)
         } operation: {
-            let sut = SignOut.liveValue.loggingFailedOutcomes()
+            let sut = SignOut.liveValue.logging()
 
             await #expect(throws: StubFailure.couldNotBuildResponse) {
                 try await sut()
@@ -41,7 +41,7 @@ import Testing
             $0.log = recorder.log
             $0.sessionStore = store.sessionStore
         } operation: {
-            let sut = SignOut.liveValue.loggingFailedOutcomes()
+            let sut = SignOut.liveValue.logging()
             try await sut()
         }
 
@@ -56,9 +56,9 @@ import Testing
         await withDependencies {
             $0.log = recorder.log
             $0.secureStorage = .failing(with: StubFailure.couldNotBuildResponse)
-            $0.sessionStore = SessionStore.live.loggingFailures()
+            $0.sessionStore = SessionStore.live.logging()
         } operation: {
-            let sut = SignOut.liveValue.loggingFailedOutcomes()
+            let sut = SignOut.liveValue.logging()
             _ = try? await sut()
         }
 

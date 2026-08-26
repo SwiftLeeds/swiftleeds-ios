@@ -6,7 +6,7 @@ extension FetchProfile {
     ///
     /// The cause already reached the log at the seam that knew it: the transport or the mapper.
     /// This line says what that cost the person waiting for their profile.
-    public func loggingFailedOutcomes() -> FetchProfile {
+    public func logging() -> FetchProfile {
         FetchProfile { () async throws(AttendeeFetchError) -> Profile in
             do throws(AttendeeFetchError) {
                 return try await self()

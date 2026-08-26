@@ -54,7 +54,7 @@ import Testing
         withDependencies {
             $0.log = LogRecorder().log
         } operation: {
-            let sut = LoginMapper.live.loggingFailures()
+            let sut = LoginMapper.live.logging()
 
             #expect(throws: LoginMapper.ResponseError.self) {
                 try sut.map(Data(), response)
@@ -69,7 +69,7 @@ import Testing
         try withDependencies {
             $0.log = recorder.log
         } operation: {
-            let sut = LoginMapper.live.loggingFailures()
+            let sut = LoginMapper.live.logging()
             _ = try sut.map(Data("jwt-abc-123".utf8), response)
         }
 
@@ -83,7 +83,7 @@ import Testing
         withDependencies {
             $0.log = recorder.log
         } operation: {
-            let sut = LoginMapper.live.loggingFailures()
+            let sut = LoginMapper.live.logging()
             _ = try? sut.map(data, response)
         }
 

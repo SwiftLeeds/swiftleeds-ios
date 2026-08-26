@@ -54,7 +54,7 @@ import Testing
             $0.httpClient = .responding(with: try attendeeJSON(reference: "!!!"), statusCode: 200)
             $0.attendeeRepository = .liveValue
         } operation: {
-            let sut = FetchProfile.liveValue.loggingFailedOutcomes()
+            let sut = FetchProfile.liveValue.logging()
             _ = try? await sut()
         }
 
@@ -66,7 +66,7 @@ import Testing
             $0.log = LogRecorder().log
             $0.attendeeRepository = .failing(with: .unauthorized)
         } operation: {
-            let sut = FetchProfile.liveValue.loggingFailedOutcomes()
+            let sut = FetchProfile.liveValue.logging()
 
             await #expect(throws: AttendeeFetchError.unauthorized) {
                 try await sut()
@@ -81,7 +81,7 @@ import Testing
             $0.log = recorder.log
             $0.attendeeRepository = .returning(try Attendee.fixture)
         } operation: {
-            let sut = FetchProfile.liveValue.loggingFailedOutcomes()
+            let sut = FetchProfile.liveValue.logging()
             return try await sut()
         }
 
@@ -95,7 +95,7 @@ import Testing
             $0.log = recorder.log
             $0.attendeeRepository = .failing(with: error)
         } operation: {
-            let sut = FetchProfile.liveValue.loggingFailedOutcomes()
+            let sut = FetchProfile.liveValue.logging()
             _ = try? await sut()
         }
 

@@ -50,7 +50,7 @@ import Testing
             $0.authGateway = .failing(with: SignInError.invalidCredentials)
             $0.sessionStore = InMemorySessionStore().sessionStore
         } operation: {
-            let sut = SignIn.liveValue.loggingFailedOutcomes()
+            let sut = SignIn.liveValue.logging()
 
             await #expect(throws: SignInError.invalidCredentials) {
                 try await sut(Credential.fixture)
@@ -66,7 +66,7 @@ import Testing
             $0.authGateway = .returning(try SessionToken("jwt-abc-123"))
             $0.sessionStore = InMemorySessionStore().sessionStore
         } operation: {
-            let sut = SignIn.liveValue.loggingFailedOutcomes()
+            let sut = SignIn.liveValue.logging()
             try await sut(Credential.fixture)
         }
 
@@ -81,7 +81,7 @@ import Testing
             $0.authGateway = .returning(try SessionToken("jwt-abc-123"))
             $0.sessionStore = .failing(with: StubFailure.couldNotBuildResponse)
         } operation: {
-            let sut = SignIn.liveValue.loggingFailedOutcomes()
+            let sut = SignIn.liveValue.logging()
             _ = try? await sut(Credential.fixture)
         }
 
@@ -96,7 +96,7 @@ import Testing
             $0.authGateway = .failing(with: error)
             $0.sessionStore = InMemorySessionStore().sessionStore
         } operation: {
-            let sut = SignIn.liveValue.loggingFailedOutcomes()
+            let sut = SignIn.liveValue.logging()
             _ = try? await sut(Credential.fixture)
         }
 

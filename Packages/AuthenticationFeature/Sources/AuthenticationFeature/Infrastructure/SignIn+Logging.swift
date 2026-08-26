@@ -6,7 +6,7 @@ extension SignIn {
     ///
     /// The cause already reached the log at the seam that knew it: the transport, the mapper, or
     /// the session store. This line says what that cost the person signing in.
-    public func loggingFailedOutcomes() -> SignIn {
+    public func logging() -> SignIn {
         SignIn { credential in
             do {
                 try await self(credential)

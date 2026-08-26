@@ -5,7 +5,7 @@ extension SessionStore {
     /// Records why the store refused, then rethrows.
     ///
     /// A session that will not clear stays on the device after the user believes they signed out.
-    package func loggingFailures() -> SessionStore {
+    package func logging() -> SessionStore {
         SessionStore(
             establish: { session in
                 do {

@@ -48,7 +48,7 @@ import Testing
         _ = try await withDependencies {
             $0.log = recorder.log
         } operation: {
-            let sut = HTTPClient.responding(with: Data(), statusCode: 500).loggingFailures()
+            let sut = HTTPClient.responding(with: Data(), statusCode: 500).logging()
             return try await sut.send(URLRequest(url: url))
         }
 
@@ -61,7 +61,7 @@ import Testing
         try? await withDependencies {
             $0.log = recorder.log
         } operation: {
-            let sut = HTTPClient.failing(with: StubFailure.couldNotBuildResponse).loggingFailures()
+            let sut = HTTPClient.failing(with: StubFailure.couldNotBuildResponse).logging()
             _ = try await sut.send(request)
         }
 

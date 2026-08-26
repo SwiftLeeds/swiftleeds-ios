@@ -27,7 +27,7 @@ extension LoginMapper {
 }
 
 private enum LoginMapperKey: DependencyKey {
-    static var liveValue: LoginMapper { .live.loggingFailures() }
+    static var liveValue: LoginMapper { .live.logging() }
     static var testValue: LoginMapper { liveValue }
 }
 

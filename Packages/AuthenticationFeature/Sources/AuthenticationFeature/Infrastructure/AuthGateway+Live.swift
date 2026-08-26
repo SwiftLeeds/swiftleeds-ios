@@ -3,7 +3,7 @@ import Foundation
 
 extension AuthGateway: DependencyKey {
     package static var liveValue: AuthGateway {
-        live.loggingRequestFailures().narrowingFailures()
+        live.logging().narrowingFailures()
     }
 }
 

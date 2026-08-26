@@ -33,7 +33,7 @@ extension AttendeeMapper {
 }
 
 private enum AttendeeMapperKey: DependencyKey {
-    static var liveValue: AttendeeMapper { .live.loggingFailures() }
+    static var liveValue: AttendeeMapper { .live.logging() }
     static var testValue: AttendeeMapper { liveValue }
 }
 

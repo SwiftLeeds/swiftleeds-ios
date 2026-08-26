@@ -52,7 +52,7 @@ import Testing
             $0.log = LogRecorder().log
             $0.secureStorage = .failing(with: StubFailure.couldNotBuildResponse)
         } operation: {
-            let sut = SessionStore.live.loggingFailures()
+            let sut = SessionStore.live.logging()
 
             await #expect(throws: StubFailure.couldNotBuildResponse) {
                 try await sut.clear()
@@ -83,7 +83,7 @@ import Testing
             $0.log = recorder.log
             $0.secureStorage = SecureStorageSpy().secureStorage
         } operation: {
-            let sut = SessionStore.live.loggingFailures()
+            let sut = SessionStore.live.logging()
             try await sut.establish(session)
             _ = try await sut.current()
             try await sut.clear()
@@ -101,7 +101,7 @@ import Testing
             $0.log = recorder.log
             $0.secureStorage = .failing(with: StubFailure.couldNotBuildResponse)
         } operation: {
-            try await operation(SessionStore.live.loggingFailures())
+            try await operation(SessionStore.live.logging())
         }
 
         return recorder.events.first

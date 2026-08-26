@@ -4,7 +4,7 @@ import SecureStorageKit
 
 extension SessionStore: DependencyKey {
     package static var liveValue: SessionStore {
-        live.loggingFailures()
+        live.logging()
     }
 }
 
