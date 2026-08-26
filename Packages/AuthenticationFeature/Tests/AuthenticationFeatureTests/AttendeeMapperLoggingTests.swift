@@ -102,6 +102,9 @@ import Testing
             _ = try sut.map(attendeeJSON(), response)
         }
 
+        // Pinned here rather than per test, so a decorator that logs an outcome twice fails
+        // everything rather than nothing.
+        #expect(recorder.events.count == 1)
         return recorder.events.first
     }
 
@@ -116,6 +119,9 @@ import Testing
             _ = try? sut.map(data, response)
         }
 
+        // Pinned here rather than per test, so a decorator that logs an outcome twice fails
+        // everything rather than nothing.
+        #expect(recorder.events.count == 1)
         return recorder.events.first
     }
 }
