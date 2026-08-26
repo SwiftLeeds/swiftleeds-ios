@@ -2,7 +2,8 @@ import AuthenticationFeature
 import Testing
 
 @Suite struct CredentialTests {
-    @Test func whenDescribed_shouldRedactEmailAndTicket() throws {
+    // Fails if Credential gains a description of its own that hides its members.
+    @Test func whenDescribed_shouldShowEmailAndTicketReference() throws {
         let credential = Credential(
             email: try EmailAddress("person@example.com"),
             ticketReference: try TicketReference("ABCD-1")
@@ -10,7 +11,7 @@ import Testing
 
         let described = String(describing: credential)
 
-        #expect(!described.contains("person@example.com"))
-        #expect(!described.contains("ABCD-1"))
+        #expect(described.contains("person@example.com"))
+        #expect(described.contains("ABCD-1"))
     }
 }

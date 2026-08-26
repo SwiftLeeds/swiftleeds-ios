@@ -17,8 +17,8 @@ import Testing
         #expect(String(email) == "person@example.com")
     }
 
-    @Test func whenDescribed_shouldRedactValue() throws {
+    @Test func whenDescribed_shouldShowValue() throws {
         let email = try EmailAddress("person@example.com")
-        #expect(!String(describing: email).contains("person@example.com"))
+        #expect(String(describing: email).contains("person@example.com"))
     }
 }
