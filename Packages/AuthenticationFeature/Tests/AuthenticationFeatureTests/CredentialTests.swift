@@ -2,8 +2,8 @@ import AuthenticationFeature
 import Testing
 
 @Suite struct CredentialTests {
-    // The member tests cover each type alone. This covers an aggregate gaining its own redaction.
-    @Test func whenDescribed_shouldShowEmailAndTicket() throws {
+    // Fails if Credential gains a description of its own that hides its members.
+    @Test func whenDescribed_shouldShowEmailAndTicketReference() throws {
         let credential = Credential(
             email: try EmailAddress("person@example.com"),
             ticketReference: try TicketReference("ABCD-1")
