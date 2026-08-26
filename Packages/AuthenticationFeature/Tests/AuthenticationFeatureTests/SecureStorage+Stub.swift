@@ -1,4 +1,3 @@
-import Foundation
 import SecureStorageKit
 
 extension SecureStorage {

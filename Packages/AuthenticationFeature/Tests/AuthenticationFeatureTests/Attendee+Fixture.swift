@@ -3,7 +3,8 @@ import Foundation
 import Testing
 
 extension Attendee {
-    /// Any well-formed attendee. Nothing in a test depends on these particular values.
+    /// Any well-formed attendee. `FetchProfileTests` pins these values in its own expectation, so
+    /// changing one changes that test.
     static var fixture: Attendee {
         get throws {
             Attendee(
