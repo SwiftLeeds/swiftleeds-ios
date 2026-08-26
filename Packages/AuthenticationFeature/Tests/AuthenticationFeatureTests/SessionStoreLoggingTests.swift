@@ -33,20 +33,6 @@ import Testing
         #expect(reason.value == .string("couldNotBuildResponse"))
     }
 
-    /// A destination groups by message, so three operations sharing one message could never be told
-    /// apart when filtering.
-    @Test func whenOperationsFail_shouldLogDifferentMessagePerOperation() async throws {
-        let session = Session(token: try SessionToken("jwt-abc-123"))
-
-        let stored = try #require(await logEvent { try await $0.establish(session) })
-        let cleared = try #require(await logEvent { try await $0.clear() })
-        let read = try #require(await logEvent { _ = try await $0.current() })
-
-        #expect(stored.message != cleared.message)
-        #expect(cleared.message != read.message)
-        #expect(read.message != stored.message)
-    }
-
     @Test func whenStoreRefuses_shouldRethrowRefusal() async throws {
         await withDependencies {
             $0.log = LogRecorder().log
@@ -75,21 +61,89 @@ import Testing
         #expect(recorder.events.count == 1)
     }
 
-    @Test func whenStoreAccepts_shouldLogNothing() async throws {
-        let recorder = LogRecorder()
+    @Test func whenStoreAccepts_shouldLogOneLinePerOperation() async throws {
         let session = Session(token: try SessionToken("jwt-abc-123"))
+
+        let events = try await acceptedEvents {
+            try await $0.establish(session)
+            _ = try await $0.current()
+            try await $0.clear()
+        }
+
+        #expect(events.count == 3)
+    }
+
+    @Test func whenSessionIsStored_shouldLogAtInfoLevel() async throws {
+        let session = Session(token: try SessionToken("jwt-abc-123"))
+
+        let event = try #require(try await acceptedEvents { try await $0.establish(session) }.first)
+
+        #expect(event.level == .info)
+    }
+
+    @Test func whenSessionIsCleared_shouldLogAtInfoLevel() async throws {
+        let event = try #require(try await acceptedEvents { try await $0.clear() }.first)
+
+        #expect(event.level == .info)
+    }
+
+    /// A read happens on every authenticated request, so it is recorded at the level the platform
+    /// drops unless someone is watching.
+    @Test func whenStoredSessionIsRead_shouldLogAtDebugLevel() async throws {
+        let event = try #require(try await acceptedEvents { _ = try await $0.current() }.first)
+
+        #expect(event.level == .debug)
+    }
+
+    /// "Why was the user signed out?" is answered by a read that found nothing, so it must be
+    /// filterable on its own rather than sharing the ordinary read's message.
+    @Test func whenReadFindsNothing_shouldLogDifferentMessageThanWhenItFindsSession() async throws {
+        let session = Session(token: try SessionToken("jwt-abc-123"))
+
+        let foundNothing = try #require(try await acceptedEvents { _ = try await $0.current() }.first)
+        let foundSession = try #require(
+            try await acceptedEvents {
+                try await $0.establish(session)
+                _ = try await $0.current()
+            }.last
+        )
+
+        #expect(foundNothing.message != foundSession.message)
+        #expect(foundSession.level == .debug)
+    }
+
+    /// Six outcomes, six messages. A destination groups by message, so any pair sharing one could
+    /// never be told apart when filtering.
+    @Test func whenOutcomesDiffer_shouldLogDifferentMessages() async throws {
+        let session = Session(token: try SessionToken("jwt-abc-123"))
+
+        let refused = try await [
+            #require(await logEvent { try await $0.establish(session) }),
+            #require(await logEvent { try await $0.clear() }),
+            #require(await logEvent { _ = try await $0.current() }),
+        ].map(\.message)
+        let accepted = try await [
+            #require(try await acceptedEvents { try await $0.establish(session) }.first),
+            #require(try await acceptedEvents { try await $0.clear() }.first),
+            #require(try await acceptedEvents { _ = try await $0.current() }.first),
+        ].map(\.message)
+
+        #expect(Set(refused + accepted).count == 6)
+    }
+
+    private func acceptedEvents(
+        _ operation: @escaping @Sendable (SessionStore) async throws -> Void
+    ) async throws -> [LogEvent] {
+        let recorder = LogRecorder()
 
         try await withDependencies {
             $0.log = recorder.log
             $0.secureStorage = SecureStorageSpy().secureStorage
         } operation: {
-            let sut = SessionStore.live.logging()
-            try await sut.establish(session)
-            _ = try await sut.current()
-            try await sut.clear()
+            try await operation(SessionStore.live.logging())
         }
 
-        #expect(recorder.events.isEmpty)
+        return recorder.events
     }
 
     private func logEvent(
