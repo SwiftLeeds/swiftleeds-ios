@@ -11,6 +11,14 @@ import Testing
         #expect(event.level == .notice)
     }
 
+    /// An offline device is expected and the user can retry, so it matches the sign-in side rather
+    /// than reporting a fault in the app.
+    @Test func whenServerCannotBeReached_shouldLogAtNoticeRatherThanError() async throws {
+        let event = try #require(await logEvent(whenRepositoryThrows: .couldNotReachServer))
+
+        #expect(event.level == .notice)
+    }
+
     @Test func whenResponseIsRejected_shouldLogAtErrorLevel() async throws {
         let event = try #require(await logEvent(whenRepositoryThrows: .invalidResponse))
 
@@ -26,13 +34,14 @@ import Testing
     /// A destination groups by message, so two outcomes sharing one message could never be told
     /// apart when filtering.
     @Test func whenOutcomesDiffer_shouldLogDifferentMessages() async throws {
-        let unaccepted = try #require(await logEvent(whenRepositoryThrows: .unauthorized))
-        let rejected = try #require(await logEvent(whenRepositoryThrows: .invalidResponse))
-        let unknown = try #require(await logEvent(whenRepositoryThrows: .unknown))
+        let messages = try await [
+            #require(await logEvent(whenRepositoryThrows: .unauthorized)),
+            #require(await logEvent(whenRepositoryThrows: .couldNotReachServer)),
+            #require(await logEvent(whenRepositoryThrows: .invalidResponse)),
+            #require(await logEvent(whenRepositoryThrows: .unknown)),
+        ].map(\.message)
 
-        #expect(unaccepted.message != rejected.message)
-        #expect(rejected.message != unknown.message)
-        #expect(unknown.message != unaccepted.message)
+        #expect(Set(messages).count == messages.count)
     }
 
     /// The mapper names the cause, the use case names the outcome. Two seams, two lines, and no

@@ -87,8 +87,10 @@ import Testing
         #expect(recorder.events.count == 1)
     }
 
-    @Test func whenTransportFails_shouldThrowUnknown() async throws {
-        await #expect(throws: AttendeeFetchError.unknown) {
+    /// An offline device is the commonest failure here, and it is not the same as a server the app
+    /// cannot make sense of.
+    @Test func whenTransportFails_shouldThrowCouldNotReachServer() async throws {
+        await #expect(throws: AttendeeFetchError.couldNotReachServer) {
             try await withDependencies {
                 $0.httpClient = .failing(with: StubError.transport)
             } operation: {
