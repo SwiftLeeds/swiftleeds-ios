@@ -1,4 +1,5 @@
 import AuthenticationUI
+import CoreGraphics
 import Dependencies
 import LogKit
 import Testing
@@ -7,68 +8,88 @@ import Testing
 /// view shows a card rather than raising anything. This is the only record of it.
 @MainActor
 @Suite struct BarcodeContentLoggingTests {
-    private let undrawable = BarcodeContent.code128("café-ticket-✓")
-    private let drawable = BarcodeContent.code128("ABCD-1")
-
     @Test func whenCodeCannotBeDrawn_shouldLogAtErrorLevel() throws {
-        let event = try #require(attempt(undrawable, payloadLength: 15))
+        let event = try #require(attempt(.undrawable, payloadBytes: 26))
 
         #expect(event.level == .error)
     }
 
-    @Test func whenCodeCannotBeDrawn_shouldLogPayloadLength() throws {
-        let event = try #require(attempt(undrawable, payloadLength: 15))
+    @Test func whenCodeCannotBeDrawn_shouldLogPayloadBytes() throws {
+        let event = try #require(attempt(.undrawable, payloadBytes: 26))
 
-        #expect(event.fields.first { String($0.name) == "payloadLength" }?.value == .integer(15))
+        #expect(event.fields.first { String($0.name) == "payloadBytes" }?.value == .integer(26))
     }
 
     @Test func whenCodeCannotBeDrawn_shouldStillReturnNothingToDraw() {
-        let recorder = LogRecorder()
-
         withDependencies {
-            $0.log = recorder.log
+            $0.log = LogRecorder().log
         } operation: {
-            #expect(undrawable.loggingFailures(payloadLength: 15).makeImage() == nil)
+            let sut = BarcodeContent.undrawable.loggingFailures(payloadBytes: 26)
+
+            #expect(sut.makeImage() == nil)
         }
     }
 
-    @Test func whenCodeDraws_shouldLogNothing() {
+    @Test func whenCodeDraws_shouldLogNothing() throws {
         let recorder = LogRecorder()
+        let swatch = try #require(CGImage.swatch)
 
         withDependencies {
             $0.log = recorder.log
         } operation: {
-            _ = drawable.loggingFailures(payloadLength: 6).makeImage()
+            let sut = BarcodeContent.drawing(swatch).loggingFailures(payloadBytes: 26)
+            _ = sut.makeImage()
         }
 
         #expect(recorder.events.isEmpty)
     }
 
-    @Test func whenCodeDraws_shouldReturnTheSameImage() {
-        let recorder = LogRecorder()
+    // The decorator observes and passes through, so returning an image of its own making, even a
+    // correct redraw, would break that contract.
+    @Test func whenCodeDraws_shouldReturnThatExactImage() throws {
+        let swatch = try #require(CGImage.swatch)
 
         withDependencies {
-            $0.log = recorder.log
+            $0.log = LogRecorder().log
         } operation: {
-            let undecorated = drawable.makeImage()
-            let decorated = drawable.loggingFailures(payloadLength: 6).makeImage()
+            let sut = BarcodeContent.drawing(swatch).loggingFailures(payloadBytes: 26)
 
-            #expect(decorated?.width == undecorated?.width)
-            #expect(decorated?.height == undecorated?.height)
+            #expect(sut.makeImage() === swatch)
         }
     }
 
-    private func attempt(_ content: BarcodeContent, payloadLength: Int) -> LogEvent? {
+    private func attempt(_ content: BarcodeContent, payloadBytes: Int) -> LogEvent? {
         let recorder = LogRecorder()
 
         withDependencies {
             $0.log = recorder.log
         } operation: {
-            _ = content.loggingFailures(payloadLength: payloadLength).makeImage()
+            let sut = content.loggingFailures(payloadBytes: payloadBytes)
+            _ = sut.makeImage()
         }
 
         // Pinned here rather than per test, so a decorator that records twice fails everything.
         #expect(recorder.events.count == 1)
         return recorder.events.first
     }
+}
+
+private extension BarcodeContent {
+    /// Content that cannot draw, without depending on any symbology's rejection rules.
+    static var undrawable: BarcodeContent { BarcodeContent { nil } }
+
+    static func drawing(_ image: CGImage) -> BarcodeContent { BarcodeContent { image } }
+}
+
+private extension CGImage {
+    /// One opaque pixel. The tests care which image comes back, never what it shows.
+    static let swatch: CGImage? = CGContext(
+        data: nil,
+        width: 1,
+        height: 1,
+        bitsPerComponent: 8,
+        bytesPerRow: 1,
+        space: CGColorSpaceCreateDeviceGray(),
+        bitmapInfo: CGImageAlphaInfo.none.rawValue
+    )?.makeImage()
 }

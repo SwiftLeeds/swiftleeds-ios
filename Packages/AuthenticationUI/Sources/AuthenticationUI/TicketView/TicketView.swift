@@ -60,7 +60,7 @@ package struct TicketView: View {
 
     private var code: BarcodeContent {
         let payload = String(slug)
-        return .qr(QRCode.Payload(payload)).loggingFailures(payloadLength: payload.count)
+        return .qr(QRCode.Payload(payload)).loggingFailures(payloadBytes: payload.utf8.count)
     }
 
     private var identity: some View {

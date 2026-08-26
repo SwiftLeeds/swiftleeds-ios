@@ -1,21 +1,20 @@
-import CoreGraphics
 import Dependencies
 import LogKit
 
 extension BarcodeContent {
     /// Records that the code could not be drawn, then returns what it drew.
     ///
-    /// - Parameter payloadLength: How many characters the code carries. A payload too long for the
-    ///   symbology is the likeliest cause, so the length is what a reader can act on.
-    package func loggingFailures(payloadLength: Int) -> BarcodeContent {
+    /// - Parameter payloadBytes: How many bytes the code carries, which is what a symbology's
+    ///   capacity is measured in.
+    package func loggingFailures(payloadBytes: Int) -> BarcodeContent {
         BarcodeContent {
             guard let image = makeImage() else {
-                // Resolved per call, so a test overriding \.log is honoured.
+                // Resolved per call, so a test override is seen.
                 @Dependency(\.log) var log
                 log.error(
                     """
                     The ticket code could not be drawn: \
-                    \(payloadLength, name: "payloadLength", privacy: .open)
+                    \(payloadBytes, name: "payloadBytes", privacy: .open)
                     """,
                     in: .ticket
                 )
