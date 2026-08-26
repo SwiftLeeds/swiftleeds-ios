@@ -35,6 +35,7 @@ import Testing
     /// apart when filtering.
     @Test func whenOutcomesDiffer_shouldLogDifferentMessages() async throws {
         let messages = try await [
+            #require(try await successEvent()),
             #require(await logEvent(whenRepositoryThrows: .unauthorized)),
             #require(await logEvent(whenRepositoryThrows: .couldNotReachServer)),
             #require(await logEvent(whenRepositoryThrows: .invalidResponse)),
@@ -74,7 +75,21 @@ import Testing
         }
     }
 
-    @Test func whenFetchSucceeds_shouldLogNothing() async throws {
+    /// A profile loads each time the card appears, so the success sits below the levels the
+    /// platform writes to disk.
+    @Test func whenFetchSucceeds_shouldLogAtInfoLevel() async throws {
+        let event = try #require(try await successEvent())
+
+        #expect(event.level == .info)
+    }
+
+    @Test func whenFetchSucceeds_shouldLogNoAttendeeDetail() async throws {
+        let event = try #require(try await successEvent())
+
+        #expect(event.fields.isEmpty)
+    }
+
+    private func successEvent() async throws -> LogEvent? {
         let recorder = LogRecorder()
 
         _ = try await withDependencies {
@@ -85,7 +100,7 @@ import Testing
             return try await sut()
         }
 
-        #expect(recorder.events.isEmpty)
+        return recorder.events.first
     }
 
     private func logEvent(whenRepositoryThrows error: AttendeeFetchError) async -> LogEvent? {
