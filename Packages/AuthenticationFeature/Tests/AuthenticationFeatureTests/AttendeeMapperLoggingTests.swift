@@ -49,25 +49,6 @@ import Testing
         #expect(event.fields.first { String($0.name) == "field" }?.value == .string("reference"))
     }
 
-    @Test func whenBodyIsNotJSON_shouldLogDifferentMessageThanInvalidField() throws {
-        let malformed = try #require(try logEvent(forBody: Data("not json".utf8)))
-        let invalidField = try #require(try logEvent(forBody: attendeeJSON(reference: "!!!")))
-
-        #expect(malformed.message != invalidField.message)
-    }
-
-    /// A destination groups by message, so two causes sharing one message could never be told apart
-    /// when filtering.
-    @Test func whenCausesDiffer_shouldLogDifferentMessages() throws {
-        let unreadable = try #require(try logEvent(forBody: attendeeJSON(reference: "!!!")))
-        let unauthorised = try #require(try logEvent(statusCode: 401))
-        let unexpected = try #require(try logEvent(statusCode: 503))
-
-        #expect(unreadable.message != unauthorised.message)
-        #expect(unauthorised.message != unexpected.message)
-        #expect(unexpected.message != unreadable.message)
-    }
-
     @Test func whenResponseIsRejected_shouldRethrowResponseError() throws {
         let response = try HTTPURLResponse.fixture(url: url, statusCode: 503)
 
@@ -82,7 +63,35 @@ import Testing
         }
     }
 
-    @Test func whenResponseIsValid_shouldLogNothing() throws {
+    /// A response is accepted every time the profile card loads, so it records at the level the
+    /// platform drops unless someone is watching.
+    @Test func whenResponseIsValid_shouldLogAtDebugLevel() throws {
+        let event = try #require(try acceptedEvent())
+
+        #expect(event.level == .debug)
+    }
+
+    /// The accepted value holds a name, an email address and a ticket reference. None of them
+    /// belong in a log line saying the response parsed.
+    @Test func whenResponseIsValid_shouldLogNoAttendeeDetail() throws {
+        let event = try #require(try acceptedEvent())
+
+        #expect(event.fields.isEmpty)
+    }
+
+    @Test func whenOutcomesDiffer_shouldLogDifferentMessages() throws {
+        let messages = try [
+            #require(try acceptedEvent()),
+            #require(try logEvent(forBody: attendeeJSON(reference: "!!!"))),
+            #require(try logEvent(forBody: Data("not json".utf8))),
+            #require(try logEvent(statusCode: 401)),
+            #require(try logEvent(statusCode: 503)),
+        ].map(\.message)
+
+        #expect(Set(messages).count == messages.count)
+    }
+
+    private func acceptedEvent() throws -> LogEvent? {
         let recorder = LogRecorder()
         let response = try HTTPURLResponse.fixture(url: url, statusCode: 200)
 
@@ -93,7 +102,7 @@ import Testing
             _ = try sut.map(attendeeJSON(), response)
         }
 
-        #expect(recorder.events.isEmpty)
+        return recorder.events.first
     }
 
     private func logEvent(forBody data: Data = Data(), statusCode: Int = 200) throws -> LogEvent? {
