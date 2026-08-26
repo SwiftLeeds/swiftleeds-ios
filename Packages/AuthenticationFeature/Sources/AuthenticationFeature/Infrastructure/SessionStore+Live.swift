@@ -4,6 +4,12 @@ import SecureStorageKit
 
 extension SessionStore: DependencyKey {
     package static var liveValue: SessionStore {
+        live.loggingFailures()
+    }
+}
+
+extension SessionStore {
+    package static var live: SessionStore {
         let key = SecureStorageKey("auth.session")
         return SessionStore(
             establish: { session in
