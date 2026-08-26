@@ -1,0 +1,53 @@
+# Every rule below traces to a convention recorded in the project's Swift rules.
+# Where a SwiftLint default contradicts one of those conventions, the default is
+# changed here and the reason is stated.
+#
+# Tuned against SwiftLint 0.65.1. Rule defaults change between versions, so
+# re-run the suite after upgrading.
+
+included:
+  - Packages/*/Package.swift
+  - Packages/*/Sources
+  - Packages/*/Tests
+  - SwiftLeeds
+  - SwiftLeedsAppClip
+  - SwiftLeedsPackage
+  - SwiftLeedsTests
+  - SwiftLeedsUITests
+  - SwiftLeedsWidget
+
+# Each package resolves its dependencies into its own .build directory, so the
+# glob must reach a nested one. A plain ".build" entry matches the root only,
+# which leaves several hundred third-party files getting linted.
+excluded:
+  - "**/.build"
+  - .build-shared
+  - DerivedData
+
+opt_in_rules:
+  # "Never write `!`. No force unwrap, no `as!`, no `try!`, in source or in tests."
+  - force_unwrapping
+  - implicitly_unwrapped_optional
+  # "Imports alphabetical, one list, no system-versus-local grouping."
+  - sorted_imports
+  # "Held as `@State private var viewModel = ViewModel()`."
+  - private_swiftui_state
+
+disabled_rules:
+  # The codebase is inconsistent here and no recorded convention picks a side,
+  # so neither setting is enforced. Revisit once one is chosen.
+  - trailing_comma
+
+# A view model nests under its view, and its own `Phase` and `Alert` enums nest
+# under that. The default of one level rejects the house pattern.
+nesting:
+  type_level: 2
+
+# "id" is SwiftLint's own default allowance. An `excluded` list replaces the
+# default rather than adding to it, so dropping "id" here would start flagging
+# every `Identifiable` conformance. "x" and "y" name pixel coordinates.
+identifier_name:
+  excluded:
+    - id
+    - x
+    - y
