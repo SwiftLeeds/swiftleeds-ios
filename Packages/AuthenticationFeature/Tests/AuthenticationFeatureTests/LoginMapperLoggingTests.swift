@@ -36,18 +36,6 @@ import Testing
         #expect(reason.value == .string("empty"))
     }
 
-    /// A destination groups by message, so two causes sharing one message could never be told apart
-    /// when filtering.
-    @Test func whenCausesDiffer_shouldLogDifferentMessages() throws {
-        let rejected = try #require(try logEvent(statusCode: 401))
-        let unexpected = try #require(try logEvent(statusCode: 503))
-        let blankToken = try #require(try logEvent(forBody: Data("   ".utf8)))
-
-        #expect(rejected.message != unexpected.message)
-        #expect(unexpected.message != blankToken.message)
-        #expect(blankToken.message != rejected.message)
-    }
-
     @Test func whenResponseIsRejected_shouldRethrowResponseError() throws {
         let response = try HTTPURLResponse.fixture(url: url, statusCode: 503)
 
@@ -62,7 +50,33 @@ import Testing
         }
     }
 
-    @Test func whenServerReturnsToken_shouldLogNothing() throws {
+    /// A response is accepted on every sign-in attempt that works, so it records at the level the
+    /// platform drops unless someone is watching.
+    @Test func whenServerReturnsToken_shouldLogAtDebugLevel() throws {
+        let event = try #require(try acceptedEvent())
+
+        #expect(event.level == .debug)
+    }
+
+    /// The accepted value is a session token. Nothing about it belongs in a log line.
+    @Test func whenServerReturnsToken_shouldLogNoToken() throws {
+        let event = try #require(try acceptedEvent())
+
+        #expect(event.fields.isEmpty)
+    }
+
+    @Test func whenOutcomesDiffer_shouldLogDifferentMessages() throws {
+        let messages = try [
+            #require(try acceptedEvent()),
+            #require(try logEvent(statusCode: 401)),
+            #require(try logEvent(statusCode: 503)),
+            #require(try logEvent(forBody: Data("   ".utf8))),
+        ].map(\.message)
+
+        #expect(Set(messages).count == messages.count)
+    }
+
+    private func acceptedEvent() throws -> LogEvent? {
         let recorder = LogRecorder()
         let response = try HTTPURLResponse.fixture(url: url, statusCode: 200)
 
@@ -73,7 +87,7 @@ import Testing
             _ = try sut.map(Data("jwt-abc-123".utf8), response)
         }
 
-        #expect(recorder.events.isEmpty)
+        return recorder.events.first
     }
 
     private func logEvent(forBody data: Data = Data(), statusCode: Int = 200) throws -> LogEvent? {

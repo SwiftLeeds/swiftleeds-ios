@@ -16,18 +16,4 @@ struct LoggedSignInError {
         }
     }
 
-    init(_ error: LoginMapper.ResponseError) {
-        switch error {
-        case .invalidCredentials:
-            // Expected: someone mistyped a ticket reference. Not a fault in the app.
-            level = .notice
-            message = "The sign-in credentials were rejected"
-        case let .unexpectedStatus(code):
-            level = .error
-            message = "Sign-in got an unexpected status \(code, name: "statusCode", privacy: .open)"
-        case let .invalidToken(reason):
-            level = .error
-            message = "The server's sign-in token was rejected: \(reason, name: "reason", privacy: .open)"
-        }
-    }
 }
