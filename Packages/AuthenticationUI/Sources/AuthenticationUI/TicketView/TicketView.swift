@@ -26,7 +26,7 @@ package struct TicketView: View {
             VStack(spacing: 24) {
                 Spacer(minLength: 0)
 
-                Barcode(.qr(QRCode.Payload(String(slug)))) {
+                Barcode(code) {
                     unreadable
                 }
                 .frame(maxWidth: 320)
@@ -56,6 +56,11 @@ package struct TicketView: View {
                 viewModel.endDisplaying()
             }
         }
+    }
+
+    private var code: BarcodeContent {
+        let payload = String(slug)
+        return .qr(QRCode.Payload(payload)).loggingFailures(payloadLength: payload.count)
     }
 
     private var identity: some View {
