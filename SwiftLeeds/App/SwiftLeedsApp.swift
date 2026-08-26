@@ -29,9 +29,9 @@ struct SwiftLeedsApp: App {
                 @Dependency(\.signOut) var signOut
                 try? await signOut()
             })
-            $0.signIn = SignIn.liveValue.loggingFailures()
-            $0.signOut = SignOut.liveValue.loggingFailures()
-            $0.fetchProfile = FetchProfile.liveValue.loggingFailures()
+            $0.signIn = SignIn.liveValue.loggingFailedOutcomes()
+            $0.signOut = SignOut.liveValue.loggingFailedOutcomes()
+            $0.fetchProfile = FetchProfile.liveValue.loggingFailedOutcomes()
         }
     }
 

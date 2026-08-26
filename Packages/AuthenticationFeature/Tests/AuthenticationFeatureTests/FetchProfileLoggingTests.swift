@@ -40,7 +40,7 @@ import Testing
             $0.log = LogRecorder().log
             $0.attendeeRepository = .failing(with: .unauthorized)
         } operation: {
-            let sut = FetchProfile.liveValue.loggingFailures()
+            let sut = FetchProfile.liveValue.loggingFailedOutcomes()
 
             await #expect(throws: AttendeeFetchError.unauthorized) {
                 try await sut()
@@ -55,7 +55,7 @@ import Testing
             $0.log = recorder.log
             $0.attendeeRepository = .returning(try Attendee.fixture)
         } operation: {
-            let sut = FetchProfile.liveValue.loggingFailures()
+            let sut = FetchProfile.liveValue.loggingFailedOutcomes()
             return try await sut()
         }
 
@@ -69,7 +69,7 @@ import Testing
             $0.log = recorder.log
             $0.attendeeRepository = .failing(with: error)
         } operation: {
-            let sut = FetchProfile.liveValue.loggingFailures()
+            let sut = FetchProfile.liveValue.loggingFailedOutcomes()
             _ = try? await sut()
         }
 

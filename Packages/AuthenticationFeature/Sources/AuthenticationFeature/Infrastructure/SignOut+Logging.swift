@@ -6,7 +6,7 @@ extension SignOut {
     ///
     /// The store names the mechanism that refused. This names what it cost the user: they believe
     /// they signed out, and the session is still on the device.
-    public func loggingFailures() -> SignOut {
+    public func loggingFailedOutcomes() -> SignOut {
         SignOut {
             do {
                 try await self()
