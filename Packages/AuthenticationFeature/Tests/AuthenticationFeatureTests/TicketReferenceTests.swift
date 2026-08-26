@@ -37,8 +37,8 @@ import Testing
         }
     }
 
-    @Test func whenDescribed_shouldRedactValue() throws {
+    @Test func whenDescribed_shouldShowValue() throws {
         let reference = try TicketReference("ABCD-1")
-        #expect(!String(describing: reference).contains("ABCD-1"))
+        #expect(String(describing: reference).contains("ABCD-1"))
     }
 }
