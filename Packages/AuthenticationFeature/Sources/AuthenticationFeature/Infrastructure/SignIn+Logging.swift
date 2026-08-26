@@ -18,10 +18,11 @@ extension SignIn {
                 log(entry.level, .auth, entry.message)
                 throw error
             } catch {
-                // The gateway narrows every failure it can produce to SignInError, so a failure of
-                // any other type means the server accepted the credentials.
+                // The gateway throws only SignInError, so in the live app this is the session
+                // store. The message names no step: `narrowingFailures()` has no catch-all, so a
+                // third error type would reach here without the store ever running.
                 @Dependency(\.log) var log
-                log.error("Signing in did not finish: the session was not stored", in: .auth)
+                log.error("Signing in did not finish, and no sign-in outcome explains it", in: .auth)
                 throw error
             }
         }

@@ -23,34 +23,25 @@ import Testing
         #expect(event.level == .error)
     }
 
-    /// The gateway narrows every failure it can produce to `SignInError`, so a failure of any other
-    /// type means the server accepted the credentials and the session did not survive.
+    /// Drives the real composition, because the fallback exists for failures the gateway cannot
+    /// produce and only the live chain proves one reaches it.
     @Test func whenSessionCannotBeStored_shouldLogAtErrorLevel() async throws {
-        let recorder = LogRecorder()
+        let event = try #require(try await storeFailureEvent())
 
-        try await withDependencies {
-            $0.log = recorder.log
-            $0.authGateway = .returning(try SessionToken("jwt-abc-123"))
-            $0.sessionStore = .failing(with: StubFailure.couldNotBuildResponse)
-        } operation: {
-            let sut = SignIn.liveValue.loggingFailedOutcomes()
-            _ = try? await sut(Credential.fixture)
-        }
-
-        let event = try #require(recorder.events.first)
         #expect(event.level == .error)
     }
 
     /// A destination groups by message, so two outcomes sharing one message could never be told
-    /// apart when filtering.
+    /// apart when filtering. The fallback counts as an outcome and must differ too.
     @Test func whenOutcomesDiffer_shouldLogDifferentMessages() async throws {
-        let rejected = try #require(await logEvent(whenGatewayThrows: .invalidCredentials))
-        let unreachable = try #require(await logEvent(whenGatewayThrows: .couldNotReachServer))
-        let unknown = try #require(await logEvent(whenGatewayThrows: .unknown))
+        let messages = try await [
+            #require(await logEvent(whenGatewayThrows: .invalidCredentials)),
+            #require(await logEvent(whenGatewayThrows: .couldNotReachServer)),
+            #require(await logEvent(whenGatewayThrows: .unknown)),
+            #require(try await storeFailureEvent()),
+        ].map(\.message)
 
-        #expect(rejected.message != unreachable.message)
-        #expect(unreachable.message != unknown.message)
-        #expect(unknown.message != rejected.message)
+        #expect(Set(messages).count == messages.count)
     }
 
     @Test func whenSignInFails_shouldRethrowFailure() async throws {
@@ -80,6 +71,21 @@ import Testing
         }
 
         #expect(recorder.events.isEmpty)
+    }
+
+    private func storeFailureEvent() async throws -> LogEvent? {
+        let recorder = LogRecorder()
+
+        try await withDependencies {
+            $0.log = recorder.log
+            $0.authGateway = .returning(try SessionToken("jwt-abc-123"))
+            $0.sessionStore = .failing(with: StubFailure.couldNotBuildResponse)
+        } operation: {
+            let sut = SignIn.liveValue.loggingFailedOutcomes()
+            _ = try? await sut(Credential.fixture)
+        }
+
+        return recorder.events.first
     }
 
     private func logEvent(whenGatewayThrows error: SignInError) async throws -> LogEvent? {
