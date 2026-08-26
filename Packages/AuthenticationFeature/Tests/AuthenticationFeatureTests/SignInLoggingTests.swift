@@ -35,6 +35,7 @@ import Testing
     /// apart when filtering. The fallback counts as an outcome and must differ too.
     @Test func whenOutcomesDiffer_shouldLogDifferentMessages() async throws {
         let messages = try await [
+            #require(try await successEvent()),
             #require(await logEvent(whenGatewayThrows: .invalidCredentials)),
             #require(await logEvent(whenGatewayThrows: .couldNotReachServer)),
             #require(await logEvent(whenGatewayThrows: .unknown)),
@@ -58,7 +59,21 @@ import Testing
         }
     }
 
-    @Test func whenSignInSucceeds_shouldLogNothing() async throws {
+    /// Signing in is rare and it starts a session, so the success is worth a line the platform
+    /// keeps. It is what anchors a later question about when the session began.
+    @Test func whenSignInSucceeds_shouldLogAtNoticeLevel() async throws {
+        let event = try #require(try await successEvent())
+
+        #expect(event.level == .notice)
+    }
+
+    @Test func whenSignInSucceeds_shouldLogNoCredential() async throws {
+        let event = try #require(try await successEvent())
+
+        #expect(event.fields.isEmpty)
+    }
+
+    private func successEvent() async throws -> LogEvent? {
         let recorder = LogRecorder()
 
         try await withDependencies {
@@ -70,7 +85,7 @@ import Testing
             try await sut(Credential.fixture)
         }
 
-        #expect(recorder.events.isEmpty)
+        return recorder.events.first
     }
 
     private func storeFailureEvent() async throws -> LogEvent? {
