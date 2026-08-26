@@ -1,6 +1,5 @@
 import AuthenticationFeature
 import Dependencies
-import Foundation
 import LogKit
 import SecureStorageKit
 import Testing
@@ -59,6 +58,21 @@ import Testing
                 try await sut.clear()
             }
         }
+    }
+
+    /// Every other test here builds the decorator itself, so this is the only one that notices if
+    /// `liveValue` stops composing it.
+    @Test func whenLiveValueStoreRefuses_shouldLogRefusal() async {
+        let recorder = LogRecorder()
+
+        await withDependencies {
+            $0.log = recorder.log
+            $0.secureStorage = .failing(with: StubFailure.couldNotBuildResponse)
+        } operation: {
+            _ = try? await SessionStore.liveValue.clear()
+        }
+
+        #expect(recorder.events.count == 1)
     }
 
     @Test func whenStoreAccepts_shouldLogNothing() async throws {
