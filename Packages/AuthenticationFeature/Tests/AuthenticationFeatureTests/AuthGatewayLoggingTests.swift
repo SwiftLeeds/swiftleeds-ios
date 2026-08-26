@@ -30,7 +30,7 @@ import Testing
         _ = try await withDependencies {
             $0.log = recorder.log
         } operation: {
-            let sut = AuthGateway { _ in try SessionToken("jwt-abc-123") }.loggingRequestFailures()
+            let sut = AuthGateway { _ in try SessionToken("jwt-abc-123") }.logging()
             return try await sut.authenticate(Credential.fixture)
         }
 
@@ -44,7 +44,7 @@ private func logEvent(forFailure error: LoginRequestError) async -> LogEvent? {
     try? await withDependencies {
         $0.log = recorder.log
     } operation: {
-        let sut = AuthGateway { _ in throw error }.loggingRequestFailures()
+        let sut = AuthGateway { _ in throw error }.logging()
         _ = try await sut.authenticate(Credential.fixture)
     }
 

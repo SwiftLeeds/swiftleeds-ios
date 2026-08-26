@@ -74,7 +74,7 @@ import Testing
         withDependencies {
             $0.log = LogRecorder().log
         } operation: {
-            let sut = AttendeeMapper.live.loggingFailures()
+            let sut = AttendeeMapper.live.logging()
 
             #expect(throws: AttendeeMapper.ResponseError.self) {
                 try sut.map(Data(), response)
@@ -89,7 +89,7 @@ import Testing
         try withDependencies {
             $0.log = recorder.log
         } operation: {
-            let sut = AttendeeMapper.live.loggingFailures()
+            let sut = AttendeeMapper.live.logging()
             _ = try sut.map(attendeeJSON(), response)
         }
 
@@ -103,7 +103,7 @@ import Testing
         withDependencies {
             $0.log = recorder.log
         } operation: {
-            let sut = AttendeeMapper.live.loggingFailures()
+            let sut = AttendeeMapper.live.logging()
             _ = try? sut.map(data, response)
         }
 

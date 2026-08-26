@@ -2,7 +2,7 @@ import Dependencies
 import LogKit
 
 extension AuthGateway {
-    package func loggingRequestFailures() -> AuthGateway {
+    package func logging() -> AuthGateway {
         AuthGateway { credential in
             do {
                 return try await authenticate(credential)

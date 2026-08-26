@@ -13,7 +13,7 @@ extension AttendeeRepository: DependencyKey {
             do {
                 (data, response) = try await httpClient.send(request)
             } catch {
-                throw AttendeeFetchError.unknown
+                throw AttendeeFetchError.couldNotReachServer
             }
             do throws(AttendeeMapper.ResponseError) {
                 return try attendeeMapper.map(data, response)

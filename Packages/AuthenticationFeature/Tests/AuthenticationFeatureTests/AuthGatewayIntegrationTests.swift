@@ -76,7 +76,7 @@ import Testing
         let recorder = LogRecorder()
 
         try? await withDependencies {
-            $0.httpClient = .failing(with: StubFailure.couldNotBuildResponse).loggingFailures()
+            $0.httpClient = .failing(with: StubFailure.couldNotBuildResponse).logging()
             $0.log = recorder.log
         } operation: {
             let sut = AuthGateway.liveValue

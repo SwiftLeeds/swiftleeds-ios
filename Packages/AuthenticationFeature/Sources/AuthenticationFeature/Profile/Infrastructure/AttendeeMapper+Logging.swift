@@ -3,7 +3,7 @@ import Foundation
 import LogKit
 
 extension AttendeeMapper {
-    package func loggingFailures() -> AttendeeMapper {
+    package func logging() -> AttendeeMapper {
         AttendeeMapper { data, response throws(ResponseError) in
             do throws(ResponseError) {
                 return try map(data, response)

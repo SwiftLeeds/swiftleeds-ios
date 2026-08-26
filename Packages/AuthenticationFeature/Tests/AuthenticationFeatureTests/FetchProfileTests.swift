@@ -5,7 +5,7 @@ import Testing
 
 @Suite struct FetchProfileTests {
     @Test func whenRepositoryReturnsAttendee_shouldReturnMappedProfile() async throws {
-        let attendee = try makeAttendee()
+        let attendee = try Attendee.fixture
 
         let profile = try await withDependencies {
             $0.attendeeRepository = .returning(attendee)
@@ -44,16 +44,6 @@ import Testing
 
         #expect(caught == .unauthorized)
     }
-}
-
-private func makeAttendee() throws -> Attendee {
-    Attendee(
-        name: PersonNameComponents(givenName: "Ada", familyName: "Lovelace"),
-        emailAddress: try EmailAddress("ada@example.com"),
-        avatarURL: AvatarURL(try #require(URL(string: "https://example.com/avatar.png"))),
-        ticketReference: try TicketReference("ABCD-12"),
-        ticketSlug: try TicketSlug("ti_abc")
-    )
 }
 
 private func expectedProfile() throws -> Profile {

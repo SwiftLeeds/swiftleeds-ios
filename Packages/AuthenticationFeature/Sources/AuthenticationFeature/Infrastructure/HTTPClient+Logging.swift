@@ -3,7 +3,7 @@ import Foundation
 import LogKit
 
 extension HTTPClient {
-    package func loggingFailures() -> HTTPClient {
+    package func logging() -> HTTPClient {
         HTTPClient { request in
             do {
                 return try await send(request)
