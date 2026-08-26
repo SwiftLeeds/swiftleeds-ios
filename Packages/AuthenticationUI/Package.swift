@@ -13,6 +13,7 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../AuthenticationFeature"),
+        .package(path: "../LogKit"),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.0.0"),
     ],
     targets: [
@@ -21,6 +22,7 @@ let package = Package(
             dependencies: [
                 "AuthenticationFeature",
                 .product(name: "Dependencies", package: "swift-dependencies"),
+                .product(name: "LogKit", package: "LogKit"),
             ]
         ),
         .testTarget(
@@ -28,6 +30,7 @@ let package = Package(
             dependencies: [
                 "AuthenticationUI",
                 .product(name: "Dependencies", package: "swift-dependencies"),
+                .product(name: "LogKit", package: "LogKit"),
             ]
         ),
     ]
