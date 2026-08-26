@@ -35,6 +35,23 @@ import Testing
         #expect(unknown.message != unaccepted.message)
     }
 
+    /// The mapper names the cause, the use case names the outcome. Two seams, two lines, and no
+    /// third line from anywhere else.
+    @Test func whenResponseIsRejected_shouldLogCauseAndOutcome() async throws {
+        let recorder = LogRecorder()
+
+        try await withDependencies {
+            $0.log = recorder.log
+            $0.httpClient = .responding(with: try attendeeJSON(reference: "!!!"), statusCode: 200)
+            $0.attendeeRepository = .liveValue
+        } operation: {
+            let sut = FetchProfile.liveValue.loggingFailedOutcomes()
+            _ = try? await sut()
+        }
+
+        #expect(recorder.events.count == 2)
+    }
+
     @Test func whenFetchFails_shouldRethrowFailure() async {
         await withDependencies {
             $0.log = LogRecorder().log
