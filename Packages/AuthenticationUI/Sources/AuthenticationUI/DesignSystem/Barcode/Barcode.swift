@@ -1,3 +1,4 @@
+import CoreGraphics
 import SwiftUI
 
 /// A machine-readable code, drawn so that a scanner can read it.
@@ -18,6 +19,10 @@ import SwiftUI
 package struct Barcode<Placeholder: View, Failure: View>: View {
     @Environment(\.barcodeStyle) private var style
 
+    // Drawing runs CoreImage and a software rasteriser, and `body` reruns on any invalidation, so
+    // the result is kept rather than redrawn.
+    @State private var drawing: Drawing = .pending
+
     private let source: Source
     private let placeholder: () -> Placeholder
     private let failure: () -> Failure
@@ -26,6 +31,12 @@ package struct Barcode<Placeholder: View, Failure: View>: View {
         case generated(BarcodeContent)
         case supplied(Image)
         case remote(URL?)
+    }
+
+    private enum Drawing {
+        case pending
+        case drawn(CGImage)
+        case unavailable
     }
 
     private init(
@@ -41,11 +52,7 @@ package struct Barcode<Placeholder: View, Failure: View>: View {
     package var body: some View {
         switch source {
         case .generated(let content):
-            if let image = content.makeImage() {
-                styled(scannable(Image(decorative: image, scale: 1)))
-            } else {
-                styled(AnyView(failure()))
-            }
+            generated(content)
         case .supplied(let image):
             styled(scannable(image))
         case .remote(let url):
@@ -61,6 +68,19 @@ package struct Barcode<Placeholder: View, Failure: View>: View {
                     styled(AnyView(placeholder()))
                 }
             }
+        }
+    }
+
+    @ViewBuilder
+    private func generated(_ content: BarcodeContent) -> some View {
+        switch drawing {
+        case .pending:
+            styled(AnyView(placeholder()))
+                .task { drawing = content.makeImage().map(Drawing.drawn) ?? .unavailable }
+        case .drawn(let image):
+            styled(scannable(Image(decorative: image, scale: 1)))
+        case .unavailable:
+            styled(AnyView(failure()))
         }
     }
 
