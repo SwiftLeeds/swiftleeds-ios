@@ -1,7 +1,7 @@
 import LogKit
 
 /// How the outcome of a profile fetch reads in a log.
-struct LoggedAttendeeFetchOutcome {
+struct LoggedProfileFetchOutcome {
     let level: LogLevel
     let message: LogMessage
 
