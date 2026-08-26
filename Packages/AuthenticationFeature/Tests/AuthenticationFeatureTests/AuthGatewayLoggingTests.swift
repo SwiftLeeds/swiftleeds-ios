@@ -24,42 +24,20 @@ import Testing
         #expect(event == nil)
     }
 
-    /// This line marks the boundary between a parsed response and a stored session, so a failure
-    /// between the two is not an unexplained gap.
-    @Test func whenGatewaySucceeds_shouldLogAtDebugLevel() async throws {
-        let event = try #require(try await acceptedEvent())
+    /// The gateway returns what the mapper handed back, and `LoginMapperLoggingTests` pins that the
+    /// mapper records it. A line here would repeat it.
+    @Test func whenGatewaySucceeds_shouldLogNothing() async throws {
+        let recorder = LogRecorder()
 
-        #expect(event.level == .debug)
+        _ = try await withDependencies {
+            $0.log = recorder.log
+        } operation: {
+            let sut = AuthGateway { _ in try SessionToken("jwt-abc-123") }.logging()
+            return try await sut.authenticate(Credential.fixture)
+        }
+
+        #expect(recorder.events.isEmpty)
     }
-
-    /// The credential is an email address and a ticket reference. Neither belongs in a log line.
-    @Test func whenGatewaySucceeds_shouldLogNoCredential() async throws {
-        let event = try #require(try await acceptedEvent())
-
-        #expect(event.fields.isEmpty)
-    }
-
-    @Test func whenOutcomesDiffer_shouldLogDifferentMessages() async throws {
-        let failure = LoginRequestError.couldNotEncodeRequest(StubFailure.couldNotBuildResponse)
-
-        let accepted = try #require(try await acceptedEvent())
-        let refused = try #require(await logEvent(forFailure: failure))
-
-        #expect(accepted.message != refused.message)
-    }
-}
-
-private func acceptedEvent() async throws -> LogEvent? {
-    let recorder = LogRecorder()
-
-    _ = try await withDependencies {
-        $0.log = recorder.log
-    } operation: {
-        let sut = AuthGateway { _ in try SessionToken("jwt-abc-123") }.logging()
-        return try await sut.authenticate(Credential.fixture)
-    }
-
-    return recorder.events.first
 }
 
 private func logEvent(forFailure error: LoginRequestError) async -> LogEvent? {
