@@ -1,0 +1,35 @@
+#!/bin/sh
+#
+# Lints the Swift files staged for this commit and refuses the commit on any
+# violation. Install it once per clone:
+#
+#     git config core.hooksPath .githooks
+#
+# Each file is read from the working tree rather than from the index, so a
+# partially staged file is judged on all of its current content.
+
+set -eu
+
+cd "$(git rev-parse --show-toplevel)"
+
+staged=$(git diff --cached --name-only --diff-filter=ACMR -- '*.swift')
+[ -n "$staged" ] || exit 0
+
+if ! command -v swiftlint > /dev/null 2>&1; then
+    echo "pre-commit: swiftlint is not installed, so nothing was linted." >&2
+    echo "pre-commit: run 'brew install swiftlint'. CI lints every pull request." >&2
+    exit 0
+fi
+
+# --force-exclude keeps an explicitly named path obeying the config's excluded
+# list. --strict is what makes the hook bite: SwiftLint exits 0 on a warning,
+# so without it the commit proceeds with violations reported.
+if git diff --cached --name-only --diff-filter=ACMR -z -- '*.swift' \
+    | xargs -0 swiftlint lint --strict --force-exclude --quiet
+then
+    exit 0
+fi
+
+echo "" >&2
+echo "pre-commit: fix the violations above, or pass --no-verify to skip." >&2
+exit 1

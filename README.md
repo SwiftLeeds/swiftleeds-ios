@@ -31,6 +31,17 @@ _You will need to have access to your developer account in order to download thi
 - Once downloaded and unzipped, move the app to your Applications folder and run it.  
 - Accept the prompt to install additional tools to allow it to run until you see the Xcode welcome pane with the new project button.
 
+### Linting
+
+We lint with [SwiftLint](https://github.com/realm/SwiftLint). Install it and turn on the pre-commit hook once per clone:
+
+```
+brew install swiftlint
+git config core.hooksPath .githooks
+```
+
+The hook checks only the files you stage. It stays quiet about the violations already recorded in `.swiftlint.baseline`, so older code will not block you. Pass `--no-verify` to skip it.
+
 ## Contributing 🏗
 
 We welcome all contributions to this repository. Please raise a PR so our Lead Maintainer (Matthew Gallagher) can help get this pushed through, alternatively please raise an Issue or Discussion topic.
