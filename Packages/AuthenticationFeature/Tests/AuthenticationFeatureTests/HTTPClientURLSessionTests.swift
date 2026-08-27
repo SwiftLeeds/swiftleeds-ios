@@ -58,6 +58,29 @@ struct HTTPClientURLSessionTests {
         #expect(recorder.events.count == 1)
     }
 
+    @Test func whenSessionExists_shouldSendBearerThroughLiveChain() async throws {
+        URLProtocolStub.lastRequest = nil
+        URLProtocolStub.stub(
+            data: Data(),
+            response: try #require(
+                HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)
+            ),
+            error: nil
+        )
+        let store = InMemorySessionStore(stored: Session(token: try SessionToken("jwt-abc-123")))
+
+        _ = try await withDependencies {
+            $0.log = LogRecorder().log
+            $0.sessionStore = store.sessionStore
+        } operation: {
+            let sut = HTTPClient.live(urlSession: URLProtocolStub.session(), onSessionExpiry: {})
+            return try await sut.send(URLRequest(url: url))
+        }
+
+        let request = try #require(URLProtocolStub.lastRequest)
+        #expect(request.value(forHTTPHeaderField: "Authorization") == "Bearer jwt-abc-123")
+    }
+
     @Test func whenServerResponds_shouldReturnDataAndHTTPResponse() async throws {
         let expected = Data("hello".utf8)
         URLProtocolStub.stub(

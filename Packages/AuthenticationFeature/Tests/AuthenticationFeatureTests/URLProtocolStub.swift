@@ -9,6 +9,9 @@ final class URLProtocolStub: URLProtocol {
 
     nonisolated(unsafe) static var stub: Stub?
 
+    /// The request the stub most recently served.
+    nonisolated(unsafe) static var lastRequest: URLRequest?
+
     static func stub(data: Data?, response: URLResponse?, error: Error?) {
         stub = Stub(data: data, response: response, error: error)
     }
@@ -23,6 +26,7 @@ final class URLProtocolStub: URLProtocol {
     override class func canonicalRequest(for request: URLRequest) -> URLRequest { request }
 
     override func startLoading() {
+        Self.lastRequest = request
         if let error = Self.stub?.error {
             client?.urlProtocol(self, didFailWithError: error)
         } else {
