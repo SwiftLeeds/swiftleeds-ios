@@ -103,3 +103,23 @@ extension HTTPURLResponse {
         HTTPStatus(code: HTTPStatusCode(statusCode))
     }
 }
+
+extension String {
+    /// Creates the category's stable name for a log field.
+    package init(_ category: HTTPStatus.Category) {
+        self = switch category {
+        case .informational:
+            "informational"
+        case .successful:
+            "successful"
+        case .redirection:
+            "redirection"
+        case .clientError:
+            "clientError"
+        case .serverError:
+            "serverError"
+        case .invalid:
+            "invalid"
+        }
+    }
+}

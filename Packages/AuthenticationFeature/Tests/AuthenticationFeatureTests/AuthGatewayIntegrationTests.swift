@@ -72,6 +72,20 @@ import Testing
         #expect(body?["ticket"] as? String == "ABCD-12")
         #expect(body?["event"] is NSNull)
     }
+    @Test func whenAuthenticating_shouldPOSTJSONToLoginTicketResource() async throws {
+        let spy = HTTPClientSpy(respondingWith: Data("jwt".utf8), statusCode: 200)
+
+        _ = try await withDependencies {
+            $0.httpClient = spy.httpClient
+        } operation: {
+            try await AuthGateway.liveValue.authenticate(Credential.fixture)
+        }
+
+        let request = try #require(await spy.requests.first)
+        #expect(request.url?.path() == "/api/v1/login/ticket")
+        #expect(request.value(forHTTPHeaderField: "Content-Type") == "application/json")
+    }
+
     @Test func whenTransportFails_shouldLogOnlyOnceAcrossChain() async throws {
         let recorder = LogRecorder()
 

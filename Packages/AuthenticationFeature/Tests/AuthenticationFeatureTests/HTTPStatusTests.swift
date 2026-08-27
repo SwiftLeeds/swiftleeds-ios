@@ -94,4 +94,19 @@ import Testing
     func whenCodeIsOutsideValidRange_shouldBeInvalid(code: Int) {
         #expect(HTTPStatus(code: HTTPStatusCode(code)).category == .invalid)
     }
+
+    @Test(arguments: [
+        (HTTPStatus.Category.informational, "informational"),
+        (HTTPStatus.Category.successful, "successful"),
+        (HTTPStatus.Category.redirection, "redirection"),
+        (HTTPStatus.Category.clientError, "clientError"),
+        (HTTPStatus.Category.serverError, "serverError"),
+        (HTTPStatus.Category.invalid, "invalid"),
+    ])
+    func whenCategoryNameIsExtracted_shouldReturnStableName(
+        category: HTTPStatus.Category,
+        name: String
+    ) {
+        #expect(String(category) == name)
+    }
 }

@@ -12,18 +12,15 @@ extension AuthGateway {
     static var live: AuthGateway {
         AuthGateway { credential in
             @Dependency(\.httpClient) var httpClient
-            @Dependency(\.apiConfiguration) var apiConfiguration
             @Dependency(\.loginMapper) var loginMapper
 
-            var request = URLRequest(url: Endpoint.login.url(baseURL: apiConfiguration.baseURL))
-            request.httpMethod = "POST"
-            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-
+            let body: Data
             do {
-                request.httpBody = try JSONEncoder().encode(LoginRequestDTO(credential))
+                body = try JSONEncoder().encode(LoginRequestDTO(credential))
             } catch {
                 throw LoginRequestError.couldNotEncodeRequest(error)
             }
+            let request = Endpoint.login(body: body).urlRequest()
 
             let data: Data
             let response: HTTPURLResponse

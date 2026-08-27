@@ -1,15 +1,18 @@
 import Foundation
 
-enum Endpoint {
-    case login
-    case profile
+/// A request to the SwiftLeeds backend, named in the backend's vocabulary.
+package enum Endpoint: HTTPRequestConvertible, Equatable, Hashable, Sendable {
+    case login(body: Data)
+    case ticket
 
-    func url(baseURL: URL) -> URL {
+    package var request: HTTPRequest {
         switch self {
-        case .login:
-            baseURL.appending(path: "api/v1/login/ticket")
-        case .profile:
-            baseURL.appending(path: "api/v1/login/ticket")
+        case let .login(body):
+            .post(Self.loginTicketPath, body: .json(body))
+        case .ticket:
+            .get(Self.loginTicketPath)
         }
     }
+
+    private static let loginTicketPath: URLPath = "api/v1/login/ticket"
 }

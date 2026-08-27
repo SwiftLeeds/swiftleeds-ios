@@ -28,6 +28,13 @@ import Testing
         #expect(event.fields.first { String($0.name) == "statusCode" }?.value == .integer(503))
     }
 
+    @Test func whenServerReturnsUnexpectedStatus_shouldLogStatusCategory() throws {
+        let event = try #require(try logEvent(statusCode: 503))
+
+        let category = try #require(event.fields.first { String($0.name) == "statusCategory" })
+        #expect(category.value == .string("serverError"))
+    }
+
     @Test func whenTokenIsBlank_shouldLogRejectionReason() throws {
         let event = try #require(try logEvent(forBody: Data("   ".utf8)))
 
