@@ -13,8 +13,36 @@ package struct HTTPRequest: Equatable, Hashable, Sendable {
         HTTPRequest(method: .get, path: path, body: nil)
     }
 
+    package static func head(_ path: URLPath) -> HTTPRequest {
+        HTTPRequest(method: .head, path: path, body: nil)
+    }
+
     package static func post(_ path: URLPath, body: HTTPBody) -> HTTPRequest {
         HTTPRequest(method: .post, path: path, body: body)
+    }
+
+    package static func put(_ path: URLPath, body: HTTPBody) -> HTTPRequest {
+        HTTPRequest(method: .put, path: path, body: body)
+    }
+
+    package static func delete(_ path: URLPath) -> HTTPRequest {
+        HTTPRequest(method: .delete, path: path, body: nil)
+    }
+
+    package static func connect(_ path: URLPath) -> HTTPRequest {
+        HTTPRequest(method: .connect, path: path, body: nil)
+    }
+
+    package static func options(_ path: URLPath) -> HTTPRequest {
+        HTTPRequest(method: .options, path: path, body: nil)
+    }
+
+    package static func trace(_ path: URLPath) -> HTTPRequest {
+        HTTPRequest(method: .trace, path: path, body: nil)
+    }
+
+    package static func patch(_ path: URLPath, body: HTTPBody) -> HTTPRequest {
+        HTTPRequest(method: .patch, path: path, body: body)
     }
 
     /// Builds the `URLRequest` this value describes.

@@ -51,6 +51,45 @@ import Testing
         #expect(request.value(forHTTPHeaderField: "Content-Type") == "application/json")
     }
 
+    private static let path: URLPath = "api/v1/resource"
+
+    private static let bodilessRequests: [(HTTPRequest, String)] = [
+        (.get(path), "GET"),
+        (.head(path), "HEAD"),
+        (.delete(path), "DELETE"),
+        (.connect(path), "CONNECT"),
+        (.options(path), "OPTIONS"),
+        (.trace(path), "TRACE"),
+    ]
+
+    private static let bodyCarryingRequests: [(HTTPRequest, String)] = [
+        (.post(path, body: .json(Data())), "POST"),
+        (.put(path, body: .json(Data())), "PUT"),
+        (.patch(path, body: .json(Data())), "PATCH"),
+    ]
+
+    @Test(arguments: bodilessRequests)
+    func whenMethodHasNoDefinedContent_shouldBuildWithoutBody(
+        request: HTTPRequest,
+        token: String
+    ) throws {
+        let built = try request.urlRequest(baseURL: baseURL)
+
+        #expect(built.httpMethod == token)
+        #expect(built.httpBody == nil)
+    }
+
+    @Test(arguments: bodyCarryingRequests)
+    func whenMethodDefinesContent_shouldBuildWithBody(
+        request: HTTPRequest,
+        token: String
+    ) throws {
+        let built = try request.urlRequest(baseURL: baseURL)
+
+        #expect(built.httpMethod == token)
+        #expect(built.httpBody != nil)
+    }
+
     private var baseURL: URL {
         get throws { try #require(URL(string: "https://example.com")) }
     }
