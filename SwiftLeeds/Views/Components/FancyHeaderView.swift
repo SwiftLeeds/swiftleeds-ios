@@ -27,7 +27,7 @@ struct FancyHeaderView: View {
             .aspectRatio(aspectRatio, contentMode: .fill)
             .background(
                 createRectangleImage(for: Image.leedsPlayhouse, aspectRatio: aspectRatio)
-                .aspectRatio(contentMode: .fill)
+                .scaledToFill()
                 .accessibilityHidden(true)
             )
             .overlay(foregroundGroup, alignment: .center)
@@ -92,7 +92,7 @@ struct FancyHeaderView: View {
             .background(
                 image
                     .resizable()
-                    .aspectRatio(contentMode: .fill)
+                    .scaledToFill()
                     .transition(.opacity)
             )
     }

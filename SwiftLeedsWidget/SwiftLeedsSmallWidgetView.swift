@@ -68,7 +68,7 @@ extension SwiftLeedsSmallWidgetView {
     private var logoView: some View {
         Image.swiftLeedsIcon
             .resizable()
-            .aspectRatio(contentMode: .fill)
+            .scaledToFill()
             .transition(.opacity)
             .frame(width: WidgetConstants.logoImageWidth, height: WidgetConstants.logoImageHeight, alignment: .center)
     }

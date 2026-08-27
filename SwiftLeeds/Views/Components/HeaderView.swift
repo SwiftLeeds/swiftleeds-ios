@@ -99,7 +99,7 @@ struct HeaderView: View {
                     .background(
                         image
                             .resizable()
-                            .aspectRatio(contentMode: .fill)
+                            .scaledToFill()
                             .transition(.opacity)
                     )
                     .background(imageBackgroundColor)
@@ -127,7 +127,7 @@ struct HeaderView: View {
                     .background(
                         Image(backgroundImageAssetName)
                             .resizable()
-                            .aspectRatio(contentMode: .fill)
+                            .scaledToFill()
                     )
                     .clipped()
             } else {
@@ -149,7 +149,7 @@ struct HeaderView: View {
                     .background(
                         image
                             .resizable()
-                            .aspectRatio(contentMode: .fill)
+                            .scaledToFill()
                             .transition(.opacity)
                     )
                     .background(imageBackgroundColor)

@@ -21,7 +21,7 @@ struct TeamMemberView: View {
                     CachedAsyncImage(url: url) { image in
                         image
                             .resizable()
-                            .aspectRatio(contentMode: .fill)
+                            .scaledToFill()
                             .frame(width: 80, height: 80)
                             .clipShape(Circle())
                     } placeholder: {

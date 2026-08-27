@@ -50,7 +50,7 @@ struct SponsorTileView: View {
                         .background(
                             image
                                 .resizable()
-                                .aspectRatio(contentMode: .fit)
+                                .scaledToFit()
                                 .transition(.opacity)
                                 .onAppear {
                                     withAnimation(.easeIn(duration: 0.3)) {

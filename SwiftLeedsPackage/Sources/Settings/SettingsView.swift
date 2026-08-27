@@ -79,7 +79,7 @@ struct AppIconButton: View {
                 if let uiImage = iconOption.iconImage {
                     Image(uiImage: uiImage)
                         .resizable()
-                        .aspectRatio(contentMode: .fit)
+                        .scaledToFit()
                         .frame(width: 60, height: 60)
                         .clipShape(RoundedRectangle(cornerRadius: 12))
                         .overlay(
