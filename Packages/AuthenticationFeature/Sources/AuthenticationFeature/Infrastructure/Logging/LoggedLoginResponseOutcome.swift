@@ -22,7 +22,7 @@ struct LoggedLoginResponseOutcome {
         case let .unexpectedStatus(status):
             LoggedLoginResponseOutcome(
                 level: .error,
-                message: "Sign-in got an unexpected status \(Int(status), name: "statusCode", privacy: .open)"
+                message: "Sign-in got an unexpected status \(Int(status.code), name: "statusCode", privacy: .open)"
             )
         case let .invalidToken(reason):
             LoggedLoginResponseOutcome(

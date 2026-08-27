@@ -3,15 +3,15 @@ import Testing
 
 @Suite struct HTTPStatusTests {
     @Test func whenCodesMatch_shouldBeEqual() {
-        #expect(HTTPStatus(503) == HTTPStatus(503))
+        #expect(HTTPStatus(code: 503) == HTTPStatus(code: 503))
     }
 
     @Test func whenCodesDiffer_shouldNotBeEqual() {
-        #expect(HTTPStatus(200) != HTTPStatus(401))
+        #expect(HTTPStatus(code: 200) != HTTPStatus(code: 401))
     }
 
     @Test func whenCodeIsExtracted_shouldReturnCodeGiven() {
-        #expect(Int(HTTPStatus(418)) == 418)
+        #expect(Int(HTTPStatus(code: 418).code) == 418)
     }
 
     private static let registeredStatuses: [(HTTPStatus, Int)] = [
@@ -68,7 +68,7 @@ import Testing
 
     @Test(arguments: registeredStatuses)
     func whenStatusIsNamed_shouldHaveRegisteredCode(status: HTTPStatus, code: Int) {
-        #expect(Int(status) == code)
+        #expect(Int(status.code) == code)
     }
 
     @Test(arguments: [
@@ -87,11 +87,11 @@ import Testing
         code: Int,
         category: HTTPStatus.Category
     ) {
-        #expect(HTTPStatus(code).category == category)
+        #expect(HTTPStatus(code: HTTPStatusCode(code)).category == category)
     }
 
     @Test(arguments: [99, 600, 0, -1, 1000])
     func whenCodeIsOutsideValidRange_shouldBeInvalid(code: Int) {
-        #expect(HTTPStatus(code).category == .invalid)
+        #expect(HTTPStatus(code: HTTPStatusCode(code)).category == .invalid)
     }
 }

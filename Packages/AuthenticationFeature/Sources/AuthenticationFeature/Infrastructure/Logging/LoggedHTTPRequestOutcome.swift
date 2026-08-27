@@ -14,7 +14,7 @@ struct LoggedHTTPRequestOutcome {
             message: """
             A response arrived: \
             \(request.loggedSummary, name: "request", privacy: .open), \
-            \(Int(status), name: "statusCode", privacy: .open)
+            \(Int(status.code), name: "statusCode", privacy: .open)
             """
         )
     }

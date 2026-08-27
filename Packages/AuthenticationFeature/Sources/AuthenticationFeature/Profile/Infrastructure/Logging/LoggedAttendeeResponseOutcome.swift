@@ -36,7 +36,7 @@ struct LoggedAttendeeResponseOutcome {
                 level: .error,
                 message: """
                 The attendee request got an unexpected status \
-                \(Int(status), name: "statusCode", privacy: .open)
+                \(Int(status.code), name: "statusCode", privacy: .open)
                 """
             )
         }
