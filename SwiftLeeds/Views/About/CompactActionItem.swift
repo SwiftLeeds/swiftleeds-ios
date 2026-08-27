@@ -7,7 +7,7 @@ struct CompactActionItem: View {
     let title: String
     let accessibilityHint: String
     let action: () -> Void
-    
+
     var body: some View {
         Button(action: action) {
             VStack(spacing: 8) {
@@ -15,7 +15,7 @@ struct CompactActionItem: View {
                     .font(.system(size: 24, weight: .medium))
                     .foregroundColor(.accentColor)
                     .frame(height: 32)
-                
+
                 Text(title)
                     .font(.caption)
                     .multilineTextAlignment(.center)
@@ -34,4 +34,3 @@ struct CompactActionItem: View {
         .accessibilityHint(accessibilityHint)
     }
 }
-

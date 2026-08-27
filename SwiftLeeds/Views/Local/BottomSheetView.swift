@@ -11,21 +11,21 @@ struct BottomSheetView: View {
 
     private let categories: [Local.LocationCategory]
     private let error: Error?
-    
+
     private let maxHeight: CGFloat
     private let minHeight: CGFloat
-    
+
     private var offsetY: CGFloat {
         isOpen ? 0 : maxHeight - minHeight
     }
-    
+
     internal init (
         isOpen: Binding<Bool>,
         selectedCategory: Binding<Local.LocationCategory?>,
         categories: [Local.LocationCategory],
         error: Error?,
         maxHeight: CGFloat
-    ){
+    ) {
         self.minHeight = maxHeight * Constants.minHeightRatio
         self.maxHeight = maxHeight
         self.categories = categories.filter { $0.locations.isEmpty == false }
@@ -33,7 +33,7 @@ struct BottomSheetView: View {
         self._isOpen = isOpen
         self._selectedCategory = selectedCategory
     }
-    
+
     var body: some View {
         GeometryReader { geometry in
             VStack {
@@ -92,7 +92,7 @@ struct BottomSheet_Previews: PreviewProvider {
     ]
 
     static var previews: some View {
-        GeometryReader{ proxy in
+        GeometryReader { proxy in
             BottomSheetView(
                 isOpen: .constant(true),
                 selectedCategory: .constant(Self.items.first),

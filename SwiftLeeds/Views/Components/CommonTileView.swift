@@ -70,7 +70,6 @@ struct CommonTileView<BackgroundType: ShapeStyle>: View {
                         .font(.subheadline.weight(.semibold))
                 }
 
-
                 if let subtitleText {
                     Text(subtitleText)
                         .font(.subheadline.weight(.light))

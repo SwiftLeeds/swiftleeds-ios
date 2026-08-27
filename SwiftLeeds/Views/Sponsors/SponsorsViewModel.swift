@@ -1,5 +1,5 @@
-import Foundation
 import Combine
+import Foundation
 import Networking
 import SwiftUI
 
@@ -9,7 +9,7 @@ final class SponsorsViewModel: ObservableObject {
     struct Section: Identifiable {
         let type: SponsorLevel
         let sponsors: [Sponsor]
-        var id : String { type.rawValue }
+        var id: String { type.rawValue }
     }
 
     func loadSponsors() async throws {

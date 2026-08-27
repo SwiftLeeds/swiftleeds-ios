@@ -23,7 +23,7 @@ struct ActivityView: View {
 
             let hasSubtitle = activity.subtitle != nil && !activity.subtitle!.isEmpty
             let hasDescription = activity.description != nil && !activity.description!.isEmpty
-            
+
             if hasSubtitle || hasDescription {
                 StackedTileView(
                     primaryText: activity.subtitle,
@@ -52,4 +52,3 @@ struct ActivityView_Previews: PreviewProvider {
         ActivityView(activity: .lunch)
     }
 }
-

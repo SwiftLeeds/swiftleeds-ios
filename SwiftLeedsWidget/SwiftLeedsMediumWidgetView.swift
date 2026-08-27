@@ -3,19 +3,19 @@ import SwiftUI
 import WidgetKit
 
 struct SwiftLeedsMediumWidgetView: View {
-    
+
     // MARK: - Pivate Properties
-    
+
     private let slot: Schedule.Slot
-    
+
     // MARK: - Init
-    
+
     init(slot: Schedule.Slot) {
         self.slot = slot
     }
-    
+
     // MARK: - Body View
-    
+
     var body: some View {
         buildSlotView(for: slot)
     }
@@ -35,14 +35,14 @@ extension SwiftLeedsMediumWidgetView {
             slotView(time: slot.startTime, speaker: speakers, details: presentation.title)
         }
     }
-    
+
     private func slotView(time: String, speaker: String = "", details: String) -> some View {
         ZStack {
             Color.background
             contentView(time: time, speaker: speaker, details: details)
         }
     }
-    
+
     private func contentView(time: String, speaker: String = "", details: String) -> some View {
         VStack(alignment: .leading) {
             HStack {
@@ -52,7 +52,7 @@ extension SwiftLeedsMediumWidgetView {
                     RoundedRectangle(cornerRadius: 14)
                         .fill(Color.cellForeground.opacity(0.1))
                         .frame(width: 100, height: 30, alignment: .center)
-                    
+
                     Text(verbatim: "Up Next")
                         .font(.system(size: 14, weight: .bold, design: .monospaced))
                 }
@@ -74,11 +74,11 @@ extension SwiftLeedsMediumWidgetView {
         .padding(16)
         .frame(maxWidth: .infinity, alignment: .leading)
     }
-    
+
     private var logoView: some View {
         Image.swiftLeedsIcon
             .resizable()
-            .aspectRatio(contentMode: .fill)
+            .scaledToFill()
             .transition(.opacity)
             .frame(width: WidgetConstants.logoImageWidth, height: WidgetConstants.logoImageHeight, alignment: .center)
     }
@@ -99,7 +99,7 @@ struct SwiftLeedsMediumWidgetView_Previews: PreviewProvider {
             )
         )
         .previewContext(WidgetPreviewContext(family: .systemMedium))
-        
+
         SwiftLeedsMediumWidgetView(
             slot: Schedule.Slot(
                 id: UUID(),

@@ -1,7 +1,7 @@
 import Foundation
+import MapKit
 import Networking
 import SwiftUI
-import MapKit
 
 class LocalViewModel: ObservableObject {
     @Published private(set) var categories: [Local.LocationCategory] = []
@@ -18,7 +18,7 @@ class LocalViewModel: ObservableObject {
             await loadData()
         }
     }
-    
+
     func loadData() async {
         do {
             let localResults = try await URLSession.shared.decode(Requests.local, dateDecodingStrategy: Requests.defaultDateDecodingStratergy)

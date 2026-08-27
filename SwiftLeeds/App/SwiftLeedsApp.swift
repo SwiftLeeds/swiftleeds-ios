@@ -46,7 +46,7 @@ struct SwiftLeedsApp: App {
 
 // MARK: - AppDelegate
 final class AppDelegate: NSObject, UIApplicationDelegate {
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
         URLCache.shared.diskCapacity = 100_000_000
 
         UITabBar.appearance().backgroundColor = UIColor(named: "TabBarBackground")

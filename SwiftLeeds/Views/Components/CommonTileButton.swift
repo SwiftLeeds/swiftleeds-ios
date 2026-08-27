@@ -13,7 +13,7 @@ struct CommonTileButton<BackgroundType: ShapeStyle>: View {
     let secondaryColor: Color
     var backgroundStyle: BackgroundType
 
-    let onTap: () -> ()
+    let onTap: () -> Void
 
     init(
         icon: String? = nil,
@@ -25,7 +25,7 @@ struct CommonTileButton<BackgroundType: ShapeStyle>: View {
         primaryColor: Color = Color.primary,
         secondaryColor: Color = Color.secondary,
         backgroundStyle: Color = Color.cellBackground,
-        onTap: @escaping () -> ()
+        onTap: @escaping () -> Void
     ) where BackgroundType == Color {
         self.icon = icon
         self.primaryText = primaryText
@@ -49,7 +49,7 @@ struct CommonTileButton<BackgroundType: ShapeStyle>: View {
         primaryColor: Color = Color.primary,
         secondaryColor: Color = Color.secondary,
         backgroundStyle: BackgroundType,
-        onTap: @escaping () -> ()
+        onTap: @escaping () -> Void
     ) {
         self.icon = icon
         self.primaryText = primaryText
@@ -62,7 +62,7 @@ struct CommonTileButton<BackgroundType: ShapeStyle>: View {
         self.backgroundStyle = backgroundStyle
         self.onTap = onTap
     }
-    
+
     var body: some View {
         Button(action: onTap) {
             CommonTileView(

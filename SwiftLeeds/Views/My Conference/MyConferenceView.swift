@@ -6,7 +6,7 @@ struct MyConferenceView: View {
 
     @State private var currentIndex: Int = 0
     @Namespace private var namespace
-    
+
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
@@ -118,7 +118,7 @@ struct MyConferenceView: View {
         }
         .buttonStyle(.plain)
     }
-    
+
     @ViewBuilder
     private var tickets: some View {
         if let numberOfDaysToConference = viewModel.numberOfDaysToConference {
@@ -129,20 +129,20 @@ struct MyConferenceView: View {
             .previewDisplayName("Buy Ticket")
         }
     }
-    
+
     private var empty: some View {
         VStack(spacing: 10) {
             Spacer()
-            
+
             Image(systemName: "signpost.right.and.left")
                 .font(.system(size: 60))
-            
+
             Text("Come back soon")
                 .font(.title)
-            
+
             Text("We're working on filling this schedule")
                 .font(.subheadline)
-            
+
             Spacer()
         }
         .foregroundColor(.cellForeground)

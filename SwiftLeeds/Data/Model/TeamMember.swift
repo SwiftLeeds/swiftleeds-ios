@@ -11,9 +11,9 @@ struct TeamMember: Codable, Identifiable {
     let twitterURL: String?
     let slackURL: String?
     let photoURL: String?
-    
+
     var id: String { name }
-    
+
     private enum CodingKeys: String, CodingKey {
         case name
         case role
@@ -22,23 +22,23 @@ struct TeamMember: Codable, Identifiable {
         case slackURL = "slack"
         case photoURL = "imageURL"
     }
-    
+
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        
+
         name = try container.decode(String.self, forKey: .name)
         role = try container.decodeIfPresent(String.self, forKey: .role)
         linkedInURL = try container.decodeIfPresent(String.self, forKey: .linkedInURL)
         twitterURL = try container.decodeIfPresent(String.self, forKey: .twitterURL)
         slackURL = try container.decodeIfPresent(String.self, forKey: .slackURL)
-        
+
         if let imageURL = try? container.decodeIfPresent(String.self, forKey: .photoURL) {
             photoURL = imageURL.hasPrefix("/") ? "https://\(ConferenceConfig.apiHost)\(imageURL)" : imageURL
         } else {
             photoURL = nil
         }
     }
-    
+
     init(name: String,
          role: String?,
          linkedInURL: String?,

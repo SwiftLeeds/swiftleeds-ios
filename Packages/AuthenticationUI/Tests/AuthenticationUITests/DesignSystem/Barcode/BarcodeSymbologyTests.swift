@@ -1,5 +1,5 @@
-import CoreImage
 @testable import AuthenticationUI
+import CoreImage
 import Testing
 
 @MainActor

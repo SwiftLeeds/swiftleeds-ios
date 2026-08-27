@@ -11,7 +11,7 @@ struct SectionHeader: View {
     init(
         title: String,
         fontStyle: Font = .callout.weight(.semibold),
-        foregroundColor : Color = .secondary,
+        foregroundColor: Color = .secondary,
         maxWidth: CGFloat = .infinity,
         alignment: Alignment = .leading,
         accessbilityAddTraits: AccessibilityTraits = .isHeader
@@ -23,7 +23,7 @@ struct SectionHeader: View {
         self.alignment = alignment
         self.accesibilityAddTraits = accessbilityAddTraits
     }
-    
+
     var body: some View {
         Text(title)
             .font(fontStyle)

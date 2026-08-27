@@ -3,19 +3,19 @@ import SwiftUI
 import WidgetKit
 
 struct SwiftLeedsSmallWidgetView: View {
-    
+
     // MARK: - Private Properties
-    
+
     private let slot: Schedule.Slot
-    
+
     // MARK: - Init
-    
+
     init(slot: Schedule.Slot) {
         self.slot = slot
     }
-    
+
     // MARK: - Body View
-    
+
     var body: some View {
         buildSlotView(for: slot)
     }
@@ -35,14 +35,14 @@ extension SwiftLeedsSmallWidgetView {
             slotView(time: slot.startTime, speaker: speakers, details: presentation.title)
         }
     }
-    
+
     private func slotView(time: String, speaker: String = "", details: String) -> some View {
         ZStack {
             Color.background
             contentView(time: time, speaker: speaker, details: details)
         }
     }
-    
+
     private func contentView(time: String, speaker: String = "", details: String) -> some View {
         VStack(alignment: .leading) {
             logoView
@@ -64,11 +64,11 @@ extension SwiftLeedsSmallWidgetView {
         .padding(16)
         .frame(maxWidth: .infinity, alignment: .leading)
     }
-    
+
     private var logoView: some View {
         Image.swiftLeedsIcon
             .resizable()
-            .aspectRatio(contentMode: .fill)
+            .scaledToFill()
             .transition(.opacity)
             .frame(width: WidgetConstants.logoImageWidth, height: WidgetConstants.logoImageHeight, alignment: .center)
     }
@@ -78,7 +78,7 @@ struct SwiftLeedsSmallWidgetView_Previews: PreviewProvider {
     static var previews: some View {
         SwiftLeedsSmallWidgetView(slot: Schedule.Slot(id: UUID(), date: Date(), startTime: "11:00 AM", duration: 1, activity: nil, presentation: Presentation.skyBet))
             .previewContext(WidgetPreviewContext(family: .systemSmall))
-        
+
         SwiftLeedsSmallWidgetView(slot: Schedule.Slot(id: UUID(), date: Date(), startTime: "11:00 AM", duration: 1, activity: nil, presentation: Presentation.skyBet))
             .environment(\.colorScheme, .dark)
             .previewContext(WidgetPreviewContext(family: .systemSmall))

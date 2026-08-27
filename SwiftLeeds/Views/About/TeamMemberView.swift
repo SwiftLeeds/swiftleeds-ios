@@ -5,7 +5,7 @@ import SwiftUI
 
 struct TeamMemberView: View {
     let member: TeamMember
-    
+
     var body: some View {
         VStack(spacing: 12) {
             ZStack {
@@ -16,12 +16,12 @@ struct TeamMemberView: View {
                         endPoint: .bottomTrailing
                     ))
                     .frame(width: 80, height: 80)
-                
+
                 if let photoURL = member.photoURL, let url = URL(string: photoURL) {
                     CachedAsyncImage(url: url) { image in
                         image
                             .resizable()
-                            .aspectRatio(contentMode: .fill)
+                            .scaledToFill()
                             .frame(width: 80, height: 80)
                             .clipShape(Circle())
                     } placeholder: {
@@ -36,14 +36,14 @@ struct TeamMemberView: View {
                 }
             }
             .shadow(color: .black.opacity(0.15), radius: 8, x: 0, y: 4)
-            
+
             VStack(spacing: 6) {
                 Text(member.name)
                     .font(.subheadline.weight(.semibold))
                     .foregroundColor(.primary)
                     .multilineTextAlignment(.center)
                     .lineLimit(2)
-                
+
                 Text(member.role ?? " ")
                     .font(.caption)
                     .foregroundColor(.secondary)
@@ -52,7 +52,7 @@ struct TeamMemberView: View {
                     .frame(minHeight: 32)
                     .opacity(member.role != nil ? 1.0 : 0.0)
             }
-                                    
+
             HStack(spacing: 16) {
                 if let linkedInURL = member.linkedInURL {
                     Button(action: { openURL(URL(string: linkedInURL)) }) {
@@ -62,7 +62,7 @@ struct TeamMemberView: View {
                     }
                     .accessibilityLabel("LinkedIn profile for \(member.name)")
                 }
-                
+
                 if let twitterURL = member.twitterURL {
                     Button(action: { openURL(URL(string: twitterURL)) }) {
                         Image(systemName: "at")
@@ -71,7 +71,7 @@ struct TeamMemberView: View {
                     }
                     .accessibilityLabel("Twitter profile for \(member.name)")
                 }
-                
+
                 if let slackURL = member.slackURL {
                     Button(action: { openURL(URL(string: slackURL)) }) {
                         Image(systemName: "bubble.left.and.bubble.right")
@@ -90,14 +90,14 @@ struct TeamMemberView: View {
             in: RoundedRectangle(cornerRadius: Constants.cellRadius)
         )
     }
-    
+
     private var initials: String {
         let components = member.name.components(separatedBy: " ")
         let firstInitial = components.first?.first?.uppercased() ?? ""
         let lastInitial = components.count > 1 ? (components.last?.first?.uppercased() ?? "") : ""
         return firstInitial + lastInitial
     }
-    
+
     private func openURL(_ url: URL?) {
         guard let url = url else { return }
         UIApplication.shared.open(url)
@@ -117,7 +117,7 @@ struct TeamMemberView_Previews: PreviewProvider {
                 photoURL: "https://\(ConferenceConfig.apiHost)/img/team/rush.jpg"
             ))
             .previewDisplayName("With Role & All Links")
-            
+
             // Team member without role
             TeamMemberView(member: TeamMember(
                 name: "Adam Oxley",
@@ -128,7 +128,7 @@ struct TeamMemberView_Previews: PreviewProvider {
                 photoURL: "https://\(ConferenceConfig.apiHost)/img/team/oxley.jpg"
             ))
             .previewDisplayName("No Role")
-            
+
             // Team member with partial social links
             TeamMemberView(member: TeamMember(
                 name: "Kannan Prasad",
@@ -139,7 +139,7 @@ struct TeamMemberView_Previews: PreviewProvider {
                 photoURL: nil
             ))
             .previewDisplayName("Partial Links & No Photo")
-            
+
             // Grid layout preview
             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 16) {
                 TeamMemberView(member: TeamMember(
@@ -150,7 +150,7 @@ struct TeamMemberView_Previews: PreviewProvider {
                     slackURL: "https://swiftleedsworkspace.slack.com/archives/D05RK6AAV29",
                     photoURL: "https://\(ConferenceConfig.apiHost)/img/team/sherlock.jpg"
                 ))
-                
+
                 TeamMemberView(member: TeamMember(
                     name: "Joe Williams",
                     role: "Camera Operator",

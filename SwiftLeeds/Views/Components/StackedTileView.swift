@@ -70,7 +70,6 @@ struct StackedTileView<BackgroundType: ShapeStyle>: View {
     }
 }
 
-
 struct StackedTileView_Previews: PreviewProvider {
     static var previews: some View {
         ZStack {

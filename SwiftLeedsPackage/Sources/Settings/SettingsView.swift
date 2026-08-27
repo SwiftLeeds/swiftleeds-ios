@@ -72,14 +72,14 @@ struct AppIconButton: View {
     let iconOption: AppIconOption
     let isSelected: Bool
     let action: () -> Void
-    
+
     var body: some View {
         Button(action: action) {
             VStack(spacing: 8) {
                 if let uiImage = iconOption.iconImage {
                     Image(uiImage: uiImage)
                         .resizable()
-                        .aspectRatio(contentMode: .fit)
+                        .scaledToFit()
                         .frame(width: 60, height: 60)
                         .clipShape(RoundedRectangle(cornerRadius: 12))
                         .overlay(
@@ -100,7 +100,7 @@ struct AppIconButton: View {
                                 .stroke(isSelected ? Color.accentColor : Color.clear, lineWidth: 3)
                         )
                 }
-                
+
                 Text(iconOption.displayName)
                     .font(.caption)
                     .multilineTextAlignment(.center)
@@ -115,7 +115,7 @@ enum AppIconOption: String, CaseIterable {
     case generic = "AppIcon"
     case space = "AppIcon-Space"
     case olympics = "AppIcon-Olympics"
-    
+
     var displayName: String {
         switch self {
         case .generic: return "General"
@@ -123,7 +123,7 @@ enum AppIconOption: String, CaseIterable {
         case .olympics: return "Sports"
         }
     }
-    
+
     var iconImage: UIImage? {
         switch self {
         case .generic:
@@ -134,7 +134,7 @@ enum AppIconOption: String, CaseIterable {
             return UIImage(named: "AppIconPreview-Olympics")
         }
     }
-    
+
     var iconName: String? {
         return self == .generic ? nil : rawValue
     }

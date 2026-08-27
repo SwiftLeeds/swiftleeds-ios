@@ -70,3 +70,47 @@ jobs:
             exit 1
           fi
           echo "Tested $count package(s)"
+
+  lint-swift:
+    name: Lint Swift Sources
+    runs-on: macos-26
+    env:
+      # The version itself lives in .swiftlint-version, which the pre-commit
+      # hook reads too, so both halves judge code by the same rules. Bumping it
+      # means updating this checksum as well, or the download check below fails.
+      SWIFTLINT_SHA256: 'c1e429b0599cf1b516f369a2d9ec04eaf0e436f3c12b637df8851fa52ff694d0'
+    steps:
+      - name: Checkout iOS Repository
+        uses: actions/checkout@v4
+
+      - name: Select Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: '26.5'
+
+      - name: Install SwiftLint
+        run: |
+          set -euo pipefail
+          version=$(cat .swiftlint-version)
+          cd "$RUNNER_TEMP"
+          curl -sSL --retry 3 -o portable_swiftlint.zip \
+            "https://github.com/realm/SwiftLint/releases/download/${version}/portable_swiftlint.zip"
+          echo "${SWIFTLINT_SHA256}  portable_swiftlint.zip" | shasum -a 256 -c -
+          unzip -q portable_swiftlint.zip -d swiftlint
+          echo "$RUNNER_TEMP/swiftlint" >> "$GITHUB_PATH"
+
+      - name: Lint every Swift source
+        run: |
+          # --strict is what makes this a gate: SwiftLint exits 0 on a warning,
+          # so without it the job passes while reporting violations.
+          status=0
+          swiftlint lint --strict --reporter github-actions-logging \
+            > "$RUNNER_TEMP/lint.log" 2>&1 || status=$?
+          cat "$RUNNER_TEMP/lint.log"
+          # A misspelt rule name is only a warning and leaves the exit code at 0,
+          # which would silently disable that rule for everyone.
+          if grep -q "is not a valid rule identifier" "$RUNNER_TEMP/lint.log"; then
+            echo "::error::.swiftlint.yml names a rule SwiftLint does not recognise"
+            exit 1
+          fi
+          exit "$status"

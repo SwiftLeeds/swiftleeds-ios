@@ -19,7 +19,7 @@ struct FancyHeaderView: View {
         self.foregroundImageURLs = foregroundImageURLs
         self.foregroundImage = foregroundImage
     }
-    
+
     var body: some View {
         Rectangle()
             .foregroundColor(.clear)
@@ -27,13 +27,13 @@ struct FancyHeaderView: View {
             .aspectRatio(aspectRatio, contentMode: .fill)
             .background(
                 createRectangleImage(for: Image.leedsPlayhouse, aspectRatio: aspectRatio)
-                .aspectRatio(contentMode: .fill)
+                .scaledToFill()
                 .accessibilityHidden(true)
             )
-            .overlay(foregroundGroup,alignment: .center)
-            .padding(.bottom,foregroundGroupViewHeight/2)
+            .overlay(foregroundGroup, alignment: .center)
+            .padding(.bottom, foregroundGroupViewHeight/2)
     }
-    
+
     private var foregroundGroup: some View {
         GeometryReader { geometry in
             VStack(spacing: Padding.cellGap) {
@@ -57,7 +57,7 @@ struct FancyHeaderView: View {
             }
         }
     }
-    
+
     @ViewBuilder
     private var foregroundImages: some View {
         if foregroundImageURLs.isEmpty == false {
@@ -70,7 +70,7 @@ struct FancyHeaderView: View {
                         case .success(let image):
                             createRectangleImage(for: image)
                                 .accessibilityHidden(true)
-                        case .failure(_):
+                        case .failure:
                             createRectangleImage(for: Image.swiftLeedsIcon)
                         @unknown default:
                             loadingView()
@@ -84,7 +84,7 @@ struct FancyHeaderView: View {
             createRectangleImage(for: Image.swiftLeedsIcon)
         }
     }
-    
+
     private func createRectangleImage(for image: Image, aspectRatio: Double = 1.0) -> some View {
         return Rectangle()
             .foregroundColor(.clear)
@@ -92,7 +92,7 @@ struct FancyHeaderView: View {
             .background(
                 image
                     .resizable()
-                    .aspectRatio(contentMode: .fill)
+                    .scaledToFill()
                     .transition(.opacity)
             )
     }

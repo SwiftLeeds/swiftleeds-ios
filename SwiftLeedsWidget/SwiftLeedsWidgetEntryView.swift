@@ -1,7 +1,7 @@
-import WidgetKit
 import SwiftUI
+import WidgetKit
 
-struct SwiftLeedsWidgetEntryView : View {
+struct SwiftLeedsWidgetEntryView: View {
     var entry: Provider.Entry
     @Environment(\.widgetFamily) var family
 
@@ -18,9 +18,8 @@ struct SwiftLeedsWidget_Previews: PreviewProvider {
     static var previews: some View {
         SwiftLeedsWidgetEntryView(entry: SwiftLeedsWidgetEntry(date: Date(), slot: Schedule.Slot(id: UUID(), date: Date(), startTime: "11:00 AM", duration: 1, activity: Activity.lunch, presentation: Presentation.donnyWalls)))
             .previewContext(WidgetPreviewContext(family: .systemSmall))
-        
+
         SwiftLeedsWidgetEntryView(entry: SwiftLeedsWidgetEntry(date: Date(), slot: Schedule.Slot(id: UUID(), date: Date(), startTime: "11:00 AM", duration: 1, activity: Activity.lunch, presentation: Presentation.donnyWalls)))
             .previewContext(WidgetPreviewContext(family: .systemMedium))
     }
 }
-

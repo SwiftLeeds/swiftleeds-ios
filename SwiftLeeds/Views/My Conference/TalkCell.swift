@@ -47,7 +47,7 @@ struct TalkCell: View {
                                         content: { image in
                                             image
                                                 .resizable()
-                                                .aspectRatio(contentMode: .fill)
+                                                .scaledToFill()
                                                 .frame(maxWidth: 40, maxHeight: 40)
                                                 .clipShape(Circle())
                                         },

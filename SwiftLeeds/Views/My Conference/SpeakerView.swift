@@ -29,7 +29,7 @@ struct SpeakerView: View {
                 )
             }
 
-            VStack(spacing: Padding.screen){
+            VStack(spacing: Padding.screen) {
                 StackedTileView(
                     primaryText: presentation.title,
                     secondaryText: presentation.synopsis,
@@ -57,7 +57,7 @@ struct SpeakerView: View {
                         accessibilityHint: "Opens Slido to allow questions to be asked",
                         primaryColor: .white,
                         secondaryColor: .white.opacity(0.8),
-                        backgroundStyle: LinearGradient(gradient: Gradient(colors:[.buyTicketGradientStart, .buyTicketGradientEnd]) ,startPoint: .leading, endPoint: .trailing),
+                        backgroundStyle: LinearGradient(gradient: Gradient(colors: [.buyTicketGradientStart, .buyTicketGradientEnd]), startPoint: .leading, endPoint: .trailing),
                         onTap: {
                             showWebSheet.toggle()
                         }
