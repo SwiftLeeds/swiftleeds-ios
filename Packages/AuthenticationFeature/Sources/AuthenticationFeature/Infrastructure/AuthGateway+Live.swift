@@ -12,7 +12,6 @@ extension AuthGateway {
     static var live: AuthGateway {
         AuthGateway { credential in
             @Dependency(\.httpClient) var httpClient
-            @Dependency(\.apiConfiguration) var apiConfiguration
             @Dependency(\.loginMapper) var loginMapper
 
             let body: Data
@@ -21,7 +20,7 @@ extension AuthGateway {
             } catch {
                 throw LoginRequestError.couldNotEncodeRequest(error)
             }
-            let request = Endpoint.login(body: body).urlRequest(baseURL: apiConfiguration.baseURL)
+            let request = Endpoint.login(body: body).urlRequest()
 
             let data: Data
             let response: HTTPURLResponse

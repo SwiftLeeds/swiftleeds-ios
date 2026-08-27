@@ -5,9 +5,8 @@ extension AttendeeRepository: DependencyKey {
     package static var liveValue: AttendeeRepository {
         AttendeeRepository { () async throws(AttendeeFetchError) -> Attendee in
             @Dependency(\.httpClient) var httpClient
-            @Dependency(\.apiConfiguration) var apiConfiguration
             @Dependency(\.attendeeMapper) var attendeeMapper
-            let request = Endpoint.ticket.urlRequest(baseURL: apiConfiguration.baseURL)
+            let request = Endpoint.ticket.urlRequest()
             let data: Data
             let response: HTTPURLResponse
             do {
