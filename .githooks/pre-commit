@@ -21,6 +21,16 @@ if ! command -v swiftlint > /dev/null 2>&1; then
     exit 0
 fi
 
+# Homebrew leaves the local version floating while CI pins one, so the two can
+# judge the same code differently. Warn, but still lint: a version difference is
+# not itself a violation.
+expected=$(cat .swiftlint-version 2>/dev/null || true)
+installed=$(swiftlint version 2>/dev/null || true)
+if [ -n "$expected" ] && [ "$expected" != "$installed" ]; then
+    echo "pre-commit: you have SwiftLint $installed; CI runs $expected." >&2
+    echo "pre-commit: rule defaults differ between versions, so CI may disagree." >&2
+fi
+
 # --force-exclude keeps an explicitly named path obeying the config's excluded
 # list. --strict is what makes the hook bite: SwiftLint exits 0 on a warning,
 # so without it the commit proceeds with violations reported.

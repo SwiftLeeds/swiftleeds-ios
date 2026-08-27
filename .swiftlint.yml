@@ -2,8 +2,9 @@
 # Where a SwiftLint default contradicts one of those conventions, the default is
 # changed here and the reason is stated.
 #
-# Tuned against SwiftLint 0.65.1. Rule defaults change between versions, so
-# re-run the suite after upgrading.
+# Tuned against the SwiftLint version in .swiftlint-version, which CI installs
+# and the pre-commit hook checks against. Rule defaults change between versions,
+# so re-run the suite after a bump.
 
 # The 78 violations left after the mechanical fixes. They stay recorded rather
 # than fixed, so linting starts green and new code is held to the full rule set.
