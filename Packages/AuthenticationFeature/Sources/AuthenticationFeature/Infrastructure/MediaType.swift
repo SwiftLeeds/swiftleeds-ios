@@ -3,7 +3,7 @@
 /// Any value is representable through `init(_:)`; the named constants cover
 /// what the app sends.
 package struct MediaType: Equatable, Hashable, Sendable {
-    /// The registered subtypes of the application top-level type (RFC 6838).
+    /// The subtypes of the application top-level type (RFC 6838) that the app uses.
     package struct Application: Sendable {
         package let json = MediaType("application/json")
     }
@@ -15,9 +15,8 @@ package struct MediaType: Equatable, Hashable, Sendable {
     }
 }
 
-// Subtypes hang off their top-level type, so a media type reads as the
-// registry's own hierarchy: `.application.json`. A top-level type arrives
-// with its first used subtype; the subtype registry is open-ended.
+// A top-level type arrives with its first used subtype; the subtype
+// registry is open-ended.
 extension MediaType {
     package static let application = Application()
 }
