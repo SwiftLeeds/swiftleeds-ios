@@ -81,6 +81,30 @@ struct HTTPClientURLSessionTests {
         #expect(request.value(forHTTPHeaderField: "Authorization") == "Bearer jwt-abc-123")
     }
 
+    @Test func whenBearerRequestGets401_shouldReportSessionExpiry() async throws {
+        URLProtocolStub.stub(
+            data: Data(),
+            response: try #require(
+                HTTPURLResponse(url: url, statusCode: 401, httpVersion: nil, headerFields: nil)
+            ),
+            error: nil
+        )
+        let store = InMemorySessionStore(stored: Session(token: try SessionToken("jwt-abc-123")))
+
+        try await confirmation("session expiry reported") { expired in
+            _ = try await withDependencies {
+                $0.log = LogRecorder().log
+                $0.sessionStore = store.sessionStore
+            } operation: {
+                let sut = HTTPClient.live(
+                    urlSession: URLProtocolStub.session(),
+                    onSessionExpiry: { expired() }
+                )
+                return try await sut.send(URLRequest(url: url))
+            }
+        }
+    }
+
     @Test func whenServerResponds_shouldReturnDataAndHTTPResponse() async throws {
         let expected = Data("hello".utf8)
         URLProtocolStub.stub(
