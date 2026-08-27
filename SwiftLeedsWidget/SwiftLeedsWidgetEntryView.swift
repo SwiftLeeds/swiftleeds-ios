@@ -1,5 +1,5 @@
-import WidgetKit
 import SwiftUI
+import WidgetKit
 
 struct SwiftLeedsWidgetEntryView: View {
     var entry: Provider.Entry

@@ -1,5 +1,5 @@
-import WidgetKit
 import SwiftUI
+import WidgetKit
 
 struct SwiftLeedsWidgetEntry: TimelineEntry {
     var date: Date

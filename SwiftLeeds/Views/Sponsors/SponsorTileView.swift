@@ -1,7 +1,7 @@
+import CachedAsyncImage
 import DesignKit
 import SharedAssets
 import SwiftUI
-import CachedAsyncImage
 
 struct SponsorTileView: View {
     let sponsor: Sponsor

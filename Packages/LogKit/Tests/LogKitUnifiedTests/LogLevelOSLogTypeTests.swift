@@ -1,6 +1,6 @@
 import LogKit
-import Testing
 import os
+import Testing
 
 @testable import LogKitUnified
 

@@ -1,7 +1,7 @@
 import Foundation
+import MapKit
 import Networking
 import SwiftUI
-import MapKit
 
 class LocalViewModel: ObservableObject {
     @Published private(set) var categories: [Local.LocationCategory] = []

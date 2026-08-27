@@ -1,7 +1,7 @@
 import AuthenticationUI
+import ReadabilityModifier
 import Settings
 import SwiftUI
-import ReadabilityModifier
 
 struct TabsMainView: View {
     @EnvironmentObject var appState: AppState
