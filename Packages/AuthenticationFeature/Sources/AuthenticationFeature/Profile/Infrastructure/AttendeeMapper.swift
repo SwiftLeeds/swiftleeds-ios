@@ -11,8 +11,8 @@ package struct AttendeeMapper: Sendable {
 
 extension AttendeeMapper {
     package static let live = AttendeeMapper { data, response throws(ResponseError) in
-        switch response.statusCode {
-        case 200:
+        switch response.status {
+        case .ok:
             let dto: AttendeeDTO
             do {
                 dto = try JSONDecoder().decode(AttendeeDTO.self, from: data)
@@ -24,10 +24,10 @@ extension AttendeeMapper {
             } catch {
                 throw .invalidField(error)
             }
-        case 401:
+        case .unauthorized:
             throw .unauthorized
         default:
-            throw .unexpectedStatus(response.statusCode)
+            throw .unexpectedStatus(response.status)
         }
     }
 }

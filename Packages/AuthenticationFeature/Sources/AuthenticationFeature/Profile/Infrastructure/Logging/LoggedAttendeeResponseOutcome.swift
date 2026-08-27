@@ -31,10 +31,13 @@ struct LoggedAttendeeResponseOutcome {
                 level: .notice,
                 message: "The attendee request was not authorized"
             )
-        case let .unexpectedStatus(code):
+        case let .unexpectedStatus(status):
             LoggedAttendeeResponseOutcome(
                 level: .error,
-                message: "The attendee request got an unexpected status \(code, name: "statusCode", privacy: .open)"
+                message: """
+                The attendee request got an unexpected status \
+                \(Int(status.code), name: "statusCode", privacy: .open)
+                """
             )
         }
     }

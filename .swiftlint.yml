@@ -53,8 +53,10 @@ nesting:
 # "id" is SwiftLint's own default allowance. An `excluded` list replaces the
 # default rather than adding to it, so dropping "id" here would start flagging
 # every `Identifiable` conformance. "x" and "y" name pixel coordinates.
+# "ok" is HTTP vocabulary: `HTTPStatus.ok` names the 200 status.
 identifier_name:
   excluded:
     - id
     - x
     - y
+    - ok

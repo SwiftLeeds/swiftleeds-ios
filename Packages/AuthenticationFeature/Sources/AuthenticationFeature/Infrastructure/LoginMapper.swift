@@ -11,17 +11,17 @@ package struct LoginMapper: Sendable {
 
 extension LoginMapper {
     package static let live = LoginMapper { data, response throws(ResponseError) in
-        switch response.statusCode {
-        case 200:
+        switch response.status {
+        case .ok:
             do throws(SessionToken.ParsingError) {
                 return try SessionToken(String(decoding: data, as: UTF8.self))
             } catch {
                 throw .invalidToken(error)
             }
-        case 401:
+        case .unauthorized:
             throw .invalidCredentials
         default:
-            throw .unexpectedStatus(response.statusCode)
+            throw .unexpectedStatus(response.status)
         }
     }
 }
