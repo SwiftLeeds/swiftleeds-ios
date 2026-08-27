@@ -8,13 +8,13 @@ struct LoggedHTTPRequestOutcome {
     // A response runs on every request in the app, so it records at the level the platform drops
     // unless someone is watching. The status is data, not severity: whoever reads the response
     // decides whether a 500 is a failure.
-    static func success(request: URLRequest, statusCode: Int) -> LoggedHTTPRequestOutcome {
+    static func success(request: URLRequest, status: HTTPStatus) -> LoggedHTTPRequestOutcome {
         LoggedHTTPRequestOutcome(
             level: .debug,
             message: """
             A response arrived: \
             \(request.loggedSummary, name: "request", privacy: .open), \
-            \(statusCode, name: "statusCode", privacy: .open)
+            \(Int(status), name: "statusCode", privacy: .open)
             """
         )
     }
