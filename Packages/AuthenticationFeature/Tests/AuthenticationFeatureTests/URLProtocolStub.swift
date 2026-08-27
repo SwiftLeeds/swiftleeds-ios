@@ -9,7 +9,7 @@ final class URLProtocolStub: URLProtocol {
 
     nonisolated(unsafe) static var stub: Stub?
 
-    /// The request the stub most recently served.
+    // The request the stub most recently served.
     nonisolated(unsafe) static var lastRequest: URLRequest?
 
     static func stub(data: Data?, response: URLResponse?, error: Error?) {

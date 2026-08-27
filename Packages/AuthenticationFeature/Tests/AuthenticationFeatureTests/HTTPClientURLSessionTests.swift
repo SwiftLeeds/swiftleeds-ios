@@ -3,8 +3,8 @@ import Dependencies
 import Foundation
 import Testing
 
-/// Everything that touches `URLProtocolStub`'s shared state lives here, unit and wiring
-/// alike: `.serialized` only serializes within one suite.
+// Everything that touches URLProtocolStub's shared state lives here, unit and wiring
+// alike: .serialized only serializes within one suite.
 @Suite(.serialized)
 struct HTTPClientURLSessionTests {
     private let url: URL
