@@ -87,6 +87,21 @@ import Testing
         #expect(recorder.events.count == 1)
     }
 
+    @Test func whenFetchingAttendee_shouldGETLoginTicketResource() async throws {
+        let spy = HTTPClientSpy(respondingWith: attendeeJSON(), statusCode: 200)
+
+        _ = try await withDependencies {
+            $0.httpClient = spy.httpClient
+        } operation: {
+            let sut = AttendeeRepository.liveValue
+            return try await sut.fetch()
+        }
+
+        let request = try #require(await spy.requests.first)
+        #expect(request.httpMethod == "GET")
+        #expect(request.url?.path() == "/api/v1/login/ticket")
+    }
+
     /// An offline device is the commonest failure here, and it is not the same as a server the app
     /// cannot make sense of.
     @Test func whenTransportFails_shouldThrowCouldNotReachServer() async throws {

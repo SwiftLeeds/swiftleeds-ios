@@ -14,14 +14,5 @@ package enum Endpoint: HTTPRequestConvertible, Equatable, Hashable, Sendable {
         }
     }
 
-    func url(baseURL: URL) -> URL {
-        switch self {
-        case .login:
-            baseURL.appending(path: "api/v1/login/ticket")
-        case .profile:
-            baseURL.appending(path: "api/v1/login/ticket")
-        }
-    }
-
     private static let loginTicketPath: URLPath = "api/v1/login/ticket"
 }

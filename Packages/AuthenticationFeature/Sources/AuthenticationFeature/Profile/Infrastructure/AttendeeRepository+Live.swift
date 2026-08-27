@@ -7,7 +7,7 @@ extension AttendeeRepository: DependencyKey {
             @Dependency(\.httpClient) var httpClient
             @Dependency(\.apiConfiguration) var apiConfiguration
             @Dependency(\.attendeeMapper) var attendeeMapper
-            let request = URLRequest(url: Endpoint.profile.url(baseURL: apiConfiguration.baseURL))
+            let request = Endpoint.profile.urlRequest(baseURL: apiConfiguration.baseURL)
             let data: Data
             let response: HTTPURLResponse
             do {
