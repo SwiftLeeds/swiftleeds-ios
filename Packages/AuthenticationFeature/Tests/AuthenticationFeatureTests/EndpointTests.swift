@@ -30,27 +30,27 @@ import Testing
         #expect(request.httpBody == body)
     }
 
-    @Test func whenProfileRequestIsBuilt_shouldGET() throws {
-        let request = try Endpoint.profile.urlRequest(baseURL: baseURL)
+    @Test func whenTicketRequestIsBuilt_shouldGET() throws {
+        let request = try Endpoint.ticket.urlRequest(baseURL: baseURL)
 
         #expect(request.httpMethod == "GET")
     }
 
-    @Test func whenProfileRequestIsBuilt_shouldTargetLoginTicketPath() throws {
-        let request = try Endpoint.profile.urlRequest(baseURL: baseURL)
+    @Test func whenTicketRequestIsBuilt_shouldTargetLoginTicketPath() throws {
+        let request = try Endpoint.ticket.urlRequest(baseURL: baseURL)
 
         let expected = try #require(URL(string: "https://example.com/api/v1/login/ticket"))
         #expect(request.url == expected)
     }
 
-    @Test func whenProfileRequestIsBuilt_shouldCarryNoBody() throws {
-        let request = try Endpoint.profile.urlRequest(baseURL: baseURL)
+    @Test func whenTicketRequestIsBuilt_shouldCarryNoBody() throws {
+        let request = try Endpoint.ticket.urlRequest(baseURL: baseURL)
 
         #expect(request.httpBody == nil)
     }
 
-    @Test func whenProfileRequestIsBuilt_shouldDeclareNoContentType() throws {
-        let request = try Endpoint.profile.urlRequest(baseURL: baseURL)
+    @Test func whenTicketRequestIsBuilt_shouldDeclareNoContentType() throws {
+        let request = try Endpoint.ticket.urlRequest(baseURL: baseURL)
 
         #expect(request.value(forHTTPHeaderField: "Content-Type") == nil)
     }
