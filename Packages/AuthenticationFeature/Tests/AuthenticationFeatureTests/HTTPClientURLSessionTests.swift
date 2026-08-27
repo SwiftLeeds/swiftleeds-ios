@@ -36,6 +36,28 @@ struct HTTPClientURLSessionTests {
         #expect(response.statusCode == 200)
     }
 
+    @Test func whenLiveChainGetsResponse_shouldLogExactlyOnce() async throws {
+        URLProtocolStub.stub(
+            data: Data(),
+            response: try #require(
+                HTTPURLResponse(url: url, statusCode: 500, httpVersion: nil, headerFields: nil)
+            ),
+            error: nil
+        )
+        let recorder = LogRecorder()
+        let store = InMemorySessionStore()
+
+        _ = try await withDependencies {
+            $0.log = recorder.log
+            $0.sessionStore = store.sessionStore
+        } operation: {
+            let sut = HTTPClient.live(urlSession: URLProtocolStub.session(), onSessionExpiry: {})
+            return try await sut.send(URLRequest(url: url))
+        }
+
+        #expect(recorder.events.count == 1)
+    }
+
     @Test func whenServerResponds_shouldReturnDataAndHTTPResponse() async throws {
         let expected = Data("hello".utf8)
         URLProtocolStub.stub(
