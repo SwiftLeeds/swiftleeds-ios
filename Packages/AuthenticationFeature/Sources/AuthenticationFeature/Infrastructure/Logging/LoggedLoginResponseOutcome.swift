@@ -19,10 +19,10 @@ struct LoggedLoginResponseOutcome {
                 level: .notice,
                 message: "The sign-in credentials were rejected"
             )
-        case let .unexpectedStatus(code):
+        case let .unexpectedStatus(status):
             LoggedLoginResponseOutcome(
                 level: .error,
-                message: "Sign-in got an unexpected status \(code, name: "statusCode", privacy: .open)"
+                message: "Sign-in got an unexpected status \(Int(status), name: "statusCode", privacy: .open)"
             )
         case let .invalidToken(reason):
             LoggedLoginResponseOutcome(

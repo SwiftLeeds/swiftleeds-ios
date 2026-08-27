@@ -1,3 +1,5 @@
+import Foundation
+
 /// An HTTP response status, compared by its code.
 package struct HTTPStatus: Equatable, Hashable, Sendable {
     fileprivate let code: Int
@@ -15,5 +17,11 @@ extension HTTPStatus {
 extension Int {
     package init(_ status: HTTPStatus) {
         self = status.code
+    }
+}
+
+extension HTTPURLResponse {
+    package var status: HTTPStatus {
+        HTTPStatus(statusCode)
     }
 }
