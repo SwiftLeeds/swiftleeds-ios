@@ -3,7 +3,6 @@ import Foundation
 struct Schedule: Codable {
     let data: Data
 
-
     struct Data: Codable {
         let event: Event
         let events: [Event]

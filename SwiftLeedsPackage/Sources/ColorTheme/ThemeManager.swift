@@ -6,7 +6,7 @@ public enum ThemeOption: String, CaseIterable {
     case system = "system"
     case light = "light"
     case dark = "dark"
-    
+
     /// User-friendly display name for the theme option
     public var displayName: String {
         switch self {
@@ -15,7 +15,7 @@ public enum ThemeOption: String, CaseIterable {
         case .dark: return "Dark"
         }
     }
-    
+
     /// Corresponding UIUserInterfaceStyle for the theme
     public var userInterfaceStyle: UIUserInterfaceStyle {
         switch self {
@@ -38,7 +38,7 @@ public final class ThemeManager: ObservableObject {
         loadTheme()
         applyTheme(currentTheme)
     }
-    
+
     /// Updates the application theme and persists the selection
     /// - Parameter theme: The new theme to apply
     public func setTheme(_ theme: ThemeOption) {
@@ -46,7 +46,7 @@ public final class ThemeManager: ObservableObject {
         UserDefaults.standard.set(theme.rawValue, forKey: UserDefaultsKeys.selectedTheme)
         applyTheme(theme)
     }
-    
+
     /// Loads the saved theme preference from UserDefaults
     private func loadTheme() {
         if let savedTheme = UserDefaults.standard.string(forKey: UserDefaultsKeys.selectedTheme),
@@ -54,7 +54,7 @@ public final class ThemeManager: ObservableObject {
             currentTheme = theme
         }
     }
-    
+
     /// Applies the specified theme to the application UI
     /// - Parameter theme: The theme to apply
     private func applyTheme(_ theme: ThemeOption) {
@@ -62,7 +62,7 @@ public final class ThemeManager: ObservableObject {
             self.updateUserInterfaceStyle(theme.userInterfaceStyle)
         }
     }
-    
+
     /// Updates the user interface style for all windows in the current scene
     /// - Parameter style: The UIUserInterfaceStyle to apply
     private func updateUserInterfaceStyle(_ style: UIUserInterfaceStyle) {
@@ -72,7 +72,7 @@ public final class ThemeManager: ObservableObject {
             print("Warning: Unable to find window scene for theme application")
             return
         }
-        
+
         windowScene.windows.forEach { window in
             window.overrideUserInterfaceStyle = style
         }

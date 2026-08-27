@@ -4,7 +4,7 @@ import SwiftUI
 
 struct SidebarMainView: View {
     @EnvironmentObject var appState: AppState
-    
+
     var body: some View {
         NavigationSplitView {
             SidebarView()

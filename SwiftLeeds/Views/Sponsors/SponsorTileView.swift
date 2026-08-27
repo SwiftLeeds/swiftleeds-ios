@@ -8,11 +8,11 @@ struct SponsorTileView: View {
     @State private var showingJobs = false
     @State private var isImageLoaded = false
     @Environment(\.openURL) private var openURL
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             mainTile
-            
+
             if !sponsor.jobs.isEmpty {
                 jobsSection
             }
@@ -24,9 +24,9 @@ struct SponsorTileView: View {
         )
         .shadow(color: Color.black.opacity(0.05), radius: 8, x: 0, y: 2)
     }
-    
+
     private var mainTile: some View {
-        Button(action: { 
+        Button(action: {
             if let url = URL(string: sponsor.url) {
                 openURL(url)
             }
@@ -38,7 +38,7 @@ struct SponsorTileView: View {
         }
         .buttonStyle(SquishyButtonStyle())
     }
-    
+
     private var imageSection: some View {
         ZStack {
             CachedAsyncImage(
@@ -52,7 +52,7 @@ struct SponsorTileView: View {
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .transition(.opacity)
-                                .onAppear { 
+                                .onAppear {
                                     withAnimation(.easeIn(duration: 0.3)) {
                                         isImageLoaded = true
                                     }
@@ -77,7 +77,7 @@ struct SponsorTileView: View {
             )
             .aspectRatio(1.66, contentMode: .fit)
             .accessibilityHidden(true)
-            
+
             if sponsor.sponsorLevel == .platinum {
                 VStack {
                     HStack {
@@ -105,7 +105,7 @@ struct SponsorTileView: View {
         }
         .padding(16)
     }
-    
+
     private var infoSection: some View {
         VStack(alignment: .leading, spacing: 6) {
             HStack {
@@ -114,7 +114,7 @@ struct SponsorTileView: View {
                         .foregroundColor(.primary)
                         .font(.headline.weight(.semibold))
                         .lineLimit(1)
-                    
+
                     if !sponsor.subtitle.isEmpty {
                         Text(sponsor.subtitle)
                             .foregroundColor(.secondary)
@@ -123,20 +123,20 @@ struct SponsorTileView: View {
                             .fixedSize(horizontal: false, vertical: true)
                     }
                 }
-                
+
                 Spacer()
-                
+
                 Image(systemName: "arrow.up.right.circle.fill")
                     .font(.title3)
                     .foregroundColor(.accent.opacity(0.7))
             }
-            
+
             if !sponsor.jobs.isEmpty {
                 HStack {
                     Label("\(sponsor.jobs.count) Job\(sponsor.jobs.count > 1 ? "s" : "")", systemImage: "briefcase.fill")
                         .font(.caption.weight(.medium))
                         .foregroundColor(.accent)
-                    
+
                     Spacer()
                 }
                 .padding(.top, 4)
@@ -146,19 +146,19 @@ struct SponsorTileView: View {
         .accessibilityElement(children: .ignore)
         .accessibilityLabel("Sponsor, \(sponsor.name), \(sponsor.subtitle). \(sponsor.jobs.isEmpty ? "" : "\(sponsor.jobs.count) job opportunities available")")
     }
-    
+
     private var jobsSection: some View {
         VStack(spacing: 0) {
             Divider()
-            
+
             Button(action: { withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) { showingJobs.toggle() } }) {
                 HStack {
                     Text("Job Opportunities")
                         .font(.subheadline.weight(.semibold))
                         .foregroundColor(.primary)
-                    
+
                     Spacer()
-                    
+
                     Image(systemName: showingJobs ? "chevron.up" : "chevron.down")
                         .font(.caption.weight(.semibold))
                         .foregroundColor(.secondary)
@@ -166,7 +166,7 @@ struct SponsorTileView: View {
                 .padding()
                 .background(Color.accent.opacity(0.05))
             }
-            
+
             if showingJobs {
                 VStack(spacing: 0) {
                     ForEach(sponsor.jobs) { job in
@@ -180,7 +180,7 @@ struct SponsorTileView: View {
             }
         }
     }
-    
+
     private var contentShape: some Shape {
         RoundedRectangle(cornerRadius: Constants.cellRadius, style: .continuous)
     }
@@ -190,23 +190,23 @@ struct JobRowView: View {
     let job: Job
     @Environment(\.openURL) private var openURL
     @State private var isPressed = false
-    
+
     var body: some View {
-        Button(action: { 
+        Button(action: {
             if let url = URL(string: job.url) {
                 openURL(url)
             }
         }) {
             VStack(spacing: 0) {
                 Divider()
-                
+
                 HStack {
                     VStack(alignment: .leading, spacing: 4) {
                         Text(job.title)
                             .font(.subheadline.weight(.medium))
                             .foregroundColor(.primary)
                             .lineLimit(1)
-                        
+
                         HStack(spacing: 4) {
                             Image(systemName: "location.fill")
                                 .font(.caption2)
@@ -215,9 +215,9 @@ struct JobRowView: View {
                         }
                         .foregroundColor(.secondary)
                     }
-                    
+
                     Spacer()
-                    
+
                     Image(systemName: "arrow.right.circle")
                         .font(.title3)
                         .foregroundColor(.accent.opacity(0.5))
@@ -235,12 +235,11 @@ struct JobRowView: View {
     }
 }
 
-
 struct SponsorTileView_Previews: PreviewProvider {
     static var previews: some View {
         ZStack {
             Color.background.edgesIgnoringSafeArea(.all)
-            
+
             VStack {
                 SponsorTileView(sponsor: .sample)
                     .padding()

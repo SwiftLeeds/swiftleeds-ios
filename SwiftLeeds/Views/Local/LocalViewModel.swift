@@ -18,7 +18,7 @@ class LocalViewModel: ObservableObject {
             await loadData()
         }
     }
-    
+
     func loadData() async {
         do {
             let localResults = try await URLSession.shared.decode(Requests.local, dateDecodingStrategy: Requests.defaultDateDecodingStratergy)

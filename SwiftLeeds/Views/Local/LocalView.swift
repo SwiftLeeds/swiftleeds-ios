@@ -12,7 +12,7 @@ struct LocalView: View {
 
     var body: some View {
         ZStack {
-            GeometryReader{ geometry in
+            GeometryReader { geometry in
                 if let category = model.selectedCategory {
                     Map(coordinateRegion: $mapRegion, showsUserLocation: true, annotationItems: model.selectedLocations) { location in
                         MapAnnotation(coordinate: location.location.coordinate) {

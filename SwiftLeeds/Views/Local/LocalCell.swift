@@ -7,28 +7,28 @@ struct LocalCell: View {
     let imageName: String
     let foregroundColor: Color
     let labelFontStyle: Font
-    let onTap: () -> ()
-    
-    internal init(label : String,
+    let onTap: () -> Void
+
+    internal init(label: String,
                   imageName: String,
                   foregroundColor: Color = .cellForeground,
                   labelFontStyle: Font = .headline.weight(.medium),
-                  onTap: @escaping () -> () = {}
-    ){
+                  onTap: @escaping () -> Void = {}
+    ) {
         self.label = label
         self.imageName = imageName
         self.foregroundColor = foregroundColor
         self.labelFontStyle = labelFontStyle
         self.onTap = onTap
     }
-    
+
     var body: some View {
         Button(action: onTap) {
             HStack {
                 Text(label)
                     .font(labelFontStyle)
                 Spacer()
-                
+
                 Image(uiImage: UIImage(systemName: imageName) ?? UIImage(imageLiteralResourceName: imageName))
                     .renderingMode(.template)
                     .frame(width: 30)
@@ -52,5 +52,5 @@ struct LocalCell_Previews: PreviewProvider {
             LocalCell(label: "Best of Leeds", imageName: "mappin")
         }
     }
-    
+
 }

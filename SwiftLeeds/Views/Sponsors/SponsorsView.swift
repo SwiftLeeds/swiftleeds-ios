@@ -8,7 +8,7 @@ struct SponsorsView: View {
     @State private var isLoading = true
     @State private var searchText = ""
     @State private var selectedSponsorLevel: SponsorLevel?
-    
+
     var body: some View {
         ScrollView {
             VStack(spacing: 0) {
@@ -35,7 +35,7 @@ struct SponsorsView: View {
             await loadSponsors()
         }
     }
-    
+
     private var loadingView: some View {
         VStack(spacing: Padding.cellGap) {
             ProgressView()
@@ -48,7 +48,7 @@ struct SponsorsView: View {
         .frame(maxWidth: .infinity, minHeight: 300)
         .padding()
     }
-    
+
     private var emptyStateView: some View {
         VStack(spacing: Padding.cellGap) {
             Image(systemName: "sparkles")
@@ -63,18 +63,18 @@ struct SponsorsView: View {
         .frame(maxWidth: .infinity, minHeight: 300)
         .padding()
     }
-    
+
     private var tierEmptyStateView: some View {
         VStack(spacing: Padding.cellGap) {
             if let selectedLevel = selectedSponsorLevel {
                 Image(systemName: iconForLevel(selectedLevel))
                     .font(.system(size: 50))
                     .foregroundColor(.secondary.opacity(0.6))
-                
+
                 Text("No \(selectedLevel.rawValue.capitalized) Sponsors")
                     .font(.headline)
                     .foregroundColor(.primary)
-                
+
                 Text("This tier doesn't have any sponsors yet")
                     .font(.subheadline)
                     .foregroundColor(.secondary)
@@ -84,11 +84,11 @@ struct SponsorsView: View {
         .frame(maxWidth: .infinity, minHeight: 200)
         .padding()
     }
-    
+
     private var sponsorsList: some View {
         VStack(spacing: Padding.cellGap) {
             filterChips
-            
+
             if filteredSections.isEmpty && selectedSponsorLevel != nil {
                 tierEmptyStateView
             } else {
@@ -100,7 +100,7 @@ struct SponsorsView: View {
         .padding(.horizontal, horizontalPadding)
         .padding(.bottom, Padding.cellGap)
     }
-    
+
     private var filterChips: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 8) {
@@ -109,12 +109,12 @@ struct SponsorsView: View {
                     isSelected: selectedSponsorLevel == nil,
                     action: { selectedSponsorLevel = nil }
                 )
-                
+
                 ForEach([SponsorLevel.platinum, .gold, .silver], id: \.self) { level in
                     FilterChip(
                         title: level.rawValue.capitalized,
                         isSelected: selectedSponsorLevel == level,
-                        action: { 
+                        action: {
                             withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
                                 selectedSponsorLevel = level == selectedSponsorLevel ? nil : level
                             }
@@ -125,18 +125,18 @@ struct SponsorsView: View {
         }
         .padding(.vertical, 8)
     }
-    
+
     private var filteredSections: [SponsorsViewModel.Section] {
         if let selectedLevel = selectedSponsorLevel {
             return viewModel.sections.filter { $0.type == selectedLevel }
         }
         return viewModel.sections
     }
-    
+
     private var gridColumns: [GridItem] {
         return Array(repeating: GridItem(.flexible(), spacing: Padding.cellGap), count: columnCount)
     }
-    
+
     private var columnCount: Int {
         #if os(iOS)
         return UIDevice.current.userInterfaceIdiom == .pad ? 3 : 2
@@ -144,7 +144,7 @@ struct SponsorsView: View {
         return 2
         #endif
     }
-    
+
     private var horizontalPadding: CGFloat {
         #if os(iOS)
         return UIDevice.current.userInterfaceIdiom == .pad ? Padding.screen * 2 : Padding.screen
@@ -152,11 +152,11 @@ struct SponsorsView: View {
         return Padding.screen
         #endif
     }
-    
+
     private func sectionView(for section: SponsorsViewModel.Section) -> some View {
         VStack(alignment: .leading, spacing: Padding.stackGap) {
             sectionHeader(for: section.type)
-            
+
             switch section.type {
             case .platinum:
                 VStack(spacing: Padding.cellGap) {
@@ -186,19 +186,19 @@ struct SponsorsView: View {
         }
         .padding(.bottom, Padding.cellGap)
     }
-    
+
     private func sectionHeader(for sponsorLevel: SponsorLevel) -> some View {
         HStack {
             Image(systemName: iconForLevel(sponsorLevel))
                 .font(.caption)
                 .foregroundColor(colorForLevel(sponsorLevel))
-            
+
             Text("\(sponsorLevel.rawValue.capitalized) Sponsors")
                 .font(.headline.weight(.semibold))
                 .foregroundColor(.primary)
-            
+
             Spacer()
-            
+
             Text("\(sponsorCount(for: sponsorLevel))")
                 .font(.caption)
                 .foregroundColor(.secondary)
@@ -210,7 +210,7 @@ struct SponsorsView: View {
         .accessibilityAddTraits(.isHeader)
         .padding(.vertical, 8)
     }
-    
+
     private func iconForLevel(_ level: SponsorLevel) -> String {
         switch level {
         case .platinum: return "crown.fill"
@@ -218,7 +218,7 @@ struct SponsorsView: View {
         case .silver: return "star"
         }
     }
-    
+
     private func colorForLevel(_ level: SponsorLevel) -> Color {
         switch level {
         case .platinum: return .purple
@@ -226,11 +226,11 @@ struct SponsorsView: View {
         case .silver: return .gray
         }
     }
-    
+
     private func sponsorCount(for level: SponsorLevel) -> Int {
         viewModel.sections.first { $0.type == level }?.sponsors.count ?? 0
     }
-    
+
     private func loadSponsors() async {
         do {
             try await viewModel.loadSponsors()
@@ -249,7 +249,7 @@ struct FilterChip: View {
     let title: String
     let isSelected: Bool
     let action: () -> Void
-    
+
     var body: some View {
         Button(action: action) {
             Text(title)
@@ -265,7 +265,6 @@ struct FilterChip: View {
         .buttonStyle(PlainButtonStyle())
     }
 }
-
 
 struct SponsorsView_Previews: PreviewProvider {
     static var previews: some View {

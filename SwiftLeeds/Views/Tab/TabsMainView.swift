@@ -5,7 +5,7 @@ import ReadabilityModifier
 
 struct TabsMainView: View {
     @EnvironmentObject var appState: AppState
-    
+
     var body: some View {
         TabView(selection: $appState.selectedTab) {
             MyConferenceView()
@@ -13,13 +13,13 @@ struct TabsMainView: View {
                     Label("Schedule", systemImage: "person.fill")
                 }
                 .tag(TabItems.conference)
-            
+
             LocalView()
                 .tabItem {
                     Label("Local", systemImage: "map.fill")
                 }
                 .tag(TabItems.location)
-            
+
             AboutView()
                 .tabItem {
                     Label("About", systemImage: "info.circle")
@@ -30,7 +30,7 @@ struct TabsMainView: View {
                     Label("Sponsors", systemImage: "sparkles")
                 }
                 .tag(TabItems.sponsors)
-            
+
             SettingsView {
                 Section("Account") { AccountView() }
             }

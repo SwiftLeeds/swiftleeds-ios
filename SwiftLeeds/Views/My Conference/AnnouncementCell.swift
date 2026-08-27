@@ -35,7 +35,6 @@ struct AnnouncementCell: View {
         .accessibilityLabel("\(label). \(value)")
     }
 
-
     // When the text is huge, stack vertically instead to avoid compressing the leading text
     @ViewBuilder
     func sizeAwareStack<Content: View>(@ViewBuilder content: () -> (Content)) -> some View {
@@ -64,7 +63,7 @@ struct AnnouncementCell_Previews: PreviewProvider {
                 ]
             )
             .previewDisplayName("Weather")
-            
+
             AnnouncementCell(
                 label: "Get your ticket now",
                 value: "69 days",
