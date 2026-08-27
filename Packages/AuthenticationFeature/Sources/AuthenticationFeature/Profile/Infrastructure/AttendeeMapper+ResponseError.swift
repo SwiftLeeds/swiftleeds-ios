@@ -3,7 +3,7 @@ extension AttendeeMapper {
         case couldNotDecode(any Error)
         case invalidField(AttendeeDTO.FieldError)
         case unauthorized
-        case unexpectedStatus(Int)
+        case unexpectedStatus(HTTPStatus)
     }
 }
 
