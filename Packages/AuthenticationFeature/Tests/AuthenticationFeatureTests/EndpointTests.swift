@@ -1,0 +1,61 @@
+import AuthenticationFeature
+import Foundation
+import Testing
+
+@Suite struct EndpointTests {
+    @Test func whenLoginRequestIsBuilt_shouldPOST() throws {
+        let request = try Endpoint.login(body: Data()).urlRequest(baseURL: baseURL)
+
+        #expect(request.httpMethod == "POST")
+    }
+
+    @Test func whenLoginRequestIsBuilt_shouldTargetLoginTicketPath() throws {
+        let request = try Endpoint.login(body: Data()).urlRequest(baseURL: baseURL)
+
+        let expected = try #require(URL(string: "https://example.com/api/v1/login/ticket"))
+        #expect(request.url == expected)
+    }
+
+    @Test func whenLoginRequestIsBuilt_shouldDeclareJSONContentType() throws {
+        let request = try Endpoint.login(body: Data()).urlRequest(baseURL: baseURL)
+
+        #expect(request.value(forHTTPHeaderField: "Content-Type") == "application/json")
+    }
+
+    @Test func whenLoginRequestIsBuilt_shouldCarryBodyGiven() throws {
+        let body = Data(#"{"ticket": "ABCD-12"}"#.utf8)
+
+        let request = try Endpoint.login(body: body).urlRequest(baseURL: baseURL)
+
+        #expect(request.httpBody == body)
+    }
+
+    @Test func whenProfileRequestIsBuilt_shouldGET() throws {
+        let request = try Endpoint.profile.urlRequest(baseURL: baseURL)
+
+        #expect(request.httpMethod == "GET")
+    }
+
+    @Test func whenProfileRequestIsBuilt_shouldTargetLoginTicketPath() throws {
+        let request = try Endpoint.profile.urlRequest(baseURL: baseURL)
+
+        let expected = try #require(URL(string: "https://example.com/api/v1/login/ticket"))
+        #expect(request.url == expected)
+    }
+
+    @Test func whenProfileRequestIsBuilt_shouldCarryNoBody() throws {
+        let request = try Endpoint.profile.urlRequest(baseURL: baseURL)
+
+        #expect(request.httpBody == nil)
+    }
+
+    @Test func whenProfileRequestIsBuilt_shouldDeclareNoContentType() throws {
+        let request = try Endpoint.profile.urlRequest(baseURL: baseURL)
+
+        #expect(request.value(forHTTPHeaderField: "Content-Type") == nil)
+    }
+
+    private var baseURL: URL {
+        get throws { try #require(URL(string: "https://example.com")) }
+    }
+}
