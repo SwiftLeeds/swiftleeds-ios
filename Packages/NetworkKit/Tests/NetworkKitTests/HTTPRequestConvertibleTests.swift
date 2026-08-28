@@ -1,6 +1,6 @@
-import AuthenticationFeature
 import Dependencies
 import Foundation
+import NetworkKit
 import Testing
 
 @Suite struct HTTPRequestConvertibleTests {

@@ -1,5 +1,6 @@
 import Dependencies
 import Foundation
+import NetworkKit
 
 extension AuthGateway: DependencyKey {
     package static var liveValue: AuthGateway {

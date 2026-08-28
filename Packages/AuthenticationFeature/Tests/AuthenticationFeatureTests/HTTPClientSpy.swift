@@ -1,5 +1,6 @@
 import AuthenticationFeature
 import Foundation
+import NetworkKit
 
 actor HTTPClientSpy {
     private(set) var requests: [URLRequest] = []

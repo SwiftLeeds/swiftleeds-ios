@@ -10,7 +10,13 @@ public struct APIConfiguration: Sendable {
 }
 
 extension APIConfiguration: TestDependencyKey {
-    public static let testValue = APIConfiguration(baseURL: URL(string: "https://example.com")!)
+    public static var testValue: APIConfiguration {
+        guard let baseURL = URL(string: "https://example.com") else {
+            reportIssue("APIConfiguration.testValue could not parse its base URL")
+            return APIConfiguration(baseURL: URL(filePath: "/dev/null"))
+        }
+        return APIConfiguration(baseURL: baseURL)
+    }
 }
 
 extension DependencyValues {

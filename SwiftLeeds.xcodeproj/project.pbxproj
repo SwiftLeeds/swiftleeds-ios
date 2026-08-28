@@ -95,6 +95,7 @@
 		A11CE57000000000000000D2 /* AuthenticationFeature in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C2 /* AuthenticationFeature */; };
 		A11CE57000000000000000D5 /* LogKit in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C5 /* LogKit */; };
 		A11CE57000000000000000D6 /* LogKitUnified in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C6 /* LogKitUnified */; };
+		A11CE57000000000000000D7 /* NetworkKit in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C7 /* NetworkKit */; };
 		A11CE57000000000000000D3 /* SecureStorageKit in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C3 /* SecureStorageKit */; };
 		A11CE57000000000000000D4 /* SecureStorageKitKeychain in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C4 /* SecureStorageKitKeychain */; };
 		A11CE57000000000000000D5 /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C5 /* Dependencies */; };
@@ -256,6 +257,7 @@
 		A11CE57000000000000000A1 /* SecureStorageKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SecureStorageKit; sourceTree = "<group>"; };
 		A11CE57000000000000000A2 /* AuthenticationFeature */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = AuthenticationFeature; sourceTree = "<group>"; };
 		A11CE57000000000000000A5 /* LogKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = LogKit; sourceTree = "<group>"; };
+		A11CE57000000000000000A4 /* NetworkKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = NetworkKit; sourceTree = "<group>"; };
 		A11CE57000000000000000A3 /* AuthenticationUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = AuthenticationUI; sourceTree = "<group>"; };
 		893A122D593379F84605F70C /* SwiftLeedsColors.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = SwiftLeedsColors.xcassets; sourceTree = "<group>"; };
 		AE1C800F289E9F3800996659 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
@@ -340,6 +342,7 @@
 				A11CE57000000000000000D2 /* AuthenticationFeature in Frameworks */,
 				A11CE57000000000000000D5 /* LogKit in Frameworks */,
 				A11CE57000000000000000D6 /* LogKitUnified in Frameworks */,
+				A11CE57000000000000000D7 /* NetworkKit in Frameworks */,
 				A11CE57000000000000000D3 /* SecureStorageKit in Frameworks */,
 				A11CE57000000000000000D4 /* SecureStorageKitKeychain in Frameworks */,
 				A11CE57000000000000000D5 /* Dependencies in Frameworks */,
@@ -445,6 +448,7 @@
 				A11CE57000000000000000A1 /* SecureStorageKit */,
 				A11CE57000000000000000A2 /* AuthenticationFeature */,
 				A11CE57000000000000000A5 /* LogKit */,
+				A11CE57000000000000000A4 /* NetworkKit */,
 				A11CE57000000000000000A3 /* AuthenticationUI */,
 			);
 			path = Packages;
@@ -725,6 +729,7 @@
 				A11CE57000000000000000C2 /* AuthenticationFeature */,
 				A11CE57000000000000000C5 /* LogKit */,
 				A11CE57000000000000000C6 /* LogKitUnified */,
+				A11CE57000000000000000C7 /* NetworkKit */,
 				A11CE57000000000000000C3 /* SecureStorageKit */,
 				A11CE57000000000000000C4 /* SecureStorageKitKeychain */,
 				A11CE57000000000000000C5 /* Dependencies */,
@@ -2023,6 +2028,10 @@
 		A11CE57000000000000000C6 /* LogKitUnified */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = LogKitUnified;
+		};
+		A11CE57000000000000000C7 /* NetworkKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = NetworkKit;
 		};
 		A11CE57000000000000000C3 /* SecureStorageKit */ = {
 			isa = XCSwiftPackageProductDependency;

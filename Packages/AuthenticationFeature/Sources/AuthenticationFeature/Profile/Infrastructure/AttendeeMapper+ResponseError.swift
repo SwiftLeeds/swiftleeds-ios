@@ -1,3 +1,5 @@
+import NetworkKit
+
 extension AttendeeMapper {
     package enum ResponseError: Error {
         case couldNotDecode(any Error)

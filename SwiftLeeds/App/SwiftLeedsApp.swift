@@ -4,6 +4,7 @@ import Dependencies
 import Foundation
 import LogKit
 import LogKitUnified
+import NetworkKit
 import SecureStorageKit
 import SecureStorageKitKeychain
 import SwiftUI

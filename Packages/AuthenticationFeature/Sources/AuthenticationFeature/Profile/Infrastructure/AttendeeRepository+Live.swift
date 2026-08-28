@@ -1,5 +1,6 @@
 import Dependencies
 import Foundation
+import NetworkKit
 
 extension AttendeeRepository: DependencyKey {
     package static var liveValue: AttendeeRepository {

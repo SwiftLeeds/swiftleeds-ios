@@ -3,38 +3,32 @@
 import PackageDescription
 
 let package = Package(
-    name: "AuthenticationFeature",
+    name: "NetworkKit",
     platforms: [
         .iOS(.v17),
         .macOS(.v13),
     ],
     products: [
-        .library(name: "AuthenticationFeature", targets: ["AuthenticationFeature"]),
+        .library(name: "NetworkKit", targets: ["NetworkKit"]),
     ],
     dependencies: [
         .package(path: "../LogKit"),
-        .package(path: "../NetworkKit"),
-        .package(path: "../SecureStorageKit"),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.0.0"),
     ],
     targets: [
         .target(
-            name: "AuthenticationFeature",
+            name: "NetworkKit",
             dependencies: [
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "LogKit", package: "LogKit"),
-                .product(name: "NetworkKit", package: "NetworkKit"),
-                .product(name: "SecureStorageKit", package: "SecureStorageKit"),
             ]
         ),
         .testTarget(
-            name: "AuthenticationFeatureTests",
+            name: "NetworkKitTests",
             dependencies: [
-                "AuthenticationFeature",
+                "NetworkKit",
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "LogKit", package: "LogKit"),
-                .product(name: "NetworkKit", package: "NetworkKit"),
-                .product(name: "SecureStorageKit", package: "SecureStorageKit"),
             ]
         ),
     ]

@@ -1,5 +1,5 @@
-import AuthenticationFeature
 import Foundation
+import NetworkKit
 import Testing
 
 @Suite struct HTTPRequestTests {
