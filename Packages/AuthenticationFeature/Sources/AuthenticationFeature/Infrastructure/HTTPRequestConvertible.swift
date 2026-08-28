@@ -1,5 +1,6 @@
 import Dependencies
 import Foundation
+import NetworkKit
 
 /// A value that describes itself as one HTTP request.
 package protocol HTTPRequestConvertible {

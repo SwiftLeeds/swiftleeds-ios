@@ -1,5 +1,6 @@
 import Dependencies
 import Foundation
+import NetworkKit
 
 package struct LoginMapper: Sendable {
     package var map: @Sendable (Data, HTTPURLResponse) throws(ResponseError) -> SessionToken

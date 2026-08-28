@@ -13,6 +13,7 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../LogKit"),
+        .package(path: "../NetworkKit"),
         .package(path: "../SecureStorageKit"),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.0.0"),
     ],
@@ -22,6 +23,7 @@ let package = Package(
             dependencies: [
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "LogKit", package: "LogKit"),
+                .product(name: "NetworkKit", package: "NetworkKit"),
                 .product(name: "SecureStorageKit", package: "SecureStorageKit"),
             ]
         ),
@@ -31,6 +33,7 @@ let package = Package(
                 "AuthenticationFeature",
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "LogKit", package: "LogKit"),
+                .product(name: "NetworkKit", package: "NetworkKit"),
                 .product(name: "SecureStorageKit", package: "SecureStorageKit"),
             ]
         ),

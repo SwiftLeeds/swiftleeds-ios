@@ -1,5 +1,6 @@
 import Dependencies
 import Foundation
+import NetworkKit
 
 package struct AttendeeMapper: Sendable {
     package var map: @Sendable (Data, HTTPURLResponse) throws(ResponseError) -> Attendee

@@ -1,4 +1,4 @@
-import AuthenticationFeature
+import NetworkKit
 import Testing
 
 @Suite struct URLPathTests {

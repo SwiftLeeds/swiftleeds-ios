@@ -1,3 +1,5 @@
+import NetworkKit
+
 extension LoginMapper {
     /// Why a login response could not be turned into a session.
     package enum ResponseError: Error {

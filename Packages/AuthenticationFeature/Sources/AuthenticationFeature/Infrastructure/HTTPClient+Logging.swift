@@ -1,6 +1,7 @@
 import Dependencies
 import Foundation
 import LogKit
+import NetworkKit
 
 extension HTTPClient {
     /// Records what came back, then returns or rethrows.

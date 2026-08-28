@@ -1,4 +1,5 @@
 import LogKit
+import NetworkKit
 
 struct LoggedAttendeeResponseOutcome {
     let level: LogLevel

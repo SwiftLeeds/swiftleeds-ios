@@ -1,5 +1,6 @@
 import Foundation
 import LogKit
+import NetworkKit
 
 struct LoggedHTTPRequestOutcome {
     let level: LogLevel

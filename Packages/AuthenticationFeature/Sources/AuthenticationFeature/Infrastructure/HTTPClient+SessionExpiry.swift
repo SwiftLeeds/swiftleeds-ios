@@ -1,4 +1,5 @@
 import Foundation
+import NetworkKit
 
 extension HTTPClient {
     package func interceptingSessionExpiry(onExpiry: @escaping @Sendable () async -> Void) -> HTTPClient {
