@@ -71,6 +71,38 @@ jobs:
           fi
           echo "Tested $count package(s)"
 
+  # Scoped to one package on purpose. SecureStorageKit's keychain tests cannot
+  # pass here: a SwiftPM test bundle runs inside Xcode's `xctest` agent, which
+  # has no `application-identifier`, so every SecItem call returns -34018.
+  # Widen the loop once those tests have a host app.
+  test-authentication-ui-ios:
+    name: Test AuthenticationUI (iOS Simulator)
+    runs-on: macos-26
+    steps:
+      - name: Checkout iOS Repository
+        uses: actions/checkout@v4
+
+      - name: Select Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: '26.5'
+
+      # The runner carries three iOS runtimes, each with its own iPhone 17 Pro.
+      # Without OS= xcodebuild picks one and never says which, so an image roll
+      # could change the runtime silently. Grepping for it first turns a missing
+      # runtime into one legible line instead of a confusing xcodebuild error.
+      - name: Check the pinned simulator runtime is present
+        run: |
+          set -euo pipefail
+          xcrun simctl list runtimes | grep 'iOS 26.5'
+
+      - name: Run AuthenticationUI's tests on the simulator
+        run: |
+          set -euo pipefail
+          cd Packages/AuthenticationUI
+          xcodebuild test -scheme AuthenticationUI \
+            -destination 'platform=iOS Simulator,name=iPhone 17 Pro,OS=26.5'
+
   lint-swift:
     name: Lint Swift Sources
     runs-on: macos-26
