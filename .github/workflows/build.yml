@@ -179,3 +179,18 @@ jobs:
             exit 1
           fi
           exit "$status"
+
+      # The simulator job finds snapshot tests by target name. A snapshot test
+      # written into any other target would compile, pass on macOS by doing
+      # nothing, and never run on iOS again. This turns that into a failure.
+      - name: Check snapshot tests live in a snapshot target
+        run: |
+          set -uo pipefail
+          stray=$(grep -rl "assertSnapshots(" Packages/*/Tests \
+            | grep -v "/Tests/[^/]*SnapshotTests/" || true)
+          if [ -n "$stray" ]; then
+            echo "::error::These call assertSnapshots but sit outside a *SnapshotTests target:"
+            echo "$stray"
+            exit 1
+          fi
+          echo "Every assertSnapshots call is in a snapshot target"
