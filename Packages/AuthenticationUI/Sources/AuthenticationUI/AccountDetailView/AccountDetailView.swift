@@ -35,10 +35,10 @@ package struct AccountDetailView: View {
             }
 
             Section {
-                LabeledContent("Email") {
+                LabeledContent("Email address") {
                     Text(verbatim: profile.emailAddress)
                 }
-                LabeledContent("Ticket Reference") {
+                LabeledContent("Ticket reference") {
                     Text(verbatim: profile.ticketReference)
                 }
             }

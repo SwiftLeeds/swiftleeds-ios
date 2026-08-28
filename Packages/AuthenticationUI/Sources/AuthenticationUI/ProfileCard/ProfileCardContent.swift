@@ -65,7 +65,7 @@ package struct ProfileCardContent: View {
 
     private var failed: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("We couldn't load your account.")
+            Text("We can't load your account just now.")
                 .foregroundStyle(.secondary)
                 .fixedSize(horizontal: false, vertical: true)
 

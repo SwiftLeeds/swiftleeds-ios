@@ -9,7 +9,7 @@ import SwiftUI
 /// Barcode(.qr(slug))
 /// Barcode(.code128("ABCD-1"))
 /// Barcode(image: savedPass)
-/// Barcode(url: remoteCode) { Text("Couldn't load") }
+/// Barcode(url: remoteCode) { Text("We can't load the code") }
 /// ```
 ///
 /// The view keeps the code readable: it never smooths pixels when scaling up, and never
@@ -142,7 +142,7 @@ package extension Barcode where Placeholder == EmptyView, Failure == EmptyView {
 
 #Preview("Cannot encode") {
     Barcode(.code128("café-ticket-✓")) {
-        Label("Couldn't make a code", systemImage: "exclamationmark.triangle")
+        Label("We can't show the code", systemImage: "exclamationmark.triangle")
     }
     .frame(width: 220, height: 80)
     .padding()
