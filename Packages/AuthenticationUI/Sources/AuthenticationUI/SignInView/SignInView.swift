@@ -29,14 +29,16 @@ public struct SignInView: View {
             } header: {
                 Text("Ticket Reference")
             } footer: {
-                Text("It's in your confirmation email - for example, 'ABCD-1'")
+                Text("You'll find it in your confirmation email. It looks like ABCD-1.")
                     .font(.footnote)
             }
 
             if case .failed(.invalidCredentials) = viewModel.phase {
                 Section {
-                    Text("We couldn't find a ticket for that email and reference. Please check them and try again.")
-                        .foregroundStyle(.red)
+                    Text(
+                        "We can't find a ticket for that email address and ticket reference. Check them and try again."
+                    )
+                    .foregroundStyle(.red)
                 }
             }
 
@@ -57,15 +59,15 @@ public struct SignInView: View {
             }
         }
         .disabled(viewModel.isSubmitting)
-        .alert("Can't connect", isPresented: presenting(.cannotConnect)) {
+        .alert("We can't connect", isPresented: presenting(.cannotConnect)) {
             Button("OK", role: .cancel) {}
         } message: {
             Text("Check your connection and try again.")
         }
-        .alert("Something went wrong", isPresented: presenting(.unexpected)) {
+        .alert("We can't sign you in", isPresented: presenting(.unexpected)) {
             Button("OK", role: .cancel) {}
         } message: {
-            Text("Please try again.")
+            Text("Something went wrong at our end. Try again in a moment.")
         }
     }
 
