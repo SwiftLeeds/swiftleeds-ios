@@ -71,13 +71,19 @@ jobs:
           fi
           echo "Tested $count package(s)"
 
-  # Scoped to one package on purpose. SecureStorageKit's keychain tests cannot
-  # pass here: a SwiftPM test bundle runs inside Xcode's `xctest` agent, which
-  # has no `application-identifier`, so every SecItem call returns -34018.
-  # Widen the loop once those tests have a host app.
-  test-authentication-ui-ios:
-    name: Test AuthenticationUI (iOS Simulator)
+  # The macOS job above skips everything behind `#if os(iOS)` or
+  # `#if canImport(UIKit)`, snapshot tests included. This one runs the same
+  # packages where those branches exist.
+  test-packages-ios:
+    name: Test Swift Packages (iOS Simulator)
     runs-on: macos-26
+    env:
+      # A SwiftPM test bundle runs inside Xcode's `xctest` agent, which carries
+      # only `get-task-allow`. With no `application-identifier` the keychain
+      # cannot pick an access group, so every SecItem call returns -34018. Drop
+      # this once those tests have a host app.
+      UNRUNNABLE: SecureStorageKitKeychainTests
+      DESTINATION: 'platform=iOS Simulator,name=iPhone 17 Pro,OS=26.5'
     steps:
       - name: Checkout iOS Repository
         uses: actions/checkout@v4
@@ -89,19 +95,49 @@ jobs:
 
       # The runner carries three iOS runtimes, each with its own iPhone 17 Pro.
       # Without OS= xcodebuild picks one and never says which, so an image roll
-      # could change the runtime silently. Grepping for it first turns a missing
-      # runtime into one legible line instead of a confusing xcodebuild error.
+      # could change the runtime silently, which would break every reference
+      # image at once. Checking here turns a missing runtime into one legible
+      # line instead of a confusing xcodebuild error.
       - name: Check the pinned simulator runtime is present
         run: |
           set -euo pipefail
           xcrun simctl list runtimes | grep 'iOS 26.5'
 
-      - name: Run AuthenticationUI's tests on the simulator
+      - name: Run every package test suite on the simulator
         run: |
-          set -euo pipefail
-          cd Packages/AuthenticationUI
-          xcodebuild test -scheme AuthenticationUI \
-            -destination 'platform=iOS Simulator,name=iPhone 17 Pro,OS=26.5'
+          set -uo pipefail
+          count=0
+          failed=""
+          for dir in Packages/*/; do
+            [ -f "${dir}Package.swift" ] || continue
+            name=$(basename "$dir")
+            targets=$( (cd "$dir" && swift package describe --type json) \
+              | jq -r --arg skip "$UNRUNNABLE" \
+                '[.targets[] | select(.type == "test") | .name] - ($skip | split(" ")) | .[]' )
+            if [ -z "$targets" ]; then
+              echo "::notice::$name has no test target that can run on the simulator"
+              continue
+            fi
+            only=()
+            for target in $targets; do only+=("-only-testing:$target"); done
+            # A package with more than one library product gets an aggregate
+            # "-Package" scheme; a single-product package's scheme carries the
+            # package's own name.
+            scheme="$name"
+            if (cd "$dir" && xcodebuild -list -json 2>/dev/null) | grep -q "\"$name-Package\""; then
+              scheme="$name-Package"
+            fi
+            echo "::group::$name ($scheme)"
+            (cd "$dir" && xcodebuild test -scheme "$scheme" -destination "$DESTINATION" "${only[@]}") \
+              || failed="$failed $name"
+            echo "::endgroup::"
+            count=$((count + 1))
+          done
+          if [ -n "$failed" ]; then
+            echo "::error::Failing packages:$failed"
+            exit 1
+          fi
+          echo "Tested $count package(s) on the simulator"
 
   lint-swift:
     name: Lint Swift Sources
