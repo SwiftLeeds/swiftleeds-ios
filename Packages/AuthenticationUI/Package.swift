@@ -29,6 +29,15 @@ let package = Package(
             dependencies: [
                 "AuthenticationUI",
                 .product(name: "Dependencies", package: "swift-dependencies"),
+            ]
+        ),
+        // Separate so CI can build and run the snapshot tests without compiling
+        // anything else. The `AuthenticationUISnapshotTests` scheme is what makes
+        // that possible, and the name of this target is how CI finds it.
+        .testTarget(
+            name: "AuthenticationUISnapshotTests",
+            dependencies: [
+                "AuthenticationUI",
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
             ]
         ),
