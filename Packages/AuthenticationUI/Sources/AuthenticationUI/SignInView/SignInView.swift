@@ -27,7 +27,7 @@ public struct SignInView: View {
                 TextField("Ticket reference", text: $viewModel.ticketReference)
                     .ticketReferenceFieldStyle()
             } header: {
-                Text("Ticket Reference")
+                Text("Ticket reference")
             } footer: {
                 Text("You'll find it in your confirmation email. It looks like ABCD-1.")
                     .font(.footnote)
