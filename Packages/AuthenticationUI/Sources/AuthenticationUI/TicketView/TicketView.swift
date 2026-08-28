@@ -70,9 +70,15 @@ package struct TicketView: View {
     }
 
     private var unreadable: some View {
-        Label("We couldn't draw your code.", systemImage: "exclamationmark.triangle")
-            .foregroundStyle(.secondary)
-            .padding()
+        VStack(spacing: 8) {
+            Label("We can't show your QR code", systemImage: "exclamationmark.triangle")
+
+            Text("Show your ticket reference to a member of staff and they'll check you in.")
+                .font(.footnote)
+        }
+        .foregroundStyle(.secondary)
+        .multilineTextAlignment(.center)
+        .padding()
     }
 }
 
