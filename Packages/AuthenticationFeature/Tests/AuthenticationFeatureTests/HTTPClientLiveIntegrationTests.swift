@@ -4,10 +4,9 @@ import Foundation
 import NetworkKit
 import Testing
 
-// Everything that touches URLProtocolStub's shared state lives here:
-// .serialized only serializes within one suite.
-/// Drives the composed live chain, stubbing only the transport, so removing any
-/// decorator from `live` fails exactly one of these.
+// Drives the composed live chain, stubbing only the transport, so removing any decorator
+// from `live` fails exactly one of these. Everything that touches URLProtocolStub's shared
+// state lives here: .serialized only serializes within one suite.
 @Suite(.serialized)
 struct HTTPClientLiveIntegrationTests {
     private let url: URL
