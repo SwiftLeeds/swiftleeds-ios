@@ -1,5 +1,6 @@
 import Dependencies
 import Foundation
+import NetworkKit
 
 extension HTTPClient {
     package func authenticated() -> HTTPClient {

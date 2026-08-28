@@ -1,4 +1,3 @@
-import AuthenticationFeature
 import Dependencies
 import Foundation
 import NetworkKit

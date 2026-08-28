@@ -1,7 +1,7 @@
-import AuthenticationFeature
 import Dependencies
 import Foundation
 import LogKit
+import NetworkKit
 import Testing
 
 /// Transport failures are logged here rather than per feature, so every request in the app is

@@ -1,14 +1,13 @@
 import Dependencies
 import Foundation
 import LogKit
-import NetworkKit
 
 extension HTTPClient {
     /// Records what came back, then returns or rethrows.
     ///
     /// Every request in the app passes through here, so this is the one seam that knows which
     /// endpoint was called and what the server answered.
-    package func logging() -> HTTPClient {
+    public func logging() -> HTTPClient {
         HTTPClient { request in
             // Resolved per call, so a test overriding \.log is honoured. Resolving it while
             // building liveValue would capture whichever log existed first.

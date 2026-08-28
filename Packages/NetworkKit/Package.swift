@@ -11,12 +11,24 @@ let package = Package(
     products: [
         .library(name: "NetworkKit", targets: ["NetworkKit"]),
     ],
+    dependencies: [
+        .package(path: "../LogKit"),
+        .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.0.0"),
+    ],
     targets: [
-        .target(name: "NetworkKit"),
+        .target(
+            name: "NetworkKit",
+            dependencies: [
+                .product(name: "Dependencies", package: "swift-dependencies"),
+                .product(name: "LogKit", package: "LogKit"),
+            ]
+        ),
         .testTarget(
             name: "NetworkKitTests",
             dependencies: [
                 "NetworkKit",
+                .product(name: "Dependencies", package: "swift-dependencies"),
+                .product(name: "LogKit", package: "LogKit"),
             ]
         ),
     ]

@@ -1,4 +1,5 @@
 import Foundation
+import NetworkKit
 
 extension HTTPClient {
     /// The composed client the app uses: transport, transport logging,

@@ -2,9 +2,9 @@ import Dependencies
 import Foundation
 
 public struct HTTPClient: Sendable {
-    package var send: @Sendable (URLRequest) async throws -> (Data, HTTPURLResponse)
+    public var send: @Sendable (URLRequest) async throws -> (Data, HTTPURLResponse)
 
-    package init(send: @escaping @Sendable (URLRequest) async throws -> (Data, HTTPURLResponse)) {
+    public init(send: @escaping @Sendable (URLRequest) async throws -> (Data, HTTPURLResponse)) {
         self.send = send
     }
 }

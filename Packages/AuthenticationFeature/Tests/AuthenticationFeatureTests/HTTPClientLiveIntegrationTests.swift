@@ -1,12 +1,15 @@
 import AuthenticationFeature
 import Dependencies
 import Foundation
+import NetworkKit
 import Testing
 
-// Everything that touches URLProtocolStub's shared state lives here, unit and wiring
-// alike: .serialized only serializes within one suite.
+// Everything that touches URLProtocolStub's shared state lives here:
+// .serialized only serializes within one suite.
+/// Drives the composed live chain, stubbing only the transport, so removing any
+/// decorator from `live` fails exactly one of these.
 @Suite(.serialized)
-struct HTTPClientURLSessionTests {
+struct HTTPClientLiveIntegrationTests {
     private let url: URL
 
     init() throws {
@@ -102,45 +105,6 @@ struct HTTPClientURLSessionTests {
                 )
                 return try await sut.send(URLRequest(url: url))
             }
-        }
-    }
-
-    @Test func whenServerResponds_shouldReturnDataAndHTTPResponse() async throws {
-        let expected = Data("hello".utf8)
-        URLProtocolStub.stub(
-            data: expected,
-            response: try #require(
-                HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)
-            ),
-            error: nil
-        )
-        let sut = HTTPClient.urlSession(URLProtocolStub.session())
-
-        let (data, response) = try await sut.send(URLRequest(url: url))
-
-        #expect(data == expected)
-        #expect(response.statusCode == 200)
-    }
-
-    @Test func whenTransportFails_shouldThrow() async {
-        URLProtocolStub.stub(data: nil, response: nil, error: URLError(.notConnectedToInternet))
-        let sut = HTTPClient.urlSession(URLProtocolStub.session())
-
-        await #expect(throws: (any Error).self) {
-            _ = try await sut.send(URLRequest(url: url))
-        }
-    }
-
-    @Test func whenResponseIsNotHTTP_shouldThrow() async {
-        URLProtocolStub.stub(
-            data: Data(),
-            response: URLResponse(url: url, mimeType: nil, expectedContentLength: 0, textEncodingName: nil),
-            error: nil
-        )
-        let sut = HTTPClient.urlSession(URLProtocolStub.session())
-
-        await #expect(throws: (any Error).self) {
-            _ = try await sut.send(URLRequest(url: url))
         }
     }
 }

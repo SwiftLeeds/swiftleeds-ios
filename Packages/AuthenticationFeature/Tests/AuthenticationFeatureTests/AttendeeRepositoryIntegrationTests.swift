@@ -1,6 +1,7 @@
 import AuthenticationFeature
 import Dependencies
 import Foundation
+import NetworkKit
 import Testing
 
 /// Drives the live composition, stubbing only the transport.
