@@ -46,6 +46,7 @@ package struct TicketViewContent: View {
             Text(verbatim: reference)
                 .font(.title2.weight(.semibold).monospaced())
                 .textSelection(.enabled)
+                .accessibilityLabel("Ticket reference \(reference)")
 
             Text(name.formatted())
                 .foregroundStyle(.secondary)
