@@ -3,18 +3,18 @@ import Foundation
 import SwiftUI
 
 /// The ticket screen's body: the code when it drew, and the way forward when it did not.
-package struct TicketViewContent: View {
+struct TicketViewContent: View {
     private let code: TicketCode
     private let reference: String
     private let name: PersonNameComponents
 
-    package init(code: TicketCode, reference: String, name: PersonNameComponents) {
+    init(code: TicketCode, reference: String, name: PersonNameComponents) {
         self.code = code
         self.reference = reference
         self.name = name
     }
 
-    package var body: some View {
+    var body: some View {
         VStack(spacing: 24) {
             Spacer(minLength: 0)
 
