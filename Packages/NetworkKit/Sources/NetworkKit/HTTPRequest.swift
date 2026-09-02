@@ -9,17 +9,20 @@ public struct HTTPRequest: Equatable, Hashable, Sendable {
     private let path: URLPath
     private let content: HTTPContent?
     private let queryItems: [URLQueryItem]
+    private let fields: [HTTPField]
 
     private init(
         method: HTTPMethod,
         path: URLPath,
         content: HTTPContent?,
-        queryItems: [URLQueryItem] = []
+        queryItems: [URLQueryItem] = [],
+        fields: [HTTPField] = []
     ) {
         self.method = method
         self.path = path
         self.content = content
         self.queryItems = queryItems
+        self.fields = fields
     }
 
     public static func get(_ path: URLPath) -> HTTPRequest {
@@ -66,16 +69,46 @@ public struct HTTPRequest: Equatable, Hashable, Sendable {
             method: method,
             path: path,
             content: content,
-            queryItems: self.queryItems + queryItems
+            queryItems: self.queryItems + queryItems,
+            fields: fields
         )
     }
 
+    /// Returns a copy carrying the given field after any it already holds.
+    ///
+    /// - Parameters:
+    ///   - name: The field name. A later field of the same name replaces an earlier one.
+    ///   - value: The data to send under that name.
+    public func appending(field name: HTTPField.Name, _ value: HTTPField.Value) -> HTTPRequest {
+        HTTPRequest(
+            method: method,
+            path: path,
+            content: content,
+            queryItems: queryItems,
+            fields: fields + [HTTPField(name: name, value: value)]
+        )
+    }
+
+    /// Returns a copy carrying the given media type under the given field name.
+    ///
+    /// - Parameters:
+    ///   - name: The field name. A later field of the same name replaces an earlier one.
+    ///   - mediaType: The media type to send under that name.
+    public func appending(field name: HTTPField.Name, _ mediaType: MediaType) -> HTTPRequest {
+        appending(field: name, HTTPField.Value(String(mediaType)))
+    }
+
     /// Builds the `URLRequest` this value describes.
+    ///
+    /// Content writes its own Content-Type last, so it wins over a field of that name.
     ///
     /// - Parameter baseURL: The server root the path is appended to.
     public func urlRequest(baseURL: URL) -> URLRequest {
         var request = URLRequest(url: url(baseURL: baseURL))
         request.httpMethod = method.rawValue
+        for field in fields {
+            field.attach(to: &request)
+        }
         content?.attach(to: &request)
         return request
     }
