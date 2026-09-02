@@ -3,13 +3,13 @@ import NetworkKit
 
 /// A request to the SwiftLeeds backend, named in the backend's vocabulary.
 package enum Endpoint: HTTPRequestConvertible, Equatable, Hashable, Sendable {
-    case login(body: Data)
+    case login(content: Data)
     case ticket
 
     package var request: HTTPRequest {
         switch self {
-        case let .login(body):
-            .post(Self.loginTicketPath, content: .json(body))
+        case let .login(content):
+            .post(Self.loginTicketPath, content: .json(content))
         case .ticket:
             .get(Self.loginTicketPath)
         }
