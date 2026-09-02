@@ -2,26 +2,26 @@ import Foundation
 import NetworkKit
 import Testing
 
-@Suite struct HTTPFieldNameTests {
+@Suite struct HTTPHeaderFieldNameTests {
     @Test func whenNamesDifferOnlyByCase_shouldBeEqual() {
-        #expect(HTTPField.Name("Accept") == HTTPField.Name("accept"))
+        #expect(HTTPHeaderField.Name("Accept") == HTTPHeaderField.Name("accept"))
     }
 
     @Test func whenNamesDifferOnlyByCase_shouldHashAlike() {
-        let names: Set<HTTPField.Name> = [HTTPField.Name("Accept"), HTTPField.Name("ACCEPT")]
+        let names: Set<HTTPHeaderField.Name> = [HTTPHeaderField.Name("Accept"), HTTPHeaderField.Name("ACCEPT")]
 
         #expect(names.count == 1)
     }
 
     @Test func whenNamesDiffer_shouldNotBeEqual() {
-        #expect(HTTPField.Name("Accept") != HTTPField.Name("Accept-Encoding"))
+        #expect(HTTPHeaderField.Name("Accept") != HTTPHeaderField.Name("Accept-Encoding"))
     }
 
     @Test func whenNameIsExtracted_shouldKeepCasingGiven() {
-        #expect(String(HTTPField.Name("If-None-Match")) == "If-None-Match")
+        #expect(String(HTTPHeaderField.Name("If-None-Match")) == "If-None-Match")
     }
 
-    private static let registeredNames: [(HTTPField.Name, String)] = [
+    private static let registeredNames: [(HTTPHeaderField.Name, String)] = [
         (.accept, "Accept"),
         (.acceptEncoding, "Accept-Encoding"),
         (.acceptLanguage, "Accept-Language"),
@@ -69,14 +69,14 @@ import Testing
     ]
 
     @Test(arguments: registeredNames)
-    func whenRegisteredNameIsExtracted_shouldSpellFieldItRegisters(
-        name: HTTPField.Name,
+    func whenRegisteredNameIsExtracted_shouldSpellHeaderFieldItRegisters(
+        name: HTTPHeaderField.Name,
         spelling: String
     ) {
         #expect(String(name) == spelling)
     }
 
-    @Test func whenNamesAreRegistered_shouldCoverEveryFieldTheRFCsDefine() {
+    @Test func whenNamesAreRegistered_shouldCoverEveryHeaderFieldTheRFCsDefine() {
         #expect(Self.registeredNames.count == 44)
     }
 }

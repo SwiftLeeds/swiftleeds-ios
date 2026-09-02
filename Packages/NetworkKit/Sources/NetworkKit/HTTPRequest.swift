@@ -8,20 +8,20 @@ public struct HTTPRequest: Equatable, Hashable, Sendable {
     private let path: URLPath
     private let content: HTTPContent?
     private let queryItems: [URLQueryItem]
-    private let fields: [HTTPField]
+    private let headerFields: [HTTPHeaderField]
 
     private init(
         method: HTTPMethod,
         path: URLPath,
         content: HTTPContent?,
         queryItems: [URLQueryItem] = [],
-        fields: [HTTPField] = []
+        headerFields: [HTTPHeaderField] = []
     ) {
         self.method = method
         self.path = path
         self.content = content
         self.queryItems = queryItems
-        self.fields = fields
+        self.headerFields = headerFields
     }
 
     public static func get(_ path: URLPath) -> HTTPRequest {
@@ -70,34 +70,34 @@ public struct HTTPRequest: Equatable, Hashable, Sendable {
             path: path,
             content: content,
             queryItems: self.queryItems + queryItems,
-            fields: fields
+            headerFields: headerFields
         )
     }
 
-    /// Adds a header.
+    /// Adds a header field.
     ///
     /// - Parameters:
-    ///   - name: Header name. Appending the same name twice keeps the last value.
-    ///   - value: Header value, sent exactly as written.
+    ///   - name: Field name. Appending the same name twice keeps the last value.
+    ///   - value: Field value, sent exactly as written.
     /// - Returns: A copy. This request is unchanged.
-    public func appending(field name: HTTPField.Name, _ value: HTTPField.Value) -> HTTPRequest {
+    public func appending(headerField name: HTTPHeaderField.Name, _ value: HTTPHeaderField.Value) -> HTTPRequest {
         HTTPRequest(
             method: method,
             path: path,
             content: content,
             queryItems: queryItems,
-            fields: fields + [HTTPField(name: name, value: value)]
+            headerFields: headerFields + [HTTPHeaderField(name: name, value: value)]
         )
     }
 
-    /// Adds a header whose value is a media type.
+    /// Adds a header field whose value is a media type.
     ///
     /// - Parameters:
-    ///   - name: Header name. Appending the same name twice keeps the last value.
+    ///   - name: Field name. Appending the same name twice keeps the last value.
     ///   - mediaType: Media type to send, such as `.application.json`.
     /// - Returns: A copy. This request is unchanged.
-    public func appending(field name: HTTPField.Name, _ mediaType: MediaType) -> HTTPRequest {
-        appending(field: name, HTTPField.Value(String(mediaType)))
+    public func appending(headerField name: HTTPHeaderField.Name, _ mediaType: MediaType) -> HTTPRequest {
+        appending(headerField: name, HTTPHeaderField.Value(String(mediaType)))
     }
 
     /// Builds the `URLRequest` this describes.
@@ -109,8 +109,8 @@ public struct HTTPRequest: Equatable, Hashable, Sendable {
     public func urlRequest(baseURL: URL) -> URLRequest {
         var request = URLRequest(url: url(baseURL: baseURL))
         request.httpMethod = method.rawValue
-        for field in fields {
-            field.attach(to: &request)
+        for headerField in headerFields {
+            headerField.attach(to: &request)
         }
         content?.attach(to: &request)
         return request
