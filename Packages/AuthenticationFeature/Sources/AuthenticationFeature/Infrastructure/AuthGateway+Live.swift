@@ -12,7 +12,7 @@ extension AuthGateway {
     /// Throws ``LoginRequestError`` or ``LoginMapper/ResponseError``.
     static var live: AuthGateway {
         AuthGateway { credential in
-            @Dependency(\.httpClient) var httpClient
+            @Dependency(\.authHTTPClient) var httpClient
             @Dependency(\.loginMapper) var loginMapper
 
             let content: Data
