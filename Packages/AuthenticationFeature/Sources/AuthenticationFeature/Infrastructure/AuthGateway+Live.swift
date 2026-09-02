@@ -15,13 +15,13 @@ extension AuthGateway {
             @Dependency(\.httpClient) var httpClient
             @Dependency(\.loginMapper) var loginMapper
 
-            let body: Data
+            let content: Data
             do {
-                body = try JSONEncoder().encode(LoginRequestDTO(credential))
+                content = try JSONEncoder().encode(LoginRequestDTO(credential))
             } catch {
                 throw LoginRequestError.couldNotEncodeRequest(error)
             }
-            let request = Endpoint.login(body: body).urlRequest()
+            let request = Endpoint.login(content: content).urlRequest()
 
             let data: Data
             let response: HTTPURLResponse
