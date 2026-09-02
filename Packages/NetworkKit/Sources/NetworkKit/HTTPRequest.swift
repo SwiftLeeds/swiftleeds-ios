@@ -8,6 +8,19 @@ public struct HTTPRequest: Equatable, Hashable, Sendable {
     private let method: HTTPMethod
     private let path: URLPath
     private let content: HTTPContent?
+    private let queryItems: [URLQueryItem]
+
+    private init(
+        method: HTTPMethod,
+        path: URLPath,
+        content: HTTPContent?,
+        queryItems: [URLQueryItem] = []
+    ) {
+        self.method = method
+        self.path = path
+        self.content = content
+        self.queryItems = queryItems
+    }
 
     public static func get(_ path: URLPath) -> HTTPRequest {
         HTTPRequest(method: .get, path: path, content: nil)
@@ -45,13 +58,32 @@ public struct HTTPRequest: Equatable, Hashable, Sendable {
         HTTPRequest(method: .patch, path: path, content: content)
     }
 
+    /// Returns a copy carrying the given query items after any it already holds.
+    ///
+    /// - Parameter queryItems: The items to append. An empty array changes nothing.
+    public func appending(queryItems: [URLQueryItem]) -> HTTPRequest {
+        HTTPRequest(
+            method: method,
+            path: path,
+            content: content,
+            queryItems: self.queryItems + queryItems
+        )
+    }
+
     /// Builds the `URLRequest` this value describes.
     ///
     /// - Parameter baseURL: The server root the path is appended to.
     public func urlRequest(baseURL: URL) -> URLRequest {
-        var request = URLRequest(url: baseURL.appending(path: String(path)))
+        var request = URLRequest(url: url(baseURL: baseURL))
         request.httpMethod = method.rawValue
         content?.attach(to: &request)
         return request
+    }
+
+    private func url(baseURL: URL) -> URL {
+        let resource = baseURL.appending(path: String(path))
+        // Foundation appends a bare "?" for an empty array, so the guard is load-bearing.
+        guard !queryItems.isEmpty else { return resource }
+        return resource.appending(queryItems: queryItems)
     }
 }
