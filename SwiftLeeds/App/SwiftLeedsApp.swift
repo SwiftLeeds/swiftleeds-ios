@@ -26,8 +26,8 @@ struct SwiftLeedsApp: App {
                 ?? .none
             $0.secureStorage = .keychain(service: KeychainService("uk.co.swiftleeds.authentication"))
             $0.apiConfiguration = APIConfiguration(baseURL: URL(string: "https://\(ConferenceConfig.apiHost)")!)
-            $0.httpClient = HTTPClient.publicContent.logging()
-            $0.authHTTPClient = .live(onSessionExpiry: {
+            $0.httpClient = HTTPClient.urlSession(.unauthenticated).logging()
+            $0.authHTTPClient = .live(urlSession: .authenticated, onSessionExpiry: {
                 @Dependency(\.signOut) var signOut
                 try? await signOut()
             })
