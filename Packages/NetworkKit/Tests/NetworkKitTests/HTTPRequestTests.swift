@@ -139,7 +139,7 @@ import Testing
     @Test func whenFieldsAreAppendedTwice_shouldWriteBoth() throws {
         let request = try HTTPRequest.get(Self.path)
             .appending(field: .accept, "application/json")
-            .appending(field: HTTPField.Name("If-None-Match"), "\"abc\"")
+            .appending(field: .ifNoneMatch, "\"abc\"")
             .urlRequest(baseURL: baseURL)
 
         #expect(request.value(forHTTPHeaderField: "Accept") == "application/json")
@@ -179,7 +179,7 @@ import Testing
 
     @Test func whenFieldCompetesWithContentType_shouldKeepTypeOfContent() throws {
         let request = try HTTPRequest.post(Self.path, content: .json(Data()))
-            .appending(field: HTTPField.Name("Content-Type"), "text/plain")
+            .appending(field: .contentType, "text/plain")
             .urlRequest(baseURL: baseURL)
 
         #expect(request.value(forHTTPHeaderField: "Content-Type") == "application/json")
