@@ -194,3 +194,64 @@ jobs:
             exit 1
           fi
           echo "Every assertSnapshots call is in a snapshot target"
+
+  # An Xcode project file is a property list, so a repeated object id is
+  # undefined. The parser keeps one definition and drops the other without a
+  # word. That is how the app target once lost a package product link and went
+  # on building anyway, because a second product pulled the module in behind it.
+  #
+  # This reads a text file. It needs no Xcode, no simulator and no compiler, so
+  # it runs on Linux: a macOS runner bills ten times the rate for the same two
+  # seconds of work. The image is pinned for the same reason the macOS jobs pin
+  # theirs, so an image roll cannot break every branch with no commit to blame.
+  lint-project-files:
+    name: Lint Xcode Project Files
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout iOS Repository
+        uses: actions/checkout@v4
+
+      - name: Check every object id is defined once
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import re
+          import sys
+          from pathlib import Path
+
+          # An object definition sits at exactly two tabs. Everything inside one
+          # sits deeper, so this matches definitions and nothing else. Checked
+          # against the parser: on a clean file the count of matches equals the
+          # count of keys plutil reports.
+          definition = re.compile(r"^\t\t([0-9A-F]{24})[ =]")
+
+          files = sorted(Path().glob("*.xcodeproj/project.pbxproj"))
+          files += sorted(Path().glob("Packages/*/*.xcodeproj/project.pbxproj"))
+          if not files:
+              print("::error::Found no project.pbxproj to check")
+              sys.exit(1)
+
+          failed = False
+          for path in files:
+              counts = {}
+              for line in path.read_text().splitlines():
+                  match = definition.match(line)
+                  if match:
+                      counts[match.group(1)] = counts.get(match.group(1), 0) + 1
+
+              # Zero matches means the format moved, not that the file is clean.
+              if not counts:
+                  print(f"::error::{path} yielded no object ids, so this check is broken")
+                  failed = True
+                  continue
+
+              repeated = sorted(i for i, n in counts.items() if n > 1)
+              if repeated:
+                  print(f"::error::{path} defines these object ids more than once: {', '.join(repeated)}")
+                  failed = True
+                  continue
+
+              print(f"{path}: {len(counts)} object ids, each defined once")
+
+          sys.exit(1 if failed else 0)
+          PY
