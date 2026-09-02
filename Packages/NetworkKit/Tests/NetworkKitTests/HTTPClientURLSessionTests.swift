@@ -8,7 +8,9 @@ import Testing
 struct HTTPClientURLSessionTests {
     private let url: URL
 
+    // Swift Testing builds a fresh suite per test, so this runs before each one.
     init() throws {
+        URLProtocolStub.removeStub()
         url = try #require(URL(string: "https://example.com"))
     }
 

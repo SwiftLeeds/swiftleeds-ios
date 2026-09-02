@@ -11,7 +11,9 @@ import Testing
 struct HTTPClientLiveIntegrationTests {
     private let url: URL
 
+    // Swift Testing builds a fresh suite per test, so this runs before each one.
     init() throws {
+        URLProtocolStub.removeStub()
         url = try #require(URL(string: "https://example.com"))
     }
 
@@ -61,7 +63,6 @@ struct HTTPClientLiveIntegrationTests {
     }
 
     @Test func whenSessionExists_shouldSendBearerThroughLiveChain() async throws {
-        URLProtocolStub.lastRequest = nil
         URLProtocolStub.stub(
             data: Data(),
             response: try #require(
