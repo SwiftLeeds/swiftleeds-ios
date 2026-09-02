@@ -8,7 +8,7 @@ import Testing
 @Suite struct AuthGatewayIntegrationTests {
     @Test func whenServerReturnsJWT_shouldReturnSessionToken() async throws {
         let token = try await withDependencies {
-            $0.httpClient = .responding(with: Data("jwt-abc-123".utf8), statusCode: 200)
+            $0.authHTTPClient = .responding(with: Data("jwt-abc-123".utf8), statusCode: 200)
         } operation: {
             try await AuthGateway.liveValue.authenticate(Credential.fixture)
         }
@@ -19,7 +19,7 @@ import Testing
     @Test func whenServerReturnsUnauthorized_shouldThrowInvalidCredentials() async throws {
         await #expect(throws: SignInError.invalidCredentials) {
             try await withDependencies {
-                $0.httpClient = .responding(with: Data(), statusCode: 401)
+                $0.authHTTPClient = .responding(with: Data(), statusCode: 401)
             } operation: {
                 try await AuthGateway.liveValue.authenticate(Credential.fixture)
             }
@@ -30,7 +30,7 @@ import Testing
     @Test func whenServerReturnsEmptyBody_shouldThrowUnknown() async throws {
         await #expect(throws: SignInError.unknown) {
             try await withDependencies {
-                $0.httpClient = .responding(with: Data(), statusCode: 200)
+                $0.authHTTPClient = .responding(with: Data(), statusCode: 200)
             } operation: {
                 try await AuthGateway.liveValue.authenticate(Credential.fixture)
             }
@@ -40,7 +40,7 @@ import Testing
     @Test func whenRequestCannotReachServer_shouldThrowCouldNotReachServer() async throws {
         await #expect(throws: SignInError.couldNotReachServer) {
             try await withDependencies {
-                $0.httpClient = .failing(with: StubFailure.couldNotBuildResponse)
+                $0.authHTTPClient = .failing(with: StubFailure.couldNotBuildResponse)
             } operation: {
                 try await AuthGateway.liveValue.authenticate(Credential.fixture)
             }
@@ -50,7 +50,7 @@ import Testing
     @Test func whenServerReturnsOtherStatus_shouldThrowUnknown() async throws {
         await #expect(throws: SignInError.unknown) {
             try await withDependencies {
-                $0.httpClient = .responding(with: Data(), statusCode: 500)
+                $0.authHTTPClient = .responding(with: Data(), statusCode: 500)
             } operation: {
                 try await AuthGateway.liveValue.authenticate(Credential.fixture)
             }
@@ -61,7 +61,7 @@ import Testing
         let spy = HTTPClientSpy(respondingWith: Data("jwt".utf8), statusCode: 200)
 
         _ = try await withDependencies {
-            $0.httpClient = spy.httpClient
+            $0.authHTTPClient = spy.httpClient
         } operation: {
             try await AuthGateway.liveValue.authenticate(Credential.fixture)
         }
@@ -77,7 +77,7 @@ import Testing
         let spy = HTTPClientSpy(respondingWith: Data("jwt".utf8), statusCode: 200)
 
         _ = try await withDependencies {
-            $0.httpClient = spy.httpClient
+            $0.authHTTPClient = spy.httpClient
         } operation: {
             try await AuthGateway.liveValue.authenticate(Credential.fixture)
         }
@@ -91,7 +91,7 @@ import Testing
         let recorder = LogRecorder()
 
         try? await withDependencies {
-            $0.httpClient = .failing(with: StubFailure.couldNotBuildResponse).logging()
+            $0.authHTTPClient = .failing(with: StubFailure.couldNotBuildResponse).logging()
             $0.log = recorder.log
         } operation: {
             let sut = AuthGateway.liveValue
@@ -105,7 +105,7 @@ import Testing
         let recorder = LogRecorder()
 
         try? await withDependencies {
-            $0.httpClient = .responding(with: Data(), statusCode: 503)
+            $0.authHTTPClient = .responding(with: Data(), statusCode: 503)
             $0.log = recorder.log
         } operation: {
             let sut = AuthGateway.liveValue

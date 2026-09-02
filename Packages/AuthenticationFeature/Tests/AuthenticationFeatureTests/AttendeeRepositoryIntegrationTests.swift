@@ -10,7 +10,7 @@ import Testing
         let expected = try expectedAttendee()
 
         let attendee = try await withDependencies {
-            $0.httpClient = .responding(with: attendeeJSON(), statusCode: 200)
+            $0.authHTTPClient = .responding(with: attendeeJSON(), statusCode: 200)
         } operation: {
             let sut = AttendeeRepository.liveValue
             return try await sut.fetch()
@@ -22,7 +22,7 @@ import Testing
     @Test func whenServerReturnsUnauthorized_shouldThrowUnauthorized() async throws {
         await #expect(throws: AttendeeFetchError.unauthorized) {
             try await withDependencies {
-                $0.httpClient = .responding(with: attendeeJSON(), statusCode: 401)
+                $0.authHTTPClient = .responding(with: attendeeJSON(), statusCode: 401)
             } operation: {
                 let sut = AttendeeRepository.liveValue
                 return try await sut.fetch()
@@ -33,7 +33,7 @@ import Testing
     @Test func whenServerReturnsOtherStatus_shouldThrowUnknown() async throws {
         await #expect(throws: AttendeeFetchError.unknown) {
             try await withDependencies {
-                $0.httpClient = .responding(with: attendeeJSON(), statusCode: 500)
+                $0.authHTTPClient = .responding(with: attendeeJSON(), statusCode: 500)
             } operation: {
                 let sut = AttendeeRepository.liveValue
                 return try await sut.fetch()
@@ -44,7 +44,7 @@ import Testing
     @Test func whenServerReturnsInvalidJSON_shouldThrowInvalidResponse() async throws {
         await #expect(throws: AttendeeFetchError.invalidResponse) {
             try await withDependencies {
-                $0.httpClient = .responding(with: Data("not json".utf8), statusCode: 200)
+                $0.authHTTPClient = .responding(with: Data("not json".utf8), statusCode: 200)
             } operation: {
                 let sut = AttendeeRepository.liveValue
                 return try await sut.fetch()
@@ -55,7 +55,7 @@ import Testing
     @Test func whenServerReturnsUnparsableTicketReference_shouldThrowInvalidResponse() async throws {
         await #expect(throws: AttendeeFetchError.invalidResponse) {
             try await withDependencies {
-                $0.httpClient = .responding(with: attendeeJSON(reference: "!!!"), statusCode: 200)
+                $0.authHTTPClient = .responding(with: attendeeJSON(reference: "!!!"), statusCode: 200)
             } operation: {
                 let sut = AttendeeRepository.liveValue
                 return try await sut.fetch()
@@ -66,7 +66,7 @@ import Testing
     @Test func whenServerReturnsUnparsableEmailAddress_shouldThrowInvalidResponse() async throws {
         await #expect(throws: AttendeeFetchError.invalidResponse) {
             try await withDependencies {
-                $0.httpClient = .responding(with: attendeeJSON(email: ""), statusCode: 200)
+                $0.authHTTPClient = .responding(with: attendeeJSON(email: ""), statusCode: 200)
             } operation: {
                 let sut = AttendeeRepository.liveValue
                 return try await sut.fetch()
@@ -78,7 +78,7 @@ import Testing
         let recorder = LogRecorder()
 
         try? await withDependencies {
-            $0.httpClient = .responding(with: attendeeJSON(reference: "!!!"), statusCode: 200)
+            $0.authHTTPClient = .responding(with: attendeeJSON(reference: "!!!"), statusCode: 200)
             $0.log = recorder.log
         } operation: {
             let sut = AttendeeRepository.liveValue
@@ -92,7 +92,7 @@ import Testing
         let spy = HTTPClientSpy(respondingWith: attendeeJSON(), statusCode: 200)
 
         _ = try await withDependencies {
-            $0.httpClient = spy.httpClient
+            $0.authHTTPClient = spy.httpClient
         } operation: {
             let sut = AttendeeRepository.liveValue
             return try await sut.fetch()
@@ -108,7 +108,7 @@ import Testing
     @Test func whenTransportFails_shouldThrowCouldNotReachServer() async throws {
         await #expect(throws: AttendeeFetchError.couldNotReachServer) {
             try await withDependencies {
-                $0.httpClient = .failing(with: StubError.transport)
+                $0.authHTTPClient = .failing(with: StubError.transport)
             } operation: {
                 let sut = AttendeeRepository.liveValue
                 return try await sut.fetch()

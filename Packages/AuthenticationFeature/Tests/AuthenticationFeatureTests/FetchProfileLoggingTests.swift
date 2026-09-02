@@ -53,7 +53,7 @@ import Testing
 
         try await withDependencies {
             $0.log = recorder.log
-            $0.httpClient = .responding(with: try attendeeJSON(reference: "!!!"), statusCode: 200)
+            $0.authHTTPClient = .responding(with: try attendeeJSON(reference: "!!!"), statusCode: 200)
             $0.attendeeRepository = .liveValue
         } operation: {
             let sut = FetchProfile.liveValue.logging()

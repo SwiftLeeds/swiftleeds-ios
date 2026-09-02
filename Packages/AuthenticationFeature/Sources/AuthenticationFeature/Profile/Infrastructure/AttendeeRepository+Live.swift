@@ -5,7 +5,7 @@ import NetworkKit
 extension AttendeeRepository: DependencyKey {
     package static var liveValue: AttendeeRepository {
         AttendeeRepository { () async throws(AttendeeFetchError) -> Attendee in
-            @Dependency(\.httpClient) var httpClient
+            @Dependency(\.authHTTPClient) var httpClient
             @Dependency(\.attendeeMapper) var attendeeMapper
             let request = Endpoint.ticket.urlRequest()
             let data: Data
