@@ -1,17 +1,15 @@
 import Foundation
 
 extension URLSession {
-    /// The session for API calls: bounded waits, and no response caching.
-    ///
-    /// Authenticated requests use this one, so a response carrying a session
-    /// token is never written to a cache.
+    /// The session for requests that carry credentials: bounded waits, and no
+    /// response caching, so a session token never reaches a cache.
     public static let api = URLSession(configuration: configuration(cache: nil))
 
-    /// The session for public content: the same limits, plus a response cache.
+    /// The session behind ``HTTPClient/publicContent``.
     ///
-    /// The cache stores only what the server marks cacheable, so it holds
-    /// nothing until the API sends `Cache-Control`.
-    public static let content = URLSession(configuration: configuration(cache: contentCache))
+    /// Deliberately not `public`: pairing it with a client is NetworkKit's job,
+    /// so no caller can send credentials through a caching session.
+    package static let publicContent = URLSession(configuration: configuration(cache: contentCache))
 
     private static func configuration(cache: URLCache?) -> URLSessionConfiguration {
         let configuration = URLSessionConfiguration.default
