@@ -98,7 +98,7 @@
 		A11CE57000000000000000D7 /* NetworkKit in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C7 /* NetworkKit */; };
 		A11CE57000000000000000D3 /* SecureStorageKit in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C3 /* SecureStorageKit */; };
 		A11CE57000000000000000D4 /* SecureStorageKitKeychain in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C4 /* SecureStorageKitKeychain */; };
-		A11CE57000000000000000D5 /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C5 /* Dependencies */; };
+		A11CE57000000000000000D8 /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C8 /* Dependencies */; };
 		7B31C8F32ED0AB0E00FEEDF7 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = 7B31C8F22ED0AB0E00FEEDF7 /* Settings */; };
 		7B31C8F52ED0AB1600FEEDF7 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = 7B31C8F42ED0AB1600FEEDF7 /* Settings */; };
 		7B6278A22EEDDE1B00DE1473 /* SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6278A12EEDDE1B00DE1473 /* SectionHeader.swift */; };
@@ -345,7 +345,7 @@
 				A11CE57000000000000000D7 /* NetworkKit in Frameworks */,
 				A11CE57000000000000000D3 /* SecureStorageKit in Frameworks */,
 				A11CE57000000000000000D4 /* SecureStorageKitKeychain in Frameworks */,
-				A11CE57000000000000000D5 /* Dependencies in Frameworks */,
+				A11CE57000000000000000D8 /* Dependencies in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -732,7 +732,7 @@
 				A11CE57000000000000000C7 /* NetworkKit */,
 				A11CE57000000000000000C3 /* SecureStorageKit */,
 				A11CE57000000000000000C4 /* SecureStorageKitKeychain */,
-				A11CE57000000000000000C5 /* Dependencies */,
+				A11CE57000000000000000C8 /* Dependencies */,
 			);
 			productName = SwiftLeeds;
 			productReference = AECB295327417F9D00CDC983 /* SwiftLeeds.app */;
@@ -2041,7 +2041,7 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = SecureStorageKitKeychain;
 		};
-		A11CE57000000000000000C5 /* Dependencies */ = {
+		A11CE57000000000000000C8 /* Dependencies */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = A11CE57000000000000000E1 /* XCRemoteSwiftPackageReference "swift-dependencies" */;
 			productName = Dependencies;
