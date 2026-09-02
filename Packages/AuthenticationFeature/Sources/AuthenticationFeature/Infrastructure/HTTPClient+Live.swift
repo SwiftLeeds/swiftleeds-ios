@@ -22,11 +22,11 @@ extension HTTPClient {
     /// session-expiry interception and bearer attachment.
     ///
     /// - Parameters:
-    ///   - urlSession: The transport session. Defaults to the configured API
-    ///     session; a test passes a stubbed one.
+    ///   - urlSession: The transport session. It must not cache, because these
+    ///     responses carry the session bearer.
     ///   - onSessionExpiry: Called when a bearer-carrying request gets a 401.
     public static func live(
-        urlSession: URLSession = .api,
+        urlSession: URLSession,
         onSessionExpiry: @escaping @Sendable () async -> Void
     ) -> HTTPClient {
         HTTPClient.urlSession(urlSession)
