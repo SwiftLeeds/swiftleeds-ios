@@ -120,6 +120,71 @@ import Testing
         #expect(request.httpBody == bytes)
     }
 
+    @Test func whenHeaderFieldIsAppended_shouldWriteItOntoRequest() throws {
+        let request = try HTTPRequest.get(Self.path)
+            .appending(headerField: .accept, "application/json")
+            .urlRequest(baseURL: baseURL)
+
+        #expect(request.value(forHTTPHeaderField: "Accept") == "application/json")
+    }
+
+    @Test func whenHeaderFieldIsAppendedWithMediaType_shouldWriteItsString() throws {
+        let request = try HTTPRequest.get(Self.path)
+            .appending(headerField: .accept, .application.json)
+            .urlRequest(baseURL: baseURL)
+
+        #expect(request.value(forHTTPHeaderField: "Accept") == "application/json")
+    }
+
+    @Test func whenHeaderFieldsAreAppendedTwice_shouldWriteBoth() throws {
+        let request = try HTTPRequest.get(Self.path)
+            .appending(headerField: .accept, "application/json")
+            .appending(headerField: .ifNoneMatch, "\"abc\"")
+            .urlRequest(baseURL: baseURL)
+
+        #expect(request.value(forHTTPHeaderField: "Accept") == "application/json")
+        #expect(request.value(forHTTPHeaderField: "If-None-Match") == "\"abc\"")
+    }
+
+    @Test func whenTwoHeaderFieldsShareName_shouldWriteLastOne() throws {
+        let request = try HTTPRequest.get(Self.path)
+            .appending(headerField: .accept, "text/plain")
+            .appending(headerField: .accept, "application/json")
+            .urlRequest(baseURL: baseURL)
+
+        #expect(request.value(forHTTPHeaderField: "Accept") == "application/json")
+    }
+
+    @Test func whenHeaderFieldAndQueryItemAreAppended_shouldCarryBoth() throws {
+        let request = try HTTPRequest.get(Self.path)
+            .appending(headerField: .accept, .application.json)
+            .appending(queryItems: [URLQueryItem(name: "event", value: "abc")])
+            .urlRequest(baseURL: baseURL)
+
+        let expected = try #require(URL(string: "https://example.com/api/v1/resource?event=abc"))
+        #expect(request.url == expected)
+        #expect(request.value(forHTTPHeaderField: "Accept") == "application/json")
+    }
+
+    @Test func whenQueryItemAndHeaderFieldAreAppended_shouldCarryBoth() throws {
+        let request = try HTTPRequest.get(Self.path)
+            .appending(queryItems: [URLQueryItem(name: "event", value: "abc")])
+            .appending(headerField: .accept, .application.json)
+            .urlRequest(baseURL: baseURL)
+
+        let expected = try #require(URL(string: "https://example.com/api/v1/resource?event=abc"))
+        #expect(request.url == expected)
+        #expect(request.value(forHTTPHeaderField: "Accept") == "application/json")
+    }
+
+    @Test func whenHeaderFieldCompetesWithContentType_shouldKeepTypeOfContent() throws {
+        let request = try HTTPRequest.post(Self.path, content: .json(Data()))
+            .appending(headerField: .contentType, "text/plain")
+            .urlRequest(baseURL: baseURL)
+
+        #expect(request.value(forHTTPHeaderField: "Content-Type") == "application/json")
+    }
+
     private static let path: URLPath = "api/v1/resource"
 
     private static let requestsWithoutContent: [(HTTPRequest, String)] = [

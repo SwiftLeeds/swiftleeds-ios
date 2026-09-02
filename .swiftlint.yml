@@ -59,4 +59,6 @@ identifier_name:
     - id
     - x
     - y
+    # HTTP spells these, and we do not get to rename them.
     - ok
+    - te
