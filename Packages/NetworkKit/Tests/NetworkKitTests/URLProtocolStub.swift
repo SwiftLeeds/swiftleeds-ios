@@ -13,6 +13,11 @@ final class URLProtocolStub: URLProtocol {
         stub = Stub(data: data, response: response, error: error)
     }
 
+    /// Forgets the current stub, so it cannot serve a test that did not set one.
+    static func removeStub() {
+        stub = nil
+    }
+
     static func session() -> URLSession {
         let configuration = URLSessionConfiguration.ephemeral
         configuration.protocolClasses = [URLProtocolStub.self]
