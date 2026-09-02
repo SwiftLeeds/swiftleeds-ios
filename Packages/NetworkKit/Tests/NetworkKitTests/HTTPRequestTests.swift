@@ -29,23 +29,23 @@ import Testing
     }
 
     @Test func whenPOSTIsBuilt_shouldUsePOSTMethod() throws {
-        let request = try HTTPRequest.post("api/v1/login/ticket", body: .json(Data()))
+        let request = try HTTPRequest.post("api/v1/login/ticket", content: .json(Data()))
             .urlRequest(baseURL: baseURL)
 
         #expect(request.httpMethod == "POST")
     }
 
-    @Test func whenPOSTIsBuilt_shouldCarryBodyGiven() throws {
+    @Test func whenPOSTIsBuilt_shouldCarryContentGiven() throws {
         let bytes = Data(#"{"ticket": "ABCD-12"}"#.utf8)
 
-        let request = try HTTPRequest.post("api/v1/login/ticket", body: .json(bytes))
+        let request = try HTTPRequest.post("api/v1/login/ticket", content: .json(bytes))
             .urlRequest(baseURL: baseURL)
 
         #expect(request.httpBody == bytes)
     }
 
     @Test func whenPOSTIsBuilt_shouldDeclareJSONContentType() throws {
-        let request = try HTTPRequest.post("api/v1/login/ticket", body: .json(Data()))
+        let request = try HTTPRequest.post("api/v1/login/ticket", content: .json(Data()))
             .urlRequest(baseURL: baseURL)
 
         #expect(request.value(forHTTPHeaderField: "Content-Type") == "application/json")
@@ -53,7 +53,7 @@ import Testing
 
     private static let path: URLPath = "api/v1/resource"
 
-    private static let bodilessRequests: [(HTTPRequest, String)] = [
+    private static let requestsWithoutContent: [(HTTPRequest, String)] = [
         (.get(path), "GET"),
         (.head(path), "HEAD"),
         (.delete(path), "DELETE"),
@@ -62,14 +62,14 @@ import Testing
         (.trace(path), "TRACE"),
     ]
 
-    private static let bodyCarryingRequests: [(HTTPRequest, String)] = [
-        (.post(path, body: .json(Data())), "POST"),
-        (.put(path, body: .json(Data())), "PUT"),
-        (.patch(path, body: .json(Data())), "PATCH"),
+    private static let requestsWithContent: [(HTTPRequest, String)] = [
+        (.post(path, content: .json(Data())), "POST"),
+        (.put(path, content: .json(Data())), "PUT"),
+        (.patch(path, content: .json(Data())), "PATCH"),
     ]
 
-    @Test(arguments: bodilessRequests)
-    func whenMethodHasNoDefinedContent_shouldBuildWithoutBody(
+    @Test(arguments: requestsWithoutContent)
+    func whenMethodHasNoDefinedContent_shouldBuildWithoutContent(
         request: HTTPRequest,
         token: String
     ) throws {
@@ -79,8 +79,8 @@ import Testing
         #expect(built.httpBody == nil)
     }
 
-    @Test(arguments: bodyCarryingRequests)
-    func whenMethodDefinesContent_shouldBuildWithBody(
+    @Test(arguments: requestsWithContent)
+    func whenMethodDefinesContent_shouldBuildWithContent(
         request: HTTPRequest,
         token: String
     ) throws {

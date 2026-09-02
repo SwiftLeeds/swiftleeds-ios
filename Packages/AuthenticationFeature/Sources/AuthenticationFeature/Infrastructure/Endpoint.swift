@@ -9,7 +9,7 @@ package enum Endpoint: HTTPRequestConvertible, Equatable, Hashable, Sendable {
     package var request: HTTPRequest {
         switch self {
         case let .login(body):
-            .post(Self.loginTicketPath, body: .json(body))
+            .post(Self.loginTicketPath, content: .json(body))
         case .ticket:
             .get(Self.loginTicketPath)
         }
