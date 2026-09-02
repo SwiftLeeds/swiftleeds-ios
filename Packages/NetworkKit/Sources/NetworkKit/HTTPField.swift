@@ -8,6 +8,9 @@ public struct HTTPField: Equatable, Hashable, Sendable {
     public struct Name: Equatable, Hashable, Sendable {
         fileprivate let value: String
 
+        /// Creates a header name for one the constants below do not cover.
+        ///
+        /// - Parameter value: The name as spelled on the wire, such as `X-Conference`.
         public init(_ value: String) {
             self.value = value
         }
@@ -25,6 +28,9 @@ public struct HTTPField: Equatable, Hashable, Sendable {
     public struct Value: Equatable, Hashable, Sendable {
         fileprivate let value: String
 
+        /// Creates a header value.
+        ///
+        /// - Parameter value: The value as sent. Nothing is escaped or encoded for you.
         public init(_ value: String) {
             self.value = value
         }
@@ -99,10 +105,16 @@ extension HTTPField.Value: ExpressibleByStringLiteral {
 }
 
 extension String {
+    /// Creates the header name's spelling, with the casing it was given.
+    ///
+    /// - Parameter name: The name to read.
     public init(_ name: HTTPField.Name) {
         self = name.value
     }
 
+    /// Creates the header value's text.
+    ///
+    /// - Parameter value: The value to read.
     public init(_ value: HTTPField.Value) {
         self = value.value
     }

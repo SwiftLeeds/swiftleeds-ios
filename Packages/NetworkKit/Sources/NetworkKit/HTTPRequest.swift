@@ -1,9 +1,8 @@
 import Foundation
 
-/// One HTTP request, described by its method, path and content.
+/// One HTTP request: a method, a path, query items, headers and content.
 ///
-/// The constructors follow RFC 9110's content semantics: only `post`, `put`
-/// and `patch` take content, so a GET cannot carry any.
+/// Only `post`, `put` and `patch` take content. A GET cannot carry any.
 public struct HTTPRequest: Equatable, Hashable, Sendable {
     private let method: HTTPMethod
     private let path: URLPath
@@ -61,9 +60,10 @@ public struct HTTPRequest: Equatable, Hashable, Sendable {
         HTTPRequest(method: .patch, path: path, content: content)
     }
 
-    /// Returns a copy carrying the given query items after any it already holds.
+    /// Adds query items to the end of the query string.
     ///
-    /// - Parameter queryItems: The items to append. An empty array changes nothing.
+    /// - Parameter queryItems: Items to append. An empty array is a no-op.
+    /// - Returns: A copy. This request is unchanged.
     public func appending(queryItems: [URLQueryItem]) -> HTTPRequest {
         HTTPRequest(
             method: method,
@@ -74,11 +74,12 @@ public struct HTTPRequest: Equatable, Hashable, Sendable {
         )
     }
 
-    /// Returns a copy carrying the given field after any it already holds.
+    /// Adds a header.
     ///
     /// - Parameters:
-    ///   - name: The field name. A later field of the same name replaces an earlier one.
-    ///   - value: The data to send under that name.
+    ///   - name: Header name. Appending the same name twice keeps the last value.
+    ///   - value: Header value, sent exactly as written.
+    /// - Returns: A copy. This request is unchanged.
     public func appending(field name: HTTPField.Name, _ value: HTTPField.Value) -> HTTPRequest {
         HTTPRequest(
             method: method,
@@ -89,20 +90,22 @@ public struct HTTPRequest: Equatable, Hashable, Sendable {
         )
     }
 
-    /// Returns a copy carrying the given media type under the given field name.
+    /// Adds a header whose value is a media type.
     ///
     /// - Parameters:
-    ///   - name: The field name. A later field of the same name replaces an earlier one.
-    ///   - mediaType: The media type to send under that name.
+    ///   - name: Header name. Appending the same name twice keeps the last value.
+    ///   - mediaType: Media type to send, such as `.application.json`.
+    /// - Returns: A copy. This request is unchanged.
     public func appending(field name: HTTPField.Name, _ mediaType: MediaType) -> HTTPRequest {
         appending(field: name, HTTPField.Value(String(mediaType)))
     }
 
-    /// Builds the `URLRequest` this value describes.
+    /// Builds the `URLRequest` this describes.
     ///
-    /// Content writes its own Content-Type last, so it wins over a field of that name.
+    /// Content sets its own `Content-Type`, beating any you appended.
     ///
-    /// - Parameter baseURL: The server root the path is appended to.
+    /// - Parameter baseURL: Server root. The path is appended to it.
+    /// - Returns: The built request, ready to send.
     public func urlRequest(baseURL: URL) -> URLRequest {
         var request = URLRequest(url: url(baseURL: baseURL))
         request.httpMethod = method.rawValue
@@ -115,7 +118,6 @@ public struct HTTPRequest: Equatable, Hashable, Sendable {
 
     private func url(baseURL: URL) -> URL {
         let resource = baseURL.appending(path: String(path))
-        // Foundation appends a bare "?" for an empty array, so the guard is load-bearing.
         guard !queryItems.isEmpty else { return resource }
         return resource.appending(queryItems: queryItems)
     }
