@@ -51,6 +51,75 @@ import Testing
         #expect(request.value(forHTTPHeaderField: "Content-Type") == "application/json")
     }
 
+    @Test func whenNoQueryItemsAreAppended_shouldBuildURLWithoutQuery() throws {
+        let request = try HTTPRequest.get(Self.path)
+            .appending(queryItems: [])
+            .urlRequest(baseURL: baseURL)
+
+        let expected = try #require(URL(string: "https://example.com/api/v1/resource"))
+        #expect(request.url == expected)
+    }
+
+    @Test func whenOneQueryItemIsAppended_shouldBuildURLWithThatQuery() throws {
+        let request = try HTTPRequest.get(Self.path)
+            .appending(queryItems: [URLQueryItem(name: "event", value: "abc")])
+            .urlRequest(baseURL: baseURL)
+
+        let expected = try #require(URL(string: "https://example.com/api/v1/resource?event=abc"))
+        #expect(request.url == expected)
+    }
+
+    @Test func whenSeveralQueryItemsAreAppended_shouldKeepTheirOrder() throws {
+        let request = try HTTPRequest.get(Self.path)
+            .appending(queryItems: [
+                URLQueryItem(name: "a", value: "1"),
+                URLQueryItem(name: "b", value: "2"),
+            ])
+            .urlRequest(baseURL: baseURL)
+
+        let expected = try #require(URL(string: "https://example.com/api/v1/resource?a=1&b=2"))
+        #expect(request.url == expected)
+    }
+
+    @Test func whenQueryItemValueNeedsEncoding_shouldPercentEncodeIt() throws {
+        let request = try HTTPRequest.get(Self.path)
+            .appending(queryItems: [URLQueryItem(name: "q", value: "a b&c=d")])
+            .urlRequest(baseURL: baseURL)
+
+        let expected = try #require(URL(string: "https://example.com/api/v1/resource?q=a%20b%26c%3Dd"))
+        #expect(request.url == expected)
+    }
+
+    @Test func whenQueryItemHasNoValue_shouldBuildURLWithBareName() throws {
+        let request = try HTTPRequest.get(Self.path)
+            .appending(queryItems: [URLQueryItem(name: "flag", value: nil)])
+            .urlRequest(baseURL: baseURL)
+
+        let expected = try #require(URL(string: "https://example.com/api/v1/resource?flag"))
+        #expect(request.url == expected)
+    }
+
+    @Test func whenQueryItemsAreAppendedTwice_shouldCarryBothSets() throws {
+        let request = try HTTPRequest.get(Self.path)
+            .appending(queryItems: [URLQueryItem(name: "a", value: "1")])
+            .appending(queryItems: [URLQueryItem(name: "b", value: "2")])
+            .urlRequest(baseURL: baseURL)
+
+        let expected = try #require(URL(string: "https://example.com/api/v1/resource?a=1&b=2"))
+        #expect(request.url == expected)
+    }
+
+    @Test func whenQueryItemsAreAppendedToPOST_shouldKeepMethodAndContent() throws {
+        let bytes = Data(#"{"ticket": "ABCD-12"}"#.utf8)
+
+        let request = try HTTPRequest.post(Self.path, content: .json(bytes))
+            .appending(queryItems: [URLQueryItem(name: "a", value: "1")])
+            .urlRequest(baseURL: baseURL)
+
+        #expect(request.httpMethod == "POST")
+        #expect(request.httpBody == bytes)
+    }
+
     private static let path: URLPath = "api/v1/resource"
 
     private static let requestsWithoutContent: [(HTTPRequest, String)] = [
