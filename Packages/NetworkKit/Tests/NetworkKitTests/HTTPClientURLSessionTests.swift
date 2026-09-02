@@ -29,16 +29,20 @@ struct HTTPClientURLSessionTests {
         #expect(response.statusCode == 200)
     }
 
-    @Test func whenTransportFails_shouldThrow() async {
+    /// The adapter reports what the session reported. It does not wrap or reclassify it, so a
+    /// caller can still tell an offline device from a cancelled task.
+    @Test func whenTransportFails_shouldThrowSessionErrorUnchanged() async {
         URLProtocolStub.stub(data: nil, response: nil, error: URLError(.notConnectedToInternet))
         let sut = HTTPClient.urlSession(URLProtocolStub.session())
 
-        await #expect(throws: (any Error).self) {
+        let thrown = await #expect(throws: URLError.self) {
             _ = try await sut.send(URLRequest(url: url))
         }
+
+        #expect(thrown?.code == .notConnectedToInternet)
     }
 
-    @Test func whenResponseIsNotHTTP_shouldThrow() async {
+    @Test func whenResponseIsNotHTTP_shouldThrowNotHTTP() async {
         URLProtocolStub.stub(
             data: Data(),
             response: URLResponse(url: url, mimeType: nil, expectedContentLength: 0, textEncodingName: nil),
@@ -46,7 +50,7 @@ struct HTTPClientURLSessionTests {
         )
         let sut = HTTPClient.urlSession(URLProtocolStub.session())
 
-        await #expect(throws: (any Error).self) {
+        await #expect(throws: HTTPClient.ResponseError.notHTTP) {
             _ = try await sut.send(URLRequest(url: url))
         }
     }

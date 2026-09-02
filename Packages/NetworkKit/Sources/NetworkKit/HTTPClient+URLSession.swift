@@ -5,7 +5,7 @@ extension HTTPClient {
         HTTPClient { request in
             let (data, response) = try await session.data(for: request)
             guard let http = response as? HTTPURLResponse else {
-                throw URLError(.badServerResponse)
+                throw ResponseError.notHTTP
             }
             return (data, http)
         }
