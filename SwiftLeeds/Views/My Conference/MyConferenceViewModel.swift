@@ -1,6 +1,7 @@
 import Combine
+import Dependencies
 import Foundation
-import Networking
+import NetworkKit
 import SwiftUI
 
 class MyConferenceViewModel: ObservableObject {
@@ -10,31 +11,37 @@ class MyConferenceViewModel: ObservableObject {
     @Published private(set) var days: [Schedule.Day] = []
     @Published private(set) var currentEvent: Schedule.Event?
 
+    private static let scheduleKey = "Schedule"
+
     func loadSchedule() async throws {
         do {
-            let schedule = try await URLSession.awaitConnectivity.decode(
-                Requests.schedule,
-                dateDecodingStrategy: Requests.scheduleDateDecodingStrategy
-            )
-
+            let schedule = try await fetchSchedule(for: nil)
             await updateSchedule(schedule)
-
-            do {
-                let data = try PropertyListEncoder().encode(schedule)
-                UserDefaults(suiteName: ConferenceConfig.appGroupIdentifier)?.setValue(data, forKey: "Schedule")
-            } catch {
-                throw(error)
-            }
+            store(schedule)
         } catch {
-            if let cachedResponse = try? await URLSession.shared.cached(
-                Requests.schedule,
-                dateDecodingStrategy: Requests.scheduleDateDecodingStrategy
-            ) {
-                await updateSchedule(cachedResponse)
-            } else {
-                throw(error)
-            }
+            guard let stored = storedSchedule() else { throw error }
+            await updateSchedule(stored)
         }
+    }
+
+    private func fetchSchedule(for event: UUID?) async throws -> Schedule {
+        @Dependency(\.httpClient) var httpClient
+        @Dependency(\.scheduleMapper) var scheduleMapper
+
+        let (data, response) = try await httpClient.send(Endpoint.schedule(event: event).urlRequest())
+        return try scheduleMapper.map(data, response)
+    }
+
+    private func store(_ schedule: Schedule) {
+        guard let data = try? PropertyListEncoder().encode(schedule) else { return }
+
+        UserDefaults.standard.set(data, forKey: Self.scheduleKey)
+        UserDefaults(suiteName: ConferenceConfig.appGroupIdentifier)?.set(data, forKey: Self.scheduleKey)
+    }
+
+    private func storedSchedule() -> Schedule? {
+        UserDefaults.standard.data(forKey: Self.scheduleKey)
+            .flatMap { try? PropertyListDecoder().decode(Schedule.self, from: $0) }
     }
 
     @MainActor
@@ -63,12 +70,7 @@ class MyConferenceViewModel: ObservableObject {
     private func reloadSchedule() async throws {
         guard let currentEvent else { return }
 
-        let schedule = try await URLSession.awaitConnectivity.decode(
-            Requests.schedule(for: currentEvent.id),
-            dateDecodingStrategy: Requests.scheduleDateDecodingStrategy,
-            filename: "schedule-\(currentEvent.id.uuidString)"
-        )
-
+        let schedule = try await fetchSchedule(for: currentEvent.id)
         await updateSchedule(schedule)
     }
 
@@ -102,50 +104,4 @@ class MyConferenceViewModel: ObservableObject {
             try? await reloadSchedule()
         }
     }
-}
-
-private extension Requests {
-    static let schedule = Request<Schedule>(
-        host: host,
-        path: "\(apiVersion2)/schedule",
-        eTagKey: "etag-schedule"
-    )
-
-    static func schedule(for eventID: UUID) -> Request<Schedule> {
-        Request<Schedule>(
-            host: host,
-            path: "\(apiVersion2)/schedule",
-            method: .get([.init(
-                name: "event",
-                value: eventID.uuidString)
-            ]),
-            eTagKey: "etag-schedule-\(eventID.uuidString)"
-        )
-    }
-
-    // Custom strategy for v2 schedule endpoint (handles both ISO8601 and dd-MM-yyyy)
-    static var scheduleDateDecodingStrategy: JSONDecoder.DateDecodingStrategy = {
-        return .custom { decoder in
-            let container = try decoder.singleValueContainer()
-            let dateString = try container.decode(String.self)
-
-            // Try ISO8601 first (for slot dates)
-            if let date = ISO8601DateFormatter().date(from: dateString) {
-                return date
-            }
-
-            // Fallback to dd-MM-yyyy format (for event dates)
-            let formatter = DateFormatter()
-            formatter.dateFormat = "dd-MM-yyyy"
-            if let date = formatter.date(from: dateString) {
-                return date
-            }
-
-            // If neither works, throw an error
-            throw DecodingError.dataCorruptedError(
-                in: container,
-                debugDescription: "Date string does not match expected format. Expected ISO8601 or dd-MM-yyyy, got: \(dateString)"
-            )
-        }
-    }()
 }
