@@ -1,6 +1,7 @@
+import Dependencies
 import Foundation
 import MapKit
-import Networking
+import NetworkKit
 import SwiftUI
 
 class LocalViewModel: ObservableObject {
@@ -20,15 +21,15 @@ class LocalViewModel: ObservableObject {
     }
 
     func loadData() async {
+        @Dependency(\.httpClient) var httpClient
+        @Dependency(\.localMapper) var localMapper
+
         do {
-            let localResults = try await URLSession.shared.decode(Requests.local, dateDecodingStrategy: Requests.defaultDateDecodingStratergy)
+            let (data, response) = try await httpClient.send(Endpoint.local.urlRequest())
+            let localResults = try localMapper.map(data, response)
             await updateLocal(localResults)
         } catch {
-            if let cachedResponse = try? await URLSession.shared.cached(Requests.local, dateDecodingStrategy: Requests.defaultDateDecodingStratergy) {
-                await updateLocal(cachedResponse)
-            } else {
-                self.error = error
-            }
+            self.error = error
         }
     }
 
@@ -37,12 +38,4 @@ class LocalViewModel: ObservableObject {
         self.categories = localResults.data
         self.selectedCategory = self.categories.first
     }
-}
-
-private extension Requests {
-    static let local = Request<Local>(
-        host: host,
-        path: "\(apiVersion1)/local",
-        eTagKey: "etag-local"
-    )
 }
