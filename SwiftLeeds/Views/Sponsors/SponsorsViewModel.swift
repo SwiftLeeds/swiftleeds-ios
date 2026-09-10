@@ -1,6 +1,7 @@
 import Combine
+import Dependencies
 import Foundation
-import Networking
+import NetworkKit
 import SwiftUI
 
 final class SponsorsViewModel: ObservableObject {
@@ -13,16 +14,12 @@ final class SponsorsViewModel: ObservableObject {
     }
 
     func loadSponsors() async throws {
-        do {
-            let sponsors = try await URLSession.shared.decode(Requests.sponsors, dateDecodingStrategy: Requests.defaultDateDecodingStratergy)
-            await updateSponsors(sponsors)
-        } catch {
-            if let cachedResponse = try? await URLSession.shared.cached(Requests.sponsors, dateDecodingStrategy: Requests.defaultDateDecodingStratergy) {
-                await updateSponsors(cachedResponse)
-            } else {
-                throw(error)
-            }
-        }
+        @Dependency(\.httpClient) var httpClient
+        @Dependency(\.sponsorsMapper) var sponsorsMapper
+
+        let (data, response) = try await httpClient.send(Endpoint.sponsors.urlRequest())
+        let sponsors = try sponsorsMapper.map(data, response)
+        await updateSponsors(sponsors)
     }
 
     @MainActor
@@ -53,12 +50,4 @@ final class SponsorsViewModel: ObservableObject {
 
         self.sections = sections
     }
-}
-
-private extension Requests {
-    static let sponsors = Request<Sponsors>(
-        host: host,
-        path: "\(apiVersion1)/sponsors",
-        eTagKey: "etag-sponsors"
-    )
 }
