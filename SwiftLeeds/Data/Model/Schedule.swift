@@ -59,8 +59,7 @@ extension Schedule.Slot: Codable {
         startTime = try values.decode(String.self, forKey: .startTime)
         duration = try values.decode(Int.self, forKey: .duration)
 
-        let date = try values.decodeIfPresent(String.self, forKey: .date) ?? ""
-        self.date = ISO8601DateFormatter().date(from: date)
+        self.date = try values.decodeIfPresent(Date.self, forKey: .date)
 
         if let activity = try values.decodeIfPresent(Activity.self, forKey: .activity) {
             self.activity = activity
