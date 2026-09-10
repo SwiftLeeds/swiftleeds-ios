@@ -95,6 +95,8 @@
 		A11CE57000000000000000D5 /* LogKit in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C5 /* LogKit */; };
 		A11CE57000000000000000D6 /* LogKitUnified in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C6 /* LogKitUnified */; };
 		A11CE57000000000000000D7 /* NetworkKit in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C7 /* NetworkKit */; };
+		F8AC9B695FEAFDBD19A01A10 /* NetworkKit in Frameworks */ = {isa = PBXBuildFile; productRef = 631E9D02432C1E1A187A3E03 /* NetworkKit */; };
+		E44377685B94DC7F6465ED4A /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = 39093D62C747210F6BA83C1E /* Dependencies */; };
 		A11CE57000000000000000D3 /* SecureStorageKit in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C3 /* SecureStorageKit */; };
 		A11CE57000000000000000D4 /* SecureStorageKitKeychain in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C4 /* SecureStorageKitKeychain */; };
 		A11CE57000000000000000D8 /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C8 /* Dependencies */; };
@@ -111,6 +113,7 @@
 		A18F779A7E6FC79F59311319 /* KotlinLeedsColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B3FFD994DBE3F62216150F8 /* KotlinLeedsColors.xcassets */; };
 		AE1C8010289E9F3800996659 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1C800F289E9F3800996659 /* String.swift */; };
 		A11CE57000000000000000F2 /* URLSession+SwiftLeeds.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11CE57000000000000000F1 /* URLSession+SwiftLeeds.swift */; };
+		F94828C06997CC0C7F25871C /* URLSession+SwiftLeeds.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11CE57000000000000000F1 /* URLSession+SwiftLeeds.swift */; };
 		AE1C801428A7BCD000996659 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AE1C801328A7BCD000996659 /* Settings.bundle */; };
 		AE5EFD73289DC1D000464FE1 /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = AE5EFD72289DC1D000464FE1 /* CachedAsyncImage */; };
 		AE5EFD75289E7CBF00464FE1 /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5EFD74289E7CBF00464FE1 /* ActivityView.swift */; };
@@ -319,6 +322,8 @@
 				741ED8FB2A75829C00494B25 /* ReadabilityModifier in Frameworks */,
 				0B4CB3FC28EAF7C500246E62 /* CachedAsyncImage in Frameworks */,
 				7B31C8EF2ED0959A00FEEDF7 /* DesignKit in Frameworks */,
+				F8AC9B695FEAFDBD19A01A10 /* NetworkKit in Frameworks */,
+				E44377685B94DC7F6465ED4A /* Dependencies in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -691,6 +696,8 @@
 				7B31C8EE2ED0959A00FEEDF7 /* DesignKit */,
 				7B31C8F42ED0AB1600FEEDF7 /* Settings */,
 				7BE081512EE5BDA8004BCD1F /* SharedAssets */,
+				631E9D02432C1E1A187A3E03 /* NetworkKit */,
+				39093D62C747210F6BA83C1E /* Dependencies */,
 			);
 			productName = SwiftLeedsAppClip;
 			productReference = 0B4CB3C528EAF19000246E62 /* SwiftLeedsAppClip.app */;
@@ -931,6 +938,7 @@
 				0B910A382A49D09300648B32 /* Sponsor.swift in Sources */,
 				0B4CB3F428EAF62100246E62 /* CommonTileView.swift in Sources */,
 				0B4CB3C828EAF19100246E62 /* SwiftLeedsAppClipApp.swift in Sources */,
+				F94828C06997CC0C7F25871C /* URLSession+SwiftLeeds.swift in Sources */,
 				0B4CB3F328EAF61B00246E62 /* CommonTileButton.swift in Sources */,
 				79E3CB724EF853948BC7D906 /* ConferenceConfig.swift in Sources */,
 			);
@@ -1080,7 +1088,7 @@
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1118,7 +1126,7 @@
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1304,7 +1312,7 @@
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1698,7 +1706,7 @@
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2046,6 +2054,15 @@
 		A11CE57000000000000000C7 /* NetworkKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = NetworkKit;
+		};
+		631E9D02432C1E1A187A3E03 /* NetworkKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = NetworkKit;
+		};
+		39093D62C747210F6BA83C1E /* Dependencies */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A11CE57000000000000000E1 /* XCRemoteSwiftPackageReference "swift-dependencies" */;
+			productName = Dependencies;
 		};
 		A11CE57000000000000000C3 /* SecureStorageKit */ = {
 			isa = XCSwiftPackageProductDependency;
