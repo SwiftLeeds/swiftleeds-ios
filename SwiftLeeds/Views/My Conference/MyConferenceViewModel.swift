@@ -15,7 +15,7 @@ class MyConferenceViewModel: ObservableObject {
 
     func loadSchedule() async throws {
         do {
-            let schedule = try await fetchSchedule(for: nil)
+            let schedule = try await fetchSchedule()
             await updateSchedule(schedule)
             store(schedule)
         } catch {
@@ -24,7 +24,7 @@ class MyConferenceViewModel: ObservableObject {
         }
     }
 
-    private func fetchSchedule(for event: UUID?) async throws -> Schedule {
+    private func fetchSchedule(for event: UUID? = nil) async throws -> Schedule {
         @Dependency(\.httpClient) var httpClient
         @Dependency(\.scheduleMapper) var scheduleMapper
 
