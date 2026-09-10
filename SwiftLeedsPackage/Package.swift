@@ -15,12 +15,6 @@ let package = Package(
             ]
         ),
         .library(
-            name: "Networking",
-            targets: [
-                "Networking",
-            ]
-        ),
-        .library(
             name: "DesignKit",
             targets: [
                 "DesignKit"
@@ -45,9 +39,6 @@ let package = Package(
     targets: [
         .target(
             name: "SwiftLeedsCore"
-        ),
-        .target(
-            name: "Networking"
         ),
         .target(
             name: "DesignKit"
