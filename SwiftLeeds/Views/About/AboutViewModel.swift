@@ -1,6 +1,7 @@
 import Combine
+import Dependencies
 import Foundation
-import Networking
+import NetworkKit
 
 @MainActor
 class AboutViewModel: ObservableObject {
@@ -73,22 +74,15 @@ class AboutViewModel: ObservableObject {
     }
 
     private func loadTeamData() async {
+        @Dependency(\.httpClient) var httpClient
+        @Dependency(\.teamMapper) var teamMapper
+
         do {
-            let teamApiResponse = try await URLSession.shared.decode(
-                Requests.team,
-                dateDecodingStrategy: Requests.defaultDateDecodingStratergy
-            )
-            await updateTeamMembers(teamApiResponse.teamMembers)
+            let (data, response) = try await httpClient.send(Endpoint.team.urlRequest())
+            let team = try teamMapper.map(data, response)
+            await updateTeamMembers(team.teamMembers)
         } catch {
-            // Try to load from cache if API fails
-            if let cachedResponse = try? await URLSession.shared.cached(
-                Requests.team,
-                dateDecodingStrategy: Requests.defaultDateDecodingStratergy
-            ) {
-                await updateTeamMembers(cachedResponse.teamMembers)
-            } else {
-                errorMessage = "Failed to load team data: \(error.localizedDescription)"
-            }
+            errorMessage = "Failed to load team data: \(error.localizedDescription)"
         }
     }
 
@@ -96,12 +90,4 @@ class AboutViewModel: ObservableObject {
     private func updateTeamMembers(_ members: [TeamMember]) async {
         self.teamMembers = members
     }
-}
-
-private extension Requests {
-    static let team = Request<Team>(
-        host: host,
-        path: "\(apiVersion2)/team",
-        eTagKey: "etag-team"
-    )
 }

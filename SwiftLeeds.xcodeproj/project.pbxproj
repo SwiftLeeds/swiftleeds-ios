@@ -45,6 +45,7 @@
 		0B910A372A49D07700648B32 /* Sponsor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B910A362A49D07700648B32 /* Sponsor.swift */; };
 		0B910A382A49D09300648B32 /* Sponsor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B910A362A49D07700648B32 /* Sponsor.swift */; };
 		0F532E9AAB8FD761A43947E1 /* SponsorsMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659D31BD07C04877B7AFF774 /* SponsorsMapper.swift */; };
+		106111EE0332466C39422B5E /* TeamMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41AB02B37BB6C44A78DC7FF9 /* TeamMapper.swift */; };
 		13707030C1082B933C28151D /* SwiftLeedsAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4301D0D3F1C8979276E77084 /* SwiftLeedsAssets.xcassets */; };
 		1ED8FD9CBE313B23E73E8132 /* KotlinLeedsColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B3FFD994DBE3F62216150F8 /* KotlinLeedsColors.xcassets */; };
 		2A3831122884A96600030002 /* FancyHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3831112884A96600030002 /* FancyHeaderView.swift */; };
@@ -232,6 +233,7 @@
 		394653AA288BB7C800212E1C /* SpeakerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakerView.swift; sourceTree = "<group>"; };
 		39ED0033288F113500AB337A /* LocalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalCell.swift; sourceTree = "<group>"; };
 		40AEBC0F9109732F54C608A9 /* KotlinLeedsAssets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = KotlinLeedsAssets.xcassets; sourceTree = "<group>"; };
+		41AB02B37BB6C44A78DC7FF9 /* TeamMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamMapper.swift; sourceTree = "<group>"; };
 		4301D0D3F1C8979276E77084 /* SwiftLeedsAssets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = SwiftLeedsAssets.xcassets; sourceTree = "<group>"; };
 		5F9FC40FEADC49E608696F7A /* SwiftLeeds.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SwiftLeeds.xcconfig; sourceTree = "<group>"; };
 		659D31BD07C04877B7AFF774 /* SponsorsMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsorsMapper.swift; sourceTree = "<group>"; };
@@ -637,6 +639,7 @@
 				816A6083DA208AE9EED41E40 /* Endpoint.swift */,
 				6653F9331892E676D8F861C8 /* LocalMapper.swift */,
 				659D31BD07C04877B7AFF774 /* SponsorsMapper.swift */,
+				41AB02B37BB6C44A78DC7FF9 /* TeamMapper.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -961,6 +964,7 @@
 				B09ACE20A089F99B5404B667 /* Endpoint.swift in Sources */,
 				911CBFE0C21C398999FE786C /* LocalMapper.swift in Sources */,
 				0F532E9AAB8FD761A43947E1 /* SponsorsMapper.swift in Sources */,
+				106111EE0332466C39422B5E /* TeamMapper.swift in Sources */,
 				A11CE57000000000000000F2 /* URLSession+SwiftLeeds.swift in Sources */,
 				AEDC22532898281300746247 /* MyConferenceViewModel.swift in Sources */,
 				AED26F7828676A9900E06064 /* AboutView.swift in Sources */,
