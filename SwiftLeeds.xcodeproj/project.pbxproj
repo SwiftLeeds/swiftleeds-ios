@@ -103,6 +103,7 @@
 		7B8C3ECF2EE4A9F70089C6CF /* SharedAssets in Frameworks */ = {isa = PBXBuildFile; productRef = 7B8C3ECE2EE4A9F70089C6CF /* SharedAssets */; };
 		7BE081522EE5BDA8004BCD1F /* SharedAssets in Frameworks */ = {isa = PBXBuildFile; productRef = 7BE081512EE5BDA8004BCD1F /* SharedAssets */; };
 		7BE081542EE5BF13004BCD1F /* SharedAssets in Frameworks */ = {isa = PBXBuildFile; productRef = 7BE081532EE5BF13004BCD1F /* SharedAssets */; };
+		911CBFE0C21C398999FE786C /* LocalMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6653F9331892E676D8F861C8 /* LocalMapper.swift */; };
 		7DD216398B20B302618BCB90 /* SwiftLeedsAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3275AD6541323F056786E508 /* SwiftLeedsAssets.xcassets */; };
 		802D63D966D0A9337F66041C /* KotlinLeedsAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 75075F01455C8AD72C71783C /* KotlinLeedsAssets.xcassets */; };
 		920187EBD71395160F1059C1 /* KotlinLeedsColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B3FFD994DBE3F62216150F8 /* KotlinLeedsColors.xcassets */; };
@@ -234,6 +235,7 @@
 		4301D0D3F1C8979276E77084 /* SwiftLeedsAssets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = SwiftLeedsAssets.xcassets; sourceTree = "<group>"; };
 		5F9FC40FEADC49E608696F7A /* SwiftLeeds.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SwiftLeeds.xcconfig; sourceTree = "<group>"; };
 		659D31BD07C04877B7AFF774 /* SponsorsMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsorsMapper.swift; sourceTree = "<group>"; };
+		6653F9331892E676D8F861C8 /* LocalMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalMapper.swift; sourceTree = "<group>"; };
 		67624B7470D6BA62D4912236 /* ConferenceConfig.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ConferenceConfig.swift; sourceTree = "<group>"; };
 		816A6083DA208AE9EED41E40 /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 		740162D92A7053A000C2D1B3 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
@@ -633,6 +635,7 @@
 			children = (
 				FA57DE572875B0E300911F03 /* Model */,
 				816A6083DA208AE9EED41E40 /* Endpoint.swift */,
+				6653F9331892E676D8F861C8 /* LocalMapper.swift */,
 				659D31BD07C04877B7AFF774 /* SponsorsMapper.swift */,
 			);
 			path = Data;
@@ -956,6 +959,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B09ACE20A089F99B5404B667 /* Endpoint.swift in Sources */,
+				911CBFE0C21C398999FE786C /* LocalMapper.swift in Sources */,
 				0F532E9AAB8FD761A43947E1 /* SponsorsMapper.swift in Sources */,
 				A11CE57000000000000000F2 /* URLSession+SwiftLeeds.swift in Sources */,
 				AEDC22532898281300746247 /* MyConferenceViewModel.swift in Sources */,
