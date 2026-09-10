@@ -91,12 +91,6 @@ class MyConferenceViewModel: ObservableObject {
         return days <= 0 && days >= -1
     }
 
-    static let stringDateFormatter: DateFormatter = {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
-        return dateFormatter
-    }()
-
     func updateCurrentEvent(_ event: Schedule.Event) {
         currentEvent = event
 
