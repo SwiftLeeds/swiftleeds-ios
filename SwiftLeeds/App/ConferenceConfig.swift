@@ -9,6 +9,14 @@ enum ConferenceConfig {
     }
 
     static let apiHost: String = value(for: "APIHost")
+
+    static let apiURL: URL = {
+        guard let url = URL(string: "https://\(apiHost)") else {
+            fatalError("APIHost is not a valid URL host: \(apiHost)")
+        }
+        return url
+    }()
+
     static let pushURL: String = "https://www.\(apiHost)/push"
     static let contactEmail: String = value(for: "ContactEmail")
     static let appGroupIdentifier: String = value(for: "AppGroupIdentifier")
