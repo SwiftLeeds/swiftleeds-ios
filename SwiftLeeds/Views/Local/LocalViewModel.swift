@@ -35,6 +35,7 @@ class LocalViewModel: ObservableObject {
 
     @MainActor
     private func updateLocal(_ localResults: Local) async {
+        self.error = nil
         self.categories = localResults.data
         self.selectedCategory = self.categories.first
     }
