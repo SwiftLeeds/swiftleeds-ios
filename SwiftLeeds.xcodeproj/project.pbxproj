@@ -44,7 +44,10 @@
 		0B59B5732E70EA6600820C3C /* About.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B59B5702E70EA6600820C3C /* About.swift */; };
 		0B910A372A49D07700648B32 /* Sponsor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B910A362A49D07700648B32 /* Sponsor.swift */; };
 		0B910A382A49D09300648B32 /* Sponsor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B910A362A49D07700648B32 /* Sponsor.swift */; };
+		0A019758B5F7EFA2BFB39AC1 /* ScheduleMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5D5DE6F666FC86B4B9DC7B /* ScheduleMapper.swift */; };
 		0F532E9AAB8FD761A43947E1 /* SponsorsMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659D31BD07C04877B7AFF774 /* SponsorsMapper.swift */; };
+		1D35F8B0CDCE0771E02C3BDA /* ScheduleMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5D5DE6F666FC86B4B9DC7B /* ScheduleMapper.swift */; };
+		FB6B9D30B85EAAED16F69656 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816A6083DA208AE9EED41E40 /* Endpoint.swift */; };
 		106111EE0332466C39422B5E /* TeamMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41AB02B37BB6C44A78DC7FF9 /* TeamMapper.swift */; };
 		13707030C1082B933C28151D /* SwiftLeedsAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4301D0D3F1C8979276E77084 /* SwiftLeedsAssets.xcassets */; };
 		1ED8FD9CBE313B23E73E8132 /* KotlinLeedsColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B3FFD994DBE3F62216150F8 /* KotlinLeedsColors.xcassets */; };
@@ -240,6 +243,7 @@
 		4301D0D3F1C8979276E77084 /* SwiftLeedsAssets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = SwiftLeedsAssets.xcassets; sourceTree = "<group>"; };
 		5F9FC40FEADC49E608696F7A /* SwiftLeeds.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SwiftLeeds.xcconfig; sourceTree = "<group>"; };
 		659D31BD07C04877B7AFF774 /* SponsorsMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsorsMapper.swift; sourceTree = "<group>"; };
+		1A5D5DE6F666FC86B4B9DC7B /* ScheduleMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMapper.swift; sourceTree = "<group>"; };
 		6653F9331892E676D8F861C8 /* LocalMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalMapper.swift; sourceTree = "<group>"; };
 		67624B7470D6BA62D4912236 /* ConferenceConfig.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ConferenceConfig.swift; sourceTree = "<group>"; };
 		816A6083DA208AE9EED41E40 /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
@@ -644,6 +648,7 @@
 				816A6083DA208AE9EED41E40 /* Endpoint.swift */,
 				6653F9331892E676D8F861C8 /* LocalMapper.swift */,
 				659D31BD07C04877B7AFF774 /* SponsorsMapper.swift */,
+				1A5D5DE6F666FC86B4B9DC7B /* ScheduleMapper.swift */,
 				41AB02B37BB6C44A78DC7FF9 /* TeamMapper.swift */,
 			);
 			path = Data;
@@ -939,6 +944,8 @@
 				0B4CB3F428EAF62100246E62 /* CommonTileView.swift in Sources */,
 				0B4CB3C828EAF19100246E62 /* SwiftLeedsAppClipApp.swift in Sources */,
 				F94828C06997CC0C7F25871C /* URLSession+SwiftLeeds.swift in Sources */,
+				FB6B9D30B85EAAED16F69656 /* Endpoint.swift in Sources */,
+				0A019758B5F7EFA2BFB39AC1 /* ScheduleMapper.swift in Sources */,
 				0B4CB3F328EAF61B00246E62 /* CommonTileButton.swift in Sources */,
 				79E3CB724EF853948BC7D906 /* ConferenceConfig.swift in Sources */,
 			);
@@ -971,6 +978,7 @@
 			files = (
 				B09ACE20A089F99B5404B667 /* Endpoint.swift in Sources */,
 				911CBFE0C21C398999FE786C /* LocalMapper.swift in Sources */,
+				1D35F8B0CDCE0771E02C3BDA /* ScheduleMapper.swift in Sources */,
 				0F532E9AAB8FD761A43947E1 /* SponsorsMapper.swift in Sources */,
 				106111EE0332466C39422B5E /* TeamMapper.swift in Sources */,
 				A11CE57000000000000000F2 /* URLSession+SwiftLeeds.swift in Sources */,
