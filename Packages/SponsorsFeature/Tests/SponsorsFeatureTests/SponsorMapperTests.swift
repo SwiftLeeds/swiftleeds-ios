@@ -35,8 +35,7 @@ import Testing
         }
     }
 
-    // The reader owns which levels are acceptable; this pins that the mapper
-    // asks it and carries its refusal.
+    // A refusal from translation reaches the caller.
     @Test func whenReaderRefuses_shouldThrowUnknownLevel() throws {
         let data = SponsorsJSON.list(SponsorsJSON.sponsor(level: "bronze"))
         let response = try HTTPURLResponse.fixture(statusCode: 200)

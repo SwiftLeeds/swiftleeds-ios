@@ -2,7 +2,7 @@ import Dependencies
 import Foundation
 import NetworkKit
 
-/// Judges the response and decodes it, then hands the reader the translation.
+/// Judges the response and decodes it.
 package struct SponsorMapper: Sendable {
     package var map: @Sendable (Data, HTTPURLResponse) throws(ResponseError) -> [Sponsor]
 
