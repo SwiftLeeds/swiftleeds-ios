@@ -16,7 +16,7 @@ struct Provider: TimelineProvider {
         var slots: [Schedule.Slot] = []
 
         do {
-            if let data = UserDefaults(suiteName: "group.uk.co.swiftleeds")?.data(forKey: "Schedule") {
+            if let data = UserDefaults(suiteName: ConferenceConfig.appGroupIdentifier)?.data(forKey: "Schedule") {
                 // Decode the full schedule and flatten days into slots
                 let schedule = try PropertyListDecoder().decode(Schedule.self, from: data)
                 slots = schedule.data.days.flatMap { $0.slots }.sorted { $0.startTime < $1.startTime }

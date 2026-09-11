@@ -255,3 +255,10 @@ jobs:
 
           sys.exit(1 if failed else 0)
           PY
+
+      # Reading the wrong app group fails silently: UserDefaults(suiteName:)
+      # returns nil for a suite the target is not entitled to. The check reads
+      # text only, so it stays on this runner, and it lives in a file so it can
+      # be run locally: python3 .github/scripts/check-app-groups.py
+      - name: Check every configuration writes to the app group it is granted
+        run: python3 .github/scripts/check-app-groups.py
