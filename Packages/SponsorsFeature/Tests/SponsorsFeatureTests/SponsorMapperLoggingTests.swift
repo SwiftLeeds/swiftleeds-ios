@@ -80,6 +80,19 @@ import Testing
         #expect(Set(messages).count == messages.count)
     }
 
+    @Test func whenLogIsOverriddenAfterBuilding_shouldWriteToTheOverride() throws {
+        let recorder = LogRecorder()
+        let sut = SponsorMapper.live.logging()
+
+        try withDependencies {
+            $0.log = recorder.log
+        } operation: {
+            _ = try sut.map(SponsorListDTO(data: [.fixture()]))
+        }
+
+        #expect(recorder.events.count == 1)
+    }
+
     private func mappedEvent(for list: SponsorListDTO) throws -> LogEvent? {
         let recorder = LogRecorder()
 

@@ -57,6 +57,19 @@ import Testing
         #expect(Set(messages).count == messages.count)
     }
 
+    @Test func whenLogIsOverriddenAfterBuilding_shouldWriteToTheOverride() async throws {
+        let recorder = LogRecorder()
+        let sut = SponsorsRepository.returning(Sponsors([.fixture()])).logging()
+
+        _ = try await withDependencies {
+            $0.log = recorder.log
+        } operation: {
+            try await sut.fetch()
+        }
+
+        #expect(recorder.events.count == 1)
+    }
+
     private func logEvent(whenRepositoryThrows error: SponsorFetchError) async -> LogEvent? {
         let recorder = LogRecorder()
 
