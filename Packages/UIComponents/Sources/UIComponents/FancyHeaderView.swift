@@ -1,9 +1,9 @@
-import CachedAsyncImage
 import DesignKit
 import SharedAssets
 import SwiftUI
 
-struct FancyHeaderView: View {
+/// A screen header: a venue photograph, images overlapping its lower edge, and a title.
+public struct FancyHeaderView: View {
     private let title: String
     private let foregroundImageURLs: [URL]
     private let foregroundImage: Image?
@@ -13,14 +13,13 @@ struct FancyHeaderView: View {
 
     @State private var foregroundGroupViewHeight: CGFloat = .zero
 
-    // MARK: - Initialisers
-    init(title: String, foregroundImageURLs: [URL] = [], foregroundImage: Image? = nil) {
+    public init(title: String, foregroundImageURLs: [URL] = [], foregroundImage: Image? = nil) {
         self.title = title
         self.foregroundImageURLs = foregroundImageURLs
         self.foregroundImage = foregroundImage
     }
 
-    var body: some View {
+    public var body: some View {
         Rectangle()
             .foregroundColor(.clear)
             .edgesIgnoringSafeArea(.top)
@@ -52,7 +51,7 @@ struct FancyHeaderView: View {
             .onAppear {
                 foregroundGroupViewHeight = geometry.size.height
             }
-            .onChange(of: geometry.size) { newValue in
+            .onChange(of: geometry.size) { _, newValue in
                 foregroundGroupViewHeight = newValue.height
             }
         }
@@ -109,7 +108,6 @@ struct FancyHeaderView: View {
 
     private var foregroundImageCount: Int {
         let count = foregroundImageURLs.count + (foregroundImage == nil ? 0 : 1)
-        // Ensure we always have at least 1 for the fallback image
         return count == 0 ? 1 : count
     }
 
@@ -130,7 +128,7 @@ struct FancyHeaderView_Previews: PreviewProvider {
                 Text(verbatim: "Remote Data")
                 FancyHeaderView(
                     title: "Swift Taylor",
-                    foregroundImageURLs: [URL(string: "https://cdn-az.allevents.in/events5/banners/458482c4fc7489448aa3d77f6e2cd5d0553fa5edd7178dbf18cf986d2172eaf2-rimg-w1200-h675-gmir.jpg?v=1655230338")!]
+                    foregroundImageURLs: remoteImageURLs
                 )
 
             }
@@ -145,11 +143,14 @@ struct FancyHeaderView_Previews: PreviewProvider {
                 Text(verbatim: "Remote Data")
                 FancyHeaderView(
                     title: "Swift Taylor",
-                    foregroundImageURLs: [
-                        URL(string: "https://cdn-az.allevents.in/events5/banners/458482c4fc7489448aa3d77f6e2cd5d0553fa5edd7178dbf18cf986d2172eaf2-rimg-w1200-h675-gmir.jpg?v=1655230338")!
-                    ]
+                    foregroundImageURLs: remoteImageURLs
                 )
             }
         }
     }
+
+    private static let remoteImageURLs = [
+        URL(string: "https://cdn-az.allevents.in/events5/banners/458482c4fc7489448aa3d77f6e2cd5d0553"
+            + "fa5edd7178dbf18cf986d2172eaf2-rimg-w1200-h675-gmir.jpg?v=1655230338"),
+    ].compactMap { $0 }
 }

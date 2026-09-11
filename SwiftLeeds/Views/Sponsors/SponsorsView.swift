@@ -3,6 +3,7 @@ import ReadabilityModifier
 import SharedAssets
 import SponsorsFeature
 import SwiftUI
+import UIComponents
 
 struct SponsorsView: View {
     @StateObject private var viewModel = SponsorsViewModel()
