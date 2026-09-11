@@ -1,11 +1,28 @@
 import Dependencies
 import Foundation
+import LogKit
 import NetworkKit
 import SponsorsFeature
 import Testing
 
 // Drives the composed `liveValue` with only the transport stubbed.
 @Suite struct SponsorsRepositoryIntegrationTests {
+    /// The mapper records the count, then the repository records the outcome. Two seams, two
+    /// lines, and no third line from anywhere else.
+    @Test func whenServerAnswersWell_shouldLogMappingThenFetch() async throws {
+        let recorder = LogRecorder()
+        let data = SponsorsJSON.list(SponsorsJSON.sponsor())
+
+        _ = try await withDependencies {
+            $0.log = recorder.log
+            $0.httpClient = .responding(with: data, statusCode: 200)
+        } operation: {
+            try await SponsorsRepository.liveValue.fetch()
+        }
+
+        #expect(recorder.events.map(\.level) == [.debug, .info])
+    }
+
     @Test func whenServerAnswersWell_shouldReturnSponsors() async throws {
         let data = SponsorsJSON.list(SponsorsJSON.sponsor(id: "a", level: "gold"))
 
