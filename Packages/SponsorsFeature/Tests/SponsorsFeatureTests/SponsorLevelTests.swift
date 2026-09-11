@@ -2,7 +2,6 @@ import SponsorsFeature
 import Testing
 
 @Suite struct SponsorLevelTests {
-    // The grouping and the screen's chips both read `allCases`.
     @Test func whenListingCases_shouldRankBestFirst() {
         #expect(SponsorLevel.allCases == [.platinum, .gold, .silver])
     }

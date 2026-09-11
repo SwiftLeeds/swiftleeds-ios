@@ -1,11 +1,9 @@
 import Dependencies
 import Foundation
 
-/// Turns the backend's sponsor list into this context's values.
+/// Turns the backend's sponsor list into sponsors.
 package struct SponsorMapper: Sendable {
-    /// The backend's list could not become sponsors.
-    ///
-    /// The field travels as data, so a new rule needs no case here.
+    /// A value the backend sent could not become part of the model.
     package struct MappingError: Error, Equatable {
         package let sponsor: String
         package let field: SponsorListDTO.SponsorDTO.CodingKeys
@@ -55,7 +53,6 @@ extension SponsorMapper {
         )
     }
 
-    // The backend sends an empty string for "no link", which parses to nil.
     private static func link(_ value: String) -> URL? {
         URL(string: value)
     }

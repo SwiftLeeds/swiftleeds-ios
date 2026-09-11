@@ -64,7 +64,6 @@ import Testing
         }
     }
 
-    // Mapping is the mapper's job. Removing that call fails this and nothing else.
     @Test func whenDecoded_shouldReturnWhateverTheMapperMakes() async throws {
         let data = SponsorsJSON.list(SponsorsJSON.sponsor(id: "ignored"))
 

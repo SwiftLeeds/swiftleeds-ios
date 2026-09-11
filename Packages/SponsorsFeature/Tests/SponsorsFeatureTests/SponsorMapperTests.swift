@@ -44,7 +44,7 @@ import Testing
         #expect(jobs.first?.location == "Leeds")
     }
 
-    // MARK: - A missing link costs a link, not the list
+    // MARK: - Links
 
     @Test func whenLogoIsMissing_shouldMapSponsorWithoutLogo() throws {
         let list = SponsorListDTO(data: [.fixture(image: "")])
@@ -70,7 +70,7 @@ import Testing
         #expect(job.url == nil)
     }
 
-    // MARK: - A level we do not sell is a refusal
+    // MARK: - Levels
 
     @Test func whenLevelIsUnknown_shouldRefuseTheList() throws {
         let list = SponsorListDTO(data: [.fixture(name: "Bronze Co", sponsorLevel: "bronze")])

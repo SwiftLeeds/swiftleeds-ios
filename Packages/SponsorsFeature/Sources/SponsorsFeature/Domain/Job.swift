@@ -7,7 +7,7 @@ public struct Job: Equatable, Hashable, Identifiable, Sendable {
     public let details: String
     public let location: String
 
-    /// Where to apply. Absent when the posting carries no usable link.
+    /// Where to apply. Absent when the posting has no link.
     public let url: URL?
 
     public init(id: JobID, title: String, details: String, location: String, url: URL?) {
