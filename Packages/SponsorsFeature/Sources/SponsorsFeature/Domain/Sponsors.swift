@@ -1,14 +1,9 @@
-/// Every sponsor, grouped by what they bought.
-///
-/// Ranking is the one rule this feature has, so it lives here rather than in a
-/// view. A level with no sponsors is absent; the whole collection may be empty,
-/// because a conference with no sponsors yet is a real state.
+/// Every sponsor, grouped by level. A level with no sponsors is absent.
 public struct Sponsors: Equatable, Hashable, Sendable {
     private let levels: [SponsorLevel: [Sponsor]]
 
     public init(_ sponsors: [Sponsor]) {
-        // Grouping never yields an empty array, so absent and empty cannot
-        // disagree.
+        // Grouping never yields an empty array, so a level is absent or full.
         levels = Dictionary(grouping: sponsors, by: \.level)
     }
 

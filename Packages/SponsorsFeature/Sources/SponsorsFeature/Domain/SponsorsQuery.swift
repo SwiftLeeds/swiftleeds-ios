@@ -1,9 +1,6 @@
 import Dependencies
 
 /// Reads the sponsor list.
-///
-/// A query rather than a repository: nothing here reconstitutes an aggregate,
-/// and nothing writes one back.
 package struct SponsorsQuery: Sendable {
     package var load: @Sendable () async throws(SponsorFetchError) -> [Sponsor]
 

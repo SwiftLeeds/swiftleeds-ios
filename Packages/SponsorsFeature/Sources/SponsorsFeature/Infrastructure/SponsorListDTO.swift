@@ -1,8 +1,7 @@
 import Foundation
 
 package struct SponsorListDTO: Decodable {
-    /// The server named a level we do not sell. Carried as data, so adding a
-    /// level needs no case here.
+    /// The server named a level we do not sell.
     package struct LevelError: Error, Equatable {
         package let sponsor: String
         package let level: String
@@ -61,8 +60,7 @@ extension SponsorListDTO {
         )
     }
 
-    /// A link the server could not express is absent, not a failure. These are
-    /// decorative, and the server sends an empty string for "no link".
+    // The server sends an empty string for "no link".
     private static func link(_ value: String) -> URL? {
         value.isEmpty ? nil : URL(string: value)
     }

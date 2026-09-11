@@ -1,21 +1,16 @@
 import Foundation
 
 /// A company sponsoring the conference.
-///
-/// A read model: nothing writes one, and it guards no invariant. It is shaped
-/// for the screen that shows it.
 public struct Sponsor: Equatable, Hashable, Identifiable, Sendable {
     public let id: SponsorID
     public let name: String
     public let subtitle: String
     public let level: SponsorLevel
 
-    /// Absent when the server sent nothing usable. The logo is decorative, so a
-    /// bad one costs an image rather than the whole list.
+    /// Absent when the sponsor has no logo.
     public let logoURL: URL?
 
-    /// Absent when the sponsor supplied no link. The server sends an empty
-    /// string for this, which is a real state rather than a defect.
+    /// Absent when the sponsor supplied no link.
     public let websiteURL: URL?
 
     public let jobs: [Job]

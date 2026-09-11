@@ -4,8 +4,7 @@ import NetworkKit
 import SponsorsFeature
 import Testing
 
-/// Drives the composed `liveValue` with only the transport stubbed, so it also
-/// pins that the query reaches the mapper at all.
+// Drives the composed `liveValue` with only the transport stubbed.
 @Suite struct SponsorsQueryIntegrationTests {
     @Test func whenServerAnswersWell_shouldReturnSponsors() async throws {
         let data = SponsorsJSON.list(SponsorsJSON.sponsor(id: "a", level: "gold"))

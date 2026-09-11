@@ -2,8 +2,7 @@ import SponsorsFeature
 import Testing
 
 @Suite struct SponsorLevelTests {
-    /// The grouping and the screen's filter chips both read `allCases`, so the
-    /// declaration order is the ranking. Reordering the enum reorders the app.
+    // The grouping and the screen's chips both read `allCases`.
     @Test func whenListingCases_shouldRankBestFirst() {
         #expect(SponsorLevel.allCases == [.platinum, .gold, .silver])
     }

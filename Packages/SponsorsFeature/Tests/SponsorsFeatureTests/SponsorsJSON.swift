@@ -1,6 +1,6 @@
 import Foundation
 
-/// Payloads shaped like the real `api/v1/sponsors` response.
+// Payloads shaped like the real `api/v1/sponsors` response.
 enum SponsorsJSON {
     static func list(_ sponsors: String...) -> Data {
         Data("{\"data\":[\(sponsors.joined(separator: ","))]}".utf8)

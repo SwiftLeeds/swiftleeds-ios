@@ -33,7 +33,6 @@ import Testing
         #expect(sponsors.sponsors(at: .platinum) == [other])
     }
 
-    /// A conference with no sponsors yet is a real state, not a failure.
     @Test func whenNoSponsors_shouldBeEmpty() {
         let sponsors = Sponsors([])
 
