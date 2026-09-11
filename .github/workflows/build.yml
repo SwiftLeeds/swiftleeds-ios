@@ -255,3 +255,14 @@ jobs:
 
           sys.exit(1 if failed else 0)
           PY
+
+      # Both brands build the same widget target, so an app group written into
+      # Swift pins one of them. The widget read a SwiftLeeds literal while
+      # KotlinLeeds wrote elsewhere; UserDefaults(suiteName:) returned nil for a
+      # suite the target is not entitled to, and the widget showed nothing with
+      # no error anywhere. This check reads text, so it stays on this runner.
+      #
+      # It lives in a file rather than a heredoc because it is long enough to be
+      # worth running locally before a push: python3 .github/scripts/check-app-groups.py
+      - name: Check every configuration writes to the app group it is granted
+        run: python3 .github/scripts/check-app-groups.py
