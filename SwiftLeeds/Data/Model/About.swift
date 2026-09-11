@@ -8,12 +8,6 @@ struct AboutURLs: Codable {
     let youtube: String
 }
 
-struct AboutData: Codable {
-    let urls: AboutURLs
-    let truncatedAboutText: String
-    let teamMembers: [TeamMember]
-}
-
 struct AboutContent: Codable {
     let urls: AboutURLs
     let truncatedAboutText: String

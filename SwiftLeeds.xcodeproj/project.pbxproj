@@ -10,7 +10,6 @@
 		0B4B1A4B2A4858F600ED7EA9 /* SponsorsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4B1A4A2A4858F600ED7EA9 /* SponsorsView.swift */; };
 		0B4B1A4D2A486EA800ED7EA9 /* SponsorsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4B1A4C2A486EA800ED7EA9 /* SponsorsViewModel.swift */; };
 		0B4CB3C828EAF19100246E62 /* SwiftLeedsAppClipApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4CB3C728EAF19100246E62 /* SwiftLeedsAppClipApp.swift */; };
-		0B4CB3CA28EAF19100246E62 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4CB3C928EAF19100246E62 /* ContentView.swift */; };
 		0B4CB3CF28EAF19100246E62 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B4CB3CE28EAF19100246E62 /* Preview Assets.xcassets */; };
 		0B4CB3D428EAF19100246E62 /* SwiftLeedsAppClip.app in Embed App Clips */ = {isa = PBXBuildFile; fileRef = 0B4CB3C528EAF19000246E62 /* SwiftLeedsAppClip.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		0B4CB3DD28EAF57900246E62 /* MyConferenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECB295827417F9D00CDC983 /* MyConferenceView.swift */; };
@@ -20,7 +19,6 @@
 		0B4CB3E428EAF5AF00246E62 /* Presentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8C1B2328BFCFC700AF7318 /* Presentation.swift */; };
 		0B4CB3E528EAF5B700246E62 /* Speaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8C1B2528BFCFE700AF7318 /* Speaker.swift */; };
 		0B4CB3E828EAF5CD00246E62 /* AnnouncementCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AED26F6F28675DA000E06064 /* AnnouncementCell.swift */; };
-		0B4CB3E928EAF5D200246E62 /* Local.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA534D8128A1909300A3BFBB /* Local.swift */; };
 		0B4CB3EB28EAF5E300246E62 /* TalkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AED26F73286764F000E06064 /* TalkCell.swift */; };
 		0B4CB3EC28EAF5E900246E62 /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5EFD74289E7CBF00464FE1 /* ActivityView.swift */; };
 		0B4CB3EE28EAF5FB00246E62 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1C800F289E9F3800996659 /* String.swift */; };
@@ -32,18 +30,13 @@
 		0B4CB3F428EAF62100246E62 /* CommonTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE442875B06500911F03 /* CommonTileView.swift */; };
 		0B4CB3FC28EAF7C500246E62 /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = 0B4CB3FB28EAF7C500246E62 /* CachedAsyncImage */; };
 		0B4CB3FD28EAF7FE00246E62 /* BuildFile in Resources */ = {isa = PBXBuildFile; };
-		0B59B5652E70E5D400820C3C /* TeamMember.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B59B5642E70E5D400820C3C /* TeamMember.swift */; };
 		0B59B5662E70E5D400820C3C /* TeamMember.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B59B5642E70E5D400820C3C /* TeamMember.swift */; };
-		0B59B5672E70E5D400820C3C /* TeamMember.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B59B5642E70E5D400820C3C /* TeamMember.swift */; };
 		0B59B5692E70E5FE00820C3C /* TeamMemberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B59B5682E70E5FE00820C3C /* TeamMemberView.swift */; };
 		0B59B56B2E70E6AC00820C3C /* CompactActionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B59B56A2E70E6AC00820C3C /* CompactActionItem.swift */; };
 		0B59B56E2E70EA4F00820C3C /* about.json in Resources */ = {isa = PBXBuildFile; fileRef = 0B59B56C2E70EA4F00820C3C /* about.json */; };
 		0B59B56F2E70EA4F00820C3C /* AboutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B59B56D2E70EA4F00820C3C /* AboutViewModel.swift */; };
-		0B59B5712E70EA6600820C3C /* About.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B59B5702E70EA6600820C3C /* About.swift */; };
 		0B59B5722E70EA6600820C3C /* About.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B59B5702E70EA6600820C3C /* About.swift */; };
-		0B59B5732E70EA6600820C3C /* About.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B59B5702E70EA6600820C3C /* About.swift */; };
 		0B910A372A49D07700648B32 /* Sponsor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B910A362A49D07700648B32 /* Sponsor.swift */; };
-		0B910A382A49D09300648B32 /* Sponsor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B910A362A49D07700648B32 /* Sponsor.swift */; };
 		0A019758B5F7EFA2BFB39AC1 /* ScheduleMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5D5DE6F666FC86B4B9DC7B /* ScheduleMapper.swift */; };
 		0F532E9AAB8FD761A43947E1 /* SponsorsMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659D31BD07C04877B7AFF774 /* SponsorsMapper.swift */; };
 		1D35F8B0CDCE0771E02C3BDA /* ScheduleMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5D5DE6F666FC86B4B9DC7B /* ScheduleMapper.swift */; };
@@ -62,7 +55,6 @@
 		6C97E4AC99FE94C690FB23B4 /* KotlinLeedsAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40AEBC0F9109732F54C608A9 /* KotlinLeedsAssets.xcassets */; };
 		6E14A8EC04159C7E092C87D4 /* SwiftLeedsColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 893A122D593379F84605F70C /* SwiftLeedsColors.xcassets */; };
 		740162DA2A7053A000C2D1B3 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740162D92A7053A000C2D1B3 /* AppState.swift */; };
-		740162DB2A7053A000C2D1B3 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740162D92A7053A000C2D1B3 /* AppState.swift */; };
 		7406572928E240720087F44F /* WidgetConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7406572828E240720087F44F /* WidgetConstants.swift */; };
 		741ED8FB2A75829C00494B25 /* ReadabilityModifier in Frameworks */ = {isa = PBXBuildFile; productRef = 741ED8FA2A75829C00494B25 /* ReadabilityModifier */; };
 		74A09FDF28C6778C00E03F39 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74A09FDE28C6778C00E03F39 /* WidgetKit.framework */; };
@@ -144,9 +136,7 @@
 		C88307224ADAA4C64A455D74 /* KotlinLeedsAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40AEBC0F9109732F54C608A9 /* KotlinLeedsAssets.xcassets */; };
 		D87582F568B0EFB6371B734B /* ConferenceConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67624B7470D6BA62D4912236 /* ConferenceConfig.swift */; };
 		E3569AEF2E5A1D0200BC9556 /* ShimmerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3569AED2E5A1D0200BC9556 /* ShimmerView.swift */; };
-		E3569B062E5B903800BC9556 /* ShimmerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3569AED2E5A1D0200BC9556 /* ShimmerView.swift */; };
 		EF223850DCFBB4DF1213DE38 /* KotlinLeedsAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ED1AFB8A37EDA9676DB1C998 /* KotlinLeedsAssets.xcassets */; };
-		FA1F7EF7287CB71600E12F8C /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1F7EF6287CB71600E12F8C /* HeaderView.swift */; };
 		FA534D8228A1909300A3BFBB /* Local.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA534D8128A1909300A3BFBB /* Local.swift */; };
 		FA534D8828A1939500A3BFBB /* LocalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA534D8728A1939500A3BFBB /* LocalViewModel.swift */; };
 		FA57DE462875B06500911F03 /* CommonTileButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE432875B06500911F03 /* CommonTileButton.swift */; };
@@ -217,7 +207,6 @@
 		0B4B1A4C2A486EA800ED7EA9 /* SponsorsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsorsViewModel.swift; sourceTree = "<group>"; };
 		0B4CB3C528EAF19000246E62 /* SwiftLeedsAppClip.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftLeedsAppClip.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B4CB3C728EAF19100246E62 /* SwiftLeedsAppClipApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftLeedsAppClipApp.swift; sourceTree = "<group>"; };
-		0B4CB3C928EAF19100246E62 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		0B4CB3CE28EAF19100246E62 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		0B4CB3D028EAF19100246E62 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0B4CB3D128EAF19100246E62 /* SwiftLeedsAppClip.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SwiftLeedsAppClip.entitlements; sourceTree = "<group>"; };
@@ -303,7 +292,6 @@
 		E3569AED2E5A1D0200BC9556 /* ShimmerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerView.swift; sourceTree = "<group>"; };
 		ED1AFB8A37EDA9676DB1C998 /* KotlinLeedsAssets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = KotlinLeedsAssets.xcassets; sourceTree = "<group>"; };
 		EEFB1E37D5A542A1798C92D5 /* SwiftLeedsAssets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = SwiftLeedsAssets.xcassets; sourceTree = "<group>"; };
-		FA1F7EF6287CB71600E12F8C /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		FA534D8128A1909300A3BFBB /* Local.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Local.swift; sourceTree = "<group>"; };
 		FA534D8728A1939500A3BFBB /* LocalViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalViewModel.swift; sourceTree = "<group>"; };
 		FA57DE432875B06500911F03 /* CommonTileButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonTileButton.swift; sourceTree = "<group>"; };
@@ -390,7 +378,6 @@
 			isa = PBXGroup;
 			children = (
 				0B4CB3C728EAF19100246E62 /* SwiftLeedsAppClipApp.swift */,
-				0B4CB3C928EAF19100246E62 /* ContentView.swift */,
 				0B4CB3D028EAF19100246E62 /* Info.plist */,
 				0B4CB3D128EAF19100246E62 /* SwiftLeedsAppClip.entitlements */,
 				0BB52A782A5FDC2614FF7243 /* KotlinLeedsAppClip.entitlements */,
@@ -628,7 +615,6 @@
 				FA57DE442875B06500911F03 /* CommonTileView.swift */,
 				2A3831112884A96600030002 /* FancyHeaderView.swift */,
 				E3569AED2E5A1D0200BC9556 /* ShimmerView.swift */,
-				FA1F7EF6287CB71600E12F8C /* HeaderView.swift */,
 				FA57DE452875B06500911F03 /* StackedTileView.swift */,
 				AEB06BD028CF8D2100E51967 /* WebView.swift */,
 			);
@@ -918,21 +904,14 @@
 				AE9367902A93467500F2DB3F /* ScheduleView.swift in Sources */,
 				0B4CB3EC28EAF5E900246E62 /* ActivityView.swift in Sources */,
 				0B4CB3F228EAF61600246E62 /* WebView.swift in Sources */,
-				0B59B5712E70EA6600820C3C /* About.swift in Sources */,
 				0B4CB3EF28EAF60200246E62 /* FancyHeaderView.swift in Sources */,
 				0B4CB3F028EAF60800246E62 /* SpeakerView.swift in Sources */,
 				0B4CB3E428EAF5AF00246E62 /* Presentation.swift in Sources */,
-				0B4CB3E928EAF5D200246E62 /* Local.swift in Sources */,
-				E3569B062E5B903800BC9556 /* ShimmerView.swift in Sources */,
 				0B4CB3E528EAF5B700246E62 /* Speaker.swift in Sources */,
 				0B4CB3E828EAF5CD00246E62 /* AnnouncementCell.swift in Sources */,
 				0B4CB3DD28EAF57900246E62 /* MyConferenceView.swift in Sources */,
-				0B4CB3CA28EAF19100246E62 /* ContentView.swift in Sources */,
 				0B4CB3E328EAF5A200246E62 /* Activity.swift in Sources */,
 				0B4CB3EB28EAF5E300246E62 /* TalkCell.swift in Sources */,
-				740162DB2A7053A000C2D1B3 /* AppState.swift in Sources */,
-				0B59B5652E70E5D400820C3C /* TeamMember.swift in Sources */,
-				0B910A382A49D09300648B32 /* Sponsor.swift in Sources */,
 				0B4CB3F428EAF62100246E62 /* CommonTileView.swift in Sources */,
 				0B4CB3C828EAF19100246E62 /* SwiftLeedsAppClipApp.swift in Sources */,
 				F94828C06997CC0C7F25871C /* URLSession+SwiftLeeds.swift in Sources */,
@@ -952,14 +931,12 @@
 				74E62F7428CAAB30004422F9 /* SwiftLeedsMediumWidgetView.swift in Sources */,
 				74E62F7228CA98EA004422F9 /* SwiftLeedsSmallWidgetView.swift in Sources */,
 				7406572928E240720087F44F /* WidgetConstants.swift in Sources */,
-				0B59B5672E70E5D400820C3C /* TeamMember.swift in Sources */,
 				74B14FB028CE21D7004C0A40 /* Provider.swift in Sources */,
 				74E62F7828CADBE0004422F9 /* Activity.swift in Sources */,
 				74E62F7A28CAE4DF004422F9 /* Speaker.swift in Sources */,
 				74E62F7728CADBD8004422F9 /* Schedule.swift in Sources */,
 				74B14FB228CE2221004C0A40 /* SwiftLeedsWidgetEntry.swift in Sources */,
 				74B14FB428CE2245004C0A40 /* SwiftLeedsWidgetEntryView.swift in Sources */,
-				0B59B5732E70EA6600820C3C /* About.swift in Sources */,
 				D87582F568B0EFB6371B734B /* ConferenceConfig.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -984,7 +961,6 @@
 				39ED0034288F113500AB337A /* LocalCell.swift in Sources */,
 				AEDC22552898288F00746247 /* Schedule.swift in Sources */,
 				AED26F74286764F000E06064 /* TalkCell.swift in Sources */,
-				FA1F7EF7287CB71600E12F8C /* HeaderView.swift in Sources */,
 				AE1C8010289E9F3800996659 /* String.swift in Sources */,
 				AECB295927417F9D00CDC983 /* MyConferenceView.swift in Sources */,
 				AE8C1B2428BFCFC700AF7318 /* Presentation.swift in Sources */,
