@@ -1,6 +1,7 @@
 import DesignKit
 import ReadabilityModifier
 import SharedAssets
+import SponsorsFeature
 import SwiftUI
 
 struct SponsorsView: View {
@@ -20,7 +21,7 @@ struct SponsorsView: View {
                 if isLoading {
                     loadingView
                         .padding(.top, Padding.screen)
-                } else if viewModel.sections.isEmpty {
+                } else if viewModel.sponsors.isEmpty {
                     emptyStateView
                         .padding(.top, Padding.screen)
                 } else {
@@ -89,11 +90,11 @@ struct SponsorsView: View {
         VStack(spacing: Padding.cellGap) {
             filterChips
 
-            if filteredSections.isEmpty && selectedSponsorLevel != nil {
+            if displayedLevels.isEmpty && selectedSponsorLevel != nil {
                 tierEmptyStateView
             } else {
-                ForEach(filteredSections) { section in
-                    sectionView(for: section)
+                ForEach(displayedLevels, id: \.self) { level in
+                    sectionView(for: level)
                 }
             }
         }
@@ -110,7 +111,7 @@ struct SponsorsView: View {
                     action: { selectedSponsorLevel = nil }
                 )
 
-                ForEach([SponsorLevel.platinum, .gold, .silver], id: \.self) { level in
+                ForEach(SponsorLevel.allCases, id: \.self) { level in
                     FilterChip(
                         title: level.rawValue.capitalized,
                         isSelected: selectedSponsorLevel == level,
@@ -126,11 +127,11 @@ struct SponsorsView: View {
         .padding(.vertical, 8)
     }
 
-    private var filteredSections: [SponsorsViewModel.Section] {
+    private var displayedLevels: [SponsorLevel] {
         if let selectedLevel = selectedSponsorLevel {
-            return viewModel.sections.filter { $0.type == selectedLevel }
+            return viewModel.sponsors.rankedLevels.filter { $0 == selectedLevel }
         }
-        return viewModel.sections
+        return viewModel.sponsors.rankedLevels
     }
 
     private var gridColumns: [GridItem] {
@@ -153,14 +154,14 @@ struct SponsorsView: View {
         #endif
     }
 
-    private func sectionView(for section: SponsorsViewModel.Section) -> some View {
+    private func sectionView(for level: SponsorLevel) -> some View {
         VStack(alignment: .leading, spacing: Padding.stackGap) {
-            sectionHeader(for: section.type)
+            sectionHeader(for: level)
 
-            switch section.type {
+            switch level {
             case .platinum:
                 VStack(spacing: Padding.cellGap) {
-                    ForEach(section.sponsors) { sponsor in
+                    ForEach(viewModel.sponsors.sponsors(at: level)) { sponsor in
                         SponsorTileView(sponsor: sponsor)
                             .transition(.asymmetric(
                                 insertion: .scale.combined(with: .opacity),
@@ -174,7 +175,7 @@ struct SponsorsView: View {
                     alignment: .leading,
                     spacing: Padding.cellGap
                 ) {
-                    ForEach(section.sponsors) { sponsor in
+                    ForEach(viewModel.sponsors.sponsors(at: level)) { sponsor in
                         SponsorTileView(sponsor: sponsor)
                             .transition(.asymmetric(
                                 insertion: .scale.combined(with: .opacity),
@@ -228,7 +229,7 @@ struct SponsorsView: View {
     }
 
     private func sponsorCount(for level: SponsorLevel) -> Int {
-        viewModel.sections.first { $0.type == level }?.sponsors.count ?? 0
+        viewModel.sponsors.sponsors(at: level).count
     }
 
     private func loadSponsors() async {

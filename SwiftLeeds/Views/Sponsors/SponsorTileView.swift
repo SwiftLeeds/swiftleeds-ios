@@ -1,6 +1,7 @@
 import CachedAsyncImage
 import DesignKit
 import SharedAssets
+import SponsorsFeature
 import SwiftUI
 
 struct SponsorTileView: View {
@@ -27,7 +28,7 @@ struct SponsorTileView: View {
 
     private var mainTile: some View {
         Button(action: {
-            if let url = URL(string: sponsor.url) {
+            if let url = sponsor.websiteURL {
                 openURL(url)
             }
         }) {
@@ -42,7 +43,7 @@ struct SponsorTileView: View {
     private var imageSection: some View {
         ZStack {
             CachedAsyncImage(
-                url: URL(string: sponsor.image),
+                url: sponsor.logoURL,
                 content: { image in
                     Rectangle()
                         .aspectRatio(1.66, contentMode: .fill)
@@ -78,7 +79,7 @@ struct SponsorTileView: View {
             .aspectRatio(1.66, contentMode: .fit)
             .accessibilityHidden(true)
 
-            if sponsor.sponsorLevel == .platinum {
+            if sponsor.level == .platinum {
                 VStack {
                     HStack {
                         Spacer()
@@ -193,7 +194,7 @@ struct JobRowView: View {
 
     var body: some View {
         Button(action: {
-            if let url = URL(string: job.url) {
+            if let url = job.url {
                 openURL(url)
             }
         }) {
@@ -241,9 +242,32 @@ struct SponsorTileView_Previews: PreviewProvider {
             Color.background.edgesIgnoringSafeArea(.all)
 
             VStack {
-                SponsorTileView(sponsor: .sample)
+                SponsorTileView(sponsor: sample)
                     .padding()
             }
         }
     }
+
+    private static let sample = Sponsor(
+        id: SponsorID("sponsor-1"),
+        name: "SwiftLeeds",
+        subtitle: "Best Conference",
+        level: .platinum,
+        logoURL: sampleLogoURL,
+        websiteURL: nil,
+        jobs: [sampleJob]
+    )
+
+    private static let sampleLogoURL = URL(
+        string: "https://swiftleeds-speakers.s3.eu-west-2.amazonaws.com/"
+            + "961E45E2-8667-42F6-895E-4CE5E8B954E2-skybrand.png"
+    )
+
+    private static let sampleJob = Job(
+        id: JobID(UUID()),
+        title: "Senior iOS Engineer",
+        details: "Bringing all your Swift skills to the fore",
+        location: "Leeds",
+        url: URL(string: "https://example.com")
+    )
 }

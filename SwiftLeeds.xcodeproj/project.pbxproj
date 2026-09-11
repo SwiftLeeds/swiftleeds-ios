@@ -36,9 +36,7 @@
 		0B59B56E2E70EA4F00820C3C /* about.json in Resources */ = {isa = PBXBuildFile; fileRef = 0B59B56C2E70EA4F00820C3C /* about.json */; };
 		0B59B56F2E70EA4F00820C3C /* AboutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B59B56D2E70EA4F00820C3C /* AboutViewModel.swift */; };
 		0B59B5722E70EA6600820C3C /* About.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B59B5702E70EA6600820C3C /* About.swift */; };
-		0B910A372A49D07700648B32 /* Sponsor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B910A362A49D07700648B32 /* Sponsor.swift */; };
 		0A019758B5F7EFA2BFB39AC1 /* ScheduleMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5D5DE6F666FC86B4B9DC7B /* ScheduleMapper.swift */; };
-		0F532E9AAB8FD761A43947E1 /* SponsorsMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659D31BD07C04877B7AFF774 /* SponsorsMapper.swift */; };
 		1D35F8B0CDCE0771E02C3BDA /* ScheduleMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5D5DE6F666FC86B4B9DC7B /* ScheduleMapper.swift */; };
 		FB6B9D30B85EAAED16F69656 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816A6083DA208AE9EED41E40 /* Endpoint.swift */; };
 		106111EE0332466C39422B5E /* TeamMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41AB02B37BB6C44A78DC7FF9 /* TeamMapper.swift */; };
@@ -217,7 +215,6 @@
 		0B59B56C2E70EA4F00820C3C /* about.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = about.json; sourceTree = "<group>"; };
 		0B59B56D2E70EA4F00820C3C /* AboutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewModel.swift; sourceTree = "<group>"; };
 		0B59B5702E70EA6600820C3C /* About.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = About.swift; sourceTree = "<group>"; };
-		0B910A362A49D07700648B32 /* Sponsor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sponsor.swift; sourceTree = "<group>"; };
 		0BB52A782A5FDC2614FF7243 /* KotlinLeedsAppClip.entitlements */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.entitlements; path = KotlinLeedsAppClip.entitlements; sourceTree = "<group>"; };
 		1AA9B4909D551477D0C04106 /* KotlinLeeds.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = KotlinLeeds.xcconfig; sourceTree = "<group>"; };
 		2A3831112884A96600030002 /* FancyHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FancyHeaderView.swift; sourceTree = "<group>"; };
@@ -229,7 +226,6 @@
 		41AB02B37BB6C44A78DC7FF9 /* TeamMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamMapper.swift; sourceTree = "<group>"; };
 		4301D0D3F1C8979276E77084 /* SwiftLeedsAssets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = SwiftLeedsAssets.xcassets; sourceTree = "<group>"; };
 		5F9FC40FEADC49E608696F7A /* SwiftLeeds.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SwiftLeeds.xcconfig; sourceTree = "<group>"; };
-		659D31BD07C04877B7AFF774 /* SponsorsMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsorsMapper.swift; sourceTree = "<group>"; };
 		1A5D5DE6F666FC86B4B9DC7B /* ScheduleMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMapper.swift; sourceTree = "<group>"; };
 		6653F9331892E676D8F861C8 /* LocalMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalMapper.swift; sourceTree = "<group>"; };
 		67624B7470D6BA62D4912236 /* ConferenceConfig.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ConferenceConfig.swift; sourceTree = "<group>"; };
@@ -631,7 +627,6 @@
 				FA57DE572875B0E300911F03 /* Model */,
 				816A6083DA208AE9EED41E40 /* Endpoint.swift */,
 				6653F9331892E676D8F861C8 /* LocalMapper.swift */,
-				659D31BD07C04877B7AFF774 /* SponsorsMapper.swift */,
 				1A5D5DE6F666FC86B4B9DC7B /* ScheduleMapper.swift */,
 				41AB02B37BB6C44A78DC7FF9 /* TeamMapper.swift */,
 			);
@@ -647,7 +642,6 @@
 				AE8C1B2328BFCFC700AF7318 /* Presentation.swift */,
 				AEDC22542898288F00746247 /* Schedule.swift */,
 				AE8C1B2528BFCFE700AF7318 /* Speaker.swift */,
-				0B910A362A49D07700648B32 /* Sponsor.swift */,
 				0B59B5642E70E5D400820C3C /* TeamMember.swift */,
 			);
 			path = Model;
@@ -953,7 +947,6 @@
 				B09ACE20A089F99B5404B667 /* Endpoint.swift in Sources */,
 				911CBFE0C21C398999FE786C /* LocalMapper.swift in Sources */,
 				1D35F8B0CDCE0771E02C3BDA /* ScheduleMapper.swift in Sources */,
-				0F532E9AAB8FD761A43947E1 /* SponsorsMapper.swift in Sources */,
 				106111EE0332466C39422B5E /* TeamMapper.swift in Sources */,
 				A11CE57000000000000000F2 /* URLSession+SwiftLeeds.swift in Sources */,
 				AEDC22532898281300746247 /* MyConferenceViewModel.swift in Sources */,
@@ -985,7 +978,6 @@
 				0B59B5662E70E5D400820C3C /* TeamMember.swift in Sources */,
 				0B4B1A4B2A4858F600ED7EA9 /* SponsorsView.swift in Sources */,
 				AE8C1B2B28C4B39A00AF7318 /* TokenDetails.swift in Sources */,
-				0B910A372A49D07700648B32 /* Sponsor.swift in Sources */,
 				AEDC0DAE286759630078A153 /* Tabs.swift in Sources */,
 				7B6278A22EEDDE1B00DE1473 /* SectionHeader.swift in Sources */,
 				AE8C1B2628BFCFE700AF7318 /* Speaker.swift in Sources */,

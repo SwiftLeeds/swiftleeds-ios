@@ -4,7 +4,6 @@ import NetworkKit
 enum Endpoint: HTTPRequestConvertible, Equatable, Hashable, Sendable {
     case local
     case schedule(event: UUID?)
-    case sponsors
     case team
 
     var request: HTTPRequest {
@@ -16,9 +15,6 @@ enum Endpoint: HTTPRequestConvertible, Equatable, Hashable, Sendable {
             .get("api/v2/schedule")
                 .appending(headerField: .accept, .application.json)
                 .appending(queryItems: Self.queryItems(forEvent: event))
-        case .sponsors:
-            .get("api/v1/sponsors")
-                .appending(headerField: .accept, .application.json)
         case .team:
             .get("api/v2/team")
                 .appending(headerField: .accept, .application.json)
