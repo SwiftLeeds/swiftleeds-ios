@@ -12,6 +12,7 @@ let package = Package(
         .library(name: "SponsorsFeature", targets: ["SponsorsFeature"]),
     ],
     dependencies: [
+        .package(path: "../LogKit"),
         .package(path: "../NetworkKit"),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.0.0"),
     ],
@@ -20,6 +21,7 @@ let package = Package(
             name: "SponsorsFeature",
             dependencies: [
                 .product(name: "Dependencies", package: "swift-dependencies"),
+                .product(name: "LogKit", package: "LogKit"),
                 .product(name: "NetworkKit", package: "NetworkKit"),
             ]
         ),
@@ -28,6 +30,7 @@ let package = Package(
             dependencies: [
                 "SponsorsFeature",
                 .product(name: "Dependencies", package: "swift-dependencies"),
+                .product(name: "LogKit", package: "LogKit"),
                 .product(name: "NetworkKit", package: "NetworkKit"),
             ]
         ),
