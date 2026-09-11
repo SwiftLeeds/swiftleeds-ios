@@ -56,6 +56,31 @@ import Testing
         #expect(event.fields.first { String($0.name) == "count" }?.value == .integer(2))
     }
 
+    @Test func whenListIsRefused_shouldRethrowMappingError() {
+        let list = SponsorListDTO(data: [.fixture(name: "Bronze Co", sponsorLevel: "bronze")])
+
+        withDependencies {
+            $0.log = LogRecorder().log
+        } operation: {
+            let sut = SponsorMapper.live.logging()
+
+            #expect(throws: SponsorMapper.MappingError.self) {
+                try sut.map(list)
+            }
+        }
+    }
+
+    /// A destination groups by message, so two outcomes sharing one message could never be told
+    /// apart when filtering.
+    @Test func whenOutcomesDiffer_shouldLogDifferentMessages() throws {
+        let messages = try [
+            #require(try mappedEvent(for: SponsorListDTO(data: [.fixture()]))),
+            #require(refusedEvent(for: SponsorListDTO(data: [.fixture(sponsorLevel: "bronze")]))),
+        ].map(\.message)
+
+        #expect(Set(messages).count == messages.count)
+    }
+
     private func mappedEvent(for list: SponsorListDTO) throws -> LogEvent? {
         let recorder = LogRecorder()
 
