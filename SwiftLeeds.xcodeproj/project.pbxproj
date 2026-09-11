@@ -10,7 +10,6 @@
 		0B4B1A4B2A4858F600ED7EA9 /* SponsorsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4B1A4A2A4858F600ED7EA9 /* SponsorsView.swift */; };
 		0B4B1A4D2A486EA800ED7EA9 /* SponsorsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4B1A4C2A486EA800ED7EA9 /* SponsorsViewModel.swift */; };
 		0B4CB3C828EAF19100246E62 /* SwiftLeedsAppClipApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4CB3C728EAF19100246E62 /* SwiftLeedsAppClipApp.swift */; };
-		0B4CB3CA28EAF19100246E62 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4CB3C928EAF19100246E62 /* ContentView.swift */; };
 		0B4CB3CF28EAF19100246E62 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B4CB3CE28EAF19100246E62 /* Preview Assets.xcassets */; };
 		0B4CB3D428EAF19100246E62 /* SwiftLeedsAppClip.app in Embed App Clips */ = {isa = PBXBuildFile; fileRef = 0B4CB3C528EAF19000246E62 /* SwiftLeedsAppClip.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		0B4CB3DD28EAF57900246E62 /* MyConferenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECB295827417F9D00CDC983 /* MyConferenceView.swift */; };
@@ -138,7 +137,6 @@
 		D87582F568B0EFB6371B734B /* ConferenceConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67624B7470D6BA62D4912236 /* ConferenceConfig.swift */; };
 		E3569AEF2E5A1D0200BC9556 /* ShimmerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3569AED2E5A1D0200BC9556 /* ShimmerView.swift */; };
 		EF223850DCFBB4DF1213DE38 /* KotlinLeedsAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ED1AFB8A37EDA9676DB1C998 /* KotlinLeedsAssets.xcassets */; };
-		FA1F7EF7287CB71600E12F8C /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1F7EF6287CB71600E12F8C /* HeaderView.swift */; };
 		FA534D8228A1909300A3BFBB /* Local.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA534D8128A1909300A3BFBB /* Local.swift */; };
 		FA534D8828A1939500A3BFBB /* LocalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA534D8728A1939500A3BFBB /* LocalViewModel.swift */; };
 		FA57DE462875B06500911F03 /* CommonTileButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE432875B06500911F03 /* CommonTileButton.swift */; };
@@ -209,7 +207,6 @@
 		0B4B1A4C2A486EA800ED7EA9 /* SponsorsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsorsViewModel.swift; sourceTree = "<group>"; };
 		0B4CB3C528EAF19000246E62 /* SwiftLeedsAppClip.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftLeedsAppClip.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B4CB3C728EAF19100246E62 /* SwiftLeedsAppClipApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftLeedsAppClipApp.swift; sourceTree = "<group>"; };
-		0B4CB3C928EAF19100246E62 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		0B4CB3CE28EAF19100246E62 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		0B4CB3D028EAF19100246E62 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0B4CB3D128EAF19100246E62 /* SwiftLeedsAppClip.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SwiftLeedsAppClip.entitlements; sourceTree = "<group>"; };
@@ -295,7 +292,6 @@
 		E3569AED2E5A1D0200BC9556 /* ShimmerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerView.swift; sourceTree = "<group>"; };
 		ED1AFB8A37EDA9676DB1C998 /* KotlinLeedsAssets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = KotlinLeedsAssets.xcassets; sourceTree = "<group>"; };
 		EEFB1E37D5A542A1798C92D5 /* SwiftLeedsAssets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = SwiftLeedsAssets.xcassets; sourceTree = "<group>"; };
-		FA1F7EF6287CB71600E12F8C /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		FA534D8128A1909300A3BFBB /* Local.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Local.swift; sourceTree = "<group>"; };
 		FA534D8728A1939500A3BFBB /* LocalViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalViewModel.swift; sourceTree = "<group>"; };
 		FA57DE432875B06500911F03 /* CommonTileButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonTileButton.swift; sourceTree = "<group>"; };
@@ -382,7 +378,6 @@
 			isa = PBXGroup;
 			children = (
 				0B4CB3C728EAF19100246E62 /* SwiftLeedsAppClipApp.swift */,
-				0B4CB3C928EAF19100246E62 /* ContentView.swift */,
 				0B4CB3D028EAF19100246E62 /* Info.plist */,
 				0B4CB3D128EAF19100246E62 /* SwiftLeedsAppClip.entitlements */,
 				0BB52A782A5FDC2614FF7243 /* KotlinLeedsAppClip.entitlements */,
@@ -620,7 +615,6 @@
 				FA57DE442875B06500911F03 /* CommonTileView.swift */,
 				2A3831112884A96600030002 /* FancyHeaderView.swift */,
 				E3569AED2E5A1D0200BC9556 /* ShimmerView.swift */,
-				FA1F7EF6287CB71600E12F8C /* HeaderView.swift */,
 				FA57DE452875B06500911F03 /* StackedTileView.swift */,
 				AEB06BD028CF8D2100E51967 /* WebView.swift */,
 			);
@@ -916,7 +910,6 @@
 				0B4CB3E528EAF5B700246E62 /* Speaker.swift in Sources */,
 				0B4CB3E828EAF5CD00246E62 /* AnnouncementCell.swift in Sources */,
 				0B4CB3DD28EAF57900246E62 /* MyConferenceView.swift in Sources */,
-				0B4CB3CA28EAF19100246E62 /* ContentView.swift in Sources */,
 				0B4CB3E328EAF5A200246E62 /* Activity.swift in Sources */,
 				0B4CB3EB28EAF5E300246E62 /* TalkCell.swift in Sources */,
 				0B4CB3F428EAF62100246E62 /* CommonTileView.swift in Sources */,
@@ -968,7 +961,6 @@
 				39ED0034288F113500AB337A /* LocalCell.swift in Sources */,
 				AEDC22552898288F00746247 /* Schedule.swift in Sources */,
 				AED26F74286764F000E06064 /* TalkCell.swift in Sources */,
-				FA1F7EF7287CB71600E12F8C /* HeaderView.swift in Sources */,
 				AE1C8010289E9F3800996659 /* String.swift in Sources */,
 				AECB295927417F9D00CDC983 /* MyConferenceView.swift in Sources */,
 				AE8C1B2428BFCFC700AF7318 /* Presentation.swift in Sources */,
