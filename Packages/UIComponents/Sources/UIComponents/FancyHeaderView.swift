@@ -56,7 +56,7 @@ public struct FancyHeaderView: View {
             .onAppear {
                 foregroundGroupViewHeight = geometry.size.height
             }
-            .onChange(of: geometry.size) { newValue in
+            .onChange(of: geometry.size) { _, newValue in
                 foregroundGroupViewHeight = newValue.height
             }
         }
