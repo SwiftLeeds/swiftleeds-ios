@@ -14,6 +14,30 @@ import Testing
         #expect(event.level == .error)
     }
 
+    @Test func whenLevelIsUnknown_shouldLogSponsorName() throws {
+        let list = SponsorListDTO(data: [.fixture(name: "Bronze Co", sponsorLevel: "bronze")])
+
+        let event = try #require(refusedEvent(for: list))
+
+        #expect(event.fields.first { String($0.name) == "sponsor" }?.value == .string("Bronze Co"))
+    }
+
+    @Test func whenLevelIsUnknown_shouldLogFieldName() throws {
+        let list = SponsorListDTO(data: [.fixture(name: "Bronze Co", sponsorLevel: "bronze")])
+
+        let event = try #require(refusedEvent(for: list))
+
+        #expect(event.fields.first { String($0.name) == "field" }?.value == .string("sponsorLevel"))
+    }
+
+    @Test func whenLevelIsUnknown_shouldLogRefusedValue() throws {
+        let list = SponsorListDTO(data: [.fixture(name: "Bronze Co", sponsorLevel: "bronze")])
+
+        let event = try #require(refusedEvent(for: list))
+
+        #expect(event.fields.first { String($0.name) == "value" }?.value == .string("bronze"))
+    }
+
     private func refusedEvent(for list: SponsorListDTO) -> LogEvent? {
         let recorder = LogRecorder()
 
