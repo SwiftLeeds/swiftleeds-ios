@@ -3,7 +3,7 @@ import NetworkKit
 extension SponsorMapper {
     package enum ResponseError: Error {
         case couldNotDecode(any Error)
-        case unknownLevel(SponsorListDTO.LevelError)
+        case unknownLevel(SponsorsReader.LevelError)
         case unexpectedStatus(HTTPStatus)
     }
 }
