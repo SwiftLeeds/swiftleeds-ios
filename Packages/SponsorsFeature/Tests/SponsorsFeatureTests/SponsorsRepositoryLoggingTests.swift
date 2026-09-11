@@ -47,7 +47,7 @@ import Testing
     /// A destination groups by message, so two outcomes sharing one message could never be told
     /// apart when filtering.
     @Test func whenOutcomesDiffer_shouldLogDifferentMessages() async throws {
-        let messages = try await [
+        let messages = try [
             #require(try await successEvent()),
             #require(await logEvent(whenRepositoryThrows: .couldNotReachServer)),
             #require(await logEvent(whenRepositoryThrows: .invalidResponse)),
