@@ -3,25 +3,32 @@ import Foundation
 
 /// Turns the backend's sponsor list into this context's values.
 package struct SponsorMapper: Sendable {
-    /// The backend named a level we do not sell.
-    package struct LevelError: Error, Equatable {
+    /// The backend's list could not become sponsors.
+    ///
+    /// The field travels as data, so a new rule needs no case here.
+    package struct MappingError: Error, Equatable {
         package let sponsor: String
-        package let level: String
+        package let field: SponsorListDTO.SponsorDTO.CodingKeys
+        package let value: String
     }
 
-    package var map: @Sendable (SponsorListDTO) throws(LevelError) -> Sponsors
+    package var map: @Sendable (SponsorListDTO) throws(MappingError) -> Sponsors
 
-    package init(map: @escaping @Sendable (SponsorListDTO) throws(LevelError) -> Sponsors) {
+    package init(map: @escaping @Sendable (SponsorListDTO) throws(MappingError) -> Sponsors) {
         self.map = map
     }
 }
 
 extension SponsorMapper {
-    package static let live = SponsorMapper { list throws(LevelError) in
+    package static let live = SponsorMapper { list throws(MappingError) in
         var sponsors: [Sponsor] = []
         for dto in list.data {
             guard let level = SponsorLevel(rawValue: dto.sponsorLevel) else {
-                throw LevelError(sponsor: dto.name, level: dto.sponsorLevel)
+                throw MappingError(
+                    sponsor: dto.name,
+                    field: .sponsorLevel,
+                    value: dto.sponsorLevel
+                )
             }
             sponsors.append(
                 Sponsor(

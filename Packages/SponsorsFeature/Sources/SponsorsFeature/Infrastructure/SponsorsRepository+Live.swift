@@ -27,7 +27,7 @@ extension SponsorsRepository: DependencyKey {
                 throw SponsorFetchError.invalidResponse
             }
 
-            do throws(SponsorMapper.LevelError) {
+            do throws(SponsorMapper.MappingError) {
                 return try sponsorMapper.map(list)
             } catch {
                 throw SponsorFetchError.invalidResponse

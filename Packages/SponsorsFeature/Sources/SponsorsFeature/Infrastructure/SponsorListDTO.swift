@@ -9,6 +9,18 @@ package struct SponsorListDTO: Decodable {
     }
 
     package struct SponsorDTO: Decodable {
+        /// Declared rather than synthesised, so an error can name a field as data
+        /// and a property added without its key fails to compile.
+        package enum CodingKeys: String, CodingKey {
+            case id
+            case name
+            case subtitle
+            case image
+            case sponsorLevel
+            case url
+            case jobs
+        }
+
         package let id: String
         package let name: String
         package let subtitle: String

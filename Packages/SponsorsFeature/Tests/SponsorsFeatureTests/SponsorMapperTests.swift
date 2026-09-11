@@ -75,12 +75,12 @@ import Testing
     @Test func whenLevelIsUnknown_shouldRefuseTheList() throws {
         let list = SponsorListDTO(data: [.fixture(name: "Bronze Co", sponsorLevel: "bronze")])
 
-        #expect(throws: SponsorMapper.LevelError.self) {
+        #expect(throws: SponsorMapper.MappingError.self) {
             try sut.map(list)
         }
     }
 
-    @Test func whenLevelIsUnknown_shouldNameTheSponsorAndTheLevel() throws {
+    @Test func whenLevelIsUnknown_shouldNameTheSponsorTheFieldAndTheValue() throws {
         let list = SponsorListDTO(data: [.fixture(name: "Bronze Co", sponsorLevel: "bronze")])
 
         do {
@@ -88,7 +88,8 @@ import Testing
             Issue.record("Expected an unknown level to be refused")
         } catch {
             #expect(error.sponsor == "Bronze Co")
-            #expect(error.level == "bronze")
+            #expect(error.field == .sponsorLevel)
+            #expect(error.value == "bronze")
         }
     }
 
@@ -98,7 +99,7 @@ import Testing
             .fixture(id: "b", sponsorLevel: "bronze"),
         ])
 
-        #expect(throws: SponsorMapper.LevelError.self) {
+        #expect(throws: SponsorMapper.MappingError.self) {
             try sut.map(list)
         }
     }
