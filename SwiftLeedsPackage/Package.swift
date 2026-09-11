@@ -6,6 +6,7 @@ let package = Package(
     name: "SwiftLeedsPackage",
     platforms: [
         .iOS(.v16),
+        .macOS(.v13),
     ],
     products: [
         .library(
@@ -54,6 +55,11 @@ let package = Package(
         ),
         .target(
             name: "SharedAssets",
+            // SwiftGen's generated code reads Bundle.module, which SwiftPM
+            // synthesises only for a target that declares resources.
+            resources: [
+                .process("Resources"),
+            ],
             plugins: [
               .plugin(name: "SwiftGenPlugin", package: "SwiftGenPlugin"),
             ]
