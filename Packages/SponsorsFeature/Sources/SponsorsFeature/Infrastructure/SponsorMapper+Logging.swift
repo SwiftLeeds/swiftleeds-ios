@@ -12,7 +12,10 @@ extension SponsorMapper {
             // building liveValue would capture whichever log existed first.
             @Dependency(\.log) var log
             do throws(MappingError) {
-                return try map(list)
+                let sponsors = try map(list)
+                let entry = LoggedSponsorMappingOutcome.success(count: list.data.count)
+                log(entry.level, .sponsors, entry.message)
+                return sponsors
             } catch {
                 let entry = LoggedSponsorMappingOutcome.failure(error)
                 log(entry.level, .sponsors, entry.message)

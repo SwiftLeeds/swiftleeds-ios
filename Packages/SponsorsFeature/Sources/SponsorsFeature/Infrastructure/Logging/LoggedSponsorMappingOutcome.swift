@@ -5,6 +5,14 @@ struct LoggedSponsorMappingOutcome {
     let level: LogLevel
     let message: LogMessage
 
+    // A count is all a success line needs, and the number of sponsors is public.
+    static func success(count: Int) -> LoggedSponsorMappingOutcome {
+        LoggedSponsorMappingOutcome(
+            level: .debug,
+            message: "The sponsor list was mapped: \(count, name: "count", privacy: .open)"
+        )
+    }
+
     // Everything is open: a sponsor is advertised, and the value came from a public endpoint.
     static func failure(_ error: SponsorMapper.MappingError) -> LoggedSponsorMappingOutcome {
         LoggedSponsorMappingOutcome(
