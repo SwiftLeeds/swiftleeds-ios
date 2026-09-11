@@ -9,14 +9,10 @@ if not project.exists():
     sys.exit(1)
 
 APP_GROUPS_KEY = "com.apple.security.application-groups"
-# ConferenceConfig reads this key from Bundle.main and calls fatalError when it
-# is absent. An extension carries its own bundle, so every target that is
-# granted a group needs its own copy of the name.
+# ConferenceConfig calls fatalError when this key is missing from Bundle.main,
+# and an extension carries its own bundle.
 GROUP_NAME_KEY = "AppGroupIdentifier"
 
-# A build configuration block opens at two tabs and closes at two tabs. Its
-# base xcconfig supplies APP_GROUP_IDENTIFIER, and either the block or that
-# same xcconfig supplies the entitlements file the configuration signs with.
 block = re.compile(
     r"^\t\t(?P<id>[0-9A-F]{24}) /\* (?P<name>[^*]+?) \*/ = \{\n(?P<body>.*?)^\t\t\};$",
     re.MULTILINE | re.DOTALL,
@@ -24,8 +20,8 @@ block = re.compile(
 owner = re.compile(r"Build configuration list for (?P<kind>\w+) \"(?P<target>[^\"]+)\"")
 member = re.compile(r"^\t\t\t\t(?P<id>[0-9A-F]{24}) /\*", re.MULTILINE)
 base_config = re.compile(r"baseConfigurationReference = [0-9A-F]{24} /\* (?P<file>[^*]+?) \*/;")
-# Anchored to the start of the line: GENERATE_INFOPLIST_FILE ends in the name
-# INFOPLIST_FILE, and an unanchored search reads its YES as a file path.
+# Anchored: GENERATE_INFOPLIST_FILE ends in INFOPLIST_FILE, so an unanchored
+# search reads its YES as a file path.
 entitlements = re.compile(r"^\s*CODE_SIGN_ENTITLEMENTS = \"?(?P<path>[^\";]+?)\"?;", re.MULTILINE)
 info_plist = re.compile(r"^\s*INFOPLIST_FILE = \"?(?P<path>[^\";]+?)\"?;", re.MULTILINE)
 setting = re.compile(r"^\s*(?P<key>[A-Z_]+)\s*=\s*(?P<value>.+?)\s*$", re.MULTILINE)
@@ -50,10 +46,8 @@ failed = False
 agreed = []
 blocks = list(block.finditer(project.read_text()))
 
-# A configuration knows its settings but not its target. The configuration list
-# that holds it names the target in its own comment, so map the two together.
-# Only a target signs and only a target carries an Info.plist, so the
-# project-level list is skipped: every target has its own block anyway.
+# The project-level list is skipped: it carries no Info.plist, and every target
+# has its own block.
 target_of = {}
 for match in blocks:
     named = owner.search(match.group("name"))
@@ -102,8 +96,6 @@ for match in blocks:
         failed = True
         continue
 
-    # Being granted the group is half of it. The target also has to be able to
-    # read the group's name, or it traps in ConferenceConfig at launch.
     named = info_plist.search(body)
     plist = named.group("path") if named else read_setting(xcconfig, "INFOPLIST_FILE")
     if plist is None or not Path(plist).exists():
@@ -134,12 +126,10 @@ if checked == 0:
     print("::error::Found no configuration pairing an xcconfig with an entitlements file")
     failed = True
 
-# The app group belongs to the configuration. A literal in Swift pins one brand
-# into a target both brands build, which is how the KotlinLeeds widget read a
-# suite it is not entitled to and silently showed nothing.
+# Both brands build the same targets, so a literal pins one of them.
 literal = re.compile(r"\"group\.[^\"]*\"")
 for source in sorted(Path().glob("**/*.swift")):
-    # Build output holds third-party sources, which are nobody's to fix here.
+    # Build output holds third-party sources.
     if any(part == "build" or part.startswith(".build") for part in source.parts):
         continue
     for number, line in enumerate(source.read_text().splitlines(), start=1):
