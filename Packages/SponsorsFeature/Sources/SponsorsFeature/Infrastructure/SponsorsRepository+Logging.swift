@@ -11,10 +11,16 @@ extension SponsorsRepository {
             // Resolved per call, so a test overriding \.log is honoured. Resolving it while
             // building liveValue would capture whichever log existed first.
             @Dependency(\.log) var log
-            let sponsors = try await fetch()
-            let entry = LoggedSponsorsFetchOutcome.success
-            log(entry.level, .sponsors, entry.message)
-            return sponsors
+            do throws(SponsorFetchError) {
+                let sponsors = try await fetch()
+                let entry = LoggedSponsorsFetchOutcome.success
+                log(entry.level, .sponsors, entry.message)
+                return sponsors
+            } catch {
+                let entry = LoggedSponsorsFetchOutcome.failure(error)
+                log(entry.level, .sponsors, entry.message)
+                throw error
+            }
         }
     }
 }
