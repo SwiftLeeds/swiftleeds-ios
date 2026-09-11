@@ -16,7 +16,7 @@ import Testing
             try await SponsorsQuery.liveValue.load()
         }
 
-        #expect(sponsors.map(\.id) == ["a"])
+        #expect(sponsors.map(\.id) == [SponsorID("a")])
         #expect(sponsors.first?.level == .gold)
     }
 

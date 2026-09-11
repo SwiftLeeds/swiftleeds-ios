@@ -38,7 +38,7 @@ extension SponsorListDTO {
             }
             sponsors.append(
                 Sponsor(
-                    id: dto.id,
+                    id: SponsorID(dto.id),
                     name: dto.name,
                     subtitle: dto.subtitle,
                     level: level,
@@ -53,7 +53,7 @@ extension SponsorListDTO {
 
     private static func job(_ dto: JobDTO) -> Job {
         Job(
-            id: dto.id,
+            id: JobID(dto.id),
             title: dto.title,
             details: dto.details,
             location: dto.location,

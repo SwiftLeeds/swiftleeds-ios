@@ -3,7 +3,7 @@ import SponsorsFeature
 
 extension Sponsor {
     static func fixture(
-        id: String = "sponsor-1",
+        id: SponsorID = SponsorID("sponsor-1"),
         name: String = "CodeMagic",
         subtitle: String = "CI/CD for mobile dev teams",
         level: SponsorLevel = .platinum,

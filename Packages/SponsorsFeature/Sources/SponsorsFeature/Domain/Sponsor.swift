@@ -5,7 +5,7 @@ import Foundation
 /// A read model: nothing writes one, and it guards no invariant. It is shaped
 /// for the screen that shows it.
 public struct Sponsor: Equatable, Hashable, Identifiable, Sendable {
-    public let id: String
+    public let id: SponsorID
     public let name: String
     public let subtitle: String
     public let level: SponsorLevel
@@ -21,7 +21,7 @@ public struct Sponsor: Equatable, Hashable, Identifiable, Sendable {
     public let jobs: [Job]
 
     public init(
-        id: String,
+        id: SponsorID,
         name: String,
         subtitle: String,
         level: SponsorLevel,

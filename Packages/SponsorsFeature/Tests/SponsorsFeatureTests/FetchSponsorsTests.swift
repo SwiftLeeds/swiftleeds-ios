@@ -5,8 +5,8 @@ import Testing
 @Suite struct FetchSponsorsTests {
     @Test func whenQueryReturnsSponsors_shouldGroupThemByLevel() async throws {
         let query = SponsorsQuery.returning([
-            .fixture(id: "a", level: .silver),
-            .fixture(id: "b", level: .platinum),
+            .fixture(id: SponsorID("a"), level: .silver),
+            .fixture(id: SponsorID("b"), level: .platinum),
         ])
 
         let sponsors = try await withDependencies {
@@ -16,7 +16,7 @@ import Testing
         }
 
         #expect(sponsors.rankedLevels == [.platinum, .silver])
-        #expect(sponsors.sponsors(at: .platinum).map(\.id) == ["b"])
+        #expect(sponsors.sponsors(at: .platinum).map(\.id) == [SponsorID("b")])
     }
 
     @Test func whenQueryReturnsNothing_shouldReturnEmpty() async throws {

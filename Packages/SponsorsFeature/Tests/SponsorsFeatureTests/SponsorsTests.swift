@@ -4,9 +4,9 @@ import Testing
 @Suite struct SponsorsTests {
     @Test func whenGroupingMixedLevels_shouldRankBestFirst() {
         let sponsors = Sponsors([
-            .fixture(id: "a", level: .silver),
-            .fixture(id: "b", level: .platinum),
-            .fixture(id: "c", level: .gold),
+            .fixture(id: SponsorID("a"), level: .silver),
+            .fixture(id: SponsorID("b"), level: .platinum),
+            .fixture(id: SponsorID("c"), level: .gold),
         ])
 
         #expect(sponsors.rankedLevels == [.platinum, .gold, .silver])
@@ -14,8 +14,8 @@ import Testing
 
     @Test func whenALevelHasNoSponsors_shouldOmitIt() {
         let sponsors = Sponsors([
-            .fixture(id: "a", level: .platinum),
-            .fixture(id: "b", level: .silver),
+            .fixture(id: SponsorID("a"), level: .platinum),
+            .fixture(id: SponsorID("b"), level: .silver),
         ])
 
         #expect(sponsors.rankedLevels == [.platinum, .silver])
@@ -23,9 +23,9 @@ import Testing
     }
 
     @Test func whenGrouping_shouldKeepEverySponsorAtItsOwnLevel() {
-        let first = Sponsor.fixture(id: "a", level: .gold)
-        let second = Sponsor.fixture(id: "b", level: .gold)
-        let other = Sponsor.fixture(id: "c", level: .platinum)
+        let first = Sponsor.fixture(id: SponsorID("a"), level: .gold)
+        let second = Sponsor.fixture(id: SponsorID("b"), level: .gold)
+        let other = Sponsor.fixture(id: SponsorID("c"), level: .platinum)
 
         let sponsors = Sponsors([first, second, other])
 

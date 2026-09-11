@@ -13,7 +13,7 @@ import Testing
 
         let sponsors = try sut.map(data, try .fixture(statusCode: 200))
 
-        #expect(sponsors.map(\.id) == ["a", "b"])
+        #expect(sponsors.map(\.id) == [SponsorID("a"), SponsorID("b")])
         #expect(sponsors.map(\.level) == [.platinum, .gold])
         #expect(sponsors.first?.name == "CodeMagic")
     }
