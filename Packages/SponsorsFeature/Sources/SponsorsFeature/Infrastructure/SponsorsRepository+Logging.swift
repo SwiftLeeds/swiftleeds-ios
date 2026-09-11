@@ -8,7 +8,7 @@ extension SponsorsRepository {
     /// mapper. This line says what that meant for the person waiting for the sponsors.
     package func logging() -> SponsorsRepository {
         SponsorsRepository { () async throws(SponsorFetchError) -> Sponsors in
-            // Resolved per call, so a test overriding \.log is honoured. Resolving it while
+            // Resolved per call, so a test overriding \.log is honored. Resolving it while
             // building liveValue would capture whichever log existed first.
             @Dependency(\.log) var log
             do throws(SponsorFetchError) {

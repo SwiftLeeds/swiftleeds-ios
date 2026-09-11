@@ -3,7 +3,7 @@ import LogKit
 import SponsorsFeature
 import Testing
 
-/// The public `SponsorFetchError` is deliberately bare, so these assert the reason survives to the
+/// The public `SponsorFetchError` carries no reason, so these assert the reason survives to the
 /// log even though the caller never sees it.
 @Suite struct SponsorMapperLoggingTests {
     @Test func whenLevelIsUnknown_shouldLogAtErrorLevel() throws {
