@@ -32,6 +32,31 @@ import Testing
         #expect(event.level == .error)
     }
 
+    @Test func whenFetchFails_shouldRethrowFailure() async {
+        await withDependencies {
+            $0.log = LogRecorder().log
+        } operation: {
+            let sut = SponsorsRepository.failing(with: .couldNotReachServer).logging()
+
+            await #expect(throws: SponsorFetchError.couldNotReachServer) {
+                try await sut.fetch()
+            }
+        }
+    }
+
+    /// A destination groups by message, so two outcomes sharing one message could never be told
+    /// apart when filtering.
+    @Test func whenOutcomesDiffer_shouldLogDifferentMessages() async throws {
+        let messages = try await [
+            #require(try await successEvent()),
+            #require(await logEvent(whenRepositoryThrows: .couldNotReachServer)),
+            #require(await logEvent(whenRepositoryThrows: .invalidResponse)),
+            #require(await logEvent(whenRepositoryThrows: .unknown)),
+        ].map(\.message)
+
+        #expect(Set(messages).count == messages.count)
+    }
+
     private func logEvent(whenRepositoryThrows error: SponsorFetchError) async -> LogEvent? {
         let recorder = LogRecorder()
 
