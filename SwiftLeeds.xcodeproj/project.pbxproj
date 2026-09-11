@@ -71,7 +71,7 @@
 		74A09FEA28C6779300E03F39 /* SwiftLeedsWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 74A09FDD28C6778C00E03F39 /* SwiftLeedsWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		74A09FF028C688E700E03F39 /* BuildFile in Resources */ = {isa = PBXBuildFile; };
 		74A09FF128C688E700E03F39 /* BuildFile in Resources */ = {isa = PBXBuildFile; };
-		74B14FB028CE21D7004C0A40 /* TimeineProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B14FAF28CE21D7004C0A40 /* TimeineProvider.swift */; };
+		74B14FB028CE21D7004C0A40 /* Provider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B14FAF28CE21D7004C0A40 /* Provider.swift */; };
 		74B14FB228CE2221004C0A40 /* SwiftLeedsWidgetEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B14FB128CE2221004C0A40 /* SwiftLeedsWidgetEntry.swift */; };
 		74B14FB428CE2245004C0A40 /* SwiftLeedsWidgetEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B14FB328CE2245004C0A40 /* SwiftLeedsWidgetEntryView.swift */; };
 		74E62F7228CA98EA004422F9 /* SwiftLeedsSmallWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E62F7128CA98EA004422F9 /* SwiftLeedsSmallWidgetView.swift */; };
@@ -252,7 +252,7 @@
 		74A09FE328C6778C00E03F39 /* SwiftLeedsWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftLeedsWidget.swift; sourceTree = "<group>"; };
 		74A09FE728C6779300E03F39 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		74B14FAD28CB22B4004C0A40 /* SwiftLeedsWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SwiftLeedsWidgetExtension.entitlements; sourceTree = "<group>"; };
-		74B14FAF28CE21D7004C0A40 /* TimeineProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeineProvider.swift; sourceTree = "<group>"; };
+		74B14FAF28CE21D7004C0A40 /* Provider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Provider.swift; sourceTree = "<group>"; };
 		74B14FB128CE2221004C0A40 /* SwiftLeedsWidgetEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftLeedsWidgetEntry.swift; sourceTree = "<group>"; };
 		74B14FB328CE2245004C0A40 /* SwiftLeedsWidgetEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftLeedsWidgetEntryView.swift; sourceTree = "<group>"; };
 		74E62F7128CA98EA004422F9 /* SwiftLeedsSmallWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftLeedsSmallWidgetView.swift; sourceTree = "<group>"; };
@@ -427,7 +427,7 @@
 		74B14FAE28CE13E4004C0A40 /* WidgetSetup */ = {
 			isa = PBXGroup;
 			children = (
-				74B14FAF28CE21D7004C0A40 /* TimeineProvider.swift */,
+				74B14FAF28CE21D7004C0A40 /* Provider.swift */,
 				74B14FB128CE2221004C0A40 /* SwiftLeedsWidgetEntry.swift */,
 				7406572828E240720087F44F /* WidgetConstants.swift */,
 			);
@@ -953,7 +953,7 @@
 				74E62F7228CA98EA004422F9 /* SwiftLeedsSmallWidgetView.swift in Sources */,
 				7406572928E240720087F44F /* WidgetConstants.swift in Sources */,
 				0B59B5672E70E5D400820C3C /* TeamMember.swift in Sources */,
-				74B14FB028CE21D7004C0A40 /* TimeineProvider.swift in Sources */,
+				74B14FB028CE21D7004C0A40 /* Provider.swift in Sources */,
 				74E62F7828CADBE0004422F9 /* Activity.swift in Sources */,
 				74E62F7A28CAE4DF004422F9 /* Speaker.swift in Sources */,
 				74E62F7728CADBD8004422F9 /* Schedule.swift in Sources */,
