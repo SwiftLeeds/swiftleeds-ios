@@ -1,4 +1,3 @@
-import Dependencies
 import Foundation
 import SponsorsFeature
 import Testing
@@ -6,57 +5,101 @@ import Testing
 @Suite struct SponsorMapperTests {
     private let sut = SponsorMapper.live
 
-    @Test func whenResponseIsWellFormed_shouldDecodeAndRead() throws {
-        let data = SponsorsJSON.list(
-            SponsorsJSON.sponsor(id: "a", level: "platinum"),
-            SponsorsJSON.sponsor(id: "b", level: "gold")
-        )
+    @Test func whenListHasSponsors_shouldMapEveryOne() throws {
+        let list = SponsorListDTO(data: [
+            .fixture(id: "a", name: "CodeMagic", sponsorLevel: "platinum"),
+            .fixture(id: "b", name: "Screenshotbot", sponsorLevel: "gold"),
+        ])
 
-        let sponsors = try sut.map(data, try .fixture(statusCode: 200))
+        let sponsors = try sut.map(list)
 
-        #expect(sponsors.map(\.id) == [SponsorID("a"), SponsorID("b")])
+        #expect(sponsors.rankedLevels == [.platinum, .gold])
+        #expect(sponsors.sponsors(at: .platinum).map(\.id) == [SponsorID("a")])
+        #expect(sponsors.sponsors(at: .platinum).first?.name == "CodeMagic")
+        #expect(sponsors.sponsors(at: .platinum).first?.subtitle == "CI/CD for mobile dev teams")
     }
 
-    @Test func whenBodyIsNotTheExpectedShape_shouldThrowCouldNotDecode() throws {
-        let response = try HTTPURLResponse.fixture(statusCode: 200)
+    @Test func whenListIsEmpty_shouldMapToNoSponsors() throws {
+        #expect(try sut.map(SponsorListDTO(data: [])).isEmpty)
+    }
 
-        #expect(throws: SponsorMapper.ResponseError.self) {
-            try sut.map(Data("{\"unexpected\":true}".utf8), response)
+    @Test func whenLevelsArriveOutOfOrder_shouldRankThem() throws {
+        let list = SponsorListDTO(data: [
+            .fixture(id: "a", sponsorLevel: "silver"),
+            .fixture(id: "b", sponsorLevel: "platinum"),
+            .fixture(id: "c", sponsorLevel: "gold"),
+        ])
+
+        #expect(try sut.map(list).rankedLevels == [.platinum, .gold, .silver])
+    }
+
+    @Test func whenSponsorCarriesJobs_shouldMapThem() throws {
+        let list = SponsorListDTO(data: [
+            .fixture(jobs: [.fixture(title: "Senior iOS Engineer", location: "Leeds")]),
+        ])
+
+        let jobs = try #require(sut.map(list).sponsors(at: .platinum).first?.jobs)
+
+        #expect(jobs.map(\.title) == ["Senior iOS Engineer"])
+        #expect(jobs.first?.location == "Leeds")
+    }
+
+    // MARK: - A missing link costs a link, not the list
+
+    @Test func whenLogoIsMissing_shouldMapSponsorWithoutLogo() throws {
+        let list = SponsorListDTO(data: [.fixture(image: "")])
+
+        let sponsor = try #require(sut.map(list).sponsors(at: .platinum).first)
+
+        #expect(sponsor.logoURL == nil)
+    }
+
+    @Test func whenWebsiteIsMissing_shouldMapSponsorWithoutWebsite() throws {
+        let list = SponsorListDTO(data: [.fixture(url: "")])
+
+        let sponsor = try #require(sut.map(list).sponsors(at: .platinum).first)
+
+        #expect(sponsor.websiteURL == nil)
+    }
+
+    @Test func whenJobLinkIsMissing_shouldMapJobWithoutLink() throws {
+        let list = SponsorListDTO(data: [.fixture(jobs: [.fixture(url: "")])])
+
+        let job = try #require(sut.map(list).sponsors(at: .platinum).first?.jobs.first)
+
+        #expect(job.url == nil)
+    }
+
+    // MARK: - A level we do not sell is a refusal
+
+    @Test func whenLevelIsUnknown_shouldRefuseTheList() throws {
+        let list = SponsorListDTO(data: [.fixture(name: "Bronze Co", sponsorLevel: "bronze")])
+
+        #expect(throws: SponsorMapper.LevelError.self) {
+            try sut.map(list)
         }
     }
 
-    @Test(arguments: [404, 500])
-    func whenStatusIsNotOK_shouldThrowUnexpectedStatus(statusCode: Int) throws {
-        let data = SponsorsJSON.list(SponsorsJSON.sponsor())
-        let response = try HTTPURLResponse.fixture(statusCode: statusCode)
+    @Test func whenLevelIsUnknown_shouldNameTheSponsorAndTheLevel() throws {
+        let list = SponsorListDTO(data: [.fixture(name: "Bronze Co", sponsorLevel: "bronze")])
 
-        #expect(throws: SponsorMapper.ResponseError.self) {
-            try sut.map(data, response)
+        do {
+            _ = try sut.map(list)
+            Issue.record("Expected an unknown level to be refused")
+        } catch {
+            #expect(error.sponsor == "Bronze Co")
+            #expect(error.level == "bronze")
         }
     }
 
-    // A refusal from translation reaches the caller.
-    @Test func whenReaderRefuses_shouldThrowUnknownLevel() throws {
-        let data = SponsorsJSON.list(SponsorsJSON.sponsor(level: "bronze"))
-        let response = try HTTPURLResponse.fixture(statusCode: 200)
+    @Test func whenOneLevelIsUnknown_shouldRefuseEvenTheReadableSponsors() throws {
+        let list = SponsorListDTO(data: [
+            .fixture(id: "a", sponsorLevel: "platinum"),
+            .fixture(id: "b", sponsorLevel: "bronze"),
+        ])
 
-        #expect(throws: SponsorMapper.ResponseError.self) {
-            try sut.map(data, response)
+        #expect(throws: SponsorMapper.LevelError.self) {
+            try sut.map(list)
         }
-    }
-
-    // Translating is the reader's job. Removing that call fails this and
-    // nothing else.
-    @Test func whenDecoded_shouldReturnWhateverTheReaderMakes() throws {
-        let data = SponsorsJSON.list(SponsorsJSON.sponsor(id: "ignored"))
-        let response = try HTTPURLResponse.fixture(statusCode: 200)
-
-        let sponsors = try withDependencies {
-            $0.sponsorsReader = SponsorsReader { _ in [.fixture(id: SponsorID("from-the-reader"))] }
-        } operation: {
-            try sut.map(data, response)
-        }
-
-        #expect(sponsors.map(\.id) == [SponsorID("from-the-reader")])
     }
 }

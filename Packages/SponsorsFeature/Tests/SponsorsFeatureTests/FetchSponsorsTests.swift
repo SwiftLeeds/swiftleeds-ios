@@ -3,25 +3,24 @@ import SponsorsFeature
 import Testing
 
 @Suite struct FetchSponsorsTests {
-    @Test func whenQueryReturnsSponsors_shouldGroupThemByLevel() async throws {
-        let query = SponsorsQuery.returning([
+    @Test func whenRepositoryReturnsSponsors_shouldHandThemBack() async throws {
+        let expected = Sponsors([
             .fixture(id: SponsorID("a"), level: .silver),
             .fixture(id: SponsorID("b"), level: .platinum),
         ])
 
         let sponsors = try await withDependencies {
-            $0.sponsorsQuery = query
+            $0.sponsorsRepository = .returning(expected)
         } operation: {
             try await FetchSponsors.liveValue()
         }
 
-        #expect(sponsors.rankedLevels == [.platinum, .silver])
-        #expect(sponsors.sponsors(at: .platinum).map(\.id) == [SponsorID("b")])
+        #expect(sponsors == expected)
     }
 
-    @Test func whenQueryReturnsNothing_shouldReturnEmpty() async throws {
+    @Test func whenRepositoryReturnsNothing_shouldReturnEmpty() async throws {
         let sponsors = try await withDependencies {
-            $0.sponsorsQuery = .returning([])
+            $0.sponsorsRepository = .returning(Sponsors([]))
         } operation: {
             try await FetchSponsors.liveValue()
         }
@@ -29,9 +28,9 @@ import Testing
         #expect(sponsors.isEmpty)
     }
 
-    @Test func whenQueryFails_shouldThrowTheSameError() async {
+    @Test func whenRepositoryFails_shouldThrowTheSameError() async {
         await withDependencies {
-            $0.sponsorsQuery = .failing(with: .couldNotReachServer)
+            $0.sponsorsRepository = .failing(with: .couldNotReachServer)
         } operation: {
             await #expect(throws: SponsorFetchError.couldNotReachServer) {
                 try await FetchSponsors.liveValue()

@@ -5,18 +5,18 @@ import SponsorsFeature
 import Testing
 
 // Drives the composed `liveValue` with only the transport stubbed.
-@Suite struct SponsorsQueryIntegrationTests {
+@Suite struct SponsorsRepositoryIntegrationTests {
     @Test func whenServerAnswersWell_shouldReturnSponsors() async throws {
         let data = SponsorsJSON.list(SponsorsJSON.sponsor(id: "a", level: "gold"))
 
         let sponsors = try await withDependencies {
             $0.httpClient = .responding(with: data, statusCode: 200)
         } operation: {
-            try await SponsorsQuery.liveValue.load()
+            try await SponsorsRepository.liveValue.fetch()
         }
 
-        #expect(sponsors.map(\.id) == [SponsorID("a")])
-        #expect(sponsors.first?.level == .gold)
+        #expect(sponsors.rankedLevels == [.gold])
+        #expect(sponsors.sponsors(at: .gold).map(\.id) == [SponsorID("a")])
     }
 
     @Test func whenRequestFails_shouldThrowCouldNotReachServer() async throws {
@@ -24,7 +24,7 @@ import Testing
             $0.httpClient = .failing(with: URLError(.notConnectedToInternet))
         } operation: {
             await #expect(throws: SponsorFetchError.couldNotReachServer) {
-                try await SponsorsQuery.liveValue.load()
+                try await SponsorsRepository.liveValue.fetch()
             }
         }
     }
@@ -34,32 +34,49 @@ import Testing
             $0.httpClient = .responding(with: Data("nonsense".utf8), statusCode: 200)
         } operation: {
             await #expect(throws: SponsorFetchError.invalidResponse) {
-                try await SponsorsQuery.liveValue.load()
+                try await SponsorsRepository.liveValue.fetch()
             }
         }
     }
 
-    @Test func whenLevelIsUnknown_shouldThrowInvalidResponse() async throws {
+    @Test func whenMapperRefuses_shouldThrowInvalidResponse() async throws {
         let data = SponsorsJSON.list(SponsorsJSON.sponsor(level: "bronze"))
 
         await withDependencies {
             $0.httpClient = .responding(with: data, statusCode: 200)
         } operation: {
             await #expect(throws: SponsorFetchError.invalidResponse) {
-                try await SponsorsQuery.liveValue.load()
+                try await SponsorsRepository.liveValue.fetch()
             }
         }
     }
 
-    @Test func whenServerRefuses_shouldThrowUnknown() async throws {
+    @Test(arguments: [404, 500])
+    func whenServerRefuses_shouldThrowUnknown(statusCode: Int) async throws {
         let data = SponsorsJSON.list(SponsorsJSON.sponsor())
 
         await withDependencies {
-            $0.httpClient = .responding(with: data, statusCode: 500)
+            $0.httpClient = .responding(with: data, statusCode: statusCode)
         } operation: {
             await #expect(throws: SponsorFetchError.unknown) {
-                try await SponsorsQuery.liveValue.load()
+                try await SponsorsRepository.liveValue.fetch()
             }
         }
+    }
+
+    // Mapping is the mapper's job. Removing that call fails this and nothing else.
+    @Test func whenDecoded_shouldReturnWhateverTheMapperMakes() async throws {
+        let data = SponsorsJSON.list(SponsorsJSON.sponsor(id: "ignored"))
+
+        let sponsors = try await withDependencies {
+            $0.httpClient = .responding(with: data, statusCode: 200)
+            $0.sponsorMapper = SponsorMapper { _ in
+                Sponsors([.fixture(id: SponsorID("from-the-mapper"))])
+            }
+        } operation: {
+            try await SponsorsRepository.liveValue.fetch()
+        }
+
+        #expect(sponsors.sponsors(at: .platinum).map(\.id) == [SponsorID("from-the-mapper")])
     }
 }

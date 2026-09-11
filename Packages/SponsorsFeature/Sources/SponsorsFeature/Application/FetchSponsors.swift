@@ -15,8 +15,8 @@ public struct FetchSponsors: Sendable {
 extension FetchSponsors: DependencyKey {
     public static var liveValue: FetchSponsors {
         FetchSponsors { () async throws(SponsorFetchError) -> Sponsors in
-            @Dependency(\.sponsorsQuery) var sponsorsQuery
-            return Sponsors(try await sponsorsQuery.load())
+            @Dependency(\.sponsorsRepository) var sponsorsRepository
+            return try await sponsorsRepository.fetch()
         }
     }
 
