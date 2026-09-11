@@ -59,7 +59,7 @@ extension SponsorMapper {
 }
 
 private enum SponsorMapperKey: DependencyKey {
-    static var liveValue: SponsorMapper { .live }
+    static var liveValue: SponsorMapper { .live.logging() }
     static var testValue: SponsorMapper { liveValue }
 }
 

@@ -4,6 +4,10 @@ import NetworkKit
 
 extension SponsorsRepository: DependencyKey {
     package static var liveValue: SponsorsRepository {
+        live.logging()
+    }
+
+    static var live: SponsorsRepository {
         SponsorsRepository { () async throws(SponsorFetchError) -> Sponsors in
             @Dependency(\.httpClient) var httpClient
             @Dependency(\.sponsorMapper) var sponsorMapper
