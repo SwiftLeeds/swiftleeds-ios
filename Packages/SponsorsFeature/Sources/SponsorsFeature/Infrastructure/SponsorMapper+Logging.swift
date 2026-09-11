@@ -4,8 +4,7 @@ import LogKit
 extension SponsorMapper {
     /// Records whether the list mapped, then returns or rethrows.
     ///
-    /// The only place a rejection's reason survives. The public ``SponsorFetchError`` does not
-    /// carry it.
+    /// The failure line carries the sponsor, the field and the refused value.
     package func logging() -> SponsorMapper {
         SponsorMapper { list throws(MappingError) in
             // Resolved per call, so a test overriding \.log is honored. Resolving it while

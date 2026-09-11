@@ -7,8 +7,8 @@ import Testing
 
 // Drives the composed `liveValue` with only the transport stubbed.
 @Suite struct SponsorsRepositoryIntegrationTests {
-    /// The mapper records the count, then the repository records the outcome. Two seams, two
-    /// lines, and no third line from anywhere else.
+    // The mapper records the count, then the repository records the outcome. Two seams, two
+    // lines, and no third line from anywhere else.
     @Test func whenServerAnswersWell_shouldLogMappingThenFetch() async throws {
         let recorder = LogRecorder()
         let data = SponsorsJSON.list(SponsorsJSON.sponsor())

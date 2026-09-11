@@ -3,8 +3,7 @@ import LogKit
 import SponsorsFeature
 import Testing
 
-/// The public `SponsorFetchError` carries no reason, so these assert the reason survives to the
-/// log even though the caller never sees it.
+// The caller never sees why a list was refused. These assert the reason reaches the log.
 @Suite struct SponsorMapperLoggingTests {
     @Test func whenLevelIsUnknown_shouldLogAtErrorLevel() throws {
         let list = SponsorListDTO(data: [.fixture(name: "Bronze Co", sponsorLevel: "bronze")])
@@ -38,8 +37,8 @@ import Testing
         #expect(event.fields.first { String($0.name) == "value" }?.value == .string("bronze"))
     }
 
-    /// A list is mapped every time the sponsors screen loads, so it records at the level the
-    /// platform drops unless someone is watching.
+    // A list is mapped every time the sponsors screen loads, so it records at the level the
+    // platform drops unless someone is watching.
     @Test func whenListMaps_shouldLogAtDebugLevel() throws {
         let list = SponsorListDTO(data: [.fixture(id: "a"), .fixture(id: "b")])
 
@@ -70,8 +69,8 @@ import Testing
         }
     }
 
-    /// A destination groups by message, so two outcomes sharing one message could never be told
-    /// apart when filtering.
+    // A destination groups by message, so two outcomes sharing one message could never be told
+    // apart when filtering.
     @Test func whenOutcomesDiffer_shouldLogDifferentMessages() throws {
         let messages = try [
             #require(try mappedEvent(for: SponsorListDTO(data: [.fixture()]))),
