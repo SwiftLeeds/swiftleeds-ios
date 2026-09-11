@@ -256,6 +256,7 @@
 		A11CE57000000000000000A1 /* SecureStorageKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SecureStorageKit; sourceTree = "<group>"; };
 		A11CE57000000000000000A2 /* AuthenticationFeature */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = AuthenticationFeature; sourceTree = "<group>"; };
 		A11CE57000000000000000A5 /* LogKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = LogKit; sourceTree = "<group>"; };
+		A11CE57000000000000000A6 /* SponsorsFeature */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SponsorsFeature; sourceTree = "<group>"; };
 		A11CE57000000000000000A4 /* NetworkKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = NetworkKit; sourceTree = "<group>"; };
 		A11CE57000000000000000A3 /* AuthenticationUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = AuthenticationUI; sourceTree = "<group>"; };
 		893A122D593379F84605F70C /* SwiftLeedsColors.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = SwiftLeedsColors.xcassets; sourceTree = "<group>"; };
@@ -445,6 +446,7 @@
 				A11CE57000000000000000A1 /* SecureStorageKit */,
 				A11CE57000000000000000A2 /* AuthenticationFeature */,
 				A11CE57000000000000000A5 /* LogKit */,
+				A11CE57000000000000000A6 /* SponsorsFeature */,
 				A11CE57000000000000000A4 /* NetworkKit */,
 				A11CE57000000000000000A3 /* AuthenticationUI */,
 			);
