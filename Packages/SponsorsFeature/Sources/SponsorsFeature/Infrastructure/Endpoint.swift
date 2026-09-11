@@ -8,6 +8,7 @@ package enum Endpoint: HTTPRequestConvertible, Equatable, Hashable, Sendable {
         switch self {
         case .sponsors:
             .get("api/v1/sponsors")
+                .appending(headerField: .accept, .application.json)
         }
     }
 }

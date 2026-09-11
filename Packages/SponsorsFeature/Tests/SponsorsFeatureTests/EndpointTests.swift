@@ -17,6 +17,12 @@ import Testing
         #expect(request.url == expected)
     }
 
+    @Test func whenSponsorsRequestIsBuilt_shouldAskForJSON() throws {
+        let request = try Endpoint.sponsors.urlRequest(baseURL: baseURL)
+
+        #expect(request.value(forHTTPHeaderField: "Accept") == "application/json")
+    }
+
     @Test func whenSponsorsRequestIsBuilt_shouldCarryNoContent() throws {
         let request = try Endpoint.sponsors.urlRequest(baseURL: baseURL)
 
