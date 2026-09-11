@@ -1,9 +1,14 @@
-import CachedAsyncImage
 import DesignKit
 import SharedAssets
 import SwiftUI
 
-struct FancyHeaderView: View {
+/// A screen header: a venue photograph, one or more images overlapping its lower
+/// edge, and a title under them.
+///
+/// Supply `foregroundImageURLs` to load the overlapping images from the network,
+/// or `foregroundImage` for one you already hold. With neither, the header shows
+/// the conference icon.
+public struct FancyHeaderView: View {
     private let title: String
     private let foregroundImageURLs: [URL]
     private let foregroundImage: Image?
@@ -13,14 +18,13 @@ struct FancyHeaderView: View {
 
     @State private var foregroundGroupViewHeight: CGFloat = .zero
 
-    // MARK: - Initialisers
-    init(title: String, foregroundImageURLs: [URL] = [], foregroundImage: Image? = nil) {
+    public init(title: String, foregroundImageURLs: [URL] = [], foregroundImage: Image? = nil) {
         self.title = title
         self.foregroundImageURLs = foregroundImageURLs
         self.foregroundImage = foregroundImage
     }
 
-    var body: some View {
+    public var body: some View {
         Rectangle()
             .foregroundColor(.clear)
             .edgesIgnoringSafeArea(.top)
@@ -130,7 +134,7 @@ struct FancyHeaderView_Previews: PreviewProvider {
                 Text(verbatim: "Remote Data")
                 FancyHeaderView(
                     title: "Swift Taylor",
-                    foregroundImageURLs: [URL(string: "https://cdn-az.allevents.in/events5/banners/458482c4fc7489448aa3d77f6e2cd5d0553fa5edd7178dbf18cf986d2172eaf2-rimg-w1200-h675-gmir.jpg?v=1655230338")!]
+                    foregroundImageURLs: remoteImageURLs
                 )
 
             }
@@ -145,11 +149,14 @@ struct FancyHeaderView_Previews: PreviewProvider {
                 Text(verbatim: "Remote Data")
                 FancyHeaderView(
                     title: "Swift Taylor",
-                    foregroundImageURLs: [
-                        URL(string: "https://cdn-az.allevents.in/events5/banners/458482c4fc7489448aa3d77f6e2cd5d0553fa5edd7178dbf18cf986d2172eaf2-rimg-w1200-h675-gmir.jpg?v=1655230338")!
-                    ]
+                    foregroundImageURLs: remoteImageURLs
                 )
             }
         }
     }
+
+    private static let remoteImageURLs = [
+        URL(string: "https://cdn-az.allevents.in/events5/banners/458482c4fc7489448aa3d77f6e2cd5d0553"
+            + "fa5edd7178dbf18cf986d2172eaf2-rimg-w1200-h675-gmir.jpg?v=1655230338"),
+    ].compactMap { $0 }
 }

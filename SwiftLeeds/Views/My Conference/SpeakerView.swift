@@ -1,5 +1,6 @@
 import DesignKit
 import SwiftUI
+import UIComponents
 
 struct SpeakerView: View {
     let presentation: Presentation

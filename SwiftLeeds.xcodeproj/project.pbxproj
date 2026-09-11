@@ -22,7 +22,6 @@
 		0B4CB3EB28EAF5E300246E62 /* TalkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AED26F73286764F000E06064 /* TalkCell.swift */; };
 		0B4CB3EC28EAF5E900246E62 /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5EFD74289E7CBF00464FE1 /* ActivityView.swift */; };
 		0B4CB3EE28EAF5FB00246E62 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1C800F289E9F3800996659 /* String.swift */; };
-		0B4CB3EF28EAF60200246E62 /* FancyHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3831112884A96600030002 /* FancyHeaderView.swift */; };
 		0B4CB3F028EAF60800246E62 /* SpeakerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394653AA288BB7C800212E1C /* SpeakerView.swift */; };
 		0B4CB3F128EAF61000246E62 /* StackedTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE452875B06500911F03 /* StackedTileView.swift */; };
 		0B4CB3F228EAF61600246E62 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB06BD028CF8D2100E51967 /* WebView.swift */; };
@@ -42,7 +41,6 @@
 		106111EE0332466C39422B5E /* TeamMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41AB02B37BB6C44A78DC7FF9 /* TeamMapper.swift */; };
 		13707030C1082B933C28151D /* SwiftLeedsAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4301D0D3F1C8979276E77084 /* SwiftLeedsAssets.xcassets */; };
 		1ED8FD9CBE313B23E73E8132 /* KotlinLeedsColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B3FFD994DBE3F62216150F8 /* KotlinLeedsColors.xcassets */; };
-		2A3831122884A96600030002 /* FancyHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3831112884A96600030002 /* FancyHeaderView.swift */; };
 		39345FDA288F17EE0031BCFF /* BottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39345FD9288F17EE0031BCFF /* BottomSheetView.swift */; };
 		394653AB288BB7C800212E1C /* SpeakerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394653AA288BB7C800212E1C /* SpeakerView.swift */; };
 		39ED0034288F113500AB337A /* LocalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39ED0033288F113500AB337A /* LocalCell.swift */; };
@@ -86,6 +84,8 @@
 		A11CE57000000000000000D6 /* LogKitUnified in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C6 /* LogKitUnified */; };
 		A11CE57000000000000000D7 /* NetworkKit in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C7 /* NetworkKit */; };
 		A11CE57000000000000000D9 /* SponsorsFeature in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C9 /* SponsorsFeature */; };
+		A11CE57000000000000000DA /* UIComponents in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000CA /* UIComponents */; };
+		A11CE57000000000000000DB /* UIComponents in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000CB /* UIComponents */; };
 		F8AC9B695FEAFDBD19A01A10 /* NetworkKit in Frameworks */ = {isa = PBXBuildFile; productRef = 631E9D02432C1E1A187A3E03 /* NetworkKit */; };
 		E44377685B94DC7F6465ED4A /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = 39093D62C747210F6BA83C1E /* Dependencies */; };
 		A11CE57000000000000000D3 /* SecureStorageKit in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C3 /* SecureStorageKit */; };
@@ -217,7 +217,6 @@
 		0B59B5702E70EA6600820C3C /* About.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = About.swift; sourceTree = "<group>"; };
 		0BB52A782A5FDC2614FF7243 /* KotlinLeedsAppClip.entitlements */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.entitlements; path = KotlinLeedsAppClip.entitlements; sourceTree = "<group>"; };
 		1AA9B4909D551477D0C04106 /* KotlinLeeds.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = KotlinLeeds.xcconfig; sourceTree = "<group>"; };
-		2A3831112884A96600030002 /* FancyHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FancyHeaderView.swift; sourceTree = "<group>"; };
 		3275AD6541323F056786E508 /* SwiftLeedsAssets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = SwiftLeedsAssets.xcassets; sourceTree = "<group>"; };
 		39345FD9288F17EE0031BCFF /* BottomSheetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BottomSheetView.swift; sourceTree = "<group>"; };
 		394653AA288BB7C800212E1C /* SpeakerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakerView.swift; sourceTree = "<group>"; };
@@ -254,6 +253,7 @@
 		A11CE57000000000000000A2 /* AuthenticationFeature */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = AuthenticationFeature; sourceTree = "<group>"; };
 		A11CE57000000000000000A5 /* LogKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = LogKit; sourceTree = "<group>"; };
 		A11CE57000000000000000A6 /* SponsorsFeature */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SponsorsFeature; sourceTree = "<group>"; };
+		A11CE57000000000000000A7 /* UIComponents */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = UIComponents; sourceTree = "<group>"; };
 		A11CE57000000000000000A4 /* NetworkKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = NetworkKit; sourceTree = "<group>"; };
 		A11CE57000000000000000A3 /* AuthenticationUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = AuthenticationUI; sourceTree = "<group>"; };
 		893A122D593379F84605F70C /* SwiftLeedsColors.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = SwiftLeedsColors.xcassets; sourceTree = "<group>"; };
@@ -309,6 +309,7 @@
 				0B4CB3FC28EAF7C500246E62 /* CachedAsyncImage in Frameworks */,
 				7B31C8EF2ED0959A00FEEDF7 /* DesignKit in Frameworks */,
 				F8AC9B695FEAFDBD19A01A10 /* NetworkKit in Frameworks */,
+				A11CE57000000000000000DB /* UIComponents in Frameworks */,
 				E44377685B94DC7F6465ED4A /* Dependencies in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -340,6 +341,7 @@
 				A11CE57000000000000000D6 /* LogKitUnified in Frameworks */,
 				A11CE57000000000000000D7 /* NetworkKit in Frameworks */,
 				A11CE57000000000000000D9 /* SponsorsFeature in Frameworks */,
+				A11CE57000000000000000DA /* UIComponents in Frameworks */,
 				A11CE57000000000000000D3 /* SecureStorageKit in Frameworks */,
 				A11CE57000000000000000D4 /* SecureStorageKitKeychain in Frameworks */,
 				A11CE57000000000000000D8 /* Dependencies in Frameworks */,
@@ -445,6 +447,7 @@
 				A11CE57000000000000000A2 /* AuthenticationFeature */,
 				A11CE57000000000000000A5 /* LogKit */,
 				A11CE57000000000000000A6 /* SponsorsFeature */,
+				A11CE57000000000000000A7 /* UIComponents */,
 				A11CE57000000000000000A4 /* NetworkKit */,
 				A11CE57000000000000000A3 /* AuthenticationUI */,
 			);
@@ -613,7 +616,6 @@
 			children = (
 				FA57DE432875B06500911F03 /* CommonTileButton.swift */,
 				FA57DE442875B06500911F03 /* CommonTileView.swift */,
-				2A3831112884A96600030002 /* FancyHeaderView.swift */,
 				E3569AED2E5A1D0200BC9556 /* ShimmerView.swift */,
 				FA57DE452875B06500911F03 /* StackedTileView.swift */,
 				AEB06BD028CF8D2100E51967 /* WebView.swift */,
@@ -679,6 +681,7 @@
 				7B31C8F42ED0AB1600FEEDF7 /* Settings */,
 				7BE081512EE5BDA8004BCD1F /* SharedAssets */,
 				631E9D02432C1E1A187A3E03 /* NetworkKit */,
+				A11CE57000000000000000CB /* UIComponents */,
 				39093D62C747210F6BA83C1E /* Dependencies */,
 			);
 			productName = SwiftLeedsAppClip;
@@ -731,6 +734,7 @@
 				A11CE57000000000000000C6 /* LogKitUnified */,
 				A11CE57000000000000000C7 /* NetworkKit */,
 				A11CE57000000000000000C9 /* SponsorsFeature */,
+				A11CE57000000000000000CA /* UIComponents */,
 				A11CE57000000000000000C3 /* SecureStorageKit */,
 				A11CE57000000000000000C4 /* SecureStorageKitKeychain */,
 				A11CE57000000000000000C8 /* Dependencies */,
@@ -903,7 +907,6 @@
 				AE9367902A93467500F2DB3F /* ScheduleView.swift in Sources */,
 				0B4CB3EC28EAF5E900246E62 /* ActivityView.swift in Sources */,
 				0B4CB3F228EAF61600246E62 /* WebView.swift in Sources */,
-				0B4CB3EF28EAF60200246E62 /* FancyHeaderView.swift in Sources */,
 				0B4CB3F028EAF60800246E62 /* SpeakerView.swift in Sources */,
 				0B4CB3E428EAF5AF00246E62 /* Presentation.swift in Sources */,
 				0B4CB3E528EAF5B700246E62 /* Speaker.swift in Sources */,
@@ -962,7 +965,6 @@
 				AE1C8010289E9F3800996659 /* String.swift in Sources */,
 				AECB295927417F9D00CDC983 /* MyConferenceView.swift in Sources */,
 				AE8C1B2428BFCFC700AF7318 /* Presentation.swift in Sources */,
-				2A3831122884A96600030002 /* FancyHeaderView.swift in Sources */,
 				0B59B5722E70EA6600820C3C /* About.swift in Sources */,
 				0B59B56B2E70E6AC00820C3C /* CompactActionItem.swift in Sources */,
 				74F5EF892A49CECB008D9413 /* SidebarView.swift in Sources */,
@@ -2023,6 +2025,14 @@
 		A11CE57000000000000000C9 /* SponsorsFeature */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SponsorsFeature;
+		};
+		A11CE57000000000000000CA /* UIComponents */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = UIComponents;
+		};
+		A11CE57000000000000000CB /* UIComponents */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = UIComponents;
 		};
 		39093D62C747210F6BA83C1E /* Dependencies */ = {
 			isa = XCSwiftPackageProductDependency;

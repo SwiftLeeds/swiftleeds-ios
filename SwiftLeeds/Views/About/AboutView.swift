@@ -3,6 +3,7 @@ import DesignKit
 import ReadabilityModifier
 import SharedAssets
 import SwiftUI
+import UIComponents
 
 struct AboutView: View {
     @StateObject private var viewModel = AboutViewModel()
