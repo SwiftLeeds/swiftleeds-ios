@@ -1,11 +1,10 @@
 import LogKit
 
-/// How the outcome of mapping a sponsor list reads in a log.
+// How the outcome of mapping a sponsor list reads in a log.
 struct LoggedSponsorMappingOutcome {
     let level: LogLevel
     let message: LogMessage
 
-    // A count is all a success line needs, and the number of sponsors is public.
     static func success(count: Int) -> LoggedSponsorMappingOutcome {
         LoggedSponsorMappingOutcome(
             level: .debug,
@@ -18,9 +17,8 @@ struct LoggedSponsorMappingOutcome {
         LoggedSponsorMappingOutcome(
             level: .error,
             message: """
-            A sponsor could not be mapped: \
-            \(error.sponsor, name: "sponsor", privacy: .open), \
-            \(error.field.rawValue, name: "field", privacy: .open), \
+            The sponsor \(error.sponsor, name: "sponsor", privacy: .open) had an invalid \
+            \(error.field.rawValue, name: "field", privacy: .open): \
             \(error.value, name: "value", privacy: .open)
             """
         )
