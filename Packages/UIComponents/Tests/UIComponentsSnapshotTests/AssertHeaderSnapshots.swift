@@ -14,12 +14,7 @@ private let textSizes: [(name: String, size: DynamicTypeSize)] = [
     ("accessibility", .accessibility5),
 ]
 
-/// Records one reference image of a header for every color scheme and text size.
-///
-/// The header keeps a free height. Give it a definite one and it never settles:
-/// its `GeometryReader` writes a height that feeds back into its own bottom
-/// padding. The spacer below it is what brings the title into the image, because
-/// the title is an overlay offset past the header's own measured bounds.
+// A definite height hangs the header; a self-sizing host clips its title away.
 @MainActor
 func assertHeaderSnapshots(
     of view: some View,
@@ -51,8 +46,6 @@ private extension View {
     }
 }
 
-// The text size goes on the view, not in the trait collection, matching the
-// AuthenticationUI helper this is modelled on.
 private func variants<V: View>() -> [String: Snapshotting<V, UIImage>] {
     colorSchemes.reduce(into: [:]) { strategies, scheme in
         for textSize in textSizes {

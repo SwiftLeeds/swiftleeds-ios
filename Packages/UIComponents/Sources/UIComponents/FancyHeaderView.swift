@@ -2,12 +2,7 @@ import DesignKit
 import SharedAssets
 import SwiftUI
 
-/// A screen header: a venue photograph, one or more images overlapping its lower
-/// edge, and a title under them.
-///
-/// Supply `foregroundImageURLs` to load the overlapping images from the network,
-/// or `foregroundImage` for one you already hold. With neither, the header shows
-/// the conference icon.
+/// A screen header: a venue photograph, images overlapping its lower edge, and a title.
 public struct FancyHeaderView: View {
     private let title: String
     private let foregroundImageURLs: [URL]
@@ -113,7 +108,6 @@ public struct FancyHeaderView: View {
 
     private var foregroundImageCount: Int {
         let count = foregroundImageURLs.count + (foregroundImage == nil ? 0 : 1)
-        // Ensure we always have at least 1 for the fallback image
         return count == 0 ? 1 : count
     }
 

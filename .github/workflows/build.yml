@@ -120,7 +120,8 @@ jobs:
               # The scheme must exist and must hold only this target. Without it
               # xcodebuild builds every test target in the package, which is the
               # cost this job exists to avoid.
-              (cd "$dir" && xcodebuild test -scheme "$target" -destination "$DESTINATION") \
+              (cd "$dir" && xcodebuild test -scheme "$target" -destination "$DESTINATION" \
+                -skipPackagePluginValidation) \
                 || failed="$failed $name/$target"
               echo "::endgroup::"
               count=$((count + 1))

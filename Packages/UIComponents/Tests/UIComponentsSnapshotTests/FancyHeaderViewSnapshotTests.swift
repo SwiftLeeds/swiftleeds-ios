@@ -5,8 +5,6 @@ import SwiftUI
 import Testing
 import UIComponents
 
-// The `foregroundImageURLs` branch is not covered here. It loads over the
-// network, and a reference image that depends on a live host is flaky.
 @MainActor
 @Suite struct FancyHeaderViewSnapshotTests {
     @Test func fallbackIcon() {

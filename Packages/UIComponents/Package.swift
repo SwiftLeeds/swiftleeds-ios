@@ -23,9 +23,6 @@ let package = Package(
                 .product(name: "SharedAssets", package: "SwiftLeedsPackage"),
             ]
         ),
-        // Separate so CI can build and run the snapshot tests without compiling
-        // anything else. The `UIComponentsSnapshotTests` scheme is what makes
-        // that possible, and the name of this target is how CI finds it.
         .testTarget(
             name: "UIComponentsSnapshotTests",
             dependencies: [
