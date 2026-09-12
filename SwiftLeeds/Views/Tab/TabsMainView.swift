@@ -1,6 +1,7 @@
 import AuthenticationUI
 import ReadabilityModifier
 import Settings
+import SponsorsUI
 import SwiftUI
 
 struct TabsMainView: View {

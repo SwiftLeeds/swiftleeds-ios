@@ -1,5 +1,6 @@
 import AuthenticationUI
 import Settings
+import SponsorsUI
 import SwiftUI
 
 struct SidebarMainView: View {
