@@ -4,13 +4,17 @@ import SharedAssets
 import SponsorsFeature
 import SwiftUI
 
-struct SponsorTileView: View {
-    let sponsor: Sponsor
+package struct SponsorTileView: View {
+    private let sponsor: Sponsor
     @State private var showingJobs = false
     @State private var isImageLoaded = false
     @Environment(\.openURL) private var openURL
 
-    var body: some View {
+    package init(sponsor: Sponsor) {
+        self.sponsor = sponsor
+    }
+
+    package var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             mainTile
 
