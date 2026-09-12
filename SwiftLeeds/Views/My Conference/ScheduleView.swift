@@ -1,4 +1,5 @@
 import DesignKit
+import ScheduleFeature
 import SwiftUI
 
 struct ScheduleView: View {
