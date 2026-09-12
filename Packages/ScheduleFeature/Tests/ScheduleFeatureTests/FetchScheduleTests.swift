@@ -40,20 +40,32 @@ private actor EventSpy {
 
 private extension ScheduleRepository {
     static func recording(into spy: EventSpy) -> ScheduleRepository {
-        ScheduleRepository { event async throws(ScheduleFetchError) -> Schedule in
-            await spy.record(event)
-            return Schedule(
-                data: Schedule.Data(
-                    event: Schedule.Event(
-                        id: UUID(),
-                        name: "SwiftLeeds 2026",
-                        location: "The Playhouse, Leeds",
-                        date: Date(timeIntervalSince1970: 0)
-                    ),
-                    events: [],
-                    days: []
-                )
+        ScheduleRepository(
+            fetchCurrentSchedule: { () async throws(ScheduleFetchError) -> Schedule in
+                await spy.record(nil)
+                return .empty
+            },
+            fetchSchedule: { event async throws(ScheduleFetchError) -> Schedule in
+                await spy.record(event)
+                return .empty
+            }
+        )
+    }
+}
+
+private extension Schedule {
+    static var empty: Schedule {
+        Schedule(
+            data: Schedule.Data(
+                event: Schedule.Event(
+                    id: UUID(),
+                    name: "SwiftLeeds 2026",
+                    location: "The Playhouse, Leeds",
+                    date: Date(timeIntervalSince1970: 0)
+                ),
+                events: [],
+                days: []
             )
-        }
+        )
     }
 }

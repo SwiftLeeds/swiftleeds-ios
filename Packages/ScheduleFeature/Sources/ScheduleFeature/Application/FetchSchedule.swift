@@ -18,7 +18,7 @@ extension FetchSchedule: DependencyKey {
     public static var liveValue: FetchSchedule {
         FetchSchedule { event async throws(ScheduleFetchError) -> Schedule in
             @Dependency(\.scheduleRepository) var scheduleRepository
-            return try await scheduleRepository.fetch(event)
+            return try await scheduleRepository.fetchSchedule(event)
         }
     }
 

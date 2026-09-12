@@ -1,6 +1,6 @@
 import Dependencies
 
-/// Asks the backend which conference is current, and returns its schedule.
+/// Returns the schedule of the conference that is currently running.
 public struct FetchCurrentSchedule: Sendable {
     private var perform: @Sendable () async throws(ScheduleFetchError) -> Schedule
 
@@ -17,7 +17,7 @@ extension FetchCurrentSchedule: DependencyKey {
     public static var liveValue: FetchCurrentSchedule {
         FetchCurrentSchedule { () async throws(ScheduleFetchError) -> Schedule in
             @Dependency(\.scheduleRepository) var scheduleRepository
-            return try await scheduleRepository.fetch(nil)
+            return try await scheduleRepository.fetchCurrentSchedule()
         }
     }
 

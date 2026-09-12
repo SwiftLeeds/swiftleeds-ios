@@ -1,19 +1,27 @@
 import Dependencies
 import Foundation
 
-/// Reads the schedule. Passing no event asks the backend for the conference it considers current.
 package struct ScheduleRepository: Sendable {
-    package var fetch: @Sendable (UUID?) async throws(ScheduleFetchError) -> Schedule
+    package var fetchCurrentSchedule: @Sendable () async throws(ScheduleFetchError) -> Schedule
+    package var fetchSchedule: @Sendable (UUID) async throws(ScheduleFetchError) -> Schedule
 
-    package init(fetch: @escaping @Sendable (UUID?) async throws(ScheduleFetchError) -> Schedule) {
-        self.fetch = fetch
+    package init(
+        fetchCurrentSchedule: @escaping @Sendable () async throws(ScheduleFetchError) -> Schedule,
+        fetchSchedule: @escaping @Sendable (UUID) async throws(ScheduleFetchError) -> Schedule
+    ) {
+        self.fetchCurrentSchedule = fetchCurrentSchedule
+        self.fetchSchedule = fetchSchedule
     }
 }
 
 extension ScheduleRepository: TestDependencyKey {
     package static let testValue = ScheduleRepository(
-        fetch: { _ async throws(ScheduleFetchError) -> Schedule in
-            reportIssue("ScheduleRepository.fetch is unimplemented")
+        fetchCurrentSchedule: { () async throws(ScheduleFetchError) -> Schedule in
+            reportIssue("ScheduleRepository.fetchCurrentSchedule is unimplemented")
+            throw .unknown
+        },
+        fetchSchedule: { _ async throws(ScheduleFetchError) -> Schedule in
+            reportIssue("ScheduleRepository.fetchSchedule is unimplemented")
             throw .unknown
         }
     )
