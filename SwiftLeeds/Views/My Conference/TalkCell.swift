@@ -1,5 +1,6 @@
 import CachedAsyncImage
 import DesignKit
+import ScheduleFeature
 import SharedAssets
 import SwiftUI
 

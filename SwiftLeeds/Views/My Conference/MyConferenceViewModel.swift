@@ -1,7 +1,7 @@
 import Combine
 import Dependencies
 import Foundation
-import NetworkKit
+import ScheduleFeature
 import SwiftUI
 
 class MyConferenceViewModel: ObservableObject {
@@ -14,22 +14,16 @@ class MyConferenceViewModel: ObservableObject {
     private static let scheduleKey = "Schedule"
 
     func loadSchedule() async throws {
+        @Dependency(\.fetchCurrentSchedule) var fetchCurrentSchedule
+
         do {
-            let schedule = try await fetchSchedule()
+            let schedule = try await fetchCurrentSchedule()
             await updateSchedule(schedule)
             store(schedule)
         } catch {
             guard let stored = storedSchedule() else { throw error }
             await updateSchedule(stored)
         }
-    }
-
-    private func fetchSchedule(for event: UUID? = nil) async throws -> Schedule {
-        @Dependency(\.httpClient) var httpClient
-        @Dependency(\.scheduleMapper) var scheduleMapper
-
-        let (data, response) = try await httpClient.send(Endpoint.schedule(event: event).urlRequest())
-        return try scheduleMapper.map(data, response)
     }
 
     private func store(_ schedule: Schedule) {
@@ -68,6 +62,8 @@ class MyConferenceViewModel: ObservableObject {
     }
 
     private func reloadSchedule() async throws {
+        @Dependency(\.fetchSchedule) var fetchSchedule
+
         guard let currentEvent else { return }
 
         let schedule = try await fetchSchedule(for: currentEvent.id)
