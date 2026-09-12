@@ -6,11 +6,13 @@ struct ShimmerView: View {
     private let colors: [Color]
     private let duration: Double
 
-    init(colors: [Color] = [
+    private static let defaultColors = [
         Color.gray.opacity(0.2),
         Color.gray.opacity(0.3),
         Color.gray.opacity(0.2)
-    ], duration: Double = 1.5) {
+    ]
+
+    init(colors: [Color] = ShimmerView.defaultColors, duration: Double = 1.5) {
         self.colors = colors
         self.duration = duration
     }

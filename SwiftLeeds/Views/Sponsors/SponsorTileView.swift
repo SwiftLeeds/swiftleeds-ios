@@ -27,16 +27,19 @@ struct SponsorTileView: View {
     }
 
     private var mainTile: some View {
-        Button(action: {
-            if let url = sponsor.websiteURL {
-                openURL(url)
+        Button(
+            action: {
+                if let url = sponsor.websiteURL {
+                    openURL(url)
+                }
+            },
+            label: {
+                VStack(alignment: .leading, spacing: 0) {
+                    imageSection
+                    infoSection
+                }
             }
-        }) {
-            VStack(alignment: .leading, spacing: 0) {
-                imageSection
-                infoSection
-            }
-        }
+        )
         .buttonStyle(SquishyButtonStyle())
     }
 
@@ -134,7 +137,7 @@ struct SponsorTileView: View {
 
             if !sponsor.jobs.isEmpty {
                 HStack {
-                    Label("\(sponsor.jobs.count) Job\(sponsor.jobs.count > 1 ? "s" : "")", systemImage: "briefcase.fill")
+                    Label(jobCountText, systemImage: "briefcase.fill")
                         .font(.caption.weight(.medium))
                         .foregroundColor(.accent)
 
@@ -145,28 +148,44 @@ struct SponsorTileView: View {
         }
         .padding()
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel("Sponsor, \(sponsor.name), \(sponsor.subtitle). \(sponsor.jobs.isEmpty ? "" : "\(sponsor.jobs.count) job opportunities available")")
+        .accessibilityLabel(accessibilityLabel)
+    }
+
+    private var jobCountText: String {
+        "\(sponsor.jobs.count) Job\(sponsor.jobs.count > 1 ? "s" : "")"
+    }
+
+    private var accessibilityLabel: String {
+        let jobs = sponsor.jobs.isEmpty ? "" : "\(sponsor.jobs.count) job opportunities available"
+        return "Sponsor, \(sponsor.name), \(sponsor.subtitle). \(jobs)"
     }
 
     private var jobsSection: some View {
         VStack(spacing: 0) {
             Divider()
 
-            Button(action: { withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) { showingJobs.toggle() } }) {
-                HStack {
-                    Text("Job Opportunities")
-                        .font(.subheadline.weight(.semibold))
-                        .foregroundColor(.primary)
+            Button(
+                action: {
+                    withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+                        showingJobs.toggle()
+                    }
+                },
+                label: {
+                    HStack {
+                        Text("Job Opportunities")
+                            .font(.subheadline.weight(.semibold))
+                            .foregroundColor(.primary)
 
-                    Spacer()
+                        Spacer()
 
-                    Image(systemName: showingJobs ? "chevron.up" : "chevron.down")
-                        .font(.caption.weight(.semibold))
-                        .foregroundColor(.secondary)
+                        Image(systemName: showingJobs ? "chevron.up" : "chevron.down")
+                            .font(.caption.weight(.semibold))
+                            .foregroundColor(.secondary)
+                    }
+                    .padding()
+                    .background(Color.accent.opacity(0.05))
                 }
-                .padding()
-                .background(Color.accent.opacity(0.05))
-            }
+            )
 
             if showingJobs {
                 VStack(spacing: 0) {
@@ -193,40 +212,43 @@ struct JobRowView: View {
     @State private var isPressed = false
 
     var body: some View {
-        Button(action: {
-            if let url = job.url {
-                openURL(url)
-            }
-        }) {
-            VStack(spacing: 0) {
-                Divider()
-
-                HStack {
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text(job.title)
-                            .font(.subheadline.weight(.medium))
-                            .foregroundColor(.primary)
-                            .lineLimit(1)
-
-                        HStack(spacing: 4) {
-                            Image(systemName: "location.fill")
-                                .font(.caption2)
-                            Text(job.location)
-                                .font(.caption)
-                        }
-                        .foregroundColor(.secondary)
-                    }
-
-                    Spacer()
-
-                    Image(systemName: "arrow.right.circle")
-                        .font(.title3)
-                        .foregroundColor(.accent.opacity(0.5))
+        Button(
+            action: {
+                if let url = job.url {
+                    openURL(url)
                 }
-                .padding()
-                .background(isPressed ? Color.accent.opacity(0.05) : Color.clear)
+            },
+            label: {
+                VStack(spacing: 0) {
+                    Divider()
+
+                    HStack {
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(job.title)
+                                .font(.subheadline.weight(.medium))
+                                .foregroundColor(.primary)
+                                .lineLimit(1)
+
+                            HStack(spacing: 4) {
+                                Image(systemName: "location.fill")
+                                    .font(.caption2)
+                                Text(job.location)
+                                    .font(.caption)
+                            }
+                            .foregroundColor(.secondary)
+                        }
+
+                        Spacer()
+
+                        Image(systemName: "arrow.right.circle")
+                            .font(.title3)
+                            .foregroundColor(.accent.opacity(0.5))
+                    }
+                    .padding()
+                    .background(isPressed ? Color.accent.opacity(0.05) : Color.clear)
+                }
             }
-        }
+        )
         .scaleEffect(isPressed ? 0.97 : 1.0)
         .onLongPressGesture(minimumDuration: 0.1, maximumDistance: .infinity, pressing: { pressing in
             withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
