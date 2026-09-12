@@ -1,4 +1,5 @@
 import Settings
+import SponsorsUI
 import SwiftUI
 
 struct SidebarView: View {

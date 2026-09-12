@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0B4B1A4B2A4858F600ED7EA9 /* SponsorsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4B1A4A2A4858F600ED7EA9 /* SponsorsView.swift */; };
-		0B4B1A4D2A486EA800ED7EA9 /* SponsorsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4B1A4C2A486EA800ED7EA9 /* SponsorsViewModel.swift */; };
 		0B4CB3C828EAF19100246E62 /* SwiftLeedsAppClipApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4CB3C728EAF19100246E62 /* SwiftLeedsAppClipApp.swift */; };
 		0B4CB3CF28EAF19100246E62 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B4CB3CE28EAF19100246E62 /* Preview Assets.xcassets */; };
 		0B4CB3D428EAF19100246E62 /* SwiftLeedsAppClip.app in Embed App Clips */ = {isa = PBXBuildFile; fileRef = 0B4CB3C528EAF19000246E62 /* SwiftLeedsAppClip.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -134,14 +132,13 @@
 		B7E34B6C6CE38F48068FB98A /* SwiftLeedsAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EEFB1E37D5A542A1798C92D5 /* SwiftLeedsAssets.xcassets */; };
 		C88307224ADAA4C64A455D74 /* KotlinLeedsAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40AEBC0F9109732F54C608A9 /* KotlinLeedsAssets.xcassets */; };
 		D87582F568B0EFB6371B734B /* ConferenceConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67624B7470D6BA62D4912236 /* ConferenceConfig.swift */; };
-		E3569AEF2E5A1D0200BC9556 /* ShimmerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3569AED2E5A1D0200BC9556 /* ShimmerView.swift */; };
 		EF223850DCFBB4DF1213DE38 /* KotlinLeedsAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ED1AFB8A37EDA9676DB1C998 /* KotlinLeedsAssets.xcassets */; };
 		FA534D8228A1909300A3BFBB /* Local.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA534D8128A1909300A3BFBB /* Local.swift */; };
 		FA534D8828A1939500A3BFBB /* LocalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA534D8728A1939500A3BFBB /* LocalViewModel.swift */; };
 		FA57DE462875B06500911F03 /* CommonTileButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE432875B06500911F03 /* CommonTileButton.swift */; };
 		FA57DE472875B06500911F03 /* CommonTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE442875B06500911F03 /* CommonTileView.swift */; };
 		FA57DE482875B06500911F03 /* StackedTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE452875B06500911F03 /* StackedTileView.swift */; };
-		FA57DE502875B09900911F03 /* SponsorTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE4E2875B09900911F03 /* SponsorTileView.swift */; };
+		A11CE57000000000000000DC /* SponsorsUI in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000CC /* SponsorsUI */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -202,8 +199,6 @@
 
 /* Begin PBXFileReference section */
 		0B3FFD994DBE3F62216150F8 /* KotlinLeedsColors.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = KotlinLeedsColors.xcassets; sourceTree = "<group>"; };
-		0B4B1A4A2A4858F600ED7EA9 /* SponsorsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsorsView.swift; sourceTree = "<group>"; };
-		0B4B1A4C2A486EA800ED7EA9 /* SponsorsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsorsViewModel.swift; sourceTree = "<group>"; };
 		0B4CB3C528EAF19000246E62 /* SwiftLeedsAppClip.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftLeedsAppClip.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B4CB3C728EAF19100246E62 /* SwiftLeedsAppClipApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftLeedsAppClipApp.swift; sourceTree = "<group>"; };
 		0B4CB3CE28EAF19100246E62 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -254,6 +249,7 @@
 		A11CE57000000000000000A5 /* LogKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = LogKit; sourceTree = "<group>"; };
 		A11CE57000000000000000A6 /* SponsorsFeature */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SponsorsFeature; sourceTree = "<group>"; };
 		A11CE57000000000000000A7 /* UIComponents */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = UIComponents; sourceTree = "<group>"; };
+		A11CE57000000000000000A8 /* SponsorsUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SponsorsUI; sourceTree = "<group>"; };
 		A11CE57000000000000000A4 /* NetworkKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = NetworkKit; sourceTree = "<group>"; };
 		A11CE57000000000000000A3 /* AuthenticationUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = AuthenticationUI; sourceTree = "<group>"; };
 		893A122D593379F84605F70C /* SwiftLeedsColors.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = SwiftLeedsColors.xcassets; sourceTree = "<group>"; };
@@ -287,7 +283,6 @@
 		AEDC22522898281300746247 /* MyConferenceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyConferenceViewModel.swift; sourceTree = "<group>"; };
 		AEDC22542898288F00746247 /* Schedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Schedule.swift; sourceTree = "<group>"; };
 		C1725A0182E1989D761551B2 /* KotlinLeedsWidgetExtension.entitlements */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.entitlements; path = KotlinLeedsWidgetExtension.entitlements; sourceTree = "<group>"; };
-		E3569AED2E5A1D0200BC9556 /* ShimmerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerView.swift; sourceTree = "<group>"; };
 		ED1AFB8A37EDA9676DB1C998 /* KotlinLeedsAssets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = KotlinLeedsAssets.xcassets; sourceTree = "<group>"; };
 		EEFB1E37D5A542A1798C92D5 /* SwiftLeedsAssets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = SwiftLeedsAssets.xcassets; sourceTree = "<group>"; };
 		FA534D8128A1909300A3BFBB /* Local.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Local.swift; sourceTree = "<group>"; };
@@ -295,7 +290,6 @@
 		FA57DE432875B06500911F03 /* CommonTileButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonTileButton.swift; sourceTree = "<group>"; };
 		FA57DE442875B06500911F03 /* CommonTileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonTileView.swift; sourceTree = "<group>"; };
 		FA57DE452875B06500911F03 /* StackedTileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StackedTileView.swift; sourceTree = "<group>"; };
-		FA57DE4E2875B09900911F03 /* SponsorTileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SponsorTileView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -342,6 +336,7 @@
 				A11CE57000000000000000D7 /* NetworkKit in Frameworks */,
 				A11CE57000000000000000D9 /* SponsorsFeature in Frameworks */,
 				A11CE57000000000000000DA /* UIComponents in Frameworks */,
+				A11CE57000000000000000DC /* SponsorsUI in Frameworks */,
 				A11CE57000000000000000D3 /* SecureStorageKit in Frameworks */,
 				A11CE57000000000000000D4 /* SecureStorageKitKeychain in Frameworks */,
 				A11CE57000000000000000D8 /* Dependencies in Frameworks */,
@@ -365,16 +360,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0B4B1A492A4858DC00ED7EA9 /* Sponsors */ = {
-			isa = PBXGroup;
-			children = (
-				0B4B1A4A2A4858F600ED7EA9 /* SponsorsView.swift */,
-				0B4B1A4C2A486EA800ED7EA9 /* SponsorsViewModel.swift */,
-				FA57DE4E2875B09900911F03 /* SponsorTileView.swift */,
-			);
-			path = Sponsors;
-			sourceTree = "<group>";
-		};
 		0B4CB3C628EAF19100246E62 /* SwiftLeedsAppClip */ = {
 			isa = PBXGroup;
 			children = (
@@ -448,6 +433,7 @@
 				A11CE57000000000000000A5 /* LogKit */,
 				A11CE57000000000000000A6 /* SponsorsFeature */,
 				A11CE57000000000000000A7 /* UIComponents */,
+				A11CE57000000000000000A8 /* SponsorsUI */,
 				A11CE57000000000000000A4 /* NetworkKit */,
 				A11CE57000000000000000A3 /* AuthenticationUI */,
 			);
@@ -544,7 +530,6 @@
 				FA57DE422875B03B00911F03 /* Components */,
 				AED26F7528676A8E00E06064 /* Local */,
 				AEDC0DAF28675D060078A153 /* My Conference */,
-				0B4B1A492A4858DC00ED7EA9 /* Sponsors */,
 				AEDC0DAC286759570078A153 /* Tab */,
 			);
 			path = Views;
@@ -616,7 +601,6 @@
 			children = (
 				FA57DE432875B06500911F03 /* CommonTileButton.swift */,
 				FA57DE442875B06500911F03 /* CommonTileView.swift */,
-				E3569AED2E5A1D0200BC9556 /* ShimmerView.swift */,
 				FA57DE452875B06500911F03 /* StackedTileView.swift */,
 				AEB06BD028CF8D2100E51967 /* WebView.swift */,
 			);
@@ -735,6 +719,7 @@
 				A11CE57000000000000000C7 /* NetworkKit */,
 				A11CE57000000000000000C9 /* SponsorsFeature */,
 				A11CE57000000000000000CA /* UIComponents */,
+				A11CE57000000000000000CC /* SponsorsUI */,
 				A11CE57000000000000000C3 /* SecureStorageKit */,
 				A11CE57000000000000000C4 /* SecureStorageKitKeychain */,
 				A11CE57000000000000000C8 /* Dependencies */,
@@ -954,7 +939,6 @@
 				A11CE57000000000000000F2 /* URLSession+SwiftLeeds.swift in Sources */,
 				AEDC22532898281300746247 /* MyConferenceViewModel.swift in Sources */,
 				AED26F7828676A9900E06064 /* AboutView.swift in Sources */,
-				FA57DE502875B09900911F03 /* SponsorTileView.swift in Sources */,
 				0B59B5692E70E5FE00820C3C /* TeamMemberView.swift in Sources */,
 				394653AB288BB7C800212E1C /* SpeakerView.swift in Sources */,
 				0B59B56F2E70EA4F00820C3C /* AboutViewModel.swift in Sources */,
@@ -973,12 +957,9 @@
 				AED26F7028675DA000E06064 /* AnnouncementCell.swift in Sources */,
 				AEB06BD128CF8D2100E51967 /* WebView.swift in Sources */,
 				AE8C1B2828C4B36B00AF7318 /* AppDelegate+Push.swift in Sources */,
-				E3569AEF2E5A1D0200BC9556 /* ShimmerView.swift in Sources */,
-				0B4B1A4D2A486EA800ED7EA9 /* SponsorsViewModel.swift in Sources */,
 				AECB295727417F9D00CDC983 /* SwiftLeedsApp.swift in Sources */,
 				AECB2A0127417F9D00CDC902 /* LogCategories.swift in Sources */,
 				0B59B5662E70E5D400820C3C /* TeamMember.swift in Sources */,
-				0B4B1A4B2A4858F600ED7EA9 /* SponsorsView.swift in Sources */,
 				AE8C1B2B28C4B39A00AF7318 /* TokenDetails.swift in Sources */,
 				AEDC0DAE286759630078A153 /* Tabs.swift in Sources */,
 				7B6278A22EEDDE1B00DE1473 /* SectionHeader.swift in Sources */,
@@ -2033,6 +2014,10 @@
 		A11CE57000000000000000CB /* UIComponents */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = UIComponents;
+		};
+		A11CE57000000000000000CC /* SponsorsUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SponsorsUI;
 		};
 		39093D62C747210F6BA83C1E /* Dependencies */ = {
 			isa = XCSwiftPackageProductDependency;
