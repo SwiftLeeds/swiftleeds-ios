@@ -1,17 +1,17 @@
 import DesignKit
-import ReadabilityModifier
 import SharedAssets
 import SponsorsFeature
 import SwiftUI
 import UIComponents
 
-struct SponsorsView: View {
+public struct SponsorsView: View {
     @StateObject private var viewModel = SponsorsViewModel()
     @State private var isLoading = true
-    @State private var searchText = ""
     @State private var selectedSponsorLevel: SponsorLevel?
 
-    var body: some View {
+    public init() {}
+
+    public var body: some View {
         ScrollView {
             VStack(spacing: 0) {
                 FancyHeaderView(
