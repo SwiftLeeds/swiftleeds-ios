@@ -49,17 +49,6 @@ class ScheduleViewModel: ObservableObject {
         await updateSchedule(schedule)
     }
 
-    var numberOfDaysToConference: Int? {
-        guard let days = event?.daysUntil else { return nil }
-
-        // Stop showing ticket sales a week before the event
-        if days > 7 {
-            return days
-        } else {
-            return nil
-        }
-    }
-
     // Only show slido links on the day of the event
     var showSlido: Bool {
         guard let days = event?.daysUntil else { return false }
