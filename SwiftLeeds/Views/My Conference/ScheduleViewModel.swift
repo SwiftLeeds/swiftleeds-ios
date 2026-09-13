@@ -3,7 +3,7 @@ import Dependencies
 import ScheduleFeature
 import SwiftUI
 
-class MyConferenceViewModel: ObservableObject {
+class ScheduleViewModel: ObservableObject {
     @Published private(set) var hasLoaded = false
     @Published private(set) var event: Schedule.Event?
     @Published private(set) var events: [Schedule.Event] = []
