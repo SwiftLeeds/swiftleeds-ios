@@ -18,8 +18,22 @@ extension ScheduleRepository: DependencyKey {
     private static func schedule(
         for request: ScheduleRequest
     ) async throws(ScheduleFetchError) -> Schedule {
+        @Dependency(\.localScheduleStore) var local
         @Dependency(\.remoteScheduleStore) var remote
+        @Dependency(\.date) var date
 
-        return try await remote.fetch(request)
+        if let stored = local.load(request), stored.isFresh(at: date.now) {
+            return stored.schedule
+        }
+
+        let schedule = try await remote.fetch(request)
+        let stored = StoredSchedule(schedule: schedule, storedAt: date.now)
+        local.save(stored, request)
+
+        if request == .current {
+            local.save(stored, .event(schedule.data.event.id))
+        }
+
+        return schedule
     }
 }
