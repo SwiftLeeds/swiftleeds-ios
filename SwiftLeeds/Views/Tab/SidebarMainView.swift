@@ -1,4 +1,5 @@
 import AuthenticationUI
+import ScheduleUI
 import Settings
 import SponsorsUI
 import SwiftUI
