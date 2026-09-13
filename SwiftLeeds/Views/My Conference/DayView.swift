@@ -2,7 +2,7 @@ import DesignKit
 import ScheduleFeature
 import SwiftUI
 
-struct ScheduleView: View {
+struct DayView: View {
     let slots: [Schedule.Slot]
     let showSlido: Bool
 
@@ -38,8 +38,8 @@ struct ScheduleView: View {
     }
 }
 
-struct ScheduleView_Previews: PreviewProvider {
+struct DayView_Previews: PreviewProvider {
     static var previews: some View {
-        ScheduleView(slots: [], showSlido: true)
+        DayView(slots: [], showSlido: true)
     }
 }

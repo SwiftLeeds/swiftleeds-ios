@@ -71,7 +71,7 @@ struct MyConferenceView: View {
             TabView(selection: $currentIndex) {
                 ForEach(Array(zip(viewModel.days.indices, viewModel.days)),
                         id: \.0) { index, day in
-                    ScheduleView(slots: day.slots, showSlido: viewModel.showSlido)
+                    DayView(slots: day.slots, showSlido: viewModel.showSlido)
                         .tag(index)
                 }
             }
