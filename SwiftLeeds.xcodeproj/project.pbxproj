@@ -126,6 +126,7 @@
 		A11CE57000000000000000DD /* ScheduleFeature in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000CD /* ScheduleFeature */; };
 		A11CE57000000000000000DE /* ScheduleFeature in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000CE /* ScheduleFeature */; };
 		A11CE57000000000000000DF /* ScheduleFeature in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000CF /* ScheduleFeature */; };
+		A11CE57000000000000000E6 /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000E5 /* Dependencies */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -301,6 +302,7 @@
 				74A09FDF28C6778C00E03F39 /* WidgetKit.framework in Frameworks */,
 				7B31C8ED2ED0959600FEEDF7 /* DesignKit in Frameworks */,
 				A11CE57000000000000000DF /* ScheduleFeature in Frameworks */,
+				A11CE57000000000000000E6 /* Dependencies in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -668,6 +670,7 @@
 			name = SwiftLeedsWidgetExtension;
 			packageProductDependencies = (
 				A11CE57000000000000000CF /* ScheduleFeature */,
+				A11CE57000000000000000E5 /* Dependencies */,
 			);
 			productName = SwiftLeedsWidgetExtension;
 			productReference = 74A09FDD28C6778C00E03F39 /* SwiftLeedsWidgetExtension.appex */;
@@ -2001,6 +2004,11 @@
 			productName = ScheduleFeature;
 		};
 		39093D62C747210F6BA83C1E /* Dependencies */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A11CE57000000000000000E1 /* XCRemoteSwiftPackageReference "swift-dependencies" */;
+			productName = Dependencies;
+		};
+		A11CE57000000000000000E5 /* Dependencies */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = A11CE57000000000000000E1 /* XCRemoteSwiftPackageReference "swift-dependencies" */;
 			productName = Dependencies;

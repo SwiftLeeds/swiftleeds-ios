@@ -1,3 +1,4 @@
+import Dependencies
 import ScheduleFeature
 import SwiftUI
 import WidgetKit
@@ -13,32 +14,23 @@ struct Provider: TimelineProvider {
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<SwiftLeedsWidgetEntry>) -> Void) {
-        var entries: [SwiftLeedsWidgetEntry] = []
-        var slots: [Schedule.Slot] = []
+        @Dependency(\.readCachedSchedule) var readCachedSchedule
 
-        do {
-            if let data = UserDefaults(suiteName: ConferenceConfig.appGroupIdentifier)?.data(forKey: "Schedule") {
-                // Decode the full schedule and flatten days into slots
-                let schedule = try PropertyListDecoder().decode(Schedule.self, from: data)
-                slots = schedule.data.days.flatMap { $0.slots }.sorted { $0.startTime < $1.startTime }
-            }
+        let slots = readCachedSchedule()
+            .map { schedule in
+                schedule.data.days.flatMap(\.slots).sorted { $0.startTime < $1.startTime }
+            } ?? []
 
-            for slot in slots {
-                let date = buildDate(for: slot)
-                if date > Date() {
-                    let entry = SwiftLeedsWidgetEntry(date: date, slot: slot)
-                    entries.append(entry)
-                }
-            }
+        let entries = slots
+            .map { SwiftLeedsWidgetEntry(date: buildDate(for: $0), slot: $0) }
+            .filter { $0.date > Date() }
 
-            let nextUpdateTime = Calendar.autoupdatingCurrent.date(byAdding: .hour, value: 1, to: Calendar.autoupdatingCurrent.startOfDay(for: Date()))!
-            let timeline = Timeline(entries: entries, policy: .after(nextUpdateTime))
-            completion(timeline)
-        } catch {
-            let nextUpdateTime = Calendar.autoupdatingCurrent.date(byAdding: .minute, value: 5, to: Calendar.autoupdatingCurrent.startOfDay(for: Date()))!
-            let timeline = Timeline(entries: entries, policy: .after(nextUpdateTime))
-            completion(timeline)
-        }
+        completion(Timeline(entries: entries, policy: .after(nextUpdateTime)))
+    }
+
+    private var nextUpdateTime: Date {
+        let anHour: TimeInterval = 60 * 60
+        return Calendar.autoupdatingCurrent.startOfDay(for: Date()).addingTimeInterval(anHour)
     }
 
     private func buildDate(for slot: Schedule.Slot) -> Date {
