@@ -70,6 +70,23 @@ enum ScheduleJSON {
         """.utf8
     )
 
+    static let noDays = Data(
+        """
+        {
+          "data": {
+            "event": {
+              "id": "6D7B9E2C-4A1F-4F0B-9A3E-1C2D3E4F5A6B",
+              "name": "SwiftLeeds 2027",
+              "location": "The Playhouse, Leeds",
+              "date": "13-10-2027"
+            },
+            "events": [],
+            "days": []
+          }
+        }
+        """.utf8
+    )
+
     static let slotWithNoContent = Data(
         """
         {
