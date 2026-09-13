@@ -3,14 +3,14 @@ import SharedAssets
 import SwiftUI
 
 /// Used when there's lots of content to display.
-struct StackedTileView<BackgroundType: ShapeStyle>: View {
+package struct StackedTileView<BackgroundType: ShapeStyle>: View {
     let primaryText: String?
     let secondaryText: String?
     let primaryColor: Color
     let secondaryColor: Color
     var backgroundStyle: BackgroundType
 
-    init(
+    package init(
         primaryText: String?,
         secondaryText: String?,
         primaryColor: Color = Color.primary,
@@ -24,7 +24,7 @@ struct StackedTileView<BackgroundType: ShapeStyle>: View {
         self.backgroundStyle = backgroundStyle
     }
 
-    init(
+    package init(
         primaryText: String?,
         secondaryText: String?,
         primaryColor: Color = Color.primary,
@@ -38,7 +38,7 @@ struct StackedTileView<BackgroundType: ShapeStyle>: View {
         self.backgroundStyle = backgroundStyle
     }
 
-    var body: some View {
+    package var body: some View {
         VStack(alignment: .leading, spacing: Padding.stackGap) {
             if let primaryText = primaryText, primaryText.isEmpty == false {
                 Text(primaryText)
@@ -87,7 +87,7 @@ struct StackedTileView_Previews: PreviewProvider {
 
     static var previews: some View {
         ZStack {
-            Color(uiColor: .systemGroupedBackground).edgesIgnoringSafeArea(.all)
+            Color.listBackground.edgesIgnoringSafeArea(.all)
             VStack(spacing: Padding.cellGap) {
                 StackedTileView(primaryText: "Primary", secondaryText: longBody)
                 StackedTileView(

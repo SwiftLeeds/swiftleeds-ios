@@ -1,17 +1,24 @@
+#if canImport(UIKit)
 import DesignKit
 import ScheduleFeature
+import SharedAssets
 import SwiftUI
 import UIComponents
 
-struct SpeakerView: View {
-    let presentation: Presentation
-    let showSlido: Bool
+package struct SpeakerView: View {
+    private let presentation: Presentation
+    private let showSlido: Bool
 
     @State private var showWebSheet = false
 
     @Environment(\.openURL) var openURL
 
-    var body: some View {
+    package init(presentation: Presentation, showSlido: Bool) {
+        self.presentation = presentation
+        self.showSlido = showSlido
+    }
+
+    package var body: some View {
         ScrollView {
             content
         }
@@ -117,3 +124,4 @@ struct SpeakerView_Previews: PreviewProvider {
             .previewDisplayName("Sky Bet")
     }
 }
+#endif

@@ -1,14 +1,17 @@
 import DesignKit
 import ScheduleFeature
+import SharedAssets
 import SwiftUI
 import UIComponents
 
-struct ActivityView: View {
-    let activity: Activity
+package struct ActivityView: View {
+    private let activity: Activity
 
-    @Environment(\.openURL) var openURL
+    package init(activity: Activity) {
+        self.activity = activity
+    }
 
-    var body: some View {
+    package var body: some View {
         ScrollView {
             content
         }

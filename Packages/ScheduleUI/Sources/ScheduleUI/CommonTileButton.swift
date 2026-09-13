@@ -2,7 +2,7 @@ import DesignKit
 import SharedAssets
 import SwiftUI
 
-struct CommonTileButton<BackgroundType: ShapeStyle>: View {
+package struct CommonTileButton<BackgroundType: ShapeStyle>: View {
     let icon: String?
     let primaryText: String
     let secondaryText: String?
@@ -15,7 +15,7 @@ struct CommonTileButton<BackgroundType: ShapeStyle>: View {
 
     let onTap: () -> Void
 
-    init(
+    package init(
         icon: String? = nil,
         primaryText: String,
         secondaryText: String? = nil,
@@ -39,7 +39,7 @@ struct CommonTileButton<BackgroundType: ShapeStyle>: View {
         self.onTap = onTap
     }
 
-    init(
+    package init(
         icon: String? = nil,
         primaryText: String,
         secondaryText: String? = nil,
@@ -63,7 +63,7 @@ struct CommonTileButton<BackgroundType: ShapeStyle>: View {
         self.onTap = onTap
     }
 
-    var body: some View {
+    package var body: some View {
         Button(action: onTap) {
             CommonTileView(
                 icon: icon,
@@ -85,7 +85,7 @@ struct CommonTileButton<BackgroundType: ShapeStyle>: View {
 struct CommonTileButtton_Previews: PreviewProvider {
     static var previews: some View {
         ZStack {
-            Color(uiColor: .systemGroupedBackground).edgesIgnoringSafeArea(.all)
+            Color.listBackground.edgesIgnoringSafeArea(.all)
             VStack(spacing: Padding.cellGap) {
                 CommonTileButton(
                     primaryText: "Primary",

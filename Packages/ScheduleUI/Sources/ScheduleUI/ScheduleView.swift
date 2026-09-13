@@ -1,13 +1,17 @@
+#if canImport(UIKit)
 import SharedAssets
 import SwiftUI
 
-struct ScheduleView: View {
+/// The conference schedule, one tab per day.
+public struct ScheduleView: View {
     @StateObject private var viewModel = ScheduleViewModel()
 
     @State private var currentIndex: Int = 0
     @Namespace private var namespace
 
-    var body: some View {
+    public init() {}
+
+    public var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
                 Divider()
@@ -147,3 +151,4 @@ struct ScheduleView_Previews: PreviewProvider {
         ScheduleView()
     }
 }
+#endif

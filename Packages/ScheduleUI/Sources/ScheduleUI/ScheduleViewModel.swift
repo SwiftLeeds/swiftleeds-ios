@@ -1,9 +1,9 @@
 import Combine
 import Dependencies
 import ScheduleFeature
-import SwiftUI
 
-class ScheduleViewModel: ObservableObject {
+@MainActor
+final class ScheduleViewModel: ObservableObject {
     @Published private(set) var hasLoaded = false
     @Published private(set) var event: Schedule.Event?
     @Published private(set) var events: [Schedule.Event] = []
@@ -14,11 +14,10 @@ class ScheduleViewModel: ObservableObject {
         @Dependency(\.fetchCurrentSchedule) var fetchCurrentSchedule
 
         let schedule = try await fetchCurrentSchedule()
-        await updateSchedule(schedule)
+        updateSchedule(schedule)
     }
 
-    @MainActor
-    private func updateSchedule(_ schedule: Schedule) async {
+    private func updateSchedule(_ schedule: Schedule) {
         event = schedule.data.event
         events = schedule.data.events.sorted(by: { $0.name < $1.name })
 
@@ -46,7 +45,7 @@ class ScheduleViewModel: ObservableObject {
         guard let currentEvent else { return }
 
         let schedule = try await fetchSchedule(for: currentEvent.id)
-        await updateSchedule(schedule)
+        updateSchedule(schedule)
     }
 
     // Only show slido links on the day of the event
