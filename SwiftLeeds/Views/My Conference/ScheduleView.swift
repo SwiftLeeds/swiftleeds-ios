@@ -121,17 +121,6 @@ struct ScheduleView: View {
         .buttonStyle(.plain)
     }
 
-    @ViewBuilder
-    private var tickets: some View {
-        if let numberOfDaysToConference = viewModel.numberOfDaysToConference {
-            AnnouncementCell(label: "Get your ticket now!",
-                             value: "\(numberOfDaysToConference) days",
-                             valueIcon: "calendar.circle.fill",
-                             gradientColors: [.accent, .accent])
-            .previewDisplayName("Buy Ticket")
-        }
-    }
-
     private var empty: some View {
         VStack(spacing: 10) {
             Spacer()
