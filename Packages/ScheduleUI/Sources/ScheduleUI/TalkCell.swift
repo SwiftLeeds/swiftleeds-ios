@@ -4,7 +4,7 @@ import ScheduleFeature
 import SharedAssets
 import SwiftUI
 
-struct TalkCell: View {
+package struct TalkCell: View {
     private let time: String
     private let details: String
     private let isNext: Bool
@@ -13,7 +13,7 @@ struct TalkCell: View {
 
     @Environment(\.colorScheme) var colorScheme
 
-    init(
+    package init(
         time: String,
         details: String,
         isNext: Bool = false,
@@ -27,7 +27,7 @@ struct TalkCell: View {
         self.gradientColors = gradientColors
     }
 
-    var body: some View {
+    package var body: some View {
         VStack(alignment: .leading, spacing: 6) {
             timeLabel(time)
 
@@ -101,7 +101,7 @@ struct TalkCell: View {
 
     private func timeLabel(_ value: String) -> some View {
         HStack(spacing: 7) {
-            Image("Clock")
+            Image.clock
 
             Text(value)
                 .foregroundColor(.cellForeground)

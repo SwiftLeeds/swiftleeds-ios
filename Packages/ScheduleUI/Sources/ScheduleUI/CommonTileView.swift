@@ -3,7 +3,7 @@ import SharedAssets
 import SwiftUI
 
 /// Generic primary secondary view
-struct CommonTileView<BackgroundType: ShapeStyle>: View {
+package struct CommonTileView<BackgroundType: ShapeStyle>: View {
     @Environment(\.sizeCategory) var sizeCategory
 
     let icon: String?
@@ -19,7 +19,7 @@ struct CommonTileView<BackgroundType: ShapeStyle>: View {
         sizeCategory >= .accessibilityMedium
     }
 
-    init(
+    package init(
         icon: String? = nil,
         primaryText: String,
         secondaryText: String? = nil,
@@ -39,7 +39,7 @@ struct CommonTileView<BackgroundType: ShapeStyle>: View {
         self.backgroundStyle = backgroundStyle
     }
 
-    init(
+    package init(
         icon: String? = nil,
         primaryText: String,
         secondaryText: String? = nil,
@@ -59,7 +59,7 @@ struct CommonTileView<BackgroundType: ShapeStyle>: View {
         self.backgroundStyle = backgroundStyle
     }
 
-    var body: some View {
+    package var body: some View {
         sizeAwareStack(content: {
             VStack(alignment: .leading, spacing: 2) {
                 if let icon {
@@ -121,7 +121,7 @@ struct CommonTileView<BackgroundType: ShapeStyle>: View {
 struct CommonTileView_Previews: PreviewProvider {
     static var previews: some View {
         ZStack {
-            Color(uiColor: .systemGroupedBackground).edgesIgnoringSafeArea(.all)
+            Color.listBackground.edgesIgnoringSafeArea(.all)
             VStack(spacing: Padding.cellGap) {
                 CommonTileView(
                     primaryText: "Primary", secondaryText: "Secondary", subtitleText: "More details", showChevron: true

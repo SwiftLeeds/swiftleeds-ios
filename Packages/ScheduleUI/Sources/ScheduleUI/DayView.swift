@@ -1,12 +1,18 @@
+#if canImport(UIKit)
 import DesignKit
 import ScheduleFeature
 import SwiftUI
 
-struct DayView: View {
-    let slots: [Schedule.Slot]
-    let showSlido: Bool
+package struct DayView: View {
+    private let slots: [Schedule.Slot]
+    private let showSlido: Bool
 
-    var body: some View {
+    package init(slots: [Schedule.Slot], showSlido: Bool) {
+        self.slots = slots
+        self.showSlido = showSlido
+    }
+
+    package var body: some View {
         ScrollView {
             VStack(spacing: Padding.cellGap) {
                 ForEach(slots) { slot in
@@ -43,3 +49,4 @@ struct DayView_Previews: PreviewProvider {
         DayView(slots: [], showSlido: true)
     }
 }
+#endif
