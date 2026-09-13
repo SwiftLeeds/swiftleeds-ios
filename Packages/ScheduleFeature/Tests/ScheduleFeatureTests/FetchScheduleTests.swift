@@ -8,7 +8,7 @@ import Testing
         let spy = EventSpy()
 
         _ = try await withDependencies {
-            $0.scheduleRepository = .recording(into: spy)
+            $0.scheduleRepository = .recording(into: spy, answering: try .fixture())
         } operation: {
             try await FetchCurrentSchedule.liveValue()
         }
@@ -21,7 +21,7 @@ import Testing
         let event = UUID()
 
         _ = try await withDependencies {
-            $0.scheduleRepository = .recording(into: spy)
+            $0.scheduleRepository = .recording(into: spy, answering: try .fixture())
         } operation: {
             try await FetchSchedule.liveValue(for: event)
         }
@@ -39,33 +39,16 @@ private actor EventSpy {
 }
 
 private extension ScheduleRepository {
-    static func recording(into spy: EventSpy) -> ScheduleRepository {
+    static func recording(into spy: EventSpy, answering answer: Schedule) -> ScheduleRepository {
         ScheduleRepository(
             fetchCurrentSchedule: { () async throws(ScheduleFetchError) -> Schedule in
                 await spy.record(nil)
-                return .empty
+                return answer
             },
             fetchSchedule: { event async throws(ScheduleFetchError) -> Schedule in
                 await spy.record(event)
-                return .empty
+                return answer
             }
-        )
-    }
-}
-
-private extension Schedule {
-    static var empty: Schedule {
-        Schedule(
-            data: Schedule.Data(
-                event: Schedule.Event(
-                    id: UUID(),
-                    name: "SwiftLeeds 2026",
-                    location: "The Playhouse, Leeds",
-                    date: Date(timeIntervalSince1970: 0)
-                ),
-                events: [],
-                days: []
-            )
         )
     }
 }
