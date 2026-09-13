@@ -1,6 +1,5 @@
 import Combine
 import Dependencies
-import Foundation
 import ScheduleFeature
 import SwiftUI
 
@@ -11,31 +10,11 @@ class MyConferenceViewModel: ObservableObject {
     @Published private(set) var days: [Schedule.Day] = []
     @Published private(set) var currentEvent: Schedule.Event?
 
-    private static let scheduleKey = "Schedule"
-
     func loadSchedule() async throws {
         @Dependency(\.fetchCurrentSchedule) var fetchCurrentSchedule
 
-        do {
-            let schedule = try await fetchCurrentSchedule()
-            await updateSchedule(schedule)
-            store(schedule)
-        } catch {
-            guard let stored = storedSchedule() else { throw error }
-            await updateSchedule(stored)
-        }
-    }
-
-    private func store(_ schedule: Schedule) {
-        guard let data = try? PropertyListEncoder().encode(schedule) else { return }
-
-        UserDefaults.standard.set(data, forKey: Self.scheduleKey)
-        UserDefaults(suiteName: ConferenceConfig.appGroupIdentifier)?.set(data, forKey: Self.scheduleKey)
-    }
-
-    private func storedSchedule() -> Schedule? {
-        UserDefaults.standard.data(forKey: Self.scheduleKey)
-            .flatMap { try? PropertyListDecoder().decode(Schedule.self, from: $0) }
+        let schedule = try await fetchCurrentSchedule()
+        await updateSchedule(schedule)
     }
 
     @MainActor
