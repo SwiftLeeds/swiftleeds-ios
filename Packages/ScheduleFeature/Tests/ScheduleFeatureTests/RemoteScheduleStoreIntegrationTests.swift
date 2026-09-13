@@ -4,15 +4,15 @@ import NetworkKit
 import ScheduleFeature
 import Testing
 
-// Drives the composed `liveValue` with only the transport stubbed.
-@Suite struct ScheduleRepositoryIntegrationTests {
+// Drives the live store with only the transport stubbed.
+@Suite struct RemoteScheduleStoreIntegrationTests {
     @Test func whenNoEventIsGiven_shouldSendNoEventQueryItem() async throws {
         let recorder = RequestRecorder()
 
         _ = try await withDependencies {
             $0.httpClient = .recordingRequests(into: recorder, responding: ScheduleJSON.valid)
         } operation: {
-            try await ScheduleRepository.liveValue.fetchCurrentSchedule()
+            try await RemoteScheduleStore.liveValue.fetch(.current)
         }
 
         let url = try #require(await recorder.requests.first?.url?.absoluteString)
@@ -26,7 +26,7 @@ import Testing
         _ = try await withDependencies {
             $0.httpClient = .recordingRequests(into: recorder, responding: ScheduleJSON.valid)
         } operation: {
-            try await ScheduleRepository.liveValue.fetchSchedule(event)
+            try await RemoteScheduleStore.liveValue.fetch(.event(event))
         }
 
         let url = try #require(await recorder.requests.first?.url?.absoluteString)
@@ -37,7 +37,7 @@ import Testing
         let schedule = try await withDependencies {
             $0.httpClient = .responding(with: ScheduleJSON.valid, statusCode: 200)
         } operation: {
-            try await ScheduleRepository.liveValue.fetchCurrentSchedule()
+            try await RemoteScheduleStore.liveValue.fetch(.current)
         }
 
         #expect(schedule.data.event.name == "SwiftLeeds 2026")
@@ -50,7 +50,7 @@ import Testing
             $0.httpClient = .failing(with: URLError(.notConnectedToInternet))
         } operation: {
             await #expect(throws: ScheduleFetchError.couldNotReachServer) {
-                try await ScheduleRepository.liveValue.fetchCurrentSchedule()
+                try await RemoteScheduleStore.liveValue.fetch(.current)
             }
         }
     }
@@ -60,7 +60,7 @@ import Testing
             $0.httpClient = .responding(with: ScheduleJSON.valid, statusCode: 500)
         } operation: {
             await #expect(throws: ScheduleFetchError.unknown) {
-                try await ScheduleRepository.liveValue.fetchCurrentSchedule()
+                try await RemoteScheduleStore.liveValue.fetch(.current)
             }
         }
     }
@@ -70,7 +70,7 @@ import Testing
             $0.httpClient = .responding(with: Data("not json".utf8), statusCode: 200)
         } operation: {
             await #expect(throws: ScheduleFetchError.invalidResponse) {
-                try await ScheduleRepository.liveValue.fetchCurrentSchedule()
+                try await RemoteScheduleStore.liveValue.fetch(.current)
             }
         }
     }
@@ -81,7 +81,7 @@ import Testing
             $0.httpClient = .responding(with: ScheduleJSON.noDays, statusCode: 200)
         } operation: {
             await #expect(throws: ScheduleFetchError.invalidResponse) {
-                try await ScheduleRepository.liveValue.fetchCurrentSchedule()
+                try await RemoteScheduleStore.liveValue.fetch(.current)
             }
         }
     }
@@ -91,7 +91,7 @@ import Testing
             $0.httpClient = .responding(with: ScheduleJSON.slotWithNoContent, statusCode: 200)
         } operation: {
             await #expect(throws: ScheduleFetchError.invalidResponse) {
-                try await ScheduleRepository.liveValue.fetchCurrentSchedule()
+                try await RemoteScheduleStore.liveValue.fetch(.current)
             }
         }
     }
