@@ -75,6 +75,17 @@ import Testing
         }
     }
 
+    // A conference does not have an empty schedule, so an empty days array is a bad payload.
+    @Test func whenTheScheduleHasNoDays_shouldThrowInvalidResponse() async {
+        await withDependencies {
+            $0.httpClient = .responding(with: ScheduleJSON.noDays, statusCode: 200)
+        } operation: {
+            await #expect(throws: ScheduleFetchError.invalidResponse) {
+                try await ScheduleRepository.liveValue.fetchCurrentSchedule()
+            }
+        }
+    }
+
     @Test func whenASlotCarriesNoContent_shouldThrowInvalidResponse() async {
         await withDependencies {
             $0.httpClient = .responding(with: ScheduleJSON.slotWithNoContent, statusCode: 200)

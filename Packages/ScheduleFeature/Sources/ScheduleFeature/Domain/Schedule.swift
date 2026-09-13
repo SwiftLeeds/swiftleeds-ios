@@ -17,6 +17,22 @@ public struct Schedule: Codable {
             self.events = events
             self.days = days
         }
+
+        public init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+
+            event = try container.decode(Event.self, forKey: .event)
+            events = try container.decode([Event].self, forKey: .events)
+            days = try container.decode([Day].self, forKey: .days)
+
+            guard days.isEmpty == false else {
+                throw DecodingError.dataCorruptedError(
+                    forKey: .days,
+                    in: container,
+                    debugDescription: "A conference has at least one day"
+                )
+            }
+        }
     }
 
     public struct Day: Codable, Identifiable {
