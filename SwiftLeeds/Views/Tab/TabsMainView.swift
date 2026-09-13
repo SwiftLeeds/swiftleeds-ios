@@ -1,5 +1,6 @@
 import AuthenticationUI
 import ReadabilityModifier
+import ScheduleUI
 import Settings
 import SponsorsUI
 import SwiftUI

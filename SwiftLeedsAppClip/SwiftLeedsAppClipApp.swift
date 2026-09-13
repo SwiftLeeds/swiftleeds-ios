@@ -1,5 +1,6 @@
 import Dependencies
 import NetworkKit
+import ScheduleUI
 import SwiftUI
 
 @main
