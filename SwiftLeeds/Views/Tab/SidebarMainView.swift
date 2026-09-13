@@ -12,7 +12,7 @@ struct SidebarMainView: View {
         } detail: {
             switch appState.selectedTab {
             case .conference:
-                MyConferenceView()
+                ScheduleView()
             case .about:
                 AboutView()
             case .location:

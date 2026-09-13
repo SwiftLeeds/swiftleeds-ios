@@ -13,7 +13,7 @@ struct SwiftLeedsAppClipApp: App {
 
     var body: some Scene {
         WindowGroup {
-            MyConferenceView()
+            ScheduleView()
         }
     }
 }

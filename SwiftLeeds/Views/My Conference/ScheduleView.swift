@@ -1,8 +1,8 @@
 import SharedAssets
 import SwiftUI
 
-struct MyConferenceView: View {
-    @StateObject private var viewModel = MyConferenceViewModel()
+struct ScheduleView: View {
+    @StateObject private var viewModel = ScheduleViewModel()
 
     @State private var currentIndex: Int = 0
     @Namespace private var namespace
@@ -153,8 +153,8 @@ struct MyConferenceView: View {
     }
 }
 
-struct MyConferenceView_Previews: PreviewProvider {
+struct ScheduleView_Previews: PreviewProvider {
     static var previews: some View {
-        MyConferenceView()
+        ScheduleView()
     }
 }

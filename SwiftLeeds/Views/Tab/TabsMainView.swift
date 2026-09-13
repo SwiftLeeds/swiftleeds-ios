@@ -9,7 +9,7 @@ struct TabsMainView: View {
 
     var body: some View {
         TabView(selection: $appState.selectedTab) {
-            MyConferenceView()
+            ScheduleView()
                 .tabItem {
                     Label("Schedule", systemImage: "person.fill")
                 }
