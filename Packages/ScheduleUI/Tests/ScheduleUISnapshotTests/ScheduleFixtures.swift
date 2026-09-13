@@ -57,6 +57,31 @@ extension Activity {
     )
 }
 
+extension Schedule.Event {
+    static func fixture(named name: String = "SwiftLeeds 2026") -> Schedule.Event {
+        Schedule.Event(
+            id: UUID(),
+            name: name,
+            location: "The Playhouse, Leeds",
+            date: Date(timeIntervalSince1970: 0)
+        )
+    }
+}
+
+extension Schedule.Day {
+    static func fixture(named name: String) -> Schedule.Day {
+        Schedule.Day(
+            date: Date(timeIntervalSince1970: 0),
+            name: name,
+            slots: [
+                .fixture(startTime: "09:30", presentation: .oneSpeaker),
+                .fixture(startTime: "10:30", activity: .coffeeBreak),
+                .fixture(startTime: "11:00", presentation: .twoSpeakers),
+            ]
+        )
+    }
+}
+
 extension Schedule.Slot {
     static func fixture(
         startTime: String,
