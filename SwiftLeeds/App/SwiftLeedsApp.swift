@@ -5,6 +5,7 @@ import Foundation
 import LogKit
 import LogKitUnified
 import NetworkKit
+import ScheduleFeature
 import SecureStorageKit
 import SecureStorageKitKeychain
 import SwiftUI
@@ -27,6 +28,7 @@ struct SwiftLeedsApp: App {
             $0.secureStorage = .keychain(service: KeychainService("uk.co.swiftleeds.authentication"))
             $0.apiConfiguration = APIConfiguration(baseURL: URL(string: "https://\(ConferenceConfig.apiHost)")!)
             $0.httpClient = HTTPClient.urlSession(.unauthenticated).logging()
+            $0.localScheduleStore = .appGroup(AppGroupIdentifier(ConferenceConfig.appGroupIdentifier))
             $0.authHTTPClient = .live(urlSession: .authenticated, onSessionExpiry: {
                 @Dependency(\.signOut) var signOut
                 try? await signOut()

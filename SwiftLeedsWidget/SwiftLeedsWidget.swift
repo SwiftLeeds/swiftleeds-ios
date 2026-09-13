@@ -1,9 +1,20 @@
+import Dependencies
+import NetworkKit
+import ScheduleFeature
 import SwiftUI
 import WidgetKit
 
 @main
 struct SwiftLeedsWidget: Widget {
     let kind: String = Bundle.main.object(forInfoDictionaryKey: "WidgetKindName") as? String ?? "Widget"
+
+    init() {
+        prepareDependencies {
+            $0.apiConfiguration = APIConfiguration(baseURL: ConferenceConfig.apiURL)
+            $0.httpClient = HTTPClient.urlSession(.shared)
+            $0.localScheduleStore = .appGroup(AppGroupIdentifier(ConferenceConfig.appGroupIdentifier))
+        }
+    }
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in

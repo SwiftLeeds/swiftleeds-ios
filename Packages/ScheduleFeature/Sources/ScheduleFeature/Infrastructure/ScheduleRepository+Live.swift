@@ -1,6 +1,5 @@
 import Dependencies
 import Foundation
-import NetworkKit
 
 extension ScheduleRepository: DependencyKey {
     package static var liveValue: ScheduleRepository { live }
@@ -8,35 +7,33 @@ extension ScheduleRepository: DependencyKey {
     static var live: ScheduleRepository {
         ScheduleRepository(
             fetchCurrentSchedule: { () async throws(ScheduleFetchError) -> Schedule in
-                try await schedule(for: nil)
+                try await schedule(for: .current)
             },
             fetchSchedule: { event async throws(ScheduleFetchError) -> Schedule in
-                try await schedule(for: event)
+                try await schedule(for: .event(event))
             }
         )
     }
 
-    private static func schedule(for event: UUID?) async throws(ScheduleFetchError) -> Schedule {
-        @Dependency(\.httpClient) var httpClient
-        @Dependency(\.scheduleMapper) var scheduleMapper
+    private static func schedule(
+        for request: ScheduleRequest
+    ) async throws(ScheduleFetchError) -> Schedule {
+        @Dependency(\.localScheduleStore) var local
+        @Dependency(\.remoteScheduleStore) var remote
+        @Dependency(\.date) var date
 
-        let data: Foundation.Data
-        let response: HTTPURLResponse
-        do {
-            (data, response) = try await httpClient.send(Endpoint.schedule(event: event).urlRequest())
-        } catch {
-            throw ScheduleFetchError.couldNotReachServer
+        if let stored = local.load(request), stored.isFresh(at: date.now) {
+            return stored.schedule
         }
 
-        do throws(ScheduleMapper.ResponseError) {
-            return try scheduleMapper.map(data, response)
-        } catch {
-            switch error {
-            case .unexpectedStatus:
-                throw ScheduleFetchError.unknown
-            case .couldNotDecode:
-                throw ScheduleFetchError.invalidResponse
-            }
+        let schedule = try await remote.fetch(request)
+        let stored = StoredSchedule(schedule: schedule, storedAt: date.now)
+        local.save(stored, request)
+
+        if request == .current {
+            local.save(stored, .event(schedule.data.event.id))
         }
+
+        return schedule
     }
 }
