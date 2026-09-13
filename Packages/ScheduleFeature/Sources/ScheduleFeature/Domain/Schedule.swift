@@ -1,13 +1,13 @@
 import Foundation
 
-public struct Schedule: Codable {
+public struct Schedule: Codable, Sendable {
     public let data: Data
 
     public init(data: Data) {
         self.data = data
     }
 
-    public struct Data: Codable {
+    public struct Data: Codable, Sendable {
         public enum ParsingError: Error, Equatable {
             case noDays
         }
@@ -35,7 +35,7 @@ public struct Schedule: Codable {
         }
     }
 
-    public struct Day: Codable, Identifiable {
+    public struct Day: Codable, Identifiable, Sendable {
         public let date: Foundation.Date
         public let name: String
         public let slots: [Slot]
@@ -51,7 +51,7 @@ public struct Schedule: Codable {
         }
     }
 
-    public struct Event: Codable, Identifiable {
+    public struct Event: Codable, Identifiable, Sendable {
         public let id: UUID
         public let name: String
         public let location: String
@@ -69,7 +69,7 @@ public struct Schedule: Codable {
         }
     }
 
-    public struct Slot: Identifiable {
+    public struct Slot: Identifiable, Sendable {
         public let id: UUID
         public let date: Foundation.Date?
         public let startTime: String
