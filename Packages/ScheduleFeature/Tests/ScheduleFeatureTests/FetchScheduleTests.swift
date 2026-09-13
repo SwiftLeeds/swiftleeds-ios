@@ -43,29 +43,12 @@ private extension ScheduleRepository {
         ScheduleRepository(
             fetchCurrentSchedule: { () async throws(ScheduleFetchError) -> Schedule in
                 await spy.record(nil)
-                return .empty
+                return .fixture()
             },
             fetchSchedule: { event async throws(ScheduleFetchError) -> Schedule in
                 await spy.record(event)
-                return .empty
+                return .fixture()
             }
-        )
-    }
-}
-
-private extension Schedule {
-    static var empty: Schedule {
-        Schedule(
-            data: Schedule.Data(
-                event: Schedule.Event(
-                    id: UUID(),
-                    name: "SwiftLeeds 2026",
-                    location: "The Playhouse, Leeds",
-                    date: Date(timeIntervalSince1970: 0)
-                ),
-                events: [],
-                days: []
-            )
         )
     }
 }
