@@ -19,6 +19,14 @@ struct SpeakerView: View {
         .edgesIgnoringSafeArea(.top)
     }
 
+    private var slidoGradient: LinearGradient {
+        LinearGradient(
+            gradient: Gradient(colors: [.buyTicketGradientStart, .buyTicketGradientEnd]),
+            startPoint: .leading,
+            endPoint: .trailing
+        )
+    }
+
     private var content: some View {
         VStack(spacing: Padding.stackGap) {
             if presentation.speakers.isEmpty == false {
@@ -38,7 +46,7 @@ struct SpeakerView: View {
                     secondaryColor: Color.primary
                 )
 
-                if let videoURL = presentation.videoURL, videoURL.isEmpty == false {
+                if let videoURL = presentation.videoURL.flatMap({ URL(string: $0) }) {
                     CommonTileView(
                         icon: "video.fill",
                         primaryText: "Watch video",
@@ -48,7 +56,7 @@ struct SpeakerView: View {
                     .accessibilityHint("Opens the video")
                     .accessibilityAddTraits(.isButton)
                     .onTapGesture {
-                        openURL(URL(string: videoURL)!)
+                        openURL(videoURL)
                     }
                 }
 
@@ -59,7 +67,7 @@ struct SpeakerView: View {
                         accessibilityHint: "Opens Slido to allow questions to be asked",
                         primaryColor: .white,
                         secondaryColor: .white.opacity(0.8),
-                        backgroundStyle: LinearGradient(gradient: Gradient(colors: [.buyTicketGradientStart, .buyTicketGradientEnd]), startPoint: .leading, endPoint: .trailing),
+                        backgroundStyle: slidoGradient,
                         onTap: {
                             showWebSheet.toggle()
                         }
@@ -75,7 +83,9 @@ struct SpeakerView: View {
                         )
                     }
 
-                    if let twitter = speaker.twitter, twitter.isEmpty == false {
+                    if let twitter = speaker.twitter,
+                       twitter.isEmpty == false,
+                       let twitterURL = URL(string: "https://twitter.com/\(twitter)") {
                         CommonTileView(
                             primaryText: "Twitter",
                             secondaryText: "@\(twitter)",
@@ -84,7 +94,7 @@ struct SpeakerView: View {
                         .accessibilityHint("Opens twitter for this speaker")
                         .accessibilityAddTraits(.isButton)
                         .onTapGesture {
-                            openURL(URL(string: "https://twitter.com/\(twitter)")!)
+                            openURL(twitterURL)
                         }
                     }
                 }

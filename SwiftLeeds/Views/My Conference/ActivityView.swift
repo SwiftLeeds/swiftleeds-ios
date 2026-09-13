@@ -23,8 +23,8 @@ struct ActivityView: View {
                 foregroundImageURLs: foregroundImageURLs
             )
 
-            let hasSubtitle = activity.subtitle != nil && !activity.subtitle!.isEmpty
-            let hasDescription = activity.description != nil && !activity.description!.isEmpty
+            let hasSubtitle = activity.subtitle?.isEmpty == false
+            let hasDescription = activity.description?.isEmpty == false
 
             if hasSubtitle || hasDescription {
                 StackedTileView(

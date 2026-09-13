@@ -35,7 +35,9 @@ struct MyConferenceView: View {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Menu {
                             ForEach(viewModel.events) { event in
-                                Button(action: { viewModel.updateCurrentEvent(event) }) {
+                                Button {
+                                    viewModel.updateCurrentEvent(event)
+                                } label: {
                                     Text(event.name)
                                 }
                             }

@@ -69,28 +69,40 @@ struct StackedTileView<BackgroundType: ShapeStyle>: View {
             .joined(separator: ", ")
     }
 }
-
 struct StackedTileView_Previews: PreviewProvider {
+    private static let longBody = """
+    A stacked tile carries a headline and a body that can run to several paragraphs. \
+    This filler stands in for a talk synopsis, which is the longest thing the tile \
+    has to lay out.
+
+    A second paragraph checks that a line break survives the layout, and that the \
+    tile grows to fit its text rather than truncating it.
+    """
+
+    private static let gradient = LinearGradient(
+        colors: [.blue, .teal],
+        startPoint: .leading,
+        endPoint: .trailing
+    )
+
     static var previews: some View {
         ZStack {
             Color(uiColor: .systemGroupedBackground).edgesIgnoringSafeArea(.all)
             VStack(spacing: Padding.cellGap) {
-                StackedTileView(
-                    primaryText: "Primary", secondaryText: "Walkin' through a crowd, the village is aglow\nKaleidoscope of loud heartbeats under coats\nEverybody here wanted somethin' more\nSearchin' for a sound we hadn't heard before"
-                )
+                StackedTileView(primaryText: "Primary", secondaryText: longBody)
                 StackedTileView(
                     primaryText: "Primary",
-                    secondaryText: "And it said\nWelcome to New York, it's been waitin' for you\nWelcome to New York, welcome to New York",
+                    secondaryText: longBody,
                     primaryColor: .white,
                     secondaryColor: .white,
                     backgroundStyle: .red
                 )
                 StackedTileView(
                     primaryText: "Primary",
-                    secondaryText: "Like any great love, it keeps you guessing\nLike any real love, it's ever-changing\nLike any true love, it drives you crazy\nBut you know you wouldn't change anything, anything, anything",
+                    secondaryText: longBody,
                     primaryColor: .white,
                     secondaryColor: .white.opacity(0.8),
-                    backgroundStyle: LinearGradient(colors: [.blue, .teal], startPoint: .leading, endPoint: .trailing)
+                    backgroundStyle: gradient
                 )
             }
             .padding()
