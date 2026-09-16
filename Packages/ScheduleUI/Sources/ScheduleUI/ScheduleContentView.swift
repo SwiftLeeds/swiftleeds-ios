@@ -5,7 +5,6 @@ import SwiftUI
 
 /// The schedule screen, drawn from a state it is given. It fetches nothing.
 package struct ScheduleContentView: View {
-    /// What the screen shows.
     package enum ScreenState {
         case loading
         case loaded(days: [Schedule.Day], showSlido: Bool)

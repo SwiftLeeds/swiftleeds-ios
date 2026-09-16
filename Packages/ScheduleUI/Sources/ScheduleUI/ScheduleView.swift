@@ -3,7 +3,7 @@ import Dependencies
 import ScheduleFeature
 import SwiftUI
 
-/// The conference schedule. Fetches it, then hands it to the view that draws it.
+/// The schedule screen. It fetches the schedule when it appears.
 public struct ScheduleView: View {
     @State private var viewModel = ViewModel()
 
