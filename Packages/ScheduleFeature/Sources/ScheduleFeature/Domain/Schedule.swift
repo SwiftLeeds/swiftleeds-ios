@@ -1,25 +1,41 @@
 import Foundation
 
-public struct Schedule: Codable {
+public struct Schedule: Codable, Sendable {
     public let data: Data
 
     public init(data: Data) {
         self.data = data
     }
 
-    public struct Data: Codable {
+    public struct Data: Codable, Sendable {
+        public enum ParsingError: Error, Equatable {
+            case noDays
+        }
+
         public let event: Event
         public let events: [Event]
         public let days: [Day]
 
-        public init(event: Event, events: [Event], days: [Day]) {
+        public init(event: Event, events: [Event], days: [Day]) throws(ParsingError) {
+            guard days.isEmpty == false else { throw .noDays }
+
             self.event = event
             self.events = events
             self.days = days
         }
+
+        public init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+
+            try self.init(
+                event: container.decode(Event.self, forKey: .event),
+                events: container.decode([Event].self, forKey: .events),
+                days: container.decode([Day].self, forKey: .days)
+            )
+        }
     }
 
-    public struct Day: Codable, Identifiable {
+    public struct Day: Codable, Identifiable, Sendable {
         public let date: Foundation.Date
         public let name: String
         public let slots: [Slot]
@@ -35,7 +51,7 @@ public struct Schedule: Codable {
         }
     }
 
-    public struct Event: Codable, Identifiable {
+    public struct Event: Codable, Identifiable, Sendable {
         public let id: UUID
         public let name: String
         public let location: String
@@ -53,7 +69,7 @@ public struct Schedule: Codable {
         }
     }
 
-    public struct Slot: Identifiable {
+    public struct Slot: Identifiable, Sendable {
         public let id: UUID
         public let date: Foundation.Date?
         public let startTime: String
