@@ -38,7 +38,7 @@ struct SpeakerView: View {
                     secondaryColor: Color.primary
                 )
 
-                if let videoURL = presentation.videoURL, videoURL.isEmpty == false {
+                if let videoURL = presentation.videoURL.flatMap({ URL(string: $0) }) {
                     CommonTileView(
                         icon: "video.fill",
                         primaryText: "Watch video",
@@ -48,7 +48,7 @@ struct SpeakerView: View {
                     .accessibilityHint("Opens the video")
                     .accessibilityAddTraits(.isButton)
                     .onTapGesture {
-                        openURL(URL(string: videoURL)!)
+                        openURL(videoURL)
                     }
                 }
 
@@ -75,7 +75,9 @@ struct SpeakerView: View {
                         )
                     }
 
-                    if let twitter = speaker.twitter, twitter.isEmpty == false {
+                    if let twitter = speaker.twitter,
+                       twitter.isEmpty == false,
+                       let twitterURL = URL(string: "https://twitter.com/\(twitter)") {
                         CommonTileView(
                             primaryText: "Twitter",
                             secondaryText: "@\(twitter)",
@@ -84,7 +86,7 @@ struct SpeakerView: View {
                         .accessibilityHint("Opens twitter for this speaker")
                         .accessibilityAddTraits(.isButton)
                         .onTapGesture {
-                            openURL(URL(string: "https://twitter.com/\(twitter)")!)
+                            openURL(twitterURL)
                         }
                     }
                 }
