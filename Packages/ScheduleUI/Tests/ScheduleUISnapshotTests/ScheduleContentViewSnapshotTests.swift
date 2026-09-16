@@ -35,7 +35,7 @@ import Testing
     }
 
     @Test func failedWithoutConferenceName() {
-        let view = ScheduleContentView(state: .failed(conference: nil))
+        let view = ScheduleContentView(state: .failed(conference: nil, reason: .couldNotReachServer))
 
         assertScreenSnapshots(of: view)
     }
@@ -43,10 +43,16 @@ import Testing
     @Test func failedForOneConference() {
         let conferences: [Schedule.Event] = [.fixture(named: "SwiftLeeds 2022"), .fixture()]
         let view = ScheduleContentView(
-            state: .failed(conference: "SwiftLeeds 2022"),
+            state: .failed(conference: "SwiftLeeds 2022", reason: .couldNotReachServer),
             events: conferences,
             currentEvent: conferences.first
         )
+
+        assertScreenSnapshots(of: view)
+    }
+
+    @Test func failedOnUnreadableResponse() {
+        let view = ScheduleContentView(state: .failed(conference: nil, reason: .invalidResponse))
 
         assertScreenSnapshots(of: view)
     }

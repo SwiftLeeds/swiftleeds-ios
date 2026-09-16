@@ -35,12 +35,12 @@ extension ScheduleView {
         func load() async {
             @Dependency(\.fetchCurrentSchedule) var fetchCurrentSchedule
 
-            do {
+            do throws(ScheduleFetchError) {
                 show(try await fetchCurrentSchedule())
             } catch {
                 // Leaving the screen cancels this load, and the next appearance starts another.
                 guard Task.isCancelled == false else { return }
-                state = .failed(conference: currentEvent?.name)
+                state = .failed(conference: currentEvent?.name, reason: error)
             }
         }
 
@@ -50,13 +50,13 @@ extension ScheduleView {
             currentEvent = event
             state = .loading
 
-            do {
+            do throws(ScheduleFetchError) {
                 let schedule = try await fetchSchedule(for: event.id)
                 guard isStillSelected(event) else { return }
                 show(schedule)
             } catch {
                 guard isStillSelected(event) else { return }
-                state = .failed(conference: event.name)
+                state = .failed(conference: event.name, reason: error)
             }
         }
 

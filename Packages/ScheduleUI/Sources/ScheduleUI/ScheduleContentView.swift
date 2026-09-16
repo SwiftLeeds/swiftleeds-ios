@@ -9,7 +9,7 @@ package struct ScheduleContentView: View {
         case loading
         case loaded(days: [Schedule.Day], showSlido: Bool)
         /// Names the conference that could not be loaded, when one was asked for by name.
-        case failed(conference: String?)
+        case failed(conference: String?, reason: ScheduleFetchError)
     }
 
     private let state: ScreenState
@@ -53,8 +53,8 @@ package struct ScheduleContentView: View {
             loadingView
         case let .loaded(days, showSlido):
             schedule(days: days, showSlido: showSlido)
-        case let .failed(conference):
-            failureView(for: conference)
+        case let .failed(conference, reason):
+            failureView(for: conference, reason: reason)
         }
     }
 
@@ -68,7 +68,7 @@ package struct ScheduleContentView: View {
         }
     }
 
-    private func failureView(for conference: String?) -> some View {
+    private func failureView(for conference: String?, reason: ScheduleFetchError) -> some View {
         VStack(spacing: 10) {
             Spacer()
 
@@ -79,14 +79,26 @@ package struct ScheduleContentView: View {
                 .font(.title)
                 .multilineTextAlignment(.center)
 
-            Text("Check your connection and try again")
+            Text(advice(for: reason))
                 .font(.subheadline)
+                .multilineTextAlignment(.center)
 
             Spacer()
         }
         .padding(.horizontal)
         .foregroundColor(.cellForeground)
         .accessibilityElement(children: .combine)
+    }
+
+    private func advice(for reason: ScheduleFetchError) -> String {
+        switch reason {
+        case .couldNotReachServer:
+            "Check your connection and try again"
+        case .invalidResponse:
+            "Something went wrong on our side. Try again later"
+        case .unknown:
+            "Something went wrong on our side. Try again later"
+        }
     }
 
     @ToolbarContentBuilder
