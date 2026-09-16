@@ -50,11 +50,6 @@ final class ScheduleViewModel: ObservableObject {
                 )
             }
 
-        guard days.isEmpty == false else {
-            state = .empty
-            return
-        }
-
         state = .loaded(days: days, showSlido: showsSlido(for: schedule.data.event))
     }
 

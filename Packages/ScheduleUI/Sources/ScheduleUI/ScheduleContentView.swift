@@ -8,7 +8,6 @@ package struct ScheduleContentView: View {
     /// What the screen shows.
     package enum ScreenState {
         case loading
-        case empty
         case loaded(days: [Schedule.Day], showSlido: Bool)
         /// Names the conference that could not be loaded, when one was asked for by name.
         case failed(conference: String?)
@@ -53,8 +52,6 @@ package struct ScheduleContentView: View {
         switch state {
         case .loading:
             loadingView
-        case .empty:
-            emptyView
         case let .loaded(days, showSlido):
             schedule(days: days, showSlido: showSlido)
         case let .failed(conference):
@@ -70,26 +67,6 @@ package struct ScheduleContentView: View {
                 .progressViewStyle(.circular)
                 .scaleEffect(2)
         }
-    }
-
-    private var emptyView: some View {
-        VStack(spacing: 10) {
-            Spacer()
-
-            Image(systemName: "signpost.right.and.left")
-                .font(.system(size: 60))
-
-            Text("Come back soon")
-                .font(.title)
-
-            Text("We're working on filling this schedule")
-                .font(.subheadline)
-
-            Spacer()
-        }
-        .foregroundColor(.cellForeground)
-        .accessibilityElement(children: .ignore)
-        .accessibilityLabel("Come back soon. We're working on filling this schedule")
     }
 
     private func failureView(for conference: String?) -> some View {
