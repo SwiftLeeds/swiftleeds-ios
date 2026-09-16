@@ -3,24 +3,24 @@ import ScheduleFeature
 import Testing
 
 @Suite struct SpeakerFormattingTests {
-    @Test func whenTwoSpeakersShareAnOrganisation_shouldNameItOnce() {
-        let speakers = [
+    @Test func whenTwoSpeakersShareOrganization_shouldNameItOnce() {
+        let sut = [
             Speaker.fixture(name: "Alex", organisation: "Leeds Software Co"),
             Speaker.fixture(name: "Sam", organisation: "Leeds Software Co"),
         ]
 
-        #expect(speakers.joinedOrganisations == "Leeds Software Co")
+        #expect(sut.joinedOrganisations == "Leeds Software Co")
     }
 
     // Five, because a Set orders by hash: with fewer, a broken build passes often enough
     // to look green. One order in 120 matches by luck.
-    @Test func whenSpeakersDiffer_shouldKeepTheSpeakerOrder() {
+    @Test func whenSpeakersDiffer_shouldKeepSpeakerOrder() {
         let organisations = ["Ada Software", "Bo Software", "Cy Software", "Di Software", "Eli Software"]
-        let speakers = organisations.map { Speaker.fixture(name: "Speaker", organisation: $0) }
+        let sut = organisations.map { Speaker.fixture(name: "Speaker", organisation: $0) }
 
         // The formatter joins for the reader's locale, so ask it rather than pin its wording.
         let inSpeakerOrder = ListFormatter.localizedString(byJoining: organisations)
-        #expect(speakers.joinedOrganisations == inSpeakerOrder)
+        #expect(sut.joinedOrganisations == inSpeakerOrder)
     }
 }
 

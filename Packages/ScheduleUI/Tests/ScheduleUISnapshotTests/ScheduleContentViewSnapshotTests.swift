@@ -20,7 +20,7 @@ import Testing
     }
 
     // Two days add the day headers, which one day does not draw.
-    @Test func twoDaysWithThePicker() {
+    @Test func twoDaysWithPicker() {
         let conferences: [Schedule.Event] = [.fixture(named: "SwiftLeeds 2025"), .fixture()]
         let view = ScheduleContentView(
             state: .loaded(
@@ -34,13 +34,12 @@ import Testing
         assertScreenSnapshots(of: view)
     }
 
-    @Test func failedWithoutAConferenceName() {
+    @Test func failedWithoutConferenceName() {
         let view = ScheduleContentView(state: .failed(conference: nil))
 
         assertScreenSnapshots(of: view)
     }
 
-    // The reported bug: the picker moved, the fetch failed, and the screen said nothing.
     @Test func failedForOneConference() {
         let conferences: [Schedule.Event] = [.fixture(named: "SwiftLeeds 2022"), .fixture()]
         let view = ScheduleContentView(
