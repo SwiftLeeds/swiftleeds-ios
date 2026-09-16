@@ -38,6 +38,8 @@ extension ScheduleView {
             do {
                 show(try await fetchCurrentSchedule())
             } catch {
+                // Leaving the screen cancels this load, and the next appearance starts another.
+                guard Task.isCancelled == false else { return }
                 state = .failed(conference: currentEvent?.name)
             }
         }
