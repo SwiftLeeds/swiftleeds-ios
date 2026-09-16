@@ -1,5 +1,6 @@
 import AuthenticationUI
 import ReadabilityModifier
+import ScheduleUI
 import Settings
 import SponsorsUI
 import SwiftUI
@@ -9,7 +10,7 @@ struct TabsMainView: View {
 
     var body: some View {
         TabView(selection: $appState.selectedTab) {
-            MyConferenceView()
+            ScheduleView()
                 .tabItem {
                     Label("Schedule", systemImage: "person.fill")
                 }

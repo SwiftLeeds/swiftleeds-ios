@@ -1,3 +1,4 @@
+import ScheduleUI
 import Settings
 import SponsorsUI
 import SwiftUI
@@ -7,7 +8,7 @@ struct SidebarView: View {
 
     var body: some View {
         List {
-            NavigationLink(destination: MyConferenceView().onAppear {
+            NavigationLink(destination: ScheduleView().onAppear {
                 appState.selectedTab = .conference
             }) {
                 Label("Schedule", systemImage: "person.fill")

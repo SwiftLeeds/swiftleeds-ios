@@ -10,16 +10,6 @@
 		0B4CB3C828EAF19100246E62 /* SwiftLeedsAppClipApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4CB3C728EAF19100246E62 /* SwiftLeedsAppClipApp.swift */; };
 		0B4CB3CF28EAF19100246E62 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B4CB3CE28EAF19100246E62 /* Preview Assets.xcassets */; };
 		0B4CB3D428EAF19100246E62 /* SwiftLeedsAppClip.app in Embed App Clips */ = {isa = PBXBuildFile; fileRef = 0B4CB3C528EAF19000246E62 /* SwiftLeedsAppClip.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		0B4CB3DD28EAF57900246E62 /* MyConferenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECB295827417F9D00CDC983 /* MyConferenceView.swift */; };
-		0B4CB3DE28EAF57E00246E62 /* MyConferenceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEDC22522898281300746247 /* MyConferenceViewModel.swift */; };
-		0B4CB3E828EAF5CD00246E62 /* AnnouncementCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AED26F6F28675DA000E06064 /* AnnouncementCell.swift */; };
-		0B4CB3EB28EAF5E300246E62 /* TalkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AED26F73286764F000E06064 /* TalkCell.swift */; };
-		0B4CB3EC28EAF5E900246E62 /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5EFD74289E7CBF00464FE1 /* ActivityView.swift */; };
-		0B4CB3EE28EAF5FB00246E62 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1C800F289E9F3800996659 /* String.swift */; };
-		0B4CB3F028EAF60800246E62 /* SpeakerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394653AA288BB7C800212E1C /* SpeakerView.swift */; };
-		0B4CB3F128EAF61000246E62 /* StackedTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE452875B06500911F03 /* StackedTileView.swift */; };
-		0B4CB3F328EAF61B00246E62 /* CommonTileButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE432875B06500911F03 /* CommonTileButton.swift */; };
-		0B4CB3F428EAF62100246E62 /* CommonTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE442875B06500911F03 /* CommonTileView.swift */; };
 		0B4CB3FC28EAF7C500246E62 /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = 0B4CB3FB28EAF7C500246E62 /* CachedAsyncImage */; };
 		0B4CB3FD28EAF7FE00246E62 /* BuildFile in Resources */ = {isa = PBXBuildFile; };
 		0B59B5662E70E5D400820C3C /* TeamMember.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B59B5642E70E5D400820C3C /* TeamMember.swift */; };
@@ -33,7 +23,6 @@
 		13707030C1082B933C28151D /* SwiftLeedsAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4301D0D3F1C8979276E77084 /* SwiftLeedsAssets.xcassets */; };
 		1ED8FD9CBE313B23E73E8132 /* KotlinLeedsColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B3FFD994DBE3F62216150F8 /* KotlinLeedsColors.xcassets */; };
 		39345FDA288F17EE0031BCFF /* BottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39345FD9288F17EE0031BCFF /* BottomSheetView.swift */; };
-		394653AB288BB7C800212E1C /* SpeakerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394653AA288BB7C800212E1C /* SpeakerView.swift */; };
 		39ED0034288F113500AB337A /* LocalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39ED0033288F113500AB337A /* LocalCell.swift */; };
 		416468542E4365477789D792 /* SwiftLeedsColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 893A122D593379F84605F70C /* SwiftLeedsColors.xcassets */; };
 		4381E5366C2266F0DBECFDC6 /* KotlinLeedsAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40AEBC0F9109732F54C608A9 /* KotlinLeedsAssets.xcassets */; };
@@ -89,28 +78,20 @@
 		802D63D966D0A9337F66041C /* KotlinLeedsAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 75075F01455C8AD72C71783C /* KotlinLeedsAssets.xcassets */; };
 		920187EBD71395160F1059C1 /* KotlinLeedsColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B3FFD994DBE3F62216150F8 /* KotlinLeedsColors.xcassets */; };
 		A18F779A7E6FC79F59311319 /* KotlinLeedsColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B3FFD994DBE3F62216150F8 /* KotlinLeedsColors.xcassets */; };
-		AE1C8010289E9F3800996659 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1C800F289E9F3800996659 /* String.swift */; };
 		A11CE57000000000000000F2 /* URLSession+SwiftLeeds.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11CE57000000000000000F1 /* URLSession+SwiftLeeds.swift */; };
 		F94828C06997CC0C7F25871C /* URLSession+SwiftLeeds.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11CE57000000000000000F1 /* URLSession+SwiftLeeds.swift */; };
 		AE1C801428A7BCD000996659 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AE1C801328A7BCD000996659 /* Settings.bundle */; };
 		AE5EFD73289DC1D000464FE1 /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = AE5EFD72289DC1D000464FE1 /* CachedAsyncImage */; };
-		AE5EFD75289E7CBF00464FE1 /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5EFD74289E7CBF00464FE1 /* ActivityView.swift */; };
 		AE8C1B2828C4B36B00AF7318 /* AppDelegate+Push.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8C1B2728C4B36B00AF7318 /* AppDelegate+Push.swift */; };
 		AE8C1B2B28C4B39A00AF7318 /* TokenDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8C1B2A28C4B39A00AF7318 /* TokenDetails.swift */; };
-		AE93678F2A93455400F2DB3F /* ScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE93678E2A93455400F2DB3F /* ScheduleView.swift */; };
-		AE9367902A93467500F2DB3F /* ScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE93678E2A93455400F2DB3F /* ScheduleView.swift */; };
 		AECB295727417F9D00CDC983 /* SwiftLeedsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECB295627417F9D00CDC983 /* SwiftLeedsApp.swift */; };
 		AECB2A0127417F9D00CDC902 /* LogCategories.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECB2A0027417F9D00CDC901 /* LogCategories.swift */; };
-		AECB295927417F9D00CDC983 /* MyConferenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECB295827417F9D00CDC983 /* MyConferenceView.swift */; };
 		AECB296827417F9E00CDC983 /* SwiftLeedsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECB296727417F9E00CDC983 /* SwiftLeedsTests.swift */; };
 		AECB297227417F9E00CDC983 /* SwiftLeedsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECB297127417F9E00CDC983 /* SwiftLeedsUITests.swift */; };
 		AECB297427417F9E00CDC983 /* SwiftLeedsUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECB297327417F9E00CDC983 /* SwiftLeedsUITestsLaunchTests.swift */; };
-		AED26F7028675DA000E06064 /* AnnouncementCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AED26F6F28675DA000E06064 /* AnnouncementCell.swift */; };
-		AED26F74286764F000E06064 /* TalkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AED26F73286764F000E06064 /* TalkCell.swift */; };
 		AED26F7828676A9900E06064 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AED26F7728676A9900E06064 /* AboutView.swift */; };
 		AED26F7A28676AA300E06064 /* LocalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AED26F7928676AA300E06064 /* LocalView.swift */; };
 		AEDC0DAE286759630078A153 /* Tabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEDC0DAD286759630078A153 /* Tabs.swift */; };
-		AEDC22532898281300746247 /* MyConferenceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEDC22522898281300746247 /* MyConferenceViewModel.swift */; };
 		B09ACE20A089F99B5404B667 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816A6083DA208AE9EED41E40 /* Endpoint.swift */; };
 		B2A3D0194187CEC82CCD3F5D /* ConferenceConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67624B7470D6BA62D4912236 /* ConferenceConfig.swift */; };
 		B7E34B6C6CE38F48068FB98A /* SwiftLeedsAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EEFB1E37D5A542A1798C92D5 /* SwiftLeedsAssets.xcassets */; };
@@ -119,10 +100,9 @@
 		EF223850DCFBB4DF1213DE38 /* KotlinLeedsAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ED1AFB8A37EDA9676DB1C998 /* KotlinLeedsAssets.xcassets */; };
 		FA534D8228A1909300A3BFBB /* Local.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA534D8128A1909300A3BFBB /* Local.swift */; };
 		FA534D8828A1939500A3BFBB /* LocalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA534D8728A1939500A3BFBB /* LocalViewModel.swift */; };
-		FA57DE462875B06500911F03 /* CommonTileButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE432875B06500911F03 /* CommonTileButton.swift */; };
-		FA57DE472875B06500911F03 /* CommonTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE442875B06500911F03 /* CommonTileView.swift */; };
-		FA57DE482875B06500911F03 /* StackedTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57DE452875B06500911F03 /* StackedTileView.swift */; };
 		A11CE57000000000000000DC /* SponsorsUI in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000CC /* SponsorsUI */; };
+		A11CE57000000000000000E8 /* ScheduleUI in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000E7 /* ScheduleUI */; };
+		A11CE57000000000000000EA /* ScheduleUI in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000E9 /* ScheduleUI */; };
 		A11CE57000000000000000DD /* ScheduleFeature in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000CD /* ScheduleFeature */; };
 		A11CE57000000000000000DE /* ScheduleFeature in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000CE /* ScheduleFeature */; };
 		A11CE57000000000000000DF /* ScheduleFeature in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000CF /* ScheduleFeature */; };
@@ -203,7 +183,6 @@
 		1AA9B4909D551477D0C04106 /* KotlinLeeds.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = KotlinLeeds.xcconfig; sourceTree = "<group>"; };
 		3275AD6541323F056786E508 /* SwiftLeedsAssets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = SwiftLeedsAssets.xcassets; sourceTree = "<group>"; };
 		39345FD9288F17EE0031BCFF /* BottomSheetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BottomSheetView.swift; sourceTree = "<group>"; };
-		394653AA288BB7C800212E1C /* SpeakerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakerView.swift; sourceTree = "<group>"; };
 		39ED0033288F113500AB337A /* LocalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalCell.swift; sourceTree = "<group>"; };
 		40AEBC0F9109732F54C608A9 /* KotlinLeedsAssets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = KotlinLeedsAssets.xcassets; sourceTree = "<group>"; };
 		41AB02B37BB6C44A78DC7FF9 /* TeamMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamMapper.swift; sourceTree = "<group>"; };
@@ -238,42 +217,33 @@
 		A11CE57000000000000000A6 /* SponsorsFeature */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SponsorsFeature; sourceTree = "<group>"; };
 		A11CE57000000000000000A7 /* UIComponents */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = UIComponents; sourceTree = "<group>"; };
 		A11CE57000000000000000A8 /* SponsorsUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SponsorsUI; sourceTree = "<group>"; };
+		A11CE57000000000000000AA /* ScheduleUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ScheduleUI; sourceTree = "<group>"; };
 		A11CE57000000000000000A9 /* ScheduleFeature */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ScheduleFeature; sourceTree = "<group>"; };
 		A11CE57000000000000000A4 /* NetworkKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = NetworkKit; sourceTree = "<group>"; };
 		A11CE57000000000000000A3 /* AuthenticationUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = AuthenticationUI; sourceTree = "<group>"; };
 		893A122D593379F84605F70C /* SwiftLeedsColors.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = SwiftLeedsColors.xcassets; sourceTree = "<group>"; };
-		AE1C800F289E9F3800996659 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		A11CE57000000000000000F1 /* URLSession+SwiftLeeds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+SwiftLeeds.swift"; sourceTree = "<group>"; };
 		AE1C801328A7BCD000996659 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
-		AE5EFD74289E7CBF00464FE1 /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
 		AE8C1B2728C4B36B00AF7318 /* AppDelegate+Push.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Push.swift"; sourceTree = "<group>"; };
 		AE8C1B2A28C4B39A00AF7318 /* TokenDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenDetails.swift; sourceTree = "<group>"; };
 		AE8C1B2C28C4B8D800AF7318 /* SwiftLeeds.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SwiftLeeds.entitlements; sourceTree = "<group>"; };
-		AE93678E2A93455400F2DB3F /* ScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleView.swift; sourceTree = "<group>"; };
 		AECB295327417F9D00CDC983 /* SwiftLeeds.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftLeeds.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AECB295627417F9D00CDC983 /* SwiftLeedsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftLeedsApp.swift; sourceTree = "<group>"; };
 		AECB2A0027417F9D00CDC901 /* LogCategories.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LogCategories.swift; sourceTree = "<group>"; };
-		AECB295827417F9D00CDC983 /* MyConferenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyConferenceView.swift; sourceTree = "<group>"; };
 		AECB296327417F9E00CDC983 /* SwiftLeedsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftLeedsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AECB296727417F9E00CDC983 /* SwiftLeedsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftLeedsTests.swift; sourceTree = "<group>"; };
 		AECB296D27417F9E00CDC983 /* SwiftLeedsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftLeedsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AECB297127417F9E00CDC983 /* SwiftLeedsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftLeedsUITests.swift; sourceTree = "<group>"; };
 		AECB297327417F9E00CDC983 /* SwiftLeedsUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftLeedsUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		AECB29832741ABFD00CDC983 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		AED26F6F28675DA000E06064 /* AnnouncementCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementCell.swift; sourceTree = "<group>"; };
-		AED26F73286764F000E06064 /* TalkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TalkCell.swift; sourceTree = "<group>"; };
 		AED26F7728676A9900E06064 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		AED26F7928676AA300E06064 /* LocalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalView.swift; sourceTree = "<group>"; };
 		AEDC0DAD286759630078A153 /* Tabs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tabs.swift; sourceTree = "<group>"; };
-		AEDC22522898281300746247 /* MyConferenceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyConferenceViewModel.swift; sourceTree = "<group>"; };
 		C1725A0182E1989D761551B2 /* KotlinLeedsWidgetExtension.entitlements */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.entitlements; path = KotlinLeedsWidgetExtension.entitlements; sourceTree = "<group>"; };
 		ED1AFB8A37EDA9676DB1C998 /* KotlinLeedsAssets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = KotlinLeedsAssets.xcassets; sourceTree = "<group>"; };
 		EEFB1E37D5A542A1798C92D5 /* SwiftLeedsAssets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = SwiftLeedsAssets.xcassets; sourceTree = "<group>"; };
 		FA534D8128A1909300A3BFBB /* Local.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Local.swift; sourceTree = "<group>"; };
 		FA534D8728A1939500A3BFBB /* LocalViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalViewModel.swift; sourceTree = "<group>"; };
-		FA57DE432875B06500911F03 /* CommonTileButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonTileButton.swift; sourceTree = "<group>"; };
-		FA57DE442875B06500911F03 /* CommonTileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonTileView.swift; sourceTree = "<group>"; };
-		FA57DE452875B06500911F03 /* StackedTileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StackedTileView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -289,6 +259,7 @@
 				F8AC9B695FEAFDBD19A01A10 /* NetworkKit in Frameworks */,
 				A11CE57000000000000000DB /* UIComponents in Frameworks */,
 				A11CE57000000000000000DE /* ScheduleFeature in Frameworks */,
+				A11CE57000000000000000EA /* ScheduleUI in Frameworks */,
 				E44377685B94DC7F6465ED4A /* Dependencies in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -325,6 +296,7 @@
 				A11CE57000000000000000D9 /* SponsorsFeature in Frameworks */,
 				A11CE57000000000000000DA /* UIComponents in Frameworks */,
 				A11CE57000000000000000DC /* SponsorsUI in Frameworks */,
+				A11CE57000000000000000E8 /* ScheduleUI in Frameworks */,
 				A11CE57000000000000000DD /* ScheduleFeature in Frameworks */,
 				A11CE57000000000000000D3 /* SecureStorageKit in Frameworks */,
 				A11CE57000000000000000D4 /* SecureStorageKitKeychain in Frameworks */,
@@ -424,6 +396,7 @@
 				A11CE57000000000000000A7 /* UIComponents */,
 				A11CE57000000000000000A8 /* SponsorsUI */,
 				A11CE57000000000000000A9 /* ScheduleFeature */,
+				A11CE57000000000000000AA /* ScheduleUI */,
 				A11CE57000000000000000A4 /* NetworkKit */,
 				A11CE57000000000000000A3 /* AuthenticationUI */,
 			);
@@ -496,7 +469,6 @@
 		AECB298027418D9800CDC983 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
-				AE1C800F289E9F3800996659 /* String.swift */,
 				A11CE57000000000000000F1 /* URLSession+SwiftLeeds.swift */,
 			);
 			path = Extension;
@@ -517,9 +489,7 @@
 			isa = PBXGroup;
 			children = (
 				AED26F7628676A9200E06064 /* About */,
-				FA57DE422875B03B00911F03 /* Components */,
 				AED26F7528676A8E00E06064 /* Local */,
-				AEDC0DAF28675D060078A153 /* My Conference */,
 				AEDC0DAC286759570078A153 /* Tab */,
 			);
 			path = Views;
@@ -570,30 +540,6 @@
 				74F5EF842A49CE6A008D9413 /* TabsMainView.swift */,
 			);
 			path = Tab;
-			sourceTree = "<group>";
-		};
-		AEDC0DAF28675D060078A153 /* My Conference */ = {
-			isa = PBXGroup;
-			children = (
-				AE5EFD74289E7CBF00464FE1 /* ActivityView.swift */,
-				AED26F6F28675DA000E06064 /* AnnouncementCell.swift */,
-				AECB295827417F9D00CDC983 /* MyConferenceView.swift */,
-				AEDC22522898281300746247 /* MyConferenceViewModel.swift */,
-				AE93678E2A93455400F2DB3F /* ScheduleView.swift */,
-				394653AA288BB7C800212E1C /* SpeakerView.swift */,
-				AED26F73286764F000E06064 /* TalkCell.swift */,
-			);
-			path = "My Conference";
-			sourceTree = "<group>";
-		};
-		FA57DE422875B03B00911F03 /* Components */ = {
-			isa = PBXGroup;
-			children = (
-				FA57DE432875B06500911F03 /* CommonTileButton.swift */,
-				FA57DE442875B06500911F03 /* CommonTileView.swift */,
-				FA57DE452875B06500911F03 /* StackedTileView.swift */,
-			);
-			path = Components;
 			sourceTree = "<group>";
 		};
 		FA57DE562875B0DC00911F03 /* Data */ = {
@@ -651,6 +597,7 @@
 				631E9D02432C1E1A187A3E03 /* NetworkKit */,
 				A11CE57000000000000000CB /* UIComponents */,
 				A11CE57000000000000000CE /* ScheduleFeature */,
+				A11CE57000000000000000E9 /* ScheduleUI */,
 				39093D62C747210F6BA83C1E /* Dependencies */,
 			);
 			productName = SwiftLeedsAppClip;
@@ -710,6 +657,7 @@
 				A11CE57000000000000000C9 /* SponsorsFeature */,
 				A11CE57000000000000000CA /* UIComponents */,
 				A11CE57000000000000000CC /* SponsorsUI */,
+				A11CE57000000000000000E7 /* ScheduleUI */,
 				A11CE57000000000000000CD /* ScheduleFeature */,
 				A11CE57000000000000000C3 /* SecureStorageKit */,
 				A11CE57000000000000000C4 /* SecureStorageKitKeychain */,
@@ -876,20 +824,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0B4CB3EE28EAF5FB00246E62 /* String.swift in Sources */,
-				0B4CB3F128EAF61000246E62 /* StackedTileView.swift in Sources */,
-				0B4CB3DE28EAF57E00246E62 /* MyConferenceViewModel.swift in Sources */,
-				AE9367902A93467500F2DB3F /* ScheduleView.swift in Sources */,
-				0B4CB3EC28EAF5E900246E62 /* ActivityView.swift in Sources */,
-				0B4CB3F028EAF60800246E62 /* SpeakerView.swift in Sources */,
-				0B4CB3E828EAF5CD00246E62 /* AnnouncementCell.swift in Sources */,
-				0B4CB3DD28EAF57900246E62 /* MyConferenceView.swift in Sources */,
-				0B4CB3EB28EAF5E300246E62 /* TalkCell.swift in Sources */,
-				0B4CB3F428EAF62100246E62 /* CommonTileView.swift in Sources */,
 				0B4CB3C828EAF19100246E62 /* SwiftLeedsAppClipApp.swift in Sources */,
 				F94828C06997CC0C7F25871C /* URLSession+SwiftLeeds.swift in Sources */,
 				FB6B9D30B85EAAED16F69656 /* Endpoint.swift in Sources */,
-				0B4CB3F328EAF61B00246E62 /* CommonTileButton.swift in Sources */,
 				79E3CB724EF853948BC7D906 /* ConferenceConfig.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -917,22 +854,15 @@
 				911CBFE0C21C398999FE786C /* LocalMapper.swift in Sources */,
 				106111EE0332466C39422B5E /* TeamMapper.swift in Sources */,
 				A11CE57000000000000000F2 /* URLSession+SwiftLeeds.swift in Sources */,
-				AEDC22532898281300746247 /* MyConferenceViewModel.swift in Sources */,
 				AED26F7828676A9900E06064 /* AboutView.swift in Sources */,
 				0B59B5692E70E5FE00820C3C /* TeamMemberView.swift in Sources */,
-				394653AB288BB7C800212E1C /* SpeakerView.swift in Sources */,
 				0B59B56F2E70EA4F00820C3C /* AboutViewModel.swift in Sources */,
 				AED26F7A28676AA300E06064 /* LocalView.swift in Sources */,
 				39ED0034288F113500AB337A /* LocalCell.swift in Sources */,
-				AED26F74286764F000E06064 /* TalkCell.swift in Sources */,
-				AE1C8010289E9F3800996659 /* String.swift in Sources */,
-				AECB295927417F9D00CDC983 /* MyConferenceView.swift in Sources */,
 				0B59B5722E70EA6600820C3C /* About.swift in Sources */,
 				0B59B56B2E70E6AC00820C3C /* CompactActionItem.swift in Sources */,
 				74F5EF892A49CECB008D9413 /* SidebarView.swift in Sources */,
 				FA534D8828A1939500A3BFBB /* LocalViewModel.swift in Sources */,
-				AE5EFD75289E7CBF00464FE1 /* ActivityView.swift in Sources */,
-				AED26F7028675DA000E06064 /* AnnouncementCell.swift in Sources */,
 				AE8C1B2828C4B36B00AF7318 /* AppDelegate+Push.swift in Sources */,
 				AECB295727417F9D00CDC983 /* SwiftLeedsApp.swift in Sources */,
 				AECB2A0127417F9D00CDC902 /* LogCategories.swift in Sources */,
@@ -940,11 +870,7 @@
 				AE8C1B2B28C4B39A00AF7318 /* TokenDetails.swift in Sources */,
 				AEDC0DAE286759630078A153 /* Tabs.swift in Sources */,
 				7B6278A22EEDDE1B00DE1473 /* SectionHeader.swift in Sources */,
-				FA57DE482875B06500911F03 /* StackedTileView.swift in Sources */,
 				FA534D8228A1909300A3BFBB /* Local.swift in Sources */,
-				AE93678F2A93455400F2DB3F /* ScheduleView.swift in Sources */,
-				FA57DE472875B06500911F03 /* CommonTileView.swift in Sources */,
-				FA57DE462875B06500911F03 /* CommonTileButton.swift in Sources */,
 				74F5EF852A49CE6A008D9413 /* TabsMainView.swift in Sources */,
 				39345FDA288F17EE0031BCFF /* BottomSheetView.swift in Sources */,
 				740162DA2A7053A000C2D1B3 /* AppState.swift in Sources */,
@@ -1989,6 +1915,14 @@
 		A11CE57000000000000000CB /* UIComponents */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = UIComponents;
+		};
+		A11CE57000000000000000E7 /* ScheduleUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ScheduleUI;
+		};
+		A11CE57000000000000000E9 /* ScheduleUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ScheduleUI;
 		};
 		A11CE57000000000000000CC /* SponsorsUI */ = {
 			isa = XCSwiftPackageProductDependency;

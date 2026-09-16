@@ -1,4 +1,5 @@
 import AuthenticationUI
+import ScheduleUI
 import Settings
 import SponsorsUI
 import SwiftUI
@@ -12,7 +13,7 @@ struct SidebarMainView: View {
         } detail: {
             switch appState.selectedTab {
             case .conference:
-                MyConferenceView()
+                ScheduleView()
             case .about:
                 AboutView()
             case .location:

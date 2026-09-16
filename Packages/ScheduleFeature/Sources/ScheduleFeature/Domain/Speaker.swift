@@ -32,7 +32,8 @@ extension Array where Element == Speaker {
     }
 
     public var joinedOrganisations: String {
-        let organisations = Set(self.map { $0.organisation })
-        return ListFormatter.localizedString(byJoining: organisations.map { $0 })
+        var seen: Set<String> = []
+        let organisations = self.map { $0.organisation }.filter { seen.insert($0).inserted }
+        return ListFormatter.localizedString(byJoining: organisations)
     }
 }
