@@ -35,42 +35,65 @@ extension ScheduleView {
         private(set) var events: [Schedule.Event] = []
         private(set) var currentEvent: Schedule.Event?
 
-        func load() async {
-            @Dependency(\.fetchCurrentSchedule) var fetchCurrentSchedule
+        // An offline request fails within a frame, so without a floor a retry shows no spinner.
+        private static let retrySpinnerMinimum = Duration.milliseconds(500)
 
-            do throws(ScheduleFetchError) {
-                show(try await fetchCurrentSchedule())
-            } catch {
-                // Leaving the screen cancels this load, and the next appearance starts another.
-                guard Task.isCancelled == false else { return }
-                state = .failed(conference: currentEvent?.name, reason: error)
-            }
+        func load() async {
+            await showCurrentSchedule(keepingSpinnerForAtLeast: .zero)
         }
 
         func select(_ event: Schedule.Event) async {
-            @Dependency(\.fetchSchedule) var fetchSchedule
-
             currentEvent = event
             state = .loading
 
-            do throws(ScheduleFetchError) {
-                let schedule = try await fetchSchedule(for: event.id)
-                guard isStillSelected(event) else { return }
-                show(schedule)
-            } catch {
-                guard isStillSelected(event) else { return }
-                state = .failed(conference: event.name, reason: error)
-            }
+            await showSchedule(for: event, keepingSpinnerForAtLeast: .zero)
         }
 
         func retry() async {
             state = .loading
 
             if let currentEvent {
-                await select(currentEvent)
+                await showSchedule(for: currentEvent, keepingSpinnerForAtLeast: Self.retrySpinnerMinimum)
             } else {
-                await load()
+                await showCurrentSchedule(keepingSpinnerForAtLeast: Self.retrySpinnerMinimum)
             }
+        }
+
+        private func showCurrentSchedule(keepingSpinnerForAtLeast minimum: Duration) async {
+            @Dependency(\.fetchCurrentSchedule) var fetchCurrentSchedule
+            let spinnerMinimum = startTimer(lasting: minimum)
+
+            do throws(ScheduleFetchError) {
+                show(try await fetchCurrentSchedule())
+            } catch {
+                await spinnerMinimum.value
+                // Leaving the screen cancels this load, and the next appearance starts another.
+                guard Task.isCancelled == false else { return }
+                state = .failed(conference: currentEvent?.name, reason: error)
+            }
+        }
+
+        private func showSchedule(
+            for event: Schedule.Event,
+            keepingSpinnerForAtLeast minimum: Duration
+        ) async {
+            @Dependency(\.fetchSchedule) var fetchSchedule
+            let spinnerMinimum = startTimer(lasting: minimum)
+
+            do throws(ScheduleFetchError) {
+                let schedule = try await fetchSchedule(for: event.id)
+                guard isStillSelected(event) else { return }
+                show(schedule)
+            } catch {
+                await spinnerMinimum.value
+                guard isStillSelected(event) else { return }
+                state = .failed(conference: event.name, reason: error)
+            }
+        }
+
+        private func startTimer(lasting duration: Duration) -> Task<Void, Never> {
+            @Dependency(\.continuousClock) var clock
+            return Task { try? await clock.sleep(for: duration) }
         }
 
         private func isStillSelected(_ event: Schedule.Event) -> Bool {
