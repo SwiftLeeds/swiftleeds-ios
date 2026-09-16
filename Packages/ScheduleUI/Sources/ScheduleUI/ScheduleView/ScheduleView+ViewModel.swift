@@ -1,36 +1,12 @@
 #if canImport(UIKit)
 import Dependencies
+import Observation
 import ScheduleFeature
-import SwiftUI
-
-/// The schedule screen. It fetches the schedule when it appears.
-public struct ScheduleView: View {
-    @State private var viewModel = ViewModel()
-
-    public init() {}
-
-    public var body: some View {
-        ScheduleContentView(
-            state: viewModel.state,
-            events: viewModel.events,
-            currentEvent: viewModel.currentEvent,
-            selectEvent: { event in
-                Task { await viewModel.select(event) }
-            },
-            retry: {
-                Task { await viewModel.retry() }
-            }
-        )
-        .task {
-            await viewModel.load()
-        }
-    }
-}
 
 extension ScheduleView {
     @Observable
     @MainActor
-    fileprivate final class ViewModel {
+    final class ViewModel {
         private(set) var state = ScheduleContentView.ScreenState.loading
         private(set) var events: [Schedule.Event] = []
         private(set) var currentEvent: Schedule.Event?
@@ -126,12 +102,6 @@ extension ScheduleView {
             let days = event.daysUntil
             return days <= 0 && days >= -1
         }
-    }
-}
-
-struct ScheduleView_Previews: PreviewProvider {
-    static var previews: some View {
-        ScheduleView()
     }
 }
 #endif
