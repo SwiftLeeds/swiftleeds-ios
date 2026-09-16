@@ -16,6 +16,9 @@ public struct ScheduleView: View {
             currentEvent: viewModel.currentEvent,
             selectEvent: { event in
                 Task { await viewModel.select(event) }
+            },
+            retry: {
+                Task { await viewModel.retry() }
             }
         )
         .task {
@@ -57,6 +60,16 @@ extension ScheduleView {
             } catch {
                 guard isStillSelected(event) else { return }
                 state = .failed(conference: event.name, reason: error)
+            }
+        }
+
+        func retry() async {
+            state = .loading
+
+            if let currentEvent {
+                await select(currentEvent)
+            } else {
+                await load()
             }
         }
 

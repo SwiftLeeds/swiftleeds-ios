@@ -16,6 +16,7 @@ package struct ScheduleContentView: View {
     private let events: [Schedule.Event]
     private let currentEvent: Schedule.Event?
     private let selectEvent: (Schedule.Event) -> Void
+    private let retry: () -> Void
 
     @State private var currentIndex: Int = 0
     @Namespace private var namespace
@@ -24,12 +25,14 @@ package struct ScheduleContentView: View {
         state: ScreenState,
         events: [Schedule.Event] = [],
         currentEvent: Schedule.Event? = nil,
-        selectEvent: @escaping (Schedule.Event) -> Void = { _ in }
+        selectEvent: @escaping (Schedule.Event) -> Void = { _ in },
+        retry: @escaping () -> Void = {}
     ) {
         self.state = state
         self.events = events
         self.currentEvent = currentEvent
         self.selectEvent = selectEvent
+        self.retry = retry
     }
 
     package var body: some View {
@@ -69,25 +72,30 @@ package struct ScheduleContentView: View {
     }
 
     private func failureView(for conference: String?, reason: ScheduleFetchError) -> some View {
-        VStack(spacing: 10) {
+        VStack(spacing: 20) {
             Spacer()
 
-            Image(systemName: "wifi.exclamationmark")
-                .font(.system(size: 60))
+            VStack(spacing: 10) {
+                Image(systemName: "wifi.exclamationmark")
+                    .font(.system(size: 60))
 
-            Text(conference.map { "Can't show \($0)" } ?? "Can't show the schedule")
-                .font(.title)
-                .multilineTextAlignment(.center)
+                Text(conference.map { "Can't show \($0)" } ?? "Can't show the schedule")
+                    .font(.title)
+                    .multilineTextAlignment(.center)
 
-            Text(advice(for: reason))
-                .font(.subheadline)
-                .multilineTextAlignment(.center)
+                Text(advice(for: reason))
+                    .font(.subheadline)
+                    .multilineTextAlignment(.center)
+            }
+            .accessibilityElement(children: .combine)
+
+            Button("Try Again", action: retry)
+                .buttonStyle(.bordered)
 
             Spacer()
         }
         .padding(.horizontal)
         .foregroundColor(.cellForeground)
-        .accessibilityElement(children: .combine)
     }
 
     private func advice(for reason: ScheduleFetchError) -> String {
