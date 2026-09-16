@@ -51,10 +51,17 @@ extension ScheduleView {
             state = .loading
 
             do {
-                show(try await fetchSchedule(for: event.id))
+                let schedule = try await fetchSchedule(for: event.id)
+                guard isStillSelected(event) else { return }
+                show(schedule)
             } catch {
+                guard isStillSelected(event) else { return }
                 state = .failed(conference: event.name)
             }
+        }
+
+        private func isStillSelected(_ event: Schedule.Event) -> Bool {
+            currentEvent?.id == event.id
         }
 
         private func show(_ schedule: Schedule) {
