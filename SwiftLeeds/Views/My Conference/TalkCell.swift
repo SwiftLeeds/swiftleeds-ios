@@ -13,7 +13,13 @@ struct TalkCell: View {
 
     @Environment(\.colorScheme) var colorScheme
 
-    init(time: String, details: String, isNext: Bool = false, speakers: [Speaker] = [], gradientColors: [Color]? = nil) {
+    init(
+        time: String,
+        details: String,
+        isNext: Bool = false,
+        speakers: [Speaker] = [],
+        gradientColors: [Color]? = nil
+    ) {
         self.time = time
         self.details = details
         self.isNext = isNext

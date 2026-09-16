@@ -19,6 +19,14 @@ struct SpeakerView: View {
         .edgesIgnoringSafeArea(.top)
     }
 
+    private var slidoGradient: LinearGradient {
+        LinearGradient(
+            gradient: Gradient(colors: [.buyTicketGradientStart, .buyTicketGradientEnd]),
+            startPoint: .leading,
+            endPoint: .trailing
+        )
+    }
+
     private var content: some View {
         VStack(spacing: Padding.stackGap) {
             if presentation.speakers.isEmpty == false {
@@ -59,7 +67,7 @@ struct SpeakerView: View {
                         accessibilityHint: "Opens Slido to allow questions to be asked",
                         primaryColor: .white,
                         secondaryColor: .white.opacity(0.8),
-                        backgroundStyle: LinearGradient(gradient: Gradient(colors: [.buyTicketGradientStart, .buyTicketGradientEnd]), startPoint: .leading, endPoint: .trailing),
+                        backgroundStyle: slidoGradient,
                         onTap: {
                             showWebSheet.toggle()
                         }
