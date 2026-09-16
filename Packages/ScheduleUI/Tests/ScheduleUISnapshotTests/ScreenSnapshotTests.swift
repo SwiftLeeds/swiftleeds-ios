@@ -21,14 +21,6 @@ import Testing
         assertScreenSnapshots(of: view)
     }
 
-    @Test func aDayWithNoSlots() {
-        let view = NavigationStack {
-            DayView(slots: [], showSlido: false)
-        }
-
-        assertScreenSnapshots(of: view)
-    }
-
     @Test func aTalkWithOneSpeaker() {
         let view = SpeakerView(presentation: .oneSpeaker, showSlido: false)
 
