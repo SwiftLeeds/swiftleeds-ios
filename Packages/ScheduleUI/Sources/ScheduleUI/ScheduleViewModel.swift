@@ -12,17 +12,24 @@ final class ScheduleViewModel: ObservableObject {
     func load() async {
         @Dependency(\.fetchCurrentSchedule) var fetchCurrentSchedule
 
-        guard let schedule = try? await fetchCurrentSchedule() else { return }
-        show(schedule)
+        do {
+            show(try await fetchCurrentSchedule())
+        } catch {
+            state = .failed(conference: currentEvent?.name)
+        }
     }
 
     func select(_ event: Schedule.Event) async {
         @Dependency(\.fetchSchedule) var fetchSchedule
 
         currentEvent = event
+        state = .loading
 
-        guard let schedule = try? await fetchSchedule(for: event.id) else { return }
-        show(schedule)
+        do {
+            show(try await fetchSchedule(for: event.id))
+        } catch {
+            state = .failed(conference: event.name)
+        }
     }
 
     private func show(_ schedule: Schedule) {

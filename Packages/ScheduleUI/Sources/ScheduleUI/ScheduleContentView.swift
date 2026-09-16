@@ -10,6 +10,8 @@ package struct ScheduleContentView: View {
         case loading
         case empty
         case loaded(days: [Schedule.Day], showSlido: Bool)
+        /// Names the conference that could not be loaded, when one was asked for by name.
+        case failed(conference: String?)
     }
 
     private let state: ScreenState
@@ -55,6 +57,8 @@ package struct ScheduleContentView: View {
             emptyView
         case let .loaded(days, showSlido):
             schedule(days: days, showSlido: showSlido)
+        case let .failed(conference):
+            failureView(for: conference)
         }
     }
 
@@ -86,6 +90,27 @@ package struct ScheduleContentView: View {
         .foregroundColor(.cellForeground)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel("Come back soon. We're working on filling this schedule")
+    }
+
+    private func failureView(for conference: String?) -> some View {
+        VStack(spacing: 10) {
+            Spacer()
+
+            Image(systemName: "wifi.exclamationmark")
+                .font(.system(size: 60))
+
+            Text(conference.map { "Can't show \($0)" } ?? "Can't show the schedule")
+                .font(.title)
+                .multilineTextAlignment(.center)
+
+            Text("Check your connection and try again")
+                .font(.subheadline)
+
+            Spacer()
+        }
+        .padding(.horizontal)
+        .foregroundColor(.cellForeground)
+        .accessibilityElement(children: .combine)
     }
 
     @ToolbarContentBuilder

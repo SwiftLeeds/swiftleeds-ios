@@ -33,5 +33,23 @@ import Testing
 
         assertScreenSnapshots(of: view)
     }
+
+    @Test func failedWithoutAConferenceName() {
+        let view = ScheduleContentView(state: .failed(conference: nil))
+
+        assertScreenSnapshots(of: view)
+    }
+
+    // The reported bug: the picker moved, the fetch failed, and the screen said nothing.
+    @Test func failedForOneConference() {
+        let conferences: [Schedule.Event] = [.fixture(named: "SwiftLeeds 2022"), .fixture()]
+        let view = ScheduleContentView(
+            state: .failed(conference: "SwiftLeeds 2022"),
+            events: conferences,
+            currentEvent: conferences.first
+        )
+
+        assertScreenSnapshots(of: view)
+    }
 }
 #endif
