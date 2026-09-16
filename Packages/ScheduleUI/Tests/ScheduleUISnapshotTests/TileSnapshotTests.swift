@@ -43,6 +43,7 @@ import Testing
             accessibilityHint: "Opens Slido to allow questions to be asked",
             primaryColor: .white,
             secondaryColor: .white.opacity(0.8),
+            backgroundStyle: LinearGradient(colors: [.blue, .teal], startPoint: .leading, endPoint: .trailing),
             onTap: {}
         )
 
