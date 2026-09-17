@@ -104,6 +104,7 @@
 		A11CE57000000000000000E8 /* ScheduleUI in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000E7 /* ScheduleUI */; };
 		A11CE57000000000000000EA /* ScheduleUI in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000E9 /* ScheduleUI */; };
 		A11CE57000000000000000DD /* ScheduleFeature in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000CD /* ScheduleFeature */; };
+		A11CE570000000000000F0D1 /* LocalFeature in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE570000000000000F0C1 /* LocalFeature */; };
 		A11CE57000000000000000DE /* ScheduleFeature in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000CE /* ScheduleFeature */; };
 		A11CE57000000000000000DF /* ScheduleFeature in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000CF /* ScheduleFeature */; };
 		A11CE57000000000000000E6 /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000E5 /* Dependencies */; };
@@ -219,6 +220,7 @@
 		A11CE57000000000000000A8 /* SponsorsUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SponsorsUI; sourceTree = "<group>"; };
 		A11CE57000000000000000AA /* ScheduleUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ScheduleUI; sourceTree = "<group>"; };
 		A11CE57000000000000000A9 /* ScheduleFeature */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ScheduleFeature; sourceTree = "<group>"; };
+		A11CE570000000000000F0A1 /* LocalFeature */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = LocalFeature; sourceTree = "<group>"; };
 		A11CE57000000000000000A4 /* NetworkKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = NetworkKit; sourceTree = "<group>"; };
 		A11CE57000000000000000A3 /* AuthenticationUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = AuthenticationUI; sourceTree = "<group>"; };
 		893A122D593379F84605F70C /* SwiftLeedsColors.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = SwiftLeedsColors.xcassets; sourceTree = "<group>"; };
@@ -298,6 +300,7 @@
 				A11CE57000000000000000DC /* SponsorsUI in Frameworks */,
 				A11CE57000000000000000E8 /* ScheduleUI in Frameworks */,
 				A11CE57000000000000000DD /* ScheduleFeature in Frameworks */,
+				A11CE570000000000000F0D1 /* LocalFeature in Frameworks */,
 				A11CE57000000000000000D3 /* SecureStorageKit in Frameworks */,
 				A11CE57000000000000000D4 /* SecureStorageKitKeychain in Frameworks */,
 				A11CE57000000000000000D8 /* Dependencies in Frameworks */,
@@ -397,6 +400,7 @@
 				A11CE57000000000000000A8 /* SponsorsUI */,
 				A11CE57000000000000000A9 /* ScheduleFeature */,
 				A11CE57000000000000000AA /* ScheduleUI */,
+				A11CE570000000000000F0A1 /* LocalFeature */,
 				A11CE57000000000000000A4 /* NetworkKit */,
 				A11CE57000000000000000A3 /* AuthenticationUI */,
 			);
@@ -659,6 +663,7 @@
 				A11CE57000000000000000CC /* SponsorsUI */,
 				A11CE57000000000000000E7 /* ScheduleUI */,
 				A11CE57000000000000000CD /* ScheduleFeature */,
+				A11CE570000000000000F0C1 /* LocalFeature */,
 				A11CE57000000000000000C3 /* SecureStorageKit */,
 				A11CE57000000000000000C4 /* SecureStorageKitKeychain */,
 				A11CE57000000000000000C8 /* Dependencies */,
@@ -1939,6 +1944,10 @@
 		A11CE57000000000000000CF /* ScheduleFeature */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ScheduleFeature;
+		};
+		A11CE570000000000000F0C1 /* LocalFeature */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = LocalFeature;
 		};
 		39093D62C747210F6BA83C1E /* Dependencies */ = {
 			isa = XCSwiftPackageProductDependency;
