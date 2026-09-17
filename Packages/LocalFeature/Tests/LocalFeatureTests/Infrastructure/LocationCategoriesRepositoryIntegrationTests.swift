@@ -31,4 +31,14 @@ import Testing
             }
         }
     }
+
+    @Test func whenBodyIsUnreadable_shouldThrowInvalidResponse() async throws {
+        await withDependencies {
+            $0.httpClient = .responding(with: Data("nonsense".utf8), statusCode: 200)
+        } operation: {
+            await #expect(throws: LocationCategoryFetchError.invalidResponse) {
+                try await LocationCategoriesRepository.liveValue.fetch()
+            }
+        }
+    }
 }

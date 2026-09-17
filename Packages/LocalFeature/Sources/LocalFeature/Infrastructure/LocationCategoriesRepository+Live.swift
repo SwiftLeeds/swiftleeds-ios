@@ -18,7 +18,7 @@ extension LocationCategoriesRepository: DependencyKey {
             do {
                 list = try JSONDecoder().decode(LocationCategoryListDTO.self, from: data)
             } catch {
-                throw LocationCategoryFetchError.unknown
+                throw LocationCategoryFetchError.invalidResponse
             }
 
             do throws(LocationCategoryMapper.MappingError) {
