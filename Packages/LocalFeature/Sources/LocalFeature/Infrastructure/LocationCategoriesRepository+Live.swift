@@ -11,7 +11,7 @@ extension LocationCategoriesRepository: DependencyKey {
             do {
                 (data, _) = try await httpClient.send(Endpoint.local.urlRequest())
             } catch {
-                throw LocationCategoryFetchError.unknown
+                throw LocationCategoryFetchError.couldNotReachServer
             }
 
             let list: LocationCategoryListDTO

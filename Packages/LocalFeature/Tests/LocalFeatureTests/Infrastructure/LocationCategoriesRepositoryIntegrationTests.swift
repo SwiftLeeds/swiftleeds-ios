@@ -21,4 +21,14 @@ import Testing
         #expect(categories.map(\.id) == [LocationCategoryID(id)])
         #expect(categories.first?.locations.map(\.name) == ["Trinity Kitchen"])
     }
+
+    @Test func whenRequestFails_shouldThrowCouldNotReachServer() async throws {
+        await withDependencies {
+            $0.httpClient = .failing(with: URLError(.notConnectedToInternet))
+        } operation: {
+            await #expect(throws: LocationCategoryFetchError.couldNotReachServer) {
+                try await LocationCategoriesRepository.liveValue.fetch()
+            }
+        }
+    }
 }
