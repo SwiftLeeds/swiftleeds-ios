@@ -50,8 +50,6 @@ disabled_rules:
 nesting:
   type_level: 2
 
-# An integration suite is named `<Subject>IntegrationTests`, so the suite for a
-# subject such as `LocationCategoriesRepository` passes the default of 40.
 type_name:
   max_length:
     warning: 50
