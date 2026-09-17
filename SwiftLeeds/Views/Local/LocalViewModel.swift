@@ -1,14 +1,13 @@
 import Dependencies
 import Foundation
-import MapKit
-import NetworkKit
+import LocalFeature
 import SwiftUI
 
 class LocalViewModel: ObservableObject {
-    @Published private(set) var categories: [Local.LocationCategory] = []
-    @Published private(set) var selectedLocations: [Local.Location] = []
+    @Published private(set) var categories: [LocationCategory] = []
+    @Published private(set) var selectedLocations: [Location] = []
 
-    @Published var selectedCategory: Local.LocationCategory? {
+    @Published var selectedCategory: LocationCategory? {
         didSet { selectedLocations = selectedCategory?.locations ?? [] }
     }
 
@@ -21,22 +20,19 @@ class LocalViewModel: ObservableObject {
     }
 
     func loadData() async {
-        @Dependency(\.httpClient) var httpClient
-        @Dependency(\.localMapper) var localMapper
+        @Dependency(\.fetchLocationCategories) var fetchLocationCategories
 
         do {
-            let (data, response) = try await httpClient.send(Endpoint.local.urlRequest())
-            let localResults = try localMapper.map(data, response)
-            await updateLocal(localResults)
+            await updateLocal(try await fetchLocationCategories())
         } catch {
             self.error = error
         }
     }
 
     @MainActor
-    private func updateLocal(_ localResults: Local) async {
+    private func updateLocal(_ categories: [LocationCategory]) async {
         self.error = nil
-        self.categories = localResults.data
+        self.categories = categories
         self.selectedCategory = self.categories.first
     }
 }
