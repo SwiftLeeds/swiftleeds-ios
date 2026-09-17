@@ -49,7 +49,12 @@ extension LocationCategoryMapper {
         do throws(Coordinate.ParsingError) {
             return try Coordinate(latitude: dto.lat, longitude: dto.lon)
         } catch {
-            throw MappingError(location: dto.name, field: .lat, value: String(dto.lat))
+            switch error {
+            case .latitudeOutOfRange:
+                throw MappingError(location: dto.name, field: .lat, value: String(dto.lat))
+            case .longitudeOutOfRange:
+                throw MappingError(location: dto.name, field: .lon, value: String(dto.lon))
+            }
         }
     }
 }

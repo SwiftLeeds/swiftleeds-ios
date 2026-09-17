@@ -52,4 +52,36 @@ import Testing
         #expect(location.websiteURL == URL(string: "https://example.invalid/trinity-kitchen"))
         #expect(location.coordinate == (try Coordinate(latitude: 53.797378, longitude: -1.545209)))
     }
+
+    // MARK: - Refusals
+
+    @Test func whenLatitudeIsOffTheGlobe_shouldNameTheLocationTheFieldAndTheValue() throws {
+        let list = LocationCategoryListDTO(data: [
+            .fixture(locations: [.fixture(name: "Trinity Kitchen", lat: 91)]),
+        ])
+
+        do {
+            _ = try sut.map(list)
+            Issue.record("Expected a latitude off the globe to be refused")
+        } catch {
+            #expect(error.location == "Trinity Kitchen")
+            #expect(error.field == .lat)
+            #expect(error.value == "91.0")
+        }
+    }
+
+    @Test func whenLongitudeIsOffTheGlobe_shouldNameTheLocationTheFieldAndTheValue() throws {
+        let list = LocationCategoryListDTO(data: [
+            .fixture(locations: [.fixture(name: "Trinity Kitchen", lon: -181)]),
+        ])
+
+        do {
+            _ = try sut.map(list)
+            Issue.record("Expected a longitude off the globe to be refused")
+        } catch {
+            #expect(error.location == "Trinity Kitchen")
+            #expect(error.field == .lon)
+            #expect(error.value == "-181.0")
+        }
+    }
 }
