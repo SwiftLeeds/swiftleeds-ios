@@ -1,15 +1,16 @@
 import DesignKit
+import LocalFeature
 import ReadabilityModifier
 import SharedAssets
 import SwiftUI
 
 struct BottomSheetView: View {
     @Binding var isOpen: Bool
-    @Binding var selectedCategory: Local.LocationCategory?
+    @Binding var selectedCategory: LocationCategory?
 
     @GestureState private var translation: CGFloat = 0
 
-    private let categories: [Local.LocationCategory]
+    private let categories: [LocationCategory]
     private let error: Error?
 
     private let maxHeight: CGFloat
@@ -21,8 +22,8 @@ struct BottomSheetView: View {
 
     internal init (
         isOpen: Binding<Bool>,
-        selectedCategory: Binding<Local.LocationCategory?>,
-        categories: [Local.LocationCategory],
+        selectedCategory: Binding<LocationCategory?>,
+        categories: [LocationCategory],
         error: Error?,
         maxHeight: CGFloat
     ) {
@@ -86,17 +87,20 @@ struct BottomSheetView: View {
 }
 
 struct BottomSheet_Previews: PreviewProvider {
-    static let items: [Local.LocationCategory] = [
-        Local.LocationCategory(id: UUID(), name: "Food", symbolName: "takeoutbag.and.cup.and.straw.fill", locations: [.init(id: UUID(), name: "Trinity Kitchen", url: URL(string: "https://trinityleeds.com/shops/trinity-kitchen")!, location: .init(latitude: 53.797378, longitude: -1.545209))]),
-        Local.LocationCategory(id: UUID(), name: "Drinks", symbolName: "wineglass.fill", locations: [.init(id: UUID(), name: "Brew Society", url: URL(string: "https://www.brewsociety.co.uk/")!, location: .init(latitude: 53.79584058588689, longitude: -1.550339186509128))])
-    ]
-
     static var previews: some View {
+        if let items = try? items {
+            preview(items)
+        } else {
+            Text(verbatim: "The preview's locations could not be built.")
+        }
+    }
+
+    private static func preview(_ items: [LocationCategory]) -> some View {
         GeometryReader { proxy in
             BottomSheetView(
                 isOpen: .constant(true),
-                selectedCategory: .constant(Self.items.first),
-                categories: Self.items,
+                selectedCategory: .constant(items.first),
+                categories: items,
                 error: nil,
                 maxHeight: proxy.size.height * Constants.maxHeightRatio
             )
@@ -104,5 +108,39 @@ struct BottomSheet_Previews: PreviewProvider {
             .previewDevice(PreviewDevice(rawValue: "iPhone 13"))
         }
         .edgesIgnoringSafeArea(.all)
+    }
+
+    private static var items: [LocationCategory] {
+        get throws {
+            [
+                category(
+                    "Food",
+                    symbolName: "takeoutbag.and.cup.and.straw.fill",
+                    location: try location(
+                        "Trinity Kitchen",
+                        link: "https://trinityleeds.com/shops/trinity-kitchen",
+                        coordinate: try Coordinate(latitude: 53.797378, longitude: -1.545209)
+                    )
+                ),
+                category(
+                    "Drinks",
+                    symbolName: "wineglass.fill",
+                    location: try location(
+                        "Brew Society",
+                        link: "https://www.brewsociety.co.uk/",
+                        coordinate: try Coordinate(latitude: 53.79584058588689, longitude: -1.550339186509128)
+                    )
+                ),
+            ]
+        }
+    }
+
+    private static func category(_ name: String, symbolName: String, location: Location) -> LocationCategory {
+        LocationCategory(id: LocationCategoryID(UUID()), name: name, symbolName: symbolName, locations: [location])
+    }
+
+    private static func location(_ name: String, link: String, coordinate: Coordinate) throws -> Location {
+        guard let websiteURL = URL(string: link) else { throw URLError(.badURL) }
+        return Location(id: LocationID(UUID()), name: name, websiteURL: websiteURL, coordinate: coordinate)
     }
 }
