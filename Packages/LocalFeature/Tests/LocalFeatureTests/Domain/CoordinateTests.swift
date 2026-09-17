@@ -16,4 +16,11 @@ import Testing
             try Coordinate(latitude: latitude, longitude: 0)
         }
     }
+
+    @Test(arguments: [-180.000001, 180.000001, .nan, -.infinity])
+    func whenLongitudeIsOffTheGlobe_shouldThrowLongitudeOutOfRange(longitude: Double) {
+        #expect(throws: Coordinate.ParsingError.longitudeOutOfRange) {
+            try Coordinate(latitude: 0, longitude: longitude)
+        }
+    }
 }
