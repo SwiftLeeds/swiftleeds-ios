@@ -6,7 +6,7 @@ import Testing
 
 // Drives the composed `liveValue` with only the transport stubbed.
 @Suite struct LocationCategoriesRepositoryIntegrationTests {
-    @Test func whenServerAnswersWell_shouldReturnCategories() async throws {
+    @Test func whenServerReturnsValidList_shouldReturnCategories() async throws {
         let id = UUID()
         let data = LocalJSON.list(
             LocalJSON.category(id: id.uuidString, name: "Food", locations: LocalJSON.location(name: "Trinity Kitchen"))
@@ -22,7 +22,7 @@ import Testing
         #expect(categories.first?.locations.map(\.name) == ["Trinity Kitchen"])
     }
 
-    @Test func whenRequestFails_shouldThrowCouldNotReachServer() async throws {
+    @Test func whenRequestThrows_shouldThrowCouldNotReachServer() async throws {
         await withDependencies {
             $0.httpClient = .failing(with: URLError(.notConnectedToInternet))
         } operation: {
@@ -32,7 +32,7 @@ import Testing
         }
     }
 
-    @Test func whenBodyIsUnreadable_shouldThrowInvalidResponse() async throws {
+    @Test func whenBodyCannotBeDecoded_shouldThrowInvalidResponse() async throws {
         await withDependencies {
             $0.httpClient = .responding(with: Data("nonsense".utf8), statusCode: 200)
         } operation: {
@@ -42,7 +42,7 @@ import Testing
         }
     }
 
-    @Test func whenMapperRefuses_shouldThrowInvalidResponse() async throws {
+    @Test func whenMapperThrows_shouldThrowInvalidResponse() async throws {
         let data = LocalJSON.list(LocalJSON.category(locations: LocalJSON.location(lat: 91)))
 
         await withDependencies {
@@ -55,7 +55,7 @@ import Testing
     }
 
     @Test(arguments: [404, 500])
-    func whenServerRefuses_shouldThrowUnknown(statusCode: Int) async throws {
+    func whenStatusIsNotOK_shouldThrowUnknown(statusCode: Int) async throws {
         let data = LocalJSON.list(LocalJSON.category())
 
         await withDependencies {
@@ -67,7 +67,7 @@ import Testing
         }
     }
 
-    @Test func whenDecoded_shouldReturnWhateverTheMapperMakes() async throws {
+    @Test func whenMapperIsReplaced_shouldReturnItsCategories() async throws {
         let data = LocalJSON.list(LocalJSON.category(name: "ignored"))
         let expected = LocationCategory.fixture(name: "From the mapper")
 

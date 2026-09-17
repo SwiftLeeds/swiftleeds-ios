@@ -5,7 +5,7 @@ import Testing
 @Suite struct LocationCategoryMapperTests {
     private let sut = LocationCategoryMapper.live
 
-    @Test func whenListHasCategories_shouldMapEveryOneInOrder() throws {
+    @Test func whenListHasCategories_shouldReturnCategoriesInListOrder() throws {
         let food = UUID()
         let coffee = UUID()
         let list = LocationCategoryListDTO(data: [
@@ -20,11 +20,11 @@ import Testing
         #expect(categories.map(\.symbolName) == ["takeoutbag.and.cup.and.straw.fill", "cup.and.saucer.fill"])
     }
 
-    @Test func whenListIsEmpty_shouldMapToNoCategories() throws {
+    @Test func whenListIsEmpty_shouldReturnNoCategories() throws {
         #expect(try sut.map(LocationCategoryListDTO(data: [])).isEmpty)
     }
 
-    @Test func whenCategoryHasLocations_shouldMapEveryOneInOrder() throws {
+    @Test func whenCategoryHasLocations_shouldReturnLocationsInListOrder() throws {
         let trinity = UUID()
         let brewSociety = UUID()
         let list = LocationCategoryListDTO(data: [
@@ -40,7 +40,7 @@ import Testing
         #expect(locations.map(\.name) == ["Trinity Kitchen", "Brew Society"])
     }
 
-    @Test func whenLocationIsReadable_shouldMapItsLinkAndCoordinate() throws {
+    @Test func whenLocationHasValidLinkAndCoordinate_shouldReturnWebsiteURLAndCoordinate() throws {
         let list = LocationCategoryListDTO(data: [
             .fixture(locations: [
                 .fixture(lat: 53.797378, lon: -1.545209, url: "https://example.invalid/trinity-kitchen"),
@@ -55,14 +55,14 @@ import Testing
 
     // MARK: - Refusals
 
-    @Test func whenLatitudeIsOffTheGlobe_shouldNameTheLocationTheFieldAndTheValue() throws {
+    @Test func whenLatitudeIsOutOfRange_shouldThrowErrorWithLocationFieldAndValue() throws {
         let list = LocationCategoryListDTO(data: [
             .fixture(locations: [.fixture(name: "Trinity Kitchen", lat: 91)]),
         ])
 
         do {
             _ = try sut.map(list)
-            Issue.record("Expected a latitude off the globe to be refused")
+            Issue.record("Expected an out-of-range latitude to throw")
         } catch {
             #expect(error.location == "Trinity Kitchen")
             #expect(error.field == .lat)
@@ -70,14 +70,14 @@ import Testing
         }
     }
 
-    @Test func whenLongitudeIsOffTheGlobe_shouldNameTheLocationTheFieldAndTheValue() throws {
+    @Test func whenLongitudeIsOutOfRange_shouldThrowErrorWithLocationFieldAndValue() throws {
         let list = LocationCategoryListDTO(data: [
             .fixture(locations: [.fixture(name: "Trinity Kitchen", lon: -181)]),
         ])
 
         do {
             _ = try sut.map(list)
-            Issue.record("Expected a longitude off the globe to be refused")
+            Issue.record("Expected an out-of-range longitude to throw")
         } catch {
             #expect(error.location == "Trinity Kitchen")
             #expect(error.field == .lon)
@@ -85,14 +85,14 @@ import Testing
         }
     }
 
-    @Test func whenLinkIsNotAURL_shouldNameTheLocationTheFieldAndTheValue() throws {
+    @Test func whenLinkIsNotURL_shouldThrowErrorWithLocationFieldAndValue() throws {
         let list = LocationCategoryListDTO(data: [
             .fixture(locations: [.fixture(name: "Trinity Kitchen", url: "")]),
         ])
 
         do {
             _ = try sut.map(list)
-            Issue.record("Expected a link that is not a URL to be refused")
+            Issue.record("Expected a link that is not a URL to throw")
         } catch {
             #expect(error.location == "Trinity Kitchen")
             #expect(error.field == .url)
@@ -100,7 +100,7 @@ import Testing
         }
     }
 
-    @Test func whenOneLocationIsOffTheGlobe_shouldRefuseEvenTheReadableCategories() throws {
+    @Test func whenOneLocationIsInvalid_shouldThrowForWholeList() throws {
         let list = LocationCategoryListDTO(data: [
             .fixture(name: "Food", locations: [.fixture()]),
             .fixture(name: "Coffee", locations: [.fixture(lat: 91)]),
