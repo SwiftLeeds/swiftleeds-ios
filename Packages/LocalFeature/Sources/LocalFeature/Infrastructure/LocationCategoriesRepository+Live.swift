@@ -24,7 +24,7 @@ extension LocationCategoriesRepository: DependencyKey {
             do throws(LocationCategoryMapper.MappingError) {
                 return try LocationCategoryMapper.live.map(list)
             } catch {
-                throw LocationCategoryFetchError.unknown
+                throw LocationCategoryFetchError.invalidResponse
             }
         }
     }

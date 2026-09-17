@@ -41,4 +41,16 @@ import Testing
             }
         }
     }
+
+    @Test func whenMapperRefuses_shouldThrowInvalidResponse() async throws {
+        let data = LocalJSON.list(LocalJSON.category(locations: LocalJSON.location(lat: 91)))
+
+        await withDependencies {
+            $0.httpClient = .responding(with: data, statusCode: 200)
+        } operation: {
+            await #expect(throws: LocationCategoryFetchError.invalidResponse) {
+                try await LocationCategoriesRepository.liveValue.fetch()
+            }
+        }
+    }
 }
