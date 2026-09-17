@@ -60,7 +60,6 @@ struct LocalView: View {
                     isOpen: $bottomSheetShown,
                     selectedCategory: $model.selectedCategory,
                     categories: model.categories,
-                    error: model.error,
                     maxHeight: geometry.size.height * Constants.maxHeightRatio
                 )
 
