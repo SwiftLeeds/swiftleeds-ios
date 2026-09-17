@@ -8,10 +8,15 @@ extension LocationCategoriesRepository: DependencyKey {
             @Dependency(\.httpClient) var httpClient
 
             let data: Data
+            let response: HTTPURLResponse
             do {
-                (data, _) = try await httpClient.send(Endpoint.local.urlRequest())
+                (data, response) = try await httpClient.send(Endpoint.local.urlRequest())
             } catch {
                 throw LocationCategoryFetchError.couldNotReachServer
+            }
+
+            guard response.status == .ok else {
+                throw LocationCategoryFetchError.unknown
             }
 
             let list: LocationCategoryListDTO

@@ -53,4 +53,17 @@ import Testing
             }
         }
     }
+
+    @Test(arguments: [404, 500])
+    func whenServerRefuses_shouldThrowUnknown(statusCode: Int) async throws {
+        let data = LocalJSON.list(LocalJSON.category())
+
+        await withDependencies {
+            $0.httpClient = .responding(with: data, statusCode: statusCode)
+        } operation: {
+            await #expect(throws: LocationCategoryFetchError.unknown) {
+                try await LocationCategoriesRepository.liveValue.fetch()
+            }
+        }
+    }
 }
