@@ -99,4 +99,15 @@ import Testing
             #expect(error.value == "")
         }
     }
+
+    @Test func whenOneLocationIsOffTheGlobe_shouldRefuseEvenTheReadableCategories() throws {
+        let list = LocationCategoryListDTO(data: [
+            .fixture(name: "Food", locations: [.fixture()]),
+            .fixture(name: "Coffee", locations: [.fixture(lat: 91)]),
+        ])
+
+        #expect(throws: LocationCategoryMapper.MappingError.self) {
+            try sut.map(list)
+        }
+    }
 }
