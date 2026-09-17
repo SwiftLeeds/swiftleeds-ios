@@ -66,4 +66,18 @@ import Testing
             }
         }
     }
+
+    @Test func whenDecoded_shouldReturnWhateverTheMapperMakes() async throws {
+        let data = LocalJSON.list(LocalJSON.category(name: "ignored"))
+        let expected = LocationCategory.fixture(name: "From the mapper")
+
+        let categories = try await withDependencies {
+            $0.httpClient = .responding(with: data, statusCode: 200)
+            $0.locationCategoryMapper = LocationCategoryMapper { _ in [expected] }
+        } operation: {
+            try await LocationCategoriesRepository.liveValue.fetch()
+        }
+
+        #expect(categories == [expected])
+    }
 }

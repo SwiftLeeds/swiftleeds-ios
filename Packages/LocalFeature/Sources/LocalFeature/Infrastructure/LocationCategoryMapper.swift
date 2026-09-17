@@ -1,3 +1,4 @@
+import Dependencies
 import Foundation
 
 /// Turns the backend's location list into location categories.
@@ -56,5 +57,17 @@ extension LocationCategoryMapper {
                 throw MappingError(location: dto.name, field: .lon, value: String(dto.lon))
             }
         }
+    }
+}
+
+private enum LocationCategoryMapperKey: DependencyKey {
+    static var liveValue: LocationCategoryMapper { .live }
+    static var testValue: LocationCategoryMapper { liveValue }
+}
+
+extension DependencyValues {
+    package var locationCategoryMapper: LocationCategoryMapper {
+        get { self[LocationCategoryMapperKey.self] }
+        set { self[LocationCategoryMapperKey.self] = newValue }
     }
 }

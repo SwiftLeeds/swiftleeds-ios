@@ -6,6 +6,7 @@ extension LocationCategoriesRepository: DependencyKey {
     package static var liveValue: LocationCategoriesRepository {
         LocationCategoriesRepository { () async throws(LocationCategoryFetchError) -> [LocationCategory] in
             @Dependency(\.httpClient) var httpClient
+            @Dependency(\.locationCategoryMapper) var locationCategoryMapper
 
             let data: Data
             let response: HTTPURLResponse
@@ -27,7 +28,7 @@ extension LocationCategoriesRepository: DependencyKey {
             }
 
             do throws(LocationCategoryMapper.MappingError) {
-                return try LocationCategoryMapper.live.map(list)
+                return try locationCategoryMapper.map(list)
             } catch {
                 throw LocationCategoryFetchError.invalidResponse
             }
