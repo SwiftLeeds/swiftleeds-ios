@@ -28,7 +28,28 @@ extension LocationCategoryMapper {
             id: LocationCategoryID(dto.id),
             name: dto.name,
             symbolName: dto.symbolName,
-            locations: []
+            locations: try dto.locations.map { dto throws(MappingError) in try location(dto) }
         )
+    }
+
+    private static func location(_ dto: LocationCategoryListDTO.LocationDTO) throws(MappingError) -> Location {
+        guard let websiteURL = URL(string: dto.url) else {
+            throw MappingError(location: dto.name, field: .url, value: dto.url)
+        }
+
+        return Location(
+            id: LocationID(dto.id),
+            name: dto.name,
+            websiteURL: websiteURL,
+            coordinate: try coordinate(dto)
+        )
+    }
+
+    private static func coordinate(_ dto: LocationCategoryListDTO.LocationDTO) throws(MappingError) -> Coordinate {
+        do throws(Coordinate.ParsingError) {
+            return try Coordinate(latitude: dto.lat, longitude: dto.lon)
+        } catch {
+            throw MappingError(location: dto.name, field: .lat, value: String(dto.lat))
+        }
     }
 }

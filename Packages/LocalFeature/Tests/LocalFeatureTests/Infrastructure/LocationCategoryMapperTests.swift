@@ -23,4 +23,33 @@ import Testing
     @Test func whenListIsEmpty_shouldMapToNoCategories() throws {
         #expect(try sut.map(LocationCategoryListDTO(data: [])).isEmpty)
     }
+
+    @Test func whenCategoryHasLocations_shouldMapEveryOneInOrder() throws {
+        let trinity = UUID()
+        let brewSociety = UUID()
+        let list = LocationCategoryListDTO(data: [
+            .fixture(locations: [
+                .fixture(id: trinity, name: "Trinity Kitchen"),
+                .fixture(id: brewSociety, name: "Brew Society"),
+            ]),
+        ])
+
+        let locations = try #require(sut.map(list).first?.locations)
+
+        #expect(locations.map(\.id) == [LocationID(trinity), LocationID(brewSociety)])
+        #expect(locations.map(\.name) == ["Trinity Kitchen", "Brew Society"])
+    }
+
+    @Test func whenLocationIsReadable_shouldMapItsLinkAndCoordinate() throws {
+        let list = LocationCategoryListDTO(data: [
+            .fixture(locations: [
+                .fixture(lat: 53.797378, lon: -1.545209, url: "https://example.invalid/trinity-kitchen"),
+            ]),
+        ])
+
+        let location = try #require(sut.map(list).first?.locations.first)
+
+        #expect(location.websiteURL == URL(string: "https://example.invalid/trinity-kitchen"))
+        #expect(location.coordinate == (try Coordinate(latitude: 53.797378, longitude: -1.545209)))
+    }
 }
