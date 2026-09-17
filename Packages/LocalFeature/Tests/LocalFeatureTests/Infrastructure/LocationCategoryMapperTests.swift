@@ -84,4 +84,19 @@ import Testing
             #expect(error.value == "-181.0")
         }
     }
+
+    @Test func whenLinkIsNotAURL_shouldNameTheLocationTheFieldAndTheValue() throws {
+        let list = LocationCategoryListDTO(data: [
+            .fixture(locations: [.fixture(name: "Trinity Kitchen", url: "")]),
+        ])
+
+        do {
+            _ = try sut.map(list)
+            Issue.record("Expected a link that is not a URL to be refused")
+        } catch {
+            #expect(error.location == "Trinity Kitchen")
+            #expect(error.field == .url)
+            #expect(error.value == "")
+        }
+    }
 }
