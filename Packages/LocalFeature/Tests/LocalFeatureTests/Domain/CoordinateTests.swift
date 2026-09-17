@@ -9,4 +9,11 @@ import Testing
         #expect(sut.latitude == latitude)
         #expect(sut.longitude == longitude)
     }
+
+    @Test(arguments: [-90.000001, 90.000001, .nan, .infinity])
+    func whenLatitudeIsOffTheGlobe_shouldThrowLatitudeOutOfRange(latitude: Double) {
+        #expect(throws: Coordinate.ParsingError.latitudeOutOfRange) {
+            try Coordinate(latitude: latitude, longitude: 0)
+        }
+    }
 }
