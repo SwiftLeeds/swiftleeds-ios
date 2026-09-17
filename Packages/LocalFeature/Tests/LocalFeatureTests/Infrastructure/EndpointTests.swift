@@ -1,0 +1,35 @@
+import Foundation
+import LocalFeature
+import NetworkKit
+import Testing
+
+@Suite struct EndpointTests {
+    @Test func whenLocalRequestIsBuilt_shouldGET() throws {
+        let request = try Endpoint.local.urlRequest(baseURL: baseURL)
+
+        #expect(request.httpMethod == "GET")
+    }
+
+    @Test func whenLocalRequestIsBuilt_shouldTargetTheLocalPath() throws {
+        let request = try Endpoint.local.urlRequest(baseURL: baseURL)
+
+        let expected = try #require(URL(string: "https://example.com/api/v1/local"))
+        #expect(request.url == expected)
+    }
+
+    @Test func whenLocalRequestIsBuilt_shouldAskForJSON() throws {
+        let request = try Endpoint.local.urlRequest(baseURL: baseURL)
+
+        #expect(request.value(forHTTPHeaderField: "Accept") == "application/json")
+    }
+
+    @Test func whenLocalRequestIsBuilt_shouldCarryNoContent() throws {
+        let request = try Endpoint.local.urlRequest(baseURL: baseURL)
+
+        #expect(request.httpBody == nil)
+    }
+
+    private var baseURL: URL {
+        get throws { try #require(URL(string: "https://example.com")) }
+    }
+}
