@@ -1,11 +1,12 @@
+#if canImport(UIKit)
 import DesignKit
 import LocalFeature
 import MapKit
 import SharedAssets
 import SwiftUI
 
-struct LocalView: View {
-    @StateObject private var model = LocalViewModel()
+public struct LocalView: View {
+    @State private var viewModel = ViewModel()
 
     @State private var bottomSheetShown = true
     @State private var mapRegion = MKCoordinateRegion(
@@ -14,14 +15,16 @@ struct LocalView: View {
     )
     @State private var selectedLocation: Location?
 
-    var body: some View {
+    public init() {}
+
+    public var body: some View {
         ZStack {
             GeometryReader { geometry in
-                if let category = model.selectedCategory {
+                if let category = viewModel.selectedCategory {
                     Map(
                         coordinateRegion: $mapRegion,
                         showsUserLocation: true,
-                        annotationItems: model.selectedLocations
+                        annotationItems: viewModel.selectedLocations
                     ) { location in
                         MapAnnotation(coordinate: CLLocationCoordinate2D(
                             latitude: location.coordinate.latitude,
@@ -42,7 +45,7 @@ struct LocalView: View {
                     .ignoresSafeArea()
                 }
 
-                if let location = selectedLocation, let category = model.selectedCategory {
+                if let location = selectedLocation, let category = viewModel.selectedCategory {
                     ZStack {
                         Color.black.opacity(0.3)
                             .ignoresSafeArea(.all)
@@ -58,19 +61,22 @@ struct LocalView: View {
 
                 BottomSheetView(
                     isOpen: $bottomSheetShown,
-                    selectedCategory: $model.selectedCategory,
-                    categories: model.categories,
+                    selectedCategory: $viewModel.selectedCategory,
+                    categories: viewModel.categories,
                     maxHeight: geometry.size.height * Constants.maxHeightRatio
                 )
 
-                if model.error != nil {
+                if viewModel.error != nil {
                     errorView
                 }
             }
         }
+        .task {
+            await viewModel.load()
+        }
     }
 
-    var errorView: some View {
+    private var errorView: some View {
         Rectangle()
             .foregroundStyle(.ultraThinMaterial)
             .edgesIgnoringSafeArea(.all)
@@ -91,7 +97,7 @@ struct LocalView: View {
 
     private func reload() {
         Task(priority: .userInitiated) {
-            await model.loadData()
+            await viewModel.load()
         }
     }
 
@@ -133,3 +139,4 @@ struct LocalView_Previews: PreviewProvider {
         LocalView()
     }
 }
+#endif
