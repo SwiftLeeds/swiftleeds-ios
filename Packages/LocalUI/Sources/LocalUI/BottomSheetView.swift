@@ -1,3 +1,4 @@
+#if canImport(UIKit)
 import DesignKit
 import LocalFeature
 import ReadabilityModifier
@@ -140,3 +141,4 @@ struct BottomSheet_Previews: PreviewProvider {
         return Location(id: LocationID(UUID()), name: name, websiteURL: websiteURL, coordinate: coordinate)
     }
 }
+#endif
