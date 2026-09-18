@@ -20,7 +20,7 @@ extension LocalView {
             @Dependency(\.fetchLocationCategories) var fetchLocationCategories
 
             do {
-                categories = try await fetchLocationCategories()
+                categories = try await fetchLocationCategories().filter { !$0.locations.isEmpty }
                 selectedCategory = categories.first
                 error = nil
             } catch {

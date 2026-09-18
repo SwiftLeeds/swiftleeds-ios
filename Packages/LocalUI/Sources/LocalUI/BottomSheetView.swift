@@ -28,7 +28,7 @@ struct BottomSheetView: View {
     ) {
         self.minHeight = maxHeight * Constants.minHeightRatio
         self.maxHeight = maxHeight
-        self.categories = categories.filter { $0.locations.isEmpty == false }
+        self.categories = categories
         self._isOpen = isOpen
         self._selectedCategory = selectedCategory
     }
