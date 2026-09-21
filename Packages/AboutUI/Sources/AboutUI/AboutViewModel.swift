@@ -14,7 +14,6 @@ package final class AboutViewModel {
 
     private let aboutContent = AboutContent.swiftLeeds
 
-    /// Creates the state with no team loaded.
     package init() {}
 
     /// The venue page on the conference site.

@@ -11,7 +11,6 @@ public struct AboutView: View {
     @State private var isReportAProblemShown = false
     @State private var isFullAboutShown = false
 
-    /// Creates the screen. It fetches the team when it first appears.
     public init() {}
 
     private var gridColumns: [GridItem] {
