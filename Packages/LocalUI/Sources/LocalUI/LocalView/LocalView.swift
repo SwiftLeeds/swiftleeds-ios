@@ -23,7 +23,6 @@ public struct LocalView: View {
                 if let category = viewModel.selectedCategory {
                     Map(
                         coordinateRegion: $mapRegion,
-                        showsUserLocation: true,
                         annotationItems: viewModel.selectedLocations
                     ) { location in
                         MapAnnotation(coordinate: CLLocationCoordinate2D(
