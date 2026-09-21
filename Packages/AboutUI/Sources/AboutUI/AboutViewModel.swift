@@ -4,32 +4,41 @@ import Foundation
 import NetworkKit
 import Observation
 
+/// The About screen's state: its links and text, and the conference team.
 @Observable
 @MainActor
-final class AboutViewModel {
-    private(set) var teamMembers: [TeamMember] = []
+package final class AboutViewModel {
+    package private(set) var teamMembers: [TeamMember] = []
     private(set) var isLoading = true
-    private(set) var errorMessage: String?
+    package private(set) var errorMessage: String?
 
     private let aboutContent = AboutContent.swiftLeeds
 
-    var venueURL: URL? {
+    /// Creates the state with no team loaded.
+    package init() {}
+
+    /// The venue page on the conference site.
+    package var venueURL: URL? {
         apiURL(path: aboutContent.urls.venue)
     }
 
-    var codeOfConductURL: URL? {
+    /// The code of conduct page on the conference site.
+    package var codeOfConductURL: URL? {
         apiURL(path: aboutContent.urls.codeOfConduct)
     }
 
-    var reportAProblemLink: String {
+    /// The form for reporting a problem.
+    package var reportAProblemLink: String {
         aboutContent.urls.reportAProblem
     }
 
-    var slackURL: URL? {
+    /// The invite to the conference Slack.
+    package var slackURL: URL? {
         URL(string: aboutContent.urls.slack)
     }
 
-    var youtubeURL: URL? {
+    /// The conference YouTube channel.
+    package var youtubeURL: URL? {
         URL(string: aboutContent.urls.youtube)
     }
 
@@ -37,7 +46,8 @@ final class AboutViewModel {
         aboutContent.truncatedAboutText
     }
 
-    func loadIfNeeded() async {
+    /// Fetches the team, unless a team is already loaded.
+    package func loadIfNeeded() async {
         guard teamMembers.isEmpty else { return }
         await load()
     }

@@ -44,6 +44,15 @@ let package = Package(
             ]
         ),
         .testTarget(
+            name: "AboutUITests",
+            dependencies: [
+                "AboutUI",
+                .product(name: "AboutFeature", package: "AboutFeature"),
+                .product(name: "Dependencies", package: "swift-dependencies"),
+                .product(name: "NetworkKit", package: "NetworkKit"),
+            ]
+        ),
+        .testTarget(
             name: "AboutUISnapshotTests",
             dependencies: [
                 "AboutUI",
