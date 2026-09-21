@@ -7,7 +7,7 @@ import SwiftUI
 import UIComponents
 
 public struct AboutView: View {
-    @StateObject private var viewModel = AboutViewModel()
+    @State private var viewModel = AboutViewModel()
     @State private var isReportAProblemShown = false
     @State private var isFullAboutShown = false
 
@@ -37,6 +37,9 @@ public struct AboutView: View {
         }
         .background(Color.background, ignoresSafeAreaEdges: .all)
         .edgesIgnoringSafeArea(.top)
+        .task {
+            await viewModel.loadIfNeeded()
+        }
     }
 
     private var content: some View {

@@ -1,14 +1,15 @@
 import AboutFeature
-import Combine
 import Dependencies
 import Foundation
 import NetworkKit
+import Observation
 
+@Observable
 @MainActor
-class AboutViewModel: ObservableObject {
-    @Published var teamMembers: [TeamMember] = []
-    @Published var isLoading = true
-    @Published var errorMessage: String?
+final class AboutViewModel {
+    private(set) var teamMembers: [TeamMember] = []
+    private(set) var isLoading = true
+    private(set) var errorMessage: String?
 
     private let aboutContent = AboutContent.swiftLeeds
 
@@ -36,10 +37,9 @@ class AboutViewModel: ObservableObject {
         aboutContent.truncatedAboutText
     }
 
-    init() {
-        Task {
-            await loadData()
-        }
+    func loadIfNeeded() async {
+        guard teamMembers.isEmpty else { return }
+        await load()
     }
 
     private func apiURL(path: String) -> URL? {
@@ -47,7 +47,7 @@ class AboutViewModel: ObservableObject {
         return URL(string: path, relativeTo: apiConfiguration.baseURL)?.absoluteURL
     }
 
-    private func loadData() async {
+    private func load() async {
         isLoading = true
         errorMessage = nil
         await loadTeamData()
