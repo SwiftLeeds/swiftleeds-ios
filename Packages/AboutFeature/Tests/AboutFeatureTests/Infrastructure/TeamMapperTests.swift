@@ -73,7 +73,7 @@ import Testing
         TeamDTO.MemberDTO.CodingKeys.twitter,
         TeamDTO.MemberDTO.CodingKeys.slack,
     ])
-    func whenLinkIsNotURL_shouldThrowErrorWithMemberFieldAndValue(field: TeamDTO.MemberDTO.CodingKeys) throws {
+    func whenLinkIsEmpty_shouldThrowErrorWithMemberFieldAndValue(field: TeamDTO.MemberDTO.CodingKeys) throws {
         let member = TeamDTO.MemberDTO.fixture(
             name: "Adam Rush",
             linkedin: field == .linkedin ? "" : nil,
@@ -86,6 +86,17 @@ import Testing
         }
 
         #expect(error == TeamMapper.MappingError(member: TeamMemberID("Adam Rush"), field: field, value: ""))
+    }
+
+    @Test(arguments: ["twitter.com/rush", "tel:01130000000", "https://"])
+    func whenLinkIsNotWebAddress_shouldThrowErrorWithMemberFieldAndValue(link: String) throws {
+        let team = TeamDTO(teamMembers: [.fixture(name: "Adam Rush", twitter: link)])
+
+        let error = try #require(throws: TeamMapper.MappingError.self) {
+            try map(team)
+        }
+
+        #expect(error == TeamMapper.MappingError(member: TeamMemberID("Adam Rush"), field: .twitter, value: link))
     }
 
     @Test func whenOneMemberIsInvalid_shouldThrowForWholeTeam() throws {

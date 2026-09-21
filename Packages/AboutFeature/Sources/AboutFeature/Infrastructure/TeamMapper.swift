@@ -61,7 +61,7 @@ extension TeamMapper {
         member: TeamMemberID,
         field: TeamDTO.MemberDTO.CodingKeys
     ) throws(MappingError) -> URL {
-        guard let url = URL(string: link) else {
+        guard let url = URL(string: link), url.isWebAddress else {
             throw MappingError(member: member, field: field, value: link)
         }
         return url
@@ -74,6 +74,14 @@ extension TeamMapper {
             throw MappingError(member: member, field: .imageURL, value: dto.imageURL)
         }
         return url.absoluteURL
+    }
+}
+
+private extension URL {
+    // `URL(string:)` accepts "twitter.com/rush" as a relative URL, which a browser cannot open.
+    var isWebAddress: Bool {
+        guard let scheme = scheme?.lowercased(), let host, !host.isEmpty else { return false }
+        return scheme == "http" || scheme == "https"
     }
 }
 
