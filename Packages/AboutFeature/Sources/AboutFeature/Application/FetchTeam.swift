@@ -1,5 +1,6 @@
 import Dependencies
 
+/// The use case that fetches the conference team, in the order to show it.
 public struct FetchTeam: Sendable {
     private var perform: @Sendable () async throws(TeamFetchError) -> [TeamMember]
 

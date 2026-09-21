@@ -2,9 +2,9 @@ import Dependencies
 import Foundation
 import NetworkKit
 
-/// Turns the backend's team into team members.
+/// The conversion from the backend's team to team members.
 package struct TeamMapper: Sendable {
-    /// A value the backend sent could not become part of the model.
+    /// A value from the backend that cannot become part of the model.
     package struct MappingError: Error, Equatable {
         package let member: TeamMemberID
         package let field: TeamDTO.MemberDTO.CodingKeys
@@ -25,7 +25,10 @@ package struct TeamMapper: Sendable {
 }
 
 extension TeamMapper {
-    /// Resolves a photo path against the configured API's base URL.
+    /// Maps the members in the team's order.
+    ///
+    /// A photo path resolves against the base URL in `apiConfiguration`. The whole team is refused
+    /// when a photo is not a URL, or a link is not an http or https web address.
     package static let live = TeamMapper { team throws(MappingError) in
         try team.teamMembers.map { dto throws(MappingError) in try member(dto) }
     }

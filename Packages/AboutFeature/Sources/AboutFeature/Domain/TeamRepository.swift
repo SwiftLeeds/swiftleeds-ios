@@ -1,6 +1,6 @@
 import Dependencies
 
-/// Reads the conference team.
+/// The source of the conference team.
 package struct TeamRepository: Sendable {
     package var fetch: @Sendable () async throws(TeamFetchError) -> [TeamMember]
 

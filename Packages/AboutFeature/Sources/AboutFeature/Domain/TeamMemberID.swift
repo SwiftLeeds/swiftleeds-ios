@@ -1,4 +1,4 @@
-/// Identifies a team member. The backend sends no ID, so the member's name serves as one.
+/// The identity of a team member. The backend sends no ID, so the member's name serves as one.
 public struct TeamMemberID: Equatable, Hashable, Sendable {
     fileprivate let storage: String
 
