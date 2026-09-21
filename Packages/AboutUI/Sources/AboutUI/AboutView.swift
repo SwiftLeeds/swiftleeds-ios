@@ -1,5 +1,4 @@
 #if canImport(UIKit)
-import CachedAsyncImage
 import DesignKit
 import ReadabilityModifier
 import SharedAssets
