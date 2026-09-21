@@ -1,3 +1,4 @@
+import AboutFeature
 import AboutUI
 import Dependencies
 import Foundation
@@ -32,6 +33,23 @@ import Testing
             #expect(url.scheme == "https")
             #expect(url.host?.isEmpty == false)
         }
+    }
+
+    @Test func whenLoadIsCancelled_shouldNotSetError() async {
+        let sut = AboutViewModel()
+
+        await withDependencies {
+            $0.fetchTeam = FetchTeam { () async throws(TeamFetchError) -> [TeamMember] in
+                try? await Task.sleep(for: .seconds(10))
+                throw .couldNotReachServer
+            }
+        } operation: {
+            let load = Task { await sut.loadIfNeeded() }
+            load.cancel()
+            await load.value
+        }
+
+        #expect(sut.errorMessage == nil)
     }
 
     private func withAPI<T>(_ operation: () -> T) throws -> T {

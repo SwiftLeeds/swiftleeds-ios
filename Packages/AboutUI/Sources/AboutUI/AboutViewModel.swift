@@ -70,6 +70,7 @@ package final class AboutViewModel {
         do {
             teamMembers = try await fetchTeam()
         } catch {
+            guard !Task.isCancelled else { return }
             errorMessage = "Failed to load team data: \(error.localizedDescription)"
         }
     }
