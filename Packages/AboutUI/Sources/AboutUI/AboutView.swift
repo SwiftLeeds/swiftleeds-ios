@@ -6,11 +6,13 @@ import SharedAssets
 import SwiftUI
 import UIComponents
 
+/// The About screen: the conference's story, its links, and the team.
 public struct AboutView: View {
     @State private var viewModel = AboutViewModel()
     @State private var isReportAProblemShown = false
     @State private var isFullAboutShown = false
 
+    /// Creates the screen. It fetches the team when it first appears.
     public init() {}
 
     private var gridColumns: [GridItem] {

@@ -14,7 +14,7 @@ package struct CompactActionItem: View {
     ///
     /// - Parameters:
     ///   - icon: The SF Symbol name.
-    ///   - title: The title, at most two lines.
+    ///   - title: The title. The tile shows two lines and cuts off the rest.
     ///   - accessibilityHint: What the tile does, read by VoiceOver.
     ///   - action: Runs when the person taps the tile.
     package init(icon: String, title: String, accessibilityHint: String, action: @escaping () -> Void) {
