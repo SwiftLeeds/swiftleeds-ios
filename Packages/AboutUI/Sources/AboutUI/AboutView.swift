@@ -118,29 +118,9 @@ public struct AboutView: View {
                 }
                 .padding(.vertical, 8)
 
-                VStack(alignment: .leading, spacing: Padding.stackGap) {
-                    Text("Meet the Team")
-                        .font(.headline.weight(.semibold))
-                        .foregroundColor(.primary)
-
-                    Text("Connect with our amazing volunteers who make SwiftLeeds possible")
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
+                if !viewModel.teamMembers.isEmpty {
+                    teamSection
                 }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .multilineTextAlignment(.leading)
-                .padding(Padding.cell)
-                .background(
-                    Color.cellBackground,
-                    in: RoundedRectangle(cornerRadius: Constants.cellRadius)
-                )
-
-                LazyVGrid(columns: teamGridColumns, spacing: Padding.cellGap) {
-                    ForEach(viewModel.teamMembers) { member in
-                        TeamMemberView(member: member)
-                    }
-                }
-                .padding(.vertical, 8)
             }
             .fitToReadableContentGuide(type: .width)
         }
@@ -178,6 +158,34 @@ public struct AboutView: View {
             }
         }
         .navigationBarHidden(true)
+    }
+
+    private var teamSection: some View {
+        Group {
+            VStack(alignment: .leading, spacing: Padding.stackGap) {
+                Text("Meet the Team")
+                    .font(.headline.weight(.semibold))
+                    .foregroundColor(.primary)
+
+                Text("Connect with our amazing volunteers who make SwiftLeeds possible")
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .multilineTextAlignment(.leading)
+            .padding(Padding.cell)
+            .background(
+                Color.cellBackground,
+                in: RoundedRectangle(cornerRadius: Constants.cellRadius)
+            )
+
+            LazyVGrid(columns: teamGridColumns, spacing: Padding.cellGap) {
+                ForEach(viewModel.teamMembers) { member in
+                    TeamMemberView(member: member)
+                }
+            }
+            .padding(.vertical, 8)
+        }
     }
 
     private func openURL(url: URL?) {
