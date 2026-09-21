@@ -20,6 +20,7 @@ let package = Package(
         // manifest fails to load and resolution stops before it reaches us.
         .package(url: "https://github.com/lorenzofiamingo/swiftui-cached-async-image", exact: "2.1.1"),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.0.0"),
+        .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", from: "1.19.4"),
         .package(url: "https://github.com/yazio/ReadabilityModifier", from: "1.0.0"),
     ],
     targets: [
@@ -40,6 +41,16 @@ let package = Package(
                 ),
                 .product(name: "SharedAssets", package: "SwiftLeedsPackage"),
                 .product(name: "UIComponents", package: "UIComponents"),
+            ]
+        ),
+        .testTarget(
+            name: "AboutUISnapshotTests",
+            dependencies: [
+                "AboutUI",
+                .product(name: "AboutFeature", package: "AboutFeature"),
+                .product(name: "DesignKit", package: "SwiftLeedsPackage"),
+                .product(name: "SharedAssets", package: "SwiftLeedsPackage"),
+                .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
             ]
         ),
     ]

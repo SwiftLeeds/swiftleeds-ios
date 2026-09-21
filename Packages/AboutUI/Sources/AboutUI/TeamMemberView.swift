@@ -5,10 +5,18 @@ import DesignKit
 import SharedAssets
 import SwiftUI
 
-struct TeamMemberView: View {
+/// A card for one team member: photo, name, role and links.
+package struct TeamMemberView: View {
     let member: TeamMember
 
-    var body: some View {
+    /// Creates the card.
+    ///
+    /// - Parameter member: The member to show.
+    package init(member: TeamMember) {
+        self.member = member
+    }
+
+    package var body: some View {
         VStack(spacing: 12) {
             ZStack {
                 Circle()
