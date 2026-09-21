@@ -1,4 +1,5 @@
 import AuthenticationUI
+import LocalUI
 import ScheduleUI
 import Settings
 import SponsorsUI
