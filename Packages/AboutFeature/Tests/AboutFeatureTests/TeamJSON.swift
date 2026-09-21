@@ -1,0 +1,29 @@
+import Foundation
+
+// Payloads shaped like the real `api/v2/team` response. The backend leaves out a key whose
+// value is nil, so an absent value is a missing key, never `null`.
+enum TeamJSON {
+    static func team(_ members: String...) -> Data {
+        Data("{\"teamMembers\":[\(members.joined(separator: ","))]}".utf8)
+    }
+
+    static func member(
+        name: String = "Member One",
+        role: String? = "Organizer",
+        linkedin: String? = nil,
+        twitter: String? = nil,
+        slack: String? = "https://slack.example.com/member-one",
+        imageURL: String = "/img/team/member-one.jpg"
+    ) -> String {
+        let fields: [(key: String, value: String?)] = [
+            ("name", name),
+            ("role", role),
+            ("twitter", twitter),
+            ("linkedin", linkedin),
+            ("slack", slack),
+            ("imageURL", imageURL),
+        ]
+        let present = fields.compactMap { field in field.value.map { "\"\(field.key)\": \"\($0)\"" } }
+        return "{\(present.joined(separator: ", ")), \"core\": true}"
+    }
+}
