@@ -52,6 +52,41 @@ import Testing
         #expect(sut.errorMessage == nil)
     }
 
+    @Test func whenTeamIsLoaded_shouldNotFetchAgain() async throws {
+        let sut = AboutViewModel()
+        let fetches = LockIsolated(0)
+        let team = [try TeamMember.fixture]
+
+        await withDependencies {
+            $0.fetchTeam = FetchTeam { () async throws(TeamFetchError) -> [TeamMember] in
+                fetches.withValue { $0 += 1 }
+                return team
+            }
+        } operation: {
+            await sut.loadIfNeeded()
+            await sut.loadIfNeeded()
+        }
+
+        #expect(fetches.value == 1)
+    }
+
+    @Test func whenLoadFailed_shouldFetchAgainOnNextLoad() async throws {
+        let sut = AboutViewModel()
+        let fetches = LockIsolated(0)
+
+        await withDependencies {
+            $0.fetchTeam = FetchTeam { () async throws(TeamFetchError) -> [TeamMember] in
+                fetches.withValue { $0 += 1 }
+                throw .couldNotReachServer
+            }
+        } operation: {
+            await sut.loadIfNeeded()
+            await sut.loadIfNeeded()
+        }
+
+        #expect(fetches.value == 2)
+    }
+
     private func withAPI<T>(_ operation: () -> T) throws -> T {
         let configuration = APIConfiguration(baseURL: try #require(URL(string: "https://example.com")))
         return withDependencies {
