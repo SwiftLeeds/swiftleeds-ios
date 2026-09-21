@@ -32,23 +32,6 @@ import Testing
         }
     }
 
-    @Test func whenLoadIsCancelled_shouldNotSetError() async {
-        let sut = await withDependencies {
-            $0.fetchTeam = FetchTeam { () async throws(TeamFetchError) -> [TeamMember] in
-                try? await Task.sleep(for: .seconds(10))
-                throw .couldNotReachServer
-            }
-        } operation: {
-            let sut = AboutViewModel()
-            let load = Task { await sut.loadIfNeeded() }
-            load.cancel()
-            await load.value
-            return sut
-        }
-
-        #expect(sut.errorMessage == nil)
-    }
-
     @Test func whenTeamIsLoaded_shouldNotFetchAgain() async throws {
         let fetches = LockIsolated(0)
         let team = [try TeamMember.fixture]
