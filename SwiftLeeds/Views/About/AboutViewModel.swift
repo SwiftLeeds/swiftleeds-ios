@@ -77,14 +77,9 @@ class AboutViewModel: ObservableObject {
         @Dependency(\.fetchTeam) var fetchTeam
 
         do {
-            await updateTeamMembers(try await fetchTeam())
+            teamMembers = try await fetchTeam()
         } catch {
             errorMessage = "Failed to load team data: \(error.localizedDescription)"
         }
-    }
-
-    @MainActor
-    private func updateTeamMembers(_ members: [TeamMember]) async {
-        self.teamMembers = members
     }
 }
