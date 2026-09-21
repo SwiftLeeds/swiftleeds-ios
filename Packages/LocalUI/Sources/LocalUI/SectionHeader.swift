@@ -7,7 +7,7 @@ package struct SectionHeader: View {
     private let foregroundColor: Color
     private let maxWidth: CGFloat
     private let alignment: Alignment
-    private let accesibilityAddTraits: AccessibilityTraits
+    private let accessibilityTraits: AccessibilityTraits
 
     package init(
         title: String,
@@ -15,14 +15,14 @@ package struct SectionHeader: View {
         foregroundColor: Color = .secondary,
         maxWidth: CGFloat = .infinity,
         alignment: Alignment = .leading,
-        accessbilityAddTraits: AccessibilityTraits = .isHeader
+        accessibilityTraits: AccessibilityTraits = .isHeader
     ) {
         self.title = title
         self.fontStyle = fontStyle
         self.foregroundColor = foregroundColor
         self.maxWidth = maxWidth
         self.alignment = alignment
-        self.accesibilityAddTraits = accessbilityAddTraits
+        self.accessibilityTraits = accessibilityTraits
     }
 
     package var body: some View {
@@ -30,7 +30,7 @@ package struct SectionHeader: View {
             .font(fontStyle)
             .foregroundColor(foregroundColor)
             .frame(maxWidth: maxWidth, alignment: alignment)
-            .accessibilityAddTraits(accesibilityAddTraits)
+            .accessibilityAddTraits(accessibilityTraits)
     }
 }
 
