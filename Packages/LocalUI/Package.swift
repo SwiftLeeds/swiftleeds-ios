@@ -40,6 +40,7 @@ let package = Package(
             dependencies: [
                 "LocalUI",
                 .product(name: "DesignKit", package: "SwiftLeedsPackage"),
+                .product(name: "LocalFeature", package: "LocalFeature"),
                 .product(name: "SharedAssets", package: "SwiftLeedsPackage"),
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
             ]
