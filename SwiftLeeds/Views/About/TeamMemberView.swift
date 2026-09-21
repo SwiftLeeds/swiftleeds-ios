@@ -1,3 +1,4 @@
+import AboutFeature
 import CachedAsyncImage
 import DesignKit
 import SharedAssets
@@ -17,19 +18,13 @@ struct TeamMemberView: View {
                     ))
                     .frame(width: 80, height: 80)
 
-                if let photoURL = member.photoURL, let url = URL(string: photoURL) {
-                    CachedAsyncImage(url: url) { image in
-                        image
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 80, height: 80)
-                            .clipShape(Circle())
-                    } placeholder: {
-                        Text(initials)
-                            .font(.title.weight(.semibold))
-                            .foregroundColor(.white)
-                    }
-                } else {
+                CachedAsyncImage(url: member.photoURL) { image in
+                    image
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 80, height: 80)
+                        .clipShape(Circle())
+                } placeholder: {
                     Text(initials)
                         .font(.title.weight(.semibold))
                         .foregroundColor(.white)
@@ -54,31 +49,15 @@ struct TeamMemberView: View {
             }
 
             HStack(spacing: 16) {
-                if let linkedInURL = member.linkedInURL {
-                    Button(action: { openURL(URL(string: linkedInURL)) }) {
-                        Image(systemName: "person.crop.rectangle")
+                ForEach(member.links, id: \.self) { link in
+                    Button {
+                        UIApplication.shared.open(link.url)
+                    } label: {
+                        Image(systemName: link.symbolName)
                             .font(.system(size: 18, weight: .medium))
                             .foregroundColor(.accentColor)
                     }
-                    .accessibilityLabel("LinkedIn profile for \(member.name)")
-                }
-
-                if let twitterURL = member.twitterURL {
-                    Button(action: { openURL(URL(string: twitterURL)) }) {
-                        Image(systemName: "at")
-                            .font(.system(size: 18, weight: .medium))
-                            .foregroundColor(.accentColor)
-                    }
-                    .accessibilityLabel("Twitter profile for \(member.name)")
-                }
-
-                if let slackURL = member.slackURL {
-                    Button(action: { openURL(URL(string: slackURL)) }) {
-                        Image(systemName: "bubble.left.and.bubble.right")
-                            .font(.system(size: 18, weight: .medium))
-                            .foregroundColor(.accentColor)
-                    }
-                    .accessibilityLabel("Message \(member.name) on Slack")
+                    .accessibilityLabel(link.accessibilityLabel(for: member.name))
                 }
             }
             .frame(minHeight: 32)
@@ -97,73 +76,103 @@ struct TeamMemberView: View {
         let lastInitial = components.count > 1 ? (components.last?.first?.uppercased() ?? "") : ""
         return firstInitial + lastInitial
     }
+}
 
-    private func openURL(_ url: URL?) {
-        guard let url = url else { return }
-        UIApplication.shared.open(url)
+private extension SocialLink {
+    var url: URL {
+        switch self {
+        case .linkedIn(let url):
+            url
+        case .twitter(let url):
+            url
+        case .slack(let url):
+            url
+        }
+    }
+
+    var symbolName: String {
+        switch self {
+        case .linkedIn:
+            "person.crop.rectangle"
+        case .twitter:
+            "at"
+        case .slack:
+            "bubble.left.and.bubble.right"
+        }
+    }
+
+    func accessibilityLabel(for name: String) -> String {
+        switch self {
+        case .linkedIn:
+            "LinkedIn profile for \(name)"
+        case .twitter:
+            "Twitter profile for \(name)"
+        case .slack:
+            "Message \(name) on Slack"
+        }
     }
 }
 
 struct TeamMemberView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            // Team member with role and all social links
-            TeamMemberView(member: TeamMember(
-                name: "Adam Rush",
-                role: "Founder and Host",
-                linkedInURL: "https://www.linkedin.com/in/swiftlyrush/",
-                twitterURL: "https://twitter.com/Adam9Rush",
-                slackURL: "https://swiftleedsworkspace.slack.com/archives/D02ELG76VC0",
-                photoURL: "https://\(ConferenceConfig.apiHost)/img/team/rush.jpg"
-            ))
-            .previewDisplayName("With Role & All Links")
+            preview(
+                member(
+                    "Adam Rush",
+                    role: "Founder and Host",
+                    photo: "/img/team/rush.jpg",
+                    linkedIn: "https://www.linkedin.com/in/swiftlyrush/",
+                    twitter: "https://twitter.com/Adam9Rush",
+                    slack: "https://swiftleedsworkspace.slack.com/archives/D02ELG76VC0"
+                ),
+                named: "With Role & All Links"
+            )
 
-            // Team member without role
-            TeamMemberView(member: TeamMember(
-                name: "Adam Oxley",
-                role: nil,
-                linkedInURL: "https://www.linkedin.com/in/adam-oxley-41183a82/",
-                twitterURL: "https://twitter.com/admoxly",
-                slackURL: "https://swiftleedsworkspace.slack.com/team/U02DRL7KUCS",
-                photoURL: "https://\(ConferenceConfig.apiHost)/img/team/oxley.jpg"
-            ))
-            .previewDisplayName("No Role")
-
-            // Team member with partial social links
-            TeamMemberView(member: TeamMember(
-                name: "Kannan Prasad",
-                role: nil,
-                linkedInURL: "https://www.linkedin.com/in/kannanprasad/",
-                twitterURL: nil,
-                slackURL: "https://swiftleedsworkspace.slack.com/archives/D0477TRS28G",
-                photoURL: nil
-            ))
-            .previewDisplayName("Partial Links & No Photo")
-
-            // Grid layout preview
-            LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 16) {
-                TeamMemberView(member: TeamMember(
-                    name: "James Sherlock",
-                    role: "Production Team Lead",
-                    linkedInURL: "https://www.linkedin.com/in/jamessherlockdeveloper/",
-                    twitterURL: "https://twitter.com/JamesSherlouk",
-                    slackURL: "https://swiftleedsworkspace.slack.com/archives/D05RK6AAV29",
-                    photoURL: "https://\(ConferenceConfig.apiHost)/img/team/sherlock.jpg"
-                ))
-
-                TeamMemberView(member: TeamMember(
-                    name: "Joe Williams",
-                    role: "Camera Operator",
-                    linkedInURL: "https://www.linkedin.com/in/joe-williams-1676b871/",
-                    twitterURL: "https://twitter.com/joedub_dev",
-                    slackURL: "https://swiftleedsworkspace.slack.com/archives/C05N7JZE2NP",
-                    photoURL: "https://\(ConferenceConfig.apiHost)/img/team/joe.jpg"
-                ))
-            }
-            .padding()
-            .previewDisplayName("Grid Layout")
+            preview(
+                member(
+                    "Kannan Prasad",
+                    role: nil,
+                    photo: "/img/team/kannan.jpg",
+                    linkedIn: "https://www.linkedin.com/in/kannanprasad/",
+                    slack: "https://swiftleedsworkspace.slack.com/archives/D0477TRS28G"
+                ),
+                named: "No Role & Partial Links"
+            )
         }
         .previewLayout(.sizeThatFits)
         .padding()
+    }
+
+    @ViewBuilder
+    private static func preview(_ member: TeamMember?, named displayName: String) -> some View {
+        if let member {
+            TeamMemberView(member: member)
+                .previewDisplayName(displayName)
+        } else {
+            Text(verbatim: "The preview's team member could not be built.")
+        }
+    }
+
+    private static func member(
+        _ name: String,
+        role: String?,
+        photo: String,
+        linkedIn: String? = nil,
+        twitter: String? = nil,
+        slack: String? = nil
+    ) -> TeamMember? {
+        guard let photoURL = URL(string: "https://\(ConferenceConfig.apiHost)\(photo)") else { return nil }
+        let links = [
+            linkedIn.flatMap { URL(string: $0) }.map { SocialLink.linkedIn($0) },
+            twitter.flatMap { URL(string: $0) }.map { SocialLink.twitter($0) },
+            slack.flatMap { URL(string: $0) }.map { SocialLink.slack($0) },
+        ]
+        return TeamMember(
+            id: TeamMemberID(name),
+            name: name,
+            role: role,
+            photoURL: photoURL,
+            links: links.compactMap(\.self)
+        )
     }
 }

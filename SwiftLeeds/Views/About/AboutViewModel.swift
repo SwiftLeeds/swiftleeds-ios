@@ -1,7 +1,7 @@
+import AboutFeature
 import Combine
 import Dependencies
 import Foundation
-import NetworkKit
 
 @MainActor
 class AboutViewModel: ObservableObject {
@@ -74,13 +74,10 @@ class AboutViewModel: ObservableObject {
     }
 
     private func loadTeamData() async {
-        @Dependency(\.httpClient) var httpClient
-        @Dependency(\.teamMapper) var teamMapper
+        @Dependency(\.fetchTeam) var fetchTeam
 
         do {
-            let (data, response) = try await httpClient.send(Endpoint.team.urlRequest())
-            let team = try teamMapper.map(data, response)
-            await updateTeamMembers(team.teamMembers)
+            await updateTeamMembers(try await fetchTeam())
         } catch {
             errorMessage = "Failed to load team data: \(error.localizedDescription)"
         }

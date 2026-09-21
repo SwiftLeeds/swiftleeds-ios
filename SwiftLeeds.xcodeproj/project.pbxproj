@@ -12,14 +12,11 @@
 		0B4CB3D428EAF19100246E62 /* SwiftLeedsAppClip.app in Embed App Clips */ = {isa = PBXBuildFile; fileRef = 0B4CB3C528EAF19000246E62 /* SwiftLeedsAppClip.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		0B4CB3FC28EAF7C500246E62 /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = 0B4CB3FB28EAF7C500246E62 /* CachedAsyncImage */; };
 		0B4CB3FD28EAF7FE00246E62 /* BuildFile in Resources */ = {isa = PBXBuildFile; };
-		0B59B5662E70E5D400820C3C /* TeamMember.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B59B5642E70E5D400820C3C /* TeamMember.swift */; };
 		0B59B5692E70E5FE00820C3C /* TeamMemberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B59B5682E70E5FE00820C3C /* TeamMemberView.swift */; };
 		0B59B56B2E70E6AC00820C3C /* CompactActionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B59B56A2E70E6AC00820C3C /* CompactActionItem.swift */; };
 		0B59B56E2E70EA4F00820C3C /* about.json in Resources */ = {isa = PBXBuildFile; fileRef = 0B59B56C2E70EA4F00820C3C /* about.json */; };
 		0B59B56F2E70EA4F00820C3C /* AboutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B59B56D2E70EA4F00820C3C /* AboutViewModel.swift */; };
 		0B59B5722E70EA6600820C3C /* About.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B59B5702E70EA6600820C3C /* About.swift */; };
-		FB6B9D30B85EAAED16F69656 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816A6083DA208AE9EED41E40 /* Endpoint.swift */; };
-		106111EE0332466C39422B5E /* TeamMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41AB02B37BB6C44A78DC7FF9 /* TeamMapper.swift */; };
 		13707030C1082B933C28151D /* SwiftLeedsAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4301D0D3F1C8979276E77084 /* SwiftLeedsAssets.xcassets */; };
 		1ED8FD9CBE313B23E73E8132 /* KotlinLeedsColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B3FFD994DBE3F62216150F8 /* KotlinLeedsColors.xcassets */; };
 		416468542E4365477789D792 /* SwiftLeedsColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 893A122D593379F84605F70C /* SwiftLeedsColors.xcassets */; };
@@ -87,7 +84,6 @@
 		AECB297427417F9E00CDC983 /* SwiftLeedsUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECB297327417F9E00CDC983 /* SwiftLeedsUITestsLaunchTests.swift */; };
 		AED26F7828676A9900E06064 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AED26F7728676A9900E06064 /* AboutView.swift */; };
 		AEDC0DAE286759630078A153 /* Tabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEDC0DAD286759630078A153 /* Tabs.swift */; };
-		B09ACE20A089F99B5404B667 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816A6083DA208AE9EED41E40 /* Endpoint.swift */; };
 		B2A3D0194187CEC82CCD3F5D /* ConferenceConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67624B7470D6BA62D4912236 /* ConferenceConfig.swift */; };
 		B7E34B6C6CE38F48068FB98A /* SwiftLeedsAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EEFB1E37D5A542A1798C92D5 /* SwiftLeedsAssets.xcassets */; };
 		C88307224ADAA4C64A455D74 /* KotlinLeedsAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40AEBC0F9109732F54C608A9 /* KotlinLeedsAssets.xcassets */; };
@@ -169,7 +165,6 @@
 		0B4CB3CE28EAF19100246E62 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		0B4CB3D028EAF19100246E62 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0B4CB3D128EAF19100246E62 /* SwiftLeedsAppClip.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SwiftLeedsAppClip.entitlements; sourceTree = "<group>"; };
-		0B59B5642E70E5D400820C3C /* TeamMember.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamMember.swift; sourceTree = "<group>"; };
 		0B59B5682E70E5FE00820C3C /* TeamMemberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamMemberView.swift; sourceTree = "<group>"; };
 		0B59B56A2E70E6AC00820C3C /* CompactActionItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompactActionItem.swift; sourceTree = "<group>"; };
 		0B59B56C2E70EA4F00820C3C /* about.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = about.json; sourceTree = "<group>"; };
@@ -179,11 +174,9 @@
 		1AA9B4909D551477D0C04106 /* KotlinLeeds.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = KotlinLeeds.xcconfig; sourceTree = "<group>"; };
 		3275AD6541323F056786E508 /* SwiftLeedsAssets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = SwiftLeedsAssets.xcassets; sourceTree = "<group>"; };
 		40AEBC0F9109732F54C608A9 /* KotlinLeedsAssets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = KotlinLeedsAssets.xcassets; sourceTree = "<group>"; };
-		41AB02B37BB6C44A78DC7FF9 /* TeamMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamMapper.swift; sourceTree = "<group>"; };
 		4301D0D3F1C8979276E77084 /* SwiftLeedsAssets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = SwiftLeedsAssets.xcassets; sourceTree = "<group>"; };
 		5F9FC40FEADC49E608696F7A /* SwiftLeeds.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SwiftLeeds.xcconfig; sourceTree = "<group>"; };
 		67624B7470D6BA62D4912236 /* ConferenceConfig.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ConferenceConfig.swift; sourceTree = "<group>"; };
-		816A6083DA208AE9EED41E40 /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 		740162D92A7053A000C2D1B3 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		7406572828E240720087F44F /* WidgetConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetConstants.swift; sourceTree = "<group>"; };
 		74A09FDD28C6778C00E03F39 /* SwiftLeedsWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SwiftLeedsWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -531,8 +524,6 @@
 			isa = PBXGroup;
 			children = (
 				FA57DE572875B0E300911F03 /* Model */,
-				816A6083DA208AE9EED41E40 /* Endpoint.swift */,
-				41AB02B37BB6C44A78DC7FF9 /* TeamMapper.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -541,7 +532,6 @@
 			isa = PBXGroup;
 			children = (
 				0B59B5702E70EA6600820C3C /* About.swift */,
-				0B59B5642E70E5D400820C3C /* TeamMember.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -812,7 +802,6 @@
 			files = (
 				0B4CB3C828EAF19100246E62 /* SwiftLeedsAppClipApp.swift in Sources */,
 				F94828C06997CC0C7F25871C /* URLSession+SwiftLeeds.swift in Sources */,
-				FB6B9D30B85EAAED16F69656 /* Endpoint.swift in Sources */,
 				79E3CB724EF853948BC7D906 /* ConferenceConfig.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -836,8 +825,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B09ACE20A089F99B5404B667 /* Endpoint.swift in Sources */,
-				106111EE0332466C39422B5E /* TeamMapper.swift in Sources */,
 				A11CE57000000000000000F2 /* URLSession+SwiftLeeds.swift in Sources */,
 				AED26F7828676A9900E06064 /* AboutView.swift in Sources */,
 				0B59B5692E70E5FE00820C3C /* TeamMemberView.swift in Sources */,
@@ -848,7 +835,6 @@
 				AE8C1B2828C4B36B00AF7318 /* AppDelegate+Push.swift in Sources */,
 				AECB295727417F9D00CDC983 /* SwiftLeedsApp.swift in Sources */,
 				AECB2A0127417F9D00CDC902 /* LogCategories.swift in Sources */,
-				0B59B5662E70E5D400820C3C /* TeamMember.swift in Sources */,
 				AE8C1B2B28C4B39A00AF7318 /* TokenDetails.swift in Sources */,
 				AEDC0DAE286759630078A153 /* Tabs.swift in Sources */,
 				74F5EF852A49CE6A008D9413 /* TabsMainView.swift in Sources */,
