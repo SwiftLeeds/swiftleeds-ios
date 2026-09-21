@@ -85,9 +85,14 @@ jobs:
     runs-on: macos-26
     env:
       DESTINATION: 'platform=iOS Simulator,name=iPhone 17 Pro,OS=26.5'
+      # Empty on a push, which is how the step below knows to run everything.
+      BASE_REF: ${{ github.base_ref }}
     steps:
       - name: Checkout iOS Repository
         uses: actions/checkout@v4
+        with:
+          # The whole history, so a pull request can be compared with its base.
+          fetch-depth: 0
 
       - name: Select Xcode
         uses: maxim-lobanov/setup-xcode@v1
@@ -107,14 +112,54 @@ jobs:
       - name: Run every snapshot test target on the simulator
         run: |
           set -uo pipefail
+          # A pull request runs only the snapshot targets its diff can change:
+          # a package's own files, or those of a local package it depends on,
+          # directly or not. A change to CI or to the app project runs them all.
+          # A push to main always runs them all, which catches anything a pull
+          # request skipped.
+          changed=""
+          run_all=true
+          if [ -n "$BASE_REF" ] && changed=$(git diff --name-only "origin/$BASE_REF...HEAD"); then
+            run_all=false
+            if grep -qE '^(\.github/|SwiftLeeds\.xcodeproj/)' <<< "$changed"; then
+              run_all=true
+            fi
+          fi
+          # Prints the repository paths of a package and of every local package
+          # it depends on, directly or not.
+          local_package_paths() {
+            (cd "$1" && swift package show-dependencies --format json) \
+              | jq -r '.. | objects | select(has("path")) | .path' \
+              | grep -v -e '/\.build/' -e '/SourcePackages/' \
+              | sed "s|^$(pwd -P)/||"
+          }
+          # When the dependencies cannot be listed, or the list does not name
+          # the package itself, the package counts as affected. So a failure
+          # here runs a test rather than skipping one.
+          is_affected() {
+            $run_all && return 0
+            paths=$(local_package_paths "$1") || return 0
+            grep -qx "$1" <<< "$paths" || return 0
+            for path in $paths; do
+              grep -q "^$path/" <<< "$changed" && return 0
+            done
+            return 1
+          }
+          found=0
           count=0
           failed=""
+          skipped=""
           for dir in Packages/*/; do
             [ -f "${dir}Package.swift" ] || continue
             name=$(basename "$dir")
             targets=$( (cd "$dir" && swift package describe --type json) \
               | jq -r '.targets[] | select(.type == "test") | select(.name | endswith("SnapshotTests")) | .name' )
             [ -n "$targets" ] || continue
+            found=$((found + 1))
+            if ! is_affected "${dir%/}"; then
+              skipped="$skipped $name"
+              continue
+            fi
             for target in $targets; do
               echo "::group::$name / $target"
               # The scheme must exist and must hold only this target. Without it
@@ -133,9 +178,12 @@ jobs:
               count=$((count + 1))
             done
           done
-          if [ "$count" -eq 0 ]; then
+          if [ "$found" -eq 0 ]; then
             echo "::error::No *SnapshotTests target found under Packages/" >&2
             exit 1
+          fi
+          if [ -n "$skipped" ]; then
+            echo "Skipped, because this pull request cannot affect them:$skipped"
           fi
           if [ -n "$failed" ]; then
             echo "::error::Failing snapshot targets:$failed"
