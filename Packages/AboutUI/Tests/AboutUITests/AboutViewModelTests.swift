@@ -84,7 +84,6 @@ import Testing
         #expect(fetches.value == 2)
     }
 
-    // The host must differ from `APIConfiguration`'s test value, or the override proves nothing.
     private func withBaseURL<T>(_ baseURL: String, _ operation: () -> T) throws -> T {
         let configuration = APIConfiguration(baseURL: try #require(URL(string: baseURL)))
         return withDependencies {
