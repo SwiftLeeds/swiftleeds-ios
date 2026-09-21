@@ -10,10 +10,14 @@ public struct TeamMember: Equatable, Hashable, Identifiable, Sendable {
 
     public let photoURL: URL
 
-    public init(id: TeamMemberID, name: String, role: String?, photoURL: URL) {
+    /// Where to reach the member, in the order to show them.
+    public let links: [SocialLink]
+
+    public init(id: TeamMemberID, name: String, role: String?, photoURL: URL, links: [SocialLink]) {
         self.id = id
         self.name = name
         self.role = role
         self.photoURL = photoURL
+        self.links = links
     }
 }

@@ -40,6 +40,32 @@ import Testing
         #expect(member.photoURL == URL(string: "https://cdn.example.org/rush.jpg"))
     }
 
+    @Test func whenMemberHasEveryLink_shouldReturnLinksInLinkedInTwitterSlackOrder() throws {
+        let team = TeamDTO(teamMembers: [
+            .fixture(
+                linkedin: "https://www.linkedin.com/in/rush/",
+                twitter: "https://twitter.com/rush",
+                slack: "https://swiftleeds.slack.com/rush"
+            ),
+        ])
+
+        let linkedIn = try #require(URL(string: "https://www.linkedin.com/in/rush/"))
+        let twitter = try #require(URL(string: "https://twitter.com/rush"))
+        let slack = try #require(URL(string: "https://swiftleeds.slack.com/rush"))
+
+        let member = try #require(try map(team).first)
+
+        #expect(member.links == [.linkedIn(linkedIn), .twitter(twitter), .slack(slack)])
+    }
+
+    @Test func whenMemberHasNoLinks_shouldReturnNoLinks() throws {
+        let team = TeamDTO(teamMembers: [.fixture(linkedin: nil, twitter: nil, slack: nil)])
+
+        let member = try #require(try map(team).first)
+
+        #expect(member.links.isEmpty)
+    }
+
     // MARK: - Refusals
 
     @Test func whenPhotoIsNotURL_shouldThrowErrorWithMemberFieldAndValue() throws {
