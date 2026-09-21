@@ -5,7 +5,8 @@ import ReadabilityModifier
 import SharedAssets
 import SwiftUI
 
-struct BottomSheetView: View {
+/// The sheet that lists the categories and marks the selected one. Drag it to open or close it.
+package struct BottomSheetView: View {
     @Binding var isOpen: Bool
     @Binding var selectedCategory: LocationCategory?
 
@@ -20,7 +21,14 @@ struct BottomSheetView: View {
         isOpen ? 0 : maxHeight - minHeight
     }
 
-    init(
+    /// Creates the sheet.
+    ///
+    /// - Parameters:
+    ///   - isOpen: Whether the sheet shows at its full height.
+    ///   - selectedCategory: The selected category. Tapping a row sets it.
+    ///   - categories: The categories to list, in order.
+    ///   - maxHeight: The sheet's height when open.
+    package init(
         isOpen: Binding<Bool>,
         selectedCategory: Binding<LocationCategory?>,
         categories: [LocationCategory],
@@ -33,7 +41,7 @@ struct BottomSheetView: View {
         self._selectedCategory = selectedCategory
     }
 
-    var body: some View {
+    package var body: some View {
         GeometryReader { geometry in
             VStack {
                 VStack(spacing: Padding.cellGap) {
