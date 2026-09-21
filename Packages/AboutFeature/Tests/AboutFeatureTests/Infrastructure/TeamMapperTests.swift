@@ -88,6 +88,14 @@ import Testing
         #expect(error == TeamMapper.MappingError(member: "Adam Rush", field: field, value: ""))
     }
 
+    @Test func whenOneMemberIsInvalid_shouldThrowForWholeTeam() throws {
+        let team = TeamDTO(teamMembers: [.fixture(name: "Adam Rush"), .fixture(name: "Paul Willis", slack: "")])
+
+        #expect(throws: TeamMapper.MappingError.self) {
+            try map(team)
+        }
+    }
+
     @Test func whenPhotoIsNotURL_shouldThrowErrorWithMemberFieldAndValue() throws {
         let team = TeamDTO(teamMembers: [.fixture(name: "Adam Rush", imageURL: "")])
 
