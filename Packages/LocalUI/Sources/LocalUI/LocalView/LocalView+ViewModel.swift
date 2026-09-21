@@ -16,6 +16,12 @@ extension LocalView {
             selectedCategory?.locations ?? []
         }
 
+        // The screen reappears on every tab switch. Loading again would reset the chosen category.
+        func loadIfNeeded() async {
+            guard categories.isEmpty else { return }
+            await load()
+        }
+
         func load() async {
             @Dependency(\.fetchLocationCategories) var fetchLocationCategories
 
@@ -24,6 +30,7 @@ extension LocalView {
                 selectedCategory = categories.first
                 error = nil
             } catch {
+                guard !Task.isCancelled else { return }
                 self.error = error
             }
         }
