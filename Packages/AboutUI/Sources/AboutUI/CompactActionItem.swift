@@ -1,14 +1,30 @@
+#if canImport(UIKit)
 import DesignKit
 import SharedAssets
 import SwiftUI
 
-struct CompactActionItem: View {
-    let icon: String
-    let title: String
-    let accessibilityHint: String
-    let action: () -> Void
+/// A small tile with a symbol and a short title that runs an action when tapped.
+package struct CompactActionItem: View {
+    private let icon: String
+    private let title: String
+    private let accessibilityHint: String
+    private let action: () -> Void
 
-    var body: some View {
+    /// Creates the tile.
+    ///
+    /// - Parameters:
+    ///   - icon: The SF Symbol name.
+    ///   - title: The title. The tile shows two lines and cuts off the rest.
+    ///   - accessibilityHint: What the tile does, read by VoiceOver.
+    ///   - action: Runs when the person taps the tile.
+    package init(icon: String, title: String, accessibilityHint: String, action: @escaping () -> Void) {
+        self.icon = icon
+        self.title = title
+        self.accessibilityHint = accessibilityHint
+        self.action = action
+    }
+
+    package var body: some View {
         Button(action: action) {
             VStack(spacing: 8) {
                 Image(systemName: icon)
@@ -34,3 +50,4 @@ struct CompactActionItem: View {
         .accessibilityHint(accessibilityHint)
     }
 }
+#endif

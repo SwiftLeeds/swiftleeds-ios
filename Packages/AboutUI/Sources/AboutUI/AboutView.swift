@@ -1,14 +1,17 @@
-import CachedAsyncImage
+#if canImport(UIKit)
 import DesignKit
 import ReadabilityModifier
 import SharedAssets
 import SwiftUI
 import UIComponents
 
-struct AboutView: View {
-    @StateObject private var viewModel = AboutViewModel()
+/// The About screen: the conference's story, its links, and the team.
+public struct AboutView: View {
+    @State private var viewModel = AboutViewModel()
     @State private var isReportAProblemShown = false
     @State private var isFullAboutShown = false
+
+    public init() {}
 
     private var gridColumns: [GridItem] {
         #if os(iOS)
@@ -28,12 +31,15 @@ struct AboutView: View {
         return Array(repeating: GridItem(.flexible(), spacing: Padding.cellGap), count: columnCount)
     }
 
-    var body: some View {
+    public var body: some View {
         ScrollView {
             content
         }
         .background(Color.background, ignoresSafeAreaEdges: .all)
         .edgesIgnoringSafeArea(.top)
+        .task {
+            await viewModel.loadIfNeeded()
+        }
     }
 
     private var content: some View {
@@ -147,7 +153,7 @@ struct AboutView: View {
             NavigationStack {
                 ScrollView {
                     VStack(alignment: .leading, spacing: Padding.cellGap) {
-                        Text(aboutSwiftLeeds)
+                        Text(viewModel.fullAboutText)
                             .font(.body)
                             .foregroundColor(.primary)
                             .frame(maxWidth: .infinity, alignment: .leading)
@@ -178,14 +184,6 @@ struct AboutView: View {
         guard let url = url else { return }
         UIApplication.shared.open(url)
     }
-
-    private let aboutSwiftLeeds = """
-    Adam Rush founded SwiftLeeds in 2019, born from over ten years of experience attending conferences. The inspiration was bringing a modern, inclusive conference in the North of the UK to be more accessible for all.
-
-    SwiftLeeds is now run with over ten community volunteers building the website, iOS applications and making sure we cover all the bases on the day. SwiftLeeds is entirely non-profit, and the funds make sure we can deliver the best experience possible.
-
-    In-person conferences are the best way to meet like-minded people who enjoy building apps with Swift. You can also learn from the best people in the industry and chat about all things Swift.
-    """
 }
 
 struct AboutView_Previews: PreviewProvider {
@@ -194,3 +192,4 @@ struct AboutView_Previews: PreviewProvider {
             .preferredColorScheme(.dark)
     }
 }
+#endif

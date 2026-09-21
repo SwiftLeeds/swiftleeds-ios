@@ -12,11 +12,6 @@
 		0B4CB3D428EAF19100246E62 /* SwiftLeedsAppClip.app in Embed App Clips */ = {isa = PBXBuildFile; fileRef = 0B4CB3C528EAF19000246E62 /* SwiftLeedsAppClip.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		0B4CB3FC28EAF7C500246E62 /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = 0B4CB3FB28EAF7C500246E62 /* CachedAsyncImage */; };
 		0B4CB3FD28EAF7FE00246E62 /* BuildFile in Resources */ = {isa = PBXBuildFile; };
-		0B59B5692E70E5FE00820C3C /* TeamMemberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B59B5682E70E5FE00820C3C /* TeamMemberView.swift */; };
-		0B59B56B2E70E6AC00820C3C /* CompactActionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B59B56A2E70E6AC00820C3C /* CompactActionItem.swift */; };
-		0B59B56E2E70EA4F00820C3C /* about.json in Resources */ = {isa = PBXBuildFile; fileRef = 0B59B56C2E70EA4F00820C3C /* about.json */; };
-		0B59B56F2E70EA4F00820C3C /* AboutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B59B56D2E70EA4F00820C3C /* AboutViewModel.swift */; };
-		0B59B5722E70EA6600820C3C /* About.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B59B5702E70EA6600820C3C /* About.swift */; };
 		13707030C1082B933C28151D /* SwiftLeedsAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4301D0D3F1C8979276E77084 /* SwiftLeedsAssets.xcassets */; };
 		1ED8FD9CBE313B23E73E8132 /* KotlinLeedsColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B3FFD994DBE3F62216150F8 /* KotlinLeedsColors.xcassets */; };
 		416468542E4365477789D792 /* SwiftLeedsColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 893A122D593379F84605F70C /* SwiftLeedsColors.xcassets */; };
@@ -82,7 +77,6 @@
 		AECB296827417F9E00CDC983 /* SwiftLeedsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECB296727417F9E00CDC983 /* SwiftLeedsTests.swift */; };
 		AECB297227417F9E00CDC983 /* SwiftLeedsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECB297127417F9E00CDC983 /* SwiftLeedsUITests.swift */; };
 		AECB297427417F9E00CDC983 /* SwiftLeedsUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECB297327417F9E00CDC983 /* SwiftLeedsUITestsLaunchTests.swift */; };
-		AED26F7828676A9900E06064 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AED26F7728676A9900E06064 /* AboutView.swift */; };
 		AEDC0DAE286759630078A153 /* Tabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEDC0DAD286759630078A153 /* Tabs.swift */; };
 		B2A3D0194187CEC82CCD3F5D /* ConferenceConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67624B7470D6BA62D4912236 /* ConferenceConfig.swift */; };
 		B7E34B6C6CE38F48068FB98A /* SwiftLeedsAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EEFB1E37D5A542A1798C92D5 /* SwiftLeedsAssets.xcassets */; };
@@ -95,6 +89,7 @@
 		A11CE57000000000000000DD /* ScheduleFeature in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000CD /* ScheduleFeature */; };
 		A11CE570000000000000F0D1 /* LocalFeature in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE570000000000000F0C1 /* LocalFeature */; };
 		A11CE570000000000000F1D1 /* AboutFeature in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE570000000000000F1C1 /* AboutFeature */; };
+		A11CE570000000000000F1D2 /* AboutUI in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE570000000000000F1C2 /* AboutUI */; };
 		A11CE570000000000000F0D2 /* LocalUI in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE570000000000000F0C2 /* LocalUI */; };
 		A11CE57000000000000000DE /* ScheduleFeature in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000CE /* ScheduleFeature */; };
 		A11CE57000000000000000DF /* ScheduleFeature in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000CF /* ScheduleFeature */; };
@@ -165,11 +160,6 @@
 		0B4CB3CE28EAF19100246E62 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		0B4CB3D028EAF19100246E62 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0B4CB3D128EAF19100246E62 /* SwiftLeedsAppClip.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SwiftLeedsAppClip.entitlements; sourceTree = "<group>"; };
-		0B59B5682E70E5FE00820C3C /* TeamMemberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamMemberView.swift; sourceTree = "<group>"; };
-		0B59B56A2E70E6AC00820C3C /* CompactActionItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompactActionItem.swift; sourceTree = "<group>"; };
-		0B59B56C2E70EA4F00820C3C /* about.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = about.json; sourceTree = "<group>"; };
-		0B59B56D2E70EA4F00820C3C /* AboutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewModel.swift; sourceTree = "<group>"; };
-		0B59B5702E70EA6600820C3C /* About.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = About.swift; sourceTree = "<group>"; };
 		0BB52A782A5FDC2614FF7243 /* KotlinLeedsAppClip.entitlements */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.entitlements; path = KotlinLeedsAppClip.entitlements; sourceTree = "<group>"; };
 		1AA9B4909D551477D0C04106 /* KotlinLeeds.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = KotlinLeeds.xcconfig; sourceTree = "<group>"; };
 		3275AD6541323F056786E508 /* SwiftLeedsAssets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = SwiftLeedsAssets.xcassets; sourceTree = "<group>"; };
@@ -206,6 +196,7 @@
 		A11CE57000000000000000A9 /* ScheduleFeature */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ScheduleFeature; sourceTree = "<group>"; };
 		A11CE570000000000000F0A1 /* LocalFeature */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = LocalFeature; sourceTree = "<group>"; };
 		A11CE570000000000000F1A1 /* AboutFeature */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = AboutFeature; sourceTree = "<group>"; };
+		A11CE570000000000000F1A2 /* AboutUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = AboutUI; sourceTree = "<group>"; };
 		A11CE570000000000000F0A2 /* LocalUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = LocalUI; sourceTree = "<group>"; };
 		A11CE57000000000000000A4 /* NetworkKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = NetworkKit; sourceTree = "<group>"; };
 		A11CE57000000000000000A3 /* AuthenticationUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = AuthenticationUI; sourceTree = "<group>"; };
@@ -224,7 +215,6 @@
 		AECB297127417F9E00CDC983 /* SwiftLeedsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftLeedsUITests.swift; sourceTree = "<group>"; };
 		AECB297327417F9E00CDC983 /* SwiftLeedsUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftLeedsUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		AECB29832741ABFD00CDC983 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		AED26F7728676A9900E06064 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		AEDC0DAD286759630078A153 /* Tabs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tabs.swift; sourceTree = "<group>"; };
 		C1725A0182E1989D761551B2 /* KotlinLeedsWidgetExtension.entitlements */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.entitlements; path = KotlinLeedsWidgetExtension.entitlements; sourceTree = "<group>"; };
 		ED1AFB8A37EDA9676DB1C998 /* KotlinLeedsAssets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = KotlinLeedsAssets.xcassets; sourceTree = "<group>"; };
@@ -285,6 +275,7 @@
 				A11CE57000000000000000DD /* ScheduleFeature in Frameworks */,
 				A11CE570000000000000F0D1 /* LocalFeature in Frameworks */,
 				A11CE570000000000000F1D1 /* AboutFeature in Frameworks */,
+				A11CE570000000000000F1D2 /* AboutUI in Frameworks */,
 				A11CE570000000000000F0D2 /* LocalUI in Frameworks */,
 				A11CE57000000000000000D3 /* SecureStorageKit in Frameworks */,
 				A11CE57000000000000000D4 /* SecureStorageKitKeychain in Frameworks */,
@@ -387,6 +378,7 @@
 				A11CE57000000000000000AA /* ScheduleUI */,
 				A11CE570000000000000F0A1 /* LocalFeature */,
 				A11CE570000000000000F1A1 /* AboutFeature */,
+				A11CE570000000000000F1A2 /* AboutUI */,
 				A11CE570000000000000F0A2 /* LocalUI */,
 				A11CE57000000000000000A4 /* NetworkKit */,
 				A11CE57000000000000000A3 /* AuthenticationUI */,
@@ -429,7 +421,6 @@
 			isa = PBXGroup;
 			children = (
 				AECB29862741AC5800CDC983 /* App */,
-				FA57DE562875B0DC00911F03 /* Data */,
 				AECB298027418D9800CDC983 /* Extension */,
 				AE8C1B2928C4B38400AF7318 /* Push */,
 				AECB29842741AC2500CDC983 /* Resources */,
@@ -479,7 +470,6 @@
 		AECB29852741AC4B00CDC983 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				AED26F7628676A9200E06064 /* About */,
 				AEDC0DAC286759570078A153 /* Tab */,
 			);
 			path = Views;
@@ -497,18 +487,6 @@
 			path = App;
 			sourceTree = "<group>";
 		};
-		AED26F7628676A9200E06064 /* About */ = {
-			isa = PBXGroup;
-			children = (
-				0B59B56C2E70EA4F00820C3C /* about.json */,
-				AED26F7728676A9900E06064 /* AboutView.swift */,
-				0B59B56D2E70EA4F00820C3C /* AboutViewModel.swift */,
-				0B59B56A2E70E6AC00820C3C /* CompactActionItem.swift */,
-				0B59B5682E70E5FE00820C3C /* TeamMemberView.swift */,
-			);
-			path = About;
-			sourceTree = "<group>";
-		};
 		AEDC0DAC286759570078A153 /* Tab */ = {
 			isa = PBXGroup;
 			children = (
@@ -518,22 +496,6 @@
 				74F5EF842A49CE6A008D9413 /* TabsMainView.swift */,
 			);
 			path = Tab;
-			sourceTree = "<group>";
-		};
-		FA57DE562875B0DC00911F03 /* Data */ = {
-			isa = PBXGroup;
-			children = (
-				FA57DE572875B0E300911F03 /* Model */,
-			);
-			path = Data;
-			sourceTree = "<group>";
-		};
-		FA57DE572875B0E300911F03 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				0B59B5702E70EA6600820C3C /* About.swift */,
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		FAF74EDA288B44BE00A0926C /* Frameworks */ = {
@@ -634,6 +596,7 @@
 				A11CE57000000000000000CD /* ScheduleFeature */,
 				A11CE570000000000000F0C1 /* LocalFeature */,
 				A11CE570000000000000F1C1 /* AboutFeature */,
+				A11CE570000000000000F1C2 /* AboutUI */,
 				A11CE570000000000000F0C2 /* LocalUI */,
 				A11CE57000000000000000C3 /* SecureStorageKit */,
 				A11CE57000000000000000C4 /* SecureStorageKitKeychain */,
@@ -771,7 +734,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				AE1C801428A7BCD000996659 /* Settings.bundle in Resources */,
-				0B59B56E2E70EA4F00820C3C /* about.json in Resources */,
 				B7E34B6C6CE38F48068FB98A /* SwiftLeedsAssets.xcassets in Resources */,
 				6E14A8EC04159C7E092C87D4 /* SwiftLeedsColors.xcassets in Resources */,
 				C88307224ADAA4C64A455D74 /* KotlinLeedsAssets.xcassets in Resources */,
@@ -826,11 +788,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				A11CE57000000000000000F2 /* URLSession+SwiftLeeds.swift in Sources */,
-				AED26F7828676A9900E06064 /* AboutView.swift in Sources */,
-				0B59B5692E70E5FE00820C3C /* TeamMemberView.swift in Sources */,
-				0B59B56F2E70EA4F00820C3C /* AboutViewModel.swift in Sources */,
-				0B59B5722E70EA6600820C3C /* About.swift in Sources */,
-				0B59B56B2E70E6AC00820C3C /* CompactActionItem.swift in Sources */,
 				74F5EF892A49CECB008D9413 /* SidebarView.swift in Sources */,
 				AE8C1B2828C4B36B00AF7318 /* AppDelegate+Push.swift in Sources */,
 				AECB295727417F9D00CDC983 /* SwiftLeedsApp.swift in Sources */,
@@ -1912,6 +1869,10 @@
 		A11CE570000000000000F1C1 /* AboutFeature */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = AboutFeature;
+		};
+		A11CE570000000000000F1C2 /* AboutUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AboutUI;
 		};
 		A11CE570000000000000F0C2 /* LocalUI */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -1,13 +1,19 @@
+#if canImport(UIKit)
 import AboutFeature
 import CachedAsyncImage
 import DesignKit
 import SharedAssets
 import SwiftUI
 
-struct TeamMemberView: View {
-    let member: TeamMember
+/// A card for one team member: photo, name, role and links.
+package struct TeamMemberView: View {
+    private let member: TeamMember
 
-    var body: some View {
+    package init(member: TeamMember) {
+        self.member = member
+    }
+
+    package var body: some View {
         VStack(spacing: 12) {
             ZStack {
                 Circle()
@@ -189,7 +195,7 @@ struct TeamMemberView_Previews: PreviewProvider {
         twitter: String? = nil,
         slack: String? = nil
     ) -> TeamMember? {
-        guard let photoURL = URL(string: "https://\(ConferenceConfig.apiHost)\(photo)") else { return nil }
+        guard let photoURL = URL(string: "https://example.com\(photo)") else { return nil }
         let links = [
             linkedIn.flatMap { URL(string: $0) }.map { SocialLink.linkedIn($0) },
             twitter.flatMap { URL(string: $0) }.map { SocialLink.twitter($0) },
@@ -204,3 +210,4 @@ struct TeamMemberView_Previews: PreviewProvider {
         )
     }
 }
+#endif
