@@ -36,17 +36,34 @@ extension TeamMapper {
             name: dto.name,
             role: dto.role,
             photoURL: try photoURL(dto),
-            links: links(dto)
+            links: try links(dto)
         )
     }
 
-    private static func links(_ dto: TeamDTO.MemberDTO) -> [SocialLink] {
+    private static func links(_ dto: TeamDTO.MemberDTO) throws(MappingError) -> [SocialLink] {
         [
-            dto.linkedin.flatMap { URL(string: $0) }.map(SocialLink.linkedIn),
-            dto.twitter.flatMap { URL(string: $0) }.map(SocialLink.twitter),
-            dto.slack.flatMap { URL(string: $0) }.map(SocialLink.slack),
+            try dto.linkedin.map { link throws(MappingError) in
+                SocialLink.linkedIn(try url(link, member: dto.name, field: .linkedin))
+            },
+            try dto.twitter.map { link throws(MappingError) in
+                SocialLink.twitter(try url(link, member: dto.name, field: .twitter))
+            },
+            try dto.slack.map { link throws(MappingError) in
+                SocialLink.slack(try url(link, member: dto.name, field: .slack))
+            },
         ]
         .compactMap(\.self)
+    }
+
+    private static func url(
+        _ link: String,
+        member: String,
+        field: TeamDTO.MemberDTO.CodingKeys
+    ) throws(MappingError) -> URL {
+        guard let url = URL(string: link) else {
+            throw MappingError(member: member, field: field, value: link)
+        }
+        return url
     }
 
     private static func photoURL(_ dto: TeamDTO.MemberDTO) throws(MappingError) -> URL {

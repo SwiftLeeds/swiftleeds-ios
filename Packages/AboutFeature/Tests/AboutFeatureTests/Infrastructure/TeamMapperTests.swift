@@ -68,6 +68,26 @@ import Testing
 
     // MARK: - Refusals
 
+    @Test(arguments: [
+        TeamDTO.MemberDTO.CodingKeys.linkedin,
+        TeamDTO.MemberDTO.CodingKeys.twitter,
+        TeamDTO.MemberDTO.CodingKeys.slack,
+    ])
+    func whenLinkIsNotURL_shouldThrowErrorWithMemberFieldAndValue(field: TeamDTO.MemberDTO.CodingKeys) throws {
+        let member = TeamDTO.MemberDTO.fixture(
+            name: "Adam Rush",
+            linkedin: field == .linkedin ? "" : nil,
+            twitter: field == .twitter ? "" : nil,
+            slack: field == .slack ? "" : nil
+        )
+
+        let error = try #require(throws: TeamMapper.MappingError.self) {
+            try map(TeamDTO(teamMembers: [member]))
+        }
+
+        #expect(error == TeamMapper.MappingError(member: "Adam Rush", field: field, value: ""))
+    }
+
     @Test func whenPhotoIsNotURL_shouldThrowErrorWithMemberFieldAndValue() throws {
         let team = TeamDTO(teamMembers: [.fixture(name: "Adam Rush", imageURL: "")])
 
