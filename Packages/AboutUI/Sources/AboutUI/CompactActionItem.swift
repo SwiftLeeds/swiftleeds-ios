@@ -5,10 +5,10 @@ import SwiftUI
 
 /// A small tile with a symbol and a short title that runs an action when tapped.
 package struct CompactActionItem: View {
-    let icon: String
-    let title: String
-    let accessibilityHint: String
-    let action: () -> Void
+    private let icon: String
+    private let title: String
+    private let accessibilityHint: String
+    private let action: () -> Void
 
     /// Creates the tile.
     ///

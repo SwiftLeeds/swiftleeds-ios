@@ -7,7 +7,7 @@ import SwiftUI
 
 /// A card for one team member: photo, name, role and links.
 package struct TeamMemberView: View {
-    let member: TeamMember
+    private let member: TeamMember
 
     /// Creates the card.
     ///
