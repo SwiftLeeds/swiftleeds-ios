@@ -107,7 +107,7 @@ import Testing
         }
     }
 
-    @Test func whenPhotoIsNotURL_shouldThrowErrorWithMemberFieldAndValue() throws {
+    @Test func whenPhotoIsEmpty_shouldThrowErrorWithMemberFieldAndValue() throws {
         let team = TeamDTO(teamMembers: [.fixture(name: "Adam Rush", imageURL: "")])
 
         let error = try #require(throws: TeamMapper.MappingError.self) {
