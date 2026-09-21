@@ -118,23 +118,23 @@ struct TeamMemberView_Previews: PreviewProvider {
         Group {
             preview(
                 member(
-                    "Adam Rush",
-                    role: "Founder and Host",
-                    photo: "/img/team/rush.jpg",
-                    linkedIn: "https://www.linkedin.com/in/swiftlyrush/",
-                    twitter: "https://twitter.com/Adam9Rush",
-                    slack: "https://swiftleedsworkspace.slack.com/archives/D02ELG76VC0"
+                    "Member One",
+                    role: "Organizer",
+                    photo: "/img/team/member-one.jpg",
+                    linkedIn: "https://linkedin.example.com/member-one",
+                    twitter: "https://twitter.example.com/member-one",
+                    slack: "https://slack.example.com/member-one"
                 ),
                 named: "With Role & All Links"
             )
 
             preview(
                 member(
-                    "Kannan Prasad",
+                    "Member Two",
                     role: nil,
-                    photo: "/img/team/kannan.jpg",
-                    linkedIn: "https://www.linkedin.com/in/kannanprasad/",
-                    slack: "https://swiftleedsworkspace.slack.com/archives/D0477TRS28G"
+                    photo: "/img/team/member-two.jpg",
+                    linkedIn: "https://linkedin.example.com/member-two",
+                    slack: "https://slack.example.com/member-two"
                 ),
                 named: "No Role & Partial Links"
             )
@@ -154,18 +154,18 @@ struct TeamMemberView_Previews: PreviewProvider {
     private static var gridMembers: [TeamMember] {
         [
             member(
-                "James Sherlock",
-                role: "Production Team Lead",
-                photo: "/img/team/sherlock.jpg",
-                linkedIn: "https://www.linkedin.com/in/jamessherlockdeveloper/",
-                twitter: "https://twitter.com/JamesSherlouk"
+                "Member Three",
+                role: "Production",
+                photo: "/img/team/member-three.jpg",
+                linkedIn: "https://linkedin.example.com/member-three",
+                twitter: "https://twitter.example.com/member-three"
             ),
             member(
-                "Joe Williams",
-                role: "Camera Operator",
-                photo: "/img/team/joe.jpg",
-                twitter: "https://twitter.com/joedub_dev",
-                slack: "https://swiftleedsworkspace.slack.com/archives/C05N7JZE2NP"
+                "Member Four",
+                role: "Camera",
+                photo: "/img/team/member-four.jpg",
+                twitter: "https://twitter.example.com/member-four",
+                slack: "https://slack.example.com/member-four"
             ),
         ]
         .compactMap(\.self)
