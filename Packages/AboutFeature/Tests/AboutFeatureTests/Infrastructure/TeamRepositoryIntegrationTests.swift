@@ -18,6 +18,21 @@ import Testing
         #expect(members.map(\.name) == ["Adam Rush", "Paul Willis"])
     }
 
+    @Test func whenMemberHasOnlyRequiredKeys_shouldReturnMemberWithNoRoleOrLinks() async throws {
+        let data = TeamJSON.team(TeamJSON.member(name: "Preeti Thombare", role: nil, slack: nil))
+
+        let members = try await withDependencies {
+            $0.httpClient = .responding(with: data, statusCode: 200)
+        } operation: {
+            try await TeamRepository.liveValue.fetch()
+        }
+
+        let member = try #require(members.first)
+        #expect(member.name == "Preeti Thombare")
+        #expect(member.role == nil)
+        #expect(member.links.isEmpty)
+    }
+
     @Test func whenRequestThrows_shouldThrowCouldNotReachServer() async throws {
         await withDependencies {
             $0.httpClient = .failing(with: URLError(.notConnectedToInternet))
