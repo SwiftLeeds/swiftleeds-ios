@@ -40,9 +40,6 @@ let package = Package(
                 ),
                 .product(name: "SharedAssets", package: "SwiftLeedsPackage"),
                 .product(name: "UIComponents", package: "UIComponents"),
-            ],
-            resources: [
-                .process("Resources"),
             ]
         ),
     ]
