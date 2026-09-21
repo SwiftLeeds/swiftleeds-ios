@@ -57,6 +57,7 @@ let package = Package(
             dependencies: [
                 "AboutUI",
                 .product(name: "AboutFeature", package: "AboutFeature"),
+                .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "DesignKit", package: "SwiftLeedsPackage"),
                 .product(name: "SharedAssets", package: "SwiftLeedsPackage"),
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),

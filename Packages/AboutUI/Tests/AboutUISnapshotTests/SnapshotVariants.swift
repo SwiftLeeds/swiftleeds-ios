@@ -15,7 +15,9 @@ private let textSizes: [(name: String, size: DynamicTypeSize)] = [
 ]
 
 @MainActor
-func snapshotVariants<V: View>() -> [String: Snapshotting<V, UIImage>] {
+func snapshotVariants<V: View>(
+    layout: SwiftUISnapshotLayout = .sizeThatFits
+) -> [String: Snapshotting<V, UIImage>] {
     colorSchemes.reduce(into: [:]) { strategies, scheme in
         for textSize in textSizes {
             let traits = UITraitCollection { mutable in
@@ -23,7 +25,7 @@ func snapshotVariants<V: View>() -> [String: Snapshotting<V, UIImage>] {
                 mutable.displayScale = 1
             }
             strategies["\(scheme.name)-\(textSize.name)"] = Snapshotting<AnyView, UIImage>
-                .image(traits: traits)
+                .image(layout: layout, traits: traits)
                 .pullback { AnyView($0.dynamicTypeSize(textSize.size)) }
         }
     }
