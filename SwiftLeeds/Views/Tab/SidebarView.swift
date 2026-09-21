@@ -1,3 +1,4 @@
+import AboutUI
 import LocalUI
 import ScheduleUI
 import Settings
