@@ -85,7 +85,7 @@ import Testing
             try map(TeamDTO(teamMembers: [member]))
         }
 
-        #expect(error == TeamMapper.MappingError(member: "Adam Rush", field: field, value: ""))
+        #expect(error == TeamMapper.MappingError(member: TeamMemberID("Adam Rush"), field: field, value: ""))
     }
 
     @Test func whenOneMemberIsInvalid_shouldThrowForWholeTeam() throws {
@@ -103,7 +103,7 @@ import Testing
             try map(team)
         }
 
-        #expect(error == TeamMapper.MappingError(member: "Adam Rush", field: .imageURL, value: ""))
+        #expect(error == TeamMapper.MappingError(member: TeamMemberID("Adam Rush"), field: .imageURL, value: ""))
     }
 
     private func map(_ team: TeamDTO) throws -> [TeamMember] {

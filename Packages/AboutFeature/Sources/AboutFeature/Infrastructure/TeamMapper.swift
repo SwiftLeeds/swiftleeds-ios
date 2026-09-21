@@ -6,11 +6,11 @@ import NetworkKit
 package struct TeamMapper: Sendable {
     /// A value the backend sent could not become part of the model.
     package struct MappingError: Error, Equatable {
-        package let member: String
+        package let member: TeamMemberID
         package let field: TeamDTO.MemberDTO.CodingKeys
         package let value: String
 
-        package init(member: String, field: TeamDTO.MemberDTO.CodingKeys, value: String) {
+        package init(member: TeamMemberID, field: TeamDTO.MemberDTO.CodingKeys, value: String) {
             self.member = member
             self.field = field
             self.value = value
@@ -31,25 +31,26 @@ extension TeamMapper {
     }
 
     private static func member(_ dto: TeamDTO.MemberDTO) throws(MappingError) -> TeamMember {
-        TeamMember(
-            id: TeamMemberID(dto.name),
+        let id = TeamMemberID(dto.name)
+        return TeamMember(
+            id: id,
             name: dto.name,
             role: dto.role,
-            photoURL: try photoURL(dto),
-            links: try links(dto)
+            photoURL: try photoURL(dto, member: id),
+            links: try links(dto, member: id)
         )
     }
 
-    private static func links(_ dto: TeamDTO.MemberDTO) throws(MappingError) -> [SocialLink] {
+    private static func links(_ dto: TeamDTO.MemberDTO, member: TeamMemberID) throws(MappingError) -> [SocialLink] {
         [
             try dto.linkedin.map { link throws(MappingError) in
-                SocialLink.linkedIn(try url(link, member: dto.name, field: .linkedin))
+                SocialLink.linkedIn(try url(link, member: member, field: .linkedin))
             },
             try dto.twitter.map { link throws(MappingError) in
-                SocialLink.twitter(try url(link, member: dto.name, field: .twitter))
+                SocialLink.twitter(try url(link, member: member, field: .twitter))
             },
             try dto.slack.map { link throws(MappingError) in
-                SocialLink.slack(try url(link, member: dto.name, field: .slack))
+                SocialLink.slack(try url(link, member: member, field: .slack))
             },
         ]
         .compactMap(\.self)
@@ -57,7 +58,7 @@ extension TeamMapper {
 
     private static func url(
         _ link: String,
-        member: String,
+        member: TeamMemberID,
         field: TeamDTO.MemberDTO.CodingKeys
     ) throws(MappingError) -> URL {
         guard let url = URL(string: link) else {
@@ -66,11 +67,11 @@ extension TeamMapper {
         return url
     }
 
-    private static func photoURL(_ dto: TeamDTO.MemberDTO) throws(MappingError) -> URL {
+    private static func photoURL(_ dto: TeamDTO.MemberDTO, member: TeamMemberID) throws(MappingError) -> URL {
         @Dependency(\.apiConfiguration) var apiConfiguration
 
         guard let url = URL(string: dto.imageURL, relativeTo: apiConfiguration.baseURL) else {
-            throw MappingError(member: dto.name, field: .imageURL, value: dto.imageURL)
+            throw MappingError(member: member, field: .imageURL, value: dto.imageURL)
         }
         return url.absoluteURL
     }
