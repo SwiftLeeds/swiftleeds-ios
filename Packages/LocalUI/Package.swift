@@ -25,8 +25,8 @@ let package = Package(
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "DesignKit", package: "SwiftLeedsPackage"),
                 .product(name: "LocalFeature", package: "LocalFeature"),
-                // ReadabilityModifier declares iOS only, so linking it on macOS
-                // fails to resolve. Every source file is inside `#if canImport(UIKit)`.
+                // ReadabilityModifier declares iOS only, so it fails to build for
+                // macOS. Every source file is inside `#if canImport(UIKit)`.
                 .product(
                     name: "ReadabilityModifier",
                     package: "ReadabilityModifier",

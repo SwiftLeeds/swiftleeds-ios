@@ -20,7 +20,7 @@ struct BottomSheetView: View {
         isOpen ? 0 : maxHeight - minHeight
     }
 
-    internal init (
+    init(
         isOpen: Binding<Bool>,
         selectedCategory: Binding<LocationCategory?>,
         categories: [LocationCategory],

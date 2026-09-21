@@ -38,7 +38,6 @@ public struct LocalView: View {
                                 )
                                 .onTapGesture {
                                     selectedLocation = location
-
                                 }
                         }
                     }
@@ -54,7 +53,7 @@ public struct LocalView: View {
                             }
 
                         locationInfoView(category: category, location: location)
-                            .padding(.bottom, bottomSheetShown ? geometry.size.height * Constants.maxHeightRatio: 0)
+                            .padding(.bottom, bottomSheetShown ? geometry.size.height * Constants.maxHeightRatio : 0)
                             .animation(.easeInOut, value: bottomSheetShown)
                     }
                 }
