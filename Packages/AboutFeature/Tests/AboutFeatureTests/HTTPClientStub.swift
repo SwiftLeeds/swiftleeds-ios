@@ -1,7 +1,7 @@
 import Foundation
 import NetworkKit
 
-enum StubFailure: Error {
+enum StubError: Error {
     case couldNotBuildResponse
 }
 
@@ -15,7 +15,7 @@ extension HTTPClient {
                       httpVersion: nil,
                       headerFields: nil
                   )
-            else { throw StubFailure.couldNotBuildResponse }
+            else { throw StubError.couldNotBuildResponse }
             return (data, response)
         }
     }
