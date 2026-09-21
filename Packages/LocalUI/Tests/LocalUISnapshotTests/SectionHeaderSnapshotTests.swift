@@ -8,7 +8,7 @@ import Testing
     @Test func defaultStyle() {
         let view = SectionHeader(title: "Nearby")
 
-        assertCellSnapshots(of: view)
+        assertSheetSnapshots(of: view)
     }
 
     @Test func screenTitleStyle() {
@@ -18,7 +18,7 @@ import Testing
             foregroundColor: .primary
         )
 
-        assertCellSnapshots(of: view)
+        assertSheetSnapshots(of: view)
     }
 }
 #endif

@@ -16,11 +16,11 @@ private let textSizes: [(name: String, size: DynamicTypeSize)] = [
     ("accessibility", .accessibility5),
 ]
 
-/// The width a cell gets on an iPhone: the screen less its horizontal padding.
-let cellWidth: CGFloat = 390 - Padding.screen * 2
+// The width the sheet's content gets on an iPhone: the screen less its horizontal padding.
+private let sheetContentWidth: CGFloat = 390 - Padding.screen * 2
 
 @MainActor
-func assertCellSnapshots(
+func assertSheetSnapshots(
     of view: some View,
     fileID: StaticString = #fileID,
     file filePath: StaticString = #filePath,
@@ -29,7 +29,7 @@ func assertCellSnapshots(
     column: UInt = #column
 ) {
     assertSnapshots(
-        of: view.cellCard(),
+        of: view.onSheet(),
         as: variants(),
         fileID: fileID,
         file: filePath,
@@ -40,9 +40,9 @@ func assertCellSnapshots(
 }
 
 private extension View {
-    func cellCard() -> some View {
+    func onSheet() -> some View {
         self
-            .frame(width: cellWidth)
+            .frame(width: sheetContentWidth)
             .fixedSize(horizontal: false, vertical: true)
             .padding(Padding.screen)
             .background(Color.background)

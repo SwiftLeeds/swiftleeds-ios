@@ -9,7 +9,7 @@ import Testing
     @Test func unselected() {
         let view = LocalCell(label: "Food", imageName: "takeoutbag.and.cup.and.straw.fill")
 
-        assertCellSnapshots(of: view)
+        assertSheetSnapshots(of: view)
     }
 
     @Test func selected() {
@@ -19,7 +19,7 @@ import Testing
             foregroundColor: .accent
         )
 
-        assertCellSnapshots(of: view)
+        assertSheetSnapshots(of: view)
     }
 
     @Test func longLabel() {
@@ -28,7 +28,7 @@ import Testing
             imageName: "cup.and.saucer.fill"
         )
 
-        assertCellSnapshots(of: view)
+        assertSheetSnapshots(of: view)
     }
 }
 #endif
