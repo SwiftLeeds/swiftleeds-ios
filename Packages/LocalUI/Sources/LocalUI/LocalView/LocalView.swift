@@ -9,10 +9,7 @@ public struct LocalView: View {
     @State private var viewModel = ViewModel()
 
     @State private var bottomSheetShown = true
-    @State private var mapRegion = MKCoordinateRegion(
-        center: CLLocationCoordinate2D(latitude: 53.78613099154973, longitude: -1.5461652186147719),
-        span: MKCoordinateSpan(latitudeDelta: 0.04, longitudeDelta: 0.04)
-    )
+    @State private var mapRegion = MKCoordinateRegion.aroundVenue
     @State private var selectedLocation: Location?
 
     public init() {}
@@ -23,7 +20,6 @@ public struct LocalView: View {
                 if let category = viewModel.selectedCategory {
                     Map(
                         coordinateRegion: $mapRegion,
-                        showsUserLocation: true,
                         annotationItems: viewModel.selectedLocations
                     ) { location in
                         MapAnnotation(coordinate: CLLocationCoordinate2D(
@@ -131,6 +127,14 @@ public struct LocalView: View {
         .background(Color.cellBackground)
         .clipShape(RoundedRectangle(cornerRadius: 8))
     }
+}
+
+private extension MKCoordinateRegion {
+    // Leeds Playhouse, where both SwiftLeeds and KotlinLeeds take place.
+    static let aroundVenue = MKCoordinateRegion(
+        center: CLLocationCoordinate2D(latitude: 53.7981911, longitude: -1.53507),
+        span: MKCoordinateSpan(latitudeDelta: 0.04, longitudeDelta: 0.04)
+    )
 }
 
 struct LocalView_Previews: PreviewProvider {
