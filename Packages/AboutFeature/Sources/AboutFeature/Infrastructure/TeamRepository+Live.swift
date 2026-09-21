@@ -14,8 +14,14 @@ extension TeamRepository: DependencyKey {
                 throw TeamFetchError.couldNotReachServer
             }
 
+            let team: TeamDTO
             do {
-                let team = try JSONDecoder().decode(TeamDTO.self, from: data)
+                team = try JSONDecoder().decode(TeamDTO.self, from: data)
+            } catch {
+                throw TeamFetchError.invalidResponse
+            }
+
+            do {
                 return try TeamMapper.live.map(team)
             } catch {
                 throw TeamFetchError.unknown

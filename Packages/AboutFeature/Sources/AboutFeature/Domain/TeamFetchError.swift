@@ -3,5 +3,8 @@ public enum TeamFetchError: Error, Equatable {
     /// down are not told apart.
     case couldNotReachServer
 
+    /// The server answered, but not with something we accept.
+    case invalidResponse
+
     case unknown
 }
