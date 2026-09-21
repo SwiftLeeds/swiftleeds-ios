@@ -7,18 +7,10 @@ extension LocalView {
     @Observable
     @MainActor
     final class ViewModel {
-        private(set) var categories: [LocationCategory] = []
-        private(set) var error: LocationCategoryFetchError?
+        private(set) var state = LocalContentView.ScreenState.loading
 
-        var selectedCategory: LocationCategory?
-
-        var selectedLocations: [Location] {
-            selectedCategory?.locations ?? []
-        }
-
-        // The screen reappears on every tab switch. Loading again would reset the chosen category.
         func loadIfNeeded() async {
-            guard categories.isEmpty else { return }
+            if case .loaded = state { return }
             await load()
         }
 
@@ -26,12 +18,10 @@ extension LocalView {
             @Dependency(\.fetchLocationCategories) var fetchLocationCategories
 
             do {
-                categories = try await fetchLocationCategories().filter { !$0.locations.isEmpty }
-                selectedCategory = categories.first
-                error = nil
+                state = .loaded(try await fetchLocationCategories().filter { !$0.locations.isEmpty })
             } catch {
                 guard !Task.isCancelled else { return }
-                self.error = error
+                state = .failed
             }
         }
     }
