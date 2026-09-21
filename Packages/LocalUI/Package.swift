@@ -15,6 +15,7 @@ let package = Package(
         .package(path: "../../SwiftLeedsPackage"),
         .package(path: "../LocalFeature"),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.0.0"),
+        .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", from: "1.19.4"),
         .package(url: "https://github.com/yazio/ReadabilityModifier", from: "1.0.0"),
     ],
     targets: [
@@ -32,6 +33,15 @@ let package = Package(
                     condition: .when(platforms: [.iOS])
                 ),
                 .product(name: "SharedAssets", package: "SwiftLeedsPackage"),
+            ]
+        ),
+        .testTarget(
+            name: "LocalUISnapshotTests",
+            dependencies: [
+                "LocalUI",
+                .product(name: "DesignKit", package: "SwiftLeedsPackage"),
+                .product(name: "SharedAssets", package: "SwiftLeedsPackage"),
+                .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
             ]
         ),
     ]
