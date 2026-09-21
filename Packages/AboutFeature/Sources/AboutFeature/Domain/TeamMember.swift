@@ -1,3 +1,5 @@
+import Foundation
+
 /// A volunteer who runs the conference.
 public struct TeamMember: Equatable, Hashable, Identifiable, Sendable {
     public let id: TeamMemberID
@@ -6,9 +8,12 @@ public struct TeamMember: Equatable, Hashable, Identifiable, Sendable {
     /// What the member does for the conference. Some members have no role.
     public let role: String?
 
-    public init(id: TeamMemberID, name: String, role: String?) {
+    public let photoURL: URL
+
+    public init(id: TeamMemberID, name: String, role: String?, photoURL: URL) {
         self.id = id
         self.name = name
         self.role = role
+        self.photoURL = photoURL
     }
 }
