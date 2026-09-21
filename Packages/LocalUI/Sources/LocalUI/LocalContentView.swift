@@ -36,6 +36,14 @@ package struct LocalContentView: View {
     }
 
     package var body: some View {
+        if state == .failed {
+            errorView
+        } else {
+            mapAndSheet
+        }
+    }
+
+    private var mapAndSheet: some View {
         ZStack {
             GeometryReader { geometry in
                 if let category = shownCategory {
@@ -84,10 +92,6 @@ package struct LocalContentView: View {
                     categories: categories,
                     maxHeight: geometry.size.height * Constants.maxHeightRatio
                 )
-
-                if state == .failed {
-                    errorView
-                }
             }
         }
     }
@@ -103,22 +107,20 @@ package struct LocalContentView: View {
     }
 
     private var errorView: some View {
-        Rectangle()
-            .foregroundStyle(.ultraThinMaterial)
-            .edgesIgnoringSafeArea(.all)
-            .overlay(
-                VStack(alignment: .center, spacing: Padding.stackGap) {
-                    Text(verbatim: "Something has gone wrong. Please try again later.")
-                        .font(.subheadline.weight(.medium))
-                        .multilineTextAlignment(.center)
-                    Button {
-                        reload()
-                    } label: {
-                        Text(verbatim: "Reload")
-                    }
-                }
-                .padding()
-            )
+        ContentUnavailableView {
+            Label {
+                Text(verbatim: "Something has gone wrong")
+            } icon: {
+                Image(systemName: "exclamationmark.triangle")
+            }
+        } description: {
+            Text(verbatim: "Please try again later.")
+        } actions: {
+            Button(action: reload) {
+                Text(verbatim: "Reload")
+            }
+        }
+        .background(Color.background, ignoresSafeAreaEdges: .all)
     }
 
     private func symbolImage(named name: String) -> Image {
