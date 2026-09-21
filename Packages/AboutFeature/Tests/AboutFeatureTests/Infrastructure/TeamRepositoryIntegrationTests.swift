@@ -37,4 +37,16 @@ import Testing
             }
         }
     }
+
+    @Test func whenMapperThrows_shouldThrowInvalidResponse() async throws {
+        let data = TeamJSON.team(TeamJSON.member(slack: ""))
+
+        await withDependencies {
+            $0.httpClient = .responding(with: data, statusCode: 200)
+        } operation: {
+            await #expect(throws: TeamFetchError.invalidResponse) {
+                try await TeamRepository.liveValue.fetch()
+            }
+        }
+    }
 }

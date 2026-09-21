@@ -21,10 +21,10 @@ extension TeamRepository: DependencyKey {
                 throw TeamFetchError.invalidResponse
             }
 
-            do {
+            do throws(TeamMapper.MappingError) {
                 return try TeamMapper.live.map(team)
             } catch {
-                throw TeamFetchError.unknown
+                throw TeamFetchError.invalidResponse
             }
         }
     }
