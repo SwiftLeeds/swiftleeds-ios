@@ -1,7 +1,7 @@
-// The links and text on the About screen.
 struct AboutContent: Equatable, Hashable, Sendable {
     // Strings, not URLs: Swift has no URL literal, so a constant URL would need `!` or an optional.
-    // `AboutViewModelTests` checks that every link parses to an https address.
+    // `AboutViewModelTests` checks that each full link parses to an https address, and each path
+    // resolves on the API host.
     struct Links: Equatable, Hashable, Sendable {
         // Paths on the API host.
         let venue: String

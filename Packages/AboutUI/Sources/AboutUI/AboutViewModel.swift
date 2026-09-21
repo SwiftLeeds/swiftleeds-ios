@@ -16,27 +16,22 @@ package final class AboutViewModel {
 
     package init() {}
 
-    /// The venue page on the conference site.
     package var venueURL: URL? {
         apiURL(path: aboutContent.links.venue)
     }
 
-    /// The code of conduct page on the conference site.
     package var codeOfConductURL: URL? {
         apiURL(path: aboutContent.links.codeOfConduct)
     }
 
-    /// The form for reporting a problem.
     package var reportAProblemLink: String {
         aboutContent.links.reportAProblem
     }
 
-    /// The invite to the conference Slack.
     package var slackURL: URL? {
         URL(string: aboutContent.links.slack)
     }
 
-    /// The conference YouTube channel.
     package var youtubeURL: URL? {
         URL(string: aboutContent.links.youtube)
     }

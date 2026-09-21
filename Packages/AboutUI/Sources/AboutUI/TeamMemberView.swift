@@ -9,9 +9,6 @@ import SwiftUI
 package struct TeamMemberView: View {
     private let member: TeamMember
 
-    /// Creates the card.
-    ///
-    /// - Parameter member: The member to show.
     package init(member: TeamMember) {
         self.member = member
     }
