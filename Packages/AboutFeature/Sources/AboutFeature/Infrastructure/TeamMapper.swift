@@ -81,7 +81,7 @@ extension TeamMapper {
 }
 
 private extension URL {
-    // `URL(string:)` accepts "twitter.com/rush" as a relative URL, which a browser cannot open.
+    // `URL(string:)` accepts "twitter.example.com/member" as a relative URL, which a browser cannot open.
     var isWebAddress: Bool {
         guard let scheme = scheme?.lowercased(), let host, !host.isEmpty else { return false }
         return scheme == "http" || scheme == "https"

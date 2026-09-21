@@ -8,12 +8,12 @@ enum TeamJSON {
     }
 
     static func member(
-        name: String = "Adam Rush",
-        role: String? = "Founder and Host",
+        name: String = "Member One",
+        role: String? = "Organizer",
         linkedin: String? = nil,
         twitter: String? = nil,
-        slack: String? = "https://swiftleeds.slack.com/rush",
-        imageURL: String = "/img/team/rush.jpg"
+        slack: String? = "https://slack.example.com/member-one",
+        imageURL: String = "/img/team/member-one.jpg"
     ) -> String {
         let fields: [(key: String, value: String?)] = [
             ("name", name),

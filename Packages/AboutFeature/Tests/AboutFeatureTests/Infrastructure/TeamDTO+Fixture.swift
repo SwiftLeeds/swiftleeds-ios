@@ -2,12 +2,12 @@ import AboutFeature
 
 extension TeamDTO.MemberDTO {
     static func fixture(
-        name: String = "Adam Rush",
-        role: String? = "Founder and Host",
+        name: String = "Member One",
+        role: String? = "Organizer",
         linkedin: String? = nil,
         twitter: String? = nil,
         slack: String? = nil,
-        imageURL: String = "/img/team/rush.jpg"
+        imageURL: String = "/img/team/member-one.jpg"
     ) -> Self {
         TeamDTO.MemberDTO(
             name: name,

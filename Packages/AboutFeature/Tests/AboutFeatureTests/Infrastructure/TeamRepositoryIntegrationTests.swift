@@ -7,7 +7,7 @@ import Testing
 // Drives the composed `liveValue` with only the transport stubbed.
 @Suite struct TeamRepositoryIntegrationTests {
     @Test func whenServerReturnsValidTeam_shouldReturnMembers() async throws {
-        let data = TeamJSON.team(TeamJSON.member(name: "Adam Rush"), TeamJSON.member(name: "Paul Willis"))
+        let data = TeamJSON.team(TeamJSON.member(name: "Member One"), TeamJSON.member(name: "Member Two"))
 
         let members = try await withDependencies {
             $0.httpClient = .responding(with: data, statusCode: 200)
@@ -15,11 +15,11 @@ import Testing
             try await TeamRepository.liveValue.fetch()
         }
 
-        #expect(members.map(\.name) == ["Adam Rush", "Paul Willis"])
+        #expect(members.map(\.name) == ["Member One", "Member Two"])
     }
 
     @Test func whenMemberHasOnlyRequiredKeys_shouldReturnMemberWithNoRoleOrLinks() async throws {
-        let data = TeamJSON.team(TeamJSON.member(name: "Preeti Thombare", role: nil, slack: nil))
+        let data = TeamJSON.team(TeamJSON.member(name: "Member Three", role: nil, slack: nil))
 
         let members = try await withDependencies {
             $0.httpClient = .responding(with: data, statusCode: 200)
@@ -28,7 +28,7 @@ import Testing
         }
 
         let member = try #require(members.first)
-        #expect(member.name == "Preeti Thombare")
+        #expect(member.name == "Member Three")
         #expect(member.role == nil)
         #expect(member.links.isEmpty)
     }

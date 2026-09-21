@@ -5,8 +5,8 @@ import Testing
 @Suite struct FetchTeamTests {
     @Test func whenRepositoryReturnsMembers_shouldReturnSameMembers() async throws {
         let expected = [
-            try TeamMember.fixture(name: "Adam Rush"),
-            try TeamMember.fixture(name: "Paul Willis"),
+            try TeamMember.fixture(name: "Member One"),
+            try TeamMember.fixture(name: "Member Two"),
         ]
 
         let members = try await withDependencies {
