@@ -8,7 +8,7 @@ import Observation
 @Observable
 @MainActor
 package final class AboutViewModel {
-    package private(set) var teamMembers: [TeamMember] = []
+    private(set) var teamMembers: [TeamMember] = []
     private(set) var isLoading = true
     package private(set) var errorMessage: String?
 
