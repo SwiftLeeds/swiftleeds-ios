@@ -38,6 +38,19 @@ import Testing
         }
     }
 
+    @Test(arguments: [404, 500])
+    func whenStatusIsNotOK_shouldThrowUnknown(statusCode: Int) async throws {
+        let data = TeamJSON.team(TeamJSON.member())
+
+        await withDependencies {
+            $0.httpClient = .responding(with: data, statusCode: statusCode)
+        } operation: {
+            await #expect(throws: TeamFetchError.unknown) {
+                try await TeamRepository.liveValue.fetch()
+            }
+        }
+    }
+
     @Test func whenMapperThrows_shouldThrowInvalidResponse() async throws {
         let data = TeamJSON.team(TeamJSON.member(slack: ""))
 

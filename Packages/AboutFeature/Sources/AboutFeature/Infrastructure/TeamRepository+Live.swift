@@ -8,10 +8,15 @@ extension TeamRepository: DependencyKey {
             @Dependency(\.httpClient) var httpClient
 
             let data: Data
+            let response: HTTPURLResponse
             do {
-                (data, _) = try await httpClient.send(Endpoint.team.urlRequest())
+                (data, response) = try await httpClient.send(Endpoint.team.urlRequest())
             } catch {
                 throw TeamFetchError.couldNotReachServer
+            }
+
+            guard response.status == .ok else {
+                throw TeamFetchError.unknown
             }
 
             let team: TeamDTO
