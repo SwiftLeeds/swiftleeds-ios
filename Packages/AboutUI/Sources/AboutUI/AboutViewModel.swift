@@ -19,31 +19,35 @@ package final class AboutViewModel {
 
     /// The venue page on the conference site.
     package var venueURL: URL? {
-        apiURL(path: aboutContent.urls.venue)
+        apiURL(path: aboutContent.links.venue)
     }
 
     /// The code of conduct page on the conference site.
     package var codeOfConductURL: URL? {
-        apiURL(path: aboutContent.urls.codeOfConduct)
+        apiURL(path: aboutContent.links.codeOfConduct)
     }
 
     /// The form for reporting a problem.
     package var reportAProblemLink: String {
-        aboutContent.urls.reportAProblem
+        aboutContent.links.reportAProblem
     }
 
     /// The invite to the conference Slack.
     package var slackURL: URL? {
-        URL(string: aboutContent.urls.slack)
+        URL(string: aboutContent.links.slack)
     }
 
     /// The conference YouTube channel.
     package var youtubeURL: URL? {
-        URL(string: aboutContent.urls.youtube)
+        URL(string: aboutContent.links.youtube)
     }
 
     var truncatedAboutText: String {
         aboutContent.truncatedAboutText
+    }
+
+    var fullAboutText: String {
+        aboutContent.fullAboutText
     }
 
     /// Fetches the team, unless a team is already loaded.

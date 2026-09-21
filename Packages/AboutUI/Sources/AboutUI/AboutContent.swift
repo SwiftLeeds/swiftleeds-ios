@@ -1,6 +1,8 @@
-// The links and short text on the About screen.
-struct AboutContent {
-    struct URLs {
+// The links and text on the About screen.
+struct AboutContent: Equatable, Hashable, Sendable {
+    // Strings, not URLs: Swift has no URL literal, so a constant URL would need `!` or an optional.
+    // `AboutViewModelTests` checks that every link parses to an https address.
+    struct Links: Equatable, Hashable, Sendable {
         // Paths on the API host.
         let venue: String
         let codeOfConduct: String
@@ -10,14 +12,15 @@ struct AboutContent {
         let youtube: String
     }
 
-    let urls: URLs
+    let links: Links
     let truncatedAboutText: String
+    let fullAboutText: String
 }
 
 extension AboutContent {
     // KotlinLeeds shows this too, which is a known gap.
     static let swiftLeeds = AboutContent(
-        urls: URLs(
+        links: Links(
             venue: "/#venue",
             codeOfConduct: "/conduct",
             reportAProblem: "https://forms.gle/PJie9aRNAtzQUdUu9",
@@ -31,6 +34,18 @@ extension AboutContent {
 
         SwiftLeeds is now run with over ten community volunteers building the website, iOS \
         applications...
+        """,
+        fullAboutText: """
+        Adam Rush founded SwiftLeeds in 2019, born from over ten years of experience attending \
+        conferences. The inspiration was bringing a modern, inclusive conference in the North of the UK \
+        to be more accessible for all.
+
+        SwiftLeeds is now run with over ten community volunteers building the website, iOS applications \
+        and making sure we cover all the bases on the day. SwiftLeeds is entirely non-profit, and the \
+        funds make sure we can deliver the best experience possible.
+
+        In-person conferences are the best way to meet like-minded people who enjoy building apps with \
+        Swift. You can also learn from the best people in the industry and chat about all things Swift.
         """
     )
 }
