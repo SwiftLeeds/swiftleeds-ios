@@ -138,9 +138,37 @@ struct TeamMemberView_Previews: PreviewProvider {
                 ),
                 named: "No Role & Partial Links"
             )
+
+            LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 16) {
+                ForEach(gridMembers) { member in
+                    TeamMemberView(member: member)
+                }
+            }
+            .padding()
+            .previewDisplayName("Grid Layout")
         }
         .previewLayout(.sizeThatFits)
         .padding()
+    }
+
+    private static var gridMembers: [TeamMember] {
+        [
+            member(
+                "James Sherlock",
+                role: "Production Team Lead",
+                photo: "/img/team/sherlock.jpg",
+                linkedIn: "https://www.linkedin.com/in/jamessherlockdeveloper/",
+                twitter: "https://twitter.com/JamesSherlouk"
+            ),
+            member(
+                "Joe Williams",
+                role: "Camera Operator",
+                photo: "/img/team/joe.jpg",
+                twitter: "https://twitter.com/joedub_dev",
+                slack: "https://swiftleedsworkspace.slack.com/archives/C05N7JZE2NP"
+            ),
+        ]
+        .compactMap(\.self)
     }
 
     @ViewBuilder
