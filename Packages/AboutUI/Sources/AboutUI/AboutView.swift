@@ -1,5 +1,4 @@
 #if canImport(UIKit)
-import SharedAssets
 import SwiftUI
 
 /// The About screen: the conference's story, its links, and the team.
@@ -9,14 +8,10 @@ public struct AboutView: View {
     public init() {}
 
     public var body: some View {
-        ScrollView {
-            AboutContentView(viewModel: viewModel)
-        }
-        .background(Color.background, ignoresSafeAreaEdges: .all)
-        .edgesIgnoringSafeArea(.top)
-        .task {
-            await viewModel.loadIfNeeded()
-        }
+        AboutContentView(viewModel: viewModel)
+            .task {
+                await viewModel.loadIfNeeded()
+            }
     }
 }
 

@@ -5,7 +5,6 @@ import SharedAssets
 import SwiftUI
 import UIComponents
 
-/// The About screen, drawn from a view model it is given. It fetches nothing.
 package struct AboutContentView: View {
     private let viewModel: AboutViewModel
 
@@ -35,6 +34,14 @@ package struct AboutContentView: View {
     }
 
     package var body: some View {
+        ScrollView {
+            content
+        }
+        .background(Color.background, ignoresSafeAreaEdges: .all)
+        .edgesIgnoringSafeArea(.top)
+    }
+
+    private var content: some View {
         VStack(spacing: Padding.cellGap) {
             FancyHeaderView(
                 title: "About",
