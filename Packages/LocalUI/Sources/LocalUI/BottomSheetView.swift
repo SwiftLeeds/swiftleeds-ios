@@ -1,3 +1,4 @@
+#if canImport(UIKit)
 import DesignKit
 import LocalFeature
 import ReadabilityModifier
@@ -11,7 +12,6 @@ struct BottomSheetView: View {
     @GestureState private var translation: CGFloat = 0
 
     private let categories: [LocationCategory]
-    private let error: Error?
 
     private let maxHeight: CGFloat
     private let minHeight: CGFloat
@@ -20,17 +20,15 @@ struct BottomSheetView: View {
         isOpen ? 0 : maxHeight - minHeight
     }
 
-    internal init (
+    init(
         isOpen: Binding<Bool>,
         selectedCategory: Binding<LocationCategory?>,
         categories: [LocationCategory],
-        error: Error?,
         maxHeight: CGFloat
     ) {
         self.minHeight = maxHeight * Constants.minHeightRatio
         self.maxHeight = maxHeight
-        self.categories = categories.filter { $0.locations.isEmpty == false }
-        self.error = error
+        self.categories = categories
         self._isOpen = isOpen
         self._selectedCategory = selectedCategory
     }
@@ -101,7 +99,6 @@ struct BottomSheet_Previews: PreviewProvider {
                 isOpen: .constant(true),
                 selectedCategory: .constant(items.first),
                 categories: items,
-                error: nil,
                 maxHeight: proxy.size.height * Constants.maxHeightRatio
             )
             .background(.blue)
@@ -144,3 +141,4 @@ struct BottomSheet_Previews: PreviewProvider {
         return Location(id: LocationID(UUID()), name: name, websiteURL: websiteURL, coordinate: coordinate)
     }
 }
+#endif

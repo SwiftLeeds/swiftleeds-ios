@@ -1,35 +1,36 @@
+#if canImport(UIKit)
 import SwiftUI
 
-struct SectionHeader: View {
+package struct SectionHeader: View {
     private let title: String
     private let fontStyle: Font
     private let foregroundColor: Color
     private let maxWidth: CGFloat
     private let alignment: Alignment
-    private let accesibilityAddTraits: AccessibilityTraits
+    private let accessibilityTraits: AccessibilityTraits
 
-    init(
+    package init(
         title: String,
         fontStyle: Font = .callout.weight(.semibold),
         foregroundColor: Color = .secondary,
         maxWidth: CGFloat = .infinity,
         alignment: Alignment = .leading,
-        accessbilityAddTraits: AccessibilityTraits = .isHeader
+        accessibilityTraits: AccessibilityTraits = .isHeader
     ) {
         self.title = title
         self.fontStyle = fontStyle
         self.foregroundColor = foregroundColor
         self.maxWidth = maxWidth
         self.alignment = alignment
-        self.accesibilityAddTraits = accessbilityAddTraits
+        self.accessibilityTraits = accessibilityTraits
     }
 
-    var body: some View {
+    package var body: some View {
         Text(title)
             .font(fontStyle)
             .foregroundColor(foregroundColor)
             .frame(maxWidth: maxWidth, alignment: alignment)
-            .accessibilityAddTraits(accesibilityAddTraits)
+            .accessibilityAddTraits(accessibilityTraits)
     }
 }
 
@@ -38,3 +39,4 @@ struct SectionHeader_Previews: PreviewProvider {
         SectionHeader(title: "SwiftLeeds")
     }
 }
+#endif

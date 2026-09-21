@@ -1,4 +1,5 @@
 import AuthenticationUI
+import LocalUI
 import ReadabilityModifier
 import ScheduleUI
 import Settings
