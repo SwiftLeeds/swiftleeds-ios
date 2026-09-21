@@ -25,10 +25,10 @@ package struct TeamMapper: Sendable {
 }
 
 extension TeamMapper {
-    /// Maps the members in the team's order.
+    /// The mapper that keeps the team's order.
     ///
-    /// A photo path resolves against the base URL in `apiConfiguration`. The whole team is refused
-    /// when a photo is not a URL, or a link is not an http or https web address.
+    /// It resolves a photo path against the base URL in `apiConfiguration`. It refuses the whole
+    /// team when a photo path is empty, or a link is not an http or https web address.
     package static let live = TeamMapper { team throws(MappingError) in
         try team.teamMembers.map { dto throws(MappingError) in try member(dto) }
     }
