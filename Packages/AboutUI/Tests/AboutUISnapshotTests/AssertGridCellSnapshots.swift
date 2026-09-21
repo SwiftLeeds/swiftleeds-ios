@@ -30,7 +30,7 @@ func assertGridCellSnapshots(
     column: UInt = #column
 ) {
     assertSnapshots(
-        of: view.inGridCell(of: columns),
+        of: view.inGridCell(columns: columns),
         as: variants(),
         fileID: fileID,
         file: filePath,
@@ -42,7 +42,7 @@ func assertGridCellSnapshots(
 
 private extension View {
     // One cell of a grid with `columns` columns and `Padding.cellGap` between them.
-    func inGridCell(of columns: Int) -> some View {
+    func inGridCell(columns: Int) -> some View {
         let gaps = Padding.cellGap * CGFloat(columns - 1)
         return self
             .frame(width: (contentWidth - gaps) / CGFloat(columns))

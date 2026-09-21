@@ -7,20 +7,20 @@ import Testing
 @MainActor
 @Suite struct TeamMemberViewSnapshotTests {
     @Test func roleAndEveryLink() throws {
-        let view = TeamMemberView(member: try .memberOne)
+        let view = TeamMemberView(member: try .withRoleAndEveryLink)
 
         assertGridCellSnapshots(of: view, columns: 2)
     }
 
     @Test func noRoleOrLinks() throws {
-        let view = TeamMemberView(member: try .memberTwo)
+        let view = TeamMemberView(member: try .withoutRoleOrLinks)
 
         assertGridCellSnapshots(of: view, columns: 2)
     }
 }
 
 private extension TeamMember {
-    static var memberOne: TeamMember {
+    static var withRoleAndEveryLink: TeamMember {
         get throws {
             TeamMember(
                 id: TeamMemberID("Member One"),
@@ -36,7 +36,7 @@ private extension TeamMember {
         }
     }
 
-    static var memberTwo: TeamMember {
+    static var withoutRoleOrLinks: TeamMember {
         get throws {
             TeamMember(id: TeamMemberID("Member Two"), name: "Member Two", role: nil, photoURL: try photo, links: [])
         }
