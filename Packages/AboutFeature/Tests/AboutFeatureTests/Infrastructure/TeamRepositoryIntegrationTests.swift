@@ -17,4 +17,14 @@ import Testing
 
         #expect(members.map(\.name) == ["Adam Rush", "Paul Willis"])
     }
+
+    @Test func whenRequestThrows_shouldThrowCouldNotReachServer() async throws {
+        await withDependencies {
+            $0.httpClient = .failing(with: URLError(.notConnectedToInternet))
+        } operation: {
+            await #expect(throws: TeamFetchError.couldNotReachServer) {
+                try await TeamRepository.liveValue.fetch()
+            }
+        }
+    }
 }
