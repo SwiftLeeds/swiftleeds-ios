@@ -6,6 +6,7 @@ extension TeamRepository: DependencyKey {
     package static var liveValue: TeamRepository {
         TeamRepository { () async throws(TeamFetchError) -> [TeamMember] in
             @Dependency(\.httpClient) var httpClient
+            @Dependency(\.teamMapper) var teamMapper
 
             let data: Data
             let response: HTTPURLResponse
@@ -27,7 +28,7 @@ extension TeamRepository: DependencyKey {
             }
 
             do throws(TeamMapper.MappingError) {
-                return try TeamMapper.live.map(team)
+                return try teamMapper.map(team)
             } catch {
                 throw TeamFetchError.invalidResponse
             }

@@ -62,4 +62,18 @@ import Testing
             }
         }
     }
+
+    @Test func whenMapperIsReplaced_shouldReturnItsMembers() async throws {
+        let data = TeamJSON.team(TeamJSON.member(name: "ignored"))
+        let expected = try TeamMember.fixture(name: "From the mapper")
+
+        let members = try await withDependencies {
+            $0.httpClient = .responding(with: data, statusCode: 200)
+            $0.teamMapper = TeamMapper { _ in [expected] }
+        } operation: {
+            try await TeamRepository.liveValue.fetch()
+        }
+
+        #expect(members == [expected])
+    }
 }

@@ -75,3 +75,15 @@ extension TeamMapper {
         return url.absoluteURL
     }
 }
+
+private enum TeamMapperKey: DependencyKey {
+    static var liveValue: TeamMapper { .live }
+    static var testValue: TeamMapper { liveValue }
+}
+
+extension DependencyValues {
+    package var teamMapper: TeamMapper {
+        get { self[TeamMapperKey.self] }
+        set { self[TeamMapperKey.self] = newValue }
+    }
+}
