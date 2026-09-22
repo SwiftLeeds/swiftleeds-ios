@@ -88,6 +88,7 @@
 		A11CE570000000000000F0D1 /* LocalFeature in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE570000000000000F0C1 /* LocalFeature */; };
 		A11CE570000000000000F1D1 /* AboutFeature in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE570000000000000F1C1 /* AboutFeature */; };
 		A11CE570000000000000F1D2 /* AboutUI in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE570000000000000F1C2 /* AboutUI */; };
+		A11CE570000000000000F2D1 /* ColorTheme in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE570000000000000F2C1 /* ColorTheme */; };
 		A11CE570000000000000F0D2 /* LocalUI in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE570000000000000F0C2 /* LocalUI */; };
 		A11CE57000000000000000DE /* ScheduleFeature in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000CE /* ScheduleFeature */; };
 		A11CE57000000000000000DF /* ScheduleFeature in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000CF /* ScheduleFeature */; };
@@ -195,6 +196,7 @@
 		A11CE570000000000000F0A1 /* LocalFeature */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = LocalFeature; sourceTree = "<group>"; };
 		A11CE570000000000000F1A1 /* AboutFeature */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = AboutFeature; sourceTree = "<group>"; };
 		A11CE570000000000000F1A2 /* AboutUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = AboutUI; sourceTree = "<group>"; };
+		A11CE570000000000000F2A1 /* ColorTheme */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ColorTheme; sourceTree = "<group>"; };
 		A11CE570000000000000F0A2 /* LocalUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = LocalUI; sourceTree = "<group>"; };
 		A11CE57000000000000000A4 /* NetworkKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = NetworkKit; sourceTree = "<group>"; };
 		A11CE57000000000000000A3 /* AuthenticationUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = AuthenticationUI; sourceTree = "<group>"; };
@@ -272,6 +274,7 @@
 				A11CE570000000000000F0D1 /* LocalFeature in Frameworks */,
 				A11CE570000000000000F1D1 /* AboutFeature in Frameworks */,
 				A11CE570000000000000F1D2 /* AboutUI in Frameworks */,
+				A11CE570000000000000F2D1 /* ColorTheme in Frameworks */,
 				A11CE570000000000000F0D2 /* LocalUI in Frameworks */,
 				A11CE57000000000000000D3 /* SecureStorageKit in Frameworks */,
 				A11CE57000000000000000D4 /* SecureStorageKitKeychain in Frameworks */,
@@ -375,6 +378,7 @@
 				A11CE570000000000000F0A1 /* LocalFeature */,
 				A11CE570000000000000F1A1 /* AboutFeature */,
 				A11CE570000000000000F1A2 /* AboutUI */,
+				A11CE570000000000000F2A1 /* ColorTheme */,
 				A11CE570000000000000F0A2 /* LocalUI */,
 				A11CE57000000000000000A4 /* NetworkKit */,
 				A11CE57000000000000000A3 /* AuthenticationUI */,
@@ -592,6 +596,7 @@
 				A11CE570000000000000F0C1 /* LocalFeature */,
 				A11CE570000000000000F1C1 /* AboutFeature */,
 				A11CE570000000000000F1C2 /* AboutUI */,
+				A11CE570000000000000F2C1 /* ColorTheme */,
 				A11CE570000000000000F0C2 /* LocalUI */,
 				A11CE57000000000000000C3 /* SecureStorageKit */,
 				A11CE57000000000000000C4 /* SecureStorageKitKeychain */,
@@ -1868,6 +1873,10 @@
 		A11CE570000000000000F1C2 /* AboutUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = AboutUI;
+		};
+		A11CE570000000000000F2C1 /* ColorTheme */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ColorTheme;
 		};
 		A11CE570000000000000F0C2 /* LocalUI */ = {
 			isa = XCSwiftPackageProductDependency;

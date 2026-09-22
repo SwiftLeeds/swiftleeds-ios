@@ -35,6 +35,7 @@ let package = Package(
         ),
     ],
     dependencies: [
+        .package(path: "../Packages/ColorTheme"),
         .package(url: "https://github.com/shadone/SwiftGenPlugin", branch: "6.6.2+deriveddatafix"),
     ],
     targets: [
@@ -47,11 +48,8 @@ let package = Package(
         .target(
             name: "Settings",
             dependencies: [
-                "ColorTheme",
+                .product(name: "ColorTheme", package: "ColorTheme"),
             ]
-        ),
-        .target(
-            name: "ColorTheme"
         ),
         .target(
             name: "SharedAssets",
