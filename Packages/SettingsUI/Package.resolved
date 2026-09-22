@@ -1,5 +1,5 @@
 {
-  "originHash": "a58255c891c0fb5a54d8ed114e6f4de7bc347fb3dc522a3de32d41efe7c989ce",
+  "originHash": "c2860753c1255f0a93a3ebb3197d3463bb307dd2146ba24559df2f300ca75d33",
   "pins": [
     {
       "identity": "combine-schedulers",
@@ -17,6 +17,15 @@
       "state": {
         "revision": "72d749bf341b78851203066ab421869b783ec42a",
         "version": "1.1.0"
+      }
+    },
+    {
+      "identity": "swift-collections",
+      "kind": "remoteSourceControl",
+      "location": "https://github.com/apple/swift-collections",
+      "state": {
+        "revision": "a0cb0954ecb21e4e31b0070e6ed5674e8556685a",
+        "version": "1.6.0"
       }
     },
     {
@@ -47,12 +56,30 @@
       }
     },
     {
-      "identity": "swift-snapshot-testing",
+      "identity": "swift-identified-collections",
       "kind": "remoteSourceControl",
-      "location": "https://github.com/pointfreeco/swift-snapshot-testing",
+      "location": "https://github.com/pointfreeco/swift-identified-collections",
       "state": {
-        "revision": "59a99c458de4d2dee580529b61b4f78dca7b7fa6",
-        "version": "1.19.4"
+        "revision": "322d9ffeeba85c9f7c4984b39422ec7cc3c56597",
+        "version": "1.1.1"
+      }
+    },
+    {
+      "identity": "swift-perception",
+      "kind": "remoteSourceControl",
+      "location": "https://github.com/pointfreeco/swift-perception",
+      "state": {
+        "revision": "597afd46249f4a71885b95d26b26cc5b893daf32",
+        "version": "2.0.12"
+      }
+    },
+    {
+      "identity": "swift-sharing",
+      "kind": "remoteSourceControl",
+      "location": "https://github.com/pointfreeco/swift-sharing",
+      "state": {
+        "revision": "3552faf8a6c18ce896ec5a72bd8c34755f0f03e0",
+        "version": "2.10.1"
       }
     },
     {
@@ -62,24 +89,6 @@
       "state": {
         "revision": "4799286537280063c85a32f09884cfbca301b1a1",
         "version": "602.0.0"
-      }
-    },
-    {
-      "identity": "swiftgenplugin",
-      "kind": "remoteSourceControl",
-      "location": "https://github.com/shadone/SwiftGenPlugin",
-      "state": {
-        "branch": "6.6.2+deriveddatafix",
-        "revision": "9eb26960d2ebecbe74feecc695e6125eb39e797e"
-      }
-    },
-    {
-      "identity": "swiftui-cached-async-image",
-      "kind": "remoteSourceControl",
-      "location": "https://github.com/lorenzofiamingo/swiftui-cached-async-image",
-      "state": {
-        "revision": "467a3d17479887943ab917a379e62bbaff60ac8a",
-        "version": "2.1.1"
       }
     },
     {

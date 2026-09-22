@@ -13,12 +13,14 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../ColorTheme"),
+        .package(url: "https://github.com/pointfreeco/swift-sharing", from: "2.10.1"),
     ],
     targets: [
         .target(
             name: "SettingsUI",
             dependencies: [
                 .product(name: "ColorTheme", package: "ColorTheme"),
+                .product(name: "Sharing", package: "swift-sharing"),
             ]
         ),
         .testTarget(name: "SettingsUITests", dependencies: ["SettingsUI"]),
