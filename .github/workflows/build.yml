@@ -191,6 +191,35 @@ jobs:
           fi
           echo "Tested $count snapshot target(s) on the simulator"
 
+  # The app build jobs compile the App Clip for both brands, but a trap at
+  # launch compiles cleanly. This installs and launches it, and fails if the
+  # process is gone a few seconds later. The script runs locally too.
+  launch-app-clip:
+    name: Launch App Clip (iOS Simulator)
+    runs-on: macos-26
+    # A simulator that never finishes booting would otherwise hold the runner
+    # for the six-hour default.
+    timeout-minutes: 10
+    steps:
+      - name: Checkout iOS Repository
+        uses: actions/checkout@v4
+
+      - name: Select Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: '26.5'
+
+      # Each brand builds into its own derived data folder. Sharing one saves
+      # almost nothing: switching configuration makes Xcode delete the other
+      # brand's products as stale, and fills the log with notes saying so.
+      - name: Launch the SwiftLeeds App Clip
+        run: .github/scripts/launch-app-clip.sh Debug uk.co.swiftleeds.SwiftLeeds.Clip "$RUNNER_TEMP/app-clip-derived-data-swiftleeds"
+
+      # Runs even when the SwiftLeeds launch failed, so one run reports both.
+      - name: Launch the KotlinLeeds App Clip
+        if: ${{ !cancelled() }}
+        run: .github/scripts/launch-app-clip.sh Debug-KotlinLeeds uk.co.kotlinleeds.KotlinLeeds.Clip "$RUNNER_TEMP/app-clip-derived-data-kotlinleeds"
+
   lint-swift:
     name: Lint Swift Sources
     runs-on: macos-26
