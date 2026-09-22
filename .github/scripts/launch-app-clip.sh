@@ -39,16 +39,16 @@ fi
 # Timestamps each phase, so a slow run's log shows where the time went.
 say() { echo "$(date -u +%H:%M:%S) $*"; }
 
-# A simulator's first boot on a CI runner took 6.5 minutes, so it boots in the
-# background while the App Clip builds. The build does not need it booted.
+# A simulator's first boot on a CI runner takes about 6.5 minutes, so it boots
+# in the background while the App Clip builds. The build does not need it.
 say "Booting $device_name ($runtime) in the background"
 xcrun simctl bootstatus "$udid" -b > /dev/null &
 boot_pid=$!
 
-# The build names no particular simulator, as the app build jobs do. Naming the
-# one that was booting, the build took from 7 to over 10 minutes on CI instead
-# of about 3. A generic destination builds every architecture, so ARCHS keeps it
-# to the runner's own.
+# The build names no particular simulator, as the app build jobs do. A generic
+# destination builds every architecture, so ARCHS keeps it to the runner's own.
+# While the simulator boots, the build takes 7 to 10 minutes on CI instead of
+# about 3: the two share the runner's cores, so overlapping them saves little.
 say "Building the $configuration App Clip"
 xcodebuild build -quiet -project SwiftLeeds.xcodeproj -scheme SwiftLeedsAppClip \
   -configuration "$configuration" \
