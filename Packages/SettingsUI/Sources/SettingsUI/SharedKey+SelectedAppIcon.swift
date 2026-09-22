@@ -1,8 +1,8 @@
 import ColorTheme
 import Sharing
 
-extension PreferenceName {
-    static let selectedAppIcon = PreferenceName("selectedAppIcon")
+extension PreferenceKey {
+    static let selectedAppIcon = PreferenceKey("selectedAppIcon")
 }
 
 extension SharedKey where Self == AppStorageKey<AppIconOption>.Default {

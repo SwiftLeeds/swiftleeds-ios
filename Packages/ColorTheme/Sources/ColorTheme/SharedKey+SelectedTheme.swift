@@ -1,8 +1,8 @@
 import Sharing
 
-extension PreferenceName {
-    /// The name the chosen theme is stored under.
-    public static let selectedTheme = PreferenceName("selectedTheme")
+extension PreferenceKey {
+    /// The key the chosen theme is stored under.
+    public static let selectedTheme = PreferenceKey("selectedTheme")
 }
 
 extension SharedKey where Self == AppStorageKey<ThemeOption>.Default {
