@@ -15,9 +15,9 @@ from pathlib import Path
 
 SCHEME = Path("SwiftLeeds.xcodeproj/xcshareddata/xcschemes/SnapshotTests.xcscheme")
 
-# The manifest is where a target is declared, which is also where the job's
-# `swift package describe` reads it from. A folder name would disagree with
-# the job the moment a target declared its own path.
+# The manifest is where a target is declared, so it is the thing the scheme
+# has to agree with. A folder name would disagree with the manifest the moment
+# a target declared its own path.
 declaration = re.compile(r'\.testTarget\(\s*name:\s*"(\w+SnapshotTests)"')
 targets = {
     name
