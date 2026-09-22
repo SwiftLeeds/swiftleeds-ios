@@ -153,26 +153,22 @@ jobs:
             done
             return 1
           }
-          found=0
+          # The scheme names every snapshot target and the package that holds
+          # it, and the lint job fails when the scheme and the manifests
+          # disagree. Reading it here replaces a `swift package describe` per
+          # package, which cost 26s of a 473s step. The script fails when the
+          # scheme runs no target, so an empty list cannot pass as "nothing to
+          # do".
+          listing=$(python3 .github/scripts/list-snapshot-targets.py) || exit 1
           selected=""
           skipped=""
-          for dir in Packages/*/; do
-            [ -f "${dir}Package.swift" ] || continue
-            name=$(basename "$dir")
-            targets=$( (cd "$dir" && swift package describe --type json) \
-              | jq -r '.targets[] | select(.type == "test") | select(.name | endswith("SnapshotTests")) | .name' )
-            [ -n "$targets" ] || continue
-            found=$((found + 1))
-            if is_affected "${dir%/}"; then
-              selected="$selected $targets"
+          while read -r target package; do
+            if is_affected "$package"; then
+              selected="$selected $target"
             else
-              skipped="$skipped $name"
+              skipped="$skipped $(basename "$package")"
             fi
-          done
-          if [ "$found" -eq 0 ]; then
-            echo "::error::No *SnapshotTests target found under Packages/" >&2
-            exit 1
-          fi
+          done <<< "$listing"
           if [ -n "$skipped" ]; then
             echo "Skipped, because this pull request cannot affect them:$skipped"
           fi
