@@ -40,7 +40,7 @@ xcrun simctl bootstatus "$udid" -b > /dev/null
 
 xcodebuild build -quiet -project SwiftLeeds.xcodeproj -scheme SwiftLeedsAppClip \
   -configuration "$configuration" \
-  -destination "platform=iOS Simulator,id=$udid" \
+  -destination "platform=iOS Simulator,id=$udid,arch=arm64" \
   -derivedDataPath "$derived_data" \
   -skipPackagePluginValidation \
   CODE_SIGNING_ALLOWED=NO
