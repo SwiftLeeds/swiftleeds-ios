@@ -2,7 +2,7 @@ import AboutUI
 import AuthenticationUI
 import LocalUI
 import ScheduleUI
-import Settings
+import SettingsUI
 import SponsorsUI
 import SwiftUI
 

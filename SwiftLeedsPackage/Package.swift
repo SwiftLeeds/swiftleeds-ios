@@ -22,12 +22,6 @@ let package = Package(
             ]
         ),
         .library(
-            name: "Settings",
-            targets: [
-                "Settings",
-            ]
-        ),
-        .library(
             name: "SharedAssets",
             targets: [
                 "SharedAssets",
@@ -43,15 +37,6 @@ let package = Package(
         ),
         .target(
             name: "DesignKit"
-        ),
-        .target(
-            name: "Settings",
-            dependencies: [
-                "ColorTheme",
-            ]
-        ),
-        .target(
-            name: "ColorTheme"
         ),
         .target(
             name: "SharedAssets",
