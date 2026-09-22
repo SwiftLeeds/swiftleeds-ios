@@ -49,11 +49,11 @@ public struct SettingsView<Header: View>: View {
                     }
 
                     Button("Contact Us") {
-                        viewModel.openContactUs()
+                        Task { await viewModel.openContactUs() }
                     }
 
                     Button("Code of Conduct") {
-                        viewModel.openCodeOfConduct()
+                        Task { await viewModel.openCodeOfConduct() }
                     }
                 }
             }

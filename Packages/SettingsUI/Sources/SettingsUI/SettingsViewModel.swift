@@ -2,7 +2,6 @@
 import Dependencies
 import Sharing
 import SwiftUI
-import UIKit
 
 @MainActor
 final class SettingsViewModel: ObservableObject {
@@ -46,15 +45,17 @@ final class SettingsViewModel: ObservableObject {
         }
     }
 
-    func openContactUs() {
+    func openContactUs() async {
+        @Dependency(\.openURL) var openURL
         if let url = URL(string: "mailto:\(contactEmail)") {
-            UIApplication.shared.open(url)
+            await openURL(url)
         }
     }
 
-    func openCodeOfConduct() {
+    func openCodeOfConduct() async {
+        @Dependency(\.openURL) var openURL
         if let url = URL(string: "https://\(codeOfConductHost)/conduct") {
-            UIApplication.shared.open(url)
+            await openURL(url)
         }
     }
 }
