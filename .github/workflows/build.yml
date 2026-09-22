@@ -192,10 +192,13 @@ jobs:
             # one test target. The aggregate scheme below builds all of them.
             schemes=(-scheme "$1")
           else
-            # One call pays the package resolution, the build planning and the
-            # simulator launch once instead of once per target. Measured
-            # 2026-09-22: on CI each call waits 23s to 45s before its first
-            # test runs, and there were seven calls.
+            # One call pays the package resolution and the build planning once
+            # instead of once per target. Measured on CI 2026-09-22: the step
+            # went from 554s to 473s.
+            # The simulator cost does not fall. Each test bundle is installed
+            # and launched on its own either way, about 30s each, and one run
+            # logged "Xcode took 26.55 seconds to acknowledge that testing
+            # finished" between two bundles of the same call.
             # -only-testing: picks which targets run. It does not make the
             # build smaller: the scheme's targets all compile either way.
             schemes=(-scheme SnapshotTests)
