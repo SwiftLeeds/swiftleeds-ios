@@ -47,9 +47,5 @@ let package = Package(
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
             ]
         ),
-    ],
-    // Swift 6 mode rejects `SettingsViewModel` sending `self` into the icon change callback.
-    swiftLanguageModes: [
-        .v5,
     ]
 )
