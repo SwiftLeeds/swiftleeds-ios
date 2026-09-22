@@ -1,4 +1,3 @@
-import ColorTheme
 import SwiftUI
 
 struct Tabs: View {
@@ -18,5 +17,4 @@ struct Tabs: View {
 #Preview {
     Tabs()
         .environmentObject(AppState())
-        .environmentObject(ThemeManager.shared)
 }

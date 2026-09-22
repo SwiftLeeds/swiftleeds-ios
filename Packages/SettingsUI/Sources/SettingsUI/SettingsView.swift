@@ -1,9 +1,10 @@
 #if canImport(UIKit)
 import ColorTheme
+import Sharing
 import SwiftUI
 
 public struct SettingsView<Header: View>: View {
-    @EnvironmentObject var themeManager: ThemeManager
+    @Shared(.selectedTheme) private var theme
     @StateObject private var viewModel = SettingsViewModel()
     private let header: Header
 
@@ -32,13 +33,10 @@ public struct SettingsView<Header: View>: View {
                 }
 
                 Section("Appearance") {
-                    Picker("Theme", selection: $themeManager.currentTheme) {
+                    Picker("Theme", selection: Binding($theme)) {
                         ForEach(ThemeOption.allCases, id: \.self) { theme in
                             Text(theme.displayName).tag(theme)
                         }
-                    }
-                    .onChange(of: themeManager.currentTheme) { newTheme in
-                        themeManager.setTheme(newTheme)
                     }
                 }
 
@@ -72,7 +70,6 @@ public struct SettingsView<Header: View>: View {
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
         SettingsView()
-            .environmentObject(ThemeManager.shared)
     }
 }
 #endif
