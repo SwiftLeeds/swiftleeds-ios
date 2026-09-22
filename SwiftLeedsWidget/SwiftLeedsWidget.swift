@@ -1,4 +1,5 @@
 import Dependencies
+import Foundation
 import NetworkKit
 import ScheduleFeature
 import SwiftUI
@@ -11,7 +12,7 @@ struct SwiftLeedsWidget: Widget {
     init() {
         prepareDependencies {
             $0.apiConfiguration = APIConfiguration(baseURL: ConferenceConfig.apiURL)
-            $0.httpClient = HTTPClient.urlSession(.shared)
+            $0.httpClient = HTTPClient.urlSession(URLSession(configuration: .api()))
             $0.localScheduleStore = .appGroup(AppGroupIdentifier(ConferenceConfig.appGroupIdentifier))
         }
     }
