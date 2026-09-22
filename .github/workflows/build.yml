@@ -195,16 +195,19 @@ jobs:
             # One call pays the package resolution and the build planning once
             # instead of once per target. Measured on CI 2026-09-22: the step
             # went from 554s to 473s.
-            # The simulator cost does not fall. Each test bundle is installed
-            # and launched on its own either way, about 30s each, and one run
-            # logged "Xcode took 26.55 seconds to acknowledge that testing
-            # finished" between two bundles of the same call.
             # -only-testing: picks which targets run. It does not make the
             # build smaller: the scheme's targets all compile either way.
             args=(-scheme SnapshotTests)
             for target in $selected; do
               args+=(-only-testing:"$target")
             done
+            # A bundle is installed and launched on its own, which costs far
+            # more than its tests, so the bundles run on cloned simulators
+            # side by side. Measured on CI 2026-09-22: the simulator and test
+            # phase fell from 288s to 116s, and the step from 473s to 303s.
+            # Two workers, because every clone boots before it tests. Three or
+            # more were not tried.
+            args+=(-parallel-testing-enabled YES -maximum-parallel-testing-workers 2)
           fi
           echo "::group::Snapshot tests:$selected"
           status=0
