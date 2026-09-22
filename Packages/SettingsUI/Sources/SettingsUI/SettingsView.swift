@@ -1,3 +1,4 @@
+#if canImport(UIKit)
 import ColorTheme
 import SwiftUI
 
@@ -146,3 +147,4 @@ struct SettingsView_Previews: PreviewProvider {
             .environmentObject(ThemeManager.shared)
     }
 }
+#endif

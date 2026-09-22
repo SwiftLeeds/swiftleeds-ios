@@ -3,7 +3,7 @@ import AuthenticationUI
 import LocalUI
 import ReadabilityModifier
 import ScheduleUI
-import Settings
+import SettingsUI
 import SponsorsUI
 import SwiftUI
 

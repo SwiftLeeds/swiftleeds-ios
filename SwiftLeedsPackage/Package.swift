@@ -22,12 +22,6 @@ let package = Package(
             ]
         ),
         .library(
-            name: "Settings",
-            targets: [
-                "Settings",
-            ]
-        ),
-        .library(
             name: "SharedAssets",
             targets: [
                 "SharedAssets",
@@ -35,7 +29,6 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(path: "../Packages/ColorTheme"),
         .package(url: "https://github.com/shadone/SwiftGenPlugin", branch: "6.6.2+deriveddatafix"),
     ],
     targets: [
@@ -44,12 +37,6 @@ let package = Package(
         ),
         .target(
             name: "DesignKit"
-        ),
-        .target(
-            name: "Settings",
-            dependencies: [
-                .product(name: "ColorTheme", package: "ColorTheme"),
-            ]
         ),
         .target(
             name: "SharedAssets",

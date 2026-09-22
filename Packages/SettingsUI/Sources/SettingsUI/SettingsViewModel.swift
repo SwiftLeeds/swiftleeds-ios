@@ -1,3 +1,4 @@
+#if canImport(UIKit)
 import ColorTheme
 import SwiftUI
 import UIKit
@@ -68,3 +69,4 @@ final class SettingsViewModel: ObservableObject {
     }
 
 }
+#endif
