@@ -78,8 +78,14 @@ jobs:
   #
   # A package opts in by declaring a test target whose name ends in
   # SnapshotTests, plus a shared scheme of the same name holding only that
-  # target. The scheme is what keeps the build small: `-only-testing:` would
-  # still compile the package's other test targets.
+  # target. That scheme keeps the build small when one target runs.
+  #
+  # When two or more targets run, the job uses the SnapshotTests scheme in the
+  # app project, which holds every snapshot target, and names the ones to run
+  # with `-only-testing:`. One call compiles more, and pays the package
+  # resolution, the build planning and the simulator launch once rather than
+  # once per target. A Linux lint check keeps that scheme in step with the
+  # targets, because a target the scheme omits would never run on iOS.
   test-snapshots-ios:
     name: Test Snapshots (iOS Simulator)
     runs-on: macos-26
@@ -109,7 +115,7 @@ jobs:
           set -euo pipefail
           xcrun simctl list runtimes | grep 'iOS 26.5'
 
-      - name: Run every snapshot test target on the simulator
+      - name: Run the snapshot tests on the simulator
         run: |
           set -uo pipefail
           # A pull request runs only the snapshot targets its diff can change:
@@ -148,8 +154,7 @@ jobs:
             return 1
           }
           found=0
-          count=0
-          failed=""
+          selected=""
           skipped=""
           for dir in Packages/*/; do
             [ -f "${dir}Package.swift" ] || continue
@@ -158,27 +163,11 @@ jobs:
               | jq -r '.targets[] | select(.type == "test") | select(.name | endswith("SnapshotTests")) | .name' )
             [ -n "$targets" ] || continue
             found=$((found + 1))
-            if ! is_affected "${dir%/}"; then
+            if is_affected "${dir%/}"; then
+              selected="$selected $targets"
+            else
               skipped="$skipped $name"
-              continue
             fi
-            for target in $targets; do
-              echo "::group::$name / $target"
-              # The scheme must exist and must hold only this target. Without it
-              # xcodebuild builds every test target in the package, which is the
-              # cost this job exists to avoid.
-              # Each scheme runs through the app project, with one derived data
-              # folder, so the dependencies the packages share compile once. Run
-              # from a package's own folder, each package is its own workspace,
-              # and Xcode rebuilds the shared dependencies every time.
-              xcodebuild test -project SwiftLeeds.xcodeproj -scheme "$target" \
-                -destination "$DESTINATION" \
-                -derivedDataPath "$RUNNER_TEMP/snapshot-derived-data" \
-                -skipPackagePluginValidation \
-                || failed="$failed $name/$target"
-              echo "::endgroup::"
-              count=$((count + 1))
-            done
           done
           if [ "$found" -eq 0 ]; then
             echo "::error::No *SnapshotTests target found under Packages/" >&2
@@ -187,11 +176,47 @@ jobs:
           if [ -n "$skipped" ]; then
             echo "Skipped, because this pull request cannot affect them:$skipped"
           fi
-          if [ -n "$failed" ]; then
-            echo "::error::Failing snapshot targets:$failed"
-            exit 1
+          if [ -z "$selected" ]; then
+            echo "No snapshot target can be affected by this pull request"
+            exit 0
           fi
-          echo "Tested $count snapshot target(s) on the simulator"
+          # Every call runs through the app project, with one derived data
+          # folder, so the dependencies the packages share compile once. Run
+          # from a package's own folder, each package is its own workspace, and
+          # Xcode rebuilds the shared dependencies every time.
+          # Unquoted on purpose: the target names are one word each, and this
+          # is how the step counts them.
+          set -- $selected
+          count=$#
+          if [ "$count" -eq 1 ]; then
+            # A package's own scheme holds only its own target, so this builds
+            # one test target. The aggregate scheme below builds all of them.
+            schemes=(-scheme "$1")
+          else
+            # One call pays the package resolution, the build planning and the
+            # simulator launch once instead of once per target. Measured
+            # 2026-09-22: on CI each call waits 23s to 45s before its first
+            # test runs, and there were seven calls.
+            # -only-testing: picks which targets run. It does not make the
+            # build smaller: the scheme's targets all compile either way.
+            schemes=(-scheme SnapshotTests)
+            for target in $selected; do
+              schemes+=(-only-testing:"$target")
+            done
+          fi
+          echo "::group::Snapshot tests:$selected"
+          status=0
+          xcodebuild test -project SwiftLeeds.xcodeproj "${schemes[@]}" \
+            -destination "$DESTINATION" \
+            -derivedDataPath "$RUNNER_TEMP/snapshot-derived-data" \
+            -skipPackagePluginValidation \
+            || status=$?
+          echo "::endgroup::"
+          if [ "$status" -ne 0 ]; then
+            echo "::error::The snapshot tests failed:$selected"
+            exit "$status"
+          fi
+          echo "Tested $count snapshot target(s) on the simulator:$selected"
 
   # The app build jobs compile the App Clip for both brands, but a trap at
   # launch compiles cleanly. This installs and launches it, and fails if the
