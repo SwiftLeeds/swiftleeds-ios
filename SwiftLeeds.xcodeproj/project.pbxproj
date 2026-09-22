@@ -41,7 +41,6 @@
 		7640E1784CFF7D166DA3E292 /* SwiftLeedsAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EEFB1E37D5A542A1798C92D5 /* SwiftLeedsAssets.xcassets */; };
 		79E3CB724EF853948BC7D906 /* ConferenceConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67624B7470D6BA62D4912236 /* ConferenceConfig.swift */; };
 		7B31C8EB2ED0959000FEEDF7 /* DesignKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7B31C8EA2ED0959000FEEDF7 /* DesignKit */; };
-		7B31C8ED2ED0959600FEEDF7 /* DesignKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7B31C8EC2ED0959600FEEDF7 /* DesignKit */; };
 		7B31C8EF2ED0959A00FEEDF7 /* DesignKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7B31C8EE2ED0959A00FEEDF7 /* DesignKit */; };
 		7B31C8F12ED0A7BF00FEEDF7 /* SettingsUI in Frameworks */ = {isa = PBXBuildFile; productRef = 7B31C8F02ED0A7BF00FEEDF7 /* SettingsUI */; };
 		A11CE57000000000000000D1 /* AuthenticationUI in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C1 /* AuthenticationUI */; };
@@ -250,7 +249,6 @@
 				7BE081542EE5BF13004BCD1F /* SharedAssets in Frameworks */,
 				74A09FE128C6778C00E03F39 /* SwiftUI.framework in Frameworks */,
 				74A09FDF28C6778C00E03F39 /* WidgetKit.framework in Frameworks */,
-				7B31C8ED2ED0959600FEEDF7 /* DesignKit in Frameworks */,
 				A11CE57000000000000000DF /* ScheduleFeature in Frameworks */,
 				A11CE57000000000000000E6 /* Dependencies in Frameworks */,
 				A11CE57000000000000000EC /* NetworkKit in Frameworks */,
@@ -1798,10 +1796,6 @@
 			productName = ReadabilityModifier;
 		};
 		7B31C8EA2ED0959000FEEDF7 /* DesignKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = DesignKit;
-		};
-		7B31C8EC2ED0959600FEEDF7 /* DesignKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = DesignKit;
 		};
