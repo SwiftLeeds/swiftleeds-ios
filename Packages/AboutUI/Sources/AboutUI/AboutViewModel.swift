@@ -9,8 +9,6 @@ import Observation
 @MainActor
 package final class AboutViewModel {
     private(set) var teamMembers: [TeamMember] = []
-    private(set) var isLoading = true
-    package private(set) var errorMessage: String?
 
     private let aboutContent = AboutContent.swiftLeeds
 
@@ -56,20 +54,10 @@ package final class AboutViewModel {
     }
 
     private func load() async {
-        isLoading = true
-        errorMessage = nil
-        await loadTeamData()
-        isLoading = false
-    }
-
-    private func loadTeamData() async {
         @Dependency(\.fetchTeam) var fetchTeam
 
-        do {
-            teamMembers = try await fetchTeam()
-        } catch {
-            guard !Task.isCancelled else { return }
-            errorMessage = "Failed to load team data: \(error.localizedDescription)"
+        if let team = try? await fetchTeam() {
+            teamMembers = team
         }
     }
 }
