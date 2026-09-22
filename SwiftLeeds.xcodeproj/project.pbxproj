@@ -10,19 +10,13 @@
 		0B4CB3C828EAF19100246E62 /* SwiftLeedsAppClipApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4CB3C728EAF19100246E62 /* SwiftLeedsAppClipApp.swift */; };
 		0B4CB3CF28EAF19100246E62 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B4CB3CE28EAF19100246E62 /* Preview Assets.xcassets */; };
 		0B4CB3D428EAF19100246E62 /* SwiftLeedsAppClip.app in Embed App Clips */ = {isa = PBXBuildFile; fileRef = 0B4CB3C528EAF19000246E62 /* SwiftLeedsAppClip.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		0B4CB3FC28EAF7C500246E62 /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = 0B4CB3FB28EAF7C500246E62 /* CachedAsyncImage */; };
-		0B4CB3FD28EAF7FE00246E62 /* BuildFile in Resources */ = {isa = PBXBuildFile; };
 		13707030C1082B933C28151D /* SwiftLeedsAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4301D0D3F1C8979276E77084 /* SwiftLeedsAssets.xcassets */; };
 		1ED8FD9CBE313B23E73E8132 /* KotlinLeedsColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B3FFD994DBE3F62216150F8 /* KotlinLeedsColors.xcassets */; };
-		416468542E4365477789D792 /* SwiftLeedsColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 893A122D593379F84605F70C /* SwiftLeedsColors.xcassets */; };
 		4381E5366C2266F0DBECFDC6 /* KotlinLeedsAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40AEBC0F9109732F54C608A9 /* KotlinLeedsAssets.xcassets */; };
 		536B0D6E662499195E36CA15 /* SwiftLeedsColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 893A122D593379F84605F70C /* SwiftLeedsColors.xcassets */; };
-		6689C3857E75808C8395B496 /* SwiftLeedsAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EEFB1E37D5A542A1798C92D5 /* SwiftLeedsAssets.xcassets */; };
-		6C97E4AC99FE94C690FB23B4 /* KotlinLeedsAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40AEBC0F9109732F54C608A9 /* KotlinLeedsAssets.xcassets */; };
 		6E14A8EC04159C7E092C87D4 /* SwiftLeedsColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 893A122D593379F84605F70C /* SwiftLeedsColors.xcassets */; };
 		740162DA2A7053A000C2D1B3 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740162D92A7053A000C2D1B3 /* AppState.swift */; };
 		7406572928E240720087F44F /* WidgetConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7406572828E240720087F44F /* WidgetConstants.swift */; };
-		741ED8FB2A75829C00494B25 /* ReadabilityModifier in Frameworks */ = {isa = PBXBuildFile; productRef = 741ED8FA2A75829C00494B25 /* ReadabilityModifier */; };
 		74A09FDF28C6778C00E03F39 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74A09FDE28C6778C00E03F39 /* WidgetKit.framework */; };
 		74A09FE128C6778C00E03F39 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74A09FE028C6778C00E03F39 /* SwiftUI.framework */; };
 		74A09FE428C6778C00E03F39 /* SwiftLeedsWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A09FE328C6778C00E03F39 /* SwiftLeedsWidget.swift */; };
@@ -41,7 +35,6 @@
 		7640E1784CFF7D166DA3E292 /* SwiftLeedsAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EEFB1E37D5A542A1798C92D5 /* SwiftLeedsAssets.xcassets */; };
 		79E3CB724EF853948BC7D906 /* ConferenceConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67624B7470D6BA62D4912236 /* ConferenceConfig.swift */; };
 		7B31C8EB2ED0959000FEEDF7 /* DesignKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7B31C8EA2ED0959000FEEDF7 /* DesignKit */; };
-		7B31C8EF2ED0959A00FEEDF7 /* DesignKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7B31C8EE2ED0959A00FEEDF7 /* DesignKit */; };
 		7B31C8F12ED0A7BF00FEEDF7 /* SettingsUI in Frameworks */ = {isa = PBXBuildFile; productRef = 7B31C8F02ED0A7BF00FEEDF7 /* SettingsUI */; };
 		A11CE57000000000000000D1 /* AuthenticationUI in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C1 /* AuthenticationUI */; };
 		A11CE57000000000000000D2 /* AuthenticationFeature in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C2 /* AuthenticationFeature */; };
@@ -50,21 +43,17 @@
 		A11CE57000000000000000D7 /* NetworkKit in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C7 /* NetworkKit */; };
 		A11CE57000000000000000D9 /* SponsorsFeature in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C9 /* SponsorsFeature */; };
 		A11CE57000000000000000DA /* UIComponents in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000CA /* UIComponents */; };
-		A11CE57000000000000000DB /* UIComponents in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000CB /* UIComponents */; };
 		F8AC9B695FEAFDBD19A01A10 /* NetworkKit in Frameworks */ = {isa = PBXBuildFile; productRef = 631E9D02432C1E1A187A3E03 /* NetworkKit */; };
 		E44377685B94DC7F6465ED4A /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = 39093D62C747210F6BA83C1E /* Dependencies */; };
 		A11CE57000000000000000D3 /* SecureStorageKit in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C3 /* SecureStorageKit */; };
 		A11CE57000000000000000D4 /* SecureStorageKitKeychain in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C4 /* SecureStorageKitKeychain */; };
 		A11CE57000000000000000D8 /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C8 /* Dependencies */; };
 		7B8C3ECF2EE4A9F70089C6CF /* SharedAssets in Frameworks */ = {isa = PBXBuildFile; productRef = 7B8C3ECE2EE4A9F70089C6CF /* SharedAssets */; };
-		7BE081522EE5BDA8004BCD1F /* SharedAssets in Frameworks */ = {isa = PBXBuildFile; productRef = 7BE081512EE5BDA8004BCD1F /* SharedAssets */; };
 		7BE081542EE5BF13004BCD1F /* SharedAssets in Frameworks */ = {isa = PBXBuildFile; productRef = 7BE081532EE5BF13004BCD1F /* SharedAssets */; };
 		7DD216398B20B302618BCB90 /* SwiftLeedsAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3275AD6541323F056786E508 /* SwiftLeedsAssets.xcassets */; };
 		802D63D966D0A9337F66041C /* KotlinLeedsAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 75075F01455C8AD72C71783C /* KotlinLeedsAssets.xcassets */; };
 		920187EBD71395160F1059C1 /* KotlinLeedsColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B3FFD994DBE3F62216150F8 /* KotlinLeedsColors.xcassets */; };
-		A18F779A7E6FC79F59311319 /* KotlinLeedsColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B3FFD994DBE3F62216150F8 /* KotlinLeedsColors.xcassets */; };
 		A11CE57000000000000000F2 /* URLSession+SwiftLeeds.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11CE57000000000000000F1 /* URLSession+SwiftLeeds.swift */; };
-		F94828C06997CC0C7F25871C /* URLSession+SwiftLeeds.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11CE57000000000000000F1 /* URLSession+SwiftLeeds.swift */; };
 		AE1C801428A7BCD000996659 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AE1C801328A7BCD000996659 /* Settings.bundle */; };
 		AE5EFD73289DC1D000464FE1 /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = AE5EFD72289DC1D000464FE1 /* CachedAsyncImage */; };
 		AE8C1B2828C4B36B00AF7318 /* AppDelegate+Push.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8C1B2728C4B36B00AF7318 /* AppDelegate+Push.swift */; };
@@ -91,7 +80,6 @@
 		A11CE570000000000000F1D2 /* AboutUI in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE570000000000000F1C2 /* AboutUI */; };
 		A11CE570000000000000F2D1 /* ColorTheme in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE570000000000000F2C1 /* ColorTheme */; };
 		A11CE570000000000000F0D2 /* LocalUI in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE570000000000000F0C2 /* LocalUI */; };
-		A11CE57000000000000000DE /* ScheduleFeature in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000CE /* ScheduleFeature */; };
 		A11CE57000000000000000DF /* ScheduleFeature in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000CF /* ScheduleFeature */; };
 		A11CE57000000000000000E6 /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000E5 /* Dependencies */; };
 		A11CE57000000000000000EC /* NetworkKit in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000EB /* NetworkKit */; };
@@ -230,13 +218,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7BE081522EE5BDA8004BCD1F /* SharedAssets in Frameworks */,
-				741ED8FB2A75829C00494B25 /* ReadabilityModifier in Frameworks */,
-				0B4CB3FC28EAF7C500246E62 /* CachedAsyncImage in Frameworks */,
-				7B31C8EF2ED0959A00FEEDF7 /* DesignKit in Frameworks */,
 				F8AC9B695FEAFDBD19A01A10 /* NetworkKit in Frameworks */,
-				A11CE57000000000000000DB /* UIComponents in Frameworks */,
-				A11CE57000000000000000DE /* ScheduleFeature in Frameworks */,
 				A11CE57000000000000000EA /* ScheduleUI in Frameworks */,
 				E44377685B94DC7F6465ED4A /* Dependencies in Frameworks */,
 			);
@@ -530,13 +512,7 @@
 			);
 			name = SwiftLeedsAppClip;
 			packageProductDependencies = (
-				0B4CB3FB28EAF7C500246E62 /* CachedAsyncImage */,
-				741ED8FA2A75829C00494B25 /* ReadabilityModifier */,
-				7B31C8EE2ED0959A00FEEDF7 /* DesignKit */,
-				7BE081512EE5BDA8004BCD1F /* SharedAssets */,
 				631E9D02432C1E1A187A3E03 /* NetworkKit */,
-				A11CE57000000000000000CB /* UIComponents */,
-				A11CE57000000000000000CE /* ScheduleFeature */,
 				A11CE57000000000000000E9 /* ScheduleUI */,
 				39093D62C747210F6BA83C1E /* Dependencies */,
 			);
@@ -711,15 +687,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				0B4CB3CF28EAF19100246E62 /* Preview Assets.xcassets in Resources */,
-				0B4CB3FD28EAF7FE00246E62 /* BuildFile in Resources */,
 				7640E1784CFF7D166DA3E292 /* SwiftLeedsAssets.xcassets in Resources */,
 				536B0D6E662499195E36CA15 /* SwiftLeedsColors.xcassets in Resources */,
 				4381E5366C2266F0DBECFDC6 /* KotlinLeedsAssets.xcassets in Resources */,
 				920187EBD71395160F1059C1 /* KotlinLeedsColors.xcassets in Resources */,
-				6689C3857E75808C8395B496 /* SwiftLeedsAssets.xcassets in Resources */,
-				416468542E4365477789D792 /* SwiftLeedsColors.xcassets in Resources */,
-				6C97E4AC99FE94C690FB23B4 /* KotlinLeedsAssets.xcassets in Resources */,
-				A18F779A7E6FC79F59311319 /* KotlinLeedsColors.xcassets in Resources */,
 				13707030C1082B933C28151D /* SwiftLeedsAssets.xcassets in Resources */,
 				802D63D966D0A9337F66041C /* KotlinLeedsAssets.xcassets in Resources */,
 			);
@@ -770,7 +741,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				0B4CB3C828EAF19100246E62 /* SwiftLeedsAppClipApp.swift in Sources */,
-				F94828C06997CC0C7F25871C /* URLSession+SwiftLeeds.swift in Sources */,
 				79E3CB724EF853948BC7D906 /* ConferenceConfig.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1780,26 +1750,12 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		0B4CB3FB28EAF7C500246E62 /* CachedAsyncImage */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = AE5EFD71289DC1D000464FE1 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */;
-			productName = CachedAsyncImage;
-		};
-		741ED8FA2A75829C00494B25 /* ReadabilityModifier */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 74F5EF8A2A4B4352008D9413 /* XCRemoteSwiftPackageReference "ReadabilityModifier" */;
-			productName = ReadabilityModifier;
-		};
 		74F5EF8B2A4B4352008D9413 /* ReadabilityModifier */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 74F5EF8A2A4B4352008D9413 /* XCRemoteSwiftPackageReference "ReadabilityModifier" */;
 			productName = ReadabilityModifier;
 		};
 		7B31C8EA2ED0959000FEEDF7 /* DesignKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = DesignKit;
-		};
-		7B31C8EE2ED0959A00FEEDF7 /* DesignKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = DesignKit;
 		};
@@ -1839,10 +1795,6 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = UIComponents;
 		};
-		A11CE57000000000000000CB /* UIComponents */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = UIComponents;
-		};
 		A11CE57000000000000000E7 /* ScheduleUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ScheduleUI;
@@ -1856,10 +1808,6 @@
 			productName = SponsorsUI;
 		};
 		A11CE57000000000000000CD /* ScheduleFeature */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = ScheduleFeature;
-		};
-		A11CE57000000000000000CE /* ScheduleFeature */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ScheduleFeature;
 		};
@@ -1915,10 +1863,6 @@
 			productName = Dependencies;
 		};
 		7B8C3ECE2EE4A9F70089C6CF /* SharedAssets */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = SharedAssets;
-		};
-		7BE081512EE5BDA8004BCD1F /* SharedAssets */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SharedAssets;
 		};
