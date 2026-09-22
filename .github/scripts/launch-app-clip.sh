@@ -42,10 +42,11 @@ say() { echo "$(date -u +%H:%M:%S) $*"; }
 # The build names no particular simulator, as the app build jobs do. A generic
 # destination builds every architecture, so ARCHS keeps it to the runner's own.
 #
-# The boot used to run in the background during this build. Measured on CI
-# 2026-09-22: the boot always finished inside the build, and the build took 7
-# to 10 minutes rather than about 2.5, because the two share the runner's
-# cores. Each phase is timed below, so a run says what it spent where.
+# The boot used to run in the background during this build, and both were slow
+# because they share the runner's cores. One after the other, measured on CI
+# 2026-09-22: build 73s and 77s, boot 64s and 75s, install and launch 54s and
+# 63s, against jobs of 10m0s and 8m33s while they overlapped. Each phase is
+# timed below, so a run says what it spent where.
 say "Building the $configuration App Clip"
 xcodebuild build -quiet -project SwiftLeeds.xcodeproj -scheme SwiftLeedsAppClip \
   -configuration "$configuration" \
