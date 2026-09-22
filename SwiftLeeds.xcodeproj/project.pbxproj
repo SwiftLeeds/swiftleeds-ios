@@ -11,14 +11,10 @@
 		0B4CB3CF28EAF19100246E62 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B4CB3CE28EAF19100246E62 /* Preview Assets.xcassets */; };
 		0B4CB3D428EAF19100246E62 /* SwiftLeedsAppClip.app in Embed App Clips */ = {isa = PBXBuildFile; fileRef = 0B4CB3C528EAF19000246E62 /* SwiftLeedsAppClip.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		0B4CB3FC28EAF7C500246E62 /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = 0B4CB3FB28EAF7C500246E62 /* CachedAsyncImage */; };
-		0B4CB3FD28EAF7FE00246E62 /* BuildFile in Resources */ = {isa = PBXBuildFile; };
 		13707030C1082B933C28151D /* SwiftLeedsAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4301D0D3F1C8979276E77084 /* SwiftLeedsAssets.xcassets */; };
 		1ED8FD9CBE313B23E73E8132 /* KotlinLeedsColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B3FFD994DBE3F62216150F8 /* KotlinLeedsColors.xcassets */; };
-		416468542E4365477789D792 /* SwiftLeedsColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 893A122D593379F84605F70C /* SwiftLeedsColors.xcassets */; };
 		4381E5366C2266F0DBECFDC6 /* KotlinLeedsAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40AEBC0F9109732F54C608A9 /* KotlinLeedsAssets.xcassets */; };
 		536B0D6E662499195E36CA15 /* SwiftLeedsColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 893A122D593379F84605F70C /* SwiftLeedsColors.xcassets */; };
-		6689C3857E75808C8395B496 /* SwiftLeedsAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EEFB1E37D5A542A1798C92D5 /* SwiftLeedsAssets.xcassets */; };
-		6C97E4AC99FE94C690FB23B4 /* KotlinLeedsAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40AEBC0F9109732F54C608A9 /* KotlinLeedsAssets.xcassets */; };
 		6E14A8EC04159C7E092C87D4 /* SwiftLeedsColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 893A122D593379F84605F70C /* SwiftLeedsColors.xcassets */; };
 		740162DA2A7053A000C2D1B3 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740162D92A7053A000C2D1B3 /* AppState.swift */; };
 		7406572928E240720087F44F /* WidgetConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7406572828E240720087F44F /* WidgetConstants.swift */; };
@@ -62,7 +58,6 @@
 		7DD216398B20B302618BCB90 /* SwiftLeedsAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3275AD6541323F056786E508 /* SwiftLeedsAssets.xcassets */; };
 		802D63D966D0A9337F66041C /* KotlinLeedsAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 75075F01455C8AD72C71783C /* KotlinLeedsAssets.xcassets */; };
 		920187EBD71395160F1059C1 /* KotlinLeedsColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B3FFD994DBE3F62216150F8 /* KotlinLeedsColors.xcassets */; };
-		A18F779A7E6FC79F59311319 /* KotlinLeedsColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B3FFD994DBE3F62216150F8 /* KotlinLeedsColors.xcassets */; };
 		A11CE57000000000000000F2 /* URLSession+SwiftLeeds.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11CE57000000000000000F1 /* URLSession+SwiftLeeds.swift */; };
 		AE1C801428A7BCD000996659 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AE1C801328A7BCD000996659 /* Settings.bundle */; };
 		AE5EFD73289DC1D000464FE1 /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = AE5EFD72289DC1D000464FE1 /* CachedAsyncImage */; };
@@ -710,15 +705,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				0B4CB3CF28EAF19100246E62 /* Preview Assets.xcassets in Resources */,
-				0B4CB3FD28EAF7FE00246E62 /* BuildFile in Resources */,
 				7640E1784CFF7D166DA3E292 /* SwiftLeedsAssets.xcassets in Resources */,
 				536B0D6E662499195E36CA15 /* SwiftLeedsColors.xcassets in Resources */,
 				4381E5366C2266F0DBECFDC6 /* KotlinLeedsAssets.xcassets in Resources */,
 				920187EBD71395160F1059C1 /* KotlinLeedsColors.xcassets in Resources */,
-				6689C3857E75808C8395B496 /* SwiftLeedsAssets.xcassets in Resources */,
-				416468542E4365477789D792 /* SwiftLeedsColors.xcassets in Resources */,
-				6C97E4AC99FE94C690FB23B4 /* KotlinLeedsAssets.xcassets in Resources */,
-				A18F779A7E6FC79F59311319 /* KotlinLeedsColors.xcassets in Resources */,
 				13707030C1082B933C28151D /* SwiftLeedsAssets.xcassets in Resources */,
 				802D63D966D0A9337F66041C /* KotlinLeedsAssets.xcassets in Resources */,
 			);
