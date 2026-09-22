@@ -560,6 +560,7 @@
 			);
 			name = SwiftLeedsWidgetExtension;
 			packageProductDependencies = (
+				7BE081532EE5BF13004BCD1F /* SharedAssets */,
 				A11CE57000000000000000CF /* ScheduleFeature */,
 				A11CE57000000000000000E5 /* Dependencies */,
 				A11CE57000000000000000EB /* NetworkKit */,
