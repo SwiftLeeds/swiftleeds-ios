@@ -51,12 +51,14 @@ jobs:
       - name: Run every package test suite
         env:
           # How many packages test at once. Each lane needs its own scratch
-          # path, so raising this repeats more dependency compilation. The
-          # runner has 3 cores and 7 GB of RAM, and `swift test` already uses
-          # every core inside one package, so a lane only overlaps the work
-          # that runs on one core at a time: loading the manifest, 79s across
-          # the 16 packages, and planning the build, 31s. Memory is the first
-          # thing to give way, not the cores.
+          # path, so raising this repeats more dependency compilation.
+          # Measured on run 35797090212, the push of ce8a391 to main, where
+          # this step ran the 16 packages one after another in 311s: 121s of
+          # that went on loading each manifest and planning each build, which
+          # SwiftPM does one package at a time, and 178s on compiling. A lane
+          # overlaps the first figure, so treat 121s as the ceiling on what a
+          # second lane can win rather than as a prediction. Whether the
+          # compile already uses all 3 of the runner's cores is not measured.
           LANE_COUNT: 2
         run: |
           set -uo pipefail
@@ -82,9 +84,11 @@ jobs:
           # SwiftPM takes a file lock on its scratch path and prints "Another
           # instance of SwiftPM is already running using ...". Two lanes on one
           # path would queue rather than overlap, so each lane gets its own.
-          # Measured locally 2026-09-23: 16 packages cost 241s in one path and
-          # 275s split across two, so a second path repeats 34s of dependency
-          # compilation, 14%. That is the price of the overlap.
+          # Measured locally 2026-09-23, every run cold and sequential so the
+          # figures are work rather than contention: the 16 packages cost 241s
+          # in one path, and 168s plus 107s when split 8 and 8 across two. So a
+          # second path repeats 34s of dependency compilation, 14%. That is
+          # the price of the overlap.
           run_lane () {
             local lane=$1
             local scratch="$RUNNER_TEMP/build-lane-$lane"
@@ -93,8 +97,8 @@ jobs:
               # mkdir fails when the directory is already there, and it is
               # atomic, so two lanes never take the same package. A lane that
               # draws a cheap package comes straight back for another, where a
-              # fixed split leaves it idle. The local split above was 168s
-              # against 107s, so balance is worth more than the duplication.
+              # fixed split leaves it idle. The fixed 8 and 8 split above ran
+              # 168s against 107s; the queue ran 182s against 190s.
               mkdir "$claims/$package" 2>/dev/null || continue
               # --force-resolved-versions uses this package's own committed
               # Package.resolved rather than resolving again, which was 91s of
@@ -110,13 +114,20 @@ jobs:
               # next begins. A lane that buffered its log and printed it at the
               # end would stamp every line with the time it was printed, which
               # is how the phase figures above would stop being measurable.
-              # `sed -l` flushes per line, so the prefix costs no delay.
-              swift test \
+              # `sed -l` flushes per line, so the prefix costs no delay. A
+              # line longer than 512 bytes is not written atomically, so a
+              # long compiler diagnostic can still land under the other lane's
+              # prefix.
+              if swift test \
                 --package-path "Packages/$package" \
                 --scratch-path "$scratch" \
                 --force-resolved-versions 2>&1 \
-                | sed -l "s/^/[$package] /" \
-                || echo "$package" >> "$failures"
+                | sed -l "s/^/[$package] /"
+              then
+                touch "$claims/$package/passed"
+              else
+                echo "$package" >> "$failures"
+              fi
             done
           }
 
@@ -128,11 +139,35 @@ jobs:
           done
           wait
 
+          # Printed so the next person can tell whether a third lane fits: the
+          # runner has 14 GB of storage and each lane holds a whole build.
+          du -sm "$RUNNER_TEMP"/build-lane-* || true
+
+          tested=0
+          for package in "${packages[@]}"; do
+            if [ -e "$claims/$package/passed" ]; then
+              tested=$((tested + 1))
+            fi
+          done
+          failed=0
           if [ -s "$failures" ]; then
+            failed=$(( $(wc -l < "$failures") ))
             echo "::error::Failing packages: $(tr '\n' ' ' < "$failures")"
+          fi
+
+          # Success is not the absence of a failure record. A lane that dies
+          # between claiming a package and reporting on it leaves neither
+          # record, and the other lane skips that package because the claim is
+          # already there. The job would then pass having tested 15 of 16.
+          # Counting both outcomes turns that into a failure.
+          if [ "$((tested + failed))" -ne "${#packages[@]}" ]; then
+            echo "::error::${#packages[@]} packages found, but $tested passed and $failed failed. A lane stopped early."
             exit 1
           fi
-          echo "Tested ${#packages[@]} package(s) in $LANE_COUNT lane(s)"
+          if [ "$failed" -ne 0 ]; then
+            exit 1
+          fi
+          echo "Tested $tested package(s) in $LANE_COUNT lane(s)"
 
   # Snapshot tests are the only tests that must run on iOS: they are the only
   # ones behind `#if os(iOS)`, so the macOS job above cannot see them. Every
