@@ -200,24 +200,70 @@ jobs:
     # A simulator that never finishes booting would otherwise hold the runner
     # for the six-hour default.
     timeout-minutes: 10
+    env:
+      # Empty on a push, which is how the scope step knows to run everything.
+      BASE_REF: ${{ github.base_ref }}
     steps:
       - name: Checkout iOS Repository
         uses: actions/checkout@v4
+        with:
+          # The whole history, so a pull request can be compared with its base.
+          fetch-depth: 0
 
       - name: Select Xcode
         uses: maxim-lobanov/setup-xcode@v1
         with:
           xcode-version: '26.5'
 
+      # A pull request skips the launch only when every file it changes sits
+      # in a local package the App Clip does not depend on. Any change outside
+      # Packages/ runs it: the App Clip compiles and bundles files from the
+      # app's own folders, and a hand-kept list of them would go stale. The
+      # App Clip reaches packages through ScheduleUI and NetworkKit; it can
+      # reach another only through a project change, which is outside Packages/.
+      - name: Decide whether this pull request can affect the App Clip
+        id: scope
+        run: |
+          set -uo pipefail
+          affected=true
+          # --no-renames lists both paths of a moved file, so a file moved into
+          # Packages/ still counts as a change where it came from.
+          if [ -n "$BASE_REF" ] && changed=$(git diff --name-only --no-renames "origin/$BASE_REF...HEAD"); then
+            if ! grep -qv '^Packages/' <<< "$changed"; then
+              affected=false
+              for root in Packages/ScheduleUI Packages/NetworkKit; do
+                # When the dependencies cannot be listed, or the list does not
+                # name the root itself, count the App Clip as affected. A
+                # failure here must run the launch, never skip it.
+                paths=$( (cd "$root" && swift package show-dependencies --format json) \
+                  | jq -r '.. | objects | select(has("path")) | .path' \
+                  | grep -v -e '/\.build/' -e '/SourcePackages/' \
+                  | sed "s|^$(pwd -P)/||" ) || { affected=true; break; }
+                grep -qx "$root" <<< "$paths" || { affected=true; break; }
+                for path in $paths; do
+                  if grep -q "^$path/" <<< "$changed"; then
+                    affected=true
+                    break 2
+                  fi
+                done
+              done
+            fi
+          fi
+          echo "affected=$affected" >> "$GITHUB_OUTPUT"
+          if [ "$affected" = false ]; then
+            echo "Skipped, because this pull request cannot affect the App Clip"
+          fi
+
       # Each brand builds into its own derived data folder. Sharing one saves
       # almost nothing: switching configuration makes Xcode delete the other
       # brand's products as stale, and fills the log with notes saying so.
       - name: Launch the SwiftLeeds App Clip
+        if: steps.scope.outputs.affected == 'true'
         run: .github/scripts/launch-app-clip.sh Debug uk.co.swiftleeds.SwiftLeeds.Clip "$RUNNER_TEMP/app-clip-derived-data-swiftleeds"
 
       # Runs even when the SwiftLeeds launch failed, so one run reports both.
       - name: Launch the KotlinLeeds App Clip
-        if: ${{ !cancelled() }}
+        if: ${{ !cancelled() && steps.scope.outputs.affected == 'true' }}
         run: .github/scripts/launch-app-clip.sh Debug-KotlinLeeds uk.co.kotlinleeds.KotlinLeeds.Clip "$RUNNER_TEMP/app-clip-derived-data-kotlinleeds"
 
   lint-swift:
