@@ -21,6 +21,7 @@ let package = Package(
                 .product(name: "ColorTheme", package: "ColorTheme"),
             ]
         ),
+        .testTarget(name: "SettingsUITests", dependencies: ["SettingsUI"]),
     ],
     // Swift 6 mode rejects `SettingsViewModel` sending `self` into the icon change callback.
     swiftLanguageModes: [
