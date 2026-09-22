@@ -154,21 +154,27 @@ jobs:
             return 1
           }
           # The scheme names every snapshot target and the package that holds
-          # it, and the lint job fails when the scheme and the manifests
-          # disagree. Reading it here replaces a `swift package describe` per
-          # package, which cost 26s of a 473s step. The script fails when the
+          # it, and the lint job fails when the scheme and the manifests name
+          # different targets. Reading it here replaces a `swift package
+          # describe` per package, which cost 26s. The script fails when the
           # scheme runs no target, so an empty list cannot pass as "nothing to
           # do".
           listing=$(python3 .github/scripts/list-snapshot-targets.py) || exit 1
           selected=""
           skipped=""
-          while read -r target package; do
+          # The list arrives on file descriptor 3, not on stdin. `is_affected`
+          # runs `swift package show-dependencies`, and a command that reads
+          # stdin would otherwise swallow the targets this loop has not read
+          # yet. Those targets would then be neither run nor reported, and the
+          # job would pass. Measured with a stdin-reading command in the body:
+          # one line of four survived.
+          while read -r target package <&3; do
             if is_affected "$package"; then
               selected="$selected $target"
             else
               skipped="$skipped $(basename "$package")"
             fi
-          done <<< "$listing"
+          done 3<<< "$listing"
           if [ -n "$skipped" ]; then
             echo "Skipped, because this pull request cannot affect them:$skipped"
           fi
