@@ -119,7 +119,9 @@ jobs:
           # request skipped.
           changed=""
           run_all=true
-          if [ -n "$BASE_REF" ] && changed=$(git diff --name-only "origin/$BASE_REF...HEAD"); then
+          # --no-renames lists both paths of a moved file, so a file moved into
+          # a package still counts as a change where it came from.
+          if [ -n "$BASE_REF" ] && changed=$(git diff --name-only --no-renames "origin/$BASE_REF...HEAD"); then
             run_all=false
             if grep -qE '^(\.github/|SwiftLeeds\.xcodeproj/)' <<< "$changed"; then
               run_all=true
