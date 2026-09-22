@@ -2,31 +2,6 @@
 import SwiftUI
 import UIKit
 
-/// Available theme options for the application
-public enum ThemeOption: String, CaseIterable {
-    case system
-    case light
-    case dark
-
-    /// User-friendly display name for the theme option
-    public var displayName: String {
-        switch self {
-        case .system: return "System"
-        case .light: return "Light"
-        case .dark: return "Dark"
-        }
-    }
-
-    /// Corresponding UIUserInterfaceStyle for the theme
-    public var userInterfaceStyle: UIUserInterfaceStyle {
-        switch self {
-        case .light: return .light
-        case .dark: return .dark
-        case .system: return .unspecified
-        }
-    }
-}
-
 /// Manages the application's theme settings and appearance
 public final class ThemeManager: ObservableObject {
     /// Shared singleton instance
