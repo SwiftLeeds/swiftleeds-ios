@@ -5,8 +5,8 @@ import PackageDescription
 let package = Package(
     name: "SecureStorageKit",
     platforms: [
-        .iOS(.v17),
-        .macOS(.v13),
+        .iOS(.v18),
+        .macOS(.v15),
     ],
     products: [
         .library(name: "SecureStorageKit", targets: ["SecureStorageKit"]),
