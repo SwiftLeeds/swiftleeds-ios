@@ -35,7 +35,7 @@ struct TabsMainView: View {
                 }
                 .tag(TabItems.sponsors)
 
-            SettingsView {
+            SettingsView(contactEmail: .conference, appVersion: .current) {
                 Section("Account") { AccountView() }
             }
             .tabItem {

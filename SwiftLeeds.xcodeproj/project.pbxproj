@@ -72,6 +72,8 @@
 		AE8C1B2B28C4B39A00AF7318 /* TokenDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8C1B2A28C4B39A00AF7318 /* TokenDetails.swift */; };
 		AECB295727417F9D00CDC983 /* SwiftLeedsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECB295627417F9D00CDC983 /* SwiftLeedsApp.swift */; };
 		AECB2A0127417F9D00CDC902 /* LogCategories.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECB2A0027417F9D00CDC901 /* LogCategories.swift */; };
+		A11CE570000000000000F3B1 /* ContactEmail+Conference.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11CE570000000000000F3A1 /* ContactEmail+Conference.swift */; };
+		A11CE570000000000000F3B2 /* AppVersion+Current.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11CE570000000000000F3A2 /* AppVersion+Current.swift */; };
 		AECB296827417F9E00CDC983 /* SwiftLeedsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECB296727417F9E00CDC983 /* SwiftLeedsTests.swift */; };
 		AECB297227417F9E00CDC983 /* SwiftLeedsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECB297127417F9E00CDC983 /* SwiftLeedsUITests.swift */; };
 		AECB297427417F9E00CDC983 /* SwiftLeedsUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECB297327417F9E00CDC983 /* SwiftLeedsUITestsLaunchTests.swift */; };
@@ -210,6 +212,8 @@
 		AECB295327417F9D00CDC983 /* SwiftLeeds.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftLeeds.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AECB295627417F9D00CDC983 /* SwiftLeedsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftLeedsApp.swift; sourceTree = "<group>"; };
 		AECB2A0027417F9D00CDC901 /* LogCategories.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LogCategories.swift; sourceTree = "<group>"; };
+		A11CE570000000000000F3A1 /* ContactEmail+Conference.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "ContactEmail+Conference.swift"; sourceTree = "<group>"; };
+		A11CE570000000000000F3A2 /* AppVersion+Current.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "AppVersion+Current.swift"; sourceTree = "<group>"; };
 		AECB296327417F9E00CDC983 /* SwiftLeedsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftLeedsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AECB296727417F9E00CDC983 /* SwiftLeedsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftLeedsTests.swift; sourceTree = "<group>"; };
 		AECB296D27417F9E00CDC983 /* SwiftLeedsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftLeedsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -483,6 +487,8 @@
 				AECB29832741ABFD00CDC983 /* Info.plist */,
 				AECB295627417F9D00CDC983 /* SwiftLeedsApp.swift */,
 				AECB2A0027417F9D00CDC901 /* LogCategories.swift */,
+				A11CE570000000000000F3A1 /* ContactEmail+Conference.swift */,
+				A11CE570000000000000F3A2 /* AppVersion+Current.swift */,
 				740162D92A7053A000C2D1B3 /* AppState.swift */,
 				67624B7470D6BA62D4912236 /* ConferenceConfig.swift */,
 			);
@@ -794,6 +800,8 @@
 				AE8C1B2828C4B36B00AF7318 /* AppDelegate+Push.swift in Sources */,
 				AECB295727417F9D00CDC983 /* SwiftLeedsApp.swift in Sources */,
 				AECB2A0127417F9D00CDC902 /* LogCategories.swift in Sources */,
+				A11CE570000000000000F3B1 /* ContactEmail+Conference.swift in Sources */,
+				A11CE570000000000000F3B2 /* AppVersion+Current.swift in Sources */,
 				AE8C1B2B28C4B39A00AF7318 /* TokenDetails.swift in Sources */,
 				AEDC0DAE286759630078A153 /* Tabs.swift in Sources */,
 				74F5EF852A49CE6A008D9413 /* TabsMainView.swift in Sources */,

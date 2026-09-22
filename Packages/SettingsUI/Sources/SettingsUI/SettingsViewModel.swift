@@ -14,22 +14,16 @@ package final class SettingsViewModel {
     /// Whether the last icon change failed.
     package var showingIconError = false
 
-    package init() {}
+    package let appVersion: AppVersion
+    private let contactEmail: ContactEmail
+
+    package init(contactEmail: ContactEmail, appVersion: AppVersion) {
+        self.contactEmail = contactEmail
+        self.appVersion = appVersion
+    }
 
     package var currentIcon: AppIconOption {
         storedIcon
-    }
-
-    package var appVersion: String {
-        Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0"
-    }
-
-    private var contactEmail: String {
-        guard let email = Bundle.main.object(forInfoDictionaryKey: "ContactEmail") as? String, !email.isEmpty else {
-            assertionFailure("Missing Info.plist key: ContactEmail")
-            return ""
-        }
-        return email
     }
 
     /// Changes the app icon, and stores the choice. On failure, keeps the icon and sets
@@ -47,9 +41,7 @@ package final class SettingsViewModel {
 
     package func openContactUs() async {
         @Dependency(\.openURL) var openURL
-        if let url = URL(string: "mailto:\(contactEmail)") {
-            await openURL(url)
-        }
+        await openURL(contactEmail.mailtoURL)
     }
 
     package func openCodeOfConduct() async {

@@ -31,7 +31,7 @@ struct SidebarView: View {
                 Label("Sponsors", systemImage: "sparkles")
             }
 
-            NavigationLink(destination: SettingsView().onAppear {
+            NavigationLink(destination: SettingsView(contactEmail: .conference, appVersion: .current).onAppear {
                 appState.selectedTab = .settings
             }) {
                 Label("Settings", systemImage: "gearshape.fill")
