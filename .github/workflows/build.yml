@@ -180,10 +180,9 @@ jobs:
             echo "No snapshot target can be affected by this pull request"
             exit 0
           fi
-          # Every call runs through the app project, with one derived data
-          # folder, so the dependencies the packages share compile once. Run
-          # from a package's own folder, each package is its own workspace, and
-          # Xcode rebuilds the shared dependencies every time.
+          # The call runs through SwiftLeeds.xcodeproj, never from a package's
+          # own folder: from there each package is its own workspace, and Xcode
+          # rebuilds the dependencies they share for every one.
           # Unquoted on purpose: the target names are one word each, and this
           # is how the step counts them.
           set -- $selected
@@ -213,7 +212,10 @@ jobs:
             || status=$?
           echo "::endgroup::"
           if [ "$status" -ne 0 ]; then
-            echo "::error::The snapshot tests failed:$selected"
+            # One call covers several targets, and its status does not say
+            # which one failed. Naming them all here would name six that
+            # passed, so the group above is where a reader looks.
+            echo "::error::The snapshot tests failed. The failing target is named in the log above"
             exit "$status"
           fi
           echo "Tested $count snapshot target(s) on the simulator:$selected"
