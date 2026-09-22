@@ -57,12 +57,13 @@ jobs:
           for dir in Packages/*/; do
             [ -f "${dir}Package.swift" ] || continue
             echo "::group::${dir%/}"
-            # --force-resolved-versions uses the committed Package.resolved and
-            # refuses to resolve again, so a package cannot quietly test against
-            # a newer version than the app ships. It also skips the resolution
-            # each package repeated: measured locally, 10 "Computing version"
-            # lines for one package became 0, and the loop went from 2m49s to
-            # 2m04s with a warm cache.
+            # --force-resolved-versions uses this package's own committed
+            # Package.resolved rather than resolving again, which was 91s of
+            # this step. A file that cannot satisfy the manifest fails the job
+            # with "an out-of-date resolved file was detected", where the old
+            # behaviour quietly resolved something newer.
+            # It says nothing about the app's own Package.resolved. Keeping the
+            # two in step is still the manual ritual in CLAUDE.md.
             (cd "$dir" && swift test --scratch-path "$scratch" --force-resolved-versions) || failed+=("${dir%/}")
             echo "::endgroup::"
             count=$((count + 1))
