@@ -57,7 +57,13 @@ jobs:
           for dir in Packages/*/; do
             [ -f "${dir}Package.swift" ] || continue
             echo "::group::${dir%/}"
-            (cd "$dir" && swift test --scratch-path "$scratch") || failed+=("${dir%/}")
+            # --force-resolved-versions uses the committed Package.resolved and
+            # refuses to resolve again, so a package cannot quietly test against
+            # a newer version than the app ships. It also skips the resolution
+            # each package repeated: measured locally, 10 "Computing version"
+            # lines for one package became 0, and the loop went from 2m49s to
+            # 2m04s with a warm cache.
+            (cd "$dir" && swift test --scratch-path "$scratch" --force-resolved-versions) || failed+=("${dir%/}")
             echo "::endgroup::"
             count=$((count + 1))
           done
