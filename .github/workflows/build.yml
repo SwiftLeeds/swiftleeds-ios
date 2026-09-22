@@ -401,3 +401,10 @@ jobs:
       # be run locally: python3 .github/scripts/check-app-groups.py
       - name: Check every configuration writes to the app group it is granted
         run: python3 .github/scripts/check-app-groups.py
+
+      # The simulator job runs one xcodebuild call against the SnapshotTests
+      # scheme, so a target that scheme does not name never runs on iOS. It
+      # would still compile on macOS and do nothing there, which is the gap
+      # this closes.
+      - name: Check the snapshot scheme lists every snapshot target
+        run: python3 .github/scripts/check-snapshot-scheme.py

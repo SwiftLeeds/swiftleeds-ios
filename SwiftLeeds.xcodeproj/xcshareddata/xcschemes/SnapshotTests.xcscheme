@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Scheme
+   LastUpgradeVersion = "2650"
+   version = "1.7">
+   <BuildAction
+      parallelizeBuildables = "YES"
+      buildImplicitDependencies = "YES">
+      <BuildActionEntries>
+      </BuildActionEntries>
+   </BuildAction>
+   <TestAction
+      buildConfiguration = "Debug"
+      selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
+      selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      language = "en-GB"
+      region = "GB"
+      shouldUseLaunchSchemeArgsEnv = "YES">
+      <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "AboutUISnapshotTests"
+               BuildableName = "AboutUISnapshotTests"
+               BlueprintName = "AboutUISnapshotTests"
+               ReferencedContainer = "container:Packages/AboutUI">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "AuthenticationUISnapshotTests"
+               BuildableName = "AuthenticationUISnapshotTests"
+               BlueprintName = "AuthenticationUISnapshotTests"
+               ReferencedContainer = "container:Packages/AuthenticationUI">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "LocalUISnapshotTests"
+               BuildableName = "LocalUISnapshotTests"
+               BlueprintName = "LocalUISnapshotTests"
+               ReferencedContainer = "container:Packages/LocalUI">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "ScheduleUISnapshotTests"
+               BuildableName = "ScheduleUISnapshotTests"
+               BlueprintName = "ScheduleUISnapshotTests"
+               ReferencedContainer = "container:Packages/ScheduleUI">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "SettingsUISnapshotTests"
+               BuildableName = "SettingsUISnapshotTests"
+               BlueprintName = "SettingsUISnapshotTests"
+               ReferencedContainer = "container:Packages/SettingsUI">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "SponsorsUISnapshotTests"
+               BuildableName = "SponsorsUISnapshotTests"
+               BlueprintName = "SponsorsUISnapshotTests"
+               ReferencedContainer = "container:Packages/SponsorsUI">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "UIComponentsSnapshotTests"
+               BuildableName = "UIComponentsSnapshotTests"
+               BlueprintName = "UIComponentsSnapshotTests"
+               ReferencedContainer = "container:Packages/UIComponents">
+            </BuildableReference>
+         </TestableReference>
+      </Testables>
+   </TestAction>
+</Scheme>
