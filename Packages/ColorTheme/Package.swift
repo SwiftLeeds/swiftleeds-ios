@@ -13,6 +13,7 @@ let package = Package(
     ],
     targets: [
         .target(name: "ColorTheme"),
+        .testTarget(name: "ColorThemeTests", dependencies: ["ColorTheme"]),
     ],
     // Swift 6 mode rejects `ThemeManager.shared`, a static that is not `Sendable`.
     swiftLanguageModes: [
