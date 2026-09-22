@@ -15,7 +15,6 @@ struct SwiftLeedsApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
 
     @StateObject private var appState = AppState()
-    @StateObject private var themeManager = ThemeManager.shared
 
     init() {
         prepareDependencies {
@@ -43,7 +42,7 @@ struct SwiftLeedsApp: App {
         WindowGroup {
             Tabs()
                 .environmentObject(appState)
-                .environmentObject(themeManager)
+                .applyingSelectedTheme()
         }
     }
 }

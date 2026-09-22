@@ -1,72 +1,54 @@
-#if canImport(UIKit)
-import ColorTheme
-import SwiftUI
-import UIKit
+import Dependencies
+import Foundation
+import NetworkKit
+import Observation
+import Sharing
 
-final class SettingsViewModel: ObservableObject {
-    @Published var currentIcon: AppIconOption = .generic
-    @Published var showingIconError = false
+/// The Settings screen's state: the app icon, and the version and links it shows.
+@Observable
+@MainActor
+package final class SettingsViewModel {
+    @ObservationIgnored
+    @Shared(.selectedAppIcon) private var storedIcon
 
-    var appVersion: String {
-        Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0"
+    /// Whether the last icon change failed.
+    package var showingIconError = false
+
+    package let appVersion: AppVersion
+    private let contactEmail: ContactEmail
+
+    package init(contactEmail: ContactEmail, appVersion: AppVersion) {
+        self.contactEmail = contactEmail
+        self.appVersion = appVersion
     }
 
-    private var contactEmail: String {
-        guard let email = Bundle.main.object(forInfoDictionaryKey: "ContactEmail") as? String, !email.isEmpty else {
-            assertionFailure("Missing Info.plist key: ContactEmail")
-            return ""
-        }
-        return email
+    package var currentIcon: AppIconOption {
+        storedIcon
     }
 
-    private var codeOfConductHost: String {
-        guard let host = Bundle.main.object(forInfoDictionaryKey: "APIHost") as? String, !host.isEmpty else {
-            assertionFailure("Missing Info.plist key: APIHost")
-            return ""
-        }
-        return host
-    }
+    /// Changes the app icon, and stores the choice. On failure, keeps the icon and sets
+    /// `showingIconError`.
+    package func changeAppIcon(to iconOption: AppIconOption) async {
+        @Dependency(\.changeAppIcon) var changeAppIcon
 
-    init() {
-        loadCurrentIcon()
-    }
-
-    func changeAppIcon(to iconOption: AppIconOption) {
-        guard UIApplication.shared.supportsAlternateIcons else {
+        do {
+            try await changeAppIcon(to: iconOption)
+            $storedIcon.withLock { $0 = iconOption }
+        } catch {
             showingIconError = true
-            return
-        }
-
-        UIApplication.shared.setAlternateIconName(iconOption.iconName) { [weak self] error in
-            DispatchQueue.main.async {
-                if error != nil {
-                    self?.showingIconError = true
-                } else {
-                    self?.currentIcon = iconOption
-                    UserDefaults.standard.set(iconOption.rawValue, forKey: UserDefaultsKeys.selectedAppIcon)
-                }
-            }
         }
     }
 
-    func openContactUs() {
-        if let url = URL(string: "mailto:\(contactEmail)") {
-            UIApplication.shared.open(url)
-        }
+    package func openContactUs() async {
+        @Dependency(\.openURL) var openURL
+        await openURL(contactEmail.mailtoURL)
     }
 
-    func openCodeOfConduct() {
-        if let url = URL(string: "https://\(codeOfConductHost)/conduct") {
-            UIApplication.shared.open(url)
+    package func openCodeOfConduct() async {
+        @Dependency(\.apiConfiguration) var apiConfiguration
+        @Dependency(\.openURL) var openURL
+        if let url = URL(string: "/conduct", relativeTo: apiConfiguration.baseURL)?.absoluteURL {
+            await openURL(url)
         }
     }
-
-    private func loadCurrentIcon() {
-        if let savedIcon = UserDefaults.standard.string(forKey: UserDefaultsKeys.selectedAppIcon),
-           let iconOption = AppIconOption(rawValue: savedIcon) {
-            currentIcon = iconOption
-        }
-    }
-
 }
-#endif

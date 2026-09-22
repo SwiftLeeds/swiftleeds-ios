@@ -1,13 +1,25 @@
 #if canImport(UIKit)
 import ColorTheme
+import Sharing
 import SwiftUI
 
 public struct SettingsView<Header: View>: View {
-    @EnvironmentObject var themeManager: ThemeManager
-    @StateObject private var viewModel = SettingsViewModel()
+    @Shared(.selectedTheme) private var theme
+    @State private var viewModel: SettingsViewModel
     private let header: Header
 
-    public init(@ViewBuilder header: () -> Header = { EmptyView() }) {
+    /// Creates the Settings screen.
+    ///
+    /// - Parameters:
+    ///   - contactEmail: The address the Contact Us button writes to.
+    ///   - appVersion: The version the screen shows.
+    ///   - header: Rows shown above the app icon picker.
+    public init(
+        contactEmail: ContactEmail,
+        appVersion: AppVersion,
+        @ViewBuilder header: () -> Header = { EmptyView() }
+    ) {
+        _viewModel = State(initialValue: SettingsViewModel(contactEmail: contactEmail, appVersion: appVersion))
         self.header = header()
     }
 
@@ -23,7 +35,7 @@ public struct SettingsView<Header: View>: View {
                                 iconOption: iconOption,
                                 isSelected: viewModel.currentIcon == iconOption,
                                 action: {
-                                    viewModel.changeAppIcon(to: iconOption)
+                                    Task { await viewModel.changeAppIcon(to: iconOption) }
                                 }
                             )
                         }
@@ -32,13 +44,10 @@ public struct SettingsView<Header: View>: View {
                 }
 
                 Section("Appearance") {
-                    Picker("Theme", selection: $themeManager.currentTheme) {
+                    Picker("Theme", selection: Binding($theme)) {
                         ForEach(ThemeOption.allCases, id: \.self) { theme in
                             Text(theme.displayName).tag(theme)
                         }
-                    }
-                    .onChange(of: themeManager.currentTheme) { newTheme in
-                        themeManager.setTheme(newTheme)
                     }
                 }
 
@@ -46,16 +55,16 @@ public struct SettingsView<Header: View>: View {
                     HStack {
                         Text("Version")
                         Spacer()
-                        Text(viewModel.appVersion)
+                        Text(String(viewModel.appVersion))
                             .foregroundColor(.secondary)
                     }
 
                     Button("Contact Us") {
-                        viewModel.openContactUs()
+                        Task { await viewModel.openContactUs() }
                     }
 
                     Button("Code of Conduct") {
-                        viewModel.openCodeOfConduct()
+                        Task { await viewModel.openCodeOfConduct() }
                     }
                 }
             }
@@ -71,8 +80,10 @@ public struct SettingsView<Header: View>: View {
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingsView()
-            .environmentObject(ThemeManager.shared)
+        if let contactEmail = try? ContactEmail("hello@conference.example"),
+           let appVersion = try? AppVersion("2.1.0") {
+            SettingsView(contactEmail: contactEmail, appVersion: appVersion)
+        }
     }
 }
 #endif

@@ -5,18 +5,30 @@ import PackageDescription
 let package = Package(
     name: "ColorTheme",
     platforms: [
-        .iOS(.v16),
-        .macOS(.v13),
+        .iOS(.v17),
+        .macOS(.v14),
     ],
     products: [
         .library(name: "ColorTheme", targets: ["ColorTheme"]),
     ],
-    targets: [
-        .target(name: "ColorTheme"),
-        .testTarget(name: "ColorThemeTests", dependencies: ["ColorTheme"]),
+    dependencies: [
+        .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.0.0"),
+        .package(url: "https://github.com/pointfreeco/swift-sharing", from: "2.10.1"),
     ],
-    // Swift 6 mode rejects `ThemeManager.shared`, a static that is not `Sendable`.
-    swiftLanguageModes: [
-        .v5,
+    targets: [
+        .target(
+            name: "ColorTheme",
+            dependencies: [
+                .product(name: "Sharing", package: "swift-sharing"),
+            ]
+        ),
+        .testTarget(
+            name: "ColorThemeTests",
+            dependencies: [
+                "ColorTheme",
+                .product(name: "Dependencies", package: "swift-dependencies"),
+                .product(name: "Sharing", package: "swift-sharing"),
+            ]
+        ),
     ]
 )

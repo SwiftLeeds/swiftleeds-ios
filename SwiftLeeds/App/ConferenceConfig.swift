@@ -19,6 +19,7 @@ enum ConferenceConfig {
 
     static let pushURL: String = "https://www.\(apiHost)/push"
     static let contactEmail: String = value(for: "ContactEmail")
+    static let appVersion: String = value(for: "CFBundleShortVersionString")
     static let appGroupIdentifier: String = value(for: "AppGroupIdentifier")
     static let conferenceName: String = value(for: "CFBundleDisplayName")
 }

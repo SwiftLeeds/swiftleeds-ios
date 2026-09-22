@@ -3,7 +3,7 @@ import UIKit
 #endif
 
 /// Available theme options for the application
-public enum ThemeOption: String, CaseIterable {
+public enum ThemeOption: String, CaseIterable, Equatable, Hashable, Sendable {
     case system
     case light
     case dark
@@ -20,8 +20,7 @@ public enum ThemeOption: String, CaseIterable {
 
 #if canImport(UIKit)
 extension ThemeOption {
-    /// Corresponding UIUserInterfaceStyle for the theme
-    public var userInterfaceStyle: UIUserInterfaceStyle {
+    var userInterfaceStyle: UIUserInterfaceStyle {
         switch self {
         case .light: return .light
         case .dark: return .dark

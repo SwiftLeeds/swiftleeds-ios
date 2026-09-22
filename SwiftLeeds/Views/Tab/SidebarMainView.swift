@@ -23,7 +23,7 @@ struct SidebarMainView: View {
             case .sponsors:
                 SponsorsView()
             case .settings:
-                SettingsView {
+                SettingsView(contactEmail: .conference, appVersion: .current) {
                     Section("Account") { AccountView() }
                 }
             }
