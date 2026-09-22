@@ -1,8 +1,10 @@
 #if canImport(UIKit)
+import Dependencies
 import Sharing
 import SwiftUI
 import UIKit
 
+@MainActor
 final class SettingsViewModel: ObservableObject {
     @Shared(.selectedAppIcon) private var storedIcon
     @Published var currentIcon: AppIconOption = .generic
@@ -32,21 +34,15 @@ final class SettingsViewModel: ObservableObject {
         currentIcon = storedIcon
     }
 
-    func changeAppIcon(to iconOption: AppIconOption) {
-        guard UIApplication.shared.supportsAlternateIcons else {
-            showingIconError = true
-            return
-        }
+    func changeAppIcon(to iconOption: AppIconOption) async {
+        @Dependency(\.changeAppIcon) var changeAppIcon
 
-        UIApplication.shared.setAlternateIconName(iconOption.iconName) { [weak self] error in
-            DispatchQueue.main.async {
-                if error != nil {
-                    self?.showingIconError = true
-                } else {
-                    self?.currentIcon = iconOption
-                    self?.$storedIcon.withLock { $0 = iconOption }
-                }
-            }
+        do {
+            try await changeAppIcon(to: iconOption)
+            currentIcon = iconOption
+            $storedIcon.withLock { $0 = iconOption }
+        } catch {
+            showingIconError = true
         }
     }
 

@@ -24,7 +24,7 @@ public struct SettingsView<Header: View>: View {
                                 iconOption: iconOption,
                                 isSelected: viewModel.currentIcon == iconOption,
                                 action: {
-                                    viewModel.changeAppIcon(to: iconOption)
+                                    Task { await viewModel.changeAppIcon(to: iconOption) }
                                 }
                             )
                         }
