@@ -1,5 +1,6 @@
 import Dependencies
 import Foundation
+import NetworkKit
 import Observation
 import Sharing
 
@@ -31,14 +32,6 @@ package final class SettingsViewModel {
         return email
     }
 
-    private var codeOfConductHost: String {
-        guard let host = Bundle.main.object(forInfoDictionaryKey: "APIHost") as? String, !host.isEmpty else {
-            assertionFailure("Missing Info.plist key: APIHost")
-            return ""
-        }
-        return host
-    }
-
     /// Changes the app icon, and stores the choice. On failure, keeps the icon and sets
     /// `showingIconError`.
     package func changeAppIcon(to iconOption: AppIconOption) async {
@@ -60,8 +53,9 @@ package final class SettingsViewModel {
     }
 
     package func openCodeOfConduct() async {
+        @Dependency(\.apiConfiguration) var apiConfiguration
         @Dependency(\.openURL) var openURL
-        if let url = URL(string: "https://\(codeOfConductHost)/conduct") {
+        if let url = URL(string: "/conduct", relativeTo: apiConfiguration.baseURL)?.absoluteURL {
             await openURL(url)
         }
     }

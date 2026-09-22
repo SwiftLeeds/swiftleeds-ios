@@ -1,5 +1,7 @@
 import Dependencies
 import DependenciesTestSupport
+import Foundation
+import NetworkKit
 import SettingsUI
 import Sharing
 import Testing
@@ -31,6 +33,23 @@ import Testing
         let sut = await changingIcon(to: .space, result: .failure(error))
 
         #expect(sut.currentIcon == .generic)
+    }
+
+    @Test func whenCodeOfConductIsOpened_shouldOpenConductPageOnAPIHost() async throws {
+        let configuration = APIConfiguration(baseURL: try #require(URL(string: "https://conference.example")))
+        let opened = LockIsolated<[URL]>([])
+
+        await withDependencies {
+            $0.apiConfiguration = configuration
+            $0.openURL = OpenURLEffect { url in
+                opened.withValue { $0.append(url) }
+                return true
+            }
+        } operation: {
+            await SettingsViewModel().openCodeOfConduct()
+        }
+
+        #expect(opened.value == [URL(string: "https://conference.example/conduct")])
     }
 
     private func changingIcon(

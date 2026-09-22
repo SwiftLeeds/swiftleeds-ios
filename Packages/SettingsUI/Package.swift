@@ -13,6 +13,7 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../ColorTheme"),
+        .package(path: "../NetworkKit"),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.0.0"),
         .package(url: "https://github.com/pointfreeco/swift-sharing", from: "2.10.1"),
     ],
@@ -22,6 +23,7 @@ let package = Package(
             dependencies: [
                 .product(name: "ColorTheme", package: "ColorTheme"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
+                .product(name: "NetworkKit", package: "NetworkKit"),
                 .product(name: "Sharing", package: "swift-sharing"),
             ]
         ),
@@ -31,6 +33,7 @@ let package = Package(
                 "SettingsUI",
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "DependenciesTestSupport", package: "swift-dependencies"),
+                .product(name: "NetworkKit", package: "NetworkKit"),
                 .product(name: "Sharing", package: "swift-sharing"),
             ]
         ),
