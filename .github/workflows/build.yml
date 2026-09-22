@@ -205,9 +205,10 @@ jobs:
             for target in $selected; do
               args+=(-only-testing:"$target")
             done
-            # Each bundle costs about 30s to install and launch, so the bundles
-            # run on cloned simulators side by side. The runner has 3 cores and
-            # a clone boots before it tests, so two workers, not seven.
+            # The bundles run on cloned simulators side by side. Measured on
+            # CI 2026-09-22: the simulator and test phase fell from 288s to
+            # 116s, and the step from 473s to 303s. Two workers, because the
+            # runner has 3 cores and every clone boots before it tests.
             args+=(-parallel-testing-enabled YES -maximum-parallel-testing-workers 2)
           fi
           echo "::group::Snapshot tests:$selected"
