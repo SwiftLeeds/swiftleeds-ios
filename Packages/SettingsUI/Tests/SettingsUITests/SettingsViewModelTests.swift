@@ -21,15 +21,15 @@ import Testing
         #expect(storedIcon == .olympics)
     }
 
-    @Test(.dependencies, arguments: [ChangeAppIcon.Error.unsupported, .refused])
-    func whenIconChangeFails_shouldShowIconError(error: ChangeAppIcon.Error) async throws {
+    @Test(.dependencies, arguments: [AppIconChangeError.unsupported, .refused])
+    func whenIconChangeFails_shouldShowIconError(error: AppIconChangeError) async throws {
         let sut = try await changingIcon(to: .space, result: .failure(error))
 
         #expect(sut.showingIconError)
     }
 
-    @Test(.dependencies, arguments: [ChangeAppIcon.Error.unsupported, .refused])
-    func whenIconChangeFails_shouldKeepCurrentIcon(error: ChangeAppIcon.Error) async throws {
+    @Test(.dependencies, arguments: [AppIconChangeError.unsupported, .refused])
+    func whenIconChangeFails_shouldKeepCurrentIcon(error: AppIconChangeError) async throws {
         let sut = try await changingIcon(to: .space, result: .failure(error))
 
         #expect(sut.currentIcon == .generic)
@@ -68,11 +68,11 @@ import Testing
 
     private func changingIcon(
         to icon: AppIconOption,
-        result: Result<Void, ChangeAppIcon.Error>
+        result: Result<Void, AppIconChangeError>
     ) async throws -> SettingsViewModel {
         let sut = try SettingsViewModel.fixture
         await withDependencies {
-            $0.changeAppIcon = ChangeAppIcon { (_: AppIconOption) async throws(ChangeAppIcon.Error) in
+            $0.changeAppIcon = ChangeAppIcon { (_: AppIconOption) async throws(AppIconChangeError) in
                 try result.get()
             }
         } operation: {
