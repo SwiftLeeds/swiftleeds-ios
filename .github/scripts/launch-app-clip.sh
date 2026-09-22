@@ -42,11 +42,12 @@ say() { echo "$(date -u +%H:%M:%S) $*"; }
 # The build names no particular simulator, as the app build jobs do. A generic
 # destination builds every architecture, so ARCHS keeps it to the runner's own.
 #
-# The boot used to run in the background during this build, and both were slow
-# because they share the runner's cores. One after the other, measured on CI
-# 2026-09-22: build 73s and 77s, boot 64s and 75s, install and launch 54s and
-# 63s, against jobs of 10m0s and 8m33s while they overlapped. Each phase is
-# timed below, so a run says what it spent where.
+#
+# The build, the boot and the launch run one after the other, and each phase is
+# timed below, so a run says what it spent where. Measured on CI 2026-09-22,
+# one run per brand: build 73s and 77s, boot 64s and 75s, install and launch
+# 54s and 63s. Overlapping the build and the boot gave jobs of 10m0s and
+# 8m33s, against 4m18s and 5m14s in order.
 say "Building the $configuration App Clip"
 xcodebuild build -quiet -project SwiftLeeds.xcodeproj -scheme SwiftLeedsAppClip \
   -configuration "$configuration" \
@@ -56,6 +57,10 @@ xcodebuild build -quiet -project SwiftLeeds.xcodeproj -scheme SwiftLeedsAppClip 
   ARCHS=arm64 \
   CODE_SIGNING_ALLOWED=NO
 
+# An earlier note recorded a first boot of 6.5 minutes on an idle runner. It
+# has not reproduced: no run since has shown one over 75s, and every job here
+# gets a fresh runner. The cause is unknown, so treat 6.5 minutes as unproven
+# rather than explained.
 say "Booting $device_name ($runtime)"
 xcrun simctl bootstatus "$udid" -b > /dev/null
 
@@ -97,4 +102,4 @@ if ! ps -p "$pid" > /dev/null; then
   exit 1
 fi
 
-echo "The $configuration App Clip ($bundle_id) is still running ${seconds_alive}s after launch"
+say "The $configuration App Clip ($bundle_id) is still running ${seconds_alive}s after launch"
