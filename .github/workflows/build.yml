@@ -195,8 +195,22 @@ jobs:
   # launch compiles cleanly. This installs and launches it, and fails if the
   # process is gone a few seconds later. The script runs locally too.
   launch-app-clip:
-    name: Launch App Clip (iOS Simulator)
+    name: Launch ${{ matrix.brand }} App Clip (iOS Simulator)
     runs-on: macos-26
+    # One runner per brand. The two builds share nothing, so running them side
+    # by side halves the wait and gives each brand its own time limit.
+    strategy:
+      # Without this, one brand failing cancels the other, and a run reports
+      # only the first failure.
+      fail-fast: false
+      matrix:
+        include:
+          - brand: SwiftLeeds
+            configuration: Debug
+            bundle-id: uk.co.swiftleeds.SwiftLeeds.Clip
+          - brand: KotlinLeeds
+            configuration: Debug-KotlinLeeds
+            bundle-id: uk.co.kotlinleeds.KotlinLeeds.Clip
     # A simulator that never finishes booting would otherwise hold the runner
     # for the six-hour default.
     timeout-minutes: 10
@@ -254,17 +268,9 @@ jobs:
             echo "Skipped, because this pull request cannot affect the App Clip"
           fi
 
-      # Each brand builds into its own derived data folder. Sharing one saves
-      # almost nothing: switching configuration makes Xcode delete the other
-      # brand's products as stale, and fills the log with notes saying so.
-      - name: Launch the SwiftLeeds App Clip
+      - name: Launch the ${{ matrix.brand }} App Clip
         if: steps.scope.outputs.affected == 'true'
-        run: .github/scripts/launch-app-clip.sh Debug uk.co.swiftleeds.SwiftLeeds.Clip "$RUNNER_TEMP/app-clip-derived-data-swiftleeds"
-
-      # Runs even when the SwiftLeeds launch failed, so one run reports both.
-      - name: Launch the KotlinLeeds App Clip
-        if: ${{ !cancelled() && steps.scope.outputs.affected == 'true' }}
-        run: .github/scripts/launch-app-clip.sh Debug-KotlinLeeds uk.co.kotlinleeds.KotlinLeeds.Clip "$RUNNER_TEMP/app-clip-derived-data-kotlinleeds"
+        run: .github/scripts/launch-app-clip.sh "${{ matrix.configuration }}" "${{ matrix.bundle-id }}" "$RUNNER_TEMP/app-clip-derived-data"
 
   lint-swift:
     name: Lint Swift Sources
