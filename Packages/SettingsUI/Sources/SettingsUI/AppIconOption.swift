@@ -2,7 +2,7 @@
 import UIKit
 #endif
 
-package enum AppIconOption: String, CaseIterable {
+package enum AppIconOption: String, CaseIterable, Equatable, Hashable, Sendable {
     case generic = "AppIcon"
     case space = "AppIcon-Space"
     case olympics = "AppIcon-Olympics"

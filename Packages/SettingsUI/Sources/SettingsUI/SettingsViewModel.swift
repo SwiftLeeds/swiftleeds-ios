@@ -1,9 +1,10 @@
 #if canImport(UIKit)
-import ColorTheme
+import Sharing
 import SwiftUI
 import UIKit
 
 final class SettingsViewModel: ObservableObject {
+    @Shared(.selectedAppIcon) private var storedIcon
     @Published var currentIcon: AppIconOption = .generic
     @Published var showingIconError = false
 
@@ -28,7 +29,7 @@ final class SettingsViewModel: ObservableObject {
     }
 
     init() {
-        loadCurrentIcon()
+        currentIcon = storedIcon
     }
 
     func changeAppIcon(to iconOption: AppIconOption) {
@@ -43,7 +44,7 @@ final class SettingsViewModel: ObservableObject {
                     self?.showingIconError = true
                 } else {
                     self?.currentIcon = iconOption
-                    UserDefaults.standard.set(iconOption.rawValue, forKey: UserDefaultsKeys.selectedAppIcon)
+                    self?.$storedIcon.withLock { $0 = iconOption }
                 }
             }
         }
@@ -60,13 +61,5 @@ final class SettingsViewModel: ObservableObject {
             UIApplication.shared.open(url)
         }
     }
-
-    private func loadCurrentIcon() {
-        if let savedIcon = UserDefaults.standard.string(forKey: UserDefaultsKeys.selectedAppIcon),
-           let iconOption = AppIconOption(rawValue: savedIcon) {
-            currentIcon = iconOption
-        }
-    }
-
 }
 #endif

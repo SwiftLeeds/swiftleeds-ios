@@ -13,6 +13,7 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../ColorTheme"),
+        .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.0.0"),
         .package(url: "https://github.com/pointfreeco/swift-sharing", from: "2.10.1"),
     ],
     targets: [
@@ -23,7 +24,14 @@ let package = Package(
                 .product(name: "Sharing", package: "swift-sharing"),
             ]
         ),
-        .testTarget(name: "SettingsUITests", dependencies: ["SettingsUI"]),
+        .testTarget(
+            name: "SettingsUITests",
+            dependencies: [
+                "SettingsUI",
+                .product(name: "Dependencies", package: "swift-dependencies"),
+                .product(name: "Sharing", package: "swift-sharing"),
+            ]
+        ),
     ],
     // Swift 6 mode rejects `SettingsViewModel` sending `self` into the icon change callback.
     swiftLanguageModes: [
