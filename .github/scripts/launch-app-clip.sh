@@ -39,16 +39,15 @@ fi
 # Timestamps each phase, so a slow run's log shows where the time went.
 say() { echo "$(date -u +%H:%M:%S) $*"; }
 
-# A simulator's first boot on a CI runner takes about 6.5 minutes, so it boots
-# in the background while the App Clip builds. The build does not need it.
-say "Booting $device_name ($runtime) in the background"
-xcrun simctl bootstatus "$udid" -b > /dev/null &
-boot_pid=$!
-
 # The build names no particular simulator, as the app build jobs do. A generic
 # destination builds every architecture, so ARCHS keeps it to the runner's own.
-# While the simulator boots, the build takes 7 to 10 minutes on CI instead of
-# about 3: the two share the runner's cores, so overlapping them saves little.
+#
+#
+# The build, the boot and the launch run one after the other, and each phase is
+# timed below, so a run says what it spent where. Measured on CI 2026-09-22,
+# one run per brand: build 73s and 77s, boot 64s and 75s, install and launch
+# 54s and 63s. Overlapping the build and the boot gave jobs of 10m0s and
+# 8m33s, against 4m18s and 5m14s in order.
 say "Building the $configuration App Clip"
 xcodebuild build -quiet -project SwiftLeeds.xcodeproj -scheme SwiftLeedsAppClip \
   -configuration "$configuration" \
@@ -58,8 +57,12 @@ xcodebuild build -quiet -project SwiftLeeds.xcodeproj -scheme SwiftLeedsAppClip 
   ARCHS=arm64 \
   CODE_SIGNING_ALLOWED=NO
 
-say "Waiting for the simulator to finish booting"
-wait "$boot_pid"
+# An earlier note recorded a first boot of 6.5 minutes on an idle runner. It
+# has not reproduced: no run since has shown one over 75s, and every job here
+# gets a fresh runner. The cause is unknown, so treat 6.5 minutes as unproven
+# rather than explained.
+say "Booting $device_name ($runtime)"
+xcrun simctl bootstatus "$udid" -b > /dev/null
 
 # Only a crash report written after this moment belongs to this launch.
 launch_marker=$(mktemp)
@@ -76,6 +79,8 @@ xcrun simctl install "$udid" "$derived_data/Build/Products/$configuration-iphone
 launch_output=$(xcrun simctl launch "$udid" "$bundle_id")
 pid="${launch_output##*: }"
 
+# Closes the install and launch phase, so the wait below is not counted in it.
+say "Launched. Watching it for ${seconds_alive}s"
 sleep "$seconds_alive"
 
 if ! ps -p "$pid" > /dev/null; then
@@ -97,4 +102,4 @@ if ! ps -p "$pid" > /dev/null; then
   exit 1
 fi
 
-echo "The $configuration App Clip ($bundle_id) is still running ${seconds_alive}s after launch"
+say "The $configuration App Clip ($bundle_id) is still running ${seconds_alive}s after launch"
