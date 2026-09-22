@@ -190,7 +190,7 @@ jobs:
           if [ "$count" -eq 1 ]; then
             # A package's own scheme holds only its own target, so this builds
             # one test target. The aggregate scheme below builds all of them.
-            schemes=(-scheme "$1")
+            args=(-scheme "$1")
           else
             # One call pays the package resolution and the build planning once
             # instead of once per target. Measured on CI 2026-09-22: the step
@@ -201,14 +201,14 @@ jobs:
             # finished" between two bundles of the same call.
             # -only-testing: picks which targets run. It does not make the
             # build smaller: the scheme's targets all compile either way.
-            schemes=(-scheme SnapshotTests)
+            args=(-scheme SnapshotTests)
             for target in $selected; do
-              schemes+=(-only-testing:"$target")
+              args+=(-only-testing:"$target")
             done
           fi
           echo "::group::Snapshot tests:$selected"
           status=0
-          xcodebuild test -project SwiftLeeds.xcodeproj "${schemes[@]}" \
+          xcodebuild test -project SwiftLeeds.xcodeproj "${args[@]}" \
             -destination "$DESTINATION" \
             -derivedDataPath "$RUNNER_TEMP/snapshot-derived-data" \
             -skipPackagePluginValidation \
