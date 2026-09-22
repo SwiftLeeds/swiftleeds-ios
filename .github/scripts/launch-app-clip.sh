@@ -36,14 +36,25 @@ if [ -z "$udid" ]; then
   exit 1
 fi
 
-xcrun simctl bootstatus "$udid" -b > /dev/null
+# Timestamps each phase, so a slow run's log shows where the time went.
+say() { echo "$(date -u +%H:%M:%S) $*"; }
 
+# A simulator's first boot on a CI runner took 6.5 minutes, so it boots in the
+# background while the App Clip builds. The build does not need it booted.
+say "Booting $device_name ($runtime) in the background"
+xcrun simctl bootstatus "$udid" -b > /dev/null &
+boot_pid=$!
+
+say "Building the $configuration App Clip"
 xcodebuild build -quiet -project SwiftLeeds.xcodeproj -scheme SwiftLeedsAppClip \
   -configuration "$configuration" \
   -destination "platform=iOS Simulator,id=$udid,arch=arm64" \
   -derivedDataPath "$derived_data" \
   -skipPackagePluginValidation \
   CODE_SIGNING_ALLOWED=NO
+
+say "Waiting for the simulator to finish booting"
+wait "$boot_pid"
 
 # Only a crash report written after this moment belongs to this launch.
 launch_marker=$(mktemp)
@@ -53,6 +64,7 @@ trap 'xcrun simctl terminate "$udid" "$bundle_id" 2> /dev/null || true
       xcrun simctl uninstall "$udid" "$bundle_id" 2> /dev/null || true
       rm -f "$launch_marker"' EXIT
 
+say "Installing and launching $bundle_id"
 xcrun simctl install "$udid" "$derived_data/Build/Products/$configuration-iphonesimulator/SwiftLeedsAppClip.app"
 
 # Prints "<bundle id>: <pid>". The pid is a process on the host, so ps can see it.
