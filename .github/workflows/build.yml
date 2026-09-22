@@ -49,35 +49,90 @@ jobs:
           xcode-version: '26.5'
 
       - name: Run every package test suite
+        env:
+          # How many packages test at once. Each lane needs its own scratch
+          # path, so raising this repeats more dependency compilation. The
+          # runner has 3 cores and 7 GB of RAM, and `swift test` already uses
+          # every core inside one package, so a lane only overlaps the work
+          # that runs on one core at a time: loading the manifest, 79s across
+          # the 16 packages, and planning the build, 31s. Memory is the first
+          # thing to give way, not the cores.
+          LANE_COUNT: 2
         run: |
           set -uo pipefail
-          scratch="$PWD/.build-shared"
-          count=0
-          failed=()
+          # Recorded so a later reader can check the figures above against the
+          # runner that produced them, rather than against a documentation page.
+          echo "cores: $(sysctl -n hw.ncpu), memory: $(sysctl -n hw.memsize) bytes"
+
+          packages=()
           for dir in Packages/*/; do
             [ -f "${dir}Package.swift" ] || continue
-            echo "::group::${dir%/}"
-            # --force-resolved-versions uses this package's own committed
-            # Package.resolved rather than resolving again, which was 91s of
-            # this step. A file that cannot satisfy the manifest fails the job
-            # with "an out-of-date resolved file was detected", where the old
-            # behaviour quietly resolved something newer.
-            # It says nothing about the app's own Package.resolved. Keeping the
-            # two in step is still the manual ritual in CLAUDE.md.
-            swift test --package-path "$dir" --scratch-path "$scratch" --force-resolved-versions \
-              || failed+=("${dir%/}")
-            echo "::endgroup::"
-            count=$((count + 1))
+            packages+=("$(basename "$dir")")
           done
-          if [ "$count" -eq 0 ]; then
+          if [ ${#packages[@]} -eq 0 ]; then
             echo "No Swift packages found under Packages/" >&2
             exit 1
           fi
-          if [ ${#failed[@]} -gt 0 ]; then
-            echo "::error::Failing packages: ${failed[*]}"
+
+          claims="$RUNNER_TEMP/package-test-claims"
+          failures="$RUNNER_TEMP/package-test-failures"
+          rm -rf "$claims" "$failures"
+          mkdir -p "$claims"
+
+          # SwiftPM takes a file lock on its scratch path and prints "Another
+          # instance of SwiftPM is already running using ...". Two lanes on one
+          # path would queue rather than overlap, so each lane gets its own.
+          # Measured locally 2026-09-23: 16 packages cost 241s in one path and
+          # 275s split across two, so a second path repeats 34s of dependency
+          # compilation, 14%. That is the price of the overlap.
+          run_lane () {
+            local lane=$1
+            local scratch="$RUNNER_TEMP/build-lane-$lane"
+            local package
+            for package in "${packages[@]}"; do
+              # mkdir fails when the directory is already there, and it is
+              # atomic, so two lanes never take the same package. A lane that
+              # draws a cheap package comes straight back for another, where a
+              # fixed split leaves it idle. The local split above was 168s
+              # against 107s, so balance is worth more than the duplication.
+              mkdir "$claims/$package" 2>/dev/null || continue
+              # --force-resolved-versions uses this package's own committed
+              # Package.resolved rather than resolving again, which was 91s of
+              # this step. A file that cannot satisfy the manifest fails the job
+              # with "an out-of-date resolved file was detected", where the old
+              # behaviour quietly resolved something newer.
+              # It says nothing about the app's own Package.resolved. Keeping the
+              # two in step is still the manual ritual in CLAUDE.md.
+              #
+              # The output stays live, prefixed rather than folded into a
+              # ::group::. GitHub timestamps each line as it arrives, and those
+              # timestamps are the only record of where one phase ends and the
+              # next begins. A lane that buffered its log and printed it at the
+              # end would stamp every line with the time it was printed, which
+              # is how the phase figures above would stop being measurable.
+              # `sed -l` flushes per line, so the prefix costs no delay.
+              swift test \
+                --package-path "Packages/$package" \
+                --scratch-path "$scratch" \
+                --force-resolved-versions 2>&1 \
+                | sed -l "s/^/[$package] /" \
+                || echo "$package" >> "$failures"
+            done
+          }
+
+          # A lane runs in a subshell, so anything it appends to a shell array
+          # is lost when it exits, and the job would go green over a failing
+          # package. Failures go to a file, which the parent reads below.
+          for lane in $(seq 1 "$LANE_COUNT"); do
+            run_lane "$lane" &
+          done
+          wait
+
+          if [ -s "$failures" ]; then
+            echo "::error::Failing packages: $(tr '\n' ' ' < "$failures")"
             exit 1
           fi
-          echo "Tested $count package(s)"
+          echo "Tested ${#packages[@]} package(s) in $LANE_COUNT lane(s)"
 
   # Snapshot tests are the only tests that must run on iOS: they are the only
   # ones behind `#if os(iOS)`, so the macOS job above cannot see them. Every
