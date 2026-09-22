@@ -1,15 +1,25 @@
-#if canImport(UIKit)
 import Dependencies
+import Foundation
+import Observation
 import Sharing
-import SwiftUI
 
+/// The Settings screen's state: the app icon, and the version and links it shows.
+@Observable
 @MainActor
-final class SettingsViewModel: ObservableObject {
+package final class SettingsViewModel {
+    @ObservationIgnored
     @Shared(.selectedAppIcon) private var storedIcon
-    @Published var currentIcon: AppIconOption = .generic
-    @Published var showingIconError = false
 
-    var appVersion: String {
+    /// Whether the last icon change failed.
+    package var showingIconError = false
+
+    package init() {}
+
+    package var currentIcon: AppIconOption {
+        storedIcon
+    }
+
+    package var appVersion: String {
         Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0"
     }
 
@@ -29,34 +39,30 @@ final class SettingsViewModel: ObservableObject {
         return host
     }
 
-    init() {
-        currentIcon = storedIcon
-    }
-
-    func changeAppIcon(to iconOption: AppIconOption) async {
+    /// Changes the app icon, and stores the choice. On failure, keeps the icon and sets
+    /// `showingIconError`.
+    package func changeAppIcon(to iconOption: AppIconOption) async {
         @Dependency(\.changeAppIcon) var changeAppIcon
 
         do {
             try await changeAppIcon(to: iconOption)
-            currentIcon = iconOption
             $storedIcon.withLock { $0 = iconOption }
         } catch {
             showingIconError = true
         }
     }
 
-    func openContactUs() async {
+    package func openContactUs() async {
         @Dependency(\.openURL) var openURL
         if let url = URL(string: "mailto:\(contactEmail)") {
             await openURL(url)
         }
     }
 
-    func openCodeOfConduct() async {
+    package func openCodeOfConduct() async {
         @Dependency(\.openURL) var openURL
         if let url = URL(string: "https://\(codeOfConductHost)/conduct") {
             await openURL(url)
         }
     }
 }
-#endif

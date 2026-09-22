@@ -5,7 +5,7 @@ import SwiftUI
 
 public struct SettingsView<Header: View>: View {
     @Shared(.selectedTheme) private var theme
-    @StateObject private var viewModel = SettingsViewModel()
+    @State private var viewModel = SettingsViewModel()
     private let header: Header
 
     public init(@ViewBuilder header: () -> Header = { EmptyView() }) {

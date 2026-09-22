@@ -30,6 +30,7 @@ let package = Package(
             dependencies: [
                 "SettingsUI",
                 .product(name: "Dependencies", package: "swift-dependencies"),
+                .product(name: "DependenciesTestSupport", package: "swift-dependencies"),
                 .product(name: "Sharing", package: "swift-sharing"),
             ]
         ),
