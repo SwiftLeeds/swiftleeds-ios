@@ -45,12 +45,17 @@ say "Booting $device_name ($runtime) in the background"
 xcrun simctl bootstatus "$udid" -b > /dev/null &
 boot_pid=$!
 
+# The build names no particular simulator, as the app build jobs do. Naming the
+# one that was booting, the build took from 7 to over 10 minutes on CI instead
+# of about 3. A generic destination builds every architecture, so ARCHS keeps it
+# to the runner's own.
 say "Building the $configuration App Clip"
 xcodebuild build -quiet -project SwiftLeeds.xcodeproj -scheme SwiftLeedsAppClip \
   -configuration "$configuration" \
-  -destination "platform=iOS Simulator,id=$udid,arch=arm64" \
+  -destination "generic/platform=iOS Simulator" \
   -derivedDataPath "$derived_data" \
   -skipPackagePluginValidation \
+  ARCHS=arm64 \
   CODE_SIGNING_ALLOWED=NO
 
 say "Waiting for the simulator to finish booting"
