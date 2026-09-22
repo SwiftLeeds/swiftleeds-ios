@@ -249,8 +249,9 @@ jobs:
             configuration: Debug-KotlinLeeds
             bundle-id: uk.co.kotlinleeds.KotlinLeeds.Clip
     # A simulator that never finishes booting would otherwise hold the runner
-    # for the six-hour default. A first boot on the runner alone took 6.5
-    # minutes, and 10 was too short for boot plus build.
+    # for the six-hour default. The build and the boot now run one after the
+    # other, and 10 minutes was too short for them overlapping, so this stays
+    # generous until the split is measured.
     timeout-minutes: 30
     env:
       # Empty on a push, which is how the scope step knows to run everything.

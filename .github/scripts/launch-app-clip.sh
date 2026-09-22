@@ -39,16 +39,13 @@ fi
 # Timestamps each phase, so a slow run's log shows where the time went.
 say() { echo "$(date -u +%H:%M:%S) $*"; }
 
-# A simulator's first boot on a CI runner takes about 6.5 minutes, so it boots
-# in the background while the App Clip builds. The build does not need it.
-say "Booting $device_name ($runtime) in the background"
-xcrun simctl bootstatus "$udid" -b > /dev/null &
-boot_pid=$!
-
 # The build names no particular simulator, as the app build jobs do. A generic
 # destination builds every architecture, so ARCHS keeps it to the runner's own.
-# While the simulator boots, the build takes 7 to 10 minutes on CI instead of
-# about 3: the two share the runner's cores, so overlapping them saves little.
+#
+# The boot used to run in the background during this build. Measured on CI
+# 2026-09-22: the boot always finished inside the build, and the build took 7
+# to 10 minutes rather than about 2.5, because the two share the runner's
+# cores. Each phase is timed below, so a run says what it spent where.
 say "Building the $configuration App Clip"
 xcodebuild build -quiet -project SwiftLeeds.xcodeproj -scheme SwiftLeedsAppClip \
   -configuration "$configuration" \
@@ -58,8 +55,8 @@ xcodebuild build -quiet -project SwiftLeeds.xcodeproj -scheme SwiftLeedsAppClip 
   ARCHS=arm64 \
   CODE_SIGNING_ALLOWED=NO
 
-say "Waiting for the simulator to finish booting"
-wait "$boot_pid"
+say "Booting $device_name ($runtime)"
+xcrun simctl bootstatus "$udid" -b > /dev/null
 
 # Only a crash report written after this moment belongs to this launch.
 launch_marker=$(mktemp)
@@ -76,6 +73,8 @@ xcrun simctl install "$udid" "$derived_data/Build/Products/$configuration-iphone
 launch_output=$(xcrun simctl launch "$udid" "$bundle_id")
 pid="${launch_output##*: }"
 
+# Closes the install and launch phase, so the wait below is not counted in it.
+say "Launched. Watching it for ${seconds_alive}s"
 sleep "$seconds_alive"
 
 if ! ps -p "$pid" > /dev/null; then
