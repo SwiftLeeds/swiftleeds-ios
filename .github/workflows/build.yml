@@ -64,7 +64,8 @@ jobs:
             # behaviour quietly resolved something newer.
             # It says nothing about the app's own Package.resolved. Keeping the
             # two in step is still the manual ritual in CLAUDE.md.
-            (cd "$dir" && swift test --scratch-path "$scratch" --force-resolved-versions) || failed+=("${dir%/}")
+            swift test --package-path "$dir" --scratch-path "$scratch" --force-resolved-versions \
+              || failed+=("${dir%/}")
             echo "::endgroup::"
             count=$((count + 1))
           done
