@@ -6,9 +6,19 @@ on:
   pull_request:
 
 jobs:
-  build-swiftleeds:
-    name: Build SwiftLeeds (DEBUG)
+  build-app:
+    name: Build ${{ matrix.brand }} (DEBUG)
     runs-on: macos-26
+    strategy:
+      # Without this, one brand failing cancels the other, and a run reports
+      # only the first failure.
+      fail-fast: false
+      matrix:
+        include:
+          - brand: SwiftLeeds
+            lane: build_swiftleeds
+          - brand: KotlinLeeds
+            lane: build_kotlinleeds
     steps:
       - name: Checkout iOS Repository
         uses: actions/checkout@v4
@@ -18,23 +28,8 @@ jobs:
         with:
           xcode-version: '26.5'
 
-      - name: Build SwiftLeeds via Fastlane
-        run: fastlane build_swiftleeds
-
-  build-kotlinleeds:
-    name: Build KotlinLeeds (DEBUG)
-    runs-on: macos-26
-    steps:
-      - name: Checkout iOS Repository
-        uses: actions/checkout@v4
-
-      - name: Select Xcode
-        uses: maxim-lobanov/setup-xcode@v1
-        with:
-          xcode-version: '26.5'
-
-      - name: Build KotlinLeeds via Fastlane
-        run: fastlane build_kotlinleeds
+      - name: Build ${{ matrix.brand }} via Fastlane
+        run: fastlane ${{ matrix.lane }}
 
   test-packages:
     name: Test Swift Packages
