@@ -3,7 +3,7 @@ import Foundation
 
 /// A generic secure key-value store for small, sensitive `Data` payloads.
 ///
-/// The store is agnostic of what it holds — callers own the meaning of each
+/// The store is agnostic of what it holds: callers own the meaning of each
 /// `SecureStorageKey`. A concrete implementation (e.g. Keychain) is supplied by
 /// the composition root; consumers depend only on this interface.
 public struct SecureStorage: Sendable {
