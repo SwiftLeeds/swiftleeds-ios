@@ -42,6 +42,7 @@ func assertSnapshots(
 // The text size goes on the view, not in the trait collection. `.sizeThatFits`
 // measures the hosting controller before it applies traits, so a text size passed
 // as a trait reaches the render but not the size, and the image clips.
+@MainActor
 private func variants<V: View>() -> [String: Snapshotting<V, UIImage>] {
     colorSchemes.reduce(into: [:]) { strategies, scheme in
         for textSize in textSizes {

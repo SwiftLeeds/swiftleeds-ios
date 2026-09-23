@@ -46,6 +46,7 @@ private extension View {
     }
 }
 
+@MainActor
 private func variants<V: View>() -> [String: Snapshotting<V, UIImage>] {
     colorSchemes.reduce(into: [:]) { strategies, scheme in
         for textSize in textSizes {
