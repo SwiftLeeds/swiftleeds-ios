@@ -50,24 +50,15 @@ jobs:
 
       - name: Run every package test suite
         env:
-          # How many packages test at once. Each lane needs its own scratch
-          # path, so raising this repeats more dependency compilation.
-          # Measured on run 35797090212, the push of ce8a391 to main, where
-          # this step ran the 16 packages one after another in 311s: 121s of
-          # that went on loading each manifest and planning each build, which
-          # SwiftPM does one package at a time, and 178s on compiling.
-          # Two lanes then took 254s and 249s, on runs 35798165788 and
-          # 35799171902. The summed compile intervals nearly doubled, 178s to
-          # 346s, and the step still fell, so one package's compile leaves
-          # some of the 3 cores idle. That summed figure mixes the repeated
-          # work with the contention, and these runs cannot separate them.
-          # A third lane fits on disk: each lane held under 1 GB of the
-          # runner's 14 GB. Memory is the open question, at 7 GB in total.
+          # Packages tested at once. 2 lanes 238s against 3 lanes 285s, medians
+          # of 5 paired runs; 1 lane was 311s, one sample. 3 loses because each
+          # lane needs its own scratch path, so it recompiles the shared
+          # dependencies, and one swift test already asks for all 3 cores.
+          # Memory ruled out: both arms swapped 0 MB.
           LANE_COUNT: 2
         run: |
           set -uo pipefail
-          # Recorded so a later reader can check the figures above against the
-          # runner that produced them, rather than against a documentation page.
+          # The runner the figures above were measured on.
           echo "cores: $(sysctl -n hw.ncpu), memory: $(sysctl -n hw.memsize) bytes"
 
           packages=()
@@ -85,43 +76,31 @@ jobs:
           rm -rf "$claims" "$failures"
           mkdir -p "$claims"
 
-          # SwiftPM takes a file lock on its scratch path and prints "Another
-          # instance of SwiftPM is already running using ...". Two lanes on one
-          # path would queue rather than overlap, so each lane gets its own.
-          # Measured locally 2026-09-23, every run cold and sequential so the
-          # figures are work rather than contention: the 16 packages cost 241s
-          # in one path, and 168s plus 107s when split 8 and 8 across two. So a
-          # second path repeats 34s of dependency compilation, 14%. That is
-          # the price of the overlap.
+          # SwiftPM file-locks its scratch path, so lanes sharing one would
+          # queue instead of overlapping. Each lane gets its own, which repeats
+          # 14% of the dependency compilation (241s in one path against 168s
+          # plus 107s split across two, measured cold and sequentially).
           run_lane () {
             local lane=$1
             local scratch="$RUNNER_TEMP/build-lane-$lane"
             local package
             for package in "${packages[@]}"; do
-              # mkdir fails when the directory is already there, and it is
-              # atomic, so two lanes never take the same package. A lane that
-              # draws a cheap package comes straight back for another, where a
-              # fixed split leaves it idle. The fixed 8 and 8 split above ran
-              # 168s against 107s; the queue ran 182s against 190s.
+              # mkdir is atomic and fails when the directory exists, so two
+              # lanes never take the same package. A queue keeps them balanced:
+              # a fixed 8/8 split ran 168s against 107s, the queue 182s and 190s.
               mkdir "$claims/$package" 2>/dev/null || continue
-              # --force-resolved-versions uses this package's own committed
-              # Package.resolved rather than resolving again, which was 91s of
-              # this step. A file that cannot satisfy the manifest fails the job
-              # with "an out-of-date resolved file was detected", where the old
-              # behaviour quietly resolved something newer.
-              # It says nothing about the app's own Package.resolved. Keeping the
-              # two in step is still the manual ritual in CLAUDE.md.
+              # --force-resolved-versions uses each package's committed
+              # Package.resolved instead of resolving again, which was 91s. A
+              # file that cannot satisfy the manifest now fails the job instead
+              # of quietly resolving something newer. It does not touch the
+              # app's own Package.resolved; CLAUDE.md covers keeping those two
+              # in step.
               #
-              # The output stays live, prefixed rather than folded into a
-              # ::group::. GitHub timestamps each line as it arrives, and those
-              # timestamps are the only record of where one phase ends and the
-              # next begins. A lane that buffered its log and printed it at the
-              # end would stamp every line with the time it was printed, which
-              # is how the phase figures above would stop being measurable.
-              # `sed -l` flushes per line, so the prefix costs no delay. A
-              # line longer than 512 bytes is not written atomically, so a
-              # long compiler diagnostic can still land under the other lane's
-              # prefix.
+              # Not folded into a ::group::, because GitHub timestamps each line
+              # as it arrives and those timestamps are the only record of the
+              # phase boundaries. `sed -l` flushes per line. A line over 512
+              # bytes is not written atomically, so a long diagnostic can land
+              # under the other lane's prefix.
               if swift test \
                 --package-path "Packages/$package" \
                 --scratch-path "$scratch" \
@@ -135,17 +114,38 @@ jobs:
             done
           }
 
-          # A lane runs in a subshell, so anything it appends to a shell array
-          # is lost when it exits, and the job would go green over a failing
-          # package. Failures go to a file, which the parent reads below.
+          # macOS compresses pages before it swaps, so swap alone misses a
+          # runner under memory pressure. Both counters are cumulative since
+          # boot, so read them either side of the lanes.
+          compressions () { vm_stat | awk -F'[:.]' '/^Compressions:/ { print $2 + 0 }'; }
+          swapouts () { vm_stat | awk -F'[:.]' '/^Swapouts:/ { print $2 + 0 }'; }
+          compressions_before=$(compressions)
+          swapouts_before=$(swapouts)
+
+          # A lane is a subshell, so a failure appended to a shell array would
+          # be lost and the job would go green. Failures go to a file.
           for lane in $(seq 1 "$LANE_COUNT"); do
             run_lane "$lane" &
           done
           wait
 
-          # Printed so the next person can tell whether a third lane fits: the
-          # runner has 14 GB of storage and each lane holds a whole build.
-          du -sm "$RUNNER_TEMP"/build-lane-* || true
+          # MB, to compare with the runner's 7 GB.
+          page_size=$(sysctl -n hw.pagesize)
+          compressed_mb=$(( ($(compressions) - compressions_before) * page_size / 1048576 ))
+          swapped_mb=$(( ($(swapouts) - swapouts_before) * page_size / 1048576 ))
+          echo "memory pressure: compressed $compressed_mb MB, swapped out $swapped_mb MB"
+          # An awk pattern that stops matching prints 0, which reads as a quiet
+          # runner. Compression is never 0 on a machine doing work.
+          if [ "$compressed_mb" -eq 0 ]; then
+            echo "::warning::vm_stat reported no compression, so these memory figures are not trustworthy"
+          fi
+          # A green job's log goes unread, so swapping has to announce itself.
+          # 10 measured runs all swapped 0 MB, so anything above 0 is a change.
+          # No threshold on compression: it ranged 2276 to 3583 MB over the same
+          # runs, so a warning there would be noise.
+          if [ "$swapped_mb" -gt 0 ]; then
+            echo "::warning::the lanes swapped $swapped_mb MB, so this runner was short of memory"
+          fi
 
           tested=0
           for package in "${packages[@]}"; do
@@ -159,11 +159,9 @@ jobs:
             echo "::error::Failing packages: $(tr '\n' ' ' < "$failures")"
           fi
 
-          # Success is not the absence of a failure record. A lane that dies
-          # between claiming a package and reporting on it leaves neither
-          # record, and the other lane skips that package because the claim is
-          # already there. The job would then pass having tested 15 of 16.
-          # Counting both outcomes turns that into a failure.
+          # A lane that dies after claiming a package leaves no pass and no fail
+          # record, and the other lane skips it because the claim is there.
+          # Counting both outcomes catches that; an absent failure does not.
           if [ "$((tested + failed))" -ne "${#packages[@]}" ]; then
             echo "::error::${#packages[@]} packages found, but $tested passed and $failed failed. A lane stopped early."
             exit 1
