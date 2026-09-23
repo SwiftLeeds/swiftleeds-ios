@@ -55,3 +55,15 @@ public struct Avatar<Fallback: View>: View {
         .accessibilityHidden(true)
     }
 }
+
+public extension Avatar where Fallback == AvatarFallback {
+    /// Creates an avatar that draws a built-in fallback while its photo is missing.
+    ///
+    /// - Parameters:
+    ///   - url: Where the photo loads from. A `nil` url draws the fallback and asks for nothing.
+    ///   - size: A diameter from ``AvatarSize``. It grows with the text size, then stops.
+    ///   - fallback: What to draw instead of the photo.
+    init(url: URL?, size: CGFloat = AvatarSize.medium, fallback: AvatarFallback = .symbol) {
+        self.init(url: url, size: size) { fallback }
+    }
+}
