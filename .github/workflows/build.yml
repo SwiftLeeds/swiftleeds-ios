@@ -6,15 +6,17 @@ on:
   pull_request:
 
 # The 5 concurrent macOS runners are an account limit, not a per-run one, so two
-# overlapping runs queue each other and undo the job count below. A new push to
-# a pull request cancels the run its commits superseded.
+# overlapping runs queue each other. A new push to a pull request cancels the run
+# its commits superseded.
 #
-# Never on `main`. Every push there shares one ref, so cancelling would let a
-# second merge kill the first merge's run, and that run is the only thing that
-# tests what a pull request's skip logic left out.
+# A push to `main` gets a group of its own, keyed by commit. Sharing one group
+# and setting cancel-in-progress to false is not enough: GitHub keeps one running
+# and one pending run per group, and a third run cancels the pending one whatever
+# that flag says. A merge would then land with no run at all, and that run is the
+# only thing that tests what a pull request's skip logic left out.
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+  group: ${{ github.workflow }}-${{ github.ref == 'refs/heads/main' && github.sha || github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build-app:
@@ -403,8 +405,8 @@ jobs:
   # on macOS, where it held one of the 5 concurrent runners for 14s to 20s, and
   # this workflow wants more macOS jobs than that limit allows.
   #
-  # The two builds enable the same 105 rules, checked on 0.65.1 before the move,
-  # so this lints exactly what macOS did.
+  # Both builds of 0.65.1 list the same rules and enable the same 104 of them,
+  # compared identifier by identifier before the move.
   lint-swift:
     name: Lint Swift Sources
     runs-on: ubuntu-24.04
@@ -412,7 +414,8 @@ jobs:
       # The version itself lives in .swiftlint-version, which the pre-commit
       # hook reads too, so both halves judge code by the same rules. Bumping it
       # means updating this checksum as well, or the download check below fails.
-      # It is the Linux asset's digest, not the macOS one the hook installs.
+      # It is the Linux asset's digest. The hook uses whatever Homebrew put on
+      # the developer's PATH, so it installs nothing and needs no checksum.
       SWIFTLINT_SHA256: 'caeed6f4a679c35539ffaf124f6c4ab4a8416917f7d8796279dc52b74026059d'
     steps:
       - name: Checkout iOS Repository
@@ -430,6 +433,24 @@ jobs:
           # unzip does not always carry the executable bit.
           chmod +x swiftlint/swiftlint
           echo "$RUNNER_TEMP/swiftlint" >> "$GITHUB_PATH"
+
+      # Temporary. `statement_position` is the one enabled rule that reports
+      # "uses sourcekit: yes", and this runner has no Swift toolchain. Listing a
+      # rule does not prove it runs, so lint a file that violates it.
+      - name: Check the SourceKit rule still fires
+        run: |
+          set -uo pipefail
+          cat > "$RUNNER_TEMP/StatementPosition.swift" <<'SWIFT'
+          func check() {
+              if Bool.random() {
+                  print("a")
+              }
+              else {
+                  print("b")
+              }
+          }
+          SWIFT
+          swiftlint lint --no-cache --reporter csv "$RUNNER_TEMP/StatementPosition.swift"
 
       - name: Lint every Swift source
         run: |
