@@ -4,13 +4,23 @@ import SwiftUI
 ///
 /// ```swift
 /// Avatar(url: profile.avatarURL)
+/// Avatar(url: profile.avatarURL, fallback: .initials(profile.name))
 /// ```
 ///
 /// It is neutral, because a color on an avatar means the person's status.
 public struct AvatarFallback: View {
+    private enum Mark {
+        case symbol
+        case initials(PersonNameComponents)
+    }
+
     @Environment(\.avatarDiameter) private var diameter
 
-    private init() {}
+    private let mark: Mark
+
+    private init(_ mark: Mark) {
+        self.mark = mark
+    }
 
     public var body: some View {
         LinearGradient(
@@ -18,23 +28,41 @@ public struct AvatarFallback: View {
             startPoint: .topLeading,
             endPoint: .bottomTrailing
         )
-        .overlay { mark }
+        .overlay { drawnMark }
     }
 
-    // Sized from the avatar, not from the text: a symbol that follows the text size overflows a
-    // small avatar at the accessibility sizes. A font size keeps the symbol's own proportions,
-    // which resizing it would not.
-    private var mark: some View {
-        Image(icon: .person)
-            .font(.system(size: diameter * Self.markProportion))
-            .foregroundStyle(.textSecondary)
+    // Sized from the avatar, not from the text: a mark that follows the text size overflows a
+    // small avatar at the accessibility sizes. The avatar itself already grows with the text.
+    @ViewBuilder
+    private var drawnMark: some View {
+        switch mark {
+        case .symbol:
+            // A font size keeps the symbol's own proportions, which resizing it would not.
+            Image(icon: .person)
+                .font(.system(size: diameter * Self.symbolProportion))
+                .foregroundStyle(.textSecondary)
+        case .initials(let name):
+            Text(name.formatted(.name(style: .abbreviated)))
+                .font(.system(size: diameter * Self.initialsProportion, weight: .semibold))
+                .foregroundStyle(.textSecondary)
+                .lineLimit(1)
+                .minimumScaleFactor(0.5)
+        }
     }
 
-    // How much of the avatar the mark covers. Any more and it meets the edge.
-    private static var markProportion: CGFloat { 0.5 }
+    // How much of the avatar each mark covers. Any more and it meets the edge.
+    private static var symbolProportion: CGFloat { 0.5 }
+    private static var initialsProportion: CGFloat { 0.38 }
 }
 
 public extension AvatarFallback {
     /// A person symbol, which is what an avatar draws unless its caller says otherwise.
-    static var symbol: AvatarFallback { AvatarFallback() }
+    static var symbol: AvatarFallback { AvatarFallback(.symbol) }
+
+    /// The person's initials, abbreviated the way their name's locale abbreviates it.
+    ///
+    /// A name that abbreviates to more than two letters shrinks to fit.
+    static func initials(_ name: PersonNameComponents) -> AvatarFallback {
+        AvatarFallback(.initials(name))
+    }
 }
