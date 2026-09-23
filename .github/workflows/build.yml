@@ -139,6 +139,13 @@ jobs:
           if [ "$compressed_mb" -eq 0 ]; then
             echo "::warning::vm_stat reported no compression, so these memory figures are not trustworthy"
           fi
+          # A green job's log goes unread, so swapping has to announce itself.
+          # 10 measured runs all swapped 0 MB, so anything above 0 is a change.
+          # No threshold on compression: it ranged 2276 to 3583 MB over the same
+          # runs, so a warning there would be noise.
+          if [ "$swapped_mb" -gt 0 ]; then
+            echo "::warning::the lanes swapped $swapped_mb MB, so this runner was short of memory"
+          fi
 
           tested=0
           for package in "${packages[@]}"; do
