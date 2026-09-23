@@ -1,22 +1,23 @@
 import SwiftUI
 
-// How a status looks. The component draws it, so every style shows the same mark and chooses
-// only where it goes.
+/// The drawn form of an ``AvatarStatus``.
+///
+/// The component draws it, so every style shows the same mark.
 struct AvatarStatusMark: View {
     let status: AvatarStatus
+
+    /// The diameter of the avatar this marks, which sets the mark's own size.
     let avatarDiameter: AvatarSize
 
     var body: some View {
         Image(icon: status.icon)
             .resizable()
             .scaledToFit()
-            // The symbol draws its own enclosure, so its glyph sits where Apple centered it.
-            // Palette gives the glyph the first color and the enclosure the second.
+            // The glyph takes the first color, the symbol's own enclosure the second.
             .symbolRenderingMode(.palette)
             .foregroundStyle(.surface, status.tint)
             .frame(width: discDiameter, height: discDiameter)
-            // The ring separates the mark from a photo of any color beneath it. It grows inward,
-            // so the whole mark still measures diameter and stays off the shape's corner.
+            // The ring grows inward, so the whole mark still measures diameter.
             .padding(ringWidth)
             .background(.surface, in: .circle)
             .accessibilityLabel(status.label)

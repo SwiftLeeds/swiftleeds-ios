@@ -26,7 +26,9 @@ public extension CGFloat {
 }
 
 extension AvatarSize {
-    // The text size has scaled this one, so it is not one of the named values.
+    /// Returns this size multiplied by a text scale.
+    ///
+    /// The result is not one of the named values.
     func scaled(by scale: CGFloat) -> AvatarSize {
         AvatarSize(points * scale)
     }

@@ -1,8 +1,7 @@
 import SwiftUI
 
-// Overloads for the modifiers whose whole purpose is a length, so a token reaches them without
-// being unwrapped at the call site. Anything that takes a length among other arguments, such as
-// `Grid` or `strokeBorder`, uses `CGFloat(token)` instead.
+// Only for modifiers whose whole purpose is a length. A length among other arguments, such as
+// `Grid` or `strokeBorder`, uses `CGFloat(token)` at the call site.
 
 public extension View {
     /// Adds a space around this view.
