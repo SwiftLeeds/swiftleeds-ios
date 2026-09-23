@@ -44,7 +44,7 @@ case "${1:-}" in
     fi
     # A green job's log goes unread, so swapping has to announce itself.
     # Every run measured so far swapped 0 MB, so anything above 0 is a change.
-    # No threshold on compression: it has ranged 1660 to 3583 MB on a passing
+    # No threshold on compression: it has ranged 1660 to 10678 MB on a passing
     # run, so a warning there would fire on healthy runs.
     if [ "$swapped_mb" -gt 0 ]; then
       echo "::warning::the work swapped $swapped_mb MB, so this runner was short of memory"
