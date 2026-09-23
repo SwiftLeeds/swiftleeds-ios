@@ -62,8 +62,8 @@ public struct AvatarFallback: View {
     }
 
     // How much of the avatar each mark covers. Any more and it meets the edge.
-    private static var symbolProportion: CGFloat { 0.5 }
-    private static var initialsProportion: CGFloat { 0.38 }
+    private static var symbolProportion: CGFloat { 0.62 }
+    private static var initialsProportion: CGFloat { 0.46 }
 }
 
 public extension AvatarFallback {
