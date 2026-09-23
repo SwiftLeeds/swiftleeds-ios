@@ -13,19 +13,30 @@ public struct AvatarStyleConfiguration {
         public var body: some View { _body() }
     }
 
+    /// A type-erased avatar status view.
+    public struct Status: View {
+        private let _body: () -> AnyView
+
+        init(_ body: some View) {
+            _body = { AnyView(body) }
+        }
+
+        public var body: some View { _body() }
+    }
+
     /// The photo, or the view standing in for it.
     public let content: Content
 
     /// The diameter to draw at. The text size has already scaled it.
     public let size: CGFloat
 
-    /// The state to show on the avatar, if any. Where it goes is the style's choice.
-    public let status: AvatarStatus?
+    /// The state to show, drawn and ready to place. Where it goes is the style's choice.
+    public let status: Status?
 
     @MainActor
-    init(content: some View, size: CGFloat, status: AvatarStatus?) {
+    init(content: some View, size: CGFloat, status: (some View)?) {
         self.content = Content(content)
         self.size = size
-        self.status = status
+        self.status = status.map(Status.init)
     }
 }

@@ -10,9 +10,13 @@ import SwiftUI
 ///     func makeBody(configuration: Configuration) -> some View {
 ///         configuration.content
 ///             .frame(width: configuration.size, height: configuration.size)
+///             .overlay(alignment: .topTrailing) { configuration.status }
 ///     }
 /// }
 /// ```
+///
+/// The status arrives drawn, so a style places it and nothing more. Leave it out and the avatar
+/// shows no status at all.
 ///
 /// A style may read the environment, so it can answer the appearance and the text size.
 public protocol AvatarStyle: DynamicProperty {

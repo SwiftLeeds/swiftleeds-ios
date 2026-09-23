@@ -54,7 +54,11 @@ public struct Avatar<Fallback: View>: View {
     }
 
     private var configuration: AvatarStyleConfiguration {
-        AvatarStyleConfiguration(content: content, size: diameter, status: status)
+        AvatarStyleConfiguration(content: content, size: diameter, status: mark)
+    }
+
+    private var mark: AvatarStatusMark? {
+        status.map { AvatarStatusMark(status: $0, avatarDiameter: diameter) }
     }
 
     private var diameter: CGFloat {
