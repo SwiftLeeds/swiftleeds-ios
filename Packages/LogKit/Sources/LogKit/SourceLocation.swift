@@ -1,6 +1,6 @@
 /// Where in the source an event was logged.
 public struct SourceLocation: Hashable, Sendable {
-    /// The file, as `#fileID` gives it: the module name and the file name, not a path.
+    /// The file, expected in `#fileID` form: the module name and the file name, not a path.
     public let file: String
     public let function: String
     public let line: Int

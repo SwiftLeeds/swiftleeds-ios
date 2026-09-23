@@ -8,9 +8,9 @@ extension Log: TestDependencyKey {
 extension DependencyValues {
     /// The log every module writes to.
     ///
-    /// LogKit ships no live destination, because only the app knows its subsystem and its salt.
-    /// The app builds one at its composition root and sets this. Anything that does not set it
-    /// logs nothing.
+    /// LogKit ships no live value. The app builds a destination at its composition root and sets
+    /// this. Code that reads it without setting it logs nothing, and in a debug build reports an
+    /// issue on every access.
     public var log: Log {
         get { self[Log.self] }
         set { self[Log.self] = newValue }

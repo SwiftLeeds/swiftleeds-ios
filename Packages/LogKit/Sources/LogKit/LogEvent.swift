@@ -6,10 +6,10 @@ public struct LogEvent: Hashable, Sendable {
     public let fields: LogFields
     public let source: SourceLocation
 
-    /// Creates an event, recording where it was raised.
+    /// Creates an event.
     ///
-    /// `source` defaults to this initializer's own call site, so build the event where the
-    /// occurrence happened, or pass a location captured there.
+    /// Pass `source: .here()` from where the occurrence happened. The default expands inside this
+    /// file, so it records this initializer rather than the caller.
     public init(
         level: LogLevel,
         category: LogCategory,
