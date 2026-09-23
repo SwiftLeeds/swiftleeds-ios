@@ -63,7 +63,7 @@ jobs:
           # work with the contention, and these runs cannot separate them.
           # A third lane fits on disk: each lane held under 1 GB of the
           # runner's 14 GB. Memory is the open question, at 7 GB in total.
-          LANE_COUNT: 2
+          LANE_COUNT: 3
         run: |
           set -uo pipefail
           # Recorded so a later reader can check the figures above against the
