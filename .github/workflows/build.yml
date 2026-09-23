@@ -284,18 +284,15 @@ jobs:
             # Bundles run on cloned simulators side by side, because installing
             # and launching a bundle costs far more than its tests: the step
             # went from 473s to 303s.
-            # 3 workers were tried and not taken. They won 4 of 5 paired runs,
-            # median 264s against 301s, but the 2-worker arm alone spanned 217s
-            # to 359s. Separating a gap that small needs about 60 runs per arm.
-            # Neither arm swapped.
+            # 3 workers were tried and not taken, measured on CI 2026-09-23.
+            # They won 4 of 5 paired runs, median 264s against 301s, but a 23s
+            # gap against a 46s spread needs about 60 runs per arm to separate
+            # at 80% power. Neither arm swapped.
             args+=(-parallel-testing-enabled YES -maximum-parallel-testing-workers 2)
           fi
           echo "::group::Snapshot tests:$selected"
           status=0
-          # This call compiles and then tests, so the figure covers both. The
-          # worker count only changes the test half, and both arms of a
-          # comparison compile the same thing, so a difference between them
-          # comes from the workers.
+          # This call compiles and then tests, so the figure covers both.
           .github/scripts/memory-pressure.sh start
           xcodebuild test -project SwiftLeeds.xcodeproj "${args[@]}" \
             -destination "$DESTINATION" \
