@@ -287,7 +287,7 @@ jobs:
             # phase fell from 288s to 116s, and the step from 473s to 303s.
             # Two workers, because every clone boots before it tests. Three or
             # more were not tried.
-            args+=(-parallel-testing-enabled YES -maximum-parallel-testing-workers 2)
+            args+=(-parallel-testing-enabled YES -maximum-parallel-testing-workers 3)
           fi
           echo "::group::Snapshot tests:$selected"
           status=0
