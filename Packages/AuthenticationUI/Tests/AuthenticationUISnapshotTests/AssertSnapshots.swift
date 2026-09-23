@@ -45,8 +45,12 @@ func assertSnapshots(
 private func variants<V: View>() -> [String: Snapshotting<V, UIImage>] {
     colorSchemes.reduce(into: [:]) { strategies, scheme in
         for textSize in textSizes {
+            let traits = UITraitCollection { mutable in
+                mutable.userInterfaceStyle = scheme.style
+                mutable.displayScale = 1
+            }
             strategies["\(scheme.name)-\(textSize.name)"] = Snapshotting<AnyView, UIImage>
-                .image(traits: .init(userInterfaceStyle: scheme.style))
+                .image(traits: traits)
                 .pullback { AnyView($0.dynamicTypeSize(textSize.size)) }
         }
     }
