@@ -81,3 +81,51 @@ public extension Avatar where Fallback == AvatarFallback {
         self.init(url: url, size: size, status: status) { fallback }
     }
 }
+
+private let previewName = PersonNameComponents(givenName: "Member", familyName: "One")
+
+#Preview("Sizes") {
+    HStack(alignment: .bottom, spacing: Spacing.large) {
+        Avatar(url: nil, size: AvatarSize.small)
+        Avatar(url: nil, size: AvatarSize.medium)
+        Avatar(url: nil, size: AvatarSize.large)
+        Avatar(url: nil, size: AvatarSize.xLarge)
+    }
+    .padding(Spacing.large)
+}
+
+#Preview("Fallbacks") {
+    HStack(spacing: Spacing.large) {
+        Avatar(url: nil, size: AvatarSize.xLarge)
+
+        Avatar(url: nil, size: AvatarSize.xLarge, fallback: .initials(previewName))
+
+        Avatar(url: nil, size: AvatarSize.xLarge) {
+            Color.brandPrimary
+        }
+    }
+    .padding(Spacing.large)
+}
+
+#Preview("Styles and status") {
+    VStack(alignment: .leading, spacing: Spacing.large) {
+        HStack(spacing: Spacing.large) {
+            Avatar(url: nil, size: AvatarSize.large, status: AvatarStatus("Checked in"))
+
+            Avatar(
+                url: nil,
+                size: AvatarSize.large,
+                status: AvatarStatus("Waitlisted", icon: .warning, tint: .warning)
+            )
+        }
+
+        HStack(spacing: Spacing.large) {
+            Avatar(url: nil, size: AvatarSize.large, status: AvatarStatus("Checked in"))
+
+            Avatar(url: nil, size: AvatarSize.large)
+                .avatarStyle(.rounded(cornerRadius: CornerRadius.small))
+        }
+        .avatarStyle(.rounded)
+    }
+    .padding(Spacing.large)
+}
