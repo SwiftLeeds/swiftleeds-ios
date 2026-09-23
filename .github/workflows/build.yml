@@ -135,6 +135,20 @@ jobs:
             done
           }
 
+          # Memory is the limit to watch when the lane count rises, not cores.
+          # Each lane's swift test already uses every core, so two lanes
+          # oversubscribe the runner's 3 and three lanes oversubscribe them
+          # further. macOS hides the cost of that: it compresses pages before it
+          # swaps, so a runner under pressure only looks slow.
+          # Both counters run from boot and only rise, so a read either side of
+          # the lanes gives what the lanes cost. Compressions also proves the
+          # reading is live, because it moves on any machine. A zero swapout
+          # figure beside a moving compression figure is real rather than broken.
+          compressions () { vm_stat | awk -F'[:.]' '/^Compressions:/ { print $2 + 0 }'; }
+          swapouts () { vm_stat | awk -F'[:.]' '/^Swapouts:/ { print $2 + 0 }'; }
+          compressions_before=$(compressions)
+          swapouts_before=$(swapouts)
+
           # A lane runs in a subshell, so anything it appends to a shell array
           # is lost when it exits, and the job would go green over a failing
           # package. Failures go to a file, which the parent reads below.
@@ -143,9 +157,23 @@ jobs:
           done
           wait
 
-          # Printed so the next person can tell whether a third lane fits: the
+          # Printed so the next person can tell whether another lane fits: the
           # runner has 14 GB of storage and each lane holds a whole build.
           du -sm "$RUNNER_TEMP"/build-lane-* || true
+
+          # Reported in MB rather than in pages, because the runner's 7 GB of
+          # memory is the figure a reader compares them with.
+          page_size=$(sysctl -n hw.pagesize)
+          compressed_mb=$(( ($(compressions) - compressions_before) * page_size / 1048576 ))
+          swapped_mb=$(( ($(swapouts) - swapouts_before) * page_size / 1048576 ))
+          echo "memory pressure: compressed $compressed_mb MB, swapped out $swapped_mb MB"
+          # A zero compression figure is the instrument, not a quiet runner:
+          # macOS compresses on any machine that does real work. An awk pattern
+          # that stops matching prints zero rather than failing, so a later
+          # reader would take a broken reading for a good result.
+          if [ "$compressed_mb" -eq 0 ]; then
+            echo "::warning::vm_stat reported no compression, so these memory figures are not trustworthy"
+          fi
 
           tested=0
           for package in "${packages[@]}"; do
