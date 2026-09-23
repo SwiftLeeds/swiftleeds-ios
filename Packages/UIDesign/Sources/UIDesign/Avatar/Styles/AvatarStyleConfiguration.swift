@@ -19,7 +19,7 @@ public struct AvatarStyleConfiguration {
     /// The diameter to draw at. The text size has already scaled it.
     public let size: CGFloat
 
-    /// What to mark the avatar's lower edge with, if anything.
+    /// The state to show on the avatar, if any. Where it goes is the style's choice.
     public let status: AvatarStatus?
 
     @MainActor

@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// Draws an avatar as a circle.
+/// Draws an avatar as a circle, with any status on its lower trailing edge.
 public struct DefaultAvatarStyle: AvatarStyle {
     public init() {}
 

@@ -32,7 +32,7 @@ public struct Avatar<Fallback: View>: View {
     /// - Parameters:
     ///   - url: Where the photo loads from. A `nil` url draws the fallback and asks for nothing.
     ///   - size: A diameter from ``AvatarSize``. It grows with the text size, then stops.
-    ///   - status: What to mark the avatar's lower edge with, if anything.
+    ///   - status: The state to show on the avatar, if any. The style decides where it goes.
     ///   - fallback: What to draw instead of the photo.
     public init(
         url: URL?,
@@ -84,7 +84,7 @@ public extension Avatar where Fallback == AvatarFallback {
     /// - Parameters:
     ///   - url: Where the photo loads from. A `nil` url draws the fallback and asks for nothing.
     ///   - size: A diameter from ``AvatarSize``. It grows with the text size, then stops.
-    ///   - status: What to mark the avatar's lower edge with, if anything.
+    ///   - status: The state to show on the avatar, if any. The style decides where it goes.
     ///   - fallback: What to draw instead of the photo.
     init(
         url: URL?,

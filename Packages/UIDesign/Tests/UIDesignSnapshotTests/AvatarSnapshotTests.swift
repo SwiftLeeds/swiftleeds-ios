@@ -50,8 +50,7 @@ import UIDesign
         assertSnapshots(of: view)
     }
 
-    // Includes the smallest size, where the doc says the mark is too small to read. The image is
-    // there so a reviewer sees that rather than taking the sentence on trust.
+    // Every size the mark can be asked to draw at, smallest first.
     @Test func status() {
         let view = HStack(alignment: .bottom, spacing: Spacing.large) {
             Avatar(url: nil, size: AvatarSize.small, status: AvatarStatus("Checked in"))

@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// Draws an avatar as a rounded square.
+/// Draws an avatar as a rounded square, with any status on its lower trailing corner.
 public struct RoundedAvatarStyle: AvatarStyle {
     private let cornerRadius: CGFloat
 
