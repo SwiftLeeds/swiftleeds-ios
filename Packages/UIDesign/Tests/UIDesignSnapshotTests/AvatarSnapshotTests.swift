@@ -45,6 +45,18 @@ import UIDesign
         assertSnapshots(of: view)
     }
 
+    @Test func roundedStyle() {
+        let view = HStack(spacing: Spacing.large) {
+            Avatar(url: nil, size: AvatarSize.xLarge)
+
+            Avatar(url: nil, size: AvatarSize.xLarge)
+                .avatarStyle(.rounded(cornerRadius: CornerRadius.small))
+        }
+        .avatarStyle(.rounded)
+
+        assertSnapshots(of: view)
+    }
+
     // A flat fill, so this suite measures the shape and the size and nothing else.
     private func avatar(size: CGFloat) -> some View {
         Avatar(url: nil, size: size) {
