@@ -63,8 +63,10 @@ jobs:
           # Two lanes won every pair. A third lane repeats the dependency
           # compilation again, and each swift test already asks for every core,
           # so it buys contention rather than work.
-          # Memory is not the reason. No run in either arm swapped a page, and
-          # each lane held under 1 GB of the runner's 14 GB of storage.
+          # Memory did not decide it. The step prints what the lanes compress
+          # and swap: three lanes compressed 3259 to 3580 MB against two lanes'
+          # 2276 to 3583 MB, so the arms overlap, and both swapped out 0 MB.
+          # Each lane held under 1 GB of the runner's 14 GB of storage.
           LANE_COUNT: 2
         run: |
           set -uo pipefail
@@ -137,10 +139,13 @@ jobs:
             done
           }
 
-          # Memory is the limit to watch on this step, not cores. Each lane's
+          # Memory is the one limit this step cannot see for itself. Each lane's
           # swift test already asks for every core, so the lanes oversubscribe
-          # the runner's 3. macOS hides the cost of that: it compresses pages
-          # before it swaps, so a runner under pressure only looks slow.
+          # the runner's 3, and macOS compresses pages before it swaps, so a
+          # runner under pressure only looks slow. Two lanes against three never
+          # reached that ceiling, as the value above records. The reading stays
+          # because the changes queued for this job, caching and one runner per
+          # package, move the same numbers.
           # Both counters run from boot and only rise, so a read either side of
           # the lanes gives what the lanes cost. Compressions also proves the
           # reading is live, because it moves on any machine. A zero swapout
