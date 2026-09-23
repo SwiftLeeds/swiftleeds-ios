@@ -5,6 +5,10 @@
 # pressure. Both counters are cumulative since boot, so `start` records them
 # and `report` prints the difference.
 #
+# Compare swap between runs, not compression. Compression is a total over the
+# window, so a longer run compresses more for that reason alone. Swap has no
+# such problem: 0 means the runner never got desperate, however long it ran.
+#
 #   memory-pressure.sh start
 #   ...work...
 #   memory-pressure.sh report
