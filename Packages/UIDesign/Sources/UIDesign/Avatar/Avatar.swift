@@ -20,6 +20,7 @@ public struct Avatar<Fallback: View>: View {
 
     private let url: URL?
     private let size: CGFloat
+    private let status: AvatarStatus?
     private let fallback: Fallback
 
     /// Creates an avatar that draws `fallback` while its photo is missing.
@@ -27,19 +28,26 @@ public struct Avatar<Fallback: View>: View {
     /// - Parameters:
     ///   - url: Where the photo loads from. A `nil` url draws the fallback and asks for nothing.
     ///   - size: A diameter from ``AvatarSize``. It grows with the text size, then stops.
+    ///   - status: What to mark the avatar's lower edge with, if anything.
     ///   - fallback: What to draw instead of the photo.
     public init(
         url: URL?,
         size: CGFloat = AvatarSize.medium,
+        status: AvatarStatus? = nil,
         @ViewBuilder fallback: () -> Fallback
     ) {
         self.url = url
         self.size = size
+        self.status = status
         self.fallback = fallback()
     }
 
     public var body: some View {
-        AnyView(style.makeBody(configuration: AvatarStyleConfiguration(content: content, size: size)))
+        AnyView(style.makeBody(configuration: configuration))
+    }
+
+    private var configuration: AvatarStyleConfiguration {
+        AvatarStyleConfiguration(content: content, size: size, status: status)
     }
 
     private var content: some View {
@@ -62,8 +70,14 @@ public extension Avatar where Fallback == AvatarFallback {
     /// - Parameters:
     ///   - url: Where the photo loads from. A `nil` url draws the fallback and asks for nothing.
     ///   - size: A diameter from ``AvatarSize``. It grows with the text size, then stops.
+    ///   - status: What to mark the avatar's lower edge with, if anything.
     ///   - fallback: What to draw instead of the photo.
-    init(url: URL?, size: CGFloat = AvatarSize.medium, fallback: AvatarFallback = .symbol) {
-        self.init(url: url, size: size) { fallback }
+    init(
+        url: URL?,
+        size: CGFloat = AvatarSize.medium,
+        status: AvatarStatus? = nil,
+        fallback: AvatarFallback = .symbol
+    ) {
+        self.init(url: url, size: size, status: status) { fallback }
     }
 }

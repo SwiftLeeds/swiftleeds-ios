@@ -1,6 +1,6 @@
 import SwiftUI
 
-// The body every built-in avatar style shares: size it, then clip it to a shape.
+// The body every built-in avatar style shares: size it, clip it, then mark it.
 struct ClippedAvatar<ClipShape: Shape>: View {
     // The base size differs per avatar, so the metric scales 1 and multiplies.
     @ScaledMetric(relativeTo: .body) private var textScale: CGFloat = 1
@@ -15,13 +15,41 @@ struct ClippedAvatar<ClipShape: Shape>: View {
             .frame(width: diameter, height: diameter)
             .overlay { configuration.content }
             .clipShape(shape)
+            .overlay(alignment: .bottomTrailing) { mark }
             .environment(\.avatarDiameter, diameter)
+    }
+
+    // The mark sits over the clip, so the edge it marks stays visible. The tint is the symbol,
+    // never a fill behind it, so a status reads the same here as it does anywhere else.
+    @ViewBuilder
+    private var mark: some View {
+        if let status = configuration.status {
+            Image(icon: status.icon)
+                .font(.system(size: markDiameter * Self.symbolProportion))
+                .foregroundStyle(status.tint)
+                // A fixed box, so a wide symbol such as a triangle marks the same spot at the
+                // same size as a narrow one. The disc separates the mark from the photo beneath.
+                .frame(width: markDiameter, height: markDiameter)
+                .background(Circle().fill(.surface))
+                .accessibilityLabel(status.label)
+        }
     }
 
     private var diameter: CGFloat {
         configuration.size * min(textScale, Self.largestGrowth)
     }
 
+    private var markDiameter: CGFloat {
+        diameter * Self.markProportion
+    }
+
     // Past this an avatar crowds the text beside it out of the row.
     private static var largestGrowth: CGFloat { 1.75 }
+
+    // At this size the mark's center lands on a circle's edge with no offset, because the corner
+    // of the frame sits half a mark beyond it.
+    private static var markProportion: CGFloat { 0.28 }
+
+    // Leaves a rim of the disc around the symbol.
+    private static var symbolProportion: CGFloat { 0.8 }
 }

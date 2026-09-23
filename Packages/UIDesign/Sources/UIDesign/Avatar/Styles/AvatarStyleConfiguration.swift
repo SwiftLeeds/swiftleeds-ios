@@ -19,9 +19,13 @@ public struct AvatarStyleConfiguration {
     /// The diameter to draw at, before the text size scales it.
     public let size: CGFloat
 
+    /// What to mark the avatar's lower edge with, if anything.
+    public let status: AvatarStatus?
+
     @MainActor
-    init(content: some View, size: CGFloat) {
+    init(content: some View, size: CGFloat, status: AvatarStatus?) {
         self.content = Content(content)
         self.size = size
+        self.status = status
     }
 }
