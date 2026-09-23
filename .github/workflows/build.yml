@@ -405,8 +405,11 @@ jobs:
   # on macOS, where it held one of the 5 concurrent runners for 14s to 20s, and
   # this workflow wants more macOS jobs than that limit allows.
   #
-  # Both builds of 0.65.1 list the same rules and enable the same 104 of them,
-  # compared identifier by identifier before the move.
+  # Both builds of 0.65.1 enable the same 104 rules, compared identifier by
+  # identifier. `statement_position` needed more than that, being the only one
+  # that reports "uses sourcekit: yes" while this runner has no Swift toolchain.
+  # It was given a file that violates it and reported the same violation as
+  # macOS, so a listed rule here is a running rule.
   lint-swift:
     name: Lint Swift Sources
     runs-on: ubuntu-24.04
@@ -433,24 +436,6 @@ jobs:
           # unzip does not always carry the executable bit.
           chmod +x swiftlint/swiftlint
           echo "$RUNNER_TEMP/swiftlint" >> "$GITHUB_PATH"
-
-      # Temporary. `statement_position` is the one enabled rule that reports
-      # "uses sourcekit: yes", and this runner has no Swift toolchain. Listing a
-      # rule does not prove it runs, so lint a file that violates it.
-      - name: Check the SourceKit rule still fires
-        run: |
-          set -uo pipefail
-          cat > "$RUNNER_TEMP/StatementPosition.swift" <<'SWIFT'
-          func check() {
-              if Bool.random() {
-                  print("a")
-              }
-              else {
-                  print("b")
-              }
-          }
-          SWIFT
-          swiftlint lint --no-cache --reporter csv "$RUNNER_TEMP/StatementPosition.swift"
 
       - name: Lint every Swift source
         run: |
