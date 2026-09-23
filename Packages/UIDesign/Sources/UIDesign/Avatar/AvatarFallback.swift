@@ -37,17 +37,28 @@ public struct AvatarFallback: View {
     private var drawnMark: some View {
         switch mark {
         case .symbol:
-            // A font size keeps the symbol's own proportions, which resizing it would not.
-            Image(icon: .person)
-                .font(.system(size: diameter * Self.symbolProportion))
-                .foregroundStyle(.textSecondary)
+            symbol
         case .initials(let name):
-            Text(name.formatted(.name(style: .abbreviated)))
-                .font(.system(size: diameter * Self.initialsProportion, weight: .semibold))
-                .foregroundStyle(.textSecondary)
-                .lineLimit(1)
-                .minimumScaleFactor(0.5)
+            let initials = name.formatted(.name(style: .abbreviated))
+            if initials.isEmpty {
+                symbol
+            } else {
+                // Primary, not secondary: at the smaller sizes these letters fall under the text
+                // size that a 3:1 contrast ratio is enough for.
+                Text(initials)
+                    .font(.system(size: diameter * Self.initialsProportion, weight: .semibold))
+                    .foregroundStyle(.textPrimary)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.5)
+            }
         }
+    }
+
+    // A font size keeps the symbol's own proportions, which resizing it would not.
+    private var symbol: some View {
+        Image(icon: .person)
+            .font(.system(size: diameter * Self.symbolProportion))
+            .foregroundStyle(.textSecondary)
     }
 
     // How much of the avatar each mark covers. Any more and it meets the edge.
@@ -61,7 +72,8 @@ public extension AvatarFallback {
 
     /// The person's initials, abbreviated the way their name's locale abbreviates it.
     ///
-    /// A name that abbreviates to more than two letters shrinks to fit.
+    /// A name that abbreviates to more than two letters shrinks to fit. A name with nothing to
+    /// abbreviate draws the symbol instead.
     static func initials(_ name: PersonNameComponents) -> AvatarFallback {
         AvatarFallback(.initials(name))
     }
