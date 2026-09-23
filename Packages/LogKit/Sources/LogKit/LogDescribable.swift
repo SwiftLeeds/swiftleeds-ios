@@ -1,6 +1,6 @@
 /// A type that knows how it should read in a log.
 ///
-/// Conform anything whose default rendering is unhelpful — notably framework errors, which reflect
+/// Conform anything whose default rendering is unhelpful, notably framework errors, which reflect
 /// into a dump rather than describing themselves. Sensitivity is not part of this protocol: an
 /// error's text is like a `String`, so the call site classifies it.
 public protocol LogDescribable {
