@@ -24,7 +24,6 @@ let package = Package(
                 .product(name: "SharedAssets", package: "SwiftLeedsPackage"),
             ]
         ),
-        // The name ends in SnapshotTests because that is how CI finds it.
         .testTarget(
             name: "UIDesignSnapshotTests",
             dependencies: [

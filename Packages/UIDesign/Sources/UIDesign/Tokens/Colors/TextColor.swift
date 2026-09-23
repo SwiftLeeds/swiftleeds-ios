@@ -1,8 +1,6 @@
 import SwiftUI
 
-/// The colours text draws in, from most to least prominent.
-///
-/// Don't carry meaning in colour alone. Pair it with a word or a symbol.
+/// The colors text draws in, from most to least prominent.
 public extension ShapeStyle where Self == Color {
     /// The main text on a surface.
     static var textPrimary: Color { .primary }
@@ -28,7 +26,7 @@ public extension ShapeStyle where Self == Color {
         #endif
     }
 
-    /// Text on a brand coloured fill.
+    /// Text on a brand colored fill.
     ///
     /// It doesn't change with the appearance, because the fill beneath it doesn't either.
     static var textOnBrand: Color { .white }

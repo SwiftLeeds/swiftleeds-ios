@@ -1,7 +1,6 @@
 #if DEBUG
 import SwiftUI
 
-/// A titled block of name and sample pairs, in two aligned columns.
 struct SpecimenGroup<Content: View>: View {
     private let title: String
     @ViewBuilder private let content: () -> Content

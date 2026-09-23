@@ -7,8 +7,6 @@ import UIKit
 ///
 /// Six images: light and dark, each at the default, the largest standard and the largest
 /// accessibility text size.
-///
-/// - Parameter view: The view to snapshot.
 @MainActor
 func assertSnapshots(
     of view: some View,
@@ -33,8 +31,6 @@ func assertSnapshots(
 ///
 /// Four images: light and dark, each at the default and the largest accessibility text size.
 /// Use this for a component. A reference sheet does not need it.
-///
-/// - Parameter view: The view to snapshot.
 @MainActor
 func assertCompactSnapshots(
     of view: some View,
@@ -87,7 +83,6 @@ private func variants<V: View>(
     }
 }
 
-// A nil width lets the view choose. A width pins it, and height stays ideal.
 @ViewBuilder
 private func sized(_ view: some View, width: CGFloat?) -> some View {
     if let width {

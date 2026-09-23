@@ -17,8 +17,6 @@ public struct Icon: Equatable, Hashable, Sendable {
     /// Creates an icon from an SF Symbol.
     ///
     /// A symbol newer than the deployment target doesn't compile.
-    ///
-    /// - Parameter symbol: The SF Symbol to draw.
     public init(_ symbol: SFSymbol) {
         systemName = symbol.rawValue
     }
@@ -26,8 +24,6 @@ public struct Icon: Equatable, Hashable, Sendable {
 
 extension String {
     /// Creates the icon's SF Symbol name.
-    ///
-    /// - Parameter icon: The icon to name.
     public init(_ icon: Icon) {
         self = icon.name
     }
@@ -43,8 +39,6 @@ public extension Icon {
     static let back = Icon(.chevronLeft)
     static let forward = Icon(.chevronRight)
     static let close = Icon(.xmark)
-
-    /// Opens a menu of further actions.
     static let more = Icon(.ellipsis)
 }
 
@@ -61,10 +55,10 @@ public extension Icon {
     static let refresh = Icon(.arrowClockwise)
     static let copy = Icon(.documentOnDocument)
 
-    /// An outline star, for an item that is not a favourite yet.
+    /// An outline star, for an item that is not a favorite yet.
     static let favorite = Icon(.star)
 
-    /// A solid star, for an item that is already a favourite.
+    /// A solid star, for an item that is already a favorite.
     static let favoriteFilled = Icon(.starFill)
 
     /// Leaves the app. Pair it with a link, never with navigation.
@@ -78,12 +72,10 @@ public extension Icon {
     static let error = Icon(.xmarkCircle)
     static let info = Icon(.infoCircle)
     static let locked = Icon(.lock)
-
-    /// Something needs attention, though nothing has failed.
-    static let warning = Icon(.exclamationmarkTriangle)
-
-    /// Something is happening right now.
     static let live = Icon(.dotRadiowavesLeftAndRight)
+
+    /// Needs attention, though nothing has failed.
+    static let warning = Icon(.exclamationmarkTriangle)
 }
 
 // MARK: - Content

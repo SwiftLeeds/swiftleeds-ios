@@ -2,8 +2,6 @@
 import SwiftUI
 
 /// Draws every icon in the vocabulary beside its name.
-///
-/// Its snapshot pins the symbol each role maps to.
 package struct IconSpecimen: View {
     package init() {}
 

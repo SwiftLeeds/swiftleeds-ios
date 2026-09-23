@@ -1,8 +1,6 @@
 import CoreGraphics
 
 /// The space between elements, on a four point grid.
-///
-/// Use the smallest step that separates two things clearly. A bigger step means less related.
 public enum Spacing {
     public static let xxSmall: CGFloat = 2
     public static let xSmall: CGFloat = 4

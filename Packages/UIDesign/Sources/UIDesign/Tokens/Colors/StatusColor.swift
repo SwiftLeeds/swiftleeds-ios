@@ -1,10 +1,6 @@
 import SwiftUI
 
-/// The colours that report an outcome or a state.
-///
-/// Each one names a role, never a feature. Map a screen's own word onto one of these.
-///
-/// Don't carry meaning in colour alone. Pair it with a word or a symbol.
+/// The colors that report an outcome or a state.
 public extension ShapeStyle where Self == Color {
     /// It worked, or it is confirmed.
     static var success: Color { .green }

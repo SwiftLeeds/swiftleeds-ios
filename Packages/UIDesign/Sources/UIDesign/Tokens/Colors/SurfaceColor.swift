@@ -1,8 +1,6 @@
 import SwiftUI
 
 /// The backgrounds a screen is built from, in three levels of depth.
-///
-/// Each names the system colour for this platform, so nothing else writes `#if os`.
 public extension ShapeStyle where Self == Color {
     /// The background of a screen.
     static var surface: Color {

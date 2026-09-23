@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// The colours a border or a divider draws in.
+/// The colors a border or a divider draws in.
 public extension ShapeStyle where Self == Color {
     /// A border that lets the surface show through.
     static var borderPrimary: Color {

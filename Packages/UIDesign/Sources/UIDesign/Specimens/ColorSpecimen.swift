@@ -1,9 +1,7 @@
 #if DEBUG
 import SwiftUI
 
-/// Draws every colour token beside its name.
-///
-/// Its snapshot pins each colour in both appearances.
+/// Draws every color token beside its name.
 package struct ColorSpecimen: View {
     package init() {}
 
