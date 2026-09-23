@@ -1,9 +1,8 @@
 import CoreGraphics
 
-/// The diameter of an avatar.
+/// The diameter of an avatar, at the default text size.
 ///
-/// Each named value is a base size at the default text size. ``Avatar`` grows it with the text
-/// size for you.
+/// ``Avatar`` grows it with the text size for you.
 public struct AvatarSize: Equatable, Hashable, Sendable {
     fileprivate let points: CGFloat
 

@@ -1,10 +1,6 @@
 import CoreGraphics
 
-/// The side of the square an icon draws in.
-///
-/// Each value is a base size at the default text size. Pass it through `@ScaledMetric` so the
-/// frame grows with the text beside it. A fixed frame clips the symbol at the accessibility
-/// text sizes.
+/// The side of the square an icon draws in, at the default text size.
 public struct IconSize: Equatable, Hashable, Sendable {
     fileprivate let points: CGFloat
 

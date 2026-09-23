@@ -50,7 +50,7 @@ import UIDesign
         assertSnapshots(of: view)
     }
 
-    // Every size the mark can be asked to draw at, smallest first.
+    // The smallest size, the default and the largest.
     @Test func status() {
         let view = HStack(alignment: .bottom, spacing: Spacing.large) {
             Avatar(url: nil, size: AvatarSize.small, status: AvatarStatus("Checked in"))

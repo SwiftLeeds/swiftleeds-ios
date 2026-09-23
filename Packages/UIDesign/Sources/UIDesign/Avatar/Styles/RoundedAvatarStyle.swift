@@ -5,6 +5,8 @@ public struct RoundedAvatarStyle: AvatarStyle {
     private let cornerRadius: CornerRadius
 
     /// Creates the style.
+    ///
+    /// - Parameter cornerRadius: The radius of each corner.
     public init(cornerRadius: CornerRadius = .medium) {
         self.cornerRadius = cornerRadius
     }

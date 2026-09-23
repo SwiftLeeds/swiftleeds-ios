@@ -9,7 +9,7 @@ import SwiftUI
 /// struct SquareAvatarStyle: AvatarStyle {
 ///     func makeBody(configuration: Configuration) -> some View {
 ///         configuration.content
-///             .frame(width: configuration.size, height: configuration.size)
+///             .frame(configuration.size)
 ///             .overlay(alignment: .topTrailing) { configuration.status }
 ///     }
 /// }
