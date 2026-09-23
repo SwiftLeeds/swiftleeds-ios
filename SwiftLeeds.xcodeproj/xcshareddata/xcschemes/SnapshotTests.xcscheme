@@ -86,6 +86,16 @@
                ReferencedContainer = "container:Packages/UIComponents">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "UIDesignSnapshotTests"
+               BuildableName = "UIDesignSnapshotTests"
+               BlueprintName = "UIDesignSnapshotTests"
+               ReferencedContainer = "container:Packages/UIDesign">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
 </Scheme>

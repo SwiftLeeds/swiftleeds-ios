@@ -43,6 +43,7 @@
 		A11CE57000000000000000D7 /* NetworkKit in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C7 /* NetworkKit */; };
 		A11CE57000000000000000D9 /* SponsorsFeature in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C9 /* SponsorsFeature */; };
 		A11CE57000000000000000DA /* UIComponents in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000CA /* UIComponents */; };
+		A11CE570000000000000F4A3 /* UIDesign in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE570000000000000F4A2 /* UIDesign */; };
 		F8AC9B695FEAFDBD19A01A10 /* NetworkKit in Frameworks */ = {isa = PBXBuildFile; productRef = 631E9D02432C1E1A187A3E03 /* NetworkKit */; };
 		E44377685B94DC7F6465ED4A /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = 39093D62C747210F6BA83C1E /* Dependencies */; };
 		A11CE57000000000000000D3 /* SecureStorageKit in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C3 /* SecureStorageKit */; };
@@ -190,6 +191,7 @@
 		A11CE570000000000000F0A2 /* LocalUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = LocalUI; sourceTree = "<group>"; };
 		A11CE57000000000000000A4 /* NetworkKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = NetworkKit; sourceTree = "<group>"; };
 		A11CE57000000000000000A3 /* AuthenticationUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = AuthenticationUI; sourceTree = "<group>"; };
+		A11CE570000000000000F4A1 /* UIDesign */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = UIDesign; sourceTree = "<group>"; };
 		893A122D593379F84605F70C /* SwiftLeedsColors.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = SwiftLeedsColors.xcassets; sourceTree = "<group>"; };
 		A11CE57000000000000000F1 /* URLSession+SwiftLeeds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+SwiftLeeds.swift"; sourceTree = "<group>"; };
 		AE1C801328A7BCD000996659 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
@@ -253,6 +255,7 @@
 				A11CE57000000000000000D7 /* NetworkKit in Frameworks */,
 				A11CE57000000000000000D9 /* SponsorsFeature in Frameworks */,
 				A11CE57000000000000000DA /* UIComponents in Frameworks */,
+				A11CE570000000000000F4A3 /* UIDesign in Frameworks */,
 				A11CE57000000000000000DC /* SponsorsUI in Frameworks */,
 				A11CE57000000000000000E8 /* ScheduleUI in Frameworks */,
 				A11CE57000000000000000DD /* ScheduleFeature in Frameworks */,
@@ -368,6 +371,7 @@
 				A11CE570000000000000F0A2 /* LocalUI */,
 				A11CE57000000000000000A4 /* NetworkKit */,
 				A11CE57000000000000000A3 /* AuthenticationUI */,
+				A11CE570000000000000F4A1 /* UIDesign */,
 			);
 			path = Packages;
 			sourceTree = "<group>";
@@ -573,6 +577,7 @@
 				A11CE57000000000000000C7 /* NetworkKit */,
 				A11CE57000000000000000C9 /* SponsorsFeature */,
 				A11CE57000000000000000CA /* UIComponents */,
+				A11CE570000000000000F4A2 /* UIDesign */,
 				A11CE57000000000000000CC /* SponsorsUI */,
 				A11CE57000000000000000E7 /* ScheduleUI */,
 				A11CE57000000000000000CD /* ScheduleFeature */,
@@ -1794,6 +1799,10 @@
 		A11CE57000000000000000CA /* UIComponents */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = UIComponents;
+		};
+		A11CE570000000000000F4A2 /* UIDesign */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = UIDesign;
 		};
 		A11CE57000000000000000E7 /* ScheduleUI */ = {
 			isa = XCSwiftPackageProductDependency;
