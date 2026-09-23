@@ -11,6 +11,10 @@ public struct LogSalt: Hashable, Sendable {
         self.storage = value
     }
 
+    /// Creates a salt from random bytes.
+    ///
+    /// - Parameter byteCount: Must be positive. Zero leaves nothing to mix in, so tokens become
+    ///   guessable, and a negative count traps.
     public static func random(byteCount: Int = 16) -> LogSalt {
         var generator = SystemRandomNumberGenerator()
         let bytes = (0..<byteCount).map { _ in UInt8.random(in: .min ... .max, using: &generator) }
