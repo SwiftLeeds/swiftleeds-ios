@@ -291,12 +291,18 @@ jobs:
           fi
           echo "::group::Snapshot tests:$selected"
           status=0
+          # This call compiles and then tests, so the figure covers both. The
+          # worker count only changes the test half, and both arms of a
+          # comparison compile the same thing, so a difference between them
+          # comes from the workers.
+          .github/scripts/memory-pressure.sh start
           xcodebuild test -project SwiftLeeds.xcodeproj "${args[@]}" \
             -destination "$DESTINATION" \
             -derivedDataPath "$RUNNER_TEMP/snapshot-derived-data" \
             -skipPackagePluginValidation \
             || status=$?
           echo "::endgroup::"
+          .github/scripts/memory-pressure.sh report
           if [ "$status" -ne 0 ]; then
             # One call covers several targets, and its status does not say
             # which one failed. Naming them all here would name six that
