@@ -1,10 +1,7 @@
 import SwiftUI
 
-// The body every built-in avatar style shares: size it, clip it, then mark it.
+// The body every built-in avatar style shares: clip it to a shape, then mark it.
 struct ClippedAvatar<ClipShape: Shape>: View {
-    // The base size differs per avatar, so the metric scales 1 and multiplies.
-    @ScaledMetric(relativeTo: .body) private var textScale: CGFloat = 1
-
     let configuration: AvatarStyleConfiguration
     let shape: ClipShape
 
@@ -16,7 +13,6 @@ struct ClippedAvatar<ClipShape: Shape>: View {
             .overlay { configuration.content }
             .clipShape(shape)
             .overlay(alignment: .bottomTrailing) { mark }
-            .environment(\.avatarDiameter, diameter)
     }
 
     // The mark sits over the clip, so the edge it marks stays visible. The tint is the symbol,
@@ -36,15 +32,12 @@ struct ClippedAvatar<ClipShape: Shape>: View {
     }
 
     private var diameter: CGFloat {
-        configuration.size * min(textScale, Self.largestGrowth)
+        configuration.size
     }
 
     private var markDiameter: CGFloat {
         diameter * Self.markProportion
     }
-
-    // Past this an avatar crowds the text beside it out of the row.
-    private static var largestGrowth: CGFloat { 1.75 }
 
     // At this size the mark's center lands on a circle's edge with no offset, because the corner
     // of the frame sits half a mark beyond it.

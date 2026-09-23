@@ -18,6 +18,9 @@ import SwiftUI
 public struct Avatar<Fallback: View>: View {
     @Environment(\.avatarStyle) private var style
 
+    // The base size differs per avatar, so the metric scales 1 and multiplies.
+    @ScaledMetric(relativeTo: .body) private var textScale: CGFloat = 1
+
     private let url: URL?
     private let size: CGFloat
     private let status: AvatarStatus?
@@ -42,13 +45,23 @@ public struct Avatar<Fallback: View>: View {
         self.fallback = fallback()
     }
 
+    // The scaling and its ceiling belong here, not to a style: a style decides the shape, and
+    // every avatar answers the text size the same way.
     public var body: some View {
         AnyView(style.makeBody(configuration: configuration))
+            .environment(\.avatarDiameter, diameter)
     }
 
     private var configuration: AvatarStyleConfiguration {
-        AvatarStyleConfiguration(content: content, size: size, status: status)
+        AvatarStyleConfiguration(content: content, size: diameter, status: status)
     }
+
+    private var diameter: CGFloat {
+        size * min(textScale, Self.largestGrowth)
+    }
+
+    // Past this an avatar crowds the text beside it out of the row.
+    private static var largestGrowth: CGFloat { 1.75 }
 
     private var content: some View {
         AsyncImage(url: url) { phase in
@@ -100,8 +113,10 @@ private let previewName = PersonNameComponents(givenName: "Member", familyName: 
 
         Avatar(url: nil, size: AvatarSize.xLarge, fallback: .initials(previewName))
 
+        // A fallback of the caller's own. Neutral, because a color here would read as a status.
         Avatar(url: nil, size: AvatarSize.xLarge) {
-            Color.brandPrimary
+            Image(icon: .locked)
+                .foregroundStyle(.textSecondary)
         }
     }
     .padding(Spacing.large)
