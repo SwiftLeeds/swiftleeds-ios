@@ -8,6 +8,8 @@ import SwiftUI
 ///
 /// It is neutral, because a color on an avatar means the person's status.
 public struct AvatarFallback: View {
+    @Environment(\.avatarDiameter) private var diameter
+
     private init() {}
 
     public var body: some View {
@@ -19,17 +21,17 @@ public struct AvatarFallback: View {
         .overlay { mark }
     }
 
-    // Resizable, not a symbol scale: the mark tracks the avatar's diameter, not the text size.
+    // Sized from the avatar, not from the text: a symbol that follows the text size overflows a
+    // small avatar at the accessibility sizes. A font size keeps the symbol's own proportions,
+    // which resizing it would not.
     private var mark: some View {
         Image(icon: .person)
-            .resizable()
-            .scaledToFit()
-            .scaleEffect(Self.markProportion)
+            .font(.system(size: diameter * Self.markProportion))
             .foregroundStyle(.textSecondary)
     }
 
     // How much of the avatar the mark covers. Any more and it meets the edge.
-    private static var markProportion: CGFloat { 0.52 }
+    private static var markProportion: CGFloat { 0.5 }
 }
 
 public extension AvatarFallback {

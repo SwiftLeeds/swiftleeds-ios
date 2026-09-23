@@ -15,6 +15,7 @@ struct ClippedAvatar<ClipShape: Shape>: View {
             .frame(width: diameter, height: diameter)
             .overlay { configuration.content }
             .clipShape(shape)
+            .environment(\.avatarDiameter, diameter)
     }
 
     private var diameter: CGFloat {
