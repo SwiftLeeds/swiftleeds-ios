@@ -137,11 +137,10 @@ jobs:
             done
           }
 
-          # Memory is the limit to watch when the lane count rises, not cores.
-          # Each lane's swift test already uses every core, so two lanes
-          # oversubscribe the runner's 3 and three lanes oversubscribe them
-          # further. macOS hides the cost of that: it compresses pages before it
-          # swaps, so a runner under pressure only looks slow.
+          # Memory is the limit to watch on this step, not cores. Each lane's
+          # swift test already asks for every core, so the lanes oversubscribe
+          # the runner's 3. macOS hides the cost of that: it compresses pages
+          # before it swaps, so a runner under pressure only looks slow.
           # Both counters run from boot and only rise, so a read either side of
           # the lanes gives what the lanes cost. Compressions also proves the
           # reading is live, because it moves on any machine. A zero swapout
@@ -158,10 +157,6 @@ jobs:
             run_lane "$lane" &
           done
           wait
-
-          # Printed so the next person can tell whether another lane fits: the
-          # runner has 14 GB of storage and each lane holds a whole build.
-          du -sm "$RUNNER_TEMP"/build-lane-* || true
 
           # Reported in MB rather than in pages, because the runner's 7 GB of
           # memory is the figure a reader compares them with.
