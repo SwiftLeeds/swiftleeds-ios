@@ -46,7 +46,7 @@ public struct AvatarFallback: View {
                 // Primary, not secondary: at the smaller sizes these letters fall under the text
                 // size that a 3:1 contrast ratio is enough for.
                 Text(initials)
-                    .font(.system(size: diameter * Self.initialsProportion, weight: .semibold))
+                    .font(.system(size: CGFloat(diameter) * Self.initialsProportion, weight: .semibold))
                     .foregroundStyle(.textPrimary)
                     .lineLimit(1)
                     .minimumScaleFactor(0.5)
@@ -57,7 +57,7 @@ public struct AvatarFallback: View {
     // A font size keeps the symbol's own proportions, which resizing it would not.
     private var symbol: some View {
         Image(icon: .person)
-            .font(.system(size: diameter * Self.symbolProportion))
+            .font(.system(size: CGFloat(diameter) * Self.symbolProportion))
             .foregroundStyle(.textSecondary)
     }
 

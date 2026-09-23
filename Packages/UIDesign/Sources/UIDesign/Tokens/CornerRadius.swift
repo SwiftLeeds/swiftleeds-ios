@@ -1,13 +1,28 @@
 import CoreGraphics
 
 /// The radius of a rounded corner.
-public enum CornerRadius {
-    public static let none: CGFloat = 0
-    public static let small: CGFloat = 8
-    public static let medium: CGFloat = 12
-    public static let large: CGFloat = 16
-    public static let xLarge: CGFloat = 24
+public struct CornerRadius: Equatable, Hashable, Sendable {
+    fileprivate let points: CGFloat
+
+    init(_ points: CGFloat) {
+        self.points = points
+    }
+}
+
+public extension CornerRadius {
+    static let none = CornerRadius(0)
+    static let small = CornerRadius(8)
+    static let medium = CornerRadius(12)
+    static let large = CornerRadius(16)
+    static let xLarge = CornerRadius(24)
 
     /// A fully rounded end. `RoundedRectangle` clamps this to half the shorter side.
-    public static let full: CGFloat = .infinity
+    static let full = CornerRadius(.infinity)
+}
+
+public extension CGFloat {
+    /// Creates a length from a corner radius.
+    init(_ radius: CornerRadius) {
+        self = radius.points
+    }
 }

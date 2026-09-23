@@ -85,7 +85,7 @@ import UIDesign
     }
 
     // A flat fill, so this suite measures the shape and the size and nothing else.
-    private func avatar(size: CGFloat) -> some View {
+    private func avatar(size: AvatarSize) -> some View {
         Avatar(url: nil, size: size) {
             Color.secondarySurface
         }

@@ -9,7 +9,7 @@ struct ClippedAvatar<ClipShape: Shape>: View {
     // larger than the frame, such as a symbol at an accessibility text size, spill into the layout.
     var body: some View {
         Color.clear
-            .frame(width: configuration.size, height: configuration.size)
+            .frame(configuration.size)
             .overlay { configuration.content }
             .clipShape(shape)
             // Over the clip, so the edge the status marks stays visible.

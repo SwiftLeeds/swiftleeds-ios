@@ -7,10 +7,10 @@ package struct DimensionSpecimen: View {
 
     package var body: some View {
         ViewThatFits(in: .horizontal) {
-            HStack(alignment: .top, spacing: Spacing.xLarge) { groups }
-            VStack(alignment: .leading, spacing: Spacing.xLarge) { groups }
+            HStack(alignment: .top, spacing: .xLarge) { groups }
+            VStack(alignment: .leading, spacing: .xLarge) { groups }
         }
-        .padding(Spacing.large)
+        .padding(.large)
     }
 
     @ViewBuilder
@@ -28,52 +28,52 @@ package struct DimensionSpecimen: View {
 private extension DimensionSpecimen {
     var spacingGroup: some View {
         SpecimenGroup("Spacing") {
-            GridRow { Text("xxSmall"); Bar(width: Spacing.xxSmall) }
-            GridRow { Text("xSmall"); Bar(width: Spacing.xSmall) }
-            GridRow { Text("small"); Bar(width: Spacing.small) }
-            GridRow { Text("medium"); Bar(width: Spacing.medium) }
-            GridRow { Text("large"); Bar(width: Spacing.large) }
-            GridRow { Text("xLarge"); Bar(width: Spacing.xLarge) }
-            GridRow { Text("xxLarge"); Bar(width: Spacing.xxLarge) }
+            GridRow { Text("xxSmall"); Bar(width: .xxSmall) }
+            GridRow { Text("xSmall"); Bar(width: .xSmall) }
+            GridRow { Text("small"); Bar(width: .small) }
+            GridRow { Text("medium"); Bar(width: .medium) }
+            GridRow { Text("large"); Bar(width: .large) }
+            GridRow { Text("xLarge"); Bar(width: .xLarge) }
+            GridRow { Text("xxLarge"); Bar(width: .xxLarge) }
         }
     }
 
     var cornerRadiusGroup: some View {
         SpecimenGroup("Radius") {
-            GridRow { Text("none"); Corner(radius: CornerRadius.none) }
-            GridRow { Text("small"); Corner(radius: CornerRadius.small) }
-            GridRow { Text("medium"); Corner(radius: CornerRadius.medium) }
-            GridRow { Text("large"); Corner(radius: CornerRadius.large) }
-            GridRow { Text("xLarge"); Corner(radius: CornerRadius.xLarge) }
-            GridRow { Text("full"); Corner(radius: CornerRadius.full) }
+            GridRow { Text("none"); Corner(radius: .none) }
+            GridRow { Text("small"); Corner(radius: .small) }
+            GridRow { Text("medium"); Corner(radius: .medium) }
+            GridRow { Text("large"); Corner(radius: .large) }
+            GridRow { Text("xLarge"); Corner(radius: .xLarge) }
+            GridRow { Text("full"); Corner(radius: .full) }
         }
     }
 
     var borderWidthGroup: some View {
         SpecimenGroup("Border") {
-            GridRow { Text("thin"); Border(width: BorderWidth.thin) }
-            GridRow { Text("medium"); Border(width: BorderWidth.medium) }
-            GridRow { Text("thick"); Border(width: BorderWidth.thick) }
+            GridRow { Text("thin"); Border(width: .thin) }
+            GridRow { Text("medium"); Border(width: .medium) }
+            GridRow { Text("thick"); Border(width: .thick) }
         }
     }
 
     var iconSizeGroup: some View {
         SpecimenGroup("Icon") {
-            GridRow { Text("xSmall"); Square(side: IconSize.xSmall) }
-            GridRow { Text("small"); Square(side: IconSize.small) }
-            GridRow { Text("medium"); Square(side: IconSize.medium) }
-            GridRow { Text("large"); Square(side: IconSize.large) }
-            GridRow { Text("xLarge"); Square(side: IconSize.xLarge) }
-            GridRow { Text("xxLarge"); Square(side: IconSize.xxLarge) }
+            GridRow { Text("xSmall"); Square(side: .xSmall) }
+            GridRow { Text("small"); Square(side: .small) }
+            GridRow { Text("medium"); Square(side: .medium) }
+            GridRow { Text("large"); Square(side: .large) }
+            GridRow { Text("xLarge"); Square(side: .xLarge) }
+            GridRow { Text("xxLarge"); Square(side: .xxLarge) }
         }
     }
 
     var avatarSizeGroup: some View {
         SpecimenGroup("Avatar") {
-            GridRow { Text("small"); Dot(diameter: AvatarSize.small) }
-            GridRow { Text("medium"); Dot(diameter: AvatarSize.medium) }
-            GridRow { Text("large"); Dot(diameter: AvatarSize.large) }
-            GridRow { Text("xLarge"); Dot(diameter: AvatarSize.xLarge) }
+            GridRow { Text("small"); Dot(diameter: .small) }
+            GridRow { Text("medium"); Dot(diameter: .medium) }
+            GridRow { Text("large"); Dot(diameter: .large) }
+            GridRow { Text("xLarge"); Dot(diameter: .xLarge) }
         }
     }
 }
@@ -81,52 +81,52 @@ private extension DimensionSpecimen {
 // MARK: - Parts
 
 private struct Bar: View {
-    let width: CGFloat
+    let width: Spacing
 
     var body: some View {
         Rectangle()
             .fill(.primary)
-            .frame(width: width, height: Spacing.medium)
+            .frame(width: CGFloat(width), height: CGFloat(Spacing.medium))
     }
 }
 
 private struct Corner: View {
-    let radius: CGFloat
+    let radius: CornerRadius
 
     var body: some View {
-        RoundedRectangle(cornerRadius: radius)
+        RoundedRectangle(cornerRadius: CGFloat(radius))
             .fill(.primary)
             .frame(width: Sample.width, height: Sample.height)
     }
 }
 
 private struct Border: View {
-    let width: CGFloat
+    let width: BorderWidth
 
     var body: some View {
-        RoundedRectangle(cornerRadius: CornerRadius.small)
-            .strokeBorder(.primary, lineWidth: width)
+        RoundedRectangle(cornerRadius: CGFloat(CornerRadius.small))
+            .strokeBorder(.primary, lineWidth: CGFloat(width))
             .frame(width: Sample.width, height: Sample.height)
     }
 }
 
 private struct Square: View {
-    let side: CGFloat
+    let side: IconSize
 
     var body: some View {
-        RoundedRectangle(cornerRadius: CornerRadius.small)
+        RoundedRectangle(cornerRadius: CGFloat(CornerRadius.small))
             .fill(.primary)
-            .frame(width: side, height: side)
+            .frame(side)
     }
 }
 
 private struct Dot: View {
-    let diameter: CGFloat
+    let diameter: AvatarSize
 
     var body: some View {
         Circle()
             .fill(.primary)
-            .frame(width: diameter, height: diameter)
+            .frame(diameter)
     }
 }
 

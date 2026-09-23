@@ -1,10 +1,25 @@
 import CoreGraphics
 
 /// The width of a border or a divider.
-public enum BorderWidth {
-    /// A hairline. Draws as one device pixel at a display scale of two or more.
-    public static let thin: CGFloat = 0.5
+public struct BorderWidth: Equatable, Hashable, Sendable {
+    fileprivate let points: CGFloat
 
-    public static let medium: CGFloat = 1
-    public static let thick: CGFloat = 2
+    init(_ points: CGFloat) {
+        self.points = points
+    }
+}
+
+public extension BorderWidth {
+    /// A hairline. Draws as one device pixel at a display scale of two or more.
+    static let thin = BorderWidth(0.5)
+
+    static let medium = BorderWidth(1)
+    static let thick = BorderWidth(2)
+}
+
+public extension CGFloat {
+    /// Creates a length from a border width.
+    init(_ width: BorderWidth) {
+        self = width.points
+    }
 }

@@ -23,7 +23,7 @@ public struct Avatar<Fallback: View>: View {
     @ScaledMetric(relativeTo: .body) private var textScale: CGFloat = 1
 
     private let url: URL?
-    private let size: CGFloat
+    private let size: AvatarSize
     private let status: AvatarStatus?
     private let fallback: Fallback
 
@@ -36,7 +36,7 @@ public struct Avatar<Fallback: View>: View {
     ///   - fallback: What to draw instead of the photo.
     public init(
         url: URL?,
-        size: CGFloat = AvatarSize.medium,
+        size: AvatarSize = .medium,
         status: AvatarStatus? = nil,
         @ViewBuilder fallback: () -> Fallback
     ) {
@@ -61,8 +61,8 @@ public struct Avatar<Fallback: View>: View {
         status.map { AvatarStatusMark(status: $0, avatarDiameter: diameter) }
     }
 
-    private var diameter: CGFloat {
-        size * min(textScale, Self.largestGrowth)
+    private var diameter: AvatarSize {
+        size.scaled(by: min(textScale, Self.largestGrowth))
     }
 
     // Past this an avatar crowds the text beside it out of the row.
@@ -92,7 +92,7 @@ public extension Avatar where Fallback == AvatarFallback {
     ///   - fallback: What to draw instead of the photo.
     init(
         url: URL?,
-        size: CGFloat = AvatarSize.medium,
+        size: AvatarSize = .medium,
         status: AvatarStatus? = nil,
         fallback: AvatarFallback = .symbol
     ) {
@@ -103,38 +103,38 @@ public extension Avatar where Fallback == AvatarFallback {
 private let previewName = PersonNameComponents(givenName: "Member", familyName: "One")
 
 #Preview("Sizes") {
-    HStack(alignment: .bottom, spacing: Spacing.large) {
-        Avatar(url: nil, size: AvatarSize.small)
-        Avatar(url: nil, size: AvatarSize.medium)
-        Avatar(url: nil, size: AvatarSize.large)
-        Avatar(url: nil, size: AvatarSize.xLarge)
+    HStack(alignment: .bottom, spacing: .large) {
+        Avatar(url: nil, size: .small)
+        Avatar(url: nil, size: .medium)
+        Avatar(url: nil, size: .large)
+        Avatar(url: nil, size: .xLarge)
     }
-    .padding(Spacing.large)
+    .padding(.large)
 }
 
 #Preview("Fallbacks") {
-    HStack(spacing: Spacing.large) {
-        Avatar(url: nil, size: AvatarSize.xLarge)
+    HStack(spacing: .large) {
+        Avatar(url: nil, size: .xLarge)
 
-        Avatar(url: nil, size: AvatarSize.xLarge, fallback: .initials(previewName))
+        Avatar(url: nil, size: .xLarge, fallback: .initials(previewName))
 
         // A fallback of the caller's own. Neutral, because a color here would read as a status.
-        Avatar(url: nil, size: AvatarSize.xLarge) {
+        Avatar(url: nil, size: .xLarge) {
             Image(icon: .locked)
                 .foregroundStyle(.textSecondary)
         }
     }
-    .padding(Spacing.large)
+    .padding(.large)
 }
 
 #Preview("Styles and status") {
-    VStack(alignment: .leading, spacing: Spacing.large) {
-        HStack(spacing: Spacing.large) {
-            Avatar(url: nil, size: AvatarSize.large, status: AvatarStatus("Checked in"))
+    VStack(alignment: .leading, spacing: .large) {
+        HStack(spacing: .large) {
+            Avatar(url: nil, size: .large, status: AvatarStatus("Checked in"))
 
             Avatar(
                 url: nil,
-                size: AvatarSize.large,
+                size: .large,
                 status: AvatarStatus(
                     "Waitlisted",
                     icon: Icon(.exclamationmarkCircleFill),
@@ -143,13 +143,13 @@ private let previewName = PersonNameComponents(givenName: "Member", familyName: 
             )
         }
 
-        HStack(spacing: Spacing.large) {
-            Avatar(url: nil, size: AvatarSize.large, status: AvatarStatus("Checked in"))
+        HStack(spacing: .large) {
+            Avatar(url: nil, size: .large, status: AvatarStatus("Checked in"))
 
-            Avatar(url: nil, size: AvatarSize.large)
-                .avatarStyle(.rounded(cornerRadius: CornerRadius.small))
+            Avatar(url: nil, size: .large)
+                .avatarStyle(.rounded(cornerRadius: .small))
         }
         .avatarStyle(.rounded)
     }
-    .padding(Spacing.large)
+    .padding(.large)
 }

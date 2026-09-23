@@ -11,10 +11,14 @@ struct SpecimenGroup<Content: View>: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: Spacing.small) {
+        VStack(alignment: .leading, spacing: .small) {
             Text(title)
                 .font(.headline)
-            Grid(alignment: .leading, horizontalSpacing: Spacing.medium, verticalSpacing: Spacing.small) {
+            Grid(
+                alignment: .leading,
+                horizontalSpacing: CGFloat(Spacing.medium),
+                verticalSpacing: CGFloat(Spacing.small)
+            ) {
                 content()
             }
             .font(.caption)

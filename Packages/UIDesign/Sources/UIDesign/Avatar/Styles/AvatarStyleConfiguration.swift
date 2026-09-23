@@ -28,13 +28,13 @@ public struct AvatarStyleConfiguration {
     public let content: Content
 
     /// The diameter to draw at. The text size has already scaled it.
-    public let size: CGFloat
+    public let size: AvatarSize
 
     /// The state to show, drawn and ready to place. Where it goes is the style's choice.
     public let status: Status?
 
     @MainActor
-    init(content: some View, size: CGFloat, status: (some View)?) {
+    init(content: some View, size: AvatarSize, status: (some View)?) {
         self.content = Content(content)
         self.size = size
         self.status = status.map(Status.init)

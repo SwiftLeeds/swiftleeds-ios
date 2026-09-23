@@ -4,7 +4,7 @@ import SwiftUI
 // only where it goes.
 struct AvatarStatusMark: View {
     let status: AvatarStatus
-    let avatarDiameter: CGFloat
+    let avatarDiameter: AvatarSize
 
     var body: some View {
         Image(icon: status.icon)
@@ -23,7 +23,7 @@ struct AvatarStatusMark: View {
     }
 
     private var diameter: CGFloat {
-        avatarDiameter * Self.proportion
+        CGFloat(avatarDiameter) * Self.proportion
     }
 
     private var ringWidth: CGFloat {

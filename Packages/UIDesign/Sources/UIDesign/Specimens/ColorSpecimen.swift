@@ -7,10 +7,10 @@ package struct ColorSpecimen: View {
 
     package var body: some View {
         ViewThatFits(in: .horizontal) {
-            HStack(alignment: .top, spacing: Spacing.xLarge) { groups }
-            VStack(alignment: .leading, spacing: Spacing.xLarge) { groups }
+            HStack(alignment: .top, spacing: .xLarge) { groups }
+            VStack(alignment: .leading, spacing: .xLarge) { groups }
         }
-        .padding(Spacing.large)
+        .padding(.large)
     }
 
     @ViewBuilder
@@ -72,12 +72,12 @@ private struct Swatch: View {
     }
 
     var body: some View {
-        RoundedRectangle(cornerRadius: CornerRadius.small)
+        RoundedRectangle(cornerRadius: CGFloat(CornerRadius.small))
             .fill(color)
             .frame(width: Sample.width, height: Sample.height)
             .overlay {
-                RoundedRectangle(cornerRadius: CornerRadius.small)
-                    .strokeBorder(.borderSecondary, lineWidth: BorderWidth.thin)
+                RoundedRectangle(cornerRadius: CGFloat(CornerRadius.small))
+                    .strokeBorder(.borderSecondary, lineWidth: CGFloat(BorderWidth.thin))
             }
     }
 }

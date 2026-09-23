@@ -7,10 +7,10 @@ package struct IconSpecimen: View {
 
     package var body: some View {
         ViewThatFits(in: .horizontal) {
-            HStack(alignment: .top, spacing: Spacing.xLarge) { groups }
-            VStack(alignment: .leading, spacing: Spacing.xLarge) { groups }
+            HStack(alignment: .top, spacing: .xLarge) { groups }
+            VStack(alignment: .leading, spacing: .xLarge) { groups }
         }
-        .padding(Spacing.large)
+        .padding(.large)
     }
 
     @ViewBuilder
@@ -89,7 +89,7 @@ private struct Glyph: View {
     var body: some View {
         Image(icon: icon)
             .imageScale(.large)
-            .frame(width: IconSize.xxLarge, alignment: .leading)
+            .frame(width: CGFloat(IconSize.xxLarge), alignment: .leading)
     }
 }
 
