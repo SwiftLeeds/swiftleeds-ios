@@ -18,8 +18,11 @@ set -euo pipefail
 
 state="${RUNNER_TEMP:-${TMPDIR:-/tmp}}/memory-pressure-start"
 
-compressions () { vm_stat | awk -F'[:.]' '/^Compressions:/ { print $2 + 0 }'; }
-swapouts () { vm_stat | awk -F'[:.]' '/^Swapouts:/ { print $2 + 0 }'; }
+# Both print a number even when the pattern stops matching. Printing nothing
+# would make the subtraction below a unary minus, so a reading that broke
+# halfway would print a negative figure on a green job.
+compressions () { vm_stat | awk -F'[:.]' '/^Compressions:/ { n = $2 } END { print n + 0 }'; }
+swapouts () { vm_stat | awk -F'[:.]' '/^Swapouts:/ { n = $2 } END { print n + 0 }'; }
 
 case "${1:-}" in
   start)
@@ -36,16 +39,19 @@ case "${1:-}" in
     page_size=$(sysctl -n hw.pagesize)
     compressed_mb=$(( ($(compressions) - compressions_before) * page_size / 1048576 ))
     swapped_mb=$(( ($(swapouts) - swapouts_before) * page_size / 1048576 ))
-    echo "memory pressure: compressed $compressed_mb MB, swapped out $swapped_mb MB"
-    # An awk pattern that stops matching prints 0, which reads as a quiet
-    # runner. Compression is never 0 on a machine doing work.
-    if [ "$compressed_mb" -eq 0 ]; then
-      echo "::warning::vm_stat reported no compression, so these memory figures are not trustworthy"
+    # Compression is never 0 on a machine doing work, so 0 or less means the
+    # counters stopped reading. Print the warning rather than a figure, because
+    # a nonsense number in a green log is worse than no number.
+    if [ "$compressed_mb" -le 0 ]; then
+      echo "::warning::vm_stat gave no usable counters, so there is no memory reading for this step"
+      exit 0
     fi
+    echo "memory pressure: compressed $compressed_mb MB, swapped out $swapped_mb MB"
     # A green job's log goes unread, so swapping has to announce itself.
     # Every run measured so far swapped 0 MB, so anything above 0 is a change.
-    # No threshold on compression: it has ranged 1660 to 10678 MB on a passing
-    # run, so a warning there would fire on healthy runs.
+    # No threshold on compression: passing runs have ranged from 1660 MB in the
+    # package job to 10678 MB in the snapshot job, so a warning would fire on
+    # healthy runs.
     if [ "$swapped_mb" -gt 0 ]; then
       echo "::warning::the work swapped $swapped_mb MB, so this runner was short of memory"
     fi
