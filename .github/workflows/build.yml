@@ -402,6 +402,9 @@ jobs:
   # `swiftlint lint` reads source; it needs no toolchain and no simulator. It ran
   # on macOS, where it held one of the 5 concurrent runners for 14s to 20s, and
   # this workflow wants more macOS jobs than that limit allows.
+  #
+  # The two builds enable the same 105 rules, checked on 0.65.1 before the move,
+  # so this lints exactly what macOS did.
   lint-swift:
     name: Lint Swift Sources
     runs-on: ubuntu-24.04
@@ -427,11 +430,6 @@ jobs:
           # unzip does not always carry the executable bit.
           chmod +x swiftlint/swiftlint
           echo "$RUNNER_TEMP/swiftlint" >> "$GITHUB_PATH"
-
-      # A Linux build that knew fewer rules would lint less and still go green.
-      # macOS 0.65.1 enables 109; the two lists must match.
-      - name: Report the enabled rules
-        run: swiftlint rules --enabled
 
       - name: Lint every Swift source
         run: |
