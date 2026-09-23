@@ -1,3 +1,4 @@
+#if os(iOS)
 import SnapshotTesting
 import Testing
 import UIDesign
@@ -15,3 +16,4 @@ struct ColorSpecimenSnapshotTests {
         assertCompactSnapshots(of: ColorSpecimen())
     }
 }
+#endif
