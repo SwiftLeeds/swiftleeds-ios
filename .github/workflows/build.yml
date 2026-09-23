@@ -114,13 +114,7 @@ jobs:
             done
           }
 
-          # macOS compresses pages before it swaps, so swap alone misses a
-          # runner under memory pressure. Both counters are cumulative since
-          # boot, so read them either side of the lanes.
-          compressions () { vm_stat | awk -F'[:.]' '/^Compressions:/ { print $2 + 0 }'; }
-          swapouts () { vm_stat | awk -F'[:.]' '/^Swapouts:/ { print $2 + 0 }'; }
-          compressions_before=$(compressions)
-          swapouts_before=$(swapouts)
+          .github/scripts/memory-pressure.sh start
 
           # A lane is a subshell, so a failure appended to a shell array would
           # be lost and the job would go green. Failures go to a file.
@@ -129,23 +123,7 @@ jobs:
           done
           wait
 
-          # MB, to compare with the runner's 7 GB.
-          page_size=$(sysctl -n hw.pagesize)
-          compressed_mb=$(( ($(compressions) - compressions_before) * page_size / 1048576 ))
-          swapped_mb=$(( ($(swapouts) - swapouts_before) * page_size / 1048576 ))
-          echo "memory pressure: compressed $compressed_mb MB, swapped out $swapped_mb MB"
-          # An awk pattern that stops matching prints 0, which reads as a quiet
-          # runner. Compression is never 0 on a machine doing work.
-          if [ "$compressed_mb" -eq 0 ]; then
-            echo "::warning::vm_stat reported no compression, so these memory figures are not trustworthy"
-          fi
-          # A green job's log goes unread, so swapping has to announce itself.
-          # 10 measured runs all swapped 0 MB, so anything above 0 is a change.
-          # No threshold on compression: it ranged 2276 to 3583 MB over the same
-          # runs, so a warning there would be noise.
-          if [ "$swapped_mb" -gt 0 ]; then
-            echo "::warning::the lanes swapped $swapped_mb MB, so this runner was short of memory"
-          fi
+          .github/scripts/memory-pressure.sh report
 
           tested=0
           for package in "${packages[@]}"; do
@@ -303,22 +281,26 @@ jobs:
             for target in $selected; do
               args+=(-only-testing:"$target")
             done
-            # A bundle is installed and launched on its own, which costs far
-            # more than its tests, so the bundles run on cloned simulators
-            # side by side. Measured on CI 2026-09-22: the simulator and test
-            # phase fell from 288s to 116s, and the step from 473s to 303s.
-            # Two workers, because every clone boots before it tests. Three or
-            # more were not tried.
+            # Bundles run on cloned simulators side by side, because installing
+            # and launching a bundle costs far more than its tests: the step
+            # went from 473s to 303s.
+            # 3 workers were tried and not taken, measured on CI 2026-09-23.
+            # They won 4 of 5 paired runs, median 264s against 301s, but a 23s
+            # gap against a 46s spread needs about 60 runs per arm to separate
+            # at 80% power. Neither arm swapped.
             args+=(-parallel-testing-enabled YES -maximum-parallel-testing-workers 2)
           fi
           echo "::group::Snapshot tests:$selected"
           status=0
+          # This call compiles and then tests, so the figure covers both.
+          .github/scripts/memory-pressure.sh start
           xcodebuild test -project SwiftLeeds.xcodeproj "${args[@]}" \
             -destination "$DESTINATION" \
             -derivedDataPath "$RUNNER_TEMP/snapshot-derived-data" \
             -skipPackagePluginValidation \
             || status=$?
           echo "::endgroup::"
+          .github/scripts/memory-pressure.sh report
           if [ "$status" -ne 0 ]; then
             # One call covers several targets, and its status does not say
             # which one failed. Naming them all here would name six that
