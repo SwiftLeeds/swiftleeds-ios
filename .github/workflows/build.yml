@@ -24,13 +24,6 @@ jobs:
       # Without this, one brand failing cancels the other, and a run reports
       # only the first failure.
       fail-fast: false
-      # The account allows 5 concurrent macOS runners and this workflow wants 6,
-      # so two jobs used to wait 3 to 4 minutes for a slot, and whichever waited
-      # longest ended the run. One brand at a time keeps the whole workflow
-      # inside the limit, and a job that is not dispatched holds no runner.
-      # Delete this the day the limit rises: it is a deliberate 3m21s wait that
-      # buys nothing on its own.
-      max-parallel: 1
       matrix:
         include:
           - brand: SwiftLeeds
