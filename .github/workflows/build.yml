@@ -58,8 +58,7 @@ jobs:
           LANE_COUNT: 2
         run: |
           set -uo pipefail
-          # Recorded so a later reader can check the figures above against the
-          # runner that produced them, rather than against a documentation page.
+          # The runner the figures above were measured on.
           echo "cores: $(sysctl -n hw.ncpu), memory: $(sysctl -n hw.memsize) bytes"
 
           packages=()
@@ -77,43 +76,31 @@ jobs:
           rm -rf "$claims" "$failures"
           mkdir -p "$claims"
 
-          # SwiftPM takes a file lock on its scratch path and prints "Another
-          # instance of SwiftPM is already running using ...". Two lanes on one
-          # path would queue rather than overlap, so each lane gets its own.
-          # Measured locally 2026-09-23, every run cold and sequential so the
-          # figures are work rather than contention: the 16 packages cost 241s
-          # in one path, and 168s plus 107s when split 8 and 8 across two. So a
-          # second path repeats 34s of dependency compilation, 14%. That is
-          # the price of the overlap.
+          # SwiftPM file-locks its scratch path, so lanes sharing one would
+          # queue instead of overlapping. Each lane gets its own, which repeats
+          # 14% of the dependency compilation (241s in one path against 168s
+          # plus 107s split across two, measured cold and sequentially).
           run_lane () {
             local lane=$1
             local scratch="$RUNNER_TEMP/build-lane-$lane"
             local package
             for package in "${packages[@]}"; do
-              # mkdir fails when the directory is already there, and it is
-              # atomic, so two lanes never take the same package. A lane that
-              # draws a cheap package comes straight back for another, where a
-              # fixed split leaves it idle. The fixed 8 and 8 split above ran
-              # 168s against 107s; the queue ran 182s against 190s.
+              # mkdir is atomic and fails when the directory exists, so two
+              # lanes never take the same package. A queue keeps them balanced:
+              # a fixed 8/8 split ran 168s against 107s, the queue 182s and 190s.
               mkdir "$claims/$package" 2>/dev/null || continue
-              # --force-resolved-versions uses this package's own committed
-              # Package.resolved rather than resolving again, which was 91s of
-              # this step. A file that cannot satisfy the manifest fails the job
-              # with "an out-of-date resolved file was detected", where the old
-              # behaviour quietly resolved something newer.
-              # It says nothing about the app's own Package.resolved. Keeping the
-              # two in step is still the manual ritual in CLAUDE.md.
+              # --force-resolved-versions uses each package's committed
+              # Package.resolved instead of resolving again, which was 91s. A
+              # file that cannot satisfy the manifest now fails the job instead
+              # of quietly resolving something newer. It does not touch the
+              # app's own Package.resolved; CLAUDE.md covers keeping those two
+              # in step.
               #
-              # The output stays live, prefixed rather than folded into a
-              # ::group::. GitHub timestamps each line as it arrives, and those
-              # timestamps are the only record of where one phase ends and the
-              # next begins. A lane that buffered its log and printed it at the
-              # end would stamp every line with the time it was printed, which
-              # is how the phase figures above would stop being measurable.
-              # `sed -l` flushes per line, so the prefix costs no delay. A
-              # line longer than 512 bytes is not written atomically, so a
-              # long compiler diagnostic can still land under the other lane's
-              # prefix.
+              # Not folded into a ::group::, because GitHub timestamps each line
+              # as it arrives and those timestamps are the only record of the
+              # phase boundaries. `sed -l` flushes per line. A line over 512
+              # bytes is not written atomically, so a long diagnostic can land
+              # under the other lane's prefix.
               if swift test \
                 --package-path "Packages/$package" \
                 --scratch-path "$scratch" \
@@ -135,9 +122,8 @@ jobs:
           compressions_before=$(compressions)
           swapouts_before=$(swapouts)
 
-          # A lane runs in a subshell, so anything it appends to a shell array
-          # is lost when it exits, and the job would go green over a failing
-          # package. Failures go to a file, which the parent reads below.
+          # A lane is a subshell, so a failure appended to a shell array would
+          # be lost and the job would go green. Failures go to a file.
           for lane in $(seq 1 "$LANE_COUNT"); do
             run_lane "$lane" &
           done
@@ -166,11 +152,9 @@ jobs:
             echo "::error::Failing packages: $(tr '\n' ' ' < "$failures")"
           fi
 
-          # Success is not the absence of a failure record. A lane that dies
-          # between claiming a package and reporting on it leaves neither
-          # record, and the other lane skips that package because the claim is
-          # already there. The job would then pass having tested 15 of 16.
-          # Counting both outcomes turns that into a failure.
+          # A lane that dies after claiming a package leaves no pass and no fail
+          # record, and the other lane skips it because the claim is there.
+          # Counting both outcomes catches that; an absent failure does not.
           if [ "$((tested + failed))" -ne "${#packages[@]}" ]; then
             echo "::error::${#packages[@]} packages found, but $tested passed and $failed failed. A lane stopped early."
             exit 1
