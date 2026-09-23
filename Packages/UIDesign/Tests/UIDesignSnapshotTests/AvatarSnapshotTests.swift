@@ -27,7 +27,6 @@ import UIDesign
         }
 
         assertSnapshots(of: view)
-        assertCompactSnapshots(of: view)
     }
 
     // Every size, because the letters are smallest where a caller is most likely to put them.
@@ -41,7 +40,6 @@ import UIDesign
         }
 
         assertSnapshots(of: view)
-        assertCompactSnapshots(of: view)
     }
 
     @Test func initialsFallbackWithNothingToAbbreviate() {
@@ -50,8 +48,7 @@ import UIDesign
         assertSnapshots(of: view)
     }
 
-    // Includes the smallest size, where the doc says the mark is too small to read. The image is
-    // there so a reviewer sees that rather than taking the sentence on trust.
+    // The smallest size, the default and the largest.
     @Test func status() {
         let view = HStack(alignment: .bottom, spacing: Spacing.large) {
             Avatar(url: nil, size: AvatarSize.small, status: AvatarStatus("Checked in"))
@@ -86,7 +83,7 @@ import UIDesign
     }
 
     // A flat fill, so this suite measures the shape and the size and nothing else.
-    private func avatar(size: CGFloat) -> some View {
+    private func avatar(size: AvatarSize) -> some View {
         Avatar(url: nil, size: size) {
             Color.secondarySurface
         }

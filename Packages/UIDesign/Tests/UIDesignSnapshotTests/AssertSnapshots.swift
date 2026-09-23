@@ -30,7 +30,16 @@ func assertSnapshots(
 /// Compares `view` with its reference images at the narrowest screen we design for.
 ///
 /// Four images: light and dark, each at the default and the largest accessibility text size.
-/// Use this for a component. A reference sheet does not need it.
+///
+/// It asks one question: at the narrowest width we design for, does this component still say what
+/// it is for, without losing anything?
+///
+/// Give it one realistic composition, not a row of samples. A view wider than the frame is
+/// centered and cropped at *both* ends, which hides the very failure the check exists to catch.
+/// Apple allows at most three elements across a watch screen, each at least 44 points.
+///
+/// This is not a watch simulation. This package does not build for watchOS, which has no light
+/// appearance and stops at AX3. The width is borrowed from a watch; nothing else is.
 @MainActor
 func assertCompactSnapshots(
     of view: some View,

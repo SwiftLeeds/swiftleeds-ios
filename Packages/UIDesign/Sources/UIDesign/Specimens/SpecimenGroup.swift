@@ -1,6 +1,7 @@
 #if DEBUG
 import SwiftUI
 
+/// A titled table of tokens, one to a row.
 struct SpecimenGroup<Content: View>: View {
     private let title: String
     @ViewBuilder private let content: () -> Content
@@ -11,10 +12,14 @@ struct SpecimenGroup<Content: View>: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: Spacing.small) {
+        VStack(alignment: .leading, spacing: .small) {
             Text(title)
                 .font(.headline)
-            Grid(alignment: .leading, horizontalSpacing: Spacing.medium, verticalSpacing: Spacing.small) {
+            Grid(
+                alignment: .leading,
+                horizontalSpacing: CGFloat(Spacing.medium),
+                verticalSpacing: CGFloat(Spacing.small)
+            ) {
                 content()
             }
             .font(.caption)
@@ -22,7 +27,7 @@ struct SpecimenGroup<Content: View>: View {
     }
 }
 
-// Sample size for a token that is not itself a width or a height.
+/// The size a specimen draws a token that is neither a width nor a height.
 enum Sample {
     static let width: CGFloat = 64
     static let height: CGFloat = 32
