@@ -1,3 +1,4 @@
+import SFSafeSymbols
 import SwiftUI
 
 /// A person, drawn as their photo.
@@ -130,7 +131,11 @@ private let previewName = PersonNameComponents(givenName: "Member", familyName: 
             Avatar(
                 url: nil,
                 size: AvatarSize.large,
-                status: AvatarStatus("Waitlisted", icon: .warning, tint: .warning)
+                status: AvatarStatus(
+                    "Waitlisted",
+                    icon: Icon(.exclamationmarkCircleFill),
+                    tint: .warning
+                )
             )
         }
 

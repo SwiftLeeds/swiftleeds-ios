@@ -21,15 +21,13 @@ struct ClippedAvatar<ClipShape: Shape>: View {
     private var mark: some View {
         if let status = configuration.status {
             Image(icon: status.icon)
-                // Resizable, not a font size: a font size sets the height, so a symbol wider than
-                // it is tall, such as a triangle, spills out of the disc and loses its corners.
                 .resizable()
                 .scaledToFit()
-                .padding(discDiameter * Self.symbolInset)
-                .foregroundStyle(.surface)
-                // A fixed box, so every symbol marks the same spot at the same size.
+                // The symbol draws its own enclosure, so its glyph sits where Apple centered it.
+                // Palette gives the glyph the first color and the enclosure the second.
+                .symbolRenderingMode(.palette)
+                .foregroundStyle(.surface, status.tint)
                 .frame(width: discDiameter, height: discDiameter)
-                .background(status.tint, in: .circle)
                 // The ring separates the mark from a photo of any color beneath it. It grows
                 // inward, so the whole mark still measures markDiameter and stays off the corner.
                 .padding(ringWidth)
@@ -57,9 +55,6 @@ struct ClippedAvatar<ClipShape: Shape>: View {
     // At this size the mark's center lands on a circle's edge with no offset, because the corner
     // of the frame sits half a mark beyond it.
     private static var markProportion: CGFloat { 0.28 }
-
-    // Leaves a rim of the disc around the symbol.
-    private static var symbolInset: CGFloat { 0.16 }
 
     // Thick enough to read against a photo, thin enough to leave the symbol room.
     private static var ringProportion: CGFloat { 0.08 }

@@ -1,4 +1,5 @@
 #if os(iOS)
+import SFSafeSymbols
 import SnapshotTesting
 import SwiftUI
 import Testing
@@ -58,7 +59,11 @@ import UIDesign
             Avatar(
                 url: nil,
                 size: AvatarSize.xLarge,
-                status: AvatarStatus("Waitlisted", icon: .warning, tint: .warning)
+                status: AvatarStatus(
+                    "Waitlisted",
+                    icon: Icon(.exclamationmarkCircleFill),
+                    tint: .warning
+                )
             )
         }
 
