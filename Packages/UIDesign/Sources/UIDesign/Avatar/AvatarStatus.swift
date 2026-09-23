@@ -1,3 +1,4 @@
+import SFSafeSymbols
 import SwiftUI
 
 /// A mark on an avatar's lower edge, saying something about the person.
@@ -20,10 +21,15 @@ public struct AvatarStatus: Equatable {
     /// - Parameters:
     ///   - label: What the mark means. VoiceOver reads it, and nothing shows it, so write the
     ///     words the person would use: "Checked in", not "green tick".
-    ///   - icon: The symbol in the mark.
-    ///   - tint: The color of the symbol. Use a status color, so the color means the same here as
-    ///     everywhere else.
-    public init(_ label: LocalizedStringKey, icon: Icon = .success, tint: Color = .success) {
+    ///   - icon: The symbol cut out of the mark. Prefer a bare glyph: the mark supplies the disc,
+    ///     so a symbol carrying its own circle draws a second one.
+    ///   - tint: The color filling the mark. Use a status color, so the color means the same here
+    ///     as everywhere else.
+    public init(
+        _ label: LocalizedStringKey,
+        icon: Icon = Icon(.checkmark),
+        tint: Color = .success
+    ) {
         self.label = label
         self.icon = icon
         self.tint = tint
