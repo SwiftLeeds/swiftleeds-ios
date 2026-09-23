@@ -31,10 +31,9 @@ func assertSnapshots(
 ///
 /// Four images: light and dark, each at the default and the largest accessibility text size.
 ///
-/// Give it what the smallest screen would really hold: one thing and its label. That screen shows
-/// only what is vital, so a row of several items is not a compact design and does not belong in a
-/// compact check. A view wider than the frame is centered and cropped at both ends, which hides
-/// the very thing the check is for.
+/// Give it a composition the smallest screen would really use, not a row of samples. A view wider
+/// than the frame is centered and cropped at both ends, which hides the very thing the check is
+/// for.
 @MainActor
 func assertCompactSnapshots(
     of view: some View,
