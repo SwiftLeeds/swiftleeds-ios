@@ -3,7 +3,7 @@ import SwiftUI
 
 /// Draws every icon in the vocabulary beside its name.
 ///
-/// Its snapshot pins the symbol each role maps to, so swapping one shows up in review.
+/// Its snapshot pins the symbol each role maps to.
 package struct IconSpecimen: View {
     package init() {}
 
@@ -80,7 +80,7 @@ private extension IconSpecimen {
 
 // MARK: - Parts
 
-// A fixed frame, so a wide symbol does not shift the column and make every row re-record.
+// Fixed frame, so a wide symbol doesn't shift the column.
 private struct Glyph: View {
     private let icon: Icon
 

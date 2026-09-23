@@ -23,7 +23,7 @@ struct SpecimenGroup<Content: View>: View {
     }
 }
 
-// The size of a sample that shows a token other than its own width or height.
+// Sample size for a token that is not itself a width or a height.
 enum Sample {
     static let width: CGFloat = 64
     static let height: CGFloat = 32

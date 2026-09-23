@@ -55,8 +55,7 @@ func assertCompactSnapshots(
     )
 }
 
-// A 40mm Apple Watch, the narrowest screen Apple currently ships. We design for it first, so a
-// component that survives here survives a folded phone and a widget too.
+// A 40mm Apple Watch, the narrowest screen Apple ships.
 private let compactWidth: CGFloat = 162
 
 private let colorSchemes: [(name: String, style: UIUserInterfaceStyle)] = [
@@ -70,11 +69,9 @@ private let everyTextSize: [(name: String, size: DynamicTypeSize)] = [
     ("accessibility", .accessibility5),
 ]
 
-// Two traps, both measured, both ending in a clipped image.
-//
-// 1. A text size passed as a trait renders large but measures small, so put it on the view.
-// 2. The strategy measures with a zero proposal, which returns the smallest size the view can
-//    take rather than the size it wants. `fixedSize` makes the two the same.
+// Both of these clip the image if dropped.
+// Text size goes on the view: as a trait it renders large but measures small.
+// fixedSize is needed: the strategy measures with a zero proposal, which gives the minimum size.
 @MainActor
 private func variants<V: View>(
     width: CGFloat?,
@@ -90,7 +87,7 @@ private func variants<V: View>(
     }
 }
 
-// A width of nil means the view chooses its own. A width pins it, and only height stays ideal.
+// A nil width lets the view choose. A width pins it, and height stays ideal.
 @ViewBuilder
 private func sized(_ view: some View, width: CGFloat?) -> some View {
     if let width {

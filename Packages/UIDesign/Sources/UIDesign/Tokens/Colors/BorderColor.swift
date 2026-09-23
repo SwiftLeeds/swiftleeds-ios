@@ -1,8 +1,8 @@
 import SwiftUI
 
-/// The colours a border or a divider is drawn in.
+/// The colours a border or a divider draws in.
 public extension ShapeStyle where Self == Color {
-    /// A divider between rows, or the edge of a card. Lets the surface show through.
+    /// A border that lets the surface show through.
     static var borderPrimary: Color {
         #if os(iOS)
         Color(.separator)
@@ -11,7 +11,7 @@ public extension ShapeStyle where Self == Color {
         #endif
     }
 
-    /// A solid divider, for where content must not show through.
+    /// A solid border, for where content must not show through.
     static var borderSecondary: Color {
         #if os(iOS)
         Color(.opaqueSeparator)

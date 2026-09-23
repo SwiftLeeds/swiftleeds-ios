@@ -3,7 +3,7 @@ import SwiftUI
 
 /// Draws every colour token beside its name.
 ///
-/// Its snapshot pins each colour in both appearances, so a change shows up as a changed picture.
+/// Its snapshot pins each colour in both appearances.
 package struct ColorSpecimen: View {
     package init() {}
 
@@ -65,7 +65,7 @@ private extension ColorSpecimen {
 
 // MARK: - Parts
 
-// A stroke, because a surface swatch drawn on that same surface is otherwise invisible.
+// Stroked, or a surface swatch on that same surface is invisible.
 private struct Swatch: View {
     private let color: Color
 

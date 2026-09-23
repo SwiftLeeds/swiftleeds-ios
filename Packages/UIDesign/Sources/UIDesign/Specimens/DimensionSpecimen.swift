@@ -3,7 +3,7 @@ import SwiftUI
 
 /// Draws every dimension token beside its name.
 ///
-/// Its snapshot pins each value, so a change shows up in review as a changed picture.
+/// Its snapshot pins each value, so a change shows up as a changed picture.
 package struct DimensionSpecimen: View {
     package init() {}
 

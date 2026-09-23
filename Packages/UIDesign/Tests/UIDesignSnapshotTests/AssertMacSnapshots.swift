@@ -48,7 +48,7 @@ func assertCompactSnapshots(
     )
 }
 
-// A 40mm Apple Watch, the narrowest screen Apple currently ships. Matches the iOS helper.
+// A 40mm Apple Watch, the narrowest screen Apple ships.
 private let compactWidth: CGFloat = 162
 
 private let appearances: [(label: String, name: NSAppearance.Name)] = [
@@ -56,7 +56,7 @@ private let appearances: [(label: String, name: NSAppearance.Name)] = [
     ("dark", .darkAqua),
 ]
 
-// Where the test called from. Carried as one value so it does not crowd every signature.
+// The test's source location, as one value.
 private struct Origin {
     let fileID: StaticString
     let filePath: StaticString
@@ -85,10 +85,8 @@ private func assert(_ view: some View, width: CGFloat?, prefix: String, at origi
     }
 }
 
-// The library has no strategy for a SwiftUI view on macOS, so host it first.
-//
-// The appearance is set before measuring, so a size that depends on it is the size drawn.
-// `fixedSize` matches the iOS helper, so both platforms snapshot the same geometry.
+// The library has no SwiftUI view strategy on macOS, so host it first.
+// Appearance goes on before measuring, so the size matches what is drawn.
 @MainActor
 private func host(
     _ view: some View,
@@ -103,7 +101,7 @@ private func host(
     return hosting
 }
 
-// A width of nil means the view chooses its own. A width pins it, and only height stays ideal.
+// A nil width lets the view choose. A width pins it, and height stays ideal.
 @ViewBuilder
 private func sized(_ view: some View, width: CGFloat?) -> some View {
     if let width {
