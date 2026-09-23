@@ -50,23 +50,11 @@ jobs:
 
       - name: Run every package test suite
         env:
-          # How many packages test at once. Each lane needs its own scratch
-          # path, so raising this repeats more dependency compilation.
-          # One at a time cost 311s, on run 35797090212. Two lanes beat that,
-          # because one package's compile leaves some of the 3 cores idle: the
-          # summed compile intervals nearly doubled, 178s to 346s, and the step
-          # still fell.
-          # Three lanes were then measured against two, five paired samples
-          # each, on one tree where only this value differed:
-          #   two lanes   222s 231s 238s 278s 289s, median 238s
-          #   three lanes 272s 275s 285s 289s 364s, median 285s
-          # Two lanes won every pair. A third lane repeats the dependency
-          # compilation again, and each swift test already asks for every core,
-          # so it buys contention rather than work.
-          # Memory did not decide it. The step prints what the lanes compress
-          # and swap: three lanes compressed 3259 to 3580 MB against two lanes'
-          # 2276 to 3583 MB, so the arms overlap, and both swapped out 0 MB.
-          # Each lane held under 1 GB of the runner's 14 GB of storage.
+          # Packages tested at once. 2 lanes 238s against 3 lanes 285s, medians
+          # of 5 paired runs; 1 lane was 311s, one sample. 3 loses because each
+          # lane needs its own scratch path, so it recompiles the shared
+          # dependencies, and one swift test already asks for all 3 cores.
+          # Memory ruled out: both arms swapped 0 MB.
           LANE_COUNT: 2
         run: |
           set -uo pipefail
@@ -139,17 +127,9 @@ jobs:
             done
           }
 
-          # Memory is the one limit this step cannot see for itself. Each lane's
-          # swift test already asks for every core, so the lanes oversubscribe
-          # the runner's 3, and macOS compresses pages before it swaps, so a
-          # runner under pressure only looks slow. Two lanes against three never
-          # reached that ceiling, as the value above records. The reading stays
-          # because the changes queued for this job, caching and one runner per
-          # package, move the same numbers.
-          # Both counters run from boot and only rise, so a read either side of
-          # the lanes gives what the lanes cost. Compressions also proves the
-          # reading is live, because it moves on any machine. A zero swapout
-          # figure beside a moving compression figure is real rather than broken.
+          # macOS compresses pages before it swaps, so swap alone misses a
+          # runner under memory pressure. Both counters are cumulative since
+          # boot, so read them either side of the lanes.
           compressions () { vm_stat | awk -F'[:.]' '/^Compressions:/ { print $2 + 0 }'; }
           swapouts () { vm_stat | awk -F'[:.]' '/^Swapouts:/ { print $2 + 0 }'; }
           compressions_before=$(compressions)
@@ -163,16 +143,13 @@ jobs:
           done
           wait
 
-          # Reported in MB rather than in pages, because the runner's 7 GB of
-          # memory is the figure a reader compares them with.
+          # MB, to compare with the runner's 7 GB.
           page_size=$(sysctl -n hw.pagesize)
           compressed_mb=$(( ($(compressions) - compressions_before) * page_size / 1048576 ))
           swapped_mb=$(( ($(swapouts) - swapouts_before) * page_size / 1048576 ))
           echo "memory pressure: compressed $compressed_mb MB, swapped out $swapped_mb MB"
-          # A zero compression figure is the instrument, not a quiet runner:
-          # macOS compresses on any machine that does real work. An awk pattern
-          # that stops matching prints zero rather than failing, so a later
-          # reader would take a broken reading for a good result.
+          # An awk pattern that stops matching prints 0, which reads as a quiet
+          # runner. Compression is never 0 on a machine doing work.
           if [ "$compressed_mb" -eq 0 ]; then
             echo "::warning::vm_stat reported no compression, so these memory figures are not trustworthy"
           fi
