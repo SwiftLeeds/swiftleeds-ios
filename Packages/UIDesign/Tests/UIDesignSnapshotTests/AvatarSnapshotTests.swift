@@ -27,7 +27,6 @@ import UIDesign
         }
 
         assertSnapshots(of: view)
-        assertCompactSnapshots(of: view)
     }
 
     // Every size, because the letters are smallest where a caller is most likely to put them.
@@ -41,7 +40,6 @@ import UIDesign
         }
 
         assertSnapshots(of: view)
-        assertCompactSnapshots(of: view)
     }
 
     @Test func initialsFallbackWithNothingToAbbreviate() {

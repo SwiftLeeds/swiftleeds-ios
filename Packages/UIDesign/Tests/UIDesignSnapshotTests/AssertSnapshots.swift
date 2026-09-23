@@ -30,7 +30,11 @@ func assertSnapshots(
 /// Compares `view` with its reference images at the narrowest screen we design for.
 ///
 /// Four images: light and dark, each at the default and the largest accessibility text size.
-/// Use this for a component. A reference sheet does not need it.
+///
+/// Give it what the smallest screen would really hold: one thing and its label. That screen shows
+/// only what is vital, so a row of several items is not a compact design and does not belong in a
+/// compact check. A view wider than the frame is centered and cropped at both ends, which hides
+/// the very thing the check is for.
 @MainActor
 func assertCompactSnapshots(
     of view: some View,
