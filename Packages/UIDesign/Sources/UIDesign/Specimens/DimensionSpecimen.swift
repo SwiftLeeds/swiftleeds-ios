@@ -82,33 +82,6 @@ private extension DimensionSpecimen {
 
 // MARK: - Parts
 
-// The size of a sample that shows a token other than its own width or height.
-private enum Sample {
-    static let width: CGFloat = 64
-    static let height: CGFloat = 32
-}
-
-private struct SpecimenGroup<Content: View>: View {
-    private let title: String
-    @ViewBuilder private let content: () -> Content
-
-    init(_ title: String, @ViewBuilder content: @escaping () -> Content) {
-        self.title = title
-        self.content = content
-    }
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: Spacing.small) {
-            Text(title)
-                .font(.headline)
-            Grid(alignment: .leading, horizontalSpacing: Spacing.medium, verticalSpacing: Spacing.small) {
-                content()
-            }
-            .font(.caption)
-        }
-    }
-}
-
 private struct Bar: View {
     let width: CGFloat
 

@@ -1,5 +1,5 @@
 {
-  "originHash" : "6cf29a3dba3cddb8e649ed99e574894dff4ec38832d605b5e4a061141147ef42",
+  "originHash" : "1a27ea1e5f7ed1196391884860e66c1139d8893aaf812bb8aadb2daa0f420fd0",
   "pins" : [
     {
       "identity" : "swift-custom-dump",
@@ -26,6 +26,15 @@
       "state" : {
         "revision" : "4799286537280063c85a32f09884cfbca301b1a1",
         "version" : "602.0.0"
+      }
+    },
+    {
+      "identity" : "swiftgenplugin",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/shadone/SwiftGenPlugin",
+      "state" : {
+        "branch" : "6.6.2+deriveddatafix",
+        "revision" : "9eb26960d2ebecbe74feecc695e6125eb39e797e"
       }
     },
     {
