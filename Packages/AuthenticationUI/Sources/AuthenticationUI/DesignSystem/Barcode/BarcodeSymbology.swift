@@ -3,7 +3,7 @@ import CoreImage
 
 /// A kind of machine-readable code, and the rules for drawing one.
 ///
-/// Each symbology owns its own quiet zone — the light margin a scanner needs to find the code.
+/// Each symbology owns its own quiet zone: the light margin a scanner needs to find the code.
 /// The required width differs per symbology.
 package protocol BarcodeSymbology: Sendable {
     associatedtype Payload: Sendable
