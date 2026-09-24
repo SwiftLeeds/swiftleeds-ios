@@ -2,6 +2,7 @@ import AuthenticationFeature
 import Dependencies
 import Foundation
 import LogKit
+import LogKitTestSupport
 import Testing
 
 /// The public `SignInError` is deliberately bare, so these assert the reason survives to the log

@@ -1,6 +1,7 @@
 import AuthenticationFeature
 import Dependencies
 import LogKit
+import LogKitTestSupport
 import Testing
 
 /// The cause reaches the log at the seam that knew it. These assert the outcome the user got.
