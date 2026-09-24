@@ -3,11 +3,12 @@ import Dependencies
 import Foundation
 import LogKit
 import LogKitTestSupport
+import NetworkKitTestSupport
 import Testing
 
 @Suite struct AuthGatewayLoggingTests {
     @Test func whenRequestCannotBeEncoded_shouldLogReason() async throws {
-        let failure = LoginRequestError.couldNotEncodeRequest(StubFailure.couldNotBuildResponse)
+        let failure = LoginRequestError.couldNotEncodeRequest(StubError.couldNotBuildResponse)
 
         let event = try #require(await logEvent(forFailure: failure))
 
@@ -18,7 +19,7 @@ import Testing
 
     /// Transport failures are logged once, by the decorator on `HTTPClient`.
     @Test func whenTransportFails_shouldLogNothing() async throws {
-        let failure = LoginRequestError.transportFailed(StubFailure.couldNotBuildResponse)
+        let failure = LoginRequestError.transportFailed(StubError.couldNotBuildResponse)
 
         let event = await logEvent(forFailure: failure)
 

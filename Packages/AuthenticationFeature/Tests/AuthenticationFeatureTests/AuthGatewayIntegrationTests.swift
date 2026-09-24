@@ -3,6 +3,7 @@ import Dependencies
 import Foundation
 import LogKitTestSupport
 import NetworkKit
+import NetworkKitTestSupport
 import Testing
 
 /// Drives the live composition, stubbing only the transport.
@@ -41,7 +42,7 @@ import Testing
     @Test func whenRequestCannotReachServer_shouldThrowCouldNotReachServer() async throws {
         await #expect(throws: SignInError.couldNotReachServer) {
             try await withDependencies {
-                $0.authHTTPClient = .failing(with: StubFailure.couldNotBuildResponse)
+                $0.authHTTPClient = .failing(with: StubError.couldNotBuildResponse)
             } operation: {
                 try await AuthGateway.liveValue.authenticate(Credential.fixture)
             }
@@ -92,7 +93,7 @@ import Testing
         let recorder = LogRecorder()
 
         try? await withDependencies {
-            $0.authHTTPClient = .failing(with: StubFailure.couldNotBuildResponse).logging()
+            $0.authHTTPClient = .failing(with: StubError.couldNotBuildResponse).logging()
             $0.log = recorder.log
         } operation: {
             let sut = AuthGateway.liveValue

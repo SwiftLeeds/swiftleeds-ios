@@ -2,6 +2,7 @@ import AuthenticationFeature
 import Dependencies
 import LogKit
 import LogKitTestSupport
+import NetworkKitTestSupport
 import SecureStorageKit
 import Testing
 
@@ -37,11 +38,11 @@ import Testing
     @Test func whenStoreRefuses_shouldRethrowRefusal() async throws {
         await withDependencies {
             $0.log = LogRecorder().log
-            $0.secureStorage = .failing(with: StubFailure.couldNotBuildResponse)
+            $0.secureStorage = .failing(with: StubError.couldNotBuildResponse)
         } operation: {
             let sut = SessionStore.live.logging()
 
-            await #expect(throws: StubFailure.couldNotBuildResponse) {
+            await #expect(throws: StubError.couldNotBuildResponse) {
                 try await sut.clear()
             }
         }
@@ -54,7 +55,7 @@ import Testing
 
         await withDependencies {
             $0.log = recorder.log
-            $0.secureStorage = .failing(with: StubFailure.couldNotBuildResponse)
+            $0.secureStorage = .failing(with: StubError.couldNotBuildResponse)
         } operation: {
             _ = try? await SessionStore.liveValue.clear()
         }
@@ -154,7 +155,7 @@ import Testing
 
         try? await withDependencies {
             $0.log = recorder.log
-            $0.secureStorage = .failing(with: StubFailure.couldNotBuildResponse)
+            $0.secureStorage = .failing(with: StubError.couldNotBuildResponse)
         } operation: {
             try await operation(SessionStore.live.logging())
         }

@@ -2,6 +2,7 @@ import AuthenticationFeature
 import Dependencies
 import LogKit
 import LogKitTestSupport
+import NetworkKitTestSupport
 import Testing
 
 /// The cause reaches the log at the seam that knew it. These assert the outcome the user got.
@@ -95,7 +96,7 @@ import Testing
         try await withDependencies {
             $0.log = recorder.log
             $0.authGateway = .returning(try SessionToken("jwt-abc-123"))
-            $0.sessionStore = .failing(with: StubFailure.couldNotBuildResponse)
+            $0.sessionStore = .failing(with: StubError.couldNotBuildResponse)
         } operation: {
             let sut = SignIn.liveValue.logging()
             _ = try? await sut(Credential.fixture)
