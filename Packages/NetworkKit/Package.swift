@@ -29,6 +29,7 @@ let package = Package(
                 "NetworkKit",
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "LogKit", package: "LogKit"),
+                .product(name: "LogKitTestSupport", package: "LogKit"),
             ]
         ),
     ]
