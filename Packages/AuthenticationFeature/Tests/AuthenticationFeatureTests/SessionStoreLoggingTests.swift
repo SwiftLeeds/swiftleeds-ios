@@ -1,6 +1,7 @@
 import AuthenticationFeature
 import Dependencies
 import LogKit
+import LogKitTestSupport
 import SecureStorageKit
 import Testing
 

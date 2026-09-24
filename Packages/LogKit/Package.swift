@@ -11,6 +11,7 @@ let package = Package(
     products: [
         .library(name: "LogKit", targets: ["LogKit"]),
         .library(name: "LogKitUnified", targets: ["LogKitUnified"]),
+        .library(name: "LogKitTestSupport", targets: ["LogKitTestSupport"]),
     ],
     dependencies: [
         .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.0.0"),
@@ -26,9 +27,13 @@ let package = Package(
             name: "LogKitUnified",
             dependencies: ["LogKit"]
         ),
+        .target(
+            name: "LogKitTestSupport",
+            dependencies: ["LogKit"]
+        ),
         .testTarget(
             name: "LogKitTests",
-            dependencies: ["LogKit"]
+            dependencies: ["LogKit", "LogKitTestSupport"]
         ),
         .testTarget(
             name: "LogKitUnifiedTests",

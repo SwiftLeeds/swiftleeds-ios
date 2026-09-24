@@ -1,5 +1,6 @@
 import Foundation
 import LogKit
+import LogKitTestSupport
 import Testing
 
 /// These assert what a destination is *unable* to see. The recorder here writes down whatever it is

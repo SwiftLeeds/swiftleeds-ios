@@ -1,6 +1,7 @@
 import Dependencies
 import Foundation
 import LogKit
+import LogKitTestSupport
 import NetworkKit
 import Testing
 

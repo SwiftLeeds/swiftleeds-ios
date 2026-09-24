@@ -1,4 +1,5 @@
 import LogKit
+import LogKitTestSupport
 import Testing
 
 @Suite struct LogLevelMethodTests {

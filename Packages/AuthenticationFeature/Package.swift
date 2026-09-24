@@ -33,6 +33,7 @@ let package = Package(
                 "AuthenticationFeature",
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "LogKit", package: "LogKit"),
+                .product(name: "LogKitTestSupport", package: "LogKit"),
                 .product(name: "NetworkKit", package: "NetworkKit"),
                 .product(name: "SecureStorageKit", package: "SecureStorageKit"),
             ]
