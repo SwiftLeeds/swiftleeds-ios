@@ -33,29 +33,29 @@ struct MockRoleRing<Ring: InsettableShape, Content: View>: View {
     var body: some View {
         content
             .padding(width + gap)
-            .background { softHalo }
-            .overlay { hardHalo }
+            .background { fadedHalo }
+            .overlay { crispHalo }
             .accessibilityElement(children: .combine)
             .accessibilityLabel(role.name)
     }
 
-    /// How far a soft edge spreads, as a share of the ring's width.
+    /// How far a fading edge spreads, as a share of the ring's width.
     private static var spread: CGFloat { 0.75 }
 
-    /// The ring drawn behind the subject and blurred, for a soft edge.
+    /// The ring drawn behind the subject and blurred, for an edge that fades.
     ///
     /// It sits behind so the subject, which is opaque, covers the half of the
     /// blur that spreads inward. Only the outer half stays visible, so the
-    /// ring keeps a clean inner edge and dissolves outward.
-    @ViewBuilder private var softHalo: some View {
-        if edge == .soft {
+    /// ring dissolves outward and nothing bleeds over the subject.
+    @ViewBuilder private var fadedHalo: some View {
+        if edge.fades {
             halo.blur(radius: width * Self.spread)
         }
     }
 
-    /// The ring drawn over the subject, for a hard edge.
-    @ViewBuilder private var hardHalo: some View {
-        if edge == .hard {
+    /// The ring drawn over the subject, for an edge that stays crisp.
+    @ViewBuilder private var crispHalo: some View {
+        if edge.isCrisp {
             halo
         }
     }
