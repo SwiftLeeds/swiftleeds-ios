@@ -40,7 +40,7 @@ struct MockRoleRing<Ring: InsettableShape, Content: View>: View {
     }
 
     /// How far a fading edge spreads, as a share of the ring's width.
-    private static var spread: CGFloat { 0.75 }
+    private static var spread: CGFloat { 1.5 }
 
     /// The ring drawn behind the subject and blurred, for an edge that fades.
     ///
