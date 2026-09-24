@@ -30,6 +30,13 @@ struct ScheduleScreen: View {
         case card
     }
 
+    /// How thick the halo is around an avatar that is a bar item.
+    ///
+    /// It is thinner than the one on a profile, in proportion and in points.
+    /// The halo is a reminder here rather than the screen's subject, and the
+    /// fade spreads from the width, so one value quietens both.
+    private static let haloWidth: CGFloat = 2
+
     /// How far the avatar moves back to line up with the title under it.
     ///
     /// A bar item reserves the margin its glass capsule would need. Hiding the
@@ -93,6 +100,7 @@ struct ScheduleScreen: View {
                         // ring is a reminder rather than the only statement.
                         MockRoleRing(
                             role: SampleAttendee.signedIn.role,
+                            width: Self.haloWidth,
                             edge: haloEdge,
                             ring: Circle()
                         ) {
