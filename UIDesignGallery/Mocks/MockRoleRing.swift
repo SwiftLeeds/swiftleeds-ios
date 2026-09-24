@@ -24,6 +24,12 @@ struct MockRoleRing<Ring: InsettableShape, Content: View>: View {
     /// mistake rather than as a halo.
     var gap: CGFloat = 0
 
+    /// How strongly the halo draws against the surface behind it.
+    ///
+    /// Short of full strength, so the colors sit into the screen rather than
+    /// on top of it.
+    var strength: Double = 0.7
+
     /// The shape the ring follows, which matches the subject it goes around.
     let ring: Ring
 
@@ -60,12 +66,6 @@ struct MockRoleRing<Ring: InsettableShape, Content: View>: View {
         }
     }
 
-    /// How strongly the halo draws against the surface behind it.
-    ///
-    /// Short of full strength, so the colors sit into the screen rather than
-    /// on top of it.
-    private static var strength: Double { 0.7 }
-
     /// The ring itself, in the colors the role runs between.
     private var halo: some View {
         ring
@@ -73,6 +73,6 @@ struct MockRoleRing<Ring: InsettableShape, Content: View>: View {
                 AngularGradient(colors: role.colors + [role.colors[0]], center: .center),
                 lineWidth: width
             )
-            .opacity(Self.strength)
+            .opacity(strength)
     }
 }
