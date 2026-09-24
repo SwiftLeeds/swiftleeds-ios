@@ -44,8 +44,13 @@ opt_in_rules:
   - lower_acl_than_parent
   # "Model absence away rather than unwrapping: a throwing initialiser, a typed
   # error, a default." An optional Bool has three states where the domain has
-  # two.
+  # two, and an optional collection says nothing an empty one does not.
   - discouraged_optional_boolean
+  - discouraged_optional_collection
+  # "Omit `return` where Swift allows it."
+  - implicit_return
+  # "A `Task` handles what it throws."
+  - unhandled_throwing_task
 
 disabled_rules:
   # The codebase is inconsistent here and no recorded convention picks a side,
