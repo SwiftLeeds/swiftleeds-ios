@@ -7,7 +7,8 @@ import UIDesign
 @MainActor
 @Suite(.snapshots(record: .never)) struct NameplateSnapshotTests {
     // A nameplate fills the width it is given, so every test states one. Without it the helper
-    // renders the natural width, where the title never wraps and the reflow never appears.
+    // renders the natural width, where no line ever wraps. An iPhone SE is 375 points wide, less
+    // a 16 point list margin on each side.
     private static let rowWidth: CGFloat = 343
 
     @Test func nameplate() {
@@ -58,6 +59,21 @@ import UIDesign
             NameplatePlaceholder()
             NameplatePlaceholder()
         }
+
+        assertSnapshots(of: row(view))
+    }
+
+    // Beside the heading it stands in for, because only a matching icon size keeps the screen
+    // still when the real one arrives.
+    @Test func prominentPlaceholder() {
+        let view = VStack(spacing: Spacing.large) {
+            NameplatePlaceholder(size: AvatarSize.large)
+
+            Nameplate(Self.name, detail: Self.company) {
+                Avatar(url: nil, size: AvatarSize.large, fallback: .initials(Self.nameComponents))
+            }
+        }
+        .nameplateStyle(.prominent)
 
         assertSnapshots(of: row(view))
     }
