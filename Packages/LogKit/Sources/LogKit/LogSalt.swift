@@ -5,7 +5,7 @@ import Foundation
 /// Required rather than defaulted, because the lifetime is a decision: a salt generated per run
 /// correlates within one launch, a stored salt correlates across launches on one device.
 public struct LogSalt: Hashable, Sendable {
-    /// How many random bytes a generated salt carries.
+    /// The number of random bytes in a generated salt.
     private static let byteCount = 16
 
     private let storage: Data

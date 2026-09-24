@@ -6,6 +6,7 @@ public struct LogEvent: Hashable, Sendable {
     public let fields: LogFields
     public let source: SourceLocation
 
+    /// Creates an event.
     public init(
         level: LogLevel,
         category: LogCategory,
