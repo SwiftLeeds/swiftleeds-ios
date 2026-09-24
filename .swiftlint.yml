@@ -1,6 +1,13 @@
-# Every rule below traces to a convention recorded in the project's Swift rules.
-# Where a SwiftLint default contradicts one of those conventions, the default is
-# changed here and the reason is stated.
+# Two kinds of entry, and the difference matters when one is questioned.
+#
+# The first group traces to a convention recorded in the project's Swift rules,
+# quoted above each entry. Where a SwiftLint default contradicts one of those
+# conventions, the default is changed here and the reason is stated.
+#
+# The second group, "rules nothing here breaks", defends a standard the project
+# does not dispute but has never written down. Each one found zero violations
+# when it was added, so it costs no fixes and only holds new code. A rule that
+# would need a sweep does not belong there: it needs a decision first.
 #
 # Tuned against the SwiftLint version in .swiftlint-version, which CI installs
 # and the pre-commit hook checks against. Rule defaults change between versions,
@@ -51,6 +58,72 @@ opt_in_rules:
   - implicit_return
   # "A `Task` handles what it throws."
   - unhandled_throwing_task
+
+  # Rules nothing here breaks. Each found zero violations when it was added on
+  # 2026-09-24, so none of them changed a line of source.
+
+  # "Favour functional style. Treat `Optional` and `Result` as functors: `map`,
+  # `flatMap`, `compactMap`." These name the call that says what you mean.
+  - array_init
+  - contains_over_filter_count
+  - contains_over_filter_is_empty
+  - contains_over_first_not_nil
+  - contains_over_range_nil_comparison
+  - first_where
+  - flatmap_over_map_reduce
+  - joined_default_parameter
+  - last_where
+  - legacy_multiple
+  - sorted_first_last
+
+  # "Code reads like clean English." Each of these deletes a word that carries
+  # no meaning.
+  - direct_return
+  - empty_collection_literal
+  - explicit_init
+  - prefer_self_type_over_type_of_self
+  - prefer_zero_over_explicit_init
+  - redundant_final
+  - redundant_nil_coalescing
+  - redundant_type_annotation
+  - toggle_bool
+  - unneeded_parentheses_in_closure_argument
+
+  # A reference that outlives what it points at, or an observer nobody removes,
+  # is a leak the compiler cannot see.
+  - discarded_notification_center_observer
+  - unowned_variable_capture
+  - weak_delegate
+
+  # "Prefer typed throws." An error, a crash and a fallthrough each need to be
+  # deliberate and visible at the point a reader meets them.
+  - fallthrough
+  - fatal_error_message
+  - return_value_from_void_function
+  - unavailable_function
+  - untyped_error_in_catch
+  - yoda_condition
+
+  # Layout the codebase already follows everywhere.
+  - closure_spacing
+  - collection_alignment
+  - comma_inheritance
+  - file_name_no_space
+  - literal_expression_end_indentation
+  - modifier_order
+  - multiline_parameters
+  - multiline_parameters_brackets
+  - period_spacing
+  - vertical_parameter_alignment_on_call
+
+  # "One enum case per line" and "a domain type does not conform to `Codable`":
+  # these guard the shapes those rules leave behind.
+  - convenience_type
+  - local_doc_comment
+  - optional_enum_case_matching
+  - pattern_matching_keywords
+  - raw_value_for_camel_cased_codable_enum
+  - static_operator
 
 disabled_rules:
   # The codebase is inconsistent here and no recorded convention picks a side,
