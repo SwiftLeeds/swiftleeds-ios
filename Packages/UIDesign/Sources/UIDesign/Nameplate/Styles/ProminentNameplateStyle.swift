@@ -1,6 +1,7 @@
 import SwiftUI
 
-/// A nameplate style that draws a heading, with a larger title and more room.
+/// A nameplate style that draws a heading, with the title in the title 3 text
+/// style and vertical padding around the row.
 ///
 /// You can also use ``NameplateStyle/prominent`` to construct this style.
 ///
@@ -18,7 +19,7 @@ public struct ProminentNameplateStyle: NameplateStyle {
 }
 
 public extension NameplateStyle where Self == ProminentNameplateStyle {
-    /// A nameplate style that draws a heading, with a larger title and more
-    /// room.
+    /// A nameplate style that draws a heading, with the title in the title 3
+    /// text style and vertical padding around the row.
     static var prominent: ProminentNameplateStyle { ProminentNameplateStyle() }
 }

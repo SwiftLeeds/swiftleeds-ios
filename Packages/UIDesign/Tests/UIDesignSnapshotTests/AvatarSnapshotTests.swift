@@ -102,8 +102,8 @@ import UIDesign
         assertSnapshots(of: view)
     }
 
-    // Every fallback, because each one draws something a redaction would otherwise turn into a
-    // rectangle sitting inside the avatar's shape.
+    /// Checks every fallback, because each draws something a redaction would
+    /// otherwise turn into a rectangle sitting inside the avatar's shape.
     @Test func redacted() {
         let name = PersonNameComponents(givenName: "Ada", familyName: "Archer")
         let view = HStack(spacing: Spacing.large) {

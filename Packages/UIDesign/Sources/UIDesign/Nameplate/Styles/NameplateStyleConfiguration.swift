@@ -8,6 +8,8 @@ public struct NameplateStyleConfiguration {
         private let _body: () -> AnyView
 
         /// Creates a type-erased title view.
+        ///
+        /// - Parameter body: The view the title draws.
         init(_ body: some View) {
             _body = { AnyView(body) }
         }
@@ -21,6 +23,8 @@ public struct NameplateStyleConfiguration {
         private let _body: () -> AnyView
 
         /// Creates a type-erased detail view.
+        ///
+        /// - Parameter body: The view the detail draws.
         init(_ body: some View) {
             _body = { AnyView(body) }
         }
@@ -34,6 +38,8 @@ public struct NameplateStyleConfiguration {
         private let _body: () -> AnyView
 
         /// Creates a type-erased icon view.
+        ///
+        /// - Parameter body: The view the icon draws.
         init(_ body: some View) {
             _body = { AnyView(body) }
         }
@@ -52,7 +58,12 @@ public struct NameplateStyleConfiguration {
     /// given.
     public let icon: Icon
 
-    /// Creates the properties of a nameplate.
+    /// Creates the properties of a nameplate, erasing each view's type.
+    ///
+    /// - Parameters:
+    ///   - title: The view naming the subject.
+    ///   - detail: The view describing the subject.
+    ///   - icon: The view picturing the subject.
     @MainActor
     init(title: some View, detail: some View, icon: some View) {
         self.title = Title(title)

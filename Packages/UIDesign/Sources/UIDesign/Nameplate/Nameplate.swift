@@ -1,7 +1,6 @@
 import SwiftUI
 
-/// A standard view for identifying a subject, consisting of an icon with a
-/// title and a detail.
+/// A view that identifies a subject with an icon, a title and a detail.
 ///
 /// A nameplate appears wherever a screen names somebody: a speaker in a list,
 /// a guest, a sponsor, or the account a settings screen belongs to.
@@ -15,19 +14,17 @@ import SwiftUI
 /// }
 /// ```
 ///
-/// A string literal binds to the initializer that localizes, and a `String`
-/// variable binds to the one that does not, so a name that came from a server
-/// stays as the server wrote it. To localize one line and not the other, pass
-/// two `Text` views to ``init(title:detail:icon:)``.
+/// VoiceOver reads a nameplate as a single element, so it announces the
+/// subject rather than each line in turn.
 ///
-/// The icon keeps the size it is given. Use ``AvatarSize/medium`` in a row and
-/// ``AvatarSize/large`` in a heading.
+/// With either built-in style, the icon moves above the text at the
+/// accessibility text sizes, so a row becomes a stack.
 ///
 /// ### Showing a loading state
 ///
 /// A loading nameplate is this view, redacted. Give it the rows a screen
-/// expects and apply `redacted(reason:)`, the way a widget renders its real
-/// view from a placeholder entry.
+/// expects and apply `redacted(reason:)`. There is no placeholder view to keep
+/// in step with this one.
 ///
 /// ```swift
 /// List(speakers) { speaker in
@@ -38,18 +35,8 @@ import SwiftUI
 /// .redacted(reason: isLoading ? .placeholder : [])
 /// ```
 ///
-/// There is no separate placeholder view to keep in step with this one. Text
-/// needs a width to redact, so a row of empty strings draws nothing: supply
-/// sample rows while the real ones load.
-///
-/// With either built-in style, the icon moves above the text at the
-/// accessibility text sizes, so a row becomes a stack.
-///
-/// VoiceOver reads a nameplate as a single element, so it announces the
-/// subject rather than each line in turn.
-///
-/// A nameplate is not a control. Give a tappable one a target of at least 44
-/// points.
+/// Text needs a width before it can be redacted, so a row of empty strings
+/// draws nothing. Supply sample rows while the real ones load.
 public struct Nameplate<Title: View, Detail: View, Icon: View>: View {
     /// The current nameplate style.
     @Environment(\.nameplateStyle) private var style

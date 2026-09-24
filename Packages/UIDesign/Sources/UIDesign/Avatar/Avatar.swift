@@ -74,13 +74,13 @@ public struct Avatar<Fallback: View>: View {
     // Past this an avatar crowds the text beside it out of the row.
     private static var largestGrowth: CGFloat { 1.75 }
 
+    /// The photo, the fallback standing in for it, or a plain shape while the
+    /// person loads.
     private var content: some View {
         Group {
             if redactionReasons.contains(.placeholder) {
-                // A placeholder shows a generic shape and no content. Left to
-                // redact itself, a symbol or a pair of initials becomes a
-                // rectangle that ignores the avatar's shape. Asking for no
-                // photo is the other half: a placeholder should load nothing.
+                // Redaction ignores the clip shape, so draw the plain shape here
+                // and ask for no photo.
                 Color.secondarySurface
             } else {
                 AsyncImage(url: url) { phase in

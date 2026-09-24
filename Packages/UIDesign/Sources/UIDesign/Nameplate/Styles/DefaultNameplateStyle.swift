@@ -1,6 +1,7 @@
 import SwiftUI
 
-/// A nameplate style that draws a row, with the title in a list row's weight.
+/// The default nameplate style, which draws a row with the title in the
+/// headline text style.
 ///
 /// You can also use ``NameplateStyle/automatic`` to construct this style.
 public struct DefaultNameplateStyle: NameplateStyle {
@@ -14,7 +15,7 @@ public struct DefaultNameplateStyle: NameplateStyle {
 }
 
 public extension NameplateStyle where Self == DefaultNameplateStyle {
-    /// A nameplate style that draws a row, with the title in a list row's
-    /// weight.
+    /// The default nameplate style, which draws a row with the title in the
+    /// headline text style.
     static var automatic: DefaultNameplateStyle { DefaultNameplateStyle() }
 }
