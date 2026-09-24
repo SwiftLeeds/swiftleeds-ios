@@ -7,7 +7,7 @@ struct ProfileScreen: View {
     let attendee: SampleAttendee
 
     /// How the halo's outer edge meets the screen behind it.
-    var haloEdge: HaloEdge = .hard
+    var haloEdge: HaloEdge = .feathered
 
     /// How thick the halo is around an avatar that is the screen's subject.
     private static let haloWidth: CGFloat = 5

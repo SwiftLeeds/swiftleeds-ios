@@ -49,7 +49,7 @@ struct ScheduleScreen: View {
     var rowStyle: RowStyle = .bare
 
     /// How the halo's outer edge meets the screen behind it.
-    var haloEdge: HaloEdge = .hard
+    var haloEdge: HaloEdge = .feathered
 
     /// The screens pushed on top of the schedule.
     @State private var path: [ScheduleDestination] = []

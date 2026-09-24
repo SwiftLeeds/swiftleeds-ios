@@ -15,7 +15,7 @@ struct MockRoleRing<Ring: InsettableShape, Content: View>: View {
     var width: CGFloat = 3
 
     /// How the ring's outer edge meets what is behind it.
-    var edge: HaloEdge = .hard
+    var edge: HaloEdge = .feathered
 
     /// How far the ring sits outside the subject.
     ///

@@ -9,8 +9,8 @@ import UIDesign
 /// A launch argument picks where the app opens, so a screenshot needs no
 /// tapping. `-tab sponsors` chooses a destination, `-detail 1` pushes a
 /// session's detail, `-profile 1` pushes the signed-in person's profile,
-/// `-rows card` swaps the schedule's arrangement, and `-halo soft` blurs the
-/// halo's outer edge.
+/// `-rows card` swaps the schedule's arrangement, and `-halo hard` or
+/// `-halo soft` swaps the halo's outer edge for the one it feathers between.
 @main
 struct UIDesignGalleryApp: App {
     /// The destination on screen.
@@ -43,7 +43,7 @@ struct UIDesignGalleryApp: App {
         let rows = defaults.string(forKey: "rows") ?? ""
         rowStyle = ScheduleScreen.RowStyle(rawValue: rows) ?? .bare
         let halo = defaults.string(forKey: "halo") ?? ""
-        haloEdge = HaloEdge(rawValue: halo) ?? .hard
+        haloEdge = HaloEdge(rawValue: halo) ?? .feathered
     }
 
     var body: some Scene {
