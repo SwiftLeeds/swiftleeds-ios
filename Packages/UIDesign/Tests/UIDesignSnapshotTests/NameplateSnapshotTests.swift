@@ -58,7 +58,7 @@ import UIDesign
         let view = VStack(spacing: Spacing.large) {
             ForEach(Self.sample, id: \.self) { name in
                 Nameplate(name, detail: Self.company) {
-                    Avatar(url: nil, size: AvatarSize.medium, fallback: .initials(.init()))
+                    Avatar(url: nil, size: AvatarSize.medium, fallback: .initials(Self.nameComponents))
                 }
             }
         }
@@ -68,6 +68,18 @@ import UIDesign
     }
 
     private static let sample = ["Ada Archer", "Blake Brooks", "Casey Cole"]
+
+    // The heading loads too, and it is the one place the row height comes from padding as well as
+    // from the text.
+    @Test func redactedWhileLoadingProminent() {
+        let view = Nameplate(Self.name, detail: Self.company) {
+            Avatar(url: nil, size: AvatarSize.large, fallback: .initials(Self.nameComponents))
+        }
+        .nameplateStyle(.prominent)
+        .redacted(reason: .placeholder)
+
+        assertSnapshots(of: row(view))
+    }
 
     // The narrowest width we design for. One row, the avatar at its smallest, nothing else.
     @Test func nameplateCompact() {
