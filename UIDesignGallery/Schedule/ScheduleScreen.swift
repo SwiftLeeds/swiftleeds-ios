@@ -35,14 +35,17 @@ struct ScheduleScreen: View {
     /// These are display text, for the reason `SampleSession` gives.
     private static let conferences = ["SwiftLeeds 2026", "SwiftLeeds 2025", "SwiftLeeds 2024"]
 
-    /// Whether the screen opens with a session's detail already pushed.
-    let showsSessionDetail: Bool
+    /// The screen the schedule opens with already pushed, if any.
+    let opensWith: ScheduleDestination?
 
     /// How the schedule separates one session from the next.
     var rowStyle: RowStyle = .bare
 
-    /// The sessions pushed on top of the schedule.
-    @State private var path: [SampleSession] = []
+    /// How the halo's outer edge meets the screen behind it.
+    var haloEdge: HaloEdge = .hard
+
+    /// The screens pushed on top of the schedule.
+    @State private var path: [ScheduleDestination] = []
 
     /// The filter the segmented control shows.
     @State private var filter: Filter = .all
@@ -67,24 +70,33 @@ struct ScheduleScreen: View {
             .background { AmbientBackground() }
             .navigationTitle(conference)
             .navigationSubtitle("Starts in 12 days")
-            .navigationDestination(for: SampleSession.self) { session in
-                SessionDetailScreen(session: session)
+            .navigationDestination(for: ScheduleDestination.self) { destination in
+                switch destination {
+                case .session(let session):
+                    SessionDetailScreen(session: session)
+                case .profile:
+                    ProfileScreen(attendee: .signedIn, haloEdge: haloEdge)
+                }
             }
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Button {} label: {
+                    NavigationLink(value: ScheduleDestination.profile) {
                         // The halo says this person holds a standing at the
                         // conference. Their own profile spells it out, so the
                         // ring is a reminder rather than the only statement.
-                        MockRoleRing(role: .organizer, ring: Circle()) {
+                        MockRoleRing(
+                            role: SampleAttendee.signedIn.role,
+                            edge: haloEdge,
+                            ring: Circle()
+                        ) {
                             Avatar(
                                 url: nil,
                                 size: .small,
-                                fallback: .initials(.init(givenName: "Ada", familyName: "Archer"))
+                                fallback: .initials(SampleAttendee.signedIn.nameComponents)
                             )
                         }
                     }
-                    .accessibilityLabel("Account, Organizer")
+                    .accessibilityLabel("Account, \(SampleAttendee.signedIn.role.name)")
                     // A bar item reserves the margin its glass capsule would
                     // need. Hiding the capsule leaves the margin, which sets the
                     // avatar in from the title below it.
@@ -122,8 +134,8 @@ struct ScheduleScreen: View {
             }
         }
         .onAppear {
-            if showsSessionDetail {
-                path = [.opening]
+            if let opensWith {
+                path = [opensWith]
             }
         }
     }
@@ -139,7 +151,7 @@ struct ScheduleScreen: View {
 
             Section {
                 ForEach(sessions) { session in
-                    NavigationLink(value: session) {
+                    NavigationLink(value: ScheduleDestination.session(session)) {
                         SessionRow(session: session)
                     }
                     .listRowBackground(Color.clear)
@@ -163,7 +175,7 @@ struct ScheduleScreen: View {
 
                     VStack(spacing: 0) {
                         ForEach(Array(sessions.enumerated()), id: \.element.id) { index, session in
-                            NavigationLink(value: session) {
+                            NavigationLink(value: ScheduleDestination.session(session)) {
                                 SessionRow(session: session, showsArtwork: true)
                                     .padding(.large)
                             }

@@ -8,7 +8,9 @@ import UIDesign
 ///
 /// A launch argument picks where the app opens, so a screenshot needs no
 /// tapping. `-tab sponsors` chooses a destination, `-detail 1` pushes a
-/// session's detail, and `-rows card` swaps the schedule's arrangement.
+/// session's detail, `-profile 1` pushes the signed-in person's profile,
+/// `-rows card` swaps the schedule's arrangement, and `-halo soft` blurs the
+/// halo's outer edge.
 @main
 struct UIDesignGalleryApp: App {
     /// The destination on screen.
@@ -17,20 +19,31 @@ struct UIDesignGalleryApp: App {
     /// than a constant so the tab bar still works once it is open.
     @State private var tab: GalleryTab
 
-    /// Whether the schedule opens with a session's detail already pushed.
-    private let showsSessionDetail: Bool
+    /// The screen the schedule opens with already pushed, if any.
+    private let opensWith: ScheduleDestination?
 
     /// How the schedule separates one session from the next.
     private let rowStyle: ScheduleScreen.RowStyle
+
+    /// How the halo's outer edge meets the screen behind it.
+    private let haloEdge: HaloEdge
 
     /// Creates the app, reading where to open from the launch arguments.
     init() {
         let defaults = UserDefaults.standard
         let name = defaults.string(forKey: "tab") ?? ""
         _tab = State(initialValue: GalleryTab(rawValue: name) ?? .schedule)
-        showsSessionDetail = defaults.bool(forKey: "detail")
+        if defaults.bool(forKey: "profile") {
+            opensWith = .profile
+        } else if defaults.bool(forKey: "detail") {
+            opensWith = .session(.opening)
+        } else {
+            opensWith = nil
+        }
         let rows = defaults.string(forKey: "rows") ?? ""
         rowStyle = ScheduleScreen.RowStyle(rawValue: rows) ?? .bare
+        let halo = defaults.string(forKey: "halo") ?? ""
+        haloEdge = HaloEdge(rawValue: halo) ?? .hard
     }
 
     var body: some Scene {
@@ -41,7 +54,7 @@ struct UIDesignGalleryApp: App {
                     systemImage: GalleryTab.schedule.symbol,
                     value: GalleryTab.schedule
                 ) {
-                    ScheduleScreen(showsSessionDetail: showsSessionDetail, rowStyle: rowStyle)
+                    ScheduleScreen(opensWith: opensWith, rowStyle: rowStyle, haloEdge: haloEdge)
                 }
 
                 Tab(
