@@ -51,6 +51,17 @@ import UIDesign
         assertSnapshots(of: row(view))
     }
 
+    // Three of them, because a skeleton is judged as a group: the bars should look like rows.
+    @Test func placeholder() {
+        let view = VStack(spacing: Spacing.large) {
+            NameplatePlaceholder()
+            NameplatePlaceholder()
+            NameplatePlaceholder()
+        }
+
+        assertSnapshots(of: row(view))
+    }
+
     // The narrowest width we design for. One row, the avatar at its smallest, nothing else.
     @Test func nameplateCompact() {
         let view = Nameplate(Self.name, detail: Self.company) {
