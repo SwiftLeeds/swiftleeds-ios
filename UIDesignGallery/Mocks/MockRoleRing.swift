@@ -28,10 +28,10 @@ struct MockRoleRing<Ring: InsettableShape, Content: View>: View {
     ///
     /// Short of full strength, so the colors sit into the screen rather than
     /// on top of it.
-    var strength: Double = 0.7
+    var strength: Double = 0.5
 
     /// Whether the fade adds light to the surface rather than painting over it.
-    var glows: Bool = false
+    var glows: Bool = true
 
     /// The shape the ring follows, which matches the subject it goes around.
     let ring: Ring
