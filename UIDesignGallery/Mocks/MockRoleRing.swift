@@ -30,6 +30,9 @@ struct MockRoleRing<Ring: InsettableShape, Content: View>: View {
     /// on top of it.
     var strength: Double = 0.7
 
+    /// Whether the fade adds light to the surface rather than painting over it.
+    var glows: Bool = false
+
     /// The shape the ring follows, which matches the subject it goes around.
     let ring: Ring
 
@@ -55,7 +58,9 @@ struct MockRoleRing<Ring: InsettableShape, Content: View>: View {
     /// ring dissolves outward and nothing bleeds over the subject.
     @ViewBuilder private var fadedHalo: some View {
         if edge.fades {
-            halo.blur(radius: width * Self.spread)
+            halo
+                .blur(radius: width * Self.spread)
+                .blendMode(glows ? .plusLighter : .normal)
         }
     }
 
