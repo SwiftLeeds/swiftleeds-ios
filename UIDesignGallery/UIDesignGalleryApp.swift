@@ -9,8 +9,9 @@ import UIDesign
 /// A launch argument picks where the app opens, so a screenshot needs no
 /// tapping. `-tab sponsors` chooses a destination, `-detail 1` pushes a
 /// session's detail, `-profile 1` pushes the signed-in person's profile,
-/// `-rows card` swaps the schedule's arrangement, and `-halo hard` or
-/// `-halo soft` swaps the halo's outer edge for the one it feathers between.
+/// `-rows card` swaps the schedule's arrangement, `-halo hard` or `-halo soft`
+/// swaps the halo's outer edge for the one it feathers between, and
+/// `-halos 1` shows every halo treatment at once instead of the app.
 @main
 struct UIDesignGalleryApp: App {
     /// The destination on screen.
@@ -28,6 +29,9 @@ struct UIDesignGalleryApp: App {
     /// How the halo's outer edge meets the screen behind it.
     private let haloEdge: HaloEdge
 
+    /// Whether the gallery shows the halo treatments instead of the app.
+    private let comparesHalos: Bool
+
     /// Creates the app, reading where to open from the launch arguments.
     init() {
         let defaults = UserDefaults.standard
@@ -44,40 +48,50 @@ struct UIDesignGalleryApp: App {
         rowStyle = ScheduleScreen.RowStyle(rawValue: rows) ?? .bare
         let halo = defaults.string(forKey: "halo") ?? ""
         haloEdge = HaloEdge(rawValue: halo) ?? .feathered
+        comparesHalos = defaults.bool(forKey: "halos")
     }
 
     var body: some Scene {
         WindowGroup {
-            TabView(selection: $tab) {
-                Tab(
-                    GalleryTab.schedule.title,
-                    systemImage: GalleryTab.schedule.symbol,
-                    value: GalleryTab.schedule
-                ) {
-                    ScheduleScreen(opensWith: opensWith, rowStyle: rowStyle, haloEdge: haloEdge)
-                }
-
-                Tab(
-                    GalleryTab.venue.title,
-                    systemImage: GalleryTab.venue.symbol,
-                    value: GalleryTab.venue
-                ) {
-                    NotYetDesigned(destination: .venue)
-                }
-
-                Tab(
-                    GalleryTab.sponsors.title,
-                    systemImage: GalleryTab.sponsors.symbol,
-                    value: GalleryTab.sponsors
-                ) {
-                    SponsorsScreen()
-                }
-
-                Tab(value: GalleryTab.search, role: .search) {
-                    NotYetDesigned(destination: .search)
-                }
+            if comparesHalos {
+                HaloComparison()
+            } else {
+                app
             }
-            .tint(.brandPrimary)
         }
+    }
+
+    /// The gallery's own screens, under the system's tab bar.
+    private var app: some View {
+        TabView(selection: $tab) {
+            Tab(
+                GalleryTab.schedule.title,
+                systemImage: GalleryTab.schedule.symbol,
+                value: GalleryTab.schedule
+            ) {
+                ScheduleScreen(opensWith: opensWith, rowStyle: rowStyle, haloEdge: haloEdge)
+            }
+
+            Tab(
+                GalleryTab.venue.title,
+                systemImage: GalleryTab.venue.symbol,
+                value: GalleryTab.venue
+            ) {
+                NotYetDesigned(destination: .venue)
+            }
+
+            Tab(
+                GalleryTab.sponsors.title,
+                systemImage: GalleryTab.sponsors.symbol,
+                value: GalleryTab.sponsors
+            ) {
+                SponsorsScreen()
+            }
+
+            Tab(value: GalleryTab.search, role: .search) {
+                NotYetDesigned(destination: .search)
+            }
+        }
+        .tint(.brandPrimary)
     }
 }

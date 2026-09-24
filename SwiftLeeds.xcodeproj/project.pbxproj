@@ -107,6 +107,7 @@
 		7CA11E000000000000000214 /* MockRoleBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000114 /* MockRoleBadge.swift */; };
 		7CA11E000000000000000215 /* HaloEdge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000115 /* HaloEdge.swift */; };
 		7CA11E000000000000000216 /* ScheduleDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000116 /* ScheduleDestination.swift */; };
+		7CA11E000000000000000217 /* HaloComparison.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000117 /* HaloComparison.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -259,6 +260,7 @@
 		7CA11E000000000000000114 /* MockRoleBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRoleBadge.swift; sourceTree = "<group>"; };
 		7CA11E000000000000000115 /* HaloEdge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HaloEdge.swift; sourceTree = "<group>"; };
 		7CA11E000000000000000116 /* ScheduleDestination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleDestination.swift; sourceTree = "<group>"; };
+		7CA11E000000000000000117 /* HaloComparison.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HaloComparison.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -565,6 +567,7 @@
 				7CA11E00000000000000010E /* ContentGroup.swift */,
 				7CA11E000000000000000111 /* ConferenceRole.swift */,
 				7CA11E000000000000000115 /* HaloEdge.swift */,
+				7CA11E000000000000000117 /* HaloComparison.swift */,
 				7CA11E00000000000000000E /* Schedule */,
 				7CA11E00000000000000000F /* SessionDetail */,
 				7CA11E000000000000000012 /* Profile */,
@@ -981,6 +984,7 @@
 				7CA11E000000000000000214 /* MockRoleBadge.swift in Sources */,
 				7CA11E000000000000000215 /* HaloEdge.swift in Sources */,
 				7CA11E000000000000000216 /* ScheduleDestination.swift in Sources */,
+				7CA11E000000000000000217 /* HaloComparison.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
