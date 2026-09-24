@@ -39,12 +39,16 @@ struct SessionDetailScreen: View {
                 }
 
                 section("Speaker") {
-                    Nameplate(session.speaker, detail: session.speakerDetail) {
-                        Avatar(
-                            url: nil,
-                            size: .medium,
-                            fallback: .initials(session.speakerName)
-                        )
+                    // The ring never carries the role alone: the detail line
+                    // names it too, so color is not the only channel.
+                    Nameplate(session.speaker, detail: "Speaker • \(session.speakerDetail)") {
+                        MockRoleRing(role: .speaker, ring: Circle()) {
+                            Avatar(
+                                url: nil,
+                                size: .medium,
+                                fallback: .initials(session.speakerName)
+                            )
+                        }
                     }
                 }
             }

@@ -6,6 +6,9 @@ struct SponsorRow: View {
     /// The sponsor this row describes.
     let sponsor: SampleSponsor
 
+    /// The standing a ring marks, or `nil` when the heading already says it.
+    var role: ConferenceRole?
+
     /// How wide and tall the logo's square is.
     static let logoSide: CGFloat = 56
 
@@ -43,9 +46,27 @@ struct SponsorRow: View {
         .padding(.vertical, .medium)
     }
 
-    /// The square that stands in for the company's mark.
+    /// The company's mark, ringed when it holds a standing worth showing.
+    @ViewBuilder
     private var logo: some View {
-        RoundedRectangle(cornerRadius: CGFloat(CornerRadius.small))
+        if let role {
+            MockRoleRing(
+                role: role,
+                ring: RoundedRectangle(
+                    cornerRadius: CGFloat(CornerRadius.medium),
+                    style: .continuous
+                )
+            ) {
+                mark
+            }
+        } else {
+            mark
+        }
+    }
+
+    /// The square that stands in for the company's logo.
+    private var mark: some View {
+        RoundedRectangle(cornerRadius: CGFloat(CornerRadius.small), style: .continuous)
             .fill(.tertiarySurface)
             .frame(width: Self.logoSide, height: Self.logoSide)
             .overlay {

@@ -100,6 +100,8 @@
 		7CA11E00000000000000020C /* MockBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E00000000000000010C /* MockBadge.swift */; };
 		7CA11E00000000000000020D /* MockNeutralBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E00000000000000010D /* MockNeutralBadge.swift */; };
 		7CA11E00000000000000020F /* MockArtwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E00000000000000010F /* MockArtwork.swift */; };
+		7CA11E000000000000000210 /* MockRoleRing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000110 /* MockRoleRing.swift */; };
+		7CA11E000000000000000211 /* ConferenceRole.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000111 /* ConferenceRole.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -245,6 +247,8 @@
 		7CA11E00000000000000010C /* MockBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockBadge.swift; sourceTree = "<group>"; };
 		7CA11E00000000000000010D /* MockNeutralBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNeutralBadge.swift; sourceTree = "<group>"; };
 		7CA11E00000000000000010F /* MockArtwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockArtwork.swift; sourceTree = "<group>"; };
+		7CA11E000000000000000110 /* MockRoleRing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRoleRing.swift; sourceTree = "<group>"; };
+		7CA11E000000000000000111 /* ConferenceRole.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConferenceRole.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -549,6 +553,7 @@
 				7CA11E000000000000000103 /* NotYetDesigned.swift */,
 				7CA11E000000000000000108 /* AmbientBackground.swift */,
 				7CA11E00000000000000010E /* ContentGroup.swift */,
+				7CA11E000000000000000111 /* ConferenceRole.swift */,
 				7CA11E00000000000000000E /* Schedule */,
 				7CA11E00000000000000000F /* SessionDetail */,
 				7CA11E000000000000000010 /* Sponsors */,
@@ -591,6 +596,7 @@
 				7CA11E00000000000000010C /* MockBadge.swift */,
 				7CA11E00000000000000010D /* MockNeutralBadge.swift */,
 				7CA11E00000000000000010F /* MockArtwork.swift */,
+				7CA11E000000000000000110 /* MockRoleRing.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -945,6 +951,8 @@
 				7CA11E00000000000000020C /* MockBadge.swift in Sources */,
 				7CA11E00000000000000020D /* MockNeutralBadge.swift in Sources */,
 				7CA11E00000000000000020F /* MockArtwork.swift in Sources */,
+				7CA11E000000000000000210 /* MockRoleRing.swift in Sources */,
+				7CA11E000000000000000211 /* ConferenceRole.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
