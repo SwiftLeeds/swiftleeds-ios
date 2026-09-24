@@ -67,9 +67,6 @@ struct ScheduleScreen: View {
             .background { AmbientBackground() }
             .navigationTitle(conference)
             .navigationSubtitle("Starts in 12 days")
-            // A large title draws no chevron, so the year menu was reachable
-            // only after a scroll collapsed the title. Inline shows it at rest.
-            .navigationBarTitleDisplayMode(.inline)
             .navigationDestination(for: SampleSession.self) { session in
                 SessionDetailScreen(session: session)
             }
@@ -107,7 +104,6 @@ struct ScheduleScreen: View {
                 // selected tab and for an action that changes something.
                 ToolbarItem(placement: .topBarTrailing) {
                     filterMenu
-                        .tint(.textPrimary)
                 }
 
                 ToolbarItem(placement: .topBarTrailing) {
@@ -136,18 +132,9 @@ struct ScheduleScreen: View {
     private var bareRows: some View {
         List {
             Section {
-                VStack(spacing: .small) {
-                    scopePicker
-
-                    if isFiltered {
-                        HStack {
-                            filterChip
-                            Spacer(minLength: 0)
-                        }
-                    }
-                }
-                .listRowSeparator(.hidden)
-                .listRowBackground(Color.clear)
+                scopePicker
+                    .listRowSeparator(.hidden)
+                    .listRowBackground(Color.clear)
             }
 
             Section {
@@ -203,29 +190,6 @@ struct ScheduleScreen: View {
         includedKinds != Self.everyKind || order != .time
     }
 
-    /// The mark that says a filter is on, and clears it.
-    ///
-    /// A filtered list that looks like an unfiltered one is how a person
-    /// concludes the data is missing.
-    private var filterChip: some View {
-        Button {
-            includedKinds = Self.everyKind
-            order = .time
-        } label: {
-            HStack(spacing: .xSmall) {
-                Text(order == .time ? "Filtered" : "Filtered and sorted")
-                Image(systemName: "xmark")
-            }
-            .font(.footnote.weight(.medium))
-            .foregroundStyle(.textSecondary)
-            .padding(.horizontal, .medium)
-            .padding(.vertical, .small)
-            .background(.textPrimary.opacity(0.10), in: .capsule)
-        }
-        .buttonStyle(.plain)
-        .accessibilityLabel("Clear the filter")
-    }
-
     /// The control that narrows the schedule to this person's own sessions.
     private var scopePicker: some View {
         Picker("Sessions", selection: $filter) {
@@ -258,8 +222,16 @@ struct ScheduleScreen: View {
                 }
             }
         } label: {
-            Label("Filter", systemImage: "line.3.horizontal.decrease")
+            // An active filter fills and tints its own button, which is how
+            // the system marks one. A separate chip saying so is not Apple's.
+            Label(
+                "Filter",
+                systemImage: isFiltered
+                    ? "line.3.horizontal.decrease.circle.fill"
+                    : "line.3.horizontal.decrease"
+            )
         }
+        .tint(isFiltered ? AnyShapeStyle(.brandPrimary) : AnyShapeStyle(.textPrimary))
     }
 
     /// Returns whether the schedule includes a kind of session.

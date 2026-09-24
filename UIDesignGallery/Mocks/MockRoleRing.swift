@@ -15,7 +15,11 @@ struct MockRoleRing<Ring: InsettableShape, Content: View>: View {
     var width: CGFloat = 3
 
     /// How far the ring sits outside the subject.
-    var gap: CGFloat = 3
+    ///
+    /// Zero by default, so the ring's inner edge meets the subject. A gap lets
+    /// whatever is behind the screen show through as a band, which reads as a
+    /// mistake rather than as a halo.
+    var gap: CGFloat = 0
 
     /// The shape the ring follows, which matches the subject it goes around.
     let ring: Ring
