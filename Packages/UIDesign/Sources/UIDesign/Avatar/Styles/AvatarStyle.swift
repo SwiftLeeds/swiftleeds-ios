@@ -1,9 +1,10 @@
 import SwiftUI
 
-/// A type that draws an ``Avatar``.
+/// A type that applies a custom appearance to all avatars within a view
+/// hierarchy.
 ///
-/// Write one to give avatars a shape of your own, then set it with
-/// ``SwiftUI/View/avatarStyle(_:)``.
+/// To configure the current avatar style for a view hierarchy, use the
+/// ``SwiftUI/View/avatarStyle(_:)`` modifier.
 ///
 /// ```swift
 /// struct SquareAvatarStyle: AvatarStyle {
@@ -15,16 +16,24 @@ import SwiftUI
 /// }
 /// ```
 ///
-/// The status arrives drawn, so a style places it and nothing more. Leave it out and the avatar
-/// shows no status at all.
+/// The status arrives drawn, so a style places it and nothing more. A style
+/// that leaves it out shows no status at all.
 ///
-/// A style may read the environment, so it can answer the appearance and the text size.
+/// A style may read the environment, so it can answer the color scheme and the
+/// Dynamic Type size.
 public protocol AvatarStyle: DynamicProperty {
+    /// A view that represents the body of an avatar.
     associatedtype Body: View
 
+    /// The properties of an avatar.
     typealias Configuration = AvatarStyleConfiguration
 
-    /// Draws one avatar.
+    /// Creates a view that represents the body of an avatar.
+    ///
+    /// The system calls this method for each `Avatar` instance in a view
+    /// hierarchy where this style is the current avatar style.
+    ///
+    /// - Parameter configuration: The properties of the avatar.
     @ViewBuilder @MainActor
     func makeBody(configuration: Configuration) -> Body
 }

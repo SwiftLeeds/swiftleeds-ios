@@ -1,10 +1,10 @@
 import SFSafeSymbols
 import SwiftUI
 
-/// A person, drawn as their photo.
+/// A view that shows a person as their photo.
 ///
-/// The photo loads from `url`. Until it arrives, and if it never does, the avatar draws the
-/// fallback instead.
+/// The photo loads from `url`. Until it arrives, and if it never does, the
+/// avatar draws the fallback instead.
 ///
 /// ```swift
 /// Avatar(url: speaker.photoURL, size: AvatarSize.large) {
@@ -12,34 +12,47 @@ import SwiftUI
 /// }
 /// ```
 ///
-/// The style clips the avatar to its shape, so a fallback cannot draw outside it.
+/// The style clips the avatar to its shape, so a fallback cannot draw outside
+/// it.
 ///
 /// Apply `redacted(reason: .placeholder)` to show an avatar whose person is
 /// still loading. It then draws a plain shape and asks for no photo.
-///
-/// An avatar is not a control. Give a tappable one a target of at least 44 points, which
-/// ``AvatarSize/small`` and ``AvatarSize/medium`` do not reach on their own.
 public struct Avatar<Fallback: View>: View {
+    /// The current avatar style.
     @Environment(\.avatarStyle) private var style
 
     /// The current redaction reasons applied to the view hierarchy.
     @Environment(\.redactionReasons) private var redactionReasons
 
-    // The base size differs per avatar, so the metric scales 1 and multiplies.
+    /// How far the text size has grown from its default.
+    ///
+    /// It scales 1 rather than a diameter, because the base size differs per
+    /// avatar, so each one multiplies by it.
     @ScaledMetric(relativeTo: .body) private var textScale: CGFloat = 1
 
+    /// Where the photo loads from.
     private let url: URL?
+
+    /// The diameter to draw at, before the text size scales it.
     private let size: AvatarSize
+
+    /// The state to show on the avatar, if any.
     private let status: AvatarStatus?
+
+    /// What to draw instead of the photo.
     private let fallback: Fallback
 
     /// Creates an avatar that draws `fallback` while its photo is missing.
     ///
     /// - Parameters:
-    ///   - url: Where the photo loads from. A `nil` url draws the fallback and asks for nothing.
-    ///   - size: A diameter from ``AvatarSize``. It grows with the text size, then stops.
-    ///   - status: The state to show on the avatar, if any. The style decides where it goes.
-    ///   - fallback: What to draw instead of the photo.
+    ///   - url: Where the photo loads from. A `nil` url draws the fallback and
+    ///     asks for nothing.
+    ///   - size: A diameter from ``AvatarSize``. It grows with the text size,
+    ///     then stops. The default is ``AvatarSize/medium``.
+    ///   - status: The state to show on the avatar, if any. The style decides
+    ///     where it goes.
+    ///   - fallback: A content builder that creates what to draw instead of
+    ///     the photo.
     public init(
         url: URL?,
         size: AvatarSize = .medium,
@@ -52,26 +65,32 @@ public struct Avatar<Fallback: View>: View {
         self.fallback = fallback()
     }
 
-    // The scaling and its ceiling belong here, not to a style: a style decides the shape, and
-    // every avatar answers the text size the same way.
     public var body: some View {
         AnyView(style.makeBody(configuration: configuration))
             .environment(\.avatarDiameter, diameter)
     }
 
+    /// The properties handed to the current avatar style.
     private var configuration: AvatarStyleConfiguration {
         AvatarStyleConfiguration(content: content, size: diameter, status: mark)
     }
 
+    /// The drawn form of the status, if there is one.
     private var mark: AvatarStatusMark? {
         status.map { AvatarStatusMark(status: $0, avatarDiameter: diameter) }
     }
 
+    /// The diameter to draw at, once the text size has scaled it.
+    ///
+    /// The scaling belongs here rather than to a style, so that every avatar
+    /// answers the text size the same way.
     private var diameter: AvatarSize {
         size.scaled(by: min(textScale, Self.largestGrowth))
     }
 
-    // Past this an avatar crowds the text beside it out of the row.
+    /// The largest an avatar grows with the text size.
+    ///
+    /// Past this an avatar crowds the text beside it out of the row.
     private static var largestGrowth: CGFloat { 1.75 }
 
     /// The photo, the fallback standing in for it, or a plain shape while the
@@ -99,13 +118,18 @@ public struct Avatar<Fallback: View>: View {
 }
 
 public extension Avatar where Fallback == AvatarFallback {
-    /// Creates an avatar that draws a built-in fallback while its photo is missing.
+    /// Creates an avatar that draws a built-in fallback while its photo is
+    /// missing.
     ///
     /// - Parameters:
-    ///   - url: Where the photo loads from. A `nil` url draws the fallback and asks for nothing.
-    ///   - size: A diameter from ``AvatarSize``. It grows with the text size, then stops.
-    ///   - status: The state to show on the avatar, if any. The style decides where it goes.
-    ///   - fallback: What to draw instead of the photo.
+    ///   - url: Where the photo loads from. A `nil` url draws the fallback and
+    ///     asks for nothing.
+    ///   - size: A diameter from ``AvatarSize``. It grows with the text size,
+    ///     then stops. The default is ``AvatarSize/medium``.
+    ///   - status: The state to show on the avatar, if any. The style decides
+    ///     where it goes.
+    ///   - fallback: What to draw instead of the photo. The default is
+    ///     ``AvatarFallback/symbol``.
     init(
         url: URL?,
         size: AvatarSize = .medium,
