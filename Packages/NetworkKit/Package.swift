@@ -10,6 +10,7 @@ let package = Package(
     ],
     products: [
         .library(name: "NetworkKit", targets: ["NetworkKit"]),
+        .library(name: "NetworkKitTestSupport", targets: ["NetworkKitTestSupport"]),
     ],
     dependencies: [
         .package(path: "../LogKit"),
@@ -23,10 +24,15 @@ let package = Package(
                 .product(name: "LogKit", package: "LogKit"),
             ]
         ),
+        .target(
+            name: "NetworkKitTestSupport",
+            dependencies: ["NetworkKit"]
+        ),
         .testTarget(
             name: "NetworkKitTests",
             dependencies: [
                 "NetworkKit",
+                "NetworkKitTestSupport",
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "LogKit", package: "LogKit"),
                 .product(name: "LogKitTestSupport", package: "LogKit"),
