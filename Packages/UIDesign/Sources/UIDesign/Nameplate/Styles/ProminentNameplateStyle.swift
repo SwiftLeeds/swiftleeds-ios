@@ -5,8 +5,7 @@ import SwiftUI
 /// You can also use ``NameplateStyle/prominent`` to construct this style.
 ///
 /// Use it for the one nameplate that names what a screen is about, such as the
-/// account a settings screen belongs to. Give its icon ``AvatarSize/large``,
-/// and give a ``NameplatePlaceholder`` standing in for it the same size.
+/// account a settings screen belongs to. Give its icon ``AvatarSize/large``.
 public struct ProminentNameplateStyle: NameplateStyle {
     /// Creates a prominent nameplate style.
     public init() {}

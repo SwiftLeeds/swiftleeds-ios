@@ -23,6 +23,25 @@ import SwiftUI
 /// The icon keeps the size it is given. Use ``AvatarSize/medium`` in a row and
 /// ``AvatarSize/large`` in a heading.
 ///
+/// ### Showing a loading state
+///
+/// A loading nameplate is this view, redacted. Give it the rows a screen
+/// expects and apply `redacted(reason:)`, the way a widget renders its real
+/// view from a placeholder entry.
+///
+/// ```swift
+/// List(speakers) { speaker in
+///     Nameplate(speaker.name, detail: speaker.company) {
+///         Avatar(url: speaker.photoURL)
+///     }
+/// }
+/// .redacted(reason: isLoading ? .placeholder : [])
+/// ```
+///
+/// There is no separate placeholder view to keep in step with this one. Text
+/// needs a width to redact, so a row of empty strings draws nothing: supply
+/// sample rows while the real ones load.
+///
 /// With either built-in style, the icon moves above the text at the
 /// accessibility text sizes, so a row becomes a stack.
 ///

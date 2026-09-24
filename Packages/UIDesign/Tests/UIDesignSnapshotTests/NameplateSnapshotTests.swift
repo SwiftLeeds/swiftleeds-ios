@@ -52,31 +52,22 @@ import UIDesign
         assertSnapshots(of: row(view))
     }
 
-    // Three of them, because a skeleton is judged as a group: the bars should look like rows.
-    @Test func placeholder() {
+    // The loading state is the nameplate itself, redacted. Three rows, because a skeleton is
+    // judged as a group: the bars should read as rows and the circles should stay circles.
+    @Test func redactedWhileLoading() {
         let view = VStack(spacing: Spacing.large) {
-            NameplatePlaceholder()
-            NameplatePlaceholder()
-            NameplatePlaceholder()
-        }
-
-        assertSnapshots(of: row(view))
-    }
-
-    // Beside the heading it stands in for, because only a matching icon size keeps the screen
-    // still when the real one arrives.
-    @Test func prominentPlaceholder() {
-        let view = VStack(spacing: Spacing.large) {
-            NameplatePlaceholder(size: AvatarSize.large)
-
-            Nameplate(Self.name, detail: Self.company) {
-                Avatar(url: nil, size: AvatarSize.large, fallback: .initials(Self.nameComponents))
+            ForEach(Self.sample, id: \.self) { name in
+                Nameplate(name, detail: Self.company) {
+                    Avatar(url: nil, size: AvatarSize.medium, fallback: .initials(.init()))
+                }
             }
         }
-        .nameplateStyle(.prominent)
+        .redacted(reason: .placeholder)
 
         assertSnapshots(of: row(view))
     }
+
+    private static let sample = ["Ada Archer", "Blake Brooks", "Casey Cole"]
 
     // The narrowest width we design for. One row, the avatar at its smallest, nothing else.
     @Test func nameplateCompact() {
