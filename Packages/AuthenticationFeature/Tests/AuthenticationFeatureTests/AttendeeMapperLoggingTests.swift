@@ -3,6 +3,8 @@ import Dependencies
 import Foundation
 import LogKit
 import LogKitTestSupport
+import NetworkKit
+import NetworkKitTestSupport
 import Testing
 
 /// The public `AttendeeFetchError` is deliberately bare, so these assert the reason survives to the
@@ -116,7 +118,10 @@ import Testing
         return recorder.events.first
     }
 
-    private func logEvent(forBody data: Data = Data(), statusCode: Int = 200) throws -> LogEvent? {
+    private func logEvent(
+        forBody data: Data = Data(),
+        statusCode: HTTPStatusCode = 200
+    ) throws -> LogEvent? {
         let recorder = LogRecorder()
         let response = try HTTPURLResponse.fixture(url: url, statusCode: statusCode)
 

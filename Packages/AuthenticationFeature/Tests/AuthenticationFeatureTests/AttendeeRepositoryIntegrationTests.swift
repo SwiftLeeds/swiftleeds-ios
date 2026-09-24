@@ -3,6 +3,7 @@ import Dependencies
 import Foundation
 import LogKitTestSupport
 import NetworkKit
+import NetworkKitTestSupport
 import Testing
 
 /// Drives the live composition, stubbing only the transport.
@@ -109,7 +110,7 @@ import Testing
     @Test func whenTransportFails_shouldThrowCouldNotReachServer() async throws {
         await #expect(throws: AttendeeFetchError.couldNotReachServer) {
             try await withDependencies {
-                $0.authHTTPClient = .failing(with: StubError.transport)
+                $0.authHTTPClient = .failing(with: TransportStubError.transport)
             } operation: {
                 let sut = AttendeeRepository.liveValue
                 return try await sut.fetch()
@@ -118,7 +119,7 @@ import Testing
     }
 }
 
-private enum StubError: Error { case transport }
+private enum TransportStubError: Error { case transport }
 
 private func expectedAttendee() throws -> Attendee {
     Attendee(

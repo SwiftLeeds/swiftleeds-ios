@@ -2,6 +2,7 @@ import Dependencies
 import Foundation
 import LocalFeature
 import NetworkKit
+import NetworkKitTestSupport
 import Testing
 
 // Drives the composed `liveValue` with only the transport stubbed.
@@ -55,7 +56,7 @@ import Testing
     }
 
     @Test(arguments: [404, 500])
-    func whenStatusIsNotOK_shouldThrowUnknown(statusCode: Int) async throws {
+    func whenStatusIsNotOK_shouldThrowUnknown(statusCode: HTTPStatusCode) async throws {
         let data = LocalJSON.list(LocalJSON.category())
 
         await withDependencies {

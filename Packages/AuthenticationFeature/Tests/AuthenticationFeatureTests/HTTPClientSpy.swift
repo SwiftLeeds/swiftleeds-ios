@@ -1,6 +1,7 @@
 import AuthenticationFeature
 import Foundation
 import NetworkKit
+import NetworkKitTestSupport
 
 actor HTTPClientSpy {
     private(set) var requests: [URLRequest] = []
@@ -25,7 +26,7 @@ actor HTTPClientSpy {
                   httpVersion: nil,
                   headerFields: nil
               )
-        else { throw StubFailure.couldNotBuildResponse }
+        else { throw StubError.couldNotBuildResponse }
         return (data, response)
     }
 }

@@ -29,6 +29,7 @@ let package = Package(
                 "ScheduleFeature",
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "NetworkKit", package: "NetworkKit"),
+                .product(name: "NetworkKitTestSupport", package: "NetworkKit"),
             ]
         ),
     ]

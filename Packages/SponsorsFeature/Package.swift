@@ -33,6 +33,7 @@ let package = Package(
                 .product(name: "LogKit", package: "LogKit"),
                 .product(name: "LogKitTestSupport", package: "LogKit"),
                 .product(name: "NetworkKit", package: "NetworkKit"),
+                .product(name: "NetworkKitTestSupport", package: "NetworkKit"),
             ]
         ),
     ]

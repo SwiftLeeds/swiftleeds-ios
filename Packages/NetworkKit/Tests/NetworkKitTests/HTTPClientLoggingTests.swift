@@ -3,6 +3,7 @@ import Foundation
 import LogKit
 import LogKitTestSupport
 import NetworkKit
+import NetworkKitTestSupport
 import Testing
 
 /// Transport failures are logged here rather than per feature, so every request in the app is
@@ -125,7 +126,7 @@ import Testing
         #expect(arrived.message != failed.message)
     }
 
-    private func arrival(_ request: URLRequest, statusCode: Int) async throws -> LogEvent? {
+    private func arrival(_ request: URLRequest, statusCode: HTTPStatusCode) async throws -> LogEvent? {
         let recorder = LogRecorder()
 
         _ = try await withDependencies {
@@ -141,7 +142,7 @@ import Testing
 
     private func attempt(
         _ request: URLRequest,
-        failingWith error: some Error & Sendable = StubFailure.couldNotBuildResponse
+        failingWith error: some Error & Sendable = StubError.couldNotBuildResponse
     ) async -> LogEvent? {
         let recorder = LogRecorder()
 

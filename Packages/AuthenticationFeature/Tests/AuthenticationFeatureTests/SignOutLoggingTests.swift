@@ -2,6 +2,7 @@ import AuthenticationFeature
 import Dependencies
 import LogKit
 import LogKitTestSupport
+import NetworkKitTestSupport
 import Testing
 
 /// Both call sites move the UI to signed out and discard the error with `try?`, so this line is the
@@ -12,7 +13,7 @@ import Testing
 
         await withDependencies {
             $0.log = recorder.log
-            $0.sessionStore = .failing(with: StubFailure.couldNotBuildResponse)
+            $0.sessionStore = .failing(with: StubError.couldNotBuildResponse)
         } operation: {
             let sut = SignOut.liveValue.logging()
             _ = try? await sut()
@@ -25,11 +26,11 @@ import Testing
     @Test func whenSignOutFails_shouldRethrowFailure() async {
         await withDependencies {
             $0.log = LogRecorder().log
-            $0.sessionStore = .failing(with: StubFailure.couldNotBuildResponse)
+            $0.sessionStore = .failing(with: StubError.couldNotBuildResponse)
         } operation: {
             let sut = SignOut.liveValue.logging()
 
-            await #expect(throws: StubFailure.couldNotBuildResponse) {
+            await #expect(throws: StubError.couldNotBuildResponse) {
                 try await sut()
             }
         }
@@ -84,7 +85,7 @@ import Testing
 
         await withDependencies {
             $0.log = recorder.log
-            $0.sessionStore = .failing(with: StubFailure.couldNotBuildResponse)
+            $0.sessionStore = .failing(with: StubError.couldNotBuildResponse)
         } operation: {
             let sut = SignOut.liveValue.logging()
             _ = try? await sut()
@@ -100,7 +101,7 @@ import Testing
 
         await withDependencies {
             $0.log = recorder.log
-            $0.secureStorage = .failing(with: StubFailure.couldNotBuildResponse)
+            $0.secureStorage = .failing(with: StubError.couldNotBuildResponse)
             $0.sessionStore = SessionStore.live.logging()
         } operation: {
             let sut = SignOut.liveValue.logging()
