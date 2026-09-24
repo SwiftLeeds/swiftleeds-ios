@@ -16,10 +16,20 @@ struct ContentGroup: ViewModifier {
         RoundedRectangle(cornerRadius: CGFloat(CornerRadius.large), style: .continuous)
     }
 
+    /// How far the surface lifts off the wash behind it.
+    ///
+    /// A material alone over a dark screen stays dark. The lift is what makes
+    /// the surface read as smoke over the wash rather than as a darker hole.
+    private static let lift: Double = 0.07
+
     func body(content: Content) -> some View {
         content
             .frame(maxWidth: .infinity, alignment: .leading)
-            .background(.regularMaterial, in: shape)
+            .background {
+                shape
+                    .fill(.ultraThinMaterial)
+                    .overlay { shape.fill(.textPrimary.opacity(Self.lift)) }
+            }
             .overlay {
                 shape.strokeBorder(.borderSecondary, lineWidth: CGFloat(BorderWidth.thin))
             }

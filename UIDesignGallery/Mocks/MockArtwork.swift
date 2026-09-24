@@ -24,9 +24,20 @@ struct MockArtwork: View {
 
     /// The two colors this seed's picture runs between.
     private var colors: [Color] {
-        let index = abs(seed.hashValue) % Self.palette.count
+        let index = Self.index(of: seed)
         let next = (index + 1) % Self.palette.count
         return [Self.palette[index], Self.palette[next]]
+    }
+
+    /// Returns which color a seed maps onto.
+    ///
+    /// `hashValue` is seeded once per launch, so it would give the same session
+    /// a different picture every time the app starts.
+    ///
+    /// - Parameter seed: The text the picture is derived from.
+    private static func index(of seed: String) -> Int {
+        let total = seed.utf8.reduce(0) { $0 + Int($1) }
+        return total % palette.count
     }
 
     var body: some View {
@@ -48,6 +59,6 @@ extension MockArtwork {
     ///
     /// - Parameter seed: The text the picture is derived from.
     static func tint(for seed: String) -> Color {
-        palette[abs(seed.hashValue) % palette.count]
+        palette[index(of: seed)]
     }
 }
