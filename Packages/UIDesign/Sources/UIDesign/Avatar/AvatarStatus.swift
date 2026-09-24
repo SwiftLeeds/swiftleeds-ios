@@ -15,8 +15,13 @@ import SwiftUI
 ///
 /// The ``AvatarStyle`` decides where it sits.
 public struct AvatarStatus: Equatable {
+    /// What the status means, for anyone who cannot see it.
     let label: LocalizedStringKey
+
+    /// The symbol that encloses its own glyph.
     let icon: Icon
+
+    /// The color of the enclosure.
     let tint: Color
 
     /// Creates a status.

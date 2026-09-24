@@ -1,8 +1,14 @@
 import SwiftUI
 
-/// The body the built-in avatar styles share.
+/// An avatar clipped to a shape, with any status over the clipped edge.
+///
+/// The built-in avatar styles share this layout, so they differ only in the
+/// shape they pass.
 struct ClippedAvatar<ClipShape: Shape>: View {
+    /// The properties of the avatar.
     let configuration: AvatarStyleConfiguration
+
+    /// The shape to clip the avatar to.
     let shape: ClipShape
 
     var body: some View {

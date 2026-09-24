@@ -1,12 +1,12 @@
 import SwiftUI
 
 extension EnvironmentValues {
-    /// How every ``Avatar`` below this point draws.
+    /// The avatar style applied to the view hierarchy.
     @Entry public var avatarStyle: any AvatarStyle = .automatic
 }
 
 public extension View {
-    /// Sets how every ``Avatar`` in this view draws.
+    /// Sets the style for avatars within this view.
     ///
     /// ```swift
     /// VStack {
@@ -15,6 +15,8 @@ public extension View {
     /// }
     /// .avatarStyle(.rounded)
     /// ```
+    ///
+    /// - Parameter style: The avatar style to apply.
     func avatarStyle(_ style: some AvatarStyle) -> some View {
         environment(\.avatarStyle, style)
     }

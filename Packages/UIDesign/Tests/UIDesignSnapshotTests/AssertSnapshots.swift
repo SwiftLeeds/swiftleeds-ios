@@ -63,6 +63,18 @@ func assertCompactSnapshots(
 // A 40mm Apple Watch, the narrowest screen Apple ships.
 private let compactWidth: CGFloat = 162
 
+/// The width of a list row on the narrowest phone we design for.
+///
+/// A view that fills the width it is given needs one, or the helper renders it
+/// at its natural width and no line ever wraps.
+let rowWidth = narrowestPhoneWidth - listMargin * 2
+
+// The screen width of an iPhone SE.
+private let narrowestPhoneWidth: CGFloat = 375
+
+// The space a list leaves on each side of a row.
+private let listMargin: CGFloat = 16
+
 private let colorSchemes: [(name: String, style: UIUserInterfaceStyle)] = [
     ("light", .light),
     ("dark", .dark),
