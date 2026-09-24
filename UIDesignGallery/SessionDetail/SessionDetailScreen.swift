@@ -22,7 +22,7 @@ struct SessionDetailScreen: View {
                     .foregroundStyle(.textSecondary)
                 }
 
-                MockControlGroup()
+                favoriteAction
 
                 section("About") {
                     Text(session.summary)
@@ -43,13 +43,52 @@ struct SessionDetailScreen: View {
             .padding(.horizontal, .large)
             .padding(.bottom, .large)
         }
+        .background { AmbientBackground() }
         // The title is long enough that the bar would truncate it to one line,
         // so the content carries it and the bar stays bare.
         .navigationTitle("")
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {} label: {
+                    Label("Calendar", systemImage: "calendar.badge.plus")
+                }
+                .tint(.textPrimary)
+            }
+
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {} label: {
+                    Label("Share", systemImage: "square.and.arrow.up")
+                }
+                .tint(.textPrimary)
+            }
+
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {} label: {
+                    Label("More", systemImage: "ellipsis")
+                }
+                .tint(.textPrimary)
+            }
+        }
     }
 
-    /// Returns a heading with its content under it.
+    /// The one action this screen is for, at the screen's highest contrast.
+    private var favoriteAction: some View {
+        Button {} label: {
+            Label("Favourite", systemImage: "star")
+                .font(.headline)
+                .foregroundStyle(.surface)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, .medium)
+                .background(
+                    .textPrimary,
+                    in: .rect(cornerRadius: CGFloat(CornerRadius.large), style: .continuous)
+                )
+        }
+        .buttonStyle(.plain)
+    }
+
+    /// Returns a heading with its content grouped under it.
     ///
     /// - Parameters:
     ///   - title: The heading's text.
@@ -63,7 +102,7 @@ struct SessionDetailScreen: View {
                 .font(.headline)
                 .foregroundStyle(.textPrimary)
 
-            content()
+            content().contentGroup()
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }
