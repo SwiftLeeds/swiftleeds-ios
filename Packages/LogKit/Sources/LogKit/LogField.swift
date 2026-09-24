@@ -19,7 +19,7 @@ public struct LogField: Hashable, Sendable {
         self.sensitivity = sensitivity
     }
 
-    /// Builds a field whose sensitivity is only known at runtime, as an
+    /// Creates a field whose sensitivity is only known at runtime, as an
     /// interpolation's is.
     ///
     /// - Parameters:

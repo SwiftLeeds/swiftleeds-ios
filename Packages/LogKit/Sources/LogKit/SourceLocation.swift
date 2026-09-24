@@ -4,7 +4,8 @@ public struct SourceLocation: Hashable, Sendable {
     /// name, not a path.
     public let file: String
 
-    /// The signature of the function the event was logged from.
+    /// The function, expected in `#function` form: its name and argument
+    /// labels, without types.
     public let function: String
 
     /// The line number within the file, counted from one.
@@ -17,7 +18,7 @@ public struct SourceLocation: Hashable, Sendable {
         self.line = line
     }
 
-    /// The place this method is called from.
+    /// Returns the place this method is called from.
     ///
     /// The literals expand at the call site, so calling it inside a helper
     /// records the helper. Call it where the event happens.

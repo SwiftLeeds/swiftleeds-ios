@@ -20,7 +20,7 @@ extension String {
 }
 
 extension LogField {
-    /// A field carrying an error, safe to store or transmit anywhere.
+    /// Builds a field carrying an error, safe to store or transmit anywhere.
     ///
     /// - Parameters:
     ///   - name: The field's name.
@@ -29,7 +29,7 @@ extension LogField {
         .open(name, String(logDescribing: error))
     }
 
-    /// A field carrying an error that may be correlated but never read.
+    /// Builds a field carrying an error that may be correlated but never read.
     ///
     /// - Parameters:
     ///   - name: The field's name.
@@ -38,7 +38,7 @@ extension LogField {
         .hashed(name, String(logDescribing: error))
     }
 
-    /// A field carrying an error that must never leave the device.
+    /// Builds a field carrying an error that must never leave the device.
     ///
     /// - Parameters:
     ///   - name: The field's name.

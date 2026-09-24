@@ -62,7 +62,7 @@ extension MessageTemplate {
     /// A secret never reaches the sentence, whether or not its field survived
     /// classification. A destination trusted to hold secrets still receives
     /// the value, through whatever channel it redacts. The sentence is not
-    /// that channel: `Log.unified` writes it as public.
+    /// that channel: a destination may write it in the clear.
     ///
     /// - Parameters:
     ///   - placeholder: The gap's name, matched against a field's name.

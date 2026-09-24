@@ -10,7 +10,7 @@ public protocol LogValueConvertible: LogValueRepresentable {
 }
 
 extension LogField {
-    /// Builds a field from a value that classifies itself.
+    /// Creates a field from a value that classifies itself.
     ///
     /// - Parameters:
     ///   - name: The name the field is logged under.

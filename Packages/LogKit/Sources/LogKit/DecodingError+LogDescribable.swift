@@ -20,7 +20,8 @@ extension DecodingError: LogDescribable {
         }
     }
 
-    /// Returns the coding path as dotted components, or `(root)` when empty.
+    /// Returns the coding path as dotted components, or `(root)` when the path
+    /// and the key are both empty.
     ///
     /// - Parameters:
     ///   - context: The error's context, which carries the coding path.
