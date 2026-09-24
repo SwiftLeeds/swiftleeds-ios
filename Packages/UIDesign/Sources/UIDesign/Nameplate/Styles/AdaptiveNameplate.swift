@@ -1,17 +1,19 @@
 import SwiftUI
 
-/// The body the built-in nameplate styles share.
+/// A view that lays out a nameplate's icon beside its title and detail, and
+/// above them at the accessibility text sizes.
 ///
-/// It puts the icon beside the text, and above it at the accessibility text
-/// sizes.
+/// The built-in nameplate styles share it, so they differ only in typography
+/// and spacing.
 struct AdaptiveNameplate: View {
-    /// The text size the reader chose in system settings.
+    /// The current Dynamic Type size.
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
-    /// The views to draw.
+    /// The properties of the nameplate.
     let configuration: NameplateStyleConfiguration
 
-    /// The font the title draws in. The detail keeps body size at every style.
+    /// The font the title draws in. The detail keeps the body text style at
+    /// every style.
     let titleFont: Font
 
     var body: some View {

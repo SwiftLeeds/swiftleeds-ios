@@ -1,10 +1,13 @@
 import SwiftUI
 
-/// A subject, named beside its picture.
+/// A standard view for identifying a subject, consisting of an icon with a
+/// title and a detail.
 ///
-/// It draws an icon, a title and one more line about the subject. The icon is
-/// usually an ``Avatar``, and a speaker, a guest and a sponsor are all
-/// subjects.
+/// A nameplate appears wherever a screen names somebody: a speaker in a list,
+/// a guest, a sponsor, or the account a settings screen belongs to.
+///
+/// You create a nameplate by providing a title, a detail and an icon. The icon
+/// is usually an ``Avatar``.
 ///
 /// ```swift
 /// Nameplate(speaker.name, detail: speaker.company) {
@@ -12,41 +15,41 @@ import SwiftUI
 /// }
 /// ```
 ///
-/// A string literal is localized and a `String` variable is not, so a name
-/// that came from a server stays as the server wrote it. When one line needs
-/// localizing and the other does not, pass two `Text` values through
-/// ``init(title:detail:icon:)``.
+/// A string literal binds to the initializer that localizes, and a `String`
+/// variable binds to the one that does not, so a name that came from a server
+/// stays as the server wrote it. To localize one line and not the other, pass
+/// two `Text` views to ``init(title:detail:icon:)``.
 ///
-/// The icon keeps the size the caller gave it. Use ``AvatarSize/medium`` in a
-/// row and ``AvatarSize/large`` in a heading.
+/// The icon keeps the size it is given. Use ``AvatarSize/medium`` in a row and
+/// ``AvatarSize/large`` in a heading.
 ///
-/// With either built-in style the icon moves above the text at the
+/// With either built-in style, the icon moves above the text at the
 /// accessibility text sizes, so a row becomes a stack.
 ///
-/// VoiceOver reads the whole nameplate as one element, so it announces the
+/// VoiceOver reads a nameplate as a single element, so it announces the
 /// subject rather than each line in turn.
 ///
 /// A nameplate is not a control. Give a tappable one a target of at least 44
 /// points.
 public struct Nameplate<Title: View, Detail: View, Icon: View>: View {
-    /// How this nameplate draws.
+    /// The current nameplate style.
     @Environment(\.nameplateStyle) private var style
 
-    /// What the subject is called.
+    /// A name for the subject.
     private let title: Title
 
-    /// One more line about the subject.
+    /// A description of the subject.
     private let detail: Detail
 
-    /// The picture of the subject.
+    /// A pictorial representation of the subject.
     private let icon: Icon
 
-    /// Creates a nameplate from three views.
+    /// Creates a nameplate with a custom title, detail and icon.
     ///
     /// - Parameters:
-    ///   - title: What the subject is called.
-    ///   - detail: One more line about the subject.
-    ///   - icon: The picture of the subject.
+    ///   - title: A content builder that creates the nameplate's title.
+    ///   - detail: A content builder that creates the nameplate's detail.
+    ///   - icon: A content builder that creates the nameplate's icon.
     public init(
         @ViewBuilder title: () -> Title,
         @ViewBuilder detail: () -> Detail,
@@ -62,19 +65,20 @@ public struct Nameplate<Title: View, Detail: View, Icon: View>: View {
             .accessibilityElement(children: .combine)
     }
 
-    /// The views handed to the style.
+    /// The properties handed to the current nameplate style.
     private var configuration: NameplateStyleConfiguration {
         NameplateStyleConfiguration(title: title, detail: detail, icon: icon)
     }
 }
 
 public extension Nameplate where Title == Text, Detail == Text {
-    /// Creates a nameplate whose title and detail are localized.
+    /// Creates a nameplate with a title and a detail generated from localized
+    /// strings.
     ///
     /// - Parameters:
-    ///   - titleKey: The key for what the subject is called.
-    ///   - detail: The key for one more line about the subject.
-    ///   - icon: The picture of the subject.
+    ///   - titleKey: A title generated from a localized string.
+    ///   - detail: A detail generated from a localized string.
+    ///   - icon: A content builder that creates the nameplate's icon.
     init(
         _ titleKey: LocalizedStringKey,
         detail: LocalizedStringKey,
@@ -83,15 +87,15 @@ public extension Nameplate where Title == Text, Detail == Text {
         self.init(title: { Text(titleKey) }, detail: { Text(detail) }, icon: icon)
     }
 
-    /// Creates a nameplate that shows exactly the text it is given.
+    /// Creates a nameplate with a title and a detail generated from strings.
     ///
-    /// Nothing here is localized, so this is the initializer for text that
+    /// Neither string is localized, so this is the initializer for text that
     /// came from a server or from a person.
     ///
     /// - Parameters:
-    ///   - title: What the subject is called.
-    ///   - detail: One more line about the subject.
-    ///   - icon: The picture of the subject.
+    ///   - title: A string used as the nameplate's title.
+    ///   - detail: A string used as the nameplate's detail.
+    ///   - icon: A content builder that creates the nameplate's icon.
     init(
         _ title: some StringProtocol,
         detail: some StringProtocol,
@@ -102,30 +106,30 @@ public extension Nameplate where Title == Text, Detail == Text {
 }
 
 public extension Nameplate where Title == Text, Detail == EmptyView {
-    /// Creates a nameplate whose localized title stands on its own.
+    /// Creates a nameplate with a title generated from a localized string.
     ///
     /// - Parameters:
-    ///   - titleKey: The key for what the subject is called.
-    ///   - icon: The picture of the subject.
+    ///   - titleKey: A title generated from a localized string.
+    ///   - icon: A content builder that creates the nameplate's icon.
     init(_ titleKey: LocalizedStringKey, @ViewBuilder icon: () -> Icon) {
         self.init(title: { Text(titleKey) }, detail: { EmptyView() }, icon: icon)
     }
 
-    /// Creates a nameplate whose title stands on its own, shown as given.
+    /// Creates a nameplate with a title generated from a string.
     ///
     /// - Parameters:
-    ///   - title: What the subject is called.
-    ///   - icon: The picture of the subject.
+    ///   - title: A string used as the nameplate's title.
+    ///   - icon: A content builder that creates the nameplate's icon.
     init(_ title: some StringProtocol, @ViewBuilder icon: () -> Icon) {
         self.init(title: { Text(title) }, detail: { EmptyView() }, icon: icon)
     }
 }
 
-/// A made-up name, held in a `let` so it binds to the initializer that does
+/// A made-up name, held in a variable so it binds to the initializer that does
 /// not localize.
 private let previewName = "Ada Archer"
 
-/// What the preview's subject does, shown as the detail line.
+/// A made-up company, shown as the preview's detail line.
 private let previewCompany = "Northern Software"
 
 /// The preview name in parts, so the avatar can abbreviate it.

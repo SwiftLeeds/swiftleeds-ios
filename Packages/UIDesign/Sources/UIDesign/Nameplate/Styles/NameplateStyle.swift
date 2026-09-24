@@ -1,9 +1,9 @@
 import SwiftUI
 
-/// A type that applies a custom appearance to every ``Nameplate`` in a view hierarchy.
+/// A type that applies a custom appearance to all nameplates within a view.
 ///
-/// Write one to lay a nameplate out in a way of your own, then set it with
-/// ``SwiftUI/View/nameplateStyle(_:)``.
+/// To configure the current nameplate style for a view hierarchy, use the
+/// ``SwiftUI/View/nameplateStyle(_:)`` modifier.
 ///
 /// ```swift
 /// struct TrailingDetailNameplateStyle: NameplateStyle {
@@ -18,10 +18,12 @@ import SwiftUI
 /// }
 /// ```
 ///
-/// Draw all three of the configuration's views. One a style leaves out reaches neither the screen
-/// nor VoiceOver, because the nameplate reads as a single element.
+/// Draw all three of the configuration's views. One that a style leaves out
+/// reaches neither the screen nor VoiceOver, because a nameplate reads as a
+/// single element.
 ///
-/// A style may read the environment, so it can answer the appearance and the text size.
+/// A style may read the environment, so it can answer the appearance and the
+/// text size.
 public protocol NameplateStyle: DynamicProperty {
     /// A view that represents the body of a nameplate.
     associatedtype Body: View
@@ -29,9 +31,14 @@ public protocol NameplateStyle: DynamicProperty {
     /// The properties of a nameplate.
     typealias Configuration = NameplateStyleConfiguration
 
-    /// Draws one nameplate.
+    /// Creates a view that represents the body of a nameplate.
     ///
-    /// - Parameter configuration: The views to draw.
+    /// The system calls this method for each nameplate instance in a view
+    /// hierarchy where this style is the current nameplate style.
+    ///
+    /// - Parameter configuration: The properties of the nameplate.
+    /// - Returns: A view that has behavior and appearance that enables it to
+    ///   function as a nameplate.
     @ViewBuilder @MainActor
     func makeBody(configuration: Configuration) -> Body
 }

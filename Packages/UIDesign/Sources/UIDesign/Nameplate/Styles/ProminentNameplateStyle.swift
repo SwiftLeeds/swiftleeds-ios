@@ -2,12 +2,13 @@ import SwiftUI
 
 /// A nameplate style that draws a heading, with a larger title and more room.
 ///
-/// Use it for the one nameplate that names what a screen is about, such as
-/// the account a settings screen belongs to. Give its icon
-/// ``AvatarSize/large``, and a ``NameplatePlaceholder`` standing in for it the
-/// same size.
+/// You can also use ``NameplateStyle/prominent`` to construct this style.
+///
+/// Use it for the one nameplate that names what a screen is about, such as the
+/// account a settings screen belongs to. Give its icon ``AvatarSize/large``,
+/// and give a ``NameplatePlaceholder`` standing in for it the same size.
 public struct ProminentNameplateStyle: NameplateStyle {
-    /// Creates the style.
+    /// Creates a prominent nameplate style.
     public init() {}
 
     @MainActor
@@ -18,6 +19,7 @@ public struct ProminentNameplateStyle: NameplateStyle {
 }
 
 public extension NameplateStyle where Self == ProminentNameplateStyle {
-    /// A heading, for the nameplate that names the screen's subject.
+    /// A nameplate style that draws a heading, with a larger title and more
+    /// room.
     static var prominent: ProminentNameplateStyle { ProminentNameplateStyle() }
 }

@@ -1,12 +1,12 @@
 import SwiftUI
 
 extension EnvironmentValues {
-    /// How every ``Nameplate`` below this point draws.
+    /// The nameplate style applied to the view hierarchy.
     @Entry public var nameplateStyle: any NameplateStyle = .automatic
 }
 
 public extension View {
-    /// Sets how every ``Nameplate`` in this view draws.
+    /// Sets the style for nameplates within this view.
     ///
     /// ```swift
     /// VStack {
@@ -17,7 +17,7 @@ public extension View {
     /// .nameplateStyle(.prominent)
     /// ```
     ///
-    /// - Parameter style: How to draw each nameplate.
+    /// - Parameter style: The nameplate style to apply.
     func nameplateStyle(_ style: some NameplateStyle) -> some View {
         environment(\.nameplateStyle, style)
     }

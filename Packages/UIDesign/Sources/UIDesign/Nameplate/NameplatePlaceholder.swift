@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// The shape of a ``Nameplate``, drawn while the real one is still loading.
+/// A view that stands in for a nameplate while its subject loads.
 ///
 /// Put one where each nameplate will be, so the screen does not move when the
 /// subjects arrive.
@@ -11,19 +11,20 @@ import SwiftUI
 /// }
 /// ```
 ///
-/// It takes whichever ``NameplateStyle`` is in force, so its title and its
-/// spacing match the rows it stands in for. Its icon does not: give it the
+/// A placeholder takes the current ``NameplateStyle``, so its title and its
+/// spacing match the rows it stands in for. Its icon does not, so give it the
 /// size the real nameplate will use.
 ///
-/// VoiceOver skips it. Say that the screen is loading from the screen itself,
+/// VoiceOver skips it. Say that a screen is loading from the screen itself,
 /// where you can use words a listener can act on.
 public struct NameplatePlaceholder: View {
-    /// The diameter of the circle standing in for the picture.
+    /// The diameter of the circle standing in for the icon.
     private let size: AvatarSize
 
-    /// Creates a placeholder.
+    /// Creates a placeholder for a nameplate.
     ///
-    /// - Parameter size: The diameter the real nameplate's icon will have.
+    /// - Parameter size: The diameter the real nameplate's icon will have. The
+    ///   default is ``AvatarSize/medium``, which is the size a row uses.
     public init(size: AvatarSize = .medium) {
         self.size = size
     }
