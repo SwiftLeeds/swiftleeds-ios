@@ -39,6 +39,13 @@ opt_in_rules:
   - sorted_imports
   # "Held as `@State private var viewModel = ViewModel()`."
   - private_swiftui_state
+  # "Minimise access. Escalate one level at a time, only when something that
+  # exists today requires it."
+  - lower_acl_than_parent
+  # "Model absence away rather than unwrapping: a throwing initialiser, a typed
+  # error, a default." An optional Bool has three states where the domain has
+  # two.
+  - discouraged_optional_boolean
 
 disabled_rules:
   # The codebase is inconsistent here and no recorded convention picks a side,
