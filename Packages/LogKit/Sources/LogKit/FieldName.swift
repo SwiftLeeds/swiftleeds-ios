@@ -31,6 +31,7 @@ public enum FieldName: Hashable, Sendable, ExpressibleByStringLiteral {
         self = .authored(value)
     }
 
+    /// Compares two gaps by position alone, never by the label a caller gave.
     public static func == (lhs: FieldName, rhs: FieldName) -> Bool {
         switch (lhs, rhs) {
         case let (.authored(left), .authored(right)):

@@ -21,7 +21,8 @@ extension Log {
         return .destination(salt: salt, secrets: .passThrough) { event in
             let logger = loggers.logger(for: event.category)
 
-            // OSLogType has no warning, so notice and warning would both read as `default`.
+            // OSLogType has no warning, so notice and warning would both read
+            // as `default`.
             let level = "[\(event.level.name)]"
             let message = event.message.rendered(with: event.fields)
             let fields = event.fields.renderedWithoutSecrets

@@ -1,10 +1,10 @@
 /// A message as it was written at the call site.
 ///
 /// Built only from a string literal or an interpolation, so its literal text
-/// always comes from source. There is deliberately no initialiser taking a
-/// runtime `String`: that is the single door keeping data out of the message
-/// itself. Interpolated values do not stay here, they become fields, where
-/// classification reaches them.
+/// always comes from source. There is no initializer taking a runtime `String`:
+/// that is the single door keeping data out of the message itself. Interpolated
+/// values do not stay here, they become fields, where classification reaches
+/// them.
 public struct LogMessage: Sendable, ExpressibleByStringInterpolation {
     /// The literal skeleton, with a gap where each value was interpolated.
     package let template: MessageTemplate
