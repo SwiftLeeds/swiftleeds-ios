@@ -3,6 +3,13 @@
 // itself. See `callAsFunction`.
 extension Log {
     /// Records a debug event.
+    ///
+    /// - Parameters:
+    ///   - message: The message to record.
+    ///   - category: The area of the app the event comes from.
+    ///   - file: The file, left to expand from `#fileID`.
+    ///   - function: The function, left to expand from `#function`.
+    ///   - line: The line, left to expand from `#line`.
     public func debug(
         _ message: LogMessage,
         in category: LogCategory,
@@ -14,6 +21,13 @@ extension Log {
     }
 
     /// Records an informational event.
+    ///
+    /// - Parameters:
+    ///   - message: The message to record.
+    ///   - category: The area of the app the event comes from.
+    ///   - file: The file, left to expand from `#fileID`.
+    ///   - function: The function, left to expand from `#function`.
+    ///   - line: The line, left to expand from `#line`.
     public func info(
         _ message: LogMessage,
         in category: LogCategory,
@@ -25,6 +39,13 @@ extension Log {
     }
 
     /// Records an event worth noticing but not acting on.
+    ///
+    /// - Parameters:
+    ///   - message: The message to record.
+    ///   - category: The area of the app the event comes from.
+    ///   - file: The file, left to expand from `#fileID`.
+    ///   - function: The function, left to expand from `#function`.
+    ///   - line: The line, left to expand from `#line`.
     public func notice(
         _ message: LogMessage,
         in category: LogCategory,
@@ -36,6 +57,13 @@ extension Log {
     }
 
     /// Records an event that may lead to a failure.
+    ///
+    /// - Parameters:
+    ///   - message: The message to record.
+    ///   - category: The area of the app the event comes from.
+    ///   - file: The file, left to expand from `#fileID`.
+    ///   - function: The function, left to expand from `#function`.
+    ///   - line: The line, left to expand from `#line`.
     public func warning(
         _ message: LogMessage,
         in category: LogCategory,
@@ -47,6 +75,13 @@ extension Log {
     }
 
     /// Records a failure.
+    ///
+    /// - Parameters:
+    ///   - message: The message to record.
+    ///   - category: The area of the app the event comes from.
+    ///   - file: The file, left to expand from `#fileID`.
+    ///   - function: The function, left to expand from `#function`.
+    ///   - line: The line, left to expand from `#line`.
     public func error(
         _ message: LogMessage,
         in category: LogCategory,
@@ -58,6 +93,13 @@ extension Log {
     }
 
     /// Records a failure that leaves the app unable to continue as intended.
+    ///
+    /// - Parameters:
+    ///   - message: The message to record.
+    ///   - category: The area of the app the event comes from.
+    ///   - file: The file, left to expand from `#fileID`.
+    ///   - function: The function, left to expand from `#function`.
+    ///   - line: The line, left to expand from `#line`.
     public func critical(
         _ message: LogMessage,
         in category: LogCategory,
