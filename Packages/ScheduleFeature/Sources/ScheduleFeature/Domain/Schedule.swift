@@ -14,19 +14,24 @@ public struct Schedule: Codable, Sendable {
 
     /// Everything one schedule carries.
     ///
-    /// Named after the JSON key, which shadows `Foundation.Data`. Every date
-    /// below is spelled `Foundation.Date` for that reason.
+    /// Named after the JSON key, which shadows `Foundation.Data`.
     public struct Data: Codable, Sendable {
         /// Why a payload could not become a schedule.
         public enum ParsingError: Error, Equatable {
             /// The payload carried no days.
+            ///
+            /// An event whose schedule is unpublished arrives this way.
             case noDays
         }
 
         /// The event this schedule belongs to.
         public let event: Event
 
-        /// Every event the backend knows about, past and future.
+        /// The announced events in this conference, oldest first.
+        ///
+        /// One deployment serves one conference, so a SwiftLeeds build never
+        /// sees a KotlinLeeds event. An event dated before 2015 counts as
+        /// unannounced and is withheld.
         public let events: [Event]
 
         /// The event's days, never empty.
@@ -46,9 +51,7 @@ public struct Schedule: Codable, Sendable {
             self.days = days
         }
 
-        /// Creates a payload from a decoder, applying the same refusal.
-        ///
-        /// - Parameter decoder: The decoder holding the schedule's JSON.
+        /// Creates a payload, refusing one that carries no days.
         public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
 
@@ -71,15 +74,15 @@ public struct Schedule: Codable, Sendable {
 
         /// The day's entries, in the order the backend sent them.
         ///
-        /// The backend does not sort them by time, so a caller showing a
-        /// running order sorts by `startTime` itself.
+        /// They do not arrive in time order, so a caller showing a running
+        /// order sorts by `startTime` itself.
         public let slots: [Slot]
 
         /// An identity built from the name and the date.
         ///
-        /// The API sends no identifier for a day, so two days sharing a name
-        /// and a date are the same day here, and renaming a day makes it a
-        /// different one.
+        /// The API sends no identifier for a day, so a list keyed by this value
+        /// treats two days sharing a name and a date as one. Renaming a day
+        /// changes its identity.
         public var id: String {
             "\(name)-\(date.timeIntervalSince1970.description)"
         }
@@ -104,8 +107,8 @@ public struct Schedule: Codable, Sendable {
     public struct Event: Codable, Identifiable, Sendable {
         /// The event's identity, assigned by the backend.
         ///
-        /// No endpoint lists events, so the only way to learn an identifier is
-        /// to request the current schedule and read this value.
+        /// No endpoint lists events, so this value is the only source of an
+        /// event identifier.
         public let id: UUID
 
         /// The event's name, such as "SwiftLeeds 2026".
@@ -114,7 +117,7 @@ public struct Schedule: Codable, Sendable {
         /// The venue, as one line of text.
         public let location: String
 
-        /// The event's first day.
+        /// The date the organizers set for the event.
         public let date: Foundation.Date
 
         /// Whole days from today until the event, negative once it has passed.
@@ -131,7 +134,7 @@ public struct Schedule: Codable, Sendable {
         ///   - id: The event's identity, assigned by the backend.
         ///   - name: The event's name.
         ///   - location: The venue, as one line of text.
-        ///   - date: The event's first day.
+        ///   - date: The date the organizers set for the event.
         public init(id: UUID, name: String, location: String, date: Foundation.Date) {
             self.id = id
             self.name = name
@@ -140,13 +143,12 @@ public struct Schedule: Codable, Sendable {
         }
     }
 
-    /// One entry in a day's running order: a talk or an activity.
+    /// One entry in a day's running order: a presentation or an activity.
     public struct Slot: Identifiable, Sendable {
         /// The slot's identity, assigned by the backend.
         public let id: UUID
 
-        /// The date of the day this slot belongs to, absent when it belongs
-        /// to no day.
+        /// The date of the day this slot belongs to.
         ///
         /// Every slot in one day carries that day's date, so this value does
         /// not order slots within a day.
@@ -161,13 +163,12 @@ public struct Schedule: Codable, Sendable {
         /// The slot's length in minutes. `0` means nobody set a length.
         public let duration: Int
 
-        /// The activity filling this slot, absent when a talk fills it.
+        /// The activity filling this slot, absent when a presentation fills it.
         public let activity: Activity?
 
-        /// The talk filling this slot, absent when an activity fills it.
+        /// The presentation filling this slot, absent when an activity does.
         public let presentation: Presentation?
 
-        /// The JSON keys a slot decodes from.
         private enum CodingKeys: CodingKey {
             case id, activity, presentation, date, startTime, duration
         }
@@ -180,7 +181,7 @@ public struct Schedule: Codable, Sendable {
         ///   - startTime: The start time, in "HH:mm".
         ///   - duration: The slot's length in minutes.
         ///   - activity: The activity filling this slot.
-        ///   - presentation: The talk filling this slot.
+        ///   - presentation: The presentation filling this slot.
         public init(
             id: UUID,
             date: Foundation.Date?,
@@ -201,12 +202,10 @@ public struct Schedule: Codable, Sendable {
 
 // MARK: - Slot Decodable
 extension Schedule.Slot: Codable {
-    /// Creates a slot, refusing one that holds neither an activity nor a talk.
+    /// Creates a slot, refusing one that holds neither an activity nor a
+    /// presentation.
     ///
-    /// A slot holding both becomes an activity, because `activity` is read
-    /// first.
-    ///
-    /// - Parameter decoder: The decoder holding the slot's JSON.
+    /// A slot holding both becomes an activity.
     public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
 
@@ -229,19 +228,14 @@ extension Schedule.Slot: Codable {
 
     /// Why a slot could not be decoded.
     public enum SlotError: Error {
-        /// The slot held neither an activity nor a talk.
+        /// The slot held neither an activity nor a presentation.
         case invalidSlot
     }
 }
 
 // MARK: - Slot Equatable
 extension Schedule.Slot: Equatable {
-    /// Compares two slots by identity alone.
-    ///
-    /// - Parameters:
-    ///   - lhs: A slot.
-    ///   - rhs: Another slot.
-    /// - Returns: `true` when both slots carry the same identifier.
+    /// Compares two slots by identity alone, never by their contents.
     public static func == (lhs: Schedule.Slot, rhs: Schedule.Slot) -> Bool {
         lhs.id == rhs.id
     }
