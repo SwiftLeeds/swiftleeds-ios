@@ -7,10 +7,10 @@ import Testing
 /// trap or a precondition failure rather than asserting on output. What the destination *renders*
 /// is covered by `LogValueRenderingTests`.
 @Suite struct LogUnifiedTests {
-    private let subsystem: LogSubsystem = "uk.co.swiftleeds.tests"
     private let salt = LogSalt(Data("fixed-for-tests".utf8))
 
-    @Test func whenWritingEveryLevelAndSensitivity_shouldNotTrap() {
+    @Test func whenWritingEveryLevelAndSensitivity_shouldNotTrap() throws {
+        let subsystem = try LogSubsystem("uk.co.swiftleeds.tests")
         let sut = Log.unified(subsystem: subsystem, salt: salt)
 
         for level in LogLevel.allCases {
@@ -27,7 +27,8 @@ import Testing
         }
     }
 
-    @Test func whenSameCategoryIsUsedTwice_shouldNotTrap() {
+    @Test func whenSameCategoryIsUsedTwice_shouldNotTrap() throws {
+        let subsystem = try LogSubsystem("uk.co.swiftleeds.tests")
         let sut = Log.unified(subsystem: subsystem, salt: salt)
 
         sut(.info, "push", "first")
