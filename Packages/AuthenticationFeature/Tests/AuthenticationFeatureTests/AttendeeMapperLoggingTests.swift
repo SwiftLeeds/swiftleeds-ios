@@ -3,6 +3,7 @@ import Dependencies
 import Foundation
 import LogKit
 import LogKitTestSupport
+import NetworkKitTestSupport
 import Testing
 
 /// The public `AttendeeFetchError` is deliberately bare, so these assert the reason survives to the
