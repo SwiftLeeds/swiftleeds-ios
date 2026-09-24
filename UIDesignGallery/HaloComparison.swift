@@ -7,8 +7,22 @@ import UIDesign
 /// the same wash, so the treatments can be judged against each other rather
 /// than one after another.
 struct HaloComparison: View {
+    /// The conference's own colors, paired for a halo.
+    ///
+    /// The second color sits 55 degrees around the hue circle from the brand's
+    /// red, the same separation the organizer's purple and blue use. That
+    /// direction lands on pink; the other lands on the gold a sponsor tier
+    /// already holds.
+    static let brand = ConferenceRole(
+        name: "SwiftLeeds",
+        colors: [.brandPrimary, .init(red: 0.95, green: 0.27, blue: 0.86)]
+    )
+
     /// How thick the ring is, matching the schedule's bar item.
     private static let haloWidth: CGFloat = 1.5
+
+    /// The standing whose colors every treatment draws.
+    let role: ConferenceRole
 
     var body: some View {
         NavigationStack {
@@ -37,6 +51,7 @@ struct HaloComparison: View {
             }
             .background { AmbientBackground() }
             .navigationTitle("Halo")
+            .navigationSubtitle(role.name)
         }
     }
 
@@ -76,7 +91,7 @@ struct HaloComparison: View {
     ) -> some View {
         VStack(spacing: .small) {
             MockRoleRing(
-                role: SampleAttendee.signedIn.role,
+                role: role,
                 width: Self.haloWidth,
                 edge: edge,
                 strength: strength,

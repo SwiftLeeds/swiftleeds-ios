@@ -11,7 +11,8 @@ import UIDesign
 /// session's detail, `-profile 1` pushes the signed-in person's profile,
 /// `-rows card` swaps the schedule's arrangement, `-halo hard` or `-halo soft`
 /// swaps the halo's outer edge for the one it feathers between, and
-/// `-halos 1` shows every halo treatment at once instead of the app.
+/// `-halos role` or `-halos brand` shows every halo treatment at once, in
+/// that standing's colors, instead of the app.
 @main
 struct UIDesignGalleryApp: App {
     /// The destination on screen.
@@ -29,8 +30,9 @@ struct UIDesignGalleryApp: App {
     /// How the halo's outer edge meets the screen behind it.
     private let haloEdge: HaloEdge
 
-    /// Whether the gallery shows the halo treatments instead of the app.
-    private let comparesHalos: Bool
+    /// The standing whose colors the halo treatments draw, or `nil` when the
+    /// gallery shows the app instead of the treatments.
+    private let comparedHalo: ConferenceRole?
 
     /// Creates the app, reading where to open from the launch arguments.
     init() {
@@ -48,13 +50,20 @@ struct UIDesignGalleryApp: App {
         rowStyle = ScheduleScreen.RowStyle(rawValue: rows) ?? .bare
         let halo = defaults.string(forKey: "halo") ?? ""
         haloEdge = HaloEdge(rawValue: halo) ?? .feathered
-        comparesHalos = defaults.bool(forKey: "halos")
+        switch defaults.string(forKey: "halos") {
+        case "brand":
+            comparedHalo = HaloComparison.brand
+        case .some:
+            comparedHalo = SampleAttendee.signedIn.role
+        case .none:
+            comparedHalo = nil
+        }
     }
 
     var body: some Scene {
         WindowGroup {
-            if comparesHalos {
-                HaloComparison()
+            if let comparedHalo {
+                HaloComparison(role: comparedHalo)
             } else {
                 app
             }
