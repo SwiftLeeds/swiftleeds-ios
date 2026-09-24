@@ -1,4 +1,5 @@
 import Foundation
+import NetworkKit
 
 extension HTTPURLResponse {
     /// Returns a response that carries the given URL and status code.
@@ -9,14 +10,14 @@ extension HTTPURLResponse {
     ///   - statusCode: The status code the response carries.
     public static func fixture(
         url: String = "https://example.com",
-        statusCode: Int
+        statusCode: HTTPStatusCode
     ) throws(StubError) -> HTTPURLResponse {
         guard let parsed = URL(string: url) else {
             throw StubError.couldNotParseURL
         }
         guard let response = HTTPURLResponse(
             url: parsed,
-            statusCode: statusCode,
+            statusCode: Int(statusCode),
             httpVersion: nil,
             headerFields: nil
         ) else {

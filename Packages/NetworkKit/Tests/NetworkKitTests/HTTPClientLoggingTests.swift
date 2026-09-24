@@ -126,7 +126,7 @@ import Testing
         #expect(arrived.message != failed.message)
     }
 
-    private func arrival(_ request: URLRequest, statusCode: Int) async throws -> LogEvent? {
+    private func arrival(_ request: URLRequest, statusCode: HTTPStatusCode) async throws -> LogEvent? {
         let recorder = LogRecorder()
 
         _ = try await withDependencies {

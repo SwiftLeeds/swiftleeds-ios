@@ -69,7 +69,7 @@ import Testing
     }
 
     @Test(arguments: [404, 500])
-    func whenServerRefuses_shouldThrowUnknown(statusCode: Int) async throws {
+    func whenServerRefuses_shouldThrowUnknown(statusCode: HTTPStatusCode) async throws {
         let data = SponsorsJSON.list(SponsorsJSON.sponsor())
 
         await withDependencies {
