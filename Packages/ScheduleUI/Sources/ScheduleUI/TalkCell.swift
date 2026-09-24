@@ -9,7 +9,7 @@ package struct TalkCell: View {
     private let details: String
     private let isNext: Bool
     private let speakers: [Speaker]
-    private let gradientColors: [Color]?
+    private let gradientColors: [Color]
 
     @Environment(\.colorScheme) var colorScheme
 
@@ -18,7 +18,7 @@ package struct TalkCell: View {
         details: String,
         isNext: Bool = false,
         speakers: [Speaker] = [],
-        gradientColors: [Color]? = nil
+        gradientColors: [Color] = []
     ) {
         self.time = time
         self.details = details
@@ -86,7 +86,7 @@ package struct TalkCell: View {
             .frame(maxWidth: .infinity)
             .foregroundColor(isNext ? .white : .cellForeground)
             .background {
-                if let gradientColors = gradientColors {
+                if !gradientColors.isEmpty {
                     RoundedRectangle(cornerRadius: Constants.cellRadius)
                         .fill(LinearGradient(colors: gradientColors, startPoint: .topLeading, endPoint: .topTrailing))
                 } else {
