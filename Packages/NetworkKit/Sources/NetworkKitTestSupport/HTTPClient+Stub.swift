@@ -2,8 +2,9 @@ import Foundation
 import NetworkKit
 
 extension HTTPClient {
-    /// Returns a client that answers every request with the same body and
-    /// status code.
+    /// Returns a client that answers each request with the same body and code.
+    ///
+    /// A request carrying no URL throws ``StubError/couldNotBuildResponse``.
     ///
     /// - Parameters:
     ///   - data: The body to return.

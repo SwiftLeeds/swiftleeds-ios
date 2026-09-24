@@ -4,8 +4,8 @@ extension HTTPURLResponse {
     /// Returns a response that carries the given URL and status code.
     ///
     /// - Parameters:
-    ///   - url: The URL the response came from. Any absolute URL serves,
-    ///     because no request is sent.
+    ///   - url: The URL the response came from. Text that is not a URL throws
+    ///     ``StubError/couldNotParseURL``.
     ///   - statusCode: The status code the response carries.
     public static func fixture(
         url: String = "https://example.com",
