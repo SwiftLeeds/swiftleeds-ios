@@ -31,6 +31,7 @@ struct ScheduleScreen: View {
                     }
                     .pickerStyle(.segmented)
                     .listRowSeparator(.hidden)
+                    .listRowBackground(Color.clear)
                 }
 
                 Section {
@@ -38,47 +39,48 @@ struct ScheduleScreen: View {
                         NavigationLink(value: session) {
                             SessionRow(session: session)
                         }
+                        .listRowBackground(Color.clear)
                     }
                 } header: {
                     dayHeader
                 }
             }
             .listStyle(.plain)
+            .scrollContentBackground(.hidden)
+            .background { AmbientBackground() }
             .navigationTitle("SwiftLeeds")
             .navigationSubtitle("Starts in 12 days")
             .navigationDestination(for: SampleSession.self) { session in
                 SessionDetailScreen(session: session)
             }
             .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {} label: {
-                        Label("Notifications", systemImage: "bell")
-                    }
-                    .overlay(alignment: .topTrailing) {
-                        Circle()
-                            .fill(.error)
-                            .frame(width: 8, height: 8)
-                            .accessibilityLabel("Unread")
-                    }
-                }
-
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {} label: {
-                        Label("Ticket", systemImage: "ticket")
-                    }
-                }
-
-                ToolbarItem(placement: .topBarTrailing) {
+                ToolbarItem(placement: .topBarLeading) {
                     Button {} label: {
                         Avatar(
                             url: nil,
-                            size: .small,
+                            size: .medium,
                             fallback: .initials(.init(givenName: "Ada", familyName: "Archer"))
                         )
                     }
                     .accessibilityLabel("Account")
                 }
                 .sharedBackgroundVisibility(.hidden)
+
+                // Chrome glyphs stay neutral. The tint is reserved for the
+                // selected tab and for an action that changes something.
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {} label: {
+                        Label("Notifications", systemImage: "bell")
+                    }
+                    .tint(.textPrimary)
+                }
+
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {} label: {
+                        Label("Ticket", systemImage: "ticket")
+                    }
+                    .tint(.textPrimary)
+                }
             }
         }
         .onAppear {

@@ -33,8 +33,6 @@ struct SessionRow: View {
                 .fixedSize(horizontal: false, vertical: true)
 
             HStack(spacing: .small) {
-                Avatar(url: nil, size: .small, fallback: .initials(session.speakerName))
-
                 Text(session.speaker)
                     .font(.subheadline)
                     .foregroundStyle(.textSecondary)
