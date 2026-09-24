@@ -85,7 +85,7 @@ public struct FancyHeaderView: View {
     }
 
     private func createRectangleImage(for image: Image, aspectRatio: Double = 1.0) -> some View {
-        return Rectangle()
+        Rectangle()
             .foregroundColor(.clear)
             .aspectRatio(aspectRatio, contentMode: .fit)
             .background(
@@ -97,7 +97,7 @@ public struct FancyHeaderView: View {
     }
 
     private func loadingView(aspectRatio: Double = 1.0) -> some View {
-        return Rectangle()
+        Rectangle()
             .foregroundColor(.secondary)
             .aspectRatio(aspectRatio, contentMode: .fit)
             .overlay(

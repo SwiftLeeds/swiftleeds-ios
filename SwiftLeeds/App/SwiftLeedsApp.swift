@@ -50,6 +50,9 @@ struct SwiftLeedsApp: App {
 
 // MARK: - AppDelegate
 final class AppDelegate: NSObject, UIApplicationDelegate {
+    // UIApplicationDelegate declares the launch options dictionary, so it stays optional here.
+    // The disable is on the previous line rather than this one because the line has no room.
+    // swiftlint:disable:next discouraged_optional_collection
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
         URLCache.shared.diskCapacity = 100_000_000
 

@@ -72,7 +72,8 @@ private extension BarcodeSymbologyTests {
         return module > 0 ? border / module : 0
     }
 
-    func grayscalePixels(of image: CGImage) -> [UInt8]? {
+    // nil means the bitmap context could not be made, which an empty array cannot say.
+    func grayscalePixels(of image: CGImage) -> [UInt8]? { // swiftlint:disable:this discouraged_optional_collection
         var pixels = [UInt8](repeating: 0, count: image.width * image.height)
         guard let context = CGContext(
             data: &pixels,
