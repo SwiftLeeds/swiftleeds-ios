@@ -16,7 +16,7 @@ package enum AppIconOption: String, CaseIterable, Equatable, Hashable, Sendable 
     }
 
     package var iconName: String? {
-        return self == .generic ? nil : rawValue
+        self == .generic ? nil : rawValue
     }
 }
 
