@@ -4,7 +4,7 @@ import SwiftUI
 ///
 /// The colors are provisional. The roles are not: they are what the conference
 /// already calls people.
-struct ConferenceRole: Equatable {
+struct ConferenceRole: Equatable, Hashable, Sendable {
     /// What the conference calls this standing.
     let name: String
 
