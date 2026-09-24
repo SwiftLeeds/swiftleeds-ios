@@ -35,7 +35,7 @@ struct ScheduleScreen: View {
     /// It is thinner than the one on a profile, in proportion and in points.
     /// The halo is a reminder here rather than the screen's subject, and the
     /// fade spreads from the width, so one value quietens both.
-    private static let haloWidth: CGFloat = 2
+    private static let haloWidth: CGFloat = 1.5
 
     /// How far the avatar moves back to line up with the title under it.
     ///
