@@ -11,8 +11,8 @@ import UIDesign
 /// session's detail, `-profile 1` pushes the signed-in person's profile,
 /// `-rows card` swaps the schedule's arrangement, `-halo hard` or `-halo soft`
 /// swaps the halo's outer edge for the one it feathers between, and
-/// `-halos role` or `-halos brand` shows every halo treatment at once, in
-/// that standing's colors, instead of the app.
+/// `-halos role`, `-halos pink` or `-halos gold` shows every halo treatment
+/// at once, in those colors, instead of the app.
 @main
 struct UIDesignGalleryApp: App {
     /// The destination on screen.
@@ -51,8 +51,10 @@ struct UIDesignGalleryApp: App {
         let halo = defaults.string(forKey: "halo") ?? ""
         haloEdge = HaloEdge(rawValue: halo) ?? .feathered
         switch defaults.string(forKey: "halos") {
-        case "brand":
-            comparedHalo = HaloComparison.brand
+        case "pink":
+            comparedHalo = HaloComparison.brandPink
+        case "gold":
+            comparedHalo = HaloComparison.brandGold
         case .some:
             comparedHalo = SampleAttendee.signedIn.role
         case .none:

@@ -7,15 +7,22 @@ import UIDesign
 /// the same wash, so the treatments can be judged against each other rather
 /// than one after another.
 struct HaloComparison: View {
-    /// The conference's own colors, paired for a halo.
+    /// The brand's red run toward a pink.
     ///
-    /// The second color sits 55 degrees around the hue circle from the brand's
-    /// red, the same separation the organizer's purple and blue use. That
-    /// direction lands on pink; the other lands on the gold a sponsor tier
-    /// already holds.
-    static let brand = ConferenceRole(
-        name: "SwiftLeeds",
+    /// The pink sits 55 degrees around the hue circle from the red, the same
+    /// separation the organizer's purple and blue use. No role holds a pink.
+    static let brandPink = ConferenceRole(
+        name: "Brand and pink",
         colors: [.brandPrimary, .init(red: 0.95, green: 0.27, blue: 0.86)]
+    )
+
+    /// The brand's red run toward the conference's own gold.
+    ///
+    /// The gold is the departure board on the conference's site, `#F9D557`,
+    /// which sits 44 degrees around the hue circle from the red.
+    static let brandGold = ConferenceRole(
+        name: "Brand and gold",
+        colors: [.brandPrimary, .init(red: 0.976, green: 0.835, blue: 0.341)]
     )
 
     /// How thick the ring is, matching the schedule's bar item.
