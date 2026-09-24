@@ -102,6 +102,25 @@ import UIDesign
         assertSnapshots(of: view)
     }
 
+    // Every fallback, because each one draws something a redaction would otherwise turn into a
+    // rectangle sitting inside the avatar's shape.
+    @Test func redacted() {
+        let name = PersonNameComponents(givenName: "Ada", familyName: "Archer")
+        let view = HStack(spacing: Spacing.large) {
+            Avatar(url: nil, size: AvatarSize.large)
+
+            Avatar(url: nil, size: AvatarSize.large, fallback: .initials(name))
+
+            Avatar(url: nil, size: AvatarSize.large) {
+                Image(icon: .locked)
+                    .foregroundStyle(.textSecondary)
+            }
+        }
+        .redacted(reason: .placeholder)
+
+        assertSnapshots(of: view)
+    }
+
     // A flat fill, so this suite measures the shape and the size and nothing else.
     private func avatar(size: AvatarSize) -> some View {
         Avatar(url: nil, size: size) {

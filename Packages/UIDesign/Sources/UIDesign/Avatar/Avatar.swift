@@ -14,10 +14,16 @@ import SwiftUI
 ///
 /// The style clips the avatar to its shape, so a fallback cannot draw outside it.
 ///
+/// Apply `redacted(reason: .placeholder)` to show an avatar whose person is
+/// still loading. It then draws a plain shape and asks for no photo.
+///
 /// An avatar is not a control. Give a tappable one a target of at least 44 points, which
 /// ``AvatarSize/small`` and ``AvatarSize/medium`` do not reach on their own.
 public struct Avatar<Fallback: View>: View {
     @Environment(\.avatarStyle) private var style
+
+    /// The current redaction reasons applied to the view hierarchy.
+    @Environment(\.redactionReasons) private var redactionReasons
 
     // The base size differs per avatar, so the metric scales 1 and multiplies.
     @ScaledMetric(relativeTo: .body) private var textScale: CGFloat = 1
@@ -69,13 +75,23 @@ public struct Avatar<Fallback: View>: View {
     private static var largestGrowth: CGFloat { 1.75 }
 
     private var content: some View {
-        AsyncImage(url: url) { phase in
-            if case .success(let image) = phase {
-                image
-                    .resizable()
-                    .scaledToFill()
+        Group {
+            if redactionReasons.contains(.placeholder) {
+                // A placeholder shows a generic shape and no content. Left to
+                // redact itself, a symbol or a pair of initials becomes a
+                // rectangle that ignores the avatar's shape. Asking for no
+                // photo is the other half: a placeholder should load nothing.
+                Color.secondarySurface
             } else {
-                fallback
+                AsyncImage(url: url) { phase in
+                    if case .success(let image) = phase {
+                        image
+                            .resizable()
+                            .scaledToFill()
+                    } else {
+                        fallback
+                    }
+                }
             }
         }
         .accessibilityHidden(true)
