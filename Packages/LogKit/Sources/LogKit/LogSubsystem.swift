@@ -30,9 +30,9 @@ public struct LogSubsystem: Hashable, Sendable {
 }
 
 extension String {
-    /// Creates the subsystem's name.
+    /// Creates a string holding the subsystem's name.
     ///
-    /// - Parameter subsystem: The subsystem to name.
+    /// - Parameter subsystem: The subsystem to read the name from.
     public init(_ subsystem: LogSubsystem) {
         self = subsystem.stringValue
     }
