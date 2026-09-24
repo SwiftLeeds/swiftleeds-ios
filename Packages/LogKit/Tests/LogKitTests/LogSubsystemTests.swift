@@ -8,21 +8,32 @@ import Testing
         #expect(String(subsystem) == "uk.co.swiftleeds.app")
     }
 
-    @Test func whenParsingEmptyString_shouldThrowEmpty() {
-        #expect(throws: LogSubsystem.ParsingError.empty) {
+    @Test func whenParsingEmptyString_shouldThrowBlank() {
+        #expect(throws: LogSubsystem.ParsingError.blank) {
             try LogSubsystem("")
         }
     }
 
-    @Test(arguments: ["uk.co swiftleeds", " uk.co.swiftleeds", "uk.co.swiftleeds\n", "   ", "\t"])
-    func whenParsingValueHoldingWhitespace_shouldThrowContainsWhitespace(_ value: String) {
-        #expect(throws: LogSubsystem.ParsingError.containsWhitespace) {
+    @Test(arguments: ["   ", "\t", "\n", " \t\n "])
+    func whenParsingOnlyWhitespace_shouldThrowBlank(_ value: String) {
+        #expect(throws: LogSubsystem.ParsingError.blank) {
             try LogSubsystem(value)
         }
     }
 
+    @Test(arguments: ["uk.co swiftleeds", " uk.co.swiftleeds", "uk.co.swiftleeds\n"])
+    func whenParsingNameHoldingWhitespace_shouldReturnSubsystemUnchanged(
+        _ value: String
+    ) throws {
+        let subsystem = try LogSubsystem(value)
+
+        #expect(String(subsystem) == value)
+    }
+
     @Test(arguments: ["SwiftLeeds", "uk.co.swiftleeds-app", "Sub/System:1"])
-    func whenParsingValueOutsideReverseDNSForm_shouldReturnSubsystem(_ value: String) throws {
+    func whenParsingNameOutsideReverseDNSForm_shouldReturnSubsystem(
+        _ value: String
+    ) throws {
         let subsystem = try LogSubsystem(value)
 
         #expect(String(subsystem) == value)

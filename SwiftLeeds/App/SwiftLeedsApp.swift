@@ -19,9 +19,8 @@ struct SwiftLeedsApp: App {
     init() {
         prepareDependencies {
             // A fresh salt each launch, so hashed values correlate within a session but never
-            // between them. Without a bundle identifier, or with one no subsystem can be made
-            // from, there is no honest subsystem (this ships as two apps), so nothing is written
-            // rather than guessing at one.
+            // between them. Without a subsystem there is no honest place to write (this ships
+            // as two apps), so nothing is written rather than guessing at one.
             $0.log = Bundle.main.bundleIdentifier
                 .flatMap { try? LogSubsystem($0) }
                 .map { Log.unified(subsystem: $0, salt: .random()) }
