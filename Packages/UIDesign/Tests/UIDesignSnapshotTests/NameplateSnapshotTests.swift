@@ -27,6 +27,16 @@ import UIDesign
         assertSnapshots(of: row(view))
     }
 
+    // A larger avatar as well as a larger title, because that is the pairing the style asks for.
+    @Test func prominentStyle() {
+        let view = Nameplate(Self.name, detail: Self.company) {
+            Avatar(url: nil, size: AvatarSize.large, fallback: .initials(Self.nameComponents))
+        }
+        .nameplateStyle(.prominent)
+
+        assertSnapshots(of: row(view))
+    }
+
     // The mark sits on the avatar's lower trailing edge, where the title could crowd it.
     @Test func withStatus() {
         let view = Nameplate(Self.name, detail: Self.company) {

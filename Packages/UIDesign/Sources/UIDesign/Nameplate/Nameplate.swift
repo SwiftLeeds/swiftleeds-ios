@@ -131,3 +131,16 @@ private let previewNameComponents = PersonNameComponents(givenName: "Ada", famil
     }
     .padding(.large)
 }
+
+#Preview("Heading") {
+    Nameplate(previewName, detail: previewCompany) {
+        Avatar(
+            url: nil,
+            size: .large,
+            status: AvatarStatus("Checked in"),
+            fallback: .initials(previewNameComponents)
+        )
+    }
+    .nameplateStyle(.prominent)
+    .padding(.large)
+}
