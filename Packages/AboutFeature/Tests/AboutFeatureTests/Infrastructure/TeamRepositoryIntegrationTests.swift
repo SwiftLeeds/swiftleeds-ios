@@ -2,6 +2,7 @@ import AboutFeature
 import Dependencies
 import Foundation
 import NetworkKit
+import NetworkKitTestSupport
 import Testing
 
 // Drives the composed `liveValue` with only the transport stubbed.
