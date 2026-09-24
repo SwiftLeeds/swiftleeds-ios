@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// Draws a nameplate as a row, with the title in the weight a list row uses.
+/// A nameplate style that draws a row, with the title in a list row's weight.
 public struct DefaultNameplateStyle: NameplateStyle {
     /// Creates the style.
     public init() {}

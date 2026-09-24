@@ -1,9 +1,11 @@
 import SwiftUI
 
-/// Draws a nameplate as a heading, with a larger title and room above and below it.
+/// A nameplate style that draws a heading, with a larger title and more room.
 ///
-/// Use it for the one nameplate that names what a screen is about, such as the account a settings
-/// screen belongs to. Give its icon ``AvatarSize/large``.
+/// Use it for the one nameplate that names what a screen is about, such as
+/// the account a settings screen belongs to. Give its icon
+/// ``AvatarSize/large``, and a ``NameplatePlaceholder`` standing in for it the
+/// same size.
 public struct ProminentNameplateStyle: NameplateStyle {
     /// Creates the style.
     public init() {}

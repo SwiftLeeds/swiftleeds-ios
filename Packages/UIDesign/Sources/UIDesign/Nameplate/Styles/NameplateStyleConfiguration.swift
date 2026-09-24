@@ -4,6 +4,7 @@ import SwiftUI
 public struct NameplateStyleConfiguration {
     /// A type-erased nameplate title view.
     public struct Title: View {
+        /// The erased view this title draws.
         private let _body: () -> AnyView
 
         /// Creates a title from a view.
@@ -16,6 +17,7 @@ public struct NameplateStyleConfiguration {
 
     /// A type-erased nameplate detail view.
     public struct Detail: View {
+        /// The erased view this detail draws.
         private let _body: () -> AnyView
 
         /// Creates a detail from a view.
@@ -28,6 +30,7 @@ public struct NameplateStyleConfiguration {
 
     /// A type-erased nameplate icon view.
     public struct Icon: View {
+        /// The erased view this icon draws.
         private let _body: () -> AnyView
 
         /// Creates an icon from a view.
@@ -41,7 +44,8 @@ public struct NameplateStyleConfiguration {
     /// What the subject is called.
     public let title: Title
 
-    /// One more line about the subject. It draws nothing when the caller gave none.
+    /// One more line about the subject. It draws nothing when the caller gave
+    /// none.
     public let detail: Detail
 
     /// The picture of the subject. It keeps the size the caller gave it.

@@ -2,8 +2,10 @@ import SwiftUI
 
 /// The body the built-in nameplate styles share.
 ///
-/// It puts the icon beside the text, and above it at the accessibility text sizes.
+/// It puts the icon beside the text, and above it at the accessibility text
+/// sizes.
 struct AdaptiveNameplate: View {
+    /// The text size the reader chose in system settings.
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     /// The views to draw.
@@ -25,14 +27,18 @@ struct AdaptiveNameplate: View {
                     .font(.body)
                     .foregroundStyle(.textSecondary)
             }
+            // The nameplate reads as one element, and VoiceOver combines its
+            // children in order. This reads the name before any status mark
+            // the avatar carries.
+            .accessibilitySortPriority(1)
         }
-        // The nameplate fills the width it is given, so a row stays leading aligned. A trailing
-        // Spacer cannot do this: it would push the icon and the text apart when they stack.
+        // Fill the width the caller gives, so a row stays leading aligned. A
+        // trailing Spacer would instead make the stacked form greedy for
+        // height.
         .frame(maxWidth: .infinity, alignment: .leading)
     }
 
-    // A row leaves the text about a third of the width at these sizes, so the text goes below the
-    // icon instead. Apple asks for the same in Typography, under Dynamic Type.
+    /// A row, or a stack once the text is too large to sit beside the icon.
     private var layout: AnyLayout {
         if dynamicTypeSize.isAccessibilitySize {
             AnyLayout(VStackLayout(alignment: .leading, spacing: CGFloat(Spacing.medium)))
