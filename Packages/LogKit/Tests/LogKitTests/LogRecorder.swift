@@ -28,6 +28,6 @@ extension LogEvent {
         level: LogLevel = .info,
         category: LogCategory = "test"
     ) -> LogEvent {
-        LogEvent(level: level, category: category, message: message)
+        LogEvent(level: level, category: category, message: message, source: .here())
     }
 }
