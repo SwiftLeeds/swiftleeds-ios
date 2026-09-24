@@ -29,6 +29,21 @@ import Testing
         #expect(first != second)
     }
 
+    @Test func whenTwoGapsShareIndex_shouldBeEqual() {
+        let first = FieldName.positional(GapIndex(0), label: "email")
+        let second = FieldName.positional(GapIndex(0), label: "emailAddress")
+
+        #expect(first == second)
+    }
+
+    @Test func whenTwoGapsShareIndex_shouldReachTheSameDictionaryEntry() {
+        let first = FieldName.positional(GapIndex(0), label: "email")
+        let second = FieldName.positional(GapIndex(0), label: "emailAddress")
+        let fields = [first: "someone@example.com"]
+
+        #expect(fields[second] == "someone@example.com")
+    }
+
     @Test func whenGapHasLabel_shouldShowLabel() {
         #expect(String(FieldName.positional(GapIndex(3), label: "email")) == "email")
     }
