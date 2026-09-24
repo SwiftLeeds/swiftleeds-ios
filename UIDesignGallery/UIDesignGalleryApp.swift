@@ -24,6 +24,14 @@ struct UIDesignGalleryApp: App {
         UserDefaults.standard.bool(forKey: "detail")
     }
 
+    /// How the schedule separates one session from the next.
+    ///
+    /// An absent or unrecognized name uses the dense list.
+    private var rowStyle: ScheduleScreen.RowStyle {
+        let name = UserDefaults.standard.string(forKey: "rows") ?? ""
+        return ScheduleScreen.RowStyle(rawValue: name) ?? .bare
+    }
+
     var body: some Scene {
         WindowGroup {
             TabView(selection: .constant(tab)) {
@@ -32,7 +40,7 @@ struct UIDesignGalleryApp: App {
                     systemImage: GalleryTab.schedule.symbol,
                     value: GalleryTab.schedule
                 ) {
-                    ScheduleScreen(showsSessionDetail: showsSessionDetail)
+                    ScheduleScreen(showsSessionDetail: showsSessionDetail, rowStyle: rowStyle)
                 }
 
                 Tab(

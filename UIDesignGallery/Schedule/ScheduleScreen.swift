@@ -12,8 +12,34 @@ struct ScheduleScreen: View {
         case mine
     }
 
+    /// What the schedule puts first.
+    private enum Order: Hashable {
+        /// The order the sessions run in.
+        case time
+
+        /// Alphabetical by session title.
+        case title
+    }
+
+    /// How the schedule separates one session from the next.
+    enum RowStyle: String {
+        /// A hairline between rows, which is what Apple's dense list uses.
+        case bare
+
+        /// A run of rows on one raised surface, with a picture on each.
+        case card
+    }
+
+    /// The conferences a person can look back at, most recent first.
+    ///
+    /// These are display text, for the reason `SampleSession` gives.
+    private static let conferences = ["SwiftLeeds 2026", "SwiftLeeds 2025", "SwiftLeeds 2024"]
+
     /// Whether the screen opens with a session's detail already pushed.
     let showsSessionDetail: Bool
+
+    /// How the schedule separates one session from the next.
+    var rowStyle: RowStyle = .bare
 
     /// The sessions pushed on top of the schedule.
     @State private var path: [SampleSession] = []
@@ -21,34 +47,25 @@ struct ScheduleScreen: View {
     /// The filter the segmented control shows.
     @State private var filter: Filter = .all
 
+    /// Which conference's schedule the screen shows.
+    @State private var conference = ScheduleScreen.conferences[0]
+
+    /// What the schedule puts first.
+    @State private var order: Order = .time
+
+    /// The kinds of session the schedule includes.
+    @State private var includedKinds: Set<String> = ["Talk", "Lightning", "Workshop"]
+
     var body: some View {
         NavigationStack(path: $path) {
-            List {
-                Section {
-                    Picker("Sessions", selection: $filter) {
-                        Text("All").tag(Filter.all)
-                        Text("Mine").tag(Filter.mine)
-                    }
-                    .pickerStyle(.segmented)
-                    .listRowSeparator(.hidden)
-                    .listRowBackground(Color.clear)
-                }
-
-                Section {
-                    ForEach(SampleSession.dayOne) { session in
-                        NavigationLink(value: session) {
-                            SessionRow(session: session)
-                        }
-                        .listRowBackground(Color.clear)
-                    }
-                } header: {
-                    dayHeader
+            Group {
+                switch rowStyle {
+                case .bare: bareRows
+                case .card: cardedRows
                 }
             }
-            .listStyle(.plain)
-            .scrollContentBackground(.hidden)
             .background { AmbientBackground() }
-            .navigationTitle("SwiftLeeds")
+            .navigationTitle(conference)
             .navigationSubtitle("Starts in 12 days")
             .navigationDestination(for: SampleSession.self) { session in
                 SessionDetailScreen(session: session)
@@ -63,11 +80,28 @@ struct ScheduleScreen: View {
                         )
                     }
                     .accessibilityLabel("Account")
+                    // A bar item reserves the margin its glass capsule would
+                    // need. Hiding the capsule leaves the margin, which sets the
+                    // avatar in from the title below it.
+                    .padding(.leading, -CGFloat(Spacing.small))
                 }
                 .sharedBackgroundVisibility(.hidden)
 
+                ToolbarTitleMenu {
+                    Picker("Conference", selection: $conference) {
+                        ForEach(Self.conferences, id: \.self) { name in
+                            Text(name).tag(name)
+                        }
+                    }
+                }
+
                 // Chrome glyphs stay neutral. The tint is reserved for the
                 // selected tab and for an action that changes something.
+                ToolbarItem(placement: .topBarTrailing) {
+                    filterMenu
+                        .tint(.textPrimary)
+                }
+
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {} label: {
                         Label("Notifications", systemImage: "bell")
@@ -88,6 +122,112 @@ struct ScheduleScreen: View {
                 path = [.opening]
             }
         }
+    }
+
+    /// The schedule as a dense list, separated by a hairline.
+    private var bareRows: some View {
+        List {
+            Section {
+                scopePicker
+                    .listRowSeparator(.hidden)
+                    .listRowBackground(Color.clear)
+            }
+
+            Section {
+                ForEach(sessions) { session in
+                    NavigationLink(value: session) {
+                        SessionRow(session: session)
+                    }
+                    .listRowBackground(Color.clear)
+                }
+            } header: {
+                dayHeader
+            }
+        }
+        .listStyle(.plain)
+        .scrollContentBackground(.hidden)
+    }
+
+    /// The schedule as one raised surface, with a picture on every row.
+    private var cardedRows: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: .large) {
+                scopePicker
+
+                VStack(alignment: .leading, spacing: .small) {
+                    dayHeader
+
+                    VStack(spacing: 0) {
+                        ForEach(Array(sessions.enumerated()), id: \.element.id) { index, session in
+                            NavigationLink(value: session) {
+                                SessionRow(session: session, showsArtwork: true)
+                                    .padding(.large)
+                            }
+                            .buttonStyle(.plain)
+
+                            if index < sessions.count - 1 {
+                                Divider().padding(.leading, CGFloat(Spacing.large))
+                            }
+                        }
+                    }
+                    .contentGroup()
+                }
+            }
+            .padding(.horizontal, .large)
+            .padding(.bottom, .large)
+        }
+    }
+
+    /// The control that narrows the schedule to this person's own sessions.
+    private var scopePicker: some View {
+        Picker("Sessions", selection: $filter) {
+            Text("All").tag(Filter.all)
+            Text("Mine").tag(Filter.mine)
+        }
+        .pickerStyle(.segmented)
+    }
+
+    /// The sessions this day, once the filter and the order have been applied.
+    private var sessions: [SampleSession] {
+        let kept = SampleSession.dayOne.filter { includedKinds.contains($0.kind ?? "Talk") }
+        switch order {
+        case .time: return kept
+        case .title: return kept.sorted { $0.title < $1.title }
+        }
+    }
+
+    /// The menu that filters the schedule and orders it.
+    private var filterMenu: some View {
+        Menu {
+            Picker("Order", selection: $order) {
+                Text("Time").tag(Order.time)
+                Text("Title").tag(Order.title)
+            }
+
+            Section("Kind") {
+                ForEach(["Talk", "Lightning", "Workshop"], id: \.self) { kind in
+                    Toggle(kind, isOn: binding(for: kind))
+                }
+            }
+        } label: {
+            Label("Filter", systemImage: "line.3.horizontal.decrease")
+        }
+    }
+
+    /// Returns whether the schedule includes a kind of session.
+    ///
+    /// - Parameter kind: The kind of session to include or leave out.
+    private func binding(for kind: String) -> Binding<Bool> {
+        Binding(
+            get: { includedKinds.contains(kind) },
+            set: { isOn in
+                if isOn {
+                    includedKinds.insert(kind)
+                } else {
+                    includedKinds.remove(kind)
+                }
+            }
+        )
     }
 
     /// The day's heading, with the weather beside it.
