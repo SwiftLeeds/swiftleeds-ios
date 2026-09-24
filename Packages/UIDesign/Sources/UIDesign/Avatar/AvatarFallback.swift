@@ -7,9 +7,8 @@ import SwiftUI
 /// Avatar(url: profile.avatarURL)
 /// ```
 ///
-/// A person we can name gets a circle in their own color, carrying their initials. A person we
-/// cannot name gets a plain one, because a shared color would make strangers look like the same
-/// person.
+/// The circle stays neutral. A color here would have to mean something, and the initials already
+/// tell one person from another.
 public struct AvatarFallback: View {
     private enum Mark {
         case symbol
@@ -41,11 +40,11 @@ public struct AvatarFallback: View {
         if letters.isEmpty {
             symbol
         } else {
-            Color.identity(of: name)
+            Color.secondarySurface
                 .overlay {
                     Text(letters)
                         .font(.system(size: CGFloat(diameter) * Self.initialsProportion, weight: .semibold))
-                        .foregroundStyle(.textOnBrand)
+                        .foregroundStyle(.textPrimary)
                         .lineLimit(1)
                         .minimumScaleFactor(0.5)
                 }

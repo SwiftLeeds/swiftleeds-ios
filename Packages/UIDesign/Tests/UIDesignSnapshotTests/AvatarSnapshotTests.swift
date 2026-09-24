@@ -42,9 +42,8 @@ import UIDesign
         assertSnapshots(of: view)
     }
 
-    // Six people, so the image shows a color following the person. It also pins each person's
-    // color across runs, which a seeded hash would not.
-    @Test func initialsFallbackColorsPeople() {
+    // Six people, so the image shows that the initials alone tell them apart.
+    @Test func initialsFallbackTellsPeopleApart() {
         let view = HStack(spacing: Spacing.large) {
             ForEach(Self.people, id: \.self) { name in
                 Avatar(url: nil, size: AvatarSize.large, fallback: .initials(name))
