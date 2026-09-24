@@ -25,6 +25,28 @@ public enum FieldName: Hashable, Sendable, ExpressibleByStringLiteral {
     public init(stringLiteral value: String) {
         self = .authored(value)
     }
+
+    public static func == (lhs: FieldName, rhs: FieldName) -> Bool {
+        switch (lhs, rhs) {
+        case let (.authored(left), .authored(right)):
+            left == right
+        case let (.positional(left, _), .positional(right, _)):
+            left == right
+        case (.authored, .positional):
+            false
+        case (.positional, .authored):
+            false
+        }
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        switch self {
+        case let .authored(value):
+            hasher.combine(value)
+        case let .positional(index, _):
+            hasher.combine(index)
+        }
+    }
 }
 
 extension String {

@@ -34,7 +34,7 @@ import Testing
     @Test func whenInterpolatedWithName_shouldLabelTheField() {
         let sut: LogMessage = "Rejected \(401, name: "statusCode", privacy: .open)"
 
-        #expect(sut.values.map(\.name) == [.positional(GapIndex(0), label: "statusCode")])
+        #expect(sut.values.map { String($0.name) } == ["statusCode"])
     }
 
     @Test func whenTwoInterpolationsShareName_shouldStayDistinct() {
