@@ -19,10 +19,12 @@ struct SwiftLeedsApp: App {
     init() {
         prepareDependencies {
             // A fresh salt each launch, so hashed values correlate within a session but never
-            // between them. Without a bundle identifier there is no honest subsystem (this
-            // ships as two apps), so nothing is written rather than guessing at one.
+            // between them. Without a bundle identifier, or with one no subsystem can be made
+            // from, there is no honest subsystem (this ships as two apps), so nothing is written
+            // rather than guessing at one.
             $0.log = Bundle.main.bundleIdentifier
-                .map { Log.unified(subsystem: LogSubsystem($0), salt: .random()) }
+                .flatMap { try? LogSubsystem($0) }
+                .map { Log.unified(subsystem: $0, salt: .random()) }
                 ?? .none
             $0.secureStorage = .keychain(service: KeychainService("uk.co.swiftleeds.authentication"))
             $0.apiConfiguration = APIConfiguration(baseURL: URL(string: "https://\(ConferenceConfig.apiHost)")!)
