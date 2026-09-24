@@ -1,5 +1,6 @@
 import Dependencies
 import LogKit
+import LogKitTestSupport
 import Testing
 
 @Suite struct LogDependencyTests {

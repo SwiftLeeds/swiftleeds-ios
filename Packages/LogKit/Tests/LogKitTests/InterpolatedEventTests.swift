@@ -1,5 +1,6 @@
 import Foundation
 import LogKit
+import LogKitTestSupport
 import Testing
 
 /// The whole path an interpolated message takes: written at a call site, enriched by middleware,
