@@ -6,8 +6,6 @@ public struct Schedule: Codable, Sendable {
     public let data: Data
 
     /// Creates a schedule from an already validated payload.
-    ///
-    /// - Parameter data: The schedule's contents.
     public init(data: Data) {
         self.data = data
     }
@@ -38,11 +36,6 @@ public struct Schedule: Codable, Sendable {
         public let days: [Day]
 
         /// Creates a payload, refusing one that carries no days.
-        ///
-        /// - Parameters:
-        ///   - event: The event this schedule belongs to.
-        ///   - events: Every event the backend knows about.
-        ///   - days: The event's days. Must not be empty.
         public init(event: Event, events: [Event], days: [Day]) throws(ParsingError) {
             guard days.isEmpty == false else { throw .noDays }
 
@@ -51,7 +44,7 @@ public struct Schedule: Codable, Sendable {
             self.days = days
         }
 
-        /// Creates a payload, refusing one that carries no days.
+        /// Decoding also refuses a payload that carries no days.
         public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
 
@@ -88,11 +81,6 @@ public struct Schedule: Codable, Sendable {
         }
 
         /// Creates a day.
-        ///
-        /// - Parameters:
-        ///   - date: The calendar day this day covers.
-        ///   - name: The organizers' name for the day.
-        ///   - slots: The day's entries.
         public init(date: Foundation.Date, name: String, slots: [Slot]) {
             self.date = date
             self.name = name
@@ -129,12 +117,6 @@ public struct Schedule: Codable, Sendable {
         }
 
         /// Creates an event.
-        ///
-        /// - Parameters:
-        ///   - id: The event's identity, assigned by the backend.
-        ///   - name: The event's name.
-        ///   - location: The venue, as one line of text.
-        ///   - date: The date the organizers set for the event.
         public init(id: UUID, name: String, location: String, date: Foundation.Date) {
             self.id = id
             self.name = name
@@ -174,14 +156,6 @@ public struct Schedule: Codable, Sendable {
         }
 
         /// Creates a slot.
-        ///
-        /// - Parameters:
-        ///   - id: The slot's identity, assigned by the backend.
-        ///   - date: The date of the day this slot belongs to.
-        ///   - startTime: The start time, in "HH:mm".
-        ///   - duration: The slot's length in minutes.
-        ///   - activity: The activity filling this slot.
-        ///   - presentation: The presentation filling this slot.
         public init(
             id: UUID,
             date: Foundation.Date?,
