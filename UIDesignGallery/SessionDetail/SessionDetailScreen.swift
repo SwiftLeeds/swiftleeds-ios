@@ -6,9 +6,17 @@ struct SessionDetailScreen: View {
     /// The session this screen describes.
     let session: SampleSession
 
+    /// The color this session's artwork lends the rest of the screen.
+    private var artworkColor: Color {
+        MockArtwork.tint(for: session.id)
+    }
+
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: .large) {
+                MockArtwork(seed: session.id)
+                    .aspectRatio(16 / 9, contentMode: .fit)
+
                 VStack(alignment: .leading, spacing: .small) {
                     Text(session.title)
                         .font(.largeTitle.weight(.bold))
@@ -43,7 +51,7 @@ struct SessionDetailScreen: View {
             .padding(.horizontal, .large)
             .padding(.bottom, .large)
         }
-        .background { AmbientBackground() }
+        .background { AmbientBackground(color: artworkColor) }
         // The title is long enough that the bar would truncate it to one line,
         // so the content carries it and the bar stays bare.
         .navigationTitle("")
@@ -72,7 +80,15 @@ struct SessionDetailScreen: View {
         }
     }
 
+    /// The shape the prominent action and its wash share.
+    private var actionShape: RoundedRectangle {
+        RoundedRectangle(cornerRadius: CGFloat(CornerRadius.large), style: .continuous)
+    }
+
     /// The one action this screen is for, at the screen's highest contrast.
+    ///
+    /// The fill takes the same wash as the background, so it reads as the
+    /// brightest thing under that light rather than as a hole cut in the screen.
     private var favoriteAction: some View {
         Button {} label: {
             Label("Favourite", systemImage: "star")
@@ -80,10 +96,11 @@ struct SessionDetailScreen: View {
                 .foregroundStyle(.surface)
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, .medium)
-                .background(
-                    .textPrimary,
-                    in: .rect(cornerRadius: CGFloat(CornerRadius.large), style: .continuous)
-                )
+                .background {
+                    actionShape
+                        .fill(.textPrimary)
+                        .overlay { actionShape.fill(AmbientBackground.tint(artworkColor)) }
+                }
         }
         .buttonStyle(.plain)
     }
@@ -102,7 +119,9 @@ struct SessionDetailScreen: View {
                 .font(.headline)
                 .foregroundStyle(.textPrimary)
 
-            content().contentGroup()
+            content()
+                .padding(.large)
+                .contentGroup()
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }
