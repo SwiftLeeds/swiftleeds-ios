@@ -8,12 +8,7 @@ import UIDesign
 struct DimensionSpecimenSnapshotTests {
     @Test
     func dimensions() {
-        assertSnapshots(of: DimensionSpecimen())
-    }
-
-    @Test
-    func dimensionsCompact() {
-        assertCompactSnapshots(of: DimensionSpecimen())
+        assertSpecimenSnapshots(of: DimensionSpecimen())
     }
 }
 #endif

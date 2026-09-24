@@ -8,12 +8,7 @@ import UIDesign
 struct IconSpecimenSnapshotTests {
     @Test
     func icons() {
-        assertSnapshots(of: IconSpecimen())
-    }
-
-    @Test
-    func iconsCompact() {
-        assertCompactSnapshots(of: IconSpecimen())
+        assertSpecimenSnapshots(of: IconSpecimen())
     }
 }
 #endif
