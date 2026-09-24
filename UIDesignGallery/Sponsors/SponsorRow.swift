@@ -7,7 +7,15 @@ struct SponsorRow: View {
     let sponsor: SampleSponsor
 
     /// How wide and tall the logo's square is.
-    private static let logoSide: CGFloat = 56
+    static let logoSide: CGFloat = 56
+
+    /// How far a separator between two rows sits from the card's leading edge.
+    ///
+    /// It lines up with the name rather than with the card, so the logos read
+    /// as one column.
+    static var separatorInset: CGFloat {
+        CGFloat(Spacing.large) + logoSide + CGFloat(Spacing.medium)
+    }
 
     var body: some View {
         HStack(spacing: .medium) {
@@ -31,7 +39,8 @@ struct SponsorRow: View {
                 .font(.footnote.weight(.semibold))
                 .foregroundStyle(.textTertiary)
         }
-        .padding(.vertical, .small)
+        .padding(.horizontal, .large)
+        .padding(.vertical, .medium)
     }
 
     /// The square that stands in for the company's mark.

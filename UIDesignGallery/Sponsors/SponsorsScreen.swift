@@ -41,7 +41,7 @@ struct SponsorsScreen: View {
                     .buttonStyle(.plain)
 
                     if index < sponsors.count - 1 {
-                        Divider()
+                        Divider().padding(.leading, SponsorRow.separatorInset)
                     }
                 }
             }
