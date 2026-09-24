@@ -31,6 +31,7 @@ let package = Package(
                 "SponsorsFeature",
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "LogKit", package: "LogKit"),
+                .product(name: "LogKitTestSupport", package: "LogKit"),
                 .product(name: "NetworkKit", package: "NetworkKit"),
             ]
         ),
