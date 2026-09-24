@@ -128,9 +128,18 @@ struct ScheduleScreen: View {
     private var bareRows: some View {
         List {
             Section {
-                scopePicker
-                    .listRowSeparator(.hidden)
-                    .listRowBackground(Color.clear)
+                VStack(spacing: .small) {
+                    scopePicker
+
+                    if isFiltered {
+                        HStack {
+                            filterChip
+                            Spacer(minLength: 0)
+                        }
+                    }
+                }
+                .listRowSeparator(.hidden)
+                .listRowBackground(Color.clear)
             }
 
             Section {
@@ -176,6 +185,37 @@ struct ScheduleScreen: View {
             .padding(.horizontal, .large)
             .padding(.bottom, .large)
         }
+    }
+
+    /// Every kind of session, which is what no filter means.
+    private static let everyKind: Set<String> = ["Talk", "Lightning", "Workshop"]
+
+    /// Whether the schedule is showing less than everything.
+    private var isFiltered: Bool {
+        includedKinds != Self.everyKind || order != .time
+    }
+
+    /// The mark that says a filter is on, and clears it.
+    ///
+    /// A filtered list that looks like an unfiltered one is how a person
+    /// concludes the data is missing.
+    private var filterChip: some View {
+        Button {
+            includedKinds = Self.everyKind
+            order = .time
+        } label: {
+            HStack(spacing: .xSmall) {
+                Text(order == .time ? "Filtered" : "Filtered and sorted")
+                Image(systemName: "xmark")
+            }
+            .font(.footnote.weight(.medium))
+            .foregroundStyle(.textSecondary)
+            .padding(.horizontal, .medium)
+            .padding(.vertical, .small)
+            .background(.textPrimary.opacity(0.10), in: .capsule)
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel("Clear the filter")
     }
 
     /// The control that narrows the schedule to this person's own sessions.
