@@ -1,7 +1,7 @@
 import LogKit
 
 extension LogEvent {
-    /// Returns an event for a test, defaulting every part the caller leaves out.
+    /// Returns an event for a test, defaulting the parts the caller omits.
     ///
     /// - Parameters:
     ///   - message: The message the event carries.
