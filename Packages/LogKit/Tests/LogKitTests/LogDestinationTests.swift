@@ -11,7 +11,7 @@ import Testing
     private let salt = LogSalt(Data("fixed-for-tests".utf8))
 
     private func event(_ fields: LogField...) -> LogEvent {
-        LogEvent(level: .error, category: "push", message: "m", fields: LogFields(fields))
+        LogEvent(level: .error, category: "push", message: "m", fields: LogFields(fields), source: .here())
     }
 
     // MARK: - Secrets
@@ -150,7 +150,7 @@ import Testing
         let recorder = LogRecorder()
         let sut = Log.destination(salt: salt, write: recorder.log.write)
 
-        sut.write(LogEvent(level: .warning, category: "push", message: "unchanged"))
+        sut.write(LogEvent(level: .warning, category: "push", message: "unchanged", source: .here()))
 
         #expect(recorder.events.first?.level == .warning)
         #expect(recorder.events.first?.category == "push")

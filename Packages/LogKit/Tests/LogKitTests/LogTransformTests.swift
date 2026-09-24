@@ -5,7 +5,12 @@ import Testing
     @Test func whenPullingBack_shouldRewriteEventBeforeWriting() {
         let recorder = LogRecorder()
         let sut = recorder.log.pullback { event in
-            LogEvent(level: .critical, category: event.category, message: event.message)
+            LogEvent(
+                level: .critical,
+                category: event.category,
+                message: event.message,
+                source: event.source
+            )
         }
 
         sut.write(.stub("raised", level: .debug))
@@ -68,7 +73,8 @@ import Testing
                 level: .info,
                 category: "auth",
                 message: "signed in",
-                fields: [.open("scheme", "ticket"), .secret("token", "abc"), .hashed("email", "a@b.c")]
+                fields: [.open("scheme", "ticket"), .secret("token", "abc"), .hashed("email", "a@b.c")],
+                source: .here()
             )
         )
 
@@ -80,7 +86,13 @@ import Testing
         let sut = recorder.log.enriching { [.open("build", "42")] }
 
         sut.write(
-            LogEvent(level: .info, category: "app", message: "launched", fields: [.open("cold", true)])
+            LogEvent(
+                level: .info,
+                category: "app",
+                message: "launched",
+                fields: [.open("cold", true)],
+                source: .here()
+            )
         )
 
         #expect(recorder.events.first?.fields.map(\.name) == ["cold", "build"])

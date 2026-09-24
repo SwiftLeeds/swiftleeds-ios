@@ -5,6 +5,9 @@ import Foundation
 /// Required rather than defaulted, because the lifetime is a decision: a salt generated per run
 /// correlates within one launch, a stored salt correlates across launches on one device.
 public struct LogSalt: Hashable, Sendable {
+    /// The number of random bytes in a generated salt.
+    private static let byteCount = 16
+
     private let storage: Data
 
     public init(_ value: Data) {
@@ -12,10 +15,7 @@ public struct LogSalt: Hashable, Sendable {
     }
 
     /// Creates a salt from random bytes.
-    ///
-    /// - Parameter byteCount: Must be positive. Zero leaves nothing to mix in, so tokens become
-    ///   guessable, and a negative count traps.
-    public static func random(byteCount: Int = 16) -> LogSalt {
+    public static func random() -> LogSalt {
         var generator = SystemRandomNumberGenerator()
         let bytes = (0..<byteCount).map { _ in UInt8.random(in: .min ... .max, using: &generator) }
         return LogSalt(Data(bytes))
