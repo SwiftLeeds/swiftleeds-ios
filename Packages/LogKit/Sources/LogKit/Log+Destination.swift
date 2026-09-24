@@ -1,15 +1,20 @@
 extension Log {
-    /// Builds a terminal destination, one that writes events out of the process.
+    /// Builds a terminal destination, one that writes events out of the
+    /// process.
     ///
-    /// Sensitivity is applied here rather than by the destination, so a destination cannot leak by
-    /// forgetting to handle it: `hashed` values arrive as correlation tokens, and `secret` fields
-    /// do not arrive at all unless `secrets` says otherwise.
+    /// Sensitivity is applied here rather than by the destination, so a
+    /// destination cannot leak by forgetting to handle it: `hashed` values
+    /// arrive as correlation tokens, and `secret` fields do not arrive at all
+    /// unless `secrets` says otherwise.
     ///
-    /// Use ``init(write:)`` instead for middleware, which needs events untouched.
+    /// Use ``Log/init(write:)`` instead for middleware, which needs events
+    /// untouched.
     ///
     /// - Parameters:
-    ///   - salt: Mixed into hashed values so their tokens cannot be reversed by guessing.
-    ///   - secrets: Whether the destination is trusted with secret fields. Defaults to removing them.
+    ///   - salt: Mixed into hashed values so their tokens cannot be reversed
+    ///     by guessing.
+    ///   - secrets: Whether the destination is trusted with secret fields.
+    ///     Defaults to removing them.
     ///   - write: Receives each already-classified event.
     public static func destination(
         salt: LogSalt,
@@ -23,7 +28,11 @@ extension Log {
 }
 
 extension LogEvent {
-    /// The event with sensitivity applied to its fields.
+    /// Returns the event with sensitivity applied to its fields.
+    ///
+    /// - Parameters:
+    ///   - salt: Mixed into hashed values.
+    ///   - secrets: Whether secret fields survive.
     func classified(salt: LogSalt, secrets: SecretPolicy) -> LogEvent {
         LogEvent(
             level: level,
@@ -36,10 +45,15 @@ extension LogEvent {
 }
 
 extension LogFields {
-    /// Replaces each hashed value with its correlation token, and removes secrets unless they are
-    /// passed through.
+    /// Replaces each hashed value with its correlation token, and removes
+    /// secrets unless they are passed through.
     ///
-    /// A field keeps its sensitivity, so a destination can still group by it. Only the value changes.
+    /// A field keeps its sensitivity, so a destination can still group by it.
+    /// Only the value changes.
+    ///
+    /// - Parameters:
+    ///   - salt: Mixed into hashed values.
+    ///   - secrets: Whether secret fields survive.
     func classified(salt: LogSalt, secrets: SecretPolicy) -> LogFields {
         LogFields(
             compactMap { field in

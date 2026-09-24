@@ -2,14 +2,19 @@ import Foundation
 
 /// Mixed into hashed values so their tokens cannot be reversed by guessing.
 ///
-/// Required rather than defaulted, because the lifetime is a decision: a salt generated per run
-/// correlates within one launch, a stored salt correlates across launches on one device.
+/// Required rather than defaulted, because the lifetime is a decision: a salt
+/// generated per run correlates within one launch, a stored salt correlates
+/// across launches on one device.
 public struct LogSalt: Hashable, Sendable {
     /// The number of random bytes in a generated salt.
     private static let byteCount = 16
 
+    /// The bytes.
     private let storage: Data
 
+    /// Creates a salt from the given bytes.
+    ///
+    /// - Parameter value: The bytes.
     public init(_ value: Data) {
         self.storage = value
     }
@@ -21,10 +26,14 @@ public struct LogSalt: Hashable, Sendable {
         return LogSalt(Data(bytes))
     }
 
+    /// The bytes.
     fileprivate var dataValue: Data { storage }
 }
 
 extension Data {
+    /// Creates data holding the salt's bytes.
+    ///
+    /// - Parameter salt: The salt to read the bytes from.
     public init(_ salt: LogSalt) {
         self = salt.dataValue
     }

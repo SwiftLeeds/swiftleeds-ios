@@ -6,6 +6,7 @@
 /// ``LogField/secret(_:_:)``. A type that does carry its own sensitivity
 /// conforms to ``LogValueConvertible`` instead.
 public protocol LogValueRepresentable {
+    /// This value in the typed form a destination writes.
     var logValue: LogValue { get }
 }
 

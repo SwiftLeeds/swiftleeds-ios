@@ -5,11 +5,16 @@
 /// has no inherent sensitivity, so those must be classified at the call site.
 /// They conform to ``LogValueRepresentable`` alone.
 public protocol LogValueConvertible: LogValueRepresentable {
+    /// How a destination must treat this value: open, hashed or secret.
     var sensitivity: Sensitivity { get }
 }
 
 extension LogField {
-    /// Builds a field from a value that classifies itself.
+    /// Creates a field from a value that classifies itself.
+    ///
+    /// - Parameters:
+    ///   - name: The name the field is logged under.
+    ///   - value: The value to log, which supplies its own sensitivity.
     public init(_ name: FieldName, _ value: some LogValueConvertible) {
         switch value.sensitivity {
         case .open:
