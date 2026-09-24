@@ -30,6 +30,13 @@ struct ScheduleScreen: View {
         case card
     }
 
+    /// How far the avatar moves back to line up with the title under it.
+    ///
+    /// A bar item reserves the margin its glass capsule would need. Hiding the
+    /// capsule leaves the margin behind, which sets the avatar in from the
+    /// title.
+    private static let avatarLead: CGFloat = -14
+
     /// The conferences a person can look back at, most recent first.
     ///
     /// These are display text, for the reason `SampleSession` gives.
@@ -91,16 +98,13 @@ struct ScheduleScreen: View {
                         ) {
                             Avatar(
                                 url: nil,
-                                size: .small,
+                                size: .medium,
                                 fallback: .initials(SampleAttendee.signedIn.nameComponents)
                             )
                         }
                     }
                     .accessibilityLabel("Account, \(SampleAttendee.signedIn.role.name)")
-                    // A bar item reserves the margin its glass capsule would
-                    // need. Hiding the capsule leaves the margin, which sets the
-                    // avatar in from the title below it.
-                    .padding(.leading, -CGFloat(Spacing.small))
+                    .padding(.leading, Self.avatarLead)
                 }
                 .sharedBackgroundVisibility(.hidden)
 
