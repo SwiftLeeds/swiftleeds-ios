@@ -51,7 +51,35 @@ func assertCompactSnapshots(
 ) {
     assertSnapshots(
         of: view,
-        as: variants(width: compactWidth, textSizes: [everyTextSize[0], everyTextSize[2]]),
+        as: variants(width: compactWidth, textSizes: [defaultTextSize, everyTextSize[2]]),
+        fileID: fileID,
+        file: filePath,
+        testName: testName,
+        line: line,
+        column: column
+    )
+}
+
+/// Compares a specimen with its reference images at the default text size.
+///
+/// Two images: light and dark.
+///
+/// A specimen lists the values the design system ships. It is not a component,
+/// so it answers what a value looks like, never how a layout holds. The text
+/// size cannot change a color, an icon or a length, so a variant per size
+/// records the same sheet three times.
+@MainActor
+func assertSpecimenSnapshots(
+    of view: some View,
+    fileID: StaticString = #fileID,
+    file filePath: StaticString = #filePath,
+    testName: String = #function,
+    line: UInt = #line,
+    column: UInt = #column
+) {
+    assertSnapshots(
+        of: view,
+        as: variants(width: nil, textSizes: [defaultTextSize]),
         fileID: fileID,
         file: filePath,
         testName: testName,
@@ -81,10 +109,13 @@ private let colorSchemes: [(name: String, style: UIUserInterfaceStyle)] = [
 ]
 
 private let everyTextSize: [(name: String, size: DynamicTypeSize)] = [
-    ("default", .large),
+    defaultTextSize,
     ("large", .xxxLarge),
     ("accessibility", .accessibility5),
 ]
+
+// The size most people read at, and the only one a specimen needs.
+private let defaultTextSize: (name: String, size: DynamicTypeSize) = ("default", .large)
 
 // Both of these clip the image if dropped.
 // Text size goes on the view: as a trait it renders large but measures small.
