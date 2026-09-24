@@ -4,12 +4,17 @@ import os
 extension Log {
     /// Writes to Apple's unified logging system.
     ///
-    /// Non-secret fields render in one pass and keep their written order; secrets go in a
-    /// separate interpolation the system redacts, which is why this is one of the few
-    /// destinations that may hold them.
+    /// Non-secret fields render in one pass and keep their written order;
+    /// secrets go in a separate interpolation the system redacts, which is why
+    /// this is one of the few destinations that may hold them.
     ///
-    /// `OSLogMessage` must be a literal at the call site, so the number of interpolations is
-    /// fixed and fields cannot be interpolated individually.
+    /// `OSLogMessage` must be a literal at the call site, so the number of
+    /// interpolations is fixed and fields cannot be interpolated individually.
+    ///
+    /// - Parameters:
+    ///   - subsystem: Names the app the lines came from, in Console.
+    ///   - salt: Mixed into hashed values so their tokens cannot be reversed
+    ///     by guessing.
     public static func unified(subsystem: LogSubsystem, salt: LogSalt) -> Log {
         let loggers = LoggerCache(subsystem: String(subsystem))
 
@@ -35,14 +40,22 @@ extension Log {
     }
 }
 
+/// Holds one `Logger` per category, so each one is built only once.
 private final class LoggerCache: @unchecked Sendable {
+    /// The subsystem every cached logger is built with.
     private let subsystem: String
+
+    /// The loggers built so far, guarded so any thread may log.
     private let lock = OSAllocatedUnfairLock(initialState: [LogCategory: Logger]())
 
+    /// Creates an empty cache.
     init(subsystem: String) {
         self.subsystem = subsystem
     }
 
+    /// Returns the logger for a category, building it on first use.
+    ///
+    /// - Parameter category: The area of the app the event came from.
     func logger(for category: LogCategory) -> Logger {
         lock.withLock { cache in
             if let existing = cache[category] { return existing }
