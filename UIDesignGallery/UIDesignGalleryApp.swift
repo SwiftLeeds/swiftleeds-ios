@@ -6,35 +6,36 @@ import UIDesign
 /// Every screen is built from the containers iOS draws itself, so the tab bar,
 /// the navigation bar and the toolbar are real rather than approximations.
 ///
-/// A session cannot tap the simulator, so the screen to open arrives as a
-/// launch argument. `-tab sponsors` chooses a destination, and `-detail 1`
-/// pushes a session's detail onto the schedule.
+/// A launch argument picks where the app opens, so a screenshot needs no
+/// tapping. `-tab sponsors` chooses a destination, `-detail 1` pushes a
+/// session's detail, and `-rows card` swaps the schedule's arrangement.
 @main
 struct UIDesignGalleryApp: App {
-    /// The destination named by the `-tab` launch argument.
+    /// The destination on screen.
     ///
-    /// An absent or unrecognized name opens the schedule.
-    private var tab: GalleryTab {
-        let name = UserDefaults.standard.string(forKey: "tab") ?? ""
-        return GalleryTab(rawValue: name) ?? .schedule
-    }
+    /// The launch argument chooses where the app opens. It is state rather
+    /// than a constant so the tab bar still works once it is open.
+    @State private var tab: GalleryTab
 
     /// Whether the schedule opens with a session's detail already pushed.
-    private var showsSessionDetail: Bool {
-        UserDefaults.standard.bool(forKey: "detail")
-    }
+    private let showsSessionDetail: Bool
 
     /// How the schedule separates one session from the next.
-    ///
-    /// An absent or unrecognized name uses the dense list.
-    private var rowStyle: ScheduleScreen.RowStyle {
-        let name = UserDefaults.standard.string(forKey: "rows") ?? ""
-        return ScheduleScreen.RowStyle(rawValue: name) ?? .bare
+    private let rowStyle: ScheduleScreen.RowStyle
+
+    /// Creates the app, reading where to open from the launch arguments.
+    init() {
+        let defaults = UserDefaults.standard
+        let name = defaults.string(forKey: "tab") ?? ""
+        _tab = State(initialValue: GalleryTab(rawValue: name) ?? .schedule)
+        showsSessionDetail = defaults.bool(forKey: "detail")
+        let rows = defaults.string(forKey: "rows") ?? ""
+        rowStyle = ScheduleScreen.RowStyle(rawValue: rows) ?? .bare
     }
 
     var body: some Scene {
         WindowGroup {
-            TabView(selection: .constant(tab)) {
+            TabView(selection: $tab) {
                 Tab(
                     GalleryTab.schedule.title,
                     systemImage: GalleryTab.schedule.symbol,

@@ -67,19 +67,27 @@ struct ScheduleScreen: View {
             .background { AmbientBackground() }
             .navigationTitle(conference)
             .navigationSubtitle("Starts in 12 days")
+            // A large title draws no chevron, so the year menu was reachable
+            // only after a scroll collapsed the title. Inline shows it at rest.
+            .navigationBarTitleDisplayMode(.inline)
             .navigationDestination(for: SampleSession.self) { session in
                 SessionDetailScreen(session: session)
             }
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button {} label: {
-                        Avatar(
-                            url: nil,
-                            size: .medium,
-                            fallback: .initials(.init(givenName: "Ada", familyName: "Archer"))
-                        )
+                        // The halo says this person holds a standing at the
+                        // conference. Their own profile spells it out, so the
+                        // ring is a reminder rather than the only statement.
+                        MockRoleRing(role: .organizer, ring: Circle()) {
+                            Avatar(
+                                url: nil,
+                                size: .small,
+                                fallback: .initials(.init(givenName: "Ada", familyName: "Archer"))
+                            )
+                        }
                     }
-                    .accessibilityLabel("Account")
+                    .accessibilityLabel("Account, Organizer")
                     // A bar item reserves the margin its glass capsule would
                     // need. Hiding the capsule leaves the margin, which sets the
                     // avatar in from the title below it.
