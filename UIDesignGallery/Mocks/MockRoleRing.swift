@@ -60,11 +60,19 @@ struct MockRoleRing<Ring: InsettableShape, Content: View>: View {
         }
     }
 
+    /// How strongly the halo draws against the surface behind it.
+    ///
+    /// Short of full strength, so the colors sit into the screen rather than
+    /// on top of it.
+    private static var strength: Double { 0.7 }
+
     /// The ring itself, in the colors the role runs between.
     private var halo: some View {
-        ring.strokeBorder(
-            AngularGradient(colors: role.colors + [role.colors[0]], center: .center),
-            lineWidth: width
-        )
+        ring
+            .strokeBorder(
+                AngularGradient(colors: role.colors + [role.colors[0]], center: .center),
+                lineWidth: width
+            )
+            .opacity(Self.strength)
     }
 }
