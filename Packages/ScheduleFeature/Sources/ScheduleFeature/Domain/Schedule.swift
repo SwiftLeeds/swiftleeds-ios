@@ -1,6 +1,6 @@
 import Foundation
 
-/// A conference's published schedule.
+/// A published schedule for one conference event.
 public struct Schedule: Codable, Sendable {
     /// The schedule's contents.
     public let data: Data
@@ -23,21 +23,21 @@ public struct Schedule: Codable, Sendable {
             case noDays
         }
 
-        /// The conference this schedule belongs to.
+        /// The event this schedule belongs to.
         public let event: Event
 
-        /// Every conference the backend knows about, including this one.
+        /// Every event the backend knows about, past and future.
         public let events: [Event]
 
-        /// The conference's days, never empty.
+        /// The event's days, never empty.
         public let days: [Day]
 
         /// Creates a payload, refusing one that carries no days.
         ///
         /// - Parameters:
-        ///   - event: The conference this schedule belongs to.
-        ///   - events: Every conference the backend knows about.
-        ///   - days: The conference's days. Must not be empty.
+        ///   - event: The event this schedule belongs to.
+        ///   - events: Every event the backend knows about.
+        ///   - days: The event's days. Must not be empty.
         public init(event: Event, events: [Event], days: [Day]) throws(ParsingError) {
             guard days.isEmpty == false else { throw .noDays }
 
@@ -60,7 +60,7 @@ public struct Schedule: Codable, Sendable {
         }
     }
 
-    /// One day of a conference, with its running order.
+    /// One day of an event, with its running order.
     public struct Day: Codable, Identifiable, Sendable {
         /// The calendar day this day covers.
         public let date: Foundation.Date
@@ -97,25 +97,27 @@ public struct Schedule: Codable, Sendable {
         }
     }
 
-    /// A conference, as the schedule describes it.
+    /// One event in the conference series, such as SwiftLeeds 2026.
+    ///
+    /// The conference recurs, so a schedule always belongs to one event rather
+    /// than to the conference itself.
     public struct Event: Codable, Identifiable, Sendable {
-        /// The conference's identity, assigned by the backend.
+        /// The event's identity, assigned by the backend.
         ///
-        /// No endpoint lists conferences, so the only way to learn an
-        /// identifier is to request the current schedule and read this value.
+        /// No endpoint lists events, so the only way to learn an identifier is
+        /// to request the current schedule and read this value.
         public let id: UUID
 
-        /// The conference's name.
+        /// The event's name, such as "SwiftLeeds 2026".
         public let name: String
 
         /// The venue, as one line of text.
         public let location: String
 
-        /// The conference's first day.
+        /// The event's first day.
         public let date: Foundation.Date
 
-        /// Whole days from today until the conference, negative once it has
-        /// passed.
+        /// Whole days from today until the event, negative once it has passed.
         ///
         /// Counted midnight to midnight in the device's current calendar and
         /// time zone, so the value moves when the device does.
@@ -123,13 +125,13 @@ public struct Schedule: Codable, Sendable {
             Calendar.current.numberOfDays(to: date)
         }
 
-        /// Creates a conference.
+        /// Creates an event.
         ///
         /// - Parameters:
-        ///   - id: The conference's identity, assigned by the backend.
-        ///   - name: The conference's name.
+        ///   - id: The event's identity, assigned by the backend.
+        ///   - name: The event's name.
         ///   - location: The venue, as one line of text.
-        ///   - date: The conference's first day.
+        ///   - date: The event's first day.
         public init(id: UUID, name: String, location: String, date: Foundation.Date) {
             self.id = id
             self.name = name
