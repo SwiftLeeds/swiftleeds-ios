@@ -31,7 +31,7 @@ import UIDesign
 
     // Every size, because the letters are smallest where a caller is most likely to put them.
     @Test func initialsFallback() {
-        let name = PersonNameComponents(givenName: "Member", familyName: "One")
+        let name = PersonNameComponents(givenName: "Ada", familyName: "Archer")
         let view = HStack(alignment: .bottom, spacing: Spacing.large) {
             Avatar(url: nil, size: AvatarSize.small, fallback: .initials(name))
             Avatar(url: nil, size: AvatarSize.medium, fallback: .initials(name))
@@ -41,6 +41,27 @@ import UIDesign
 
         assertSnapshots(of: view)
     }
+
+    // Six people, so the image shows a color following the person. It also pins each person's
+    // color across runs, which a seeded hash would not.
+    @Test func initialsFallbackColorsPeople() {
+        let view = HStack(spacing: Spacing.large) {
+            ForEach(Self.people, id: \.self) { name in
+                Avatar(url: nil, size: AvatarSize.large, fallback: .initials(name))
+            }
+        }
+
+        assertSnapshots(of: view)
+    }
+
+    private static let people = [
+        PersonNameComponents(givenName: "Ada", familyName: "Archer"),
+        PersonNameComponents(givenName: "Blake", familyName: "Brooks"),
+        PersonNameComponents(givenName: "Casey", familyName: "Cole"),
+        PersonNameComponents(givenName: "Devon", familyName: "Drake"),
+        PersonNameComponents(givenName: "Ellis", familyName: "East"),
+        PersonNameComponents(givenName: "Frankie", familyName: "Fox"),
+    ]
 
     @Test func initialsFallbackWithNothingToAbbreviate() {
         let view = Avatar(url: nil, size: AvatarSize.xLarge, fallback: .initials(.init()))

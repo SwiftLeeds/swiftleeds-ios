@@ -3,11 +3,13 @@ import SwiftUI
 /// What an ``Avatar`` draws when it has no photo.
 ///
 /// ```swift
-/// Avatar(url: profile.avatarURL)
 /// Avatar(url: profile.avatarURL, fallback: .initials(profile.name))
+/// Avatar(url: profile.avatarURL)
 /// ```
 ///
-/// It is neutral, because a color on an avatar means the person's status.
+/// A person we can name gets a circle in their own color, carrying their initials. A person we
+/// cannot name gets a plain one, because a shared color would make strangers look like the same
+/// person.
 public struct AvatarFallback: View {
     private enum Mark {
         case symbol
@@ -23,42 +25,41 @@ public struct AvatarFallback: View {
     }
 
     public var body: some View {
-        LinearGradient(
-            colors: [.secondarySurface, .tertiarySurface],
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        )
-        .overlay { drawnMark }
+        switch mark {
+        case .symbol:
+            symbol
+        case .initials(let name):
+            initials(of: name)
+        }
     }
 
     // Sized from the avatar, not from the text: a mark that follows the text size overflows a
     // small avatar at the accessibility sizes. The avatar itself already grows with the text.
     @ViewBuilder
-    private var drawnMark: some View {
-        switch mark {
-        case .symbol:
+    private func initials(of name: PersonNameComponents) -> some View {
+        let letters = name.formatted(.name(style: .abbreviated))
+        if letters.isEmpty {
             symbol
-        case .initials(let name):
-            let initials = name.formatted(.name(style: .abbreviated))
-            if initials.isEmpty {
-                symbol
-            } else {
-                // Primary, not secondary: at the smaller sizes these letters fall under the text
-                // size that a 3:1 contrast ratio is enough for.
-                Text(initials)
-                    .font(.system(size: CGFloat(diameter) * Self.initialsProportion, weight: .semibold))
-                    .foregroundStyle(.textPrimary)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.5)
-            }
+        } else {
+            Color.identity(of: name)
+                .overlay {
+                    Text(letters)
+                        .font(.system(size: CGFloat(diameter) * Self.initialsProportion, weight: .semibold))
+                        .foregroundStyle(.textOnBrand)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.5)
+                }
         }
     }
 
     // A font size keeps the symbol's own proportions, which resizing it would not.
     private var symbol: some View {
-        Image(icon: .person)
-            .font(.system(size: CGFloat(diameter) * Self.symbolProportion))
-            .foregroundStyle(.textSecondary)
+        Color.secondarySurface
+            .overlay {
+                Image(icon: .person)
+                    .font(.system(size: CGFloat(diameter) * Self.symbolProportion))
+                    .foregroundStyle(.textSecondary)
+            }
     }
 
     // How much of the avatar each mark covers. Any more and it meets the edge.
@@ -67,13 +68,13 @@ public struct AvatarFallback: View {
 }
 
 public extension AvatarFallback {
-    /// A person symbol, which is what an avatar draws unless its caller says otherwise.
+    /// A person symbol on a plain circle, for someone we cannot name.
     static var symbol: AvatarFallback { AvatarFallback(.symbol) }
 
-    /// The person's initials, abbreviated the way their name's locale abbreviates it.
+    /// The person's initials on a circle in their own color.
     ///
-    /// A name that abbreviates to more than two letters shrinks to fit. A name with nothing to
-    /// abbreviate draws the symbol instead.
+    /// The initials are abbreviated the way the name's locale abbreviates it. A name with nothing
+    /// to abbreviate draws the symbol instead.
     static func initials(_ name: PersonNameComponents) -> AvatarFallback {
         AvatarFallback(.initials(name))
     }
