@@ -92,7 +92,8 @@
 		7CA11E000000000000000205 /* SessionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000105 /* SessionRow.swift */; };
 		7CA11E000000000000000206 /* ScheduleScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000106 /* ScheduleScreen.swift */; };
 		7CA11E000000000000000207 /* SessionDetailScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000107 /* SessionDetailScreen.swift */; };
-		7CA11E000000000000000208 /* MockControlGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000108 /* MockControlGroup.swift */; };
+		7CA11E000000000000000208 /* AmbientBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000108 /* AmbientBackground.swift */; };
+		7CA11E00000000000000020E /* ContentGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E00000000000000010E /* ContentGroup.swift */; };
 		7CA11E000000000000000209 /* SampleSponsor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000109 /* SampleSponsor.swift */; };
 		7CA11E00000000000000020A /* SponsorRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E00000000000000010A /* SponsorRow.swift */; };
 		7CA11E00000000000000020B /* SponsorsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E00000000000000010B /* SponsorsScreen.swift */; };
@@ -235,7 +236,8 @@
 		7CA11E000000000000000105 /* SessionRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionRow.swift; sourceTree = "<group>"; };
 		7CA11E000000000000000106 /* ScheduleScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleScreen.swift; sourceTree = "<group>"; };
 		7CA11E000000000000000107 /* SessionDetailScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionDetailScreen.swift; sourceTree = "<group>"; };
-		7CA11E000000000000000108 /* MockControlGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockControlGroup.swift; sourceTree = "<group>"; };
+		7CA11E000000000000000108 /* AmbientBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmbientBackground.swift; sourceTree = "<group>"; };
+		7CA11E00000000000000010E /* ContentGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentGroup.swift; sourceTree = "<group>"; };
 		7CA11E000000000000000109 /* SampleSponsor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleSponsor.swift; sourceTree = "<group>"; };
 		7CA11E00000000000000010A /* SponsorRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsorRow.swift; sourceTree = "<group>"; };
 		7CA11E00000000000000010B /* SponsorsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsorsScreen.swift; sourceTree = "<group>"; };
@@ -543,6 +545,8 @@
 				7CA11E000000000000000101 /* UIDesignGalleryApp.swift */,
 				7CA11E000000000000000102 /* GalleryTab.swift */,
 				7CA11E000000000000000103 /* NotYetDesigned.swift */,
+				7CA11E000000000000000108 /* AmbientBackground.swift */,
+				7CA11E00000000000000010E /* ContentGroup.swift */,
 				7CA11E00000000000000000E /* Schedule */,
 				7CA11E00000000000000000F /* SessionDetail */,
 				7CA11E000000000000000010 /* Sponsors */,
@@ -565,7 +569,6 @@
 			isa = PBXGroup;
 			children = (
 				7CA11E000000000000000107 /* SessionDetailScreen.swift */,
-				7CA11E000000000000000108 /* MockControlGroup.swift */,
 			);
 			path = SessionDetail;
 			sourceTree = "<group>";
@@ -931,7 +934,8 @@
 				7CA11E000000000000000205 /* SessionRow.swift in Sources */,
 				7CA11E000000000000000206 /* ScheduleScreen.swift in Sources */,
 				7CA11E000000000000000207 /* SessionDetailScreen.swift in Sources */,
-				7CA11E000000000000000208 /* MockControlGroup.swift in Sources */,
+				7CA11E000000000000000208 /* AmbientBackground.swift in Sources */,
+				7CA11E00000000000000020E /* ContentGroup.swift in Sources */,
 				7CA11E000000000000000209 /* SampleSponsor.swift in Sources */,
 				7CA11E00000000000000020A /* SponsorRow.swift in Sources */,
 				7CA11E00000000000000020B /* SponsorsScreen.swift in Sources */,
