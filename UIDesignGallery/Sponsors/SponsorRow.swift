@@ -14,13 +14,9 @@ struct SponsorRow: View {
             logo
 
             VStack(alignment: .leading, spacing: .xxSmall) {
-                HStack(spacing: .small) {
-                    Text(sponsor.name)
-                        .font(.headline)
-                        .foregroundStyle(.textPrimary)
-
-                    MockNeutralBadge(text: sponsor.tier)
-                }
+                Text(sponsor.name)
+                    .font(.headline)
+                    .foregroundStyle(.textPrimary)
 
                 if let detail = sponsor.detail {
                     Text(detail)
@@ -30,6 +26,10 @@ struct SponsorRow: View {
             }
 
             Spacer(minLength: 0)
+
+            Image(systemName: "chevron.right")
+                .font(.footnote.weight(.semibold))
+                .foregroundStyle(.textTertiary)
         }
         .padding(.vertical, .small)
     }
