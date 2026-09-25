@@ -28,7 +28,9 @@ struct SearchScreen: View {
                 }
         }
         .searchable(text: $query, prompt: "Talks, speakers and sponsors")
-        .searchScopes($scope) {
+        // The picker waits for the first keystroke by default. Showing it as
+        // search opens says what can be narrowed before anything is typed.
+        .searchScopes($scope, activation: .onSearchPresentation) {
             Text("All").tag(Scope.everything)
 
             ForEach(SampleResult.Kind.allCases) { kind in

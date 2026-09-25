@@ -135,6 +135,11 @@ struct ScheduleScreen: View {
                     filterMenu
                 }
 
+                // The filter takes a group of its own, so an active filter can
+                // fill its own background instead of tinting its glyph. Sharing
+                // a group with the actions beside it would tint all of them.
+                ToolbarSpacer(.fixed, placement: .topBarTrailing)
+
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {} label: {
                         Label("Notifications", systemImage: "bell")
@@ -257,11 +262,24 @@ struct ScheduleScreen: View {
 
     /// The menu that filters the schedule and orders it.
     ///
-    /// An active filter tints its own glyph, which is how the system marks one.
-    /// A separate chip saying so is not Apple's. The glyph never changes, so
-    /// only the color moves: a bare symbol and a circled one draw their bars at
-    /// different sizes.
+    /// An active filter fills its own background, which is how the system marks
+    /// one. A separate chip saying so is not Apple's. The glyph never changes,
+    /// so only what sits behind it moves: a bare symbol and a circled one draw
+    /// their bars at different sizes.
+    @ViewBuilder
     private var filterMenu: some View {
+        if isFiltered {
+            filterChoices
+                .buttonStyle(.glassProminent)
+                .tint(.brandPrimary)
+        } else {
+            filterChoices
+                .tint(.textPrimary)
+        }
+    }
+
+    /// What the filter menu offers, whatever the filter's own state is.
+    private var filterChoices: some View {
         Menu {
             Picker("Order", selection: $order) {
                 Text("Time").tag(Order.time)
@@ -276,7 +294,6 @@ struct ScheduleScreen: View {
         } label: {
             Label("Filter", systemImage: "line.3.horizontal.decrease")
         }
-        .tint(isFiltered ? AnyShapeStyle(.brandPrimary) : AnyShapeStyle(.textPrimary))
     }
 
     /// Returns whether the schedule includes a kind of session.
