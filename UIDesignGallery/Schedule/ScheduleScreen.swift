@@ -21,15 +21,6 @@ struct ScheduleScreen: View {
         case title
     }
 
-    /// How the schedule separates one session from the next.
-    enum RowStyle: String {
-        /// A hairline between rows, which is what Apple's dense list uses.
-        case bare
-
-        /// A run of rows on one raised surface, with a picture on each.
-        case card
-    }
-
     /// How thick the halo is around an avatar that is a bar item.
     ///
     /// It is thinner than the one on a profile, in proportion and in points.
@@ -51,9 +42,6 @@ struct ScheduleScreen: View {
 
     /// The screen the schedule opens with already pushed, if any.
     let opensWith: ScheduleDestination?
-
-    /// How the schedule separates one session from the next.
-    var rowStyle: RowStyle = .bare
 
     /// How the halo's outer edge meets the screen behind it.
     var haloEdge: HaloEdge = .feathered
@@ -78,12 +66,7 @@ struct ScheduleScreen: View {
 
     var body: some View {
         NavigationStack(path: $path) {
-            Group {
-                switch rowStyle {
-                case .bare: bareRows
-                case .card: cardedRows
-                }
-            }
+            rows
             .background { AmbientBackground() }
             .navigationTitle(conference)
             .navigationSubtitle("Starts in 12 days")
@@ -180,7 +163,7 @@ struct ScheduleScreen: View {
     }
 
     /// The schedule as a dense list, separated by a hairline.
-    private var bareRows: some View {
+    private var rows: some View {
         List {
             Section {
                 scopePicker
@@ -201,36 +184,6 @@ struct ScheduleScreen: View {
         }
         .listStyle(.plain)
         .scrollContentBackground(.hidden)
-    }
-
-    /// The schedule as one raised surface, with a picture on every row.
-    private var cardedRows: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: .large) {
-                scopePicker
-
-                VStack(alignment: .leading, spacing: .small) {
-                    dayHeader
-
-                    VStack(spacing: 0) {
-                        ForEach(Array(sessions.enumerated()), id: \.element.id) { index, session in
-                            NavigationLink(value: session) {
-                                SessionRow(session: session, showsArtwork: true)
-                                    .padding(.large)
-                            }
-                            .buttonStyle(.plain)
-
-                            if index < sessions.count - 1 {
-                                Divider().padding(.leading, CGFloat(Spacing.large))
-                            }
-                        }
-                    }
-                    .contentGroup()
-                }
-            }
-            .padding(.horizontal, .large)
-            .padding(.bottom, .large)
-        }
     }
 
     /// Every kind of session, which is what no filter means.

@@ -9,10 +9,9 @@ import UIDesign
 /// A launch argument picks where the app opens, so a screenshot needs no
 /// tapping. `-tab sponsors` chooses a destination, `-detail 1` pushes a
 /// session's detail, `-profile 1` pushes the signed-in person's profile,
-/// `-rows card` swaps the schedule's arrangement, `-halo hard` or `-halo soft`
-/// swaps the halo's outer edge for the one it feathers between, and
-/// `-halos role`, `-halos pink` or `-halos gold` shows every halo treatment
-/// at once, in those colors, instead of the app.
+/// `-halo hard` or `-halo soft` swaps the halo's outer edge for the one it
+/// feathers between, and `-halos role`, `-halos pink` or `-halos gold` shows
+/// every halo treatment at once, in those colors, instead of the app.
 @main
 struct UIDesignGalleryApp: App {
     /// The destination on screen.
@@ -23,9 +22,6 @@ struct UIDesignGalleryApp: App {
 
     /// The screen the schedule opens with already pushed, if any.
     private let opensWith: ScheduleDestination?
-
-    /// How the schedule separates one session from the next.
-    private let rowStyle: ScheduleScreen.RowStyle
 
     /// How the halo's outer edge meets the screen behind it.
     private let haloEdge: HaloEdge
@@ -46,8 +42,6 @@ struct UIDesignGalleryApp: App {
         } else {
             opensWith = nil
         }
-        let rows = defaults.string(forKey: "rows") ?? ""
-        rowStyle = ScheduleScreen.RowStyle(rawValue: rows) ?? .bare
         let halo = defaults.string(forKey: "halo") ?? ""
         haloEdge = HaloEdge(rawValue: halo) ?? .feathered
         switch defaults.string(forKey: "halos") {
@@ -80,7 +74,7 @@ struct UIDesignGalleryApp: App {
                 systemImage: GalleryTab.schedule.symbol,
                 value: GalleryTab.schedule
             ) {
-                ScheduleScreen(opensWith: opensWith, rowStyle: rowStyle, haloEdge: haloEdge)
+                ScheduleScreen(opensWith: opensWith, haloEdge: haloEdge)
             }
 
             Tab(
