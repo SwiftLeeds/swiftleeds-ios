@@ -3,9 +3,6 @@ import UIDesign
 
 /// A view that summarizes one sponsor in the sponsors list.
 struct SponsorRow: View {
-    /// How large this person has asked text to be.
-    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
-
     /// The sponsor this row describes.
     let sponsor: SampleSponsor
 
@@ -15,18 +12,8 @@ struct SponsorRow: View {
     /// and grows with the text beside it.
     @ScaledMetric(relativeTo: .headline) private var logoSide: CGFloat = 56
 
-    /// How a row arranges its logo and its text.
-    ///
-    /// At an accessibility size the two stack, which gives the name the whole
-    /// width instead of the share a grown logo leaves it.
-    private var rowLayout: AnyLayout {
-        dynamicTypeSize.isAccessibilitySize
-            ? AnyLayout(VStackLayout(alignment: .leading, spacing: CGFloat(Spacing.small)))
-            : AnyLayout(HStackLayout(alignment: .center, spacing: CGFloat(Spacing.medium)))
-    }
-
     var body: some View {
-        rowLayout {
+        ReflowingStack {
             logo
 
             VStack(alignment: .leading, spacing: .xxSmall) {

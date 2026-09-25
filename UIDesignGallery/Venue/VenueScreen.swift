@@ -12,16 +12,6 @@ struct VenueScreen: View {
     /// symbols grow.
     @ScaledMetric(relativeTo: .body) private var symbolWidth = CGFloat(IconSize.large)
 
-    /// How a row arranges its symbol, its text and its trailing mark.
-    ///
-    /// At an accessibility size the three stack, which gives the text the whole
-    /// width instead of the share a symbol column leaves it.
-    private var rowLayout: AnyLayout {
-        dynamicTypeSize.isAccessibilitySize
-            ? AnyLayout(VStackLayout(alignment: .leading, spacing: CGFloat(Spacing.small)))
-            : AnyLayout(HStackLayout(alignment: .center, spacing: CGFloat(Spacing.medium)))
-    }
-
     var body: some View {
         NavigationStack {
             List {
@@ -47,7 +37,7 @@ struct VenueScreen: View {
             row(SampleResource.address)
             fact("Rooms", value: SampleVenue.rooms)
         } header: {
-            rowLayout {
+            ReflowingStack {
                 Text(SampleVenue.name)
                     .frame(maxWidth: .infinity, alignment: .leading)
 
@@ -134,7 +124,7 @@ struct VenueScreen: View {
     ///   - mark: The SF Symbol that says tapping the row leaves the app, or
     ///     `nil` where `List` draws the mark itself.
     private func line(_ resource: SampleResource, mark: String?) -> some View {
-        rowLayout {
+        ReflowingStack {
             Image(systemName: resource.symbol)
                 .font(.body)
                 .foregroundStyle(.textSecondary)

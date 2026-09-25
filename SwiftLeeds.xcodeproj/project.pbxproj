@@ -114,6 +114,7 @@
 		7CA11E00000000000000021B /* VenueScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E00000000000000011B /* VenueScreen.swift */; };
 		7CA11E00000000000000021C /* SampleResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E00000000000000011C /* SampleResult.swift */; };
 		7CA11E00000000000000021D /* SearchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E00000000000000011D /* SearchScreen.swift */; };
+		7CA11E00000000000000021E /* ReflowingStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E00000000000000011E /* ReflowingStack.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -273,6 +274,7 @@
 		7CA11E00000000000000011B /* VenueScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VenueScreen.swift; sourceTree = "<group>"; };
 		7CA11E00000000000000011C /* SampleResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleResult.swift; sourceTree = "<group>"; };
 		7CA11E00000000000000011D /* SearchScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchScreen.swift; sourceTree = "<group>"; };
+		7CA11E00000000000000011E /* ReflowingStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReflowingStack.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -580,6 +582,7 @@
 				7CA11E000000000000000111 /* ConferenceRole.swift */,
 				7CA11E000000000000000115 /* HaloEdge.swift */,
 				7CA11E000000000000000117 /* HaloComparison.swift */,
+				7CA11E00000000000000011E /* ReflowingStack.swift */,
 				7CA11E00000000000000000E /* Schedule */,
 				7CA11E00000000000000000F /* SessionDetail */,
 				7CA11E000000000000000012 /* Profile */,
@@ -1025,6 +1028,7 @@
 				7CA11E00000000000000021B /* VenueScreen.swift in Sources */,
 				7CA11E00000000000000021C /* SampleResult.swift in Sources */,
 				7CA11E00000000000000021D /* SearchScreen.swift in Sources */,
+				7CA11E00000000000000021E /* ReflowingStack.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

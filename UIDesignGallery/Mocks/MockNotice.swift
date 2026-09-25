@@ -6,9 +6,6 @@ import UIDesign
 /// It sits in the content and scrolls with it. Nothing about it floats over
 /// the screen, and nothing about it times out, so it is not a toast.
 struct MockNotice: View {
-    /// How large this person has asked text to be.
-    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
-
     /// The SF Symbol that stands for what the notice is about.
     let symbol: String
 
@@ -35,19 +32,9 @@ struct MockNotice: View {
         .contentGroup()
     }
 
-    /// How the statement arranges its symbol and its sentence.
-    ///
-    /// At an accessibility size the two stack, which gives the sentence the
-    /// whole width instead of the share a grown symbol leaves it.
-    private var statementLayout: AnyLayout {
-        dynamicTypeSize.isAccessibilitySize
-            ? AnyLayout(VStackLayout(alignment: .leading, spacing: CGFloat(Spacing.small)))
-            : AnyLayout(HStackLayout(alignment: .top, spacing: CGFloat(Spacing.medium)))
-    }
-
     /// The symbol and the sentence, with the close button over them.
     private var statement: some View {
-        statementLayout {
+        ReflowingStack(alignment: .top) {
             Image(systemName: symbol)
                 .font(.title3)
                 .foregroundStyle(.textSecondary)
