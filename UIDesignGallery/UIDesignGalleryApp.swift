@@ -100,7 +100,7 @@ struct UIDesignGalleryApp: App {
             }
 
             Tab(value: GalleryTab.search, role: .search) {
-                NotYetDesigned(destination: .search)
+                SearchScreen()
             }
         }
         .tint(.brandPrimary)
