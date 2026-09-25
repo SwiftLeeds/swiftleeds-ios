@@ -37,13 +37,6 @@ struct ScheduleScreen: View {
     /// fade spreads from the width, so one value quietens both.
     private static let haloWidth: CGFloat = 1.5
 
-    /// How far the avatar moves back to line up with the title under it.
-    ///
-    /// A bar item reserves the margin its glass capsule would need. Hiding the
-    /// capsule leaves the margin behind, which sets the avatar in from the
-    /// title.
-    private static let avatarLead: CGFloat = -14
-
     /// The conferences a person can look back at, most recent first.
     ///
     /// These are display text, for the reason `SampleSession` gives.
@@ -58,8 +51,11 @@ struct ScheduleScreen: View {
     /// How the halo's outer edge meets the screen behind it.
     var haloEdge: HaloEdge = .feathered
 
-    /// The screens pushed on top of the schedule.
-    @State private var path: [ScheduleDestination] = []
+    /// The sessions pushed on top of the schedule.
+    @State private var path: [SampleSession] = []
+
+    /// Whether the signed-in person's profile is on screen.
+    @State private var showsProfile = false
 
     /// The filter the segmented control shows.
     @State private var filter: Filter = .all
@@ -84,17 +80,15 @@ struct ScheduleScreen: View {
             .background { AmbientBackground() }
             .navigationTitle(conference)
             .navigationSubtitle("Starts in 12 days")
-            .navigationDestination(for: ScheduleDestination.self) { destination in
-                switch destination {
-                case .session(let session):
-                    SessionDetailScreen(session: session)
-                case .profile:
-                    ProfileScreen(attendee: .signedIn, haloEdge: haloEdge)
-                }
+            .navigationDestination(for: SampleSession.self) { session in
+                SessionDetailScreen(session: session)
             }
+            .sheet(isPresented: $showsProfile) { profileSheet }
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    NavigationLink(value: ScheduleDestination.profile) {
+                    Button {
+                        showsProfile = true
+                    } label: {
                         // The halo says this person holds a standing at the
                         // conference. Their own profile spells it out, so the
                         // ring is a reminder rather than the only statement.
@@ -112,7 +106,6 @@ struct ScheduleScreen: View {
                         }
                     }
                     .accessibilityLabel("Account, \(SampleAttendee.signedIn.role.name)")
-                    .padding(.leading, Self.avatarLead)
                 }
 
                 ToolbarTitleMenu {
@@ -145,9 +138,27 @@ struct ScheduleScreen: View {
             }
         }
         .onAppear {
-            if let opensWith {
-                path = [opensWith]
+            switch opensWith {
+            case .session(let session): path = [session]
+            case .profile: showsProfile = true
+            case nil: break
             }
+        }
+    }
+
+    /// The signed-in person's profile, over the schedule rather than after it.
+    ///
+    /// A profile is not the next step in reading the schedule, so it arrives as
+    /// a sheet and leaves by the same gesture it came in on.
+    private var profileSheet: some View {
+        NavigationStack {
+            ProfileScreen(attendee: .signedIn, haloEdge: haloEdge)
+                .toolbar {
+                    ToolbarItem(placement: .topBarLeading) {
+                        Button("Close", systemImage: "xmark") { showsProfile = false }
+                            .tint(.textPrimary)
+                    }
+                }
         }
     }
 
@@ -162,7 +173,7 @@ struct ScheduleScreen: View {
 
             Section {
                 ForEach(sessions) { session in
-                    NavigationLink(value: ScheduleDestination.session(session)) {
+                    NavigationLink(value: session) {
                         SessionRow(session: session)
                     }
                     .listRowBackground(Color.clear)
@@ -186,7 +197,7 @@ struct ScheduleScreen: View {
 
                     VStack(spacing: 0) {
                         ForEach(Array(sessions.enumerated()), id: \.element.id) { index, session in
-                            NavigationLink(value: ScheduleDestination.session(session)) {
+                            NavigationLink(value: session) {
                                 SessionRow(session: session, showsArtwork: true)
                                     .padding(.large)
                             }
