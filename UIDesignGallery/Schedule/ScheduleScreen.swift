@@ -114,7 +114,6 @@ struct ScheduleScreen: View {
                     .accessibilityLabel("Account, \(SampleAttendee.signedIn.role.name)")
                     .padding(.leading, Self.avatarLead)
                 }
-                .sharedBackgroundVisibility(.hidden)
 
                 ToolbarTitleMenu {
                     Picker("Conference", selection: $conference) {
