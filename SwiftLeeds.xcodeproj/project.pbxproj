@@ -108,6 +108,7 @@
 		7CA11E000000000000000215 /* HaloEdge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000115 /* HaloEdge.swift */; };
 		7CA11E000000000000000216 /* ScheduleDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000116 /* ScheduleDestination.swift */; };
 		7CA11E000000000000000217 /* HaloComparison.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000117 /* HaloComparison.swift */; };
+		7CA11E000000000000000218 /* MockNotice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000118 /* MockNotice.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -261,6 +262,7 @@
 		7CA11E000000000000000115 /* HaloEdge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HaloEdge.swift; sourceTree = "<group>"; };
 		7CA11E000000000000000116 /* ScheduleDestination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleDestination.swift; sourceTree = "<group>"; };
 		7CA11E000000000000000117 /* HaloComparison.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HaloComparison.swift; sourceTree = "<group>"; };
+		7CA11E000000000000000118 /* MockNotice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNotice.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -614,6 +616,7 @@
 				7CA11E00000000000000010F /* MockArtwork.swift */,
 				7CA11E000000000000000110 /* MockRoleRing.swift */,
 				7CA11E000000000000000114 /* MockRoleBadge.swift */,
+				7CA11E000000000000000118 /* MockNotice.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -985,6 +988,7 @@
 				7CA11E000000000000000215 /* HaloEdge.swift in Sources */,
 				7CA11E000000000000000216 /* ScheduleDestination.swift in Sources */,
 				7CA11E000000000000000217 /* HaloComparison.swift in Sources */,
+				7CA11E000000000000000218 /* MockNotice.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
