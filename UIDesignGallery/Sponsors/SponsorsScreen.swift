@@ -5,14 +5,12 @@ import UIDesign
 struct SponsorsScreen: View {
     var body: some View {
         NavigationStack {
-            ScrollView {
-                VStack(alignment: .leading, spacing: .large) {
-                    tier("Headline", sponsors: SampleSponsor.headline)
-                    tier("Gold", sponsors: SampleSponsor.gold)
-                }
-                .padding(.horizontal, .large)
-                .padding(.bottom, .large)
+            List {
+                tier("Headline", sponsors: SampleSponsor.headline)
+                tier("Gold", sponsors: SampleSponsor.gold)
             }
+            .listStyle(.insetGrouped)
+            .scrollContentBackground(.hidden)
             .background { AmbientBackground() }
             .navigationTitle("Sponsors")
             .navigationDestination(for: SampleSponsor.self) { sponsor in
@@ -28,24 +26,13 @@ struct SponsorsScreen: View {
     ///   - name: What the conference calls this tier.
     ///   - sponsors: The companies at this tier.
     private func tier(_ name: String, sponsors: [SampleSponsor]) -> some View {
-        VStack(alignment: .leading, spacing: .small) {
-            Text(name)
-                .font(.title3.weight(.semibold))
-                .foregroundStyle(.textPrimary)
-
-            VStack(spacing: 0) {
-                ForEach(Array(sponsors.enumerated()), id: \.element.id) { index, sponsor in
-                    NavigationLink(value: sponsor) {
-                        SponsorRow(sponsor: sponsor)
-                    }
-                    .buttonStyle(.plain)
-
-                    if index < sponsors.count - 1 {
-                        Divider().padding(.leading, SponsorRow.separatorInset)
-                    }
+        Section(name) {
+            ForEach(sponsors) { sponsor in
+                NavigationLink(value: sponsor) {
+                    SponsorRow(sponsor: sponsor)
                 }
             }
-            .contentGroup()
         }
+        .listRowBackground(ContentSurface())
     }
 }
