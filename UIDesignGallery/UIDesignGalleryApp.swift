@@ -88,7 +88,7 @@ struct UIDesignGalleryApp: App {
                 systemImage: GalleryTab.venue.symbol,
                 value: GalleryTab.venue
             ) {
-                NotYetDesigned(destination: .venue)
+                VenueScreen()
             }
 
             Tab(

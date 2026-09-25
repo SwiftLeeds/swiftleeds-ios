@@ -1,0 +1,108 @@
+import Foundation
+
+/// A page or a screen the venue points a person at.
+///
+/// Every field is display text rather than a domain value, for the reason
+/// `SampleSession` gives.
+struct SampleResource: Identifiable, Equatable, Hashable, Sendable {
+    /// Where a resource opens.
+    enum Destination: Equatable, Hashable, Sendable {
+        /// A screen inside the app.
+        case screen
+
+        /// A page on the web, which leaves the app.
+        case page
+    }
+
+    /// Tells one sample resource from another.
+    let id: String
+
+    /// What the row calls it.
+    let title: String
+
+    /// What it holds, or `nil` when the title says enough.
+    let detail: String?
+
+    /// The SF Symbol that stands for it.
+    let symbol: String
+
+    /// Where it opens.
+    let destination: Destination
+}
+
+extension SampleResource {
+    /// The venue's address, which opens in Maps.
+    static let address = SampleResource(
+        id: "address",
+        title: "Playhouse Square, Quarry Hill",
+        detail: "Leeds LS2 7UP",
+        symbol: "mappin.and.ellipse",
+        destination: .page
+    )
+
+    /// What a person needs to read before they arrive.
+    ///
+    /// The FAQ is the one entry on the web, so the list shows both marks.
+    static let practical: [SampleResource] = [
+        SampleResource(
+            id: "conduct",
+            title: "Code of conduct",
+            detail: "What we expect of everyone here",
+            symbol: "hand.raised",
+            destination: .screen
+        ),
+        SampleResource(
+            id: "accommodation",
+            title: "Accommodation",
+            detail: "Places to stay near the venue",
+            symbol: "bed.double",
+            destination: .screen
+        ),
+        SampleResource(
+            id: "joining",
+            title: "Joining instructions",
+            detail: "When to arrive, and what to bring",
+            symbol: "doc.text",
+            destination: .screen
+        ),
+        SampleResource(
+            id: "faq",
+            title: "FAQ",
+            detail: "Answers to what we get asked most",
+            symbol: "questionmark.circle",
+            destination: .page
+        ),
+    ]
+
+    /// The conference's own screen, and the places it publishes.
+    static let swiftLeeds: [SampleResource] = [
+        SampleResource(
+            id: "about",
+            title: "About SwiftLeeds",
+            detail: "Who runs the conference",
+            symbol: "info.circle",
+            destination: .screen
+        ),
+        SampleResource(
+            id: "website",
+            title: "Website",
+            detail: nil,
+            symbol: "safari",
+            destination: .page
+        ),
+        SampleResource(
+            id: "podcast",
+            title: "Podcast",
+            detail: nil,
+            symbol: "mic",
+            destination: .page
+        ),
+        SampleResource(
+            id: "youtube",
+            title: "YouTube",
+            detail: nil,
+            symbol: "play.rectangle",
+            destination: .page
+        ),
+    ]
+}
