@@ -13,15 +13,26 @@ struct ProfileScreen: View {
     private static let haloWidth: CGFloat = 5
 
     var body: some View {
-        ScrollView {
-            VStack(spacing: .xLarge) {
+        List {
+            Section {
                 header
-                groups
+                    .listRowInsets(EdgeInsets())
+                    // The header is the screen's subject, not one of its rows,
+                    // so it sits on the page rather than on a card.
+                    .listRowBackground(Color.clear)
             }
-            .padding(.horizontal, .large)
-            .padding(.bottom, .large)
+
+            Section("Conference") {
+                LabeledContent("Ticket", value: attendee.ticket)
+                LabeledContent("Saved sessions", value: attendee.savedSessions)
+            }
+
+            Section("Details") {
+                LabeledContent("Name", value: attendee.name)
+                LabeledContent("Email", value: attendee.email)
+            }
         }
-        .background { AmbientBackground() }
+        .listStyle(.insetGrouped)
         .navigationTitle(attendee.name)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
@@ -69,6 +80,7 @@ struct ProfileScreen: View {
         }
         .frame(maxWidth: .infinity)
         .multilineTextAlignment(.center)
+        .padding(.horizontal, .large)
         .padding(.top, .large)
     }
 
@@ -87,59 +99,4 @@ struct ProfileScreen: View {
         }
     }
 
-    /// What the conference holds about this person.
-    private var groups: some View {
-        VStack(spacing: .large) {
-            group("Conference") {
-                row("Ticket", value: attendee.ticket)
-                separator
-                row("Saved sessions", value: attendee.savedSessions)
-            }
-
-            group("Details") {
-                row("Name", value: attendee.name)
-                separator
-                row("Email", value: attendee.email)
-            }
-        }
-    }
-
-    /// The hairline between one row and the next, inset to the text.
-    private var separator: some View {
-        Divider().padding(.leading, CGFloat(Spacing.large))
-    }
-
-    /// Returns a heading with a run of rows grouped under it.
-    ///
-    /// - Parameters:
-    ///   - title: The heading's text.
-    ///   - content: A content builder that creates the rows under the heading.
-    private func group(
-        _ title: String,
-        @ViewBuilder content: () -> some View
-    ) -> some View {
-        VStack(alignment: .leading, spacing: .small) {
-            Text(title)
-                .font(.headline)
-                .foregroundStyle(.textPrimary)
-
-            VStack(spacing: 0) {
-                content()
-            }
-            .contentGroup()
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-    }
-
-    /// Returns one thing the conference holds, with the value beside its name.
-    ///
-    /// - Parameters:
-    ///   - title: What the value is called.
-    ///   - value: The value itself, as the row prints it.
-    private func row(_ title: String, value: String) -> some View {
-        LabeledContent(title, value: value)
-            .font(.body)
-            .foregroundStyle(.textPrimary)
-            .padding(.large)
-    }
 }

@@ -4,8 +4,8 @@ import UIDesign
 /// A view that shows one avatar under every halo treatment at once.
 ///
 /// It draws at the size and the ring width the schedule's bar item uses, on
-/// the same wash, so the treatments can be judged against each other rather
-/// than one after another.
+/// the same background, so the treatments can be judged against each other
+/// rather than one after another.
 struct HaloComparison: View {
     /// The brand's red run toward a pink.
     ///
@@ -56,7 +56,6 @@ struct HaloComparison: View {
                 .padding(.horizontal, .large)
                 .padding(.bottom, .large)
             }
-            .background { AmbientBackground() }
             .navigationTitle("Halo")
             .navigationSubtitle(role.name)
         }
@@ -87,7 +86,7 @@ struct HaloComparison: View {
     ///
     /// - Parameters:
     ///   - name: What tells this treatment from the others beside it.
-    ///   - edge: How the halo's outer edge meets the wash behind it.
+    ///   - edge: How the halo's outer edge meets the screen behind it.
     ///   - strength: How strongly the halo draws.
     ///   - glows: Whether the fade adds light rather than painting over.
     private func tile(

@@ -6,52 +6,38 @@ struct SessionDetailScreen: View {
     /// The session this screen describes.
     let session: SampleSession
 
-    /// The color this session's artwork lends the rest of the screen.
-    private var artworkColor: Color {
-        MockArtwork.tint(for: session.id)
-    }
-
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: .large) {
+        List {
+            // The artwork, the title and the action are the screen's subject
+            // rather than a list of facts about it, so they sit on the page
+            // with no card and no separators between them.
+            Section {
                 MockArtwork(seed: session.id)
                     .aspectRatio(16 / 9, contentMode: .fit)
+                    .listRowInsets(EdgeInsets())
 
-                VStack(alignment: .leading, spacing: .small) {
-                    Text(session.title)
-                        .font(.largeTitle.weight(.bold))
-                        .foregroundStyle(.textPrimary)
-
-                    HStack(spacing: .medium) {
-                        Label(session.time, systemImage: "clock")
-                        Label(session.room, systemImage: "mappin.and.ellipse")
-                    }
-                    .font(.subheadline)
-                    .foregroundStyle(.textSecondary)
-                }
+                heading
 
                 favoriteAction
+            }
+            .listRowBackground(Color.clear)
+            .listRowSeparator(.hidden)
 
-                section("About") {
-                    Text(session.summary)
-                        .font(.body)
-                        .foregroundStyle(.textSecondary)
-                }
+            Section("About") {
+                Text(session.summary)
+            }
 
-                section("Speaker") {
-                    Nameplate(session.speaker, detail: "Speaker • \(session.speakerDetail)") {
-                        Avatar(
-                            url: nil,
-                            size: .medium,
-                            fallback: .initials(session.speakerName)
-                        )
-                    }
+            Section("Speaker") {
+                Nameplate(session.speaker, detail: "Speaker • \(session.speakerDetail)") {
+                    Avatar(
+                        url: nil,
+                        size: .medium,
+                        fallback: .initials(session.speakerName)
+                    )
                 }
             }
-            .padding(.horizontal, .large)
-            .padding(.bottom, .large)
         }
-        .background { AmbientBackground(color: artworkColor) }
+        .listStyle(.insetGrouped)
         // The title is long enough that the bar would truncate it to one line,
         // so the content carries it and the bar stays bare.
         .navigationTitle("")
@@ -80,49 +66,35 @@ struct SessionDetailScreen: View {
         }
     }
 
-    /// The shape the prominent action and its wash share.
-    private var actionShape: RoundedRectangle {
-        RoundedRectangle(cornerRadius: CGFloat(CornerRadius.large), style: .continuous)
+    /// What the session is called, and when and where it runs.
+    private var heading: some View {
+        VStack(alignment: .leading, spacing: .small) {
+            Text(session.title)
+                .font(.largeTitle.weight(.bold))
+                .foregroundStyle(.textPrimary)
+
+            HStack(spacing: .medium) {
+                Label(session.time, systemImage: "clock")
+                Label(session.room, systemImage: "mappin.and.ellipse")
+            }
+            .font(.subheadline)
+            .foregroundStyle(.textSecondary)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 
     /// The one action this screen is for, at the screen's highest contrast.
     ///
-    /// The fill takes the same wash as the background, so it reads as the
-    /// brightest thing under that light rather than as a hole cut in the screen.
+    /// It is the screen's only filled control, which is what marks it as the
+    /// one the screen is for.
     private var favoriteAction: some View {
         Button {} label: {
             Label("Favourite", systemImage: "star")
                 .font(.headline)
-                .foregroundStyle(.surface)
                 .frame(maxWidth: .infinity)
-                .padding(.vertical, .medium)
-                .background {
-                    actionShape
-                        .fill(.textPrimary)
-                        .overlay { actionShape.fill(AmbientBackground.tint(artworkColor)) }
-                }
         }
-        .buttonStyle(.plain)
-    }
-
-    /// Returns a heading with its content grouped under it.
-    ///
-    /// - Parameters:
-    ///   - title: The heading's text.
-    ///   - content: A content builder that creates what sits under the heading.
-    private func section(
-        _ title: String,
-        @ViewBuilder content: () -> some View
-    ) -> some View {
-        VStack(alignment: .leading, spacing: .small) {
-            Text(title)
-                .font(.headline)
-                .foregroundStyle(.textPrimary)
-
-            content()
-                .padding(.large)
-                .contentGroup()
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
+        .buttonStyle(.borderedProminent)
+        .controlSize(.large)
+        .tint(.brandPrimary)
     }
 }
