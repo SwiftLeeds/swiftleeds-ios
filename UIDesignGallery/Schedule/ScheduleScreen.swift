@@ -37,6 +37,13 @@ struct ScheduleScreen: View {
     /// fade spreads from the width, so one value quietens both.
     private static let haloWidth: CGFloat = 1.5
 
+    /// How far the avatar moves back to line up with the title under it.
+    ///
+    /// A bar item reserves the margin its glass capsule would need. Hiding the
+    /// capsule leaves the margin behind, which sets the avatar in from the
+    /// title.
+    private static let avatarLead: CGFloat = -14
+
     /// The conferences a person can look back at, most recent first.
     ///
     /// These are display text, for the reason `SampleSession` gives.
@@ -106,7 +113,13 @@ struct ScheduleScreen: View {
                         }
                     }
                     .accessibilityLabel("Account, \(SampleAttendee.signedIn.role.name)")
+                    .padding(.leading, Self.avatarLead)
                 }
+                // Apple's shape rule is a circle for one bar item and a capsule
+                // for a group. The system draws a wide capsule around a lone
+                // custom label, and `buttonBorderShape(.circle)` does not move
+                // it, so the avatar draws its own circle instead.
+                .sharedBackgroundVisibility(.hidden)
 
                 ToolbarTitleMenu {
                     Picker("Conference", selection: $conference) {
@@ -243,6 +256,11 @@ struct ScheduleScreen: View {
     }
 
     /// The menu that filters the schedule and orders it.
+    ///
+    /// An active filter tints its own glyph, which is how the system marks one.
+    /// A separate chip saying so is not Apple's. The glyph never changes, so
+    /// only the color moves: a bare symbol and a circled one draw their bars at
+    /// different sizes.
     private var filterMenu: some View {
         Menu {
             Picker("Order", selection: $order) {
@@ -256,12 +274,7 @@ struct ScheduleScreen: View {
                 }
             }
         } label: {
-            // An active filter fills and tints its own button, which is how
-            // the system marks one. A separate chip saying so is not Apple's.
-            // One symbol, filled or not, so only the color changes. The bare
-            // symbol and the circled one draw their bars at different sizes.
-            Label("Filter", systemImage: "line.3.horizontal.decrease.circle")
-                .symbolVariant(isFiltered ? .fill : SymbolVariants.none)
+            Label("Filter", systemImage: "line.3.horizontal.decrease")
         }
         .tint(isFiltered ? AnyShapeStyle(.brandPrimary) : AnyShapeStyle(.textPrimary))
     }
