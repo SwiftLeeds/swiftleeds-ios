@@ -283,10 +283,11 @@ struct ScheduleScreen: View {
 
             Spacer(minLength: 0)
 
-            Label("18°", systemImage: "sun.max")
+            Label(SampleVenue.temperature, systemImage: SampleVenue.weatherSymbol)
                 .font(.subheadline)
                 .foregroundStyle(.textSecondary)
                 .textCase(nil)
+                .accessibilityLabel(SampleVenue.weather)
         }
     }
 }
