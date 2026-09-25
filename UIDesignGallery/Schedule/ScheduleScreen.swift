@@ -258,12 +258,10 @@ struct ScheduleScreen: View {
         } label: {
             // An active filter fills and tints its own button, which is how
             // the system marks one. A separate chip saying so is not Apple's.
-            Label(
-                "Filter",
-                systemImage: isFiltered
-                    ? "line.3.horizontal.decrease.circle.fill"
-                    : "line.3.horizontal.decrease"
-            )
+            // One symbol, filled or not, so only the color changes. The bare
+            // symbol and the circled one draw their bars at different sizes.
+            Label("Filter", systemImage: "line.3.horizontal.decrease.circle")
+                .symbolVariant(isFiltered ? .fill : SymbolVariants.none)
         }
         .tint(isFiltered ? AnyShapeStyle(.brandPrimary) : AnyShapeStyle(.textPrimary))
     }
