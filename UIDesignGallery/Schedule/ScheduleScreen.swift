@@ -67,7 +67,6 @@ struct ScheduleScreen: View {
     var body: some View {
         NavigationStack(path: $path) {
             rows
-            .background { AmbientBackground() }
             .navigationTitle(conference)
             .navigationSubtitle("Starts in 12 days")
             .navigationDestination(for: SampleSession.self) { session in
@@ -168,7 +167,6 @@ struct ScheduleScreen: View {
             Section {
                 scopePicker
                     .listRowSeparator(.hidden)
-                    .listRowBackground(Color.clear)
             }
 
             Section {
@@ -176,14 +174,12 @@ struct ScheduleScreen: View {
                     NavigationLink(value: session) {
                         SessionRow(session: session)
                     }
-                    .listRowBackground(Color.clear)
                 }
             } header: {
                 dayHeader
             }
         }
         .listStyle(.plain)
-        .scrollContentBackground(.hidden)
     }
 
     /// Every kind of session, which is what no filter means.

@@ -10,8 +10,6 @@ struct SponsorsScreen: View {
                 tier("Gold", sponsors: SampleSponsor.gold)
             }
             .listStyle(.insetGrouped)
-            .scrollContentBackground(.hidden)
-            .background { AmbientBackground() }
             .navigationTitle("Sponsors")
             .navigationDestination(for: SampleSponsor.self) { sponsor in
                 NotYetDesigned(destination: .sponsors)
@@ -33,6 +31,5 @@ struct SponsorsScreen: View {
                 }
             }
         }
-        .listRowBackground(ContentSurface())
     }
 }

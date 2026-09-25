@@ -5,6 +5,11 @@ import UIDesign
 ///
 /// It sits in the content and scrolls with it. Nothing about it floats over
 /// the screen, and nothing about it times out, so it is not a toast.
+///
+/// It draws no surface of its own. It fills a `List` section, which draws one
+/// in the system's colors, so the notice matches every other section on the
+/// screen. Its row clears the section's insets, because the notice pads
+/// itself.
 struct MockNotice: View {
     /// The SF Symbol that stands for what the notice is about.
     let symbol: String
@@ -29,7 +34,6 @@ struct MockNotice: View {
 
             action
         }
-        .contentGroup()
     }
 
     /// The symbol and the sentence, with the close button over them.

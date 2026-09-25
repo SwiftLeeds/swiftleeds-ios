@@ -21,7 +21,6 @@ struct SearchScreen: View {
     var body: some View {
         NavigationStack {
             found
-                .background { AmbientBackground() }
                 .navigationTitle("Search")
                 .navigationDestination(for: SampleResult.self) { result in
                     destination(for: result)
@@ -69,7 +68,6 @@ struct SearchScreen: View {
             }
         }
         .listStyle(.plain)
-        .scrollContentBackground(.hidden)
     }
 
     /// The results this query and this scope keep.
@@ -100,7 +98,6 @@ struct SearchScreen: View {
                 icon(for: result)
             }
         }
-        .listRowBackground(Color.clear)
     }
 
     /// Returns what stands for one result beside its name.

@@ -21,8 +21,6 @@ struct VenueScreen: View {
                 section("SwiftLeeds", resources: SampleResource.swiftLeeds)
             }
             .listStyle(.insetGrouped)
-            .scrollContentBackground(.hidden)
-            .background { AmbientBackground() }
             .navigationTitle("Venue")
             .navigationDestination(for: SampleResource.self) { resource in
                 NotYetDesigned(destination: .venue)
@@ -44,7 +42,6 @@ struct VenueScreen: View {
                 weather
             }
         }
-        .listRowBackground(ContentSurface())
     }
 
     /// How warm it is at the venue.
@@ -57,8 +54,8 @@ struct VenueScreen: View {
 
     /// What the venue feeds people, and the voucher lunch asks them to carry.
     ///
-    /// The notice draws its own surface, so its row clears the one the section
-    /// would otherwise put behind it.
+    /// The notice pads itself, so its row clears the insets the section would
+    /// otherwise add on top.
     private var food: some View {
         Group {
             Section("Food and drink") {
@@ -68,13 +65,11 @@ struct VenueScreen: View {
                     actionTitle: SampleVenue.lunchAction
                 )
                 .listRowInsets(EdgeInsets())
-                .listRowBackground(Color.clear)
             }
 
             Section {
                 fact("Breaks", value: SampleVenue.breaks)
             }
-            .listRowBackground(ContentSurface())
         }
     }
 
@@ -89,7 +84,6 @@ struct VenueScreen: View {
                 row(resource)
             }
         }
-        .listRowBackground(ContentSurface())
     }
 
     /// Returns one resource as a row that opens it.
