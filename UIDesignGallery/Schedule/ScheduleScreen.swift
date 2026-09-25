@@ -135,9 +135,8 @@ struct ScheduleScreen: View {
                     filterMenu
                 }
 
-                // The filter takes a group of its own, so an active filter can
-                // fill its own background instead of tinting its glyph. Sharing
-                // a group with the actions beside it would tint all of them.
+                // Apple groups related actions in one capsule. The filter changes
+                // what the schedule shows; the two beside it open something else.
                 ToolbarSpacer(.fixed, placement: .topBarTrailing)
 
                 ToolbarItem(placement: .topBarTrailing) {
@@ -262,24 +261,9 @@ struct ScheduleScreen: View {
 
     /// The menu that filters the schedule and orders it.
     ///
-    /// An active filter fills its own background, which is how the system marks
-    /// one. A separate chip saying so is not Apple's. The glyph never changes,
-    /// so only what sits behind it moves: a bare symbol and a circled one draw
-    /// their bars at different sizes.
-    @ViewBuilder
+    /// An active filter tints its glyph. A separate chip saying so is not
+    /// Apple's.
     private var filterMenu: some View {
-        if isFiltered {
-            filterChoices
-                .buttonStyle(.glassProminent)
-                .tint(.brandPrimary)
-        } else {
-            filterChoices
-                .tint(.textPrimary)
-        }
-    }
-
-    /// What the filter menu offers, whatever the filter's own state is.
-    private var filterChoices: some View {
         Menu {
             Picker("Order", selection: $order) {
                 Text("Time").tag(Order.time)
@@ -294,6 +278,7 @@ struct ScheduleScreen: View {
         } label: {
             Label("Filter", systemImage: "line.3.horizontal.decrease")
         }
+        .tint(isFiltered ? .brandPrimary : .textPrimary)
     }
 
     /// Returns whether the schedule includes a kind of session.
