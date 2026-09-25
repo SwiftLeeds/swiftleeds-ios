@@ -12,16 +12,6 @@ struct VenueScreen: View {
     /// symbols grow.
     @ScaledMetric(relativeTo: .body) private var symbolWidth = CGFloat(IconSize.large)
 
-    /// How far a separator between two rows sits from the group's leading edge.
-    ///
-    /// It lines up with the title rather than with the group, so the symbols
-    /// read as one column. At an accessibility size the symbol moves above the
-    /// title, so there is no column left to line up with.
-    private var separatorInset: CGFloat {
-        guard !dynamicTypeSize.isAccessibilitySize else { return CGFloat(Spacing.large) }
-        return CGFloat(Spacing.large) + symbolWidth + CGFloat(Spacing.medium)
-    }
-
     /// How a row arranges its symbol, its text and its trailing mark.
     ///
     /// At an accessibility size the three stack, which gives the text the whole
@@ -34,16 +24,14 @@ struct VenueScreen: View {
 
     var body: some View {
         NavigationStack {
-            ScrollView {
-                VStack(alignment: .leading, spacing: .large) {
-                    venue
-                    food
-                    section("Practical", resources: SampleResource.practical)
-                    section("SwiftLeeds", resources: SampleResource.swiftLeeds)
-                }
-                .padding(.horizontal, .large)
-                .padding(.bottom, .large)
+            List {
+                venue
+                food
+                section("Practical", resources: SampleResource.practical)
+                section("SwiftLeeds", resources: SampleResource.swiftLeeds)
             }
+            .listStyle(.insetGrouped)
+            .scrollContentBackground(.hidden)
             .background { AmbientBackground() }
             .navigationTitle("Venue")
             .navigationDestination(for: SampleResource.self) { resource in
@@ -55,46 +43,48 @@ struct VenueScreen: View {
 
     /// Where the conference is, with the weather beside its name.
     private var venue: some View {
-        VStack(alignment: .leading, spacing: .small) {
+        Section {
+            row(SampleResource.address)
+            fact("Rooms", value: SampleVenue.rooms)
+        } header: {
             rowLayout {
-                heading(SampleVenue.name)
+                Text(SampleVenue.name)
                     .frame(maxWidth: .infinity, alignment: .leading)
 
                 weather
             }
-
-            VStack(spacing: 0) {
-                row(SampleResource.address)
-
-                Divider().padding(.leading, separatorInset)
-
-                fact("Rooms", value: SampleVenue.rooms)
-            }
-            .contentGroup()
         }
+        .listRowBackground(ContentSurface())
     }
 
     /// How warm it is at the venue.
+    ///
+    /// It takes the heading's own size and color, so the two read as one line.
     private var weather: some View {
         Label(SampleVenue.temperature, systemImage: SampleVenue.weatherSymbol)
-            .font(.subheadline)
-            .foregroundStyle(.textSecondary)
             .accessibilityLabel(SampleVenue.weather)
     }
 
     /// What the venue feeds people, and the voucher lunch asks them to carry.
+    ///
+    /// The notice draws its own surface, so its row clears the one the section
+    /// would otherwise put behind it.
     private var food: some View {
-        VStack(alignment: .leading, spacing: .small) {
-            heading("Food and drink")
+        Group {
+            Section("Food and drink") {
+                MockNotice(
+                    symbol: "ticket",
+                    message: SampleVenue.lunch,
+                    actionTitle: SampleVenue.lunchAction
+                )
+                .listRowInsets(EdgeInsets())
+                .listRowBackground(Color.clear)
+            }
 
-            MockNotice(
-                symbol: "ticket",
-                message: SampleVenue.lunch,
-                actionTitle: SampleVenue.lunchAction
-            )
-
-            fact("Breaks", value: SampleVenue.breaks)
-                .contentGroup()
+            Section {
+                fact("Breaks", value: SampleVenue.breaks)
+            }
+            .listRowBackground(ContentSurface())
         }
     }
 
@@ -104,35 +94,18 @@ struct VenueScreen: View {
     ///   - name: What the section is called.
     ///   - resources: The pages and screens the section points at.
     private func section(_ name: String, resources: [SampleResource]) -> some View {
-        VStack(alignment: .leading, spacing: .small) {
-            heading(name)
-
-            VStack(spacing: 0) {
-                ForEach(Array(resources.enumerated()), id: \.element.id) { index, resource in
-                    row(resource)
-
-                    if index < resources.count - 1 {
-                        Divider().padding(.leading, separatorInset)
-                    }
-                }
+        Section(name) {
+            ForEach(resources) { resource in
+                row(resource)
             }
-            .contentGroup()
         }
-    }
-
-    /// Returns one section's heading.
-    ///
-    /// - Parameter name: What the section is called.
-    private func heading(_ name: String) -> some View {
-        Text(name)
-            .font(.title3.weight(.semibold))
-            .foregroundStyle(.textPrimary)
+        .listRowBackground(ContentSurface())
     }
 
     /// Returns one resource as a row that opens it.
     ///
-    /// A screen inside the app pushes, so it takes a chevron. A page on the web
-    /// leaves the app, so it takes an arrow.
+    /// A screen inside the app pushes, so `List` draws its chevron. A page on
+    /// the web leaves the app, so the row draws an arrow of its own.
     ///
     /// - Parameter resource: The page or screen the row opens.
     @ViewBuilder
@@ -140,9 +113,8 @@ struct VenueScreen: View {
         switch resource.destination {
         case .screen:
             NavigationLink(value: resource) {
-                line(resource, mark: "chevron.right")
+                line(resource, mark: nil)
             }
-            .buttonStyle(.plain)
 
         case .page:
             Button {} label: {
@@ -159,8 +131,9 @@ struct VenueScreen: View {
     ///
     /// - Parameters:
     ///   - resource: The page or screen the row opens.
-    ///   - mark: The SF Symbol that says what tapping the row does.
-    private func line(_ resource: SampleResource, mark: String) -> some View {
+    ///   - mark: The SF Symbol that says tapping the row leaves the app, or
+    ///     `nil` where `List` draws the mark itself.
+    private func line(_ resource: SampleResource, mark: String?) -> some View {
         rowLayout {
             Image(systemName: resource.symbol)
                 .font(.body)
@@ -182,16 +155,15 @@ struct VenueScreen: View {
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
+            .alignmentGuide(.listRowSeparatorLeading) { $0[.leading] }
 
-            Image(systemName: mark)
-                .font(.footnote.weight(.semibold))
-                .foregroundStyle(.textTertiary)
-                .accessibilityHidden(true)
+            if let mark {
+                Image(systemName: mark)
+                    .font(.footnote.weight(.semibold))
+                    .foregroundStyle(.textTertiary)
+                    .accessibilityHidden(true)
+            }
         }
-        .padding(.horizontal, .large)
-        .padding(.vertical, .medium)
-        .frame(minHeight: CGFloat(IconSize.xxLarge))
-        .contentShape(.rect)
     }
 
     /// Returns one fact, with its label above its value.
@@ -211,7 +183,5 @@ struct VenueScreen: View {
                 .fixedSize(horizontal: false, vertical: true)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.horizontal, .large)
-        .padding(.vertical, .medium)
     }
 }
