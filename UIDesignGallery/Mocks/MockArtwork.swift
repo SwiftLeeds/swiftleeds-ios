@@ -4,8 +4,7 @@ import UIDesign
 /// A view that stands in for the `Artwork` component, which is not built yet.
 ///
 /// A session has no picture yet, so this draws a stable one from the session's
-/// own name. The point is to give the glass and the ambient wash something to
-/// sit over, which a flat fill cannot do.
+/// own name.
 struct MockArtwork: View {
     /// The text the picture is derived from.
     let seed: String
