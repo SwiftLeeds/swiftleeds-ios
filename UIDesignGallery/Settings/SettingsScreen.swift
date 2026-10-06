@@ -54,8 +54,11 @@ struct SettingsScreen: View {
     ///
     /// Both rows push a screen to choose on. A row carries the choice and the
     /// answer, so the list stays short enough to read at a glance.
+    ///
+    /// The light and dark choice is called Theme here, because the section is
+    /// already called Appearance and a row may not repeat its own section.
     private var choices: some View {
-        Section {
+        Section("Appearance") {
             Picker("App icon", selection: $icon) {
                 ForEach(SampleAppIcon.allCases) { option in
                     ReflowingStack {
@@ -67,7 +70,7 @@ struct SettingsScreen: View {
                 }
             }
 
-            Picker("Appearance", selection: $appearance) {
+            Picker("Theme", selection: $appearance) {
                 ForEach(SampleAppearance.allCases) { option in
                     Label {
                         Text(option.title)
@@ -124,7 +127,7 @@ struct SettingsScreen: View {
                 ResourceRow(resource: resource)
             }
         } header: {
-            Text("SwiftLeeds")
+            Text("About")
         } footer: {
             Text(Self.version)
         }
