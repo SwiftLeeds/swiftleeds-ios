@@ -49,8 +49,14 @@ struct ScheduleScreen: View {
     /// The sessions pushed on top of the schedule.
     @State private var path: [SampleSession] = []
 
-    /// Whether the signed-in person's profile is on screen.
-    @State private var showsProfile = false
+    /// Whether Settings is on screen.
+    @State private var showsSettings = false
+
+    /// The screens pushed on top of Settings.
+    ///
+    /// Settings pushes two kinds of thing, a person and a resource, so the path
+    /// is untyped. A typed path would take one of them and drop the other.
+    @State private var settingsPath = NavigationPath()
 
     /// The filter the segmented control shows.
     @State private var filter: Filter = .all
@@ -72,11 +78,11 @@ struct ScheduleScreen: View {
             .navigationDestination(for: SampleSession.self) { session in
                 SessionDetailScreen(session: session)
             }
-            .sheet(isPresented: $showsProfile) { profileSheet }
+            .sheet(isPresented: $showsSettings) { settingsSheet }
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button {
-                        showsProfile = true
+                        showsSettings = true
                     } label: {
                         // The halo says this person holds a standing at the
                         // conference. Their own profile spells it out, so the
@@ -94,7 +100,7 @@ struct ScheduleScreen: View {
                             )
                         }
                     }
-                    .accessibilityLabel("Account, \(SampleAttendee.signedIn.role.name)")
+                    .accessibilityLabel("Settings, \(SampleAttendee.signedIn.role.name)")
                     .padding(.leading, Self.avatarLead)
                 }
                 // Apple's shape rule is a circle for one bar item and a capsule
@@ -139,22 +145,33 @@ struct ScheduleScreen: View {
         .onAppear {
             switch opensWith {
             case .session(let session): path = [session]
-            case .profile: showsProfile = true
+            case .settings: showsSettings = true
+            case .profile:
+                showsSettings = true
+                settingsPath.append(SampleAttendee.signedIn)
             case nil: break
             }
         }
     }
 
-    /// The signed-in person's profile, over the schedule rather than after it.
+    /// Settings, over the schedule rather than after it.
     ///
-    /// A profile is not the next step in reading the schedule, so it arrives as
-    /// a sheet and leaves by the same gesture it came in on.
-    private var profileSheet: some View {
-        NavigationStack {
-            ProfileScreen(attendee: .signedIn, haloEdge: haloEdge)
+    /// Settings is not the next step in reading the schedule, so it arrives as
+    /// a sheet and leaves by the same gesture it came in on. The profile sits
+    /// one step inside it, reached from the account at the top.
+    private var settingsSheet: some View {
+        NavigationStack(path: $settingsPath) {
+            SettingsScreen(attendee: .signedIn)
+                .navigationDestination(for: SampleAttendee.self) { attendee in
+                    ProfileScreen(attendee: attendee, haloEdge: haloEdge)
+                }
+                .navigationDestination(for: SampleResource.self) { resource in
+                    NotYetDesigned(destination: .venue)
+                        .navigationTitle(resource.title)
+                }
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
-                        Button("Close", systemImage: "xmark") { showsProfile = false }
+                        Button("Close", systemImage: "xmark") { showsSettings = false }
                             .tint(.textPrimary)
                     }
                 }
