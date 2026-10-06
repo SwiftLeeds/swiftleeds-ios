@@ -19,8 +19,11 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # Each brand is a scheme of the same name, built in its Debug and its Release
+  # configuration. The app target embeds the App Clip and the widget extension,
+  # so one build covers all three.
   build-app:
-    name: Build ${{ matrix.brand }} (DEBUG)
+    name: Build ${{ matrix.brand }}
     runs-on: macos-26
     strategy:
       # Without this, one brand failing cancels the other, and a run reports
@@ -29,9 +32,11 @@ jobs:
       matrix:
         include:
           - brand: SwiftLeeds
-            lane: build_swiftleeds
+            debug-configuration: Debug
+            release-configuration: Release
           - brand: KotlinLeeds
-            lane: build_kotlinleeds
+            debug-configuration: Debug-KotlinLeeds
+            release-configuration: Release-KotlinLeeds
     steps:
       - name: Checkout iOS Repository
         uses: actions/checkout@v4
@@ -41,8 +46,15 @@ jobs:
         with:
           xcode-version: '26.5'
 
-      - name: Build ${{ matrix.brand }} via Fastlane
-        run: fastlane ${{ matrix.lane }}
+      - name: Build ${{ matrix.brand }} (${{ matrix.debug-configuration }})
+        run: fastlane build scheme:${{ matrix.brand }} configuration:${{ matrix.debug-configuration }}
+
+      # Release compiles out every `#if DEBUG` block, so this is the only build
+      # that fails when shipping code uses a DEBUG-only symbol. It shares a job
+      # with the Debug build because the account runs 5 macOS jobs at once and
+      # this workflow already holds 6.
+      - name: Build ${{ matrix.brand }} (${{ matrix.release-configuration }})
+        run: fastlane build scheme:${{ matrix.brand }} configuration:${{ matrix.release-configuration }}
 
   test-packages:
     name: Test Swift Packages
