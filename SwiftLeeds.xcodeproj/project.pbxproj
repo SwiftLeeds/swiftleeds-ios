@@ -114,6 +114,10 @@
 		7CA11E00000000000000021D /* SearchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E00000000000000011D /* SearchScreen.swift */; };
 		7CA11E00000000000000021E /* ReflowingStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E00000000000000011E /* ReflowingStack.swift */; };
 		7CA11E00000000000000021F /* ResourceRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E00000000000000011F /* ResourceRow.swift */; };
+		7CA11E000000000000000220 /* SampleAppIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000120 /* SampleAppIcon.swift */; };
+		7CA11E000000000000000221 /* SampleAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000121 /* SampleAppearance.swift */; };
+		7CA11E000000000000000222 /* SettingsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000122 /* SettingsScreen.swift */; };
+		7CA11E000000000000000223 /* MockAppIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000123 /* MockAppIcon.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -273,6 +277,10 @@
 		7CA11E00000000000000011D /* SearchScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchScreen.swift; sourceTree = "<group>"; };
 		7CA11E00000000000000011E /* ReflowingStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReflowingStack.swift; sourceTree = "<group>"; };
 		7CA11E00000000000000011F /* ResourceRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceRow.swift; sourceTree = "<group>"; };
+		7CA11E000000000000000120 /* SampleAppIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleAppIcon.swift; sourceTree = "<group>"; };
+		7CA11E000000000000000121 /* SampleAppearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleAppearance.swift; sourceTree = "<group>"; };
+		7CA11E000000000000000122 /* SettingsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsScreen.swift; sourceTree = "<group>"; };
+		7CA11E000000000000000123 /* MockAppIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAppIcon.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -588,6 +596,7 @@
 				7CA11E000000000000000011 /* Mocks */,
 				7CA11E000000000000000013 /* Venue */,
 				7CA11E000000000000000014 /* Search */,
+				7CA11E000000000000000015 /* Settings */,
 			);
 			path = UIDesignGallery;
 			sourceTree = "<group>";
@@ -630,6 +639,7 @@
 				7CA11E000000000000000110 /* MockRoleRing.swift */,
 				7CA11E000000000000000114 /* MockRoleBadge.swift */,
 				7CA11E000000000000000118 /* MockNotice.swift */,
+				7CA11E000000000000000123 /* MockAppIcon.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -659,6 +669,16 @@
 				7CA11E00000000000000011D /* SearchScreen.swift */,
 			);
 			path = Search;
+			sourceTree = "<group>";
+		};
+		7CA11E000000000000000015 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				7CA11E000000000000000120 /* SampleAppIcon.swift */,
+				7CA11E000000000000000121 /* SampleAppearance.swift */,
+				7CA11E000000000000000122 /* SettingsScreen.swift */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1025,6 +1045,10 @@
 				7CA11E00000000000000021D /* SearchScreen.swift in Sources */,
 				7CA11E00000000000000021E /* ReflowingStack.swift in Sources */,
 				7CA11E00000000000000021F /* ResourceRow.swift in Sources */,
+				7CA11E000000000000000220 /* SampleAppIcon.swift in Sources */,
+				7CA11E000000000000000221 /* SampleAppearance.swift in Sources */,
+				7CA11E000000000000000222 /* SettingsScreen.swift in Sources */,
+				7CA11E000000000000000223 /* MockAppIcon.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

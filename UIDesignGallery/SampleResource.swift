@@ -74,6 +74,27 @@ extension SampleResource {
         ),
     ]
 
+    /// What a person reaches from Settings.
+    ///
+    /// The code of conduct is a screen, so `List` marks it. Writing to the
+    /// organizers opens Mail, which leaves the app.
+    static let settings: [SampleResource] = [
+        SampleResource(
+            id: "settings-conduct",
+            title: "Code of conduct",
+            detail: "What we expect of everyone here",
+            symbol: "hand.raised",
+            destination: .screen
+        ),
+        SampleResource(
+            id: "settings-contact",
+            title: "Contact the organizers",
+            detail: "hello@swiftleeds.co.uk",
+            symbol: "envelope",
+            destination: .page
+        ),
+    ]
+
     /// The conference's own screen, and the places it publishes.
     static let swiftLeeds: [SampleResource] = [
         SampleResource(
