@@ -21,7 +21,8 @@ struct SwiftLeedsApp: App {
             // A fresh salt each launch, so hashed values correlate within a session but never
             // between them. Without a subsystem there is no honest place to write (this ships
             // as two apps), so nothing is written rather than guessing at one.
-            $0.log = Bundle.main.bundleIdentifier
+            $0.log =
+                Bundle.main.bundleIdentifier
                 .flatMap { try? LogSubsystem($0) }
                 .map { Log.unified(subsystem: $0, salt: .random()) }
                 ?? .none
@@ -29,10 +30,12 @@ struct SwiftLeedsApp: App {
             $0.apiConfiguration = APIConfiguration(baseURL: URL(string: "https://\(ConferenceConfig.apiHost)")!)
             $0.httpClient = HTTPClient.urlSession(.unauthenticated).logging()
             $0.localScheduleStore = .appGroup(AppGroupIdentifier(ConferenceConfig.appGroupIdentifier))
-            $0.authHTTPClient = .live(urlSession: .authenticated, onSessionExpiry: {
-                @Dependency(\.signOut) var signOut
-                try? await signOut()
-            })
+            $0.authHTTPClient = .live(
+                urlSession: .authenticated,
+                onSessionExpiry: {
+                    @Dependency(\.signOut) var signOut
+                    try? await signOut()
+                })
             $0.signIn = SignIn.liveValue.logging()
             $0.signOut = SignOut.liveValue.logging()
             $0.fetchProfile = FetchProfile.liveValue.logging()
@@ -50,10 +53,13 @@ struct SwiftLeedsApp: App {
 
 // MARK: - AppDelegate
 final class AppDelegate: NSObject, UIApplicationDelegate {
-    // UIApplicationDelegate declares the launch options dictionary, so it stays optional here.
-    // The disable is on the previous line rather than this one because the line has no room.
-    // swiftlint:disable:next discouraged_optional_collection
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
+    func application(
+        _ application: UIApplication,
+        // UIApplicationDelegate declares the launch options dictionary, so it stays optional here.
+        // The disable sits above the parameter rather than on it because the line has no room.
+        // swiftlint:disable:next discouraged_optional_collection
+        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
+    ) -> Bool {
         URLCache.shared.diskCapacity = 100_000_000
 
         UITabBar.appearance().backgroundColor = UIColor(named: "TabBarBackground")
@@ -66,7 +72,9 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         @Dependency(\.log) var log
         guard let url = URL(string: ConferenceConfig.pushURL) else {
-            log.error("The push URL is not a valid URL: \(ConferenceConfig.pushURL, name: "pushURL", privacy: .open)", in: .push)
+            log.error(
+                "The push URL is not a valid URL: \(ConferenceConfig.pushURL, name: "pushURL", privacy: .open)",
+                in: .push)
             return
         }
         sendPushRegistrationDatails(to: url, deviceToken: deviceToken)
