@@ -14,7 +14,7 @@ struct VenueScreen: View {
             .listStyle(.insetGrouped)
             .navigationTitle("Venue")
             .navigationDestination(for: SampleResource.self) { resource in
-                NotYetDesigned(destination: .venue)
+                NotYetDesigned(symbol: resource.symbol)
                     .navigationTitle(resource.title)
             }
         }

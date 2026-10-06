@@ -166,7 +166,7 @@ struct ScheduleScreen: View {
                     ProfileScreen(attendee: attendee, haloEdge: haloEdge)
                 }
                 .navigationDestination(for: SampleResource.self) { resource in
-                    NotYetDesigned(destination: .venue)
+                    NotYetDesigned(symbol: resource.symbol)
                         .navigationTitle(resource.title)
                 }
                 .toolbar {
