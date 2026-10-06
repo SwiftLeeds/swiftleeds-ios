@@ -9,7 +9,7 @@ let package = Package(
         .macOS(.v15),
     ],
     products: [
-        .library(name: "SponsorsFeature", targets: ["SponsorsFeature"]),
+        .library(name: "SponsorsFeature", targets: ["SponsorsFeature"])
     ],
     dependencies: [
         .package(path: "../LogKit"),

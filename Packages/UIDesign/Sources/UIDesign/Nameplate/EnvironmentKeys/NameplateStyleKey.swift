@@ -5,7 +5,7 @@ extension EnvironmentValues {
     @Entry public var nameplateStyle: any NameplateStyle = .automatic
 }
 
-public extension View {
+extension View {
     /// Sets the style for nameplates within this view.
     ///
     /// ```swift
@@ -18,7 +18,7 @@ public extension View {
     /// ```
     ///
     /// - Parameter style: The nameplate style to apply.
-    func nameplateStyle(_ style: some NameplateStyle) -> some View {
+    public func nameplateStyle(_ style: some NameplateStyle) -> some View {
         environment(\.nameplateStyle, style)
     }
 }

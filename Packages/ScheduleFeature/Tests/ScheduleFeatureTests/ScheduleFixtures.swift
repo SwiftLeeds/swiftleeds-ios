@@ -22,9 +22,9 @@ extension Schedule {
                                 duration: 30,
                                 activity: .lunch,
                                 presentation: nil
-                            ),
+                            )
                         ]
-                    ),
+                    )
                 ]
             )
         )

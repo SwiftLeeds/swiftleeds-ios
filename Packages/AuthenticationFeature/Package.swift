@@ -9,7 +9,7 @@ let package = Package(
         .macOS(.v15),
     ],
     products: [
-        .library(name: "AuthenticationFeature", targets: ["AuthenticationFeature"]),
+        .library(name: "AuthenticationFeature", targets: ["AuthenticationFeature"])
     ],
     dependencies: [
         .package(path: "../LogKit"),

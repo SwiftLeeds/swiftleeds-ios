@@ -28,11 +28,12 @@ func assertGridCellSnapshots(
     )
 }
 
-private extension View {
+extension View {
     // One cell of a grid with `columns` columns and `Padding.cellGap` between them.
-    func inGridCell(columns: Int) -> some View {
+    fileprivate func inGridCell(columns: Int) -> some View {
         let gaps = Padding.cellGap * CGFloat(columns - 1)
-        return self
+        return
+            self
             .frame(width: (contentWidth - gaps) / CGFloat(columns))
             .fixedSize(horizontal: false, vertical: true)
             .padding(Padding.screen)

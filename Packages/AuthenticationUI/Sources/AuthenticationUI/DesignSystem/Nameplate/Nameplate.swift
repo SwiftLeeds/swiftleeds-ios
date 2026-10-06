@@ -33,8 +33,8 @@ package struct Nameplate<Title: View, Detail: View, Icon: View>: View {
     }
 }
 
-package extension Nameplate where Title == Text, Detail == Text {
-    init(
+extension Nameplate where Title == Text, Detail == Text {
+    package init(
         _ title: Text,
         detail: Text,
         role: NameplateRole = .standard,
@@ -44,8 +44,8 @@ package extension Nameplate where Title == Text, Detail == Text {
     }
 }
 
-package extension Nameplate where Title == Text, Detail == EmptyView {
-    init(
+extension Nameplate where Title == Text, Detail == EmptyView {
+    package init(
         _ title: Text,
         role: NameplateRole = .standard,
         @ViewBuilder icon: () -> Icon

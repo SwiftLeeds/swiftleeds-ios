@@ -47,8 +47,10 @@ import Testing
     @Test func whenSeveralGaps_shouldFillEachFromItsOwnField() {
         let sut = MessageTemplate(
             leadingText: "User ",
-            gaps: [.init(placeholder: user, trailingText: " token "),
-                   .init(placeholder: token, trailingText: "")]
+            gaps: [
+                .init(placeholder: user, trailingText: " token "),
+                .init(placeholder: token, trailingText: ""),
+            ]
         )
 
         let rendered = sut.rendered(with: [.open(user, "ada"), .secret(token, "abc")])

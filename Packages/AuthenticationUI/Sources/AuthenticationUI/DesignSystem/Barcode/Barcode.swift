@@ -80,14 +80,14 @@ package struct Barcode<Placeholder: View, Failure: View>: View {
     }
 }
 
-package extension Barcode {
+extension Barcode {
     /// Creates a code fetched from `url`.
     ///
     /// - Parameters:
     ///   - url: Where to fetch the code image from.
     ///   - placeholder: Shown while fetching.
     ///   - failure: Shown if the fetch fails.
-    init(
+    package init(
         url: URL?,
         @ViewBuilder placeholder: @escaping () -> Placeholder,
         @ViewBuilder failure: @escaping () -> Failure
@@ -96,28 +96,28 @@ package extension Barcode {
     }
 }
 
-package extension Barcode where Placeholder == Failure {
+extension Barcode where Placeholder == Failure {
     /// Creates a code fetched from `url`, showing `fallback` both while fetching and on failure.
-    init(url: URL?, @ViewBuilder fallback: @escaping () -> Failure) {
+    package init(url: URL?, @ViewBuilder fallback: @escaping () -> Failure) {
         self.init(source: .remote(url), placeholder: fallback, failure: fallback)
     }
 }
 
-package extension Barcode where Placeholder == EmptyView {
+extension Barcode where Placeholder == EmptyView {
     /// Creates a code generated from `content`, showing `failure` if it cannot be encoded.
-    init(_ content: BarcodeContent, @ViewBuilder failure: @escaping () -> Failure) {
+    package init(_ content: BarcodeContent, @ViewBuilder failure: @escaping () -> Failure) {
         self.init(source: .generated(content), placeholder: { EmptyView() }, failure: failure)
     }
 }
 
-package extension Barcode where Placeholder == EmptyView, Failure == EmptyView {
+extension Barcode where Placeholder == EmptyView, Failure == EmptyView {
     /// Creates a code generated from `content`, showing nothing if it cannot be encoded.
-    init(_ content: BarcodeContent) {
+    package init(_ content: BarcodeContent) {
         self.init(source: .generated(content), placeholder: { EmptyView() }, failure: { EmptyView() })
     }
 
     /// Creates a code from an image you already have.
-    init(image: Image) {
+    package init(image: Image) {
         self.init(source: .supplied(image), placeholder: { EmptyView() }, failure: { EmptyView() })
     }
 }

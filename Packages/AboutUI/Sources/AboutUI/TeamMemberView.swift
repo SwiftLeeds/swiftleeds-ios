@@ -17,11 +17,13 @@ package struct TeamMemberView: View {
         VStack(spacing: 12) {
             ZStack {
                 Circle()
-                    .fill(LinearGradient(
-                        colors: [.accentColor.opacity(0.8), .accentColor],
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
-                    ))
+                    .fill(
+                        LinearGradient(
+                            colors: [.accentColor.opacity(0.8), .accentColor],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
                     .frame(width: 80, height: 80)
 
                 CachedAsyncImage(url: member.photoURL) { image in
@@ -84,8 +86,8 @@ package struct TeamMemberView: View {
     }
 }
 
-private extension SocialLink {
-    var url: URL {
+extension SocialLink {
+    fileprivate var url: URL {
         switch self {
         case .linkedIn(let url):
             url
@@ -96,7 +98,7 @@ private extension SocialLink {
         }
     }
 
-    var symbolName: String {
+    fileprivate var symbolName: String {
         switch self {
         case .linkedIn:
             "person.crop.rectangle"
@@ -107,7 +109,7 @@ private extension SocialLink {
         }
     }
 
-    func accessibilityLabel(for name: String) -> String {
+    fileprivate func accessibilityLabel(for name: String) -> String {
         switch self {
         case .linkedIn:
             "LinkedIn profile for \(name)"

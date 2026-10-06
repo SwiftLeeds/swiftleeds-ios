@@ -39,11 +39,12 @@ import Testing
     func whenBuiltFromVariable_shouldKeepTheChosenSensitivity(sensitivity: Sensitivity) {
         let value = "ada@example.com"
 
-        let sut = switch sensitivity {
-        case .open: LogField.open("email", value)
-        case .hashed: LogField.hashed("email", value)
-        case .secret: LogField.secret("email", value)
-        }
+        let sut =
+            switch sensitivity {
+            case .open: LogField.open("email", value)
+            case .hashed: LogField.hashed("email", value)
+            case .secret: LogField.secret("email", value)
+            }
 
         #expect(sut.sensitivity == sensitivity)
         #expect(sut.value == .string(value))

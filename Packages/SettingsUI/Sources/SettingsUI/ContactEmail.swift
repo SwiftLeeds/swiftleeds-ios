@@ -13,9 +13,9 @@ public struct ContactEmail: Equatable, Hashable, Sendable {
     public init(_ text: String) throws(ParsingError) {
         let parts = text.split(separator: "@", omittingEmptySubsequences: false)
         guard parts.count == 2,
-              let localPart = parts.first, !localPart.isEmpty,
-              let domain = parts.last, Self.isDomain(domain),
-              let url = URL(string: "mailto:\(text)")
+            let localPart = parts.first, !localPart.isEmpty,
+            let domain = parts.last, Self.isDomain(domain),
+            let url = URL(string: "mailto:\(text)")
         else {
             throw .notAnAddress(text)
         }

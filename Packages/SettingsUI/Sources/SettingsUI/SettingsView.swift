@@ -70,7 +70,7 @@ public struct SettingsView<Header: View>: View {
             }
             .navigationTitle("Settings")
             .alert("Icon Change Failed", isPresented: $viewModel.showingIconError) {
-                Button("OK") { }
+                Button("OK") {}
             } message: {
                 Text("Unable to change app icon. Please try again.")
             }
@@ -81,7 +81,8 @@ public struct SettingsView<Header: View>: View {
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
         if let contactEmail = try? ContactEmail("hello@conference.example"),
-           let appVersion = try? AppVersion("2.1.0") {
+            let appVersion = try? AppVersion("2.1.0")
+        {
             SettingsView(contactEmail: contactEmail, appVersion: appVersion)
         }
     }

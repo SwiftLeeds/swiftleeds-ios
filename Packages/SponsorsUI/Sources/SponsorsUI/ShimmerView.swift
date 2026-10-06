@@ -9,7 +9,7 @@ struct ShimmerView: View {
     private static let defaultColors = [
         Color.gray.opacity(0.2),
         Color.gray.opacity(0.3),
-        Color.gray.opacity(0.2)
+        Color.gray.opacity(0.2),
     ]
 
     init(colors: [Color] = ShimmerView.defaultColors, duration: Double = 1.5) {
@@ -50,11 +50,13 @@ struct ShimmerView_Previews: PreviewProvider {
 
             Rectangle()
                 .frame(height: 50)
-                .overlay(ShimmerView(colors: [
-                    Color.blue.opacity(0.2),
-                    Color.blue.opacity(0.4),
-                    Color.blue.opacity(0.2)
-                ]))
+                .overlay(
+                    ShimmerView(colors: [
+                        Color.blue.opacity(0.2),
+                        Color.blue.opacity(0.4),
+                        Color.blue.opacity(0.2),
+                    ])
+                )
                 .clipShape(RoundedRectangle(cornerRadius: 8))
         }
         .padding()

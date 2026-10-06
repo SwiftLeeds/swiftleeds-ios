@@ -71,13 +71,13 @@ package struct StackedTileView<BackgroundType: ShapeStyle>: View {
 }
 struct StackedTileView_Previews: PreviewProvider {
     private static let longBody = """
-    A stacked tile carries a headline and a body that can run to several paragraphs. \
-    This filler stands in for a talk synopsis, which is the longest thing the tile \
-    has to lay out.
+        A stacked tile carries a headline and a body that can run to several paragraphs. \
+        This filler stands in for a talk synopsis, which is the longest thing the tile \
+        has to lay out.
 
-    A second paragraph checks that a line break survives the layout, and that the \
-    tile grows to fit its text rather than truncating it.
-    """
+        A second paragraph checks that a line break survives the layout, and that the \
+        tile grows to fit its text rather than truncating it.
+        """
 
     private static let gradient = LinearGradient(
         colors: [.blue, .teal],

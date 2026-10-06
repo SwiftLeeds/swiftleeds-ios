@@ -14,8 +14,8 @@ public struct DefaultNameplateStyle: NameplateStyle {
     }
 }
 
-public extension NameplateStyle where Self == DefaultNameplateStyle {
+extension NameplateStyle where Self == DefaultNameplateStyle {
     /// The default nameplate style, which draws a row with the title in the
     /// headline text style.
-    static var automatic: DefaultNameplateStyle { DefaultNameplateStyle() }
+    public static var automatic: DefaultNameplateStyle { DefaultNameplateStyle() }
 }

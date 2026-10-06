@@ -9,7 +9,7 @@ let package = Package(
         .macOS(.v15),
     ],
     products: [
-        .library(name: "AuthenticationUI", targets: ["AuthenticationUI"]),
+        .library(name: "AuthenticationUI", targets: ["AuthenticationUI"])
     ],
     dependencies: [
         .package(path: "../AuthenticationFeature"),

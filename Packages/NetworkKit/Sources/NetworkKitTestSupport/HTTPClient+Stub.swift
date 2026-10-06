@@ -12,12 +12,12 @@ extension HTTPClient {
     public static func responding(with data: Data, statusCode: HTTPStatusCode) -> HTTPClient {
         HTTPClient { request in
             guard let url = request.url,
-                  let response = HTTPURLResponse(
-                      url: url,
-                      statusCode: Int(statusCode),
-                      httpVersion: nil,
-                      headerFields: nil
-                  )
+                let response = HTTPURLResponse(
+                    url: url,
+                    statusCode: Int(statusCode),
+                    httpVersion: nil,
+                    headerFields: nil
+                )
             else { throw StubError.couldNotBuildResponse }
             return (data, response)
         }

@@ -23,8 +23,8 @@ import Testing
     }
 }
 
-private extension [LocationCategory] {
-    static var foodAndDrink: [LocationCategory] {
+extension [LocationCategory] {
+    fileprivate static var foodAndDrink: [LocationCategory] {
         get throws {
             [
                 .category(
@@ -35,7 +35,7 @@ private extension [LocationCategory] {
                             named: "Trinity Kitchen",
                             websiteURL: "https://trinityleeds.com/shops/trinity-kitchen",
                             coordinate: try Coordinate(latitude: 53.797378, longitude: -1.545209)
-                        ),
+                        )
                     ]
                 ),
                 .category(
@@ -46,7 +46,7 @@ private extension [LocationCategory] {
                             named: "Brew Society",
                             websiteURL: "https://www.brewsociety.co.uk/",
                             coordinate: try Coordinate(latitude: 53.795840, longitude: -1.550339)
-                        ),
+                        )
                     ]
                 ),
             ]
@@ -54,8 +54,9 @@ private extension [LocationCategory] {
     }
 }
 
-private extension LocationCategory {
-    static func category(named name: String, symbolName: String, locations: [Location]) -> LocationCategory {
+extension LocationCategory {
+    fileprivate static func category(named name: String, symbolName: String, locations: [Location]) -> LocationCategory
+    {
         LocationCategory(
             id: LocationCategoryID(UUID()),
             name: name,
@@ -65,8 +66,9 @@ private extension LocationCategory {
     }
 }
 
-private extension Location {
-    static func location(named name: String, websiteURL: String, coordinate: Coordinate) throws -> Location {
+extension Location {
+    fileprivate static func location(named name: String, websiteURL: String, coordinate: Coordinate) throws -> Location
+    {
         Location(
             id: LocationID(UUID()),
             name: name,

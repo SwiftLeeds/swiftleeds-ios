@@ -9,7 +9,7 @@ let package = Package(
         .macOS(.v15),
     ],
     products: [
-        .library(name: "ScheduleFeature", targets: ["ScheduleFeature"]),
+        .library(name: "ScheduleFeature", targets: ["ScheduleFeature"])
     ],
     dependencies: [
         .package(path: "../NetworkKit"),

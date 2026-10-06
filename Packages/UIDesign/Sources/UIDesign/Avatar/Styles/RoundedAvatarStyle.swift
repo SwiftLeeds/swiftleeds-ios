@@ -25,16 +25,16 @@ public struct RoundedAvatarStyle: AvatarStyle {
     }
 }
 
-public extension AvatarStyle where Self == RoundedAvatarStyle {
+extension AvatarStyle where Self == RoundedAvatarStyle {
     /// An avatar style that draws a rounded square, with any status on its
     /// lower trailing corner.
-    static var rounded: RoundedAvatarStyle { RoundedAvatarStyle() }
+    public static var rounded: RoundedAvatarStyle { RoundedAvatarStyle() }
 
     /// An avatar style that draws a rounded square with a corner radius of
     /// your own.
     ///
     /// - Parameter cornerRadius: The radius of each corner.
-    static func rounded(cornerRadius: CornerRadius) -> RoundedAvatarStyle {
+    public static func rounded(cornerRadius: CornerRadius) -> RoundedAvatarStyle {
         RoundedAvatarStyle(cornerRadius: cornerRadius)
     }
 }

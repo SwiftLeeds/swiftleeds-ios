@@ -77,11 +77,19 @@ extension SwiftLeedsSmallWidgetView {
 
 struct SwiftLeedsSmallWidgetView_Previews: PreviewProvider {
     static var previews: some View {
-        SwiftLeedsSmallWidgetView(slot: Schedule.Slot(id: UUID(), date: Date(), startTime: "11:00 AM", duration: 1, activity: nil, presentation: Presentation.skyBet))
-            .previewContext(WidgetPreviewContext(family: .systemSmall))
+        SwiftLeedsSmallWidgetView(
+            slot: Schedule.Slot(
+                id: UUID(), date: Date(), startTime: "11:00 AM", duration: 1, activity: nil,
+                presentation: Presentation.skyBet)
+        )
+        .previewContext(WidgetPreviewContext(family: .systemSmall))
 
-        SwiftLeedsSmallWidgetView(slot: Schedule.Slot(id: UUID(), date: Date(), startTime: "11:00 AM", duration: 1, activity: nil, presentation: Presentation.skyBet))
-            .environment(\.colorScheme, .dark)
-            .previewContext(WidgetPreviewContext(family: .systemSmall))
+        SwiftLeedsSmallWidgetView(
+            slot: Schedule.Slot(
+                id: UUID(), date: Date(), startTime: "11:00 AM", duration: 1, activity: nil,
+                presentation: Presentation.skyBet)
+        )
+        .environment(\.colorScheme, .dark)
+        .previewContext(WidgetPreviewContext(family: .systemSmall))
     }
 }

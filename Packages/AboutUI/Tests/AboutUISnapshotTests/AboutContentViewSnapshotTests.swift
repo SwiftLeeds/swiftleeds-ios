@@ -36,8 +36,8 @@ import Testing
     }
 }
 
-private extension TeamMember {
-    static var one: TeamMember {
+extension TeamMember {
+    fileprivate static var one: TeamMember {
         get throws {
             TeamMember(
                 id: TeamMemberID("Member One"),
@@ -49,7 +49,7 @@ private extension TeamMember {
         }
     }
 
-    static var two: TeamMember {
+    fileprivate static var two: TeamMember {
         get throws {
             TeamMember(
                 id: TeamMemberID("Member Two"),

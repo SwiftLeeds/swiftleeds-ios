@@ -52,7 +52,7 @@ extension Presentation {
                     + "jOaeQ1Og_400x400.jpeg-AEAB9C2A-9572-4E6A-A63E-C3534EE5C321",
                 organisation: "DonnyWals.com",
                 twitter: "donnywals"
-            ),
+            )
         ],
         image: nil,
         slidoURL: "https://app.sli.do/event/2x7itwrn",

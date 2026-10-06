@@ -42,8 +42,6 @@ opt_in_rules:
   # "Never write `!`. No force unwrap, no `as!`, no `try!`, in source or in tests."
   - force_unwrapping
   - implicitly_unwrapped_optional
-  # "Imports alphabetical, one list, no system-versus-local grouping."
-  - sorted_imports
   # "Held as `@State private var viewModel = ViewModel()`."
   - private_swiftui_state
   # "Minimise access. Escalate one level at a time, only when something that
@@ -126,9 +124,26 @@ opt_in_rules:
   - static_operator
 
 disabled_rules:
-  # The codebase is inconsistent here and no recorded convention picks a side,
-  # so neither setting is enforced. Revisit once one is chosen.
+  # `swift format` owns layout, and these three rules contradict what it writes.
+  #
+  # `trailing_comma`: the formatter puts a trailing comma on a collection of two
+  # or more elements and removes it from a collection of one. That settles the
+  # inconsistency this entry used to record.
+  #
+  # `sorted_imports`: `OrderedImports` sorts by code point, where a capital
+  # letter precedes every lowercase one, and this rule ignores case. No ordering
+  # satisfies both, so any module named lowercase, such as `os`, splits them.
+  #
+  # `opening_brace`: the formatter puts `{` on its own line after a wrapped
+  # multi-line condition. Five sites in this codebase.
   - trailing_comma
+  - sorted_imports
+  - opening_brace
+
+# `.swift-format` sets `lineLength` to this number. Pin it here rather than
+# inheriting SwiftLint's default, so a version bump cannot move one tool's limit
+# without the other. `--strict` is what makes the warning threshold a gate.
+line_length: 120
 
 # A view model nests under its view, and its own `Phase` and `Alert` enums nest
 # under that. The default of one level rejects the house pattern.

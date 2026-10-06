@@ -5,11 +5,19 @@ import WidgetKit
 
 struct Provider: TimelineProvider {
     func placeholder(in context: Context) -> SwiftLeedsWidgetEntry {
-        SwiftLeedsWidgetEntry(date: Date(), slot: Schedule.Slot(id: UUID(), date: Date(), startTime: "11:00 AM", duration: 1, activity: nil, presentation: Presentation.donnyWalls))
+        SwiftLeedsWidgetEntry(
+            date: Date(),
+            slot: Schedule.Slot(
+                id: UUID(), date: Date(), startTime: "11:00 AM", duration: 1, activity: nil,
+                presentation: Presentation.donnyWalls))
     }
 
     func getSnapshot(in context: Context, completion: @escaping (SwiftLeedsWidgetEntry) -> Void) {
-        let entry = SwiftLeedsWidgetEntry(date: Date(), slot: Schedule.Slot(id: UUID(), date: Date(), startTime: "11:00 AM", duration: 1, activity: nil, presentation: Presentation.donnyWalls))
+        let entry = SwiftLeedsWidgetEntry(
+            date: Date(),
+            slot: Schedule.Slot(
+                id: UUID(), date: Date(), startTime: "11:00 AM", duration: 1, activity: nil,
+                presentation: Presentation.donnyWalls))
         completion(entry)
     }
 

@@ -80,9 +80,9 @@ public struct AvatarFallback: View {
     private static var initialsProportion: CGFloat { 0.46 }
 }
 
-public extension AvatarFallback {
+extension AvatarFallback {
     /// A person symbol on a plain fill, for someone the app cannot name.
-    static var symbol: AvatarFallback { AvatarFallback(.symbol) }
+    public static var symbol: AvatarFallback { AvatarFallback(.symbol) }
 
     /// The person's initials on a plain fill.
     ///
@@ -90,7 +90,7 @@ public extension AvatarFallback {
     /// nothing to abbreviate draws the symbol instead.
     ///
     /// - Parameter name: The name to abbreviate.
-    static func initials(_ name: PersonNameComponents) -> AvatarFallback {
+    public static func initials(_ name: PersonNameComponents) -> AvatarFallback {
         AvatarFallback(.initials(name))
     }
 }

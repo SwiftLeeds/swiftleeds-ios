@@ -7,7 +7,8 @@ enum TicketCode {
 
     /// Creates the drawn code, or `unavailable` when `content` cannot be encoded.
     @MainActor init(drawing content: BarcodeContent) {
-        self = content.makeImage()
+        self =
+            content.makeImage()
             .map { .drawn(Image(decorative: $0, scale: 1)) }
             ?? .unavailable
     }

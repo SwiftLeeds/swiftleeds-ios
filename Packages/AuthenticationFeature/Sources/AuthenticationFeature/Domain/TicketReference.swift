@@ -13,7 +13,8 @@ public struct TicketReference: Equatable, Hashable, Sendable {
     /// - Parameter value: The ticket reference.
     /// - Throws: ``ParsingError/invalidFormat`` if `value` is not a valid ticket reference.
     public init(_ value: String) throws(ParsingError) {
-        self.storage = try value
+        self.storage =
+            try value
             .trimmingCharacters(in: .whitespacesAndNewlines)
             .uppercased()
             .wholeMatch(of: /([A-Z0-9]{4})-?([0-9]{1,2})/)

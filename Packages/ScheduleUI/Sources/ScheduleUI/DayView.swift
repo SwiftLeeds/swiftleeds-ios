@@ -27,12 +27,15 @@ package struct DayView: View {
 
                     if let presentation = slot.presentation {
                         NavigationLink {
-                            SpeakerView(presentation: presentation,
-                                        showSlido: showSlido)
+                            SpeakerView(
+                                presentation: presentation,
+                                showSlido: showSlido)
                         } label: {
-                            TalkCell(time: slot.startTime,
-                                     details: presentation.title,
-                                     speakers: presentation.speakers)
+                            TalkCell(
+                                time: slot.startTime,
+                                details: presentation.title,
+                                speakers: presentation.speakers
+                            )
                             .transition(.opacity)
                         }
                     }

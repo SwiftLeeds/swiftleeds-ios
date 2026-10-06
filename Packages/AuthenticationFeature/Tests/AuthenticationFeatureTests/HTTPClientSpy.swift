@@ -20,12 +20,12 @@ actor HTTPClientSpy {
     private func handle(_ request: URLRequest) throws -> (Data, HTTPURLResponse) {
         requests.append(request)
         guard let url = request.url,
-              let response = HTTPURLResponse(
-                  url: url,
-                  statusCode: statusCode,
-                  httpVersion: nil,
-                  headerFields: nil
-              )
+            let response = HTTPURLResponse(
+                url: url,
+                statusCode: statusCode,
+                httpVersion: nil,
+                headerFields: nil
+            )
         else { throw StubError.couldNotBuildResponse }
         return (data, response)
     }

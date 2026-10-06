@@ -46,7 +46,7 @@ import Testing
                 linkedin: "https://linkedin.example.com/member-one",
                 twitter: "https://twitter.example.com/member-one",
                 slack: "https://slack.example.com/member-one"
-            ),
+            )
         ])
 
         let linkedIn = try #require(URL(string: "https://linkedin.example.com/member-one"))

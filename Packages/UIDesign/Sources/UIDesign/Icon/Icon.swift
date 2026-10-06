@@ -35,58 +35,58 @@ extension Icon {
 
 // MARK: - Navigation
 
-public extension Icon {
-    static let back = Icon(.chevronLeft)
-    static let forward = Icon(.chevronRight)
-    static let close = Icon(.xmark)
-    static let more = Icon(.ellipsis)
+extension Icon {
+    public static let back = Icon(.chevronLeft)
+    public static let forward = Icon(.chevronRight)
+    public static let close = Icon(.xmark)
+    public static let more = Icon(.ellipsis)
 }
 
 // MARK: - Actions
 
-public extension Icon {
-    static let share = Icon(.squareAndArrowUp)
-    static let add = Icon(.plus)
-    static let delete = Icon(.trash)
-    static let edit = Icon(.pencil)
-    static let search = Icon(.magnifyingglass)
-    static let filter = Icon(.line3HorizontalDecrease)
-    static let sort = Icon(.arrowUpArrowDown)
-    static let refresh = Icon(.arrowClockwise)
-    static let copy = Icon(.documentOnDocument)
+extension Icon {
+    public static let share = Icon(.squareAndArrowUp)
+    public static let add = Icon(.plus)
+    public static let delete = Icon(.trash)
+    public static let edit = Icon(.pencil)
+    public static let search = Icon(.magnifyingglass)
+    public static let filter = Icon(.line3HorizontalDecrease)
+    public static let sort = Icon(.arrowUpArrowDown)
+    public static let refresh = Icon(.arrowClockwise)
+    public static let copy = Icon(.documentOnDocument)
 
     /// An outline star, for an item that is not a favorite yet.
-    static let favorite = Icon(.star)
+    public static let favorite = Icon(.star)
 
     /// A solid star, for an item that is already a favorite.
-    static let favoriteFilled = Icon(.starFill)
+    public static let favoriteFilled = Icon(.starFill)
 
     /// Leaves the app. Pair it with a link, never with navigation.
-    static let openExternal = Icon(.arrowUpRightSquare)
+    public static let openExternal = Icon(.arrowUpRightSquare)
 }
 
 // MARK: - State
 
-public extension Icon {
-    static let success = Icon(.checkmarkCircle)
-    static let error = Icon(.xmarkCircle)
-    static let info = Icon(.infoCircle)
-    static let locked = Icon(.lock)
-    static let live = Icon(.dotRadiowavesLeftAndRight)
+extension Icon {
+    public static let success = Icon(.checkmarkCircle)
+    public static let error = Icon(.xmarkCircle)
+    public static let info = Icon(.infoCircle)
+    public static let locked = Icon(.lock)
+    public static let live = Icon(.dotRadiowavesLeftAndRight)
 
     /// Needs attention, though nothing has failed.
-    static let warning = Icon(.exclamationmarkTriangle)
+    public static let warning = Icon(.exclamationmarkTriangle)
 }
 
 // MARK: - Content
 
-public extension Icon {
-    static let calendar = Icon(.calendar)
-    static let clock = Icon(.clock)
-    static let location = Icon(.mappinAndEllipse)
-    static let person = Icon(.person)
-    static let link = Icon(.link)
-    static let document = Icon(.textDocument)
-    static let video = Icon(.playRectangle)
-    static let ticket = Icon(.ticket)
+extension Icon {
+    public static let calendar = Icon(.calendar)
+    public static let clock = Icon(.clock)
+    public static let location = Icon(.mappinAndEllipse)
+    public static let person = Icon(.person)
+    public static let link = Icon(.link)
+    public static let document = Icon(.textDocument)
+    public static let video = Icon(.playRectangle)
+    public static let ticket = Icon(.ticket)
 }
