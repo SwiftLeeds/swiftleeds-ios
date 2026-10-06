@@ -31,11 +31,9 @@ jobs:
       matrix:
         include:
           - brand: SwiftLeeds
-            debug-configuration: Debug
-            release-configuration: Release
+            configuration: Release
           - brand: KotlinLeeds
-            debug-configuration: Debug-KotlinLeeds
-            release-configuration: Release-KotlinLeeds
+            configuration: Release-KotlinLeeds
     steps:
       - name: Checkout iOS Repository
         uses: actions/checkout@v4
@@ -45,15 +43,13 @@ jobs:
         with:
           xcode-version: '26.5'
 
-      - name: Build ${{ matrix.brand }} (${{ matrix.debug-configuration }})
-        run: fastlane build scheme:${{ matrix.brand }} configuration:${{ matrix.debug-configuration }}
-
-      # Release compiles out every `#if DEBUG` block, so this step fails when
-      # the app's shipping code uses a DEBUG-only symbol, and the Debug step
-      # cannot. The two share a job because of the runner limit described at
-      # the top of this file.
-      - name: Build ${{ matrix.brand }} (${{ matrix.release-configuration }})
-        run: fastlane build scheme:${{ matrix.brand }} configuration:${{ matrix.release-configuration }}
+      # Release compiles out every `#if DEBUG` block, so this build fails when
+      # the app's shipping code uses a DEBUG-only symbol, and a Debug build
+      # cannot. Debug is not built here: the test jobs compile the packages in
+      # Debug and the launch jobs compile the App Clip in Debug, and a second
+      # build would double this job's time.
+      - name: Build ${{ matrix.brand }} (${{ matrix.configuration }})
+        run: fastlane build scheme:${{ matrix.brand }} configuration:${{ matrix.configuration }}
 
   test-packages:
     name: Test Swift Packages
