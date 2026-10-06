@@ -1,6 +1,7 @@
-@testable import AuthenticationUI
 import CoreImage
 import Testing
+
+@testable import AuthenticationUI
 
 @MainActor
 @Suite struct BarcodeSymbologyTests {
@@ -39,8 +40,8 @@ import Testing
     }
 }
 
-private extension BarcodeSymbologyTests {
-    func decode(_ image: CGImage) -> String? {
+extension BarcodeSymbologyTests {
+    fileprivate func decode(_ image: CGImage) -> String? {
         let detector = CIDetector(
             ofType: CIDetectorTypeQRCode,
             context: nil,
@@ -52,7 +53,7 @@ private extension BarcodeSymbologyTests {
 
     /// The width of the uniform light border, measured in modules. The module size is derived
     /// from the top-left finder pattern, whose top edge is seven modules wide in every QR code.
-    func quietZoneModules(of image: CGImage) -> Int {
+    fileprivate func quietZoneModules(of image: CGImage) -> Int {
         guard let pixels = grayscalePixels(of: image) else { return 0 }
         let width = image.width
         let isLight = { (x: Int, y: Int) in pixels[y * width + x] > 127 }
@@ -73,17 +74,21 @@ private extension BarcodeSymbologyTests {
     }
 
     // nil means the bitmap context could not be made, which an empty array cannot say.
-    func grayscalePixels(of image: CGImage) -> [UInt8]? { // swiftlint:disable:this discouraged_optional_collection
+    // The disable sits above the declaration rather than on it because the line has no room.
+    // swiftlint:disable:next discouraged_optional_collection
+    fileprivate func grayscalePixels(of image: CGImage) -> [UInt8]? {
         var pixels = [UInt8](repeating: 0, count: image.width * image.height)
-        guard let context = CGContext(
-            data: &pixels,
-            width: image.width,
-            height: image.height,
-            bitsPerComponent: 8,
-            bytesPerRow: image.width,
-            space: CGColorSpaceCreateDeviceGray(),
-            bitmapInfo: CGImageAlphaInfo.none.rawValue
-        ) else { return nil }
+        guard
+            let context = CGContext(
+                data: &pixels,
+                width: image.width,
+                height: image.height,
+                bitsPerComponent: 8,
+                bytesPerRow: image.width,
+                space: CGColorSpaceCreateDeviceGray(),
+                bitmapInfo: CGImageAlphaInfo.none.rawValue
+            )
+        else { return nil }
         context.draw(image, in: CGRect(x: 0, y: 0, width: image.width, height: image.height))
         return pixels
     }
