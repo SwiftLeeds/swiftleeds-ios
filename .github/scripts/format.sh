@@ -1,7 +1,7 @@
 #!/bin/bash
 #
-# Formats every Swift source file with Apple's `swift format`, or checks that
-# they are already formatted. Run it from the repository root:
+# Formats every Swift source file git tracks with Apple's `swift format`, or
+# checks that they are already formatted. Run it from the repository root:
 #
 #     .github/scripts/format.sh            # rewrite the files
 #     .github/scripts/format.sh --check    # report, change nothing
@@ -9,25 +9,28 @@
 # `--check` exits 0 when the tree is formatted and 1 when it is not. On GitHub
 # Actions it also writes a short report to the job summary and an annotation to
 # the log.
+#
+# A new file is covered once it is staged, because staging puts it in the index
+# and that is what git lists. The pre-commit hook is the gate that catches it.
 
 set -uo pipefail
 
 # `swift format` has no `excluded` setting, and a `.swift-format-ignore` file
-# does nothing in the 6.3.0 that ships with Xcode 26.5. So naming the roots is
-# the only thing that keeps the formatter out of `.build-shared`, out of each
-# package's own `.build`, and out of a second worktree. A bare `--recursive .`
-# would rewrite third-party dependency source in place.
+# does nothing in the 6.3.0 that ships with Xcode 26.5. The paths it is given are
+# the only control there is, and a bare `--recursive .` would rewrite third-party
+# dependency source in place.
 #
-# These are the same roots `.swiftlint.yml` lists under `included`.
-ROOTS=(
-    Packages
-    SwiftLeeds
-    SwiftLeedsAppClip
-    SwiftLeedsPackage
-    SwiftLeedsTests
-    SwiftLeedsUITests
-    SwiftLeedsWidget
-)
+# So ask git for the files instead of naming directories. Build output is
+# ignored, so it can never be reached: not `.build-shared`, not a package's own
+# `.build`, not a stray `dd` inside a package, not a worktree. A directory list
+# cannot promise that, because build output sits inside the source directories
+# rather than beside them.
+#
+# This covers every Swift file the repository tracks, so a new directory needs no
+# change here.
+swift_files () {
+    git ls-files -z '*.swift'
+}
 
 work=${RUNNER_TEMP:-$(mktemp -d)}
 summary=${GITHUB_STEP_SUMMARY:-/dev/null}
@@ -83,10 +86,16 @@ if ! diff -u .swift-format "$work/effective.json" > "$work/config.diff"; then
     exit 1
 fi
 
+count=$(git ls-files '*.swift' | wc -l | tr -d ' ')
+if [ "$count" -eq 0 ]; then
+    fatal "git tracks no Swift files here, so this check is broken"
+    exit 1
+fi
+
 if [ "${1:-}" != "--check" ]; then
-    echo "Formatting ${#ROOTS[@]} roots in place"
-    if ! swift format format --in-place --recursive --parallel \
-        --configuration .swift-format "${ROOTS[@]}"
+    echo "Formatting $count tracked Swift files in place"
+    if ! swift_files | xargs -0 swift format format --in-place --parallel \
+        --configuration .swift-format
     then
         fatal "swift format could not rewrite every file"
         exit 1
@@ -95,11 +104,11 @@ if [ "${1:-}" != "--check" ]; then
     exit 0
 fi
 
-echo "Linting formatting over ${#ROOTS[@]} roots"
+echo "Linting $count tracked Swift files"
 
 status=0
-swift format lint --strict --recursive --parallel \
-    --configuration .swift-format "${ROOTS[@]}" \
+swift_files | xargs -0 swift format lint --strict --parallel \
+    --configuration .swift-format \
     > "$work/findings.log" 2>&1 || status=$?
 cat "$work/findings.log"
 

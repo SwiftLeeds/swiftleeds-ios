@@ -569,9 +569,3 @@ jobs:
       - name: Check the snapshot scheme lists every snapshot target
         run: python3 .github/scripts/check-snapshot-scheme.py
 
-      # `swift format` has no `excluded` setting, so the formatter names the
-      # directories it walks and SwiftLint names its own. A new top-level source
-      # directory reaching one list and not the other would be linted and never
-      # formatted, with both jobs still green.
-      - name: Check both tools read the same source roots
-        run: python3 .github/scripts/check-format-roots.py
