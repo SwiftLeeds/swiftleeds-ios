@@ -83,8 +83,8 @@ public struct SignInView: View {
     }
 }
 
-private extension View {
-    func emailFieldStyle() -> some View {
+extension View {
+    fileprivate func emailFieldStyle() -> some View {
         #if os(iOS)
         keyboardType(.emailAddress)
             .textInputAutocapitalization(.never)
@@ -94,7 +94,7 @@ private extension View {
         #endif
     }
 
-    func ticketReferenceFieldStyle() -> some View {
+    fileprivate func ticketReferenceFieldStyle() -> some View {
         #if os(iOS)
         textInputAutocapitalization(.characters)
             .autocorrectionDisabled()

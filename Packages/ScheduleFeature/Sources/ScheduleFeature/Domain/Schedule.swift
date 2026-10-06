@@ -196,7 +196,7 @@ extension Schedule.Slot: Codable {
             self.activity = nil
             self.presentation = presentation
         } else {
-            throw(SlotError.invalidSlot)
+            throw (SlotError.invalidSlot)
         }
     }
 
@@ -215,13 +215,13 @@ extension Schedule.Slot: Equatable {
     }
 }
 
-private extension Calendar {
+extension Calendar {
     /// Whole days from the start of today to the start of the given date.
     ///
     /// - Parameter date: The date to count to.
     /// - Returns: A negative count once the date has passed, or `0` when the
     ///   calendar reports no day component.
-    func numberOfDays(to date: Date) -> Int {
+    fileprivate func numberOfDays(to date: Date) -> Int {
         let fromDate = startOfDay(for: Date.now)
         let toDate = startOfDay(for: date)
         let numberOfDays = dateComponents([.day], from: fromDate, to: toDate)

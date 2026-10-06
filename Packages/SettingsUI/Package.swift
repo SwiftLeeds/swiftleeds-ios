@@ -9,7 +9,7 @@ let package = Package(
         .macOS(.v15),
     ],
     products: [
-        .library(name: "SettingsUI", targets: ["SettingsUI"]),
+        .library(name: "SettingsUI", targets: ["SettingsUI"])
     ],
     dependencies: [
         .package(path: "../ColorTheme"),

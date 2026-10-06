@@ -64,8 +64,8 @@ package struct Avatar<Content: View, Placeholder: View, Failure: View>: View {
     }
 }
 
-package extension Avatar where Placeholder == Failure {
-    init(
+extension Avatar where Placeholder == Failure {
+    package init(
         url: URL?,
         @ViewBuilder content: @escaping (Image) -> Content,
         @ViewBuilder fallback: @escaping () -> Failure
@@ -74,8 +74,8 @@ package extension Avatar where Placeholder == Failure {
     }
 }
 
-package extension Avatar where Content == AvatarImage {
-    init(
+extension Avatar where Content == AvatarImage {
+    package init(
         url: URL?,
         @ViewBuilder placeholder: @escaping () -> Placeholder,
         @ViewBuilder failure: @escaping () -> Failure
@@ -84,8 +84,8 @@ package extension Avatar where Content == AvatarImage {
     }
 }
 
-package extension Avatar where Content == AvatarImage, Placeholder == Failure {
-    init(url: URL?, @ViewBuilder fallback: @escaping () -> Failure) {
+extension Avatar where Content == AvatarImage, Placeholder == Failure {
+    package init(url: URL?, @ViewBuilder fallback: @escaping () -> Failure) {
         self.init(url: url, content: { AvatarImage($0) }, placeholder: fallback, failure: fallback)
     }
 }

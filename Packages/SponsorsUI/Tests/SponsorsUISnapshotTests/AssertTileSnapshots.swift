@@ -42,8 +42,8 @@ func assertTileSnapshots(
     )
 }
 
-private extension View {
-    func tileCard(width: CGFloat) -> some View {
+extension View {
+    fileprivate func tileCard(width: CGFloat) -> some View {
         self
             .frame(width: width)
             .fixedSize(horizontal: false, vertical: true)

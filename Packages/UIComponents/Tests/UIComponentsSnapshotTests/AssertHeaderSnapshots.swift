@@ -35,8 +35,8 @@ func assertHeaderSnapshots(
     )
 }
 
-private extension View {
-    func headerCard(width: CGFloat = 390, titleSpace: CGFloat = 220) -> some View {
+extension View {
+    fileprivate func headerCard(width: CGFloat = 390, titleSpace: CGFloat = 220) -> some View {
         VStack(spacing: 0) {
             self
             Color.clear.frame(height: titleSpace)

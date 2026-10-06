@@ -90,8 +90,8 @@ import Testing
     }
 }
 
-private extension LocalScheduleStore {
-    func save(_ schedule: Schedule, for request: ScheduleRequest, at storedAt: Date = .now) {
+extension LocalScheduleStore {
+    fileprivate func save(_ schedule: Schedule, for request: ScheduleRequest, at storedAt: Date = .now) {
         save(StoredSchedule(schedule: schedule, storedAt: storedAt), request)
     }
 }

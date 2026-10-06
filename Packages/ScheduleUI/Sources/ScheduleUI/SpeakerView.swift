@@ -91,8 +91,9 @@ package struct SpeakerView: View {
                     }
 
                     if let twitter = speaker.twitter,
-                       twitter.isEmpty == false,
-                       let twitterURL = URL(string: "https://twitter.com/\(twitter)") {
+                        twitter.isEmpty == false,
+                        let twitterURL = URL(string: "https://twitter.com/\(twitter)")
+                    {
                         CommonTileView(
                             primaryText: "Twitter",
                             secondaryText: "@\(twitter)",

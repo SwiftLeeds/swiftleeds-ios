@@ -9,7 +9,7 @@ let package = Package(
         .macOS(.v15),
     ],
     products: [
-        .library(name: "SponsorsUI", targets: ["SponsorsUI"]),
+        .library(name: "SponsorsUI", targets: ["SponsorsUI"])
     ],
     dependencies: [
         .package(path: "../../SwiftLeedsPackage"),

@@ -12,10 +12,10 @@ struct LoggedHTTPRequestOutcome {
         LoggedHTTPRequestOutcome(
             level: .debug,
             message: """
-            A response arrived: \
-            \(request.loggedSummary, name: "request", privacy: .open), \
-            \(Int(status.code), name: "statusCode", privacy: .open)
-            """
+                A response arrived: \
+                \(request.loggedSummary, name: "request", privacy: .open), \
+                \(Int(status.code), name: "statusCode", privacy: .open)
+                """
         )
     }
 
@@ -24,10 +24,10 @@ struct LoggedHTTPRequestOutcome {
         return LoggedHTTPRequestOutcome(
             level: reason.level,
             message: """
-            A request did not reach the server: \
-            \(request.loggedSummary, name: "request", privacy: .open), \
-            \(reason.name, name: "reason", privacy: .open)
-            """
+                A request did not reach the server: \
+                \(request.loggedSummary, name: "request", privacy: .open), \
+                \(reason.name, name: "reason", privacy: .open)
+                """
         )
     }
 }

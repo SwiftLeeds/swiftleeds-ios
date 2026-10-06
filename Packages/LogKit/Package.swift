@@ -14,13 +14,13 @@ let package = Package(
         .library(name: "LogKitTestSupport", targets: ["LogKitTestSupport"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.0.0"),
+        .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.0.0")
     ],
     targets: [
         .target(
             name: "LogKit",
             dependencies: [
-                .product(name: "Dependencies", package: "swift-dependencies"),
+                .product(name: "Dependencies", package: "swift-dependencies")
             ]
         ),
         .target(

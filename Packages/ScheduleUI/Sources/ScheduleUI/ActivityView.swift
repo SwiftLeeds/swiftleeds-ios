@@ -42,9 +42,10 @@ package struct ActivityView: View {
 
     private var foregroundImageURLs: [URL] {
         if let image = activity.image,
-           !image.isEmpty,
-           let encodedImage = image.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed),
-           let url = URL(string: encodedImage) {
+            !image.isEmpty,
+            let encodedImage = image.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed),
+            let url = URL(string: encodedImage)
+        {
             return [url]
         } else {
             return []

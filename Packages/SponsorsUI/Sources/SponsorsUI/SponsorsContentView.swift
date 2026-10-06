@@ -194,10 +194,11 @@ package struct SponsorsContentView: View {
     private func tiles(for level: SponsorLevel, in sponsors: Sponsors) -> some View {
         ForEach(sponsors.sponsors(at: level)) { sponsor in
             SponsorTileView(sponsor: sponsor)
-                .transition(.asymmetric(
-                    insertion: .scale.combined(with: .opacity),
-                    removal: .scale.combined(with: .opacity)
-                ))
+                .transition(
+                    .asymmetric(
+                        insertion: .scale.combined(with: .opacity),
+                        removal: .scale.combined(with: .opacity)
+                    ))
         }
     }
 

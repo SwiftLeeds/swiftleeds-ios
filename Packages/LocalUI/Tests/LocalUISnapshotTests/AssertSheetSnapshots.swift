@@ -39,8 +39,8 @@ func assertSheetSnapshots(
     )
 }
 
-private extension View {
-    func onSheet() -> some View {
+extension View {
+    fileprivate func onSheet() -> some View {
         self
             .frame(width: sheetContentWidth)
             .fixedSize(horizontal: false, vertical: true)

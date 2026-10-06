@@ -35,7 +35,7 @@ import Testing
 
     @Test func whenSponsorCarriesJobs_shouldMapThem() throws {
         let list = SponsorListDTO(data: [
-            .fixture(jobs: [.fixture(title: "Senior iOS Engineer", location: "Leeds")]),
+            .fixture(jobs: [.fixture(title: "Senior iOS Engineer", location: "Leeds")])
         ])
 
         let jobs = try #require(sut.map(list).sponsors(at: .platinum).first?.jobs)

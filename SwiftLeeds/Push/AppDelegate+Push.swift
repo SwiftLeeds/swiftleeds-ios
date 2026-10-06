@@ -29,9 +29,9 @@ extension AppDelegate {
         @Dependency(\.log) var log
         var details = TokenDetails(token: deviceToken)
 
-#if DEBUG
+        #if DEBUG
         details.debug = true
-#endif
+        #endif
 
         log.debug(
             "Registering for push with token \(deviceToken.map { String(format: "%02x", $0) }.joined(), name: "deviceToken", privacy: .hashed)",
@@ -70,7 +70,9 @@ extension AppDelegate {
 
 // MARK: - UNUserNotificationCenterDelegate
 extension AppDelegate: UNUserNotificationCenterDelegate {
-    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification) async -> UNNotificationPresentationOptions {
+    func userNotificationCenter(
+        _ center: UNUserNotificationCenter, willPresent notification: UNNotification
+    ) async -> UNNotificationPresentationOptions {
         [.banner, .sound, .badge]
     }
 }

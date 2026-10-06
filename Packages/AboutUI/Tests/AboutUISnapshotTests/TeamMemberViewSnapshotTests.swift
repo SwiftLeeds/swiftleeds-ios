@@ -19,8 +19,8 @@ import Testing
     }
 }
 
-private extension TeamMember {
-    static var withRoleAndEveryLink: TeamMember {
+extension TeamMember {
+    fileprivate static var withRoleAndEveryLink: TeamMember {
         get throws {
             TeamMember(
                 id: TeamMemberID("Member One"),
@@ -36,7 +36,7 @@ private extension TeamMember {
         }
     }
 
-    static var withoutRoleOrLinks: TeamMember {
+    fileprivate static var withoutRoleOrLinks: TeamMember {
         get throws {
             TeamMember(id: TeamMemberID("Member Two"), name: "Member Two", role: nil, photoURL: try photo, links: [])
         }

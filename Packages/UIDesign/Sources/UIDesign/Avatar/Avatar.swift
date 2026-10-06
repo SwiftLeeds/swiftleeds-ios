@@ -117,7 +117,7 @@ public struct Avatar<Fallback: View>: View {
     }
 }
 
-public extension Avatar where Fallback == AvatarFallback {
+extension Avatar where Fallback == AvatarFallback {
     /// Creates an avatar that draws a built-in fallback while its photo is
     /// missing.
     ///
@@ -130,7 +130,7 @@ public extension Avatar where Fallback == AvatarFallback {
     ///     where it goes.
     ///   - fallback: What to draw instead of the photo. The default is
     ///     ``AvatarFallback/symbol``.
-    init(
+    public init(
         url: URL?,
         size: AvatarSize = .medium,
         status: AvatarStatus? = nil,

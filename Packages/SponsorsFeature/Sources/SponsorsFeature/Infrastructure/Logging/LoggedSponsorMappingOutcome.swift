@@ -15,10 +15,10 @@ struct LoggedSponsorMappingOutcome {
         LoggedSponsorMappingOutcome(
             level: .error,
             message: """
-            The sponsor \(error.sponsor, name: "sponsor", privacy: .open) had an invalid \
-            \(error.field.rawValue, name: "field", privacy: .open): \
-            \(error.value, name: "value", privacy: .open)
-            """
+                The sponsor \(error.sponsor, name: "sponsor", privacy: .open) had an invalid \
+                \(error.field.rawValue, name: "field", privacy: .open): \
+                \(error.value, name: "value", privacy: .open)
+                """
         )
     }
 }

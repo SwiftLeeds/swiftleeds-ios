@@ -22,9 +22,9 @@ struct LoggedAttendeeResponseOutcome {
             LoggedAttendeeResponseOutcome(
                 level: .error,
                 message: """
-                The attendee response had an invalid \(invalid.field.rawValue, name: "field", privacy: .open): \
-                \(invalid.reason, name: "reason", privacy: .open)
-                """
+                    The attendee response had an invalid \(invalid.field.rawValue, name: "field", privacy: .open): \
+                    \(invalid.reason, name: "reason", privacy: .open)
+                    """
             )
         case .unauthorized:
             // Expected: the session expired or was revoked. Not a fault in the app.
@@ -36,10 +36,10 @@ struct LoggedAttendeeResponseOutcome {
             LoggedAttendeeResponseOutcome(
                 level: .error,
                 message: """
-                The attendee request got an unexpected status \
-                \(Int(status.code), name: "statusCode", privacy: .open) \
-                (\(String(status.category), name: "statusCategory", privacy: .open))
-                """
+                    The attendee request got an unexpected status \
+                    \(Int(status.code), name: "statusCode", privacy: .open) \
+                    (\(String(status.category), name: "statusCategory", privacy: .open))
+                    """
             )
         }
     }

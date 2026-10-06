@@ -197,10 +197,11 @@ package struct SponsorTileView: View {
                         JobRowView(job: job)
                     }
                 }
-                .transition(.asymmetric(
-                    insertion: .push(from: .top).combined(with: .opacity),
-                    removal: .push(from: .bottom).combined(with: .opacity)
-                ))
+                .transition(
+                    .asymmetric(
+                        insertion: .push(from: .top).combined(with: .opacity),
+                        removal: .push(from: .bottom).combined(with: .opacity)
+                    ))
             }
         }
     }
@@ -254,11 +255,13 @@ struct JobRowView: View {
             }
         )
         .scaleEffect(isPressed ? 0.97 : 1.0)
-        .onLongPressGesture(minimumDuration: 0.1, maximumDistance: .infinity, pressing: { pressing in
-            withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
-                isPressed = pressing
-            }
-        }, perform: {})
+        .onLongPressGesture(
+            minimumDuration: 0.1, maximumDistance: .infinity,
+            pressing: { pressing in
+                withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
+                    isPressed = pressing
+                }
+            }, perform: {})
     }
 }
 

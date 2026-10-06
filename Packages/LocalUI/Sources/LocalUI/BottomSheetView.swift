@@ -58,9 +58,10 @@ package struct BottomSheetView: View {
                                 label: category.name,
                                 imageName: category.symbolName,
                                 foregroundColor: (category == selectedCategory ? .accent : .cellForeground),
-                                labelFontStyle: .body) {
-                                    selectedCategory = category
-                                }
+                                labelFontStyle: .body
+                            ) {
+                                selectedCategory = category
+                            }
                         }
                         .padding(.bottom, Padding.screen)
                     }

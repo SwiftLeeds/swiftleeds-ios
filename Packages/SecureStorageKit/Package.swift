@@ -13,19 +13,19 @@ let package = Package(
         .library(name: "SecureStorageKitKeychain", targets: ["SecureStorageKitKeychain"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.0.0"),
+        .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.0.0")
     ],
     targets: [
         .target(
             name: "SecureStorageKit",
             dependencies: [
-                .product(name: "Dependencies", package: "swift-dependencies"),
+                .product(name: "Dependencies", package: "swift-dependencies")
             ]
         ),
         .target(
             name: "SecureStorageKitKeychain",
             dependencies: [
-                "SecureStorageKit",
+                "SecureStorageKit"
             ]
         ),
         .testTarget(

@@ -54,7 +54,8 @@ extension LogValue {
         case let .array(values):
             "[" + values.map(\.rendered).joined(separator: ", ") + "]"
         case let .dictionary(values):
-            "[" + values
+            "["
+                + values
                 .map { (String($0.key), $0.value.rendered) }
                 .sorted { $0.0 < $1.0 }
                 .map { "\($0.0): \($0.1)" }

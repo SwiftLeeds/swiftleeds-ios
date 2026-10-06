@@ -31,7 +31,8 @@ struct CorrelationToken {
             using: SymmetricKey(data: Data(salt))
         )
 
-        storage = code
+        storage =
+            code
             .prefix(Self.keptByteCount)
             .map(\.hexadecimalPair)
             .joined()
@@ -50,12 +51,12 @@ extension String {
     }
 }
 
-private extension UInt8 {
+extension UInt8 {
     /// The byte as exactly two lowercase hexadecimal digits.
     ///
     /// The zero padding is load-bearing: without it `0x0a` renders as `a`, so
     /// two different byte sequences could produce the same string.
-    var hexadecimalPair: String {
+    fileprivate var hexadecimalPair: String {
         String(format: "%02x", self)
     }
 }

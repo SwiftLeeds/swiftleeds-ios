@@ -9,20 +9,20 @@ public struct IconSize: Equatable, Hashable, Sendable {
     }
 }
 
-public extension IconSize {
-    static let xSmall = IconSize(12)
-    static let small = IconSize(16)
-    static let medium = IconSize(20)
-    static let large = IconSize(24)
-    static let xLarge = IconSize(32)
+extension IconSize {
+    public static let xSmall = IconSize(12)
+    public static let small = IconSize(16)
+    public static let medium = IconSize(20)
+    public static let large = IconSize(24)
+    public static let xLarge = IconSize(32)
 
     /// Also the smallest comfortable touch target.
-    static let xxLarge = IconSize(44)
+    public static let xxLarge = IconSize(44)
 }
 
-public extension CGFloat {
+extension CGFloat {
     /// Creates a length from an icon size.
-    init(_ size: IconSize) {
+    public init(_ size: IconSize) {
         self = size.points
     }
 }

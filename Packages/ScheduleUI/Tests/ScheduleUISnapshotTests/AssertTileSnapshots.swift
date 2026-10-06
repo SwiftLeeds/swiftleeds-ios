@@ -41,8 +41,8 @@ func assertTileSnapshots(
     )
 }
 
-private extension View {
-    func tileCard(width: CGFloat) -> some View {
+extension View {
+    fileprivate func tileCard(width: CGFloat) -> some View {
         self
             .frame(width: width)
             .fixedSize(horizontal: false, vertical: true)
@@ -55,10 +55,12 @@ private func variants<V: View>() -> [String: Snapshotting<V, UIImage>] {
     colorSchemes.reduce(into: [:]) { strategies, scheme in
         for textSize in textSizes {
             strategies["\(scheme.name)-\(textSize.name)"] = Snapshotting<AnyView, UIImage>
-                .image(traits: .init(traitsFrom: [
-                    .init(userInterfaceStyle: scheme.style),
-                    .init(displayScale: 1),
-                ]))
+                .image(
+                    traits: .init(traitsFrom: [
+                        .init(userInterfaceStyle: scheme.style),
+                        .init(displayScale: 1),
+                    ])
+                )
                 .pullback { AnyView($0.dynamicTypeSize(textSize.size)) }
         }
     }

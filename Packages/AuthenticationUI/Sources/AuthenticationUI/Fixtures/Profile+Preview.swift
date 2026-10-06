@@ -2,8 +2,8 @@ import AuthenticationFeature
 import Foundation
 
 #if DEBUG
-package extension Profile {
-    static var preview: Profile {
+extension Profile {
+    package static var preview: Profile {
         Profile(
             name: PersonNameComponents(givenName: "Ada", familyName: "Lovelace"),
             emailAddress: "ada@example.com",
