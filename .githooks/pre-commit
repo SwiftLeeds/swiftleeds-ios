@@ -15,6 +15,28 @@ cd "$(git rev-parse --show-toplevel)"
 staged=$(git diff --cached --name-only --diff-filter=ACMR -- '*.swift')
 [ -n "$staged" ] || exit 0
 
+# `swift format` owns layout, so it runs first: fixing a layout violation can
+# change what SwiftLint then sees. It ships with the toolchain, so a machine
+# with Xcode already has it and nothing needs installing.
+if ! command -v swift > /dev/null 2>&1; then
+    echo "pre-commit: no Swift toolchain, so nothing was format checked." >&2
+    echo "pre-commit: install Xcode. CI checks formatting on every pull request." >&2
+# Both tools search upward for their configuration file, and a git worktree
+# placed inside the repository has the repository above it. So name the file
+# rather than relying on the search, or a commit from a worktree is judged by a
+# configuration from somewhere else.
+elif git diff --cached --name-only --diff-filter=ACMR -z -- '*.swift' \
+    | xargs -0 swift format lint --strict --configuration .swift-format
+then
+    :
+else
+    echo "" >&2
+    echo "pre-commit: the files above are not formatted." >&2
+    echo "pre-commit: fix every one with .github/scripts/format.sh, then stage the result." >&2
+    echo "pre-commit: or pass --no-verify to skip." >&2
+    exit 1
+fi
+
 if ! command -v swiftlint > /dev/null 2>&1; then
     echo "pre-commit: swiftlint is not installed, so nothing was linted." >&2
     echo "pre-commit: run 'brew install swiftlint'. CI lints every pull request." >&2
@@ -35,7 +57,7 @@ fi
 # list. --strict is what makes the hook bite: SwiftLint exits 0 on a warning,
 # so without it the commit proceeds with violations reported.
 if git diff --cached --name-only --diff-filter=ACMR -z -- '*.swift' \
-    | xargs -0 swiftlint lint --strict --force-exclude --quiet
+    | xargs -0 swiftlint lint --strict --force-exclude --quiet --config .swiftlint.yml
 then
     exit 0
 fi
