@@ -19,9 +19,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # Each brand is a scheme of the same name, built in its Debug and its Release
-  # configuration. The app target embeds the App Clip and the widget extension,
-  # so one build covers all three.
+  # The app target embeds the App Clip and the widget extension, so one build
+  # of the app covers all three.
   build-app:
     name: Build ${{ matrix.brand }}
     runs-on: macos-26
@@ -49,10 +48,10 @@ jobs:
       - name: Build ${{ matrix.brand }} (${{ matrix.debug-configuration }})
         run: fastlane build scheme:${{ matrix.brand }} configuration:${{ matrix.debug-configuration }}
 
-      # Release compiles out every `#if DEBUG` block, so this is the only build
-      # that fails when shipping code uses a DEBUG-only symbol. It shares a job
-      # with the Debug build because the account runs 5 macOS jobs at once and
-      # this workflow already holds 6.
+      # Release compiles out every `#if DEBUG` block, so this step fails when
+      # the app's shipping code uses a DEBUG-only symbol, and the Debug step
+      # cannot. The two share a job because of the runner limit described at
+      # the top of this file.
       - name: Build ${{ matrix.brand }} (${{ matrix.release-configuration }})
         run: fastlane build scheme:${{ matrix.brand }} configuration:${{ matrix.release-configuration }}
 
