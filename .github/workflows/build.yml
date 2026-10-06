@@ -157,6 +157,25 @@ jobs:
           fi
           echo "Tested $tested package(s) in $LANE_COUNT lane(s)"
 
+      # `swift format` ships with the toolchain, so this needs the Xcode the
+      # step above already selected. It rides in this job rather than taking one
+      # of its own: the workflow declares 6 macOS jobs against an account limit
+      # of 5, so a seventh would wait for a runner. The cost here is seconds.
+      #
+      # A formatting failure must not hide the test results above, so this runs
+      # even when that step failed. `!cancelled()` rather than `always()`,
+      # because this workflow cancels a superseded run and a cancelled run has
+      # nothing to report.
+      #
+      # The failure shows in the pull request under this job's name, which says
+      # "Test Swift Packages". A reviewer seeing it red should read the job
+      # summary before looking for a broken test. The name is a required status
+      # check on `main`, so renaming it would block every pull request until
+      # that branch rule is edited too.
+      - name: Check formatting
+        if: ${{ !cancelled() }}
+        run: .github/scripts/format.sh --check
+
   # Snapshot tests are the only tests that must run on iOS: they are the only
   # ones behind `#if os(iOS)`, so the macOS job above cannot see them. Every
   # other test compiles and runs there, and the app build jobs compile the
@@ -542,3 +561,10 @@ jobs:
       # this closes.
       - name: Check the snapshot scheme lists every snapshot target
         run: python3 .github/scripts/check-snapshot-scheme.py
+
+      # `swift format` has no `excluded` setting, so the formatter names the
+      # directories it walks and SwiftLint names its own. A new top-level source
+      # directory reaching one list and not the other would be linted and never
+      # formatted, with both jobs still green.
+      - name: Check both tools read the same source roots
+        run: python3 .github/scripts/check-format-roots.py
