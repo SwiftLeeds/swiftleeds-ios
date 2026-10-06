@@ -1,26 +1,21 @@
 default_platform(:ios)
 
+# fastlane otherwise writes fastlane/README.md on every run, and the file is
+# not tracked.
+skip_docs
+
 platform :ios do
-  desc "Build a scheme with a given configuration"
+  desc "Build a scheme in a configuration. Both scheme: and configuration: are required"
   lane :build do |options|
     build_app(
       project: "SwiftLeeds.xcodeproj",
-      configuration: options[:configuration],
-      scheme: options[:scheme] || "SwiftLeeds",
+      # A missing option must fail the lane, never build a default.
+      configuration: options.fetch(:configuration),
+      scheme: options.fetch(:scheme),
       clean: true,
       skip_archive: true,
       skip_codesigning: true,
       xcargs: "-skipPackagePluginValidation"
     )
-  end
-
-  desc "Build SwiftLeeds scheme with Debug Configuration"
-  lane :build_swiftleeds do
-    build(scheme: "SwiftLeeds", configuration: "Debug")
-  end
-
-  desc "Build KotlinLeeds scheme with Debug Configuration"
-  lane :build_kotlinleeds do
-    build(scheme: "KotlinLeeds", configuration: "Debug-KotlinLeeds")
   end
 end

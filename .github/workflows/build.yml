@@ -19,8 +19,10 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # The app target embeds the App Clip and the widget extension, so one build
+  # of the app covers all three.
   build-app:
-    name: Build ${{ matrix.brand }} (DEBUG)
+    name: Build ${{ matrix.brand }}
     runs-on: macos-26
     strategy:
       # Without this, one brand failing cancels the other, and a run reports
@@ -29,9 +31,9 @@ jobs:
       matrix:
         include:
           - brand: SwiftLeeds
-            lane: build_swiftleeds
+            configuration: Release
           - brand: KotlinLeeds
-            lane: build_kotlinleeds
+            configuration: Release-KotlinLeeds
     steps:
       - name: Checkout iOS Repository
         uses: actions/checkout@v4
@@ -41,8 +43,13 @@ jobs:
         with:
           xcode-version: '26.5'
 
-      - name: Build ${{ matrix.brand }} via Fastlane
-        run: fastlane ${{ matrix.lane }}
+      # Release compiles out every `#if DEBUG` block, so this build fails when
+      # the app's shipping code uses a DEBUG-only symbol, and a Debug build
+      # cannot. Debug is not built here: the test jobs compile the packages in
+      # Debug and the launch jobs compile the App Clip in Debug, and a second
+      # build would double this job's time.
+      - name: Build ${{ matrix.brand }} (${{ matrix.configuration }})
+        run: fastlane build scheme:${{ matrix.brand }} configuration:${{ matrix.configuration }}
 
   test-packages:
     name: Test Swift Packages
