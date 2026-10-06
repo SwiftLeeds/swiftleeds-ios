@@ -31,8 +31,7 @@ struct SettingsScreen: View {
     var body: some View {
         List {
             account
-            appIcon
-            appearanceChoice
+            choices
             reminders
             about
         }
@@ -51,42 +50,38 @@ struct SettingsScreen: View {
         }
     }
 
-    /// The icon the app wears on the Home Screen.
-    private var appIcon: some View {
-        Picker("App icon", selection: $icon) {
-            ForEach(SampleAppIcon.allCases) { option in
-                ReflowingStack {
-                    MockAppIcon(icon: option)
-
-                    Text(option.title)
-                        .alignmentGuide(.listRowSeparatorLeading) { $0[.leading] }
-                }
-                .tag(option)
-            }
-        }
-        .pickerStyle(.inline)
-    }
-
-    /// How light or dark the app is.
+    /// What the app looks like, each choice behind its own row.
     ///
-    /// Each option carries a symbol rather than a preview of the screen. A
-    /// preview large enough to read is a second control, and this choice does
-    /// not need one.
-    private var appearanceChoice: some View {
-        Picker("Appearance", selection: $appearance) {
-            ForEach(SampleAppearance.allCases) { option in
-                Label {
-                    Text(option.title)
-                } icon: {
-                    // The symbol stands for the mode rather than acting, so it
-                    // stays neutral. The check mark is the section's one tint.
-                    Image(systemName: option.symbol)
-                        .foregroundStyle(.textSecondary)
+    /// Both rows push a screen to choose on. A row carries the choice and the
+    /// answer, so the list stays short enough to read at a glance.
+    private var choices: some View {
+        Section {
+            Picker("App icon", selection: $icon) {
+                ForEach(SampleAppIcon.allCases) { option in
+                    ReflowingStack {
+                        MockAppIcon(icon: option)
+
+                        Text(option.title)
+                    }
+                    .tag(option)
                 }
-                .tag(option)
+            }
+
+            Picker("Appearance", selection: $appearance) {
+                ForEach(SampleAppearance.allCases) { option in
+                    Label {
+                        Text(option.title)
+                    } icon: {
+                        // The symbol stands for the mode rather than acting, so
+                        // it stays neutral. The check mark is the one tint.
+                        Image(systemName: option.symbol)
+                            .foregroundStyle(.textSecondary)
+                    }
+                    .tag(option)
+                }
             }
         }
-        .pickerStyle(.inline)
+        .pickerStyle(.navigationLink)
     }
 
     /// Which sessions this person hears about before they start.
