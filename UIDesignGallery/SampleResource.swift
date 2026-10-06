@@ -1,6 +1,6 @@
 import Foundation
 
-/// A page or a screen the venue points a person at.
+/// A page or a screen a row points a person at.
 ///
 /// Every field is display text rather than a domain value, for the reason
 /// `SampleSession` gives.
