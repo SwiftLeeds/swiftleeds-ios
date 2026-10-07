@@ -1,19 +1,21 @@
 import AuthenticationFeature
+import AuthenticationFeatureTestSupport
 import AuthenticationUI
 import Dependencies
 import Testing
 
 @MainActor
 @Suite struct AccountViewModelTests {
-    @Test func whenSignedIn_shouldBeSignedIn() async {
+    @Test func whenSignedIn_shouldBeSignedIn() async throws {
+        let proof = try SignedInProof.fixture
         await withDependencies {
-            $0.authStatus = AuthStatus { .signedIn(SignedInProof()) }
+            $0.authStatus = AuthStatus { .signedIn(proof) }
         } operation: {
             let sut = AccountView.ViewModel()
 
             await sut.load()
 
-            #expect(sut.state == .signedIn(SignedInProof()))
+            #expect(sut.state == .signedIn(proof))
         }
     }
 
@@ -53,8 +55,8 @@ import Testing
         }
     }
 
-    @Test func whenSignedInAgain_shouldStopRequiringSignIn() async {
-        let proof = SignedInProof()
+    @Test func whenSignedInAgain_shouldStopRequiringSignIn() async throws {
+        let proof = try SignedInProof.fixture
         await withDependencies {
             $0.authStatus = AuthStatus { .signedIn(proof) }
         } operation: {
