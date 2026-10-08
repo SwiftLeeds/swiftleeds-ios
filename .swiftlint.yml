@@ -13,8 +13,10 @@
 # and the pre-commit hook checks against. Rule defaults change between versions,
 # so re-run the suite after a bump.
 
-# The 78 violations left after the mechanical fixes. They stay recorded rather
-# than fixed, so linting starts green and new code is held to the full rule set.
+# The violations left after the mechanical fixes, 37 as of 2026-10-08, down from
+# 78. They stay recorded rather than fixed, so linting starts green and new code
+# is held to the full rule set. Read the current list with
+# `swiftlint baseline report .swiftlint.baseline --reporter summary`.
 # SwiftLint matches a baselined violation by its content, not its line number,
 # so unrelated edits above it do not resurface it. Burn this down over time.
 baseline: .swiftlint.baseline
