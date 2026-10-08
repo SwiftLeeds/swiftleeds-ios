@@ -124,21 +124,42 @@ opt_in_rules:
   - static_operator
 
 disabled_rules:
-  # `swift format` owns layout, and these three rules contradict what it writes.
+  # `swift format` owns layout, so a SwiftLint rule about where a character goes
+  # is either a contradiction or a duplicate. Both are off. Several below are
+  # opt-in rules that were never enabled; they are listed so nobody turns them on
+  # and re-derives why they do not work here.
   #
-  # `trailing_comma`: the formatter puts a trailing comma on a collection of two
-  # or more elements and removes it from a collection of one. That settles the
-  # inconsistency this entry used to record.
+  # Contradictions. The formatter writes what the rule forbids, so fixing the
+  # violations by hand would be undone by the next format run.
   #
+  # `trailing_comma`: the formatter puts a comma on a collection of two or more
+  # elements and removes it from a collection of one.
   # `sorted_imports`: `OrderedImports` sorts by code point, where a capital
   # letter precedes every lowercase one, and this rule ignores case. No ordering
   # satisfies both, so any module named lowercase, such as `os`, splits them.
-  #
   # `opening_brace`: the formatter puts `{` on its own line after a wrapped
-  # multi-line condition. Five sites in this codebase.
+  # multi-line condition.
+  # `extension_access_modifier`: it wants the access level hoisted onto the
+  # extension declaration, and the formatter moves it onto each member instead.
+  # The three `multiline_*` rules: each wants one argument per line, and
+  # `.swift-format` keeps the formatter's fill wrapping.
   - trailing_comma
   - sorted_imports
   - opening_brace
+  - extension_access_modifier
+  - multiline_arguments
+  - multiline_arguments_brackets
+  - multiline_call_arguments
+  #
+  # Duplicates. The formatter already enforces these and its own check gates
+  # every pull request, so a second gate could only ever disagree with the first.
+  #
+  # `indentation_width`: the pretty-printer owns indentation. This rule also
+  # reads indentation inside `"""` literals, which here is JSON fixture data.
+  # `no_extension_access_modifier`: the formatter's
+  # `NoAccessLevelOnExtensionDeclaration` is on and does the same thing.
+  - indentation_width
+  - no_extension_access_modifier
 
 # `.swift-format` sets `lineLength` to this number. Pin it here rather than
 # inheriting SwiftLint's default, so a version bump cannot move one tool's limit
