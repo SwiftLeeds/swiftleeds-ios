@@ -9,16 +9,6 @@ struct SettingsScreen: View {
     /// The person this screen's account section names.
     let attendee: SampleAttendee
 
-    /// The kinds of session a reminder can cover.
-    ///
-    /// These are display text, for the reason `SampleSession` gives.
-    private static let reminderKinds = ["Talks", "Lightning talks", "Workshops"]
-
-    /// What iOS does once a person saves more sessions than it can hold.
-    private static let reminderLimit = """
-        iOS keeps up to 64 reminders waiting. Sessions past that get none.
-        """
-
     /// Which build of the app this is.
     private static let version = "Version 3.0.1 (412)"
 
@@ -28,14 +18,15 @@ struct SettingsScreen: View {
     /// that opens that screen shows the answer.
     @State private var icon: SampleAppIcon = .classic
 
-    /// The kinds of session this person wants a reminder for.
-    @State private var remindedKinds: Set<String> = ["Talks"]
+    /// Whether the app may notify this person at all.
+    ///
+    /// It lives here for the same reason the icon does.
+    @State private var allowsNotifications = true
 
     var body: some View {
         List {
             account
             categories
-            reminders
             about
         }
         .listStyle(.insetGrouped)
@@ -97,7 +88,7 @@ struct SettingsScreen: View {
     private func answer(for category: SettingsCategory) -> String? {
         switch category {
         case .appearance: icon.title
-        case .notifications: nil
+        case .notifications: allowsNotifications ? "On" : "Off"
         case .about: nil
         case .contact: nil
         }
@@ -113,8 +104,7 @@ struct SettingsScreen: View {
             AppearanceScreen(icon: $icon)
 
         case .notifications:
-            NotYetDesigned(symbol: category.symbol)
-                .navigationTitle(category.title)
+            NotificationsScreen(allowsNotifications: $allowsNotifications)
 
         case .about:
             NotYetDesigned(symbol: category.symbol)
@@ -124,36 +114,6 @@ struct SettingsScreen: View {
             NotYetDesigned(symbol: category.symbol)
                 .navigationTitle(category.title)
         }
-    }
-
-    /// Which sessions this person hears about before they start.
-    private var reminders: some View {
-        Section {
-            ForEach(Self.reminderKinds, id: \.self) { kind in
-                Toggle(kind, isOn: binding(for: kind))
-            }
-        } header: {
-            Text("Reminders")
-        } footer: {
-            Text(Self.reminderLimit)
-        }
-    }
-
-    /// Returns whether this person wants a reminder for one kind of session.
-    ///
-    /// - Parameter kind: The kind of session to remind about, or stop
-    ///   reminding about.
-    private func binding(for kind: String) -> Binding<Bool> {
-        Binding(
-            get: { remindedKinds.contains(kind) },
-            set: { isOn in
-                if isOn {
-                    remindedKinds.insert(kind)
-                } else {
-                    remindedKinds.remove(kind)
-                }
-            }
-        )
     }
 
     /// What the conference asks of people, and how to reach it.
