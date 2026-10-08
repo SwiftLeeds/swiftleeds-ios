@@ -43,6 +43,12 @@ struct SettingsScreen: View {
         }
     }
 
+    /// The parts of Settings a person sets.
+    private static let settingGroup: [SettingsCategory] = [.appearance, .notifications]
+
+    /// The parts of Settings a person reads.
+    private static let readingGroup: [SettingsCategory] = [.about, .contact]
+
     /// The parts of Settings, each on a row that opens its own screen.
     ///
     /// A row carries its category's icon, and the icon reappears at the top of
@@ -50,8 +56,19 @@ struct SettingsScreen: View {
     /// tint per region: that rule came from toolbars and sheets, and a settings
     /// root is a list of identities, as Apple's own is.
     private var categories: some View {
+        Group {
+            group(of: Self.settingGroup)
+            group(of: Self.readingGroup)
+        }
+    }
+
+    /// Returns one group of categories, each on a row that opens its own
+    /// screen.
+    ///
+    /// - Parameter categories: The categories to show, in order.
+    private func group(of categories: [SettingsCategory]) -> some View {
         Section {
-            ForEach(SettingsCategory.allCases, id: \.self) { category in
+            ForEach(categories, id: \.self) { category in
                 NavigationLink(value: category) {
                     row(for: category)
                 }
