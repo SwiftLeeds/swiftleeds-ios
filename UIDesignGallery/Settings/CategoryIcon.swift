@@ -63,8 +63,8 @@ struct CategoryIcon: View {
     /// The text style the symbol takes, which sets its size.
     private var glyph: Font {
         switch placement {
-        case .row: .body.weight(.semibold)
-        case .introduction: .largeTitle.weight(.medium)
+        case .row: .footnote.weight(.semibold)
+        case .introduction: .title.weight(.medium)
         }
     }
 
