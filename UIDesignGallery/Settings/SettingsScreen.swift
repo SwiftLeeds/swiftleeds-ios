@@ -9,9 +9,6 @@ struct SettingsScreen: View {
     /// The person this screen's account section names.
     let attendee: SampleAttendee
 
-    /// Which build of the app this is.
-    private static let version = "Version 3.0.1 (412)"
-
     /// The icon this person gives the app.
     ///
     /// It lives here rather than on the Appearance screen, because the row
@@ -27,7 +24,6 @@ struct SettingsScreen: View {
         List {
             account
             categories
-            about
         }
         .listStyle(.insetGrouped)
         .navigationTitle("Settings")
@@ -107,28 +103,11 @@ struct SettingsScreen: View {
             NotificationsScreen(allowsNotifications: $allowsNotifications)
 
         case .about:
-            NotYetDesigned(symbol: category.symbol)
-                .navigationTitle(category.title)
+            AboutScreen()
 
         case .contact:
             NotYetDesigned(symbol: category.symbol)
                 .navigationTitle(category.title)
-        }
-    }
-
-    /// What the conference asks of people, and how to reach it.
-    ///
-    /// The version sits in this section's footer, which is the last thing on
-    /// the screen, so no row has to carry it.
-    private var about: some View {
-        Section {
-            ForEach(SampleResource.settings) { resource in
-                ResourceRow(resource: resource)
-            }
-        } header: {
-            Text("About")
-        } footer: {
-            Text(Self.version)
         }
     }
 }

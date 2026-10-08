@@ -74,36 +74,29 @@ extension SampleResource {
         ),
     ]
 
-    /// What a person reaches from Settings.
+    /// What the conference asks of people, and what it promises them.
     ///
-    /// The code of conduct is a screen, so `List` marks it. Writing to the
-    /// organizers opens Mail, which leaves the app.
-    static let settings: [SampleResource] = [
+    /// The code of conduct is a screen, so `List` marks it. The privacy
+    /// policy is on the web, so the row draws its own arrow.
+    static let policies: [SampleResource] = [
         SampleResource(
-            id: "settings-conduct",
+            id: "conduct",
             title: "Code of conduct",
             detail: "What we expect of everyone here",
             symbol: "hand.raised",
             destination: .screen
         ),
         SampleResource(
-            id: "settings-contact",
-            title: "Contact the organizers",
-            detail: "hello@swiftleeds.co.uk",
-            symbol: "envelope",
+            id: "privacy",
+            title: "Privacy policy",
+            detail: "What we keep about you, and why",
+            symbol: "lock",
             destination: .page
         ),
     ]
 
-    /// The conference's own screen, and the places it publishes.
-    static let swiftLeeds: [SampleResource] = [
-        SampleResource(
-            id: "about",
-            title: "About SwiftLeeds",
-            detail: "Who runs the conference",
-            symbol: "info.circle",
-            destination: .screen
-        ),
+    /// The places the conference publishes, all of them on the web.
+    static let outreach: [SampleResource] = [
         SampleResource(
             id: "website",
             title: "Website",
@@ -126,4 +119,16 @@ extension SampleResource {
             destination: .page
         ),
     ]
+
+    /// The conference's own screen, and the places it publishes.
+    static let swiftLeeds: [SampleResource] =
+        [
+            SampleResource(
+                id: "about",
+                title: "About SwiftLeeds",
+                detail: "Who runs the conference",
+                symbol: "info.circle",
+                destination: .screen
+            )
+        ] + outreach
 }
