@@ -12,4 +12,7 @@ enum ScheduleDestination: Equatable, Hashable {
     /// The signed-in person's own standing at the conference, which sits one
     /// step inside Settings.
     case profile
+
+    /// One part of Settings, which sits one step inside it.
+    case settingsCategory(SettingsCategory)
 }

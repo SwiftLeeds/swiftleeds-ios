@@ -150,6 +150,9 @@ struct ScheduleScreen: View {
             case .profile:
                 showsSettings = true
                 settingsPath.append(SampleAttendee.signedIn)
+            case .settingsCategory(let category):
+                showsSettings = true
+                settingsPath.append(category)
             case nil: break
             }
         }

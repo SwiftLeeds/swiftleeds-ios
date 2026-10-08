@@ -10,6 +10,7 @@ import UIDesign
 /// tapping. `-tab sponsors` chooses a destination, `-detail 1` pushes a
 /// session's detail, `-settings 1` presents Settings, `-profile 1` presents
 /// Settings with the signed-in person's profile pushed on top of it,
+/// `-category about` presents Settings with that part of it pushed on top,
 /// `-halo hard` or `-halo soft` swaps the halo's outer edge for the one it
 /// feathers between, and `-halos role`, `-halos pink` or `-halos gold` shows
 /// every halo treatment at once, in those colors, instead of the app.
@@ -36,7 +37,10 @@ struct UIDesignGalleryApp: App {
         let defaults = UserDefaults.standard
         let name = defaults.string(forKey: "tab") ?? ""
         _tab = State(initialValue: GalleryTab(rawValue: name) ?? .schedule)
-        if defaults.bool(forKey: "profile") {
+        let category = defaults.string(forKey: "category") ?? ""
+        if let category = SettingsCategory(rawValue: category) {
+            opensWith = .settingsCategory(category)
+        } else if defaults.bool(forKey: "profile") {
             opensWith = .profile
         } else if defaults.bool(forKey: "settings") {
             opensWith = .settings
