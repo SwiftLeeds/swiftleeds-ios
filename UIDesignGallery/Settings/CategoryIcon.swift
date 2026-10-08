@@ -7,8 +7,8 @@ import UIDesign
 /// at the top of the screen that row opens, so the two read as one thing.
 ///
 /// The icon is decoration: the title beside it names the category, so
-/// VoiceOver skips it. It still scales with the text size, because the symbol
-/// inside it is text and scales anyway, and the square grows to keep it.
+/// VoiceOver skips it, and it keeps one size at every text size. The symbol
+/// inside is pinned with it, so the square never has to grow to hold it.
 struct CategoryIcon: View {
     /// Where the icon sits, which sets its size.
     enum Placement {
@@ -31,9 +31,6 @@ struct CategoryIcon: View {
     /// Where the icon sits.
     let placement: Placement
 
-    /// How much larger this text size makes the icon.
-    @ScaledMetric(relativeTo: .body) private var scale: CGFloat = 1
-
     var body: some View {
         RoundedRectangle(cornerRadius: radius, style: .continuous)
             .fill(tint)
@@ -43,22 +40,23 @@ struct CategoryIcon: View {
                     .foregroundStyle(.white)
             }
             .frame(width: side, height: side)
+            .dynamicTypeSize(.large)
             .accessibilityHidden(true)
     }
 
-    /// How wide and tall the icon is at this text size.
+    /// How wide and tall the icon is.
     private var side: CGFloat {
         switch placement {
-        case .row: Self.rowSide * scale
-        case .introduction: Self.introductionSide * scale
+        case .row: Self.rowSide
+        case .introduction: Self.introductionSide
         }
     }
 
-    /// How rounded the square's corners are at this text size.
+    /// How rounded the square's corners are.
     private var radius: CGFloat {
         switch placement {
-        case .row: CGFloat(CornerRadius.small) * scale
-        case .introduction: CGFloat(CornerRadius.medium) * scale
+        case .row: CGFloat(CornerRadius.small)
+        case .introduction: CGFloat(CornerRadius.medium)
         }
     }
 
