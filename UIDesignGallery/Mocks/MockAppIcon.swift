@@ -14,16 +14,16 @@ struct MockAppIcon: View {
 
     /// How wide and tall the swatch is.
     ///
-    /// It starts at the smallest comfortable touch target, so a person can see
-    /// the glyph at the default text size.
-    @ScaledMetric(relativeTo: .body) private var side = CGFloat(IconSize.xxLarge)
+    /// It starts at the size of a settings row's icon, so the swatch sits in
+    /// the row as a category icon does.
+    @ScaledMetric(relativeTo: .body) private var side = CGFloat(IconSize.xLarge)
 
     var body: some View {
         RoundedRectangle(cornerRadius: CGFloat(CornerRadius.medium), style: .continuous)
             .fill(fill)
             .overlay {
                 Image(systemName: icon.symbol)
-                    .font(.headline)
+                    .font(.subheadline.weight(.semibold))
                     .foregroundStyle(glyph)
             }
             .overlay {
