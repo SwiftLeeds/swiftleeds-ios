@@ -28,6 +28,7 @@ let package = Package(
             name: "AuthenticationUITests",
             dependencies: [
                 "AuthenticationUI",
+                .product(name: "AuthenticationFeatureTestSupport", package: "AuthenticationFeature"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
             ]
         ),

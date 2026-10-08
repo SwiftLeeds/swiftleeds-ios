@@ -46,14 +46,28 @@ jobs:
       # Release compiles out every `#if DEBUG` block, so this build fails when
       # the app's shipping code uses a DEBUG-only symbol, and a Debug build
       # cannot. Debug is not built here: the test jobs compile the packages in
-      # Debug and the launch jobs compile the App Clip in Debug, and a second
-      # build would double this job's time.
+      # Debug and Release, the launch jobs compile the App Clip in Debug, and a
+      # second build would double this job's time.
       - name: Build ${{ matrix.brand }} (${{ matrix.configuration }})
         run: fastlane build scheme:${{ matrix.brand }} configuration:${{ matrix.configuration }}
 
+  # Release catches what Debug cannot: a test that uses a DEBUG-only symbol, or
+  # that relies on DEBUG-only test isolation. Both lanes run the same script.
   test-packages:
-    name: Test Swift Packages
+    name: ${{ matrix.name }}
     runs-on: macos-26
+    strategy:
+      # Without this, one configuration failing cancels the other, and a run
+      # reports only the first failure.
+      fail-fast: false
+      matrix:
+        include:
+          # This name is a required status check on `main`. Renaming it blocks
+          # every pull request until that branch rule is edited too.
+          - name: Test Swift Packages
+            configuration: debug
+          - name: Test Swift Packages (Release)
+            configuration: release
     steps:
       - name: Checkout iOS Repository
         uses: actions/checkout@v4
@@ -63,13 +77,15 @@ jobs:
         with:
           xcode-version: '26.5'
 
-      - name: Run every package test suite
+      - name: Run every package test suite (${{ matrix.configuration }})
         env:
+          CONFIGURATION: ${{ matrix.configuration }}
           # Packages tested at once. 2 lanes 238s against 3 lanes 285s, medians
           # of 5 paired runs; 1 lane was 311s, one sample. 3 loses because each
           # lane needs its own scratch path, so it recompiles the shared
           # dependencies, and one swift test already asks for all 3 cores.
-          # Memory ruled out: both arms swapped 0 MB.
+          # Memory ruled out: both arms swapped 0 MB. Measured in Debug; the
+          # Release lane has not been measured and takes the same value.
           LANE_COUNT: 2
         run: |
           set -uo pipefail
@@ -119,6 +135,7 @@ jobs:
               if swift test \
                 --package-path "Packages/$package" \
                 --scratch-path "$scratch" \
+                --configuration "$CONFIGURATION" \
                 --force-resolved-versions 2>&1 \
                 | sed -l "s/^/[$package] /"
               then
@@ -162,12 +179,15 @@ jobs:
           if [ "$failed" -ne 0 ]; then
             exit 1
           fi
-          echo "Tested $tested package(s) in $LANE_COUNT lane(s)"
+          echo "Tested $tested package(s) in $LANE_COUNT lane(s), $CONFIGURATION configuration"
 
       # `swift format` ships with the toolchain, so this needs the Xcode the
       # step above already selected. It rides in this job rather than taking one
-      # of its own: the workflow declares 6 macOS jobs against an account limit
-      # of 5, so a seventh would wait for a runner. The cost here is seconds.
+      # of its own: the workflow declares 7 macOS jobs against an account limit
+      # of 5, so two already wait for a runner and another job would be a
+      # third. The cost here is seconds.
+      # Formatting does not depend on the configuration, so only the Debug lane
+      # runs it.
       #
       # A formatting failure must not hide the test results above, so this runs
       # even when that step failed. `!cancelled()` rather than `always()`,
@@ -180,7 +200,7 @@ jobs:
       # check on `main`, so renaming it would block every pull request until
       # that branch rule is edited too.
       - name: Check formatting
-        if: ${{ !cancelled() }}
+        if: ${{ !cancelled() && matrix.configuration == 'debug' }}
         run: .github/scripts/format.sh --check
 
   # Snapshot tests are the only tests that must run on iOS: they are the only

@@ -9,7 +9,8 @@ let package = Package(
         .macOS(.v15),
     ],
     products: [
-        .library(name: "AuthenticationFeature", targets: ["AuthenticationFeature"])
+        .library(name: "AuthenticationFeature", targets: ["AuthenticationFeature"]),
+        .library(name: "AuthenticationFeatureTestSupport", targets: ["AuthenticationFeatureTestSupport"]),
     ],
     dependencies: [
         .package(path: "../LogKit"),
@@ -26,6 +27,10 @@ let package = Package(
                 .product(name: "NetworkKit", package: "NetworkKit"),
                 .product(name: "SecureStorageKit", package: "SecureStorageKit"),
             ]
+        ),
+        .target(
+            name: "AuthenticationFeatureTestSupport",
+            dependencies: ["AuthenticationFeature"]
         ),
         .testTarget(
             name: "AuthenticationFeatureTests",
