@@ -54,8 +54,9 @@ struct ScheduleScreen: View {
 
     /// The screens pushed on top of Settings.
     ///
-    /// Settings pushes two kinds of thing, a person and a resource, so the path
-    /// is untyped. A typed path would take one of them and drop the other.
+    /// Settings pushes three kinds of thing, a person, a resource and a
+    /// category, so the path is untyped. A typed path would take one of them
+    /// and drop the others.
     @State private var settingsPath = NavigationPath()
 
     /// The filter the segmented control shows.

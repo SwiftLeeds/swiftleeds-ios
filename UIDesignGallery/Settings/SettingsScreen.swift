@@ -2,6 +2,9 @@ import SwiftUI
 import UIDesign
 
 /// A view that holds what a person can change about the app.
+///
+/// It is a root: its rows are the parts of Settings, and each opens its own
+/// screen. The settings themselves live on those screens.
 struct SettingsScreen: View {
     /// The person this screen's account section names.
     let attendee: SampleAttendee
@@ -20,10 +23,10 @@ struct SettingsScreen: View {
     private static let version = "Version 3.0.1 (412)"
 
     /// The icon this person gives the app.
+    ///
+    /// It lives here rather than on the Appearance screen, because the row
+    /// that opens that screen shows the answer.
     @State private var icon: SampleAppIcon = .classic
-
-    /// How light or dark this person asks the app to be.
-    @State private var appearance: SampleAppearance = .automatic
 
     /// The kinds of session this person wants a reminder for.
     @State private var remindedKinds: Set<String> = ["Talks"]
@@ -31,12 +34,15 @@ struct SettingsScreen: View {
     var body: some View {
         List {
             account
-            choices
+            categories
             reminders
             about
         }
         .listStyle(.insetGrouped)
         .navigationTitle("Settings")
+        .navigationDestination(for: SettingsCategory.self) { category in
+            screen(for: category)
+        }
     }
 
     /// Who this person is, and the way to their own profile.
@@ -50,41 +56,74 @@ struct SettingsScreen: View {
         }
     }
 
-    /// What the app looks like, each choice behind its own row.
+    /// The parts of Settings, each on a row that opens its own screen.
     ///
-    /// Both rows push a screen to choose on. A row carries the choice and the
-    /// answer, so the list stays short enough to read at a glance.
-    ///
-    /// The light and dark choice is called Theme here, because the section is
-    /// already called Appearance and a row may not repeat its own section.
-    private var choices: some View {
-        Section("Appearance") {
-            Picker("App icon", selection: $icon) {
-                ForEach(SampleAppIcon.allCases) { option in
-                    ReflowingStack {
-                        MockAppIcon(icon: option)
-
-                        Text(option.title)
-                    }
-                    .tag(option)
-                }
-            }
-
-            Picker("Theme", selection: $appearance) {
-                ForEach(SampleAppearance.allCases) { option in
-                    Label {
-                        Text(option.title)
-                    } icon: {
-                        // The symbol stands for the mode rather than acting, so
-                        // it stays neutral. The check mark is the one tint.
-                        Image(systemName: option.symbol)
-                            .foregroundStyle(.textSecondary)
-                    }
-                    .tag(option)
+    /// A row carries its category's icon, and the icon reappears at the top of
+    /// the screen it opens. Four tinted icons in one group depart from one
+    /// tint per region: that rule came from toolbars and sheets, and a settings
+    /// root is a list of identities, as Apple's own is.
+    private var categories: some View {
+        Section {
+            ForEach(SettingsCategory.allCases, id: \.self) { category in
+                NavigationLink(value: category) {
+                    row(for: category)
                 }
             }
         }
-        .pickerStyle(.navigationLink)
+    }
+
+    /// Returns one category's row: its icon, its name, and its answer where it
+    /// has one.
+    ///
+    /// - Parameter category: The part of Settings the row opens.
+    private func row(for category: SettingsCategory) -> some View {
+        LabeledContent {
+            if let answer = answer(for: category) {
+                Text(answer)
+            }
+        } label: {
+            Label {
+                Text(category.title)
+            } icon: {
+                CategoryIcon(category: category, placement: .row)
+            }
+        }
+    }
+
+    /// Returns what a category's screen is set to, or `nil` where it has no
+    /// single answer worth showing.
+    ///
+    /// - Parameter category: The part of Settings to sum up.
+    private func answer(for category: SettingsCategory) -> String? {
+        switch category {
+        case .appearance: icon.title
+        case .notifications: nil
+        case .about: nil
+        case .contact: nil
+        }
+    }
+
+    /// Returns the screen a category's row opens.
+    ///
+    /// - Parameter category: The part of Settings to open.
+    @ViewBuilder
+    private func screen(for category: SettingsCategory) -> some View {
+        switch category {
+        case .appearance:
+            AppearanceScreen(icon: $icon)
+
+        case .notifications:
+            NotYetDesigned(symbol: category.symbol)
+                .navigationTitle(category.title)
+
+        case .about:
+            NotYetDesigned(symbol: category.symbol)
+                .navigationTitle(category.title)
+
+        case .contact:
+            NotYetDesigned(symbol: category.symbol)
+                .navigationTitle(category.title)
+        }
     }
 
     /// Which sessions this person hears about before they start.

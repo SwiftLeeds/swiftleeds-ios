@@ -115,9 +115,12 @@
 		7CA11E00000000000000021E /* ReflowingStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E00000000000000011E /* ReflowingStack.swift */; };
 		7CA11E00000000000000021F /* ResourceRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E00000000000000011F /* ResourceRow.swift */; };
 		7CA11E000000000000000220 /* SampleAppIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000120 /* SampleAppIcon.swift */; };
-		7CA11E000000000000000221 /* SampleAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000121 /* SampleAppearance.swift */; };
 		7CA11E000000000000000222 /* SettingsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000122 /* SettingsScreen.swift */; };
 		7CA11E000000000000000223 /* MockAppIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000123 /* MockAppIcon.swift */; };
+		7CA11E000000000000000224 /* SettingsCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000124 /* SettingsCategory.swift */; };
+		7CA11E000000000000000225 /* CategoryIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000125 /* CategoryIcon.swift */; };
+		7CA11E000000000000000226 /* CategoryIntroduction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000126 /* CategoryIntroduction.swift */; };
+		7CA11E000000000000000227 /* AppearanceScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000127 /* AppearanceScreen.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -278,9 +281,12 @@
 		7CA11E00000000000000011E /* ReflowingStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReflowingStack.swift; sourceTree = "<group>"; };
 		7CA11E00000000000000011F /* ResourceRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceRow.swift; sourceTree = "<group>"; };
 		7CA11E000000000000000120 /* SampleAppIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleAppIcon.swift; sourceTree = "<group>"; };
-		7CA11E000000000000000121 /* SampleAppearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleAppearance.swift; sourceTree = "<group>"; };
 		7CA11E000000000000000122 /* SettingsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsScreen.swift; sourceTree = "<group>"; };
 		7CA11E000000000000000123 /* MockAppIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAppIcon.swift; sourceTree = "<group>"; };
+		7CA11E000000000000000124 /* SettingsCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCategory.swift; sourceTree = "<group>"; };
+		7CA11E000000000000000125 /* CategoryIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryIcon.swift; sourceTree = "<group>"; };
+		7CA11E000000000000000126 /* CategoryIntroduction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryIntroduction.swift; sourceTree = "<group>"; };
+		7CA11E000000000000000127 /* AppearanceScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceScreen.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -675,8 +681,11 @@
 			isa = PBXGroup;
 			children = (
 				7CA11E000000000000000120 /* SampleAppIcon.swift */,
-				7CA11E000000000000000121 /* SampleAppearance.swift */,
 				7CA11E000000000000000122 /* SettingsScreen.swift */,
+				7CA11E000000000000000124 /* SettingsCategory.swift */,
+				7CA11E000000000000000125 /* CategoryIcon.swift */,
+				7CA11E000000000000000126 /* CategoryIntroduction.swift */,
+				7CA11E000000000000000127 /* AppearanceScreen.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -1046,9 +1055,12 @@
 				7CA11E00000000000000021E /* ReflowingStack.swift in Sources */,
 				7CA11E00000000000000021F /* ResourceRow.swift in Sources */,
 				7CA11E000000000000000220 /* SampleAppIcon.swift in Sources */,
-				7CA11E000000000000000221 /* SampleAppearance.swift in Sources */,
 				7CA11E000000000000000222 /* SettingsScreen.swift in Sources */,
 				7CA11E000000000000000223 /* MockAppIcon.swift in Sources */,
+				7CA11E000000000000000224 /* SettingsCategory.swift in Sources */,
+				7CA11E000000000000000225 /* CategoryIcon.swift in Sources */,
+				7CA11E000000000000000226 /* CategoryIntroduction.swift in Sources */,
+				7CA11E000000000000000227 /* AppearanceScreen.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
