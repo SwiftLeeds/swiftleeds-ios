@@ -106,8 +106,7 @@ struct SettingsScreen: View {
             AboutScreen()
 
         case .contact:
-            NotYetDesigned(symbol: category.symbol)
-                .navigationTitle(category.title)
+            ContactScreen()
         }
     }
 }

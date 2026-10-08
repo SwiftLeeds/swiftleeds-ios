@@ -123,6 +123,7 @@
 		7CA11E000000000000000227 /* AppearanceScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000127 /* AppearanceScreen.swift */; };
 		7CA11E000000000000000228 /* NotificationsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000128 /* NotificationsScreen.swift */; };
 		7CA11E000000000000000229 /* AboutScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000129 /* AboutScreen.swift */; };
+		7CA11E00000000000000022A /* ContactScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E00000000000000012A /* ContactScreen.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -291,6 +292,7 @@
 		7CA11E000000000000000127 /* AppearanceScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceScreen.swift; sourceTree = "<group>"; };
 		7CA11E000000000000000128 /* NotificationsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsScreen.swift; sourceTree = "<group>"; };
 		7CA11E000000000000000129 /* AboutScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutScreen.swift; sourceTree = "<group>"; };
+		7CA11E00000000000000012A /* ContactScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactScreen.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -692,6 +694,7 @@
 				7CA11E000000000000000127 /* AppearanceScreen.swift */,
 				7CA11E000000000000000128 /* NotificationsScreen.swift */,
 				7CA11E000000000000000129 /* AboutScreen.swift */,
+				7CA11E00000000000000012A /* ContactScreen.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -1069,6 +1072,7 @@
 				7CA11E000000000000000227 /* AppearanceScreen.swift in Sources */,
 				7CA11E000000000000000228 /* NotificationsScreen.swift in Sources */,
 				7CA11E000000000000000229 /* AboutScreen.swift in Sources */,
+				7CA11E00000000000000022A /* ContactScreen.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

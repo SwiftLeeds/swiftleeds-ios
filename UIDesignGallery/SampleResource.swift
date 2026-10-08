@@ -120,6 +120,27 @@ extension SampleResource {
         ),
     ]
 
+    /// The ways to reach the people who run the conference.
+    ///
+    /// Each one leaves the app: writing opens Mail, and the rest open their
+    /// own apps or the web.
+    static let contact: [SampleResource] = [
+        SampleResource(
+            id: "email",
+            title: "Email the organizers",
+            detail: "hello@swiftleeds.co.uk",
+            symbol: "envelope",
+            destination: .page
+        ),
+        SampleResource(
+            id: "x",
+            title: "Message us on X",
+            detail: "@swift_leeds",
+            symbol: "at",
+            destination: .page
+        ),
+    ]
+
     /// The conference's own screen, and the places it publishes.
     static let swiftLeeds: [SampleResource] =
         [
