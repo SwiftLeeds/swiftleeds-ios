@@ -17,7 +17,8 @@ enum SignInState: String, CaseIterable, Equatable, Hashable {
     var email: String {
         switch self {
         case .blank: ""
-        case .filled, .rejected: SampleAttendee.signedIn.email
+        case .filled: SampleAttendee.signedIn.email
+        case .rejected: SampleAttendee.signedIn.email
         }
     }
 
@@ -25,7 +26,8 @@ enum SignInState: String, CaseIterable, Equatable, Hashable {
     var ticketReference: String {
         switch self {
         case .blank: ""
-        case .filled, .rejected: "SLDS-7"
+        case .filled: "SLDS-7"
+        case .rejected: "SLDS-7"
         }
     }
 
