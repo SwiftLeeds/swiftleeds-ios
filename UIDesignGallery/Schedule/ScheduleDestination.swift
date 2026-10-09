@@ -1,7 +1,7 @@
 /// A screen the schedule opens over itself as the gallery starts.
 ///
-/// A session is pushed and Settings is presented, so this says which screen to
-/// open rather than how it arrives.
+/// A session is pushed, and Settings and Sign in are presented, so this says
+/// which screen to open rather than how it arrives.
 enum ScheduleDestination: Equatable, Hashable {
     /// What one session is about, and what a person can do about it.
     case session(SampleSession)
@@ -15,4 +15,7 @@ enum ScheduleDestination: Equatable, Hashable {
 
     /// One part of Settings, which sits one step inside it.
     case settingsCategory(SettingsCategory)
+
+    /// The screen that signs a person in with their ticket.
+    case signIn(SignInState)
 }

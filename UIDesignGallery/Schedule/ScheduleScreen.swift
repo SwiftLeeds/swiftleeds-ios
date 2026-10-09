@@ -3,6 +3,17 @@ import UIDesign
 
 /// A view that lists the conference's sessions, a day at a time.
 struct ScheduleScreen: View {
+    /// Which sheet the schedule shows, or nil for none.
+    private enum Sheet: Equatable, Hashable, Identifiable {
+        /// What a person can change about the app.
+        case settings
+
+        /// The screen that signs a person in with their ticket.
+        case signIn(SignInState)
+
+        var id: Self { self }
+    }
+
     /// Which sessions the schedule lists.
     private enum Filter: Hashable {
         /// Every session at the conference.
@@ -49,8 +60,8 @@ struct ScheduleScreen: View {
     /// The sessions pushed on top of the schedule.
     @State private var path: [SampleSession] = []
 
-    /// Whether Settings is on screen.
-    @State private var showsSettings = false
+    /// The sheet the schedule shows, or nil for none.
+    @State private var sheet: Sheet?
 
     /// The screens pushed on top of Settings.
     ///
@@ -79,11 +90,16 @@ struct ScheduleScreen: View {
             .navigationDestination(for: SampleSession.self) { session in
                 SessionDetailScreen(session: session)
             }
-            .sheet(isPresented: $showsSettings) { settingsSheet }
+            .sheet(item: $sheet) { item in
+                switch item {
+                case .settings: settingsSheet
+                case .signIn(let state): signInSheet(opensWith: state)
+                }
+            }
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button {
-                        showsSettings = true
+                        sheet = .settings
                     } label: {
                         // The halo says this person holds a standing at the
                         // conference. Their own profile spells it out, so the
@@ -146,13 +162,14 @@ struct ScheduleScreen: View {
         .onAppear {
             switch opensWith {
             case .session(let session): path = [session]
-            case .settings: showsSettings = true
+            case .settings: sheet = .settings
             case .profile:
-                showsSettings = true
+                sheet = .settings
                 settingsPath.append(SampleAttendee.signedIn)
             case .settingsCategory(let category):
-                showsSettings = true
+                sheet = .settings
                 settingsPath.append(category)
+            case .signIn(let state): sheet = .signIn(state)
             case nil: break
             }
         }
@@ -175,7 +192,22 @@ struct ScheduleScreen: View {
                 }
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
-                        Button("Close", systemImage: "xmark") { showsSettings = false }
+                        Button("Close", systemImage: "xmark") { sheet = nil }
+                            .tint(.textPrimary)
+                    }
+                }
+        }
+    }
+
+    /// Sign in, over the schedule rather than after it.
+    ///
+    /// - Parameter state: The state the screen opens in.
+    private func signInSheet(opensWith state: SignInState) -> some View {
+        NavigationStack {
+            SignInScreen(opensWith: state)
+                .toolbar {
+                    ToolbarItem(placement: .topBarLeading) {
+                        Button("Close", systemImage: "xmark") { sheet = nil }
                             .tint(.textPrimary)
                     }
                 }

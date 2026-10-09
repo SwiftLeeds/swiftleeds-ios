@@ -124,6 +124,8 @@
 		7CA11E000000000000000228 /* NotificationsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000128 /* NotificationsScreen.swift */; };
 		7CA11E000000000000000229 /* AboutScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000129 /* AboutScreen.swift */; };
 		7CA11E00000000000000022A /* ContactScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E00000000000000012A /* ContactScreen.swift */; };
+		7CA11E00000000000000022B /* SignInState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E00000000000000012B /* SignInState.swift */; };
+		7CA11E00000000000000022C /* SignInScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E00000000000000012C /* SignInScreen.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -293,6 +295,8 @@
 		7CA11E000000000000000128 /* NotificationsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsScreen.swift; sourceTree = "<group>"; };
 		7CA11E000000000000000129 /* AboutScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutScreen.swift; sourceTree = "<group>"; };
 		7CA11E00000000000000012A /* ContactScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactScreen.swift; sourceTree = "<group>"; };
+		7CA11E00000000000000012B /* SignInState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInState.swift; sourceTree = "<group>"; };
+		7CA11E00000000000000012C /* SignInScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInScreen.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -609,6 +613,7 @@
 				7CA11E000000000000000013 /* Venue */,
 				7CA11E000000000000000014 /* Search */,
 				7CA11E000000000000000015 /* Settings */,
+				7CA11E000000000000000016 /* SignIn */,
 			);
 			path = UIDesignGallery;
 			sourceTree = "<group>";
@@ -697,6 +702,15 @@
 				7CA11E00000000000000012A /* ContactScreen.swift */,
 			);
 			path = Settings;
+			sourceTree = "<group>";
+		};
+		7CA11E000000000000000016 /* SignIn */ = {
+			isa = PBXGroup;
+			children = (
+				7CA11E00000000000000012B /* SignInState.swift */,
+				7CA11E00000000000000012C /* SignInScreen.swift */,
+			);
+			path = SignIn;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1073,6 +1087,8 @@
 				7CA11E000000000000000228 /* NotificationsScreen.swift in Sources */,
 				7CA11E000000000000000229 /* AboutScreen.swift in Sources */,
 				7CA11E00000000000000022A /* ContactScreen.swift in Sources */,
+				7CA11E00000000000000022B /* SignInState.swift in Sources */,
+				7CA11E00000000000000022C /* SignInScreen.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
