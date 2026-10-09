@@ -76,7 +76,6 @@ struct SignInScreen: View {
             Section {
                 heading
                     .listRowBackground(Color.clear)
-                    .listRowInsets(EdgeInsets())
                     .padding(.top, .large)
             }
 
