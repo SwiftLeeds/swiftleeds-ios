@@ -80,11 +80,21 @@ struct SignInScreen: View {
             }
 
             Section {
-                emailRow
-                ticketReferenceRow
+                emailSection
+            } header: {
+                Text("Email address")
             } footer: {
+                Text("The email address you used to buy your ticket")
+            }
+
+            Section {
+                ticketReferenceSection
+            } header: {
+                Text("Ticket reference")
+            } footer: {
+                Text("You'll find it in your confirmation email. It looks like ABCD-1.")
                 if phase == .rejected {
-                    rejectionFooter
+                    rejectionSection
                 }
             }
         }
@@ -141,44 +151,40 @@ struct SignInScreen: View {
         .accessibilityAddTraits(.isHeader)
     }
 
-    /// The row that reads the email address this person typed.
-    private var emailRow: some View {
-        LabeledContent("Email address") {
-            TextField("Email address", text: $email, prompt: Text(verbatim: "name@example.com"))
-                .keyboardType(.emailAddress)
-                .textContentType(.emailAddress)
-                .textInputAutocapitalization(.never)
-                .autocorrectionDisabled()
-                .submitLabel(.next)
-                .multilineTextAlignment(.leading)
-                .focused($focus, equals: .email)
-                .onSubmit { focus = .ticketReference }
-                .onChange(of: email) { clearRejection() }
-        }
-        .disabled(phase == .submitting)
+    /// The field that reads the email address this person typed.
+    private var emailSection: some View {
+        TextField("Email address", text: $email, prompt: Text(verbatim: "name@example.com"))
+            .keyboardType(.emailAddress)
+            .textContentType(.emailAddress)
+            .textInputAutocapitalization(.never)
+            .autocorrectionDisabled()
+            .submitLabel(.next)
+            .multilineTextAlignment(.leading)
+            .focused($focus, equals: .email)
+            .onSubmit { focus = .ticketReference }
+            .onChange(of: email) { clearRejection() }
+            .disabled(phase == .submitting)
     }
 
-    /// The row that reads the ticket reference this person typed.
-    private var ticketReferenceRow: some View {
-        LabeledContent("Ticket reference") {
-            TextField("Ticket reference", text: $ticketReference, prompt: Text(verbatim: "ABCD-1"))
-                .textInputAutocapitalization(.characters)
-                .autocorrectionDisabled()
-                .submitLabel(.go)
-                .multilineTextAlignment(.leading)
-                .focused($focus, equals: .ticketReference)
-                .onSubmit {
-                    if canSubmit {
-                        signIn()
-                    }
+    /// The field that reads the ticket reference this person typed.
+    private var ticketReferenceSection: some View {
+        TextField("Ticket reference", text: $ticketReference, prompt: Text(verbatim: "ABCD-1"))
+            .textInputAutocapitalization(.characters)
+            .autocorrectionDisabled()
+            .submitLabel(.go)
+            .multilineTextAlignment(.leading)
+            .focused($focus, equals: .ticketReference)
+            .onSubmit {
+                if canSubmit {
+                    signIn()
                 }
-                .onChange(of: ticketReference) { clearRejection() }
-        }
-        .disabled(phase == .submitting)
+            }
+            .onChange(of: ticketReference) { clearRejection() }
+            .disabled(phase == .submitting)
     }
 
     /// The message explaining why the server refused the typed fields.
-    private var rejectionFooter: some View {
+    private var rejectionSection: some View {
         Label(
             "We can't find a ticket for that email address and ticket reference. Check them and try again.",
             systemImage: "exclamationmark.circle"
