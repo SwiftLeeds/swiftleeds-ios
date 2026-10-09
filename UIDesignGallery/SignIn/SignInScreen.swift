@@ -20,6 +20,9 @@ struct SignInScreen: View {
 
         /// Waiting for the pretend server to answer.
         case submitting
+
+        /// The server has refused the typed fields.
+        case rejected
     }
 
     /// How long the gallery pretends the server takes to answer.
@@ -27,6 +30,9 @@ struct SignInScreen: View {
 
     /// Dismisses the sheet once signing in finishes.
     @Environment(\.dismiss) private var dismiss
+
+    /// Whether this person has asked for less movement on screen.
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     /// The email address this person has typed.
     @State private var email: String
@@ -40,6 +46,12 @@ struct SignInScreen: View {
     /// Which field holds the keyboard focus.
     @FocusState private var focus: Field?
 
+    /// Whether VoiceOver should move to the rejection message.
+    @AccessibilityFocusState private var isRejectionFocused: Bool
+
+    /// Whether the screen opened already rejected.
+    private let opensRejected: Bool
+
     /// Creates the screen, with the fields seeded from the state the gallery
     /// asked it to open with.
     ///
@@ -47,6 +59,8 @@ struct SignInScreen: View {
     init(opensWith state: SignInState) {
         _email = State(initialValue: state.email)
         _ticketReference = State(initialValue: state.ticketReference)
+        _phase = State(initialValue: state.isRejected ? .rejected : .editing)
+        opensRejected = state.isRejected
     }
 
     /// Whether both fields hold enough to submit.
@@ -69,6 +83,10 @@ struct SignInScreen: View {
             Section {
                 emailRow
                 ticketReferenceRow
+            } footer: {
+                if phase == .rejected {
+                    rejectionFooter
+                }
             }
         }
         .listStyle(.insetGrouped)
@@ -81,6 +99,17 @@ struct SignInScreen: View {
             // sleep then has nothing left to do.
             try? await Task.sleep(for: Self.pretendDelay)
             dismiss()
+        }
+        .sensoryFeedback(.error, trigger: phase) { _, new in new == .rejected }
+        .onAppear {
+            if opensRejected {
+                withAnimation(reduceMotion ? nil : .default) {
+                    phase = .rejected
+                }
+            }
+            if phase == .rejected {
+                isRejectionFocused = true
+            }
         }
     }
 
@@ -125,6 +154,7 @@ struct SignInScreen: View {
                 .multilineTextAlignment(.leading)
                 .focused($focus, equals: .email)
                 .onSubmit { focus = .ticketReference }
+                .onChange(of: email) { clearRejection() }
         }
         .disabled(phase == .submitting)
     }
@@ -143,8 +173,19 @@ struct SignInScreen: View {
                         signIn()
                     }
                 }
+                .onChange(of: ticketReference) { clearRejection() }
         }
         .disabled(phase == .submitting)
+    }
+
+    /// The message explaining why the server refused the typed fields.
+    private var rejectionFooter: some View {
+        Label(
+            "We can't find a ticket for that email address and ticket reference. Check them and try again.",
+            systemImage: "exclamationmark.circle"
+        )
+        .foregroundStyle(.error)
+        .accessibilityFocused($isRejectionFocused)
     }
 
     /// The action that submits the fields.
@@ -172,5 +213,12 @@ struct SignInScreen: View {
     /// Starts submitting the typed fields.
     private func signIn() {
         phase = .submitting
+    }
+
+    /// Returns a rejected screen to editing, now that a field has changed.
+    private func clearRejection() {
+        if phase == .rejected {
+            phase = .editing
+        }
     }
 }

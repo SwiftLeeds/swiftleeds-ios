@@ -10,11 +10,14 @@ enum SignInState: String, CaseIterable, Equatable, Hashable {
     /// Both fields hold a sample attendee's ticket details.
     case filled
 
+    /// The same two values, and the server has refused them.
+    case rejected
+
     /// The email address the screen opens with.
     var email: String {
         switch self {
         case .blank: ""
-        case .filled: SampleAttendee.signedIn.email
+        case .filled, .rejected: SampleAttendee.signedIn.email
         }
     }
 
@@ -22,7 +25,13 @@ enum SignInState: String, CaseIterable, Equatable, Hashable {
     var ticketReference: String {
         switch self {
         case .blank: ""
-        case .filled: "SLDS-7"
+        case .filled, .rejected: "SLDS-7"
         }
+    }
+
+    /// Whether the server has refused this state's email and ticket
+    /// reference.
+    var isRejected: Bool {
+        self == .rejected
     }
 }
