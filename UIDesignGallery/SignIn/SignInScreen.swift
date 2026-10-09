@@ -144,7 +144,7 @@ struct SignInScreen: View {
     /// The row that reads the email address this person typed.
     private var emailRow: some View {
         LabeledContent("Email address") {
-            TextField("Email address", text: $email, prompt: Text("name@example.com"))
+            TextField("Email address", text: $email, prompt: Text(verbatim: "name@example.com"))
                 .keyboardType(.emailAddress)
                 .textContentType(.emailAddress)
                 .textInputAutocapitalization(.never)
@@ -161,7 +161,7 @@ struct SignInScreen: View {
     /// The row that reads the ticket reference this person typed.
     private var ticketReferenceRow: some View {
         LabeledContent("Ticket reference") {
-            TextField("Ticket reference", text: $ticketReference, prompt: Text("ABCD-1"))
+            TextField("Ticket reference", text: $ticketReference, prompt: Text(verbatim: "ABCD-1"))
                 .textInputAutocapitalization(.characters)
                 .autocorrectionDisabled()
                 .submitLabel(.go)
