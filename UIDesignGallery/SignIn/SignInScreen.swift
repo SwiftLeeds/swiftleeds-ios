@@ -79,6 +79,12 @@ struct SignInScreen: View {
                     .padding(.top, .large)
             }
 
+            if phase == .rejected {
+                Section {
+                    rejectionSection
+                }
+            }
+
             Section {
                 emailSection
             } header: {
@@ -93,9 +99,6 @@ struct SignInScreen: View {
                 Text("Ticket reference")
             } footer: {
                 Text("You'll find it in your confirmation email. It looks like ABCD-1.")
-                if phase == .rejected {
-                    rejectionSection
-                }
             }
         }
         .listStyle(.insetGrouped)
