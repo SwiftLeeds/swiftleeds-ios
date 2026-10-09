@@ -28,11 +28,18 @@ struct SignInScreen: View {
     /// How long the gallery pretends the server takes to answer.
     private static let pretendDelay = Duration.seconds(1)
 
+    /// Extra room below the last field at an accessibility text size, so its
+    /// footer can scroll clear of the pinned bottom bar.
+    private static let accessibilityBottomClearance: CGFloat = 100
+
     /// Dismisses the sheet once signing in finishes.
     @Environment(\.dismiss) private var dismiss
 
     /// Whether this person has asked for less movement on screen.
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+    /// This person's preferred text size.
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     /// The email address this person has typed.
     @State private var email: String
@@ -99,6 +106,15 @@ struct SignInScreen: View {
                 Text("Ticket reference")
             } footer: {
                 Text("You'll find it in your confirmation email. It looks like ABCD-1.")
+            }
+
+            if dynamicTypeSize.isAccessibilitySize {
+                Section {
+                    Color.clear
+                        .frame(height: Self.accessibilityBottomClearance)
+                        .listRowBackground(Color.clear)
+                        .listRowSeparator(.hidden)
+                }
             }
         }
         .listStyle(.insetGrouped)
