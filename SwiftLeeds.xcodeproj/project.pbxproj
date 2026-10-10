@@ -21,8 +21,6 @@
 		74A09FE128C6778C00E03F39 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74A09FE028C6778C00E03F39 /* SwiftUI.framework */; };
 		74A09FE428C6778C00E03F39 /* SwiftLeedsWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A09FE328C6778C00E03F39 /* SwiftLeedsWidget.swift */; };
 		74A09FEA28C6779300E03F39 /* SwiftLeedsWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 74A09FDD28C6778C00E03F39 /* SwiftLeedsWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		74A09FF028C688E700E03F39 /* BuildFile in Resources */ = {isa = PBXBuildFile; };
-		74A09FF128C688E700E03F39 /* BuildFile in Resources */ = {isa = PBXBuildFile; };
 		74B14FB028CE21D7004C0A40 /* Provider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B14FAF28CE21D7004C0A40 /* Provider.swift */; };
 		74B14FB228CE2221004C0A40 /* SwiftLeedsWidgetEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B14FB128CE2221004C0A40 /* SwiftLeedsWidgetEntry.swift */; };
 		74B14FB428CE2245004C0A40 /* SwiftLeedsWidgetEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B14FB328CE2245004C0A40 /* SwiftLeedsWidgetEntryView.swift */; };
@@ -705,8 +703,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				74A09FF128C688E700E03F39 /* BuildFile in Resources */,
-				74A09FF028C688E700E03F39 /* BuildFile in Resources */,
 				7DD216398B20B302618BCB90 /* SwiftLeedsAssets.xcassets in Resources */,
 				EF223850DCFBB4DF1213DE38 /* KotlinLeedsAssets.xcassets in Resources */,
 			);
