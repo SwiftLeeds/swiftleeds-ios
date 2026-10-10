@@ -1,5 +1,5 @@
 {
-  "originHash" : "f3bcb04325cb0186ca70302d497f912fc09ef83d520230b31cf4b2f6380eb460",
+  "originHash" : "08499cdb91ef13d935370fce7b5b8670c3e7fa67e4682f1a3a4ecab79a5e668f",
   "pins" : [
     {
       "identity" : "combine-schedulers",
@@ -35,6 +35,15 @@
       "state" : {
         "revision" : "8dc1fbf2f6255a73dec53b4648164884898db4c5",
         "version" : "1.14.1"
+      }
+    },
+    {
+      "identity" : "swift-issue-reporting",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/pointfreeco/swift-issue-reporting",
+      "state" : {
+        "revision" : "75b000cea2ca6d7527a57e1b9cc0bdf21a9abe9f",
+        "version" : "2.1.1"
       }
     },
     {
