@@ -21,8 +21,6 @@
 		74A09FE128C6778C00E03F39 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74A09FE028C6778C00E03F39 /* SwiftUI.framework */; };
 		74A09FE428C6778C00E03F39 /* SwiftLeedsWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A09FE328C6778C00E03F39 /* SwiftLeedsWidget.swift */; };
 		74A09FEA28C6779300E03F39 /* SwiftLeedsWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 74A09FDD28C6778C00E03F39 /* SwiftLeedsWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		74A09FF028C688E700E03F39 /* BuildFile in Resources */ = {isa = PBXBuildFile; };
-		74A09FF128C688E700E03F39 /* BuildFile in Resources */ = {isa = PBXBuildFile; };
 		74B14FB028CE21D7004C0A40 /* Provider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B14FAF28CE21D7004C0A40 /* Provider.swift */; };
 		74B14FB228CE2221004C0A40 /* SwiftLeedsWidgetEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B14FB128CE2221004C0A40 /* SwiftLeedsWidgetEntry.swift */; };
 		74B14FB428CE2245004C0A40 /* SwiftLeedsWidgetEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B14FB328CE2245004C0A40 /* SwiftLeedsWidgetEntryView.swift */; };
@@ -36,54 +34,54 @@
 		79E3CB724EF853948BC7D906 /* ConferenceConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67624B7470D6BA62D4912236 /* ConferenceConfig.swift */; };
 		7B31C8EB2ED0959000FEEDF7 /* DesignKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7B31C8EA2ED0959000FEEDF7 /* DesignKit */; };
 		7B31C8F12ED0A7BF00FEEDF7 /* SettingsUI in Frameworks */ = {isa = PBXBuildFile; productRef = 7B31C8F02ED0A7BF00FEEDF7 /* SettingsUI */; };
-		A11CE57000000000000000D1 /* AuthenticationUI in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C1 /* AuthenticationUI */; };
-		A11CE57000000000000000D2 /* AuthenticationFeature in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C2 /* AuthenticationFeature */; };
-		A11CE57000000000000000D5 /* LogKit in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C5 /* LogKit */; };
-		A11CE57000000000000000D6 /* LogKitUnified in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C6 /* LogKitUnified */; };
-		A11CE57000000000000000D7 /* NetworkKit in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C7 /* NetworkKit */; };
-		A11CE57000000000000000D9 /* SponsorsFeature in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C9 /* SponsorsFeature */; };
-		A11CE57000000000000000DA /* UIComponents in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000CA /* UIComponents */; };
-		A11CE570000000000000F4A3 /* UIDesign in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE570000000000000F4A2 /* UIDesign */; };
-		F8AC9B695FEAFDBD19A01A10 /* NetworkKit in Frameworks */ = {isa = PBXBuildFile; productRef = 631E9D02432C1E1A187A3E03 /* NetworkKit */; };
-		E44377685B94DC7F6465ED4A /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = 39093D62C747210F6BA83C1E /* Dependencies */; };
-		A11CE57000000000000000D3 /* SecureStorageKit in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C3 /* SecureStorageKit */; };
-		A11CE57000000000000000D4 /* SecureStorageKitKeychain in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C4 /* SecureStorageKitKeychain */; };
-		A11CE57000000000000000D8 /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C8 /* Dependencies */; };
 		7B8C3ECF2EE4A9F70089C6CF /* SharedAssets in Frameworks */ = {isa = PBXBuildFile; productRef = 7B8C3ECE2EE4A9F70089C6CF /* SharedAssets */; };
 		7BE081542EE5BF13004BCD1F /* SharedAssets in Frameworks */ = {isa = PBXBuildFile; productRef = 7BE081532EE5BF13004BCD1F /* SharedAssets */; };
 		7DD216398B20B302618BCB90 /* SwiftLeedsAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3275AD6541323F056786E508 /* SwiftLeedsAssets.xcassets */; };
 		802D63D966D0A9337F66041C /* KotlinLeedsAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 75075F01455C8AD72C71783C /* KotlinLeedsAssets.xcassets */; };
 		920187EBD71395160F1059C1 /* KotlinLeedsColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B3FFD994DBE3F62216150F8 /* KotlinLeedsColors.xcassets */; };
+		A11CE57000000000000000D1 /* AuthenticationUI in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C1 /* AuthenticationUI */; };
+		A11CE57000000000000000D2 /* AuthenticationFeature in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C2 /* AuthenticationFeature */; };
+		A11CE57000000000000000D3 /* SecureStorageKit in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C3 /* SecureStorageKit */; };
+		A11CE57000000000000000D4 /* SecureStorageKitKeychain in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C4 /* SecureStorageKitKeychain */; };
+		A11CE57000000000000000D5 /* LogKit in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C5 /* LogKit */; };
+		A11CE57000000000000000D6 /* LogKitUnified in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C6 /* LogKitUnified */; };
+		A11CE57000000000000000D7 /* NetworkKit in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C7 /* NetworkKit */; };
+		A11CE57000000000000000D8 /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C8 /* Dependencies */; };
+		A11CE57000000000000000D9 /* SponsorsFeature in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C9 /* SponsorsFeature */; };
+		A11CE57000000000000000DA /* UIComponents in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000CA /* UIComponents */; };
+		A11CE57000000000000000DC /* SponsorsUI in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000CC /* SponsorsUI */; };
+		A11CE57000000000000000DD /* ScheduleFeature in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000CD /* ScheduleFeature */; };
+		A11CE57000000000000000DF /* ScheduleFeature in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000CF /* ScheduleFeature */; };
+		A11CE57000000000000000E6 /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000E5 /* Dependencies */; };
+		A11CE57000000000000000E8 /* ScheduleUI in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000E7 /* ScheduleUI */; };
+		A11CE57000000000000000EA /* ScheduleUI in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000E9 /* ScheduleUI */; };
+		A11CE57000000000000000EC /* NetworkKit in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000EB /* NetworkKit */; };
 		A11CE57000000000000000F2 /* URLSession+SwiftLeeds.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11CE57000000000000000F1 /* URLSession+SwiftLeeds.swift */; };
+		A11CE570000000000000F0D1 /* LocalFeature in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE570000000000000F0C1 /* LocalFeature */; };
+		A11CE570000000000000F0D2 /* LocalUI in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE570000000000000F0C2 /* LocalUI */; };
+		A11CE570000000000000F1D1 /* AboutFeature in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE570000000000000F1C1 /* AboutFeature */; };
+		A11CE570000000000000F1D2 /* AboutUI in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE570000000000000F1C2 /* AboutUI */; };
+		A11CE570000000000000F2D1 /* ColorTheme in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE570000000000000F2C1 /* ColorTheme */; };
+		A11CE570000000000000F3B1 /* ContactEmail+Conference.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11CE570000000000000F3A1 /* ContactEmail+Conference.swift */; };
+		A11CE570000000000000F3B2 /* AppVersion+Current.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11CE570000000000000F3A2 /* AppVersion+Current.swift */; };
+		A11CE570000000000000F4A3 /* UIDesign in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE570000000000000F4A2 /* UIDesign */; };
 		AE1C801428A7BCD000996659 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AE1C801328A7BCD000996659 /* Settings.bundle */; };
 		AE5EFD73289DC1D000464FE1 /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = AE5EFD72289DC1D000464FE1 /* CachedAsyncImage */; };
 		AE8C1B2828C4B36B00AF7318 /* AppDelegate+Push.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8C1B2728C4B36B00AF7318 /* AppDelegate+Push.swift */; };
 		AE8C1B2B28C4B39A00AF7318 /* TokenDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8C1B2A28C4B39A00AF7318 /* TokenDetails.swift */; };
 		AECB295727417F9D00CDC983 /* SwiftLeedsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECB295627417F9D00CDC983 /* SwiftLeedsApp.swift */; };
-		AECB2A0127417F9D00CDC902 /* LogCategories.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECB2A0027417F9D00CDC901 /* LogCategories.swift */; };
-		A11CE570000000000000F3B1 /* ContactEmail+Conference.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11CE570000000000000F3A1 /* ContactEmail+Conference.swift */; };
-		A11CE570000000000000F3B2 /* AppVersion+Current.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11CE570000000000000F3A2 /* AppVersion+Current.swift */; };
 		AECB296827417F9E00CDC983 /* SwiftLeedsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECB296727417F9E00CDC983 /* SwiftLeedsTests.swift */; };
 		AECB297227417F9E00CDC983 /* SwiftLeedsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECB297127417F9E00CDC983 /* SwiftLeedsUITests.swift */; };
 		AECB297427417F9E00CDC983 /* SwiftLeedsUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECB297327417F9E00CDC983 /* SwiftLeedsUITestsLaunchTests.swift */; };
+		AECB2A0127417F9D00CDC902 /* LogCategories.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECB2A0027417F9D00CDC901 /* LogCategories.swift */; };
 		AEDC0DAE286759630078A153 /* Tabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEDC0DAD286759630078A153 /* Tabs.swift */; };
 		B2A3D0194187CEC82CCD3F5D /* ConferenceConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67624B7470D6BA62D4912236 /* ConferenceConfig.swift */; };
 		B7E34B6C6CE38F48068FB98A /* SwiftLeedsAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EEFB1E37D5A542A1798C92D5 /* SwiftLeedsAssets.xcassets */; };
 		C88307224ADAA4C64A455D74 /* KotlinLeedsAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40AEBC0F9109732F54C608A9 /* KotlinLeedsAssets.xcassets */; };
 		D87582F568B0EFB6371B734B /* ConferenceConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67624B7470D6BA62D4912236 /* ConferenceConfig.swift */; };
+		E44377685B94DC7F6465ED4A /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = 39093D62C747210F6BA83C1E /* Dependencies */; };
 		EF223850DCFBB4DF1213DE38 /* KotlinLeedsAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ED1AFB8A37EDA9676DB1C998 /* KotlinLeedsAssets.xcassets */; };
-		A11CE57000000000000000DC /* SponsorsUI in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000CC /* SponsorsUI */; };
-		A11CE57000000000000000E8 /* ScheduleUI in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000E7 /* ScheduleUI */; };
-		A11CE57000000000000000EA /* ScheduleUI in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000E9 /* ScheduleUI */; };
-		A11CE57000000000000000DD /* ScheduleFeature in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000CD /* ScheduleFeature */; };
-		A11CE570000000000000F0D1 /* LocalFeature in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE570000000000000F0C1 /* LocalFeature */; };
-		A11CE570000000000000F1D1 /* AboutFeature in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE570000000000000F1C1 /* AboutFeature */; };
-		A11CE570000000000000F1D2 /* AboutUI in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE570000000000000F1C2 /* AboutUI */; };
-		A11CE570000000000000F2D1 /* ColorTheme in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE570000000000000F2C1 /* ColorTheme */; };
-		A11CE570000000000000F0D2 /* LocalUI in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE570000000000000F0C2 /* LocalUI */; };
-		A11CE57000000000000000DF /* ScheduleFeature in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000CF /* ScheduleFeature */; };
-		A11CE57000000000000000E6 /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000E5 /* Dependencies */; };
-		A11CE57000000000000000EC /* NetworkKit in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000EB /* NetworkKit */; };
+		F8AC9B695FEAFDBD19A01A10 /* NetworkKit in Frameworks */ = {isa = PBXBuildFile; productRef = 631E9D02432C1E1A187A3E03 /* NetworkKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -175,40 +173,40 @@
 		75075F01455C8AD72C71783C /* KotlinLeedsAssets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = KotlinLeedsAssets.xcassets; sourceTree = "<group>"; };
 		7804F8767E529D8F3A0D8BE4 /* KotlinLeeds.entitlements */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.entitlements; path = KotlinLeeds.entitlements; sourceTree = "<group>"; };
 		7B8108412E5CA00E00CCB2F5 /* SwiftLeedsPackage */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SwiftLeedsPackage; sourceTree = "<group>"; };
+		893A122D593379F84605F70C /* SwiftLeedsColors.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = SwiftLeedsColors.xcassets; sourceTree = "<group>"; };
 		A11CE57000000000000000A1 /* SecureStorageKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SecureStorageKit; sourceTree = "<group>"; };
 		A11CE57000000000000000A2 /* AuthenticationFeature */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = AuthenticationFeature; sourceTree = "<group>"; };
+		A11CE57000000000000000A3 /* AuthenticationUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = AuthenticationUI; sourceTree = "<group>"; };
+		A11CE57000000000000000A4 /* NetworkKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = NetworkKit; sourceTree = "<group>"; };
 		A11CE57000000000000000A5 /* LogKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = LogKit; sourceTree = "<group>"; };
 		A11CE57000000000000000A6 /* SponsorsFeature */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SponsorsFeature; sourceTree = "<group>"; };
 		A11CE57000000000000000A7 /* UIComponents */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = UIComponents; sourceTree = "<group>"; };
 		A11CE57000000000000000A8 /* SponsorsUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SponsorsUI; sourceTree = "<group>"; };
-		A11CE57000000000000000AA /* ScheduleUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ScheduleUI; sourceTree = "<group>"; };
 		A11CE57000000000000000A9 /* ScheduleFeature */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ScheduleFeature; sourceTree = "<group>"; };
+		A11CE57000000000000000AA /* ScheduleUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ScheduleUI; sourceTree = "<group>"; };
+		A11CE57000000000000000F1 /* URLSession+SwiftLeeds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+SwiftLeeds.swift"; sourceTree = "<group>"; };
 		A11CE570000000000000F0A1 /* LocalFeature */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = LocalFeature; sourceTree = "<group>"; };
+		A11CE570000000000000F0A2 /* LocalUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = LocalUI; sourceTree = "<group>"; };
 		A11CE570000000000000F1A1 /* AboutFeature */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = AboutFeature; sourceTree = "<group>"; };
 		A11CE570000000000000F1A2 /* AboutUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = AboutUI; sourceTree = "<group>"; };
 		A11CE570000000000000F2A1 /* ColorTheme */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ColorTheme; sourceTree = "<group>"; };
 		A11CE570000000000000F2A2 /* SettingsUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SettingsUI; sourceTree = "<group>"; };
-		A11CE570000000000000F0A2 /* LocalUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = LocalUI; sourceTree = "<group>"; };
-		A11CE57000000000000000A4 /* NetworkKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = NetworkKit; sourceTree = "<group>"; };
-		A11CE57000000000000000A3 /* AuthenticationUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = AuthenticationUI; sourceTree = "<group>"; };
+		A11CE570000000000000F3A1 /* ContactEmail+Conference.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "ContactEmail+Conference.swift"; sourceTree = "<group>"; };
+		A11CE570000000000000F3A2 /* AppVersion+Current.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "AppVersion+Current.swift"; sourceTree = "<group>"; };
 		A11CE570000000000000F4A1 /* UIDesign */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = UIDesign; sourceTree = "<group>"; };
-		893A122D593379F84605F70C /* SwiftLeedsColors.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = SwiftLeedsColors.xcassets; sourceTree = "<group>"; };
-		A11CE57000000000000000F1 /* URLSession+SwiftLeeds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+SwiftLeeds.swift"; sourceTree = "<group>"; };
 		AE1C801328A7BCD000996659 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		AE8C1B2728C4B36B00AF7318 /* AppDelegate+Push.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Push.swift"; sourceTree = "<group>"; };
 		AE8C1B2A28C4B39A00AF7318 /* TokenDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenDetails.swift; sourceTree = "<group>"; };
 		AE8C1B2C28C4B8D800AF7318 /* SwiftLeeds.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SwiftLeeds.entitlements; sourceTree = "<group>"; };
 		AECB295327417F9D00CDC983 /* SwiftLeeds.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftLeeds.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AECB295627417F9D00CDC983 /* SwiftLeedsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftLeedsApp.swift; sourceTree = "<group>"; };
-		AECB2A0027417F9D00CDC901 /* LogCategories.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LogCategories.swift; sourceTree = "<group>"; };
-		A11CE570000000000000F3A1 /* ContactEmail+Conference.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "ContactEmail+Conference.swift"; sourceTree = "<group>"; };
-		A11CE570000000000000F3A2 /* AppVersion+Current.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "AppVersion+Current.swift"; sourceTree = "<group>"; };
 		AECB296327417F9E00CDC983 /* SwiftLeedsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftLeedsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AECB296727417F9E00CDC983 /* SwiftLeedsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftLeedsTests.swift; sourceTree = "<group>"; };
 		AECB296D27417F9E00CDC983 /* SwiftLeedsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftLeedsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AECB297127417F9E00CDC983 /* SwiftLeedsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftLeedsUITests.swift; sourceTree = "<group>"; };
 		AECB297327417F9E00CDC983 /* SwiftLeedsUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftLeedsUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		AECB29832741ABFD00CDC983 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AECB2A0027417F9D00CDC901 /* LogCategories.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LogCategories.swift; sourceTree = "<group>"; };
 		AEDC0DAD286759630078A153 /* Tabs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tabs.swift; sourceTree = "<group>"; };
 		C1725A0182E1989D761551B2 /* KotlinLeedsWidgetExtension.entitlements */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.entitlements; path = KotlinLeedsWidgetExtension.entitlements; sourceTree = "<group>"; };
 		ED1AFB8A37EDA9676DB1C998 /* KotlinLeedsAssets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = KotlinLeedsAssets.xcassets; sourceTree = "<group>"; };
@@ -343,15 +341,6 @@
 			path = Configuration;
 			sourceTree = "<group>";
 		};
-		AE8C1B2928C4B38400AF7318 /* Push */ = {
-			isa = PBXGroup;
-			children = (
-				AE8C1B2728C4B36B00AF7318 /* AppDelegate+Push.swift */,
-				AE8C1B2A28C4B39A00AF7318 /* TokenDetails.swift */,
-			);
-			path = Push;
-			sourceTree = "<group>";
-		};
 		A11CE57000000000000000B2 /* Packages */ = {
 			isa = PBXGroup;
 			children = (
@@ -374,6 +363,15 @@
 				A11CE570000000000000F4A1 /* UIDesign */,
 			);
 			path = Packages;
+			sourceTree = "<group>";
+		};
+		AE8C1B2928C4B38400AF7318 /* Push */ = {
+			isa = PBXGroup;
+			children = (
+				AE8C1B2728C4B36B00AF7318 /* AppDelegate+Push.swift */,
+				AE8C1B2A28C4B39A00AF7318 /* TokenDetails.swift */,
+			);
+			path = Push;
 			sourceTree = "<group>";
 		};
 		AECB294A27417F9D00CDC983 = {
@@ -705,8 +703,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				74A09FF128C688E700E03F39 /* BuildFile in Resources */,
-				74A09FF028C688E700E03F39 /* BuildFile in Resources */,
 				7DD216398B20B302618BCB90 /* SwiftLeedsAssets.xcassets in Resources */,
 				EF223850DCFBB4DF1213DE38 /* KotlinLeedsAssets.xcassets in Resources */,
 			);
@@ -1032,6 +1028,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SwiftLeeds/App/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "$(APP_DISPLAY_NAME)";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1306,6 +1303,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SwiftLeeds/App/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "$(APP_DISPLAY_NAME)";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1338,6 +1336,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SwiftLeeds/App/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "$(APP_DISPLAY_NAME)";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1636,6 +1635,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SwiftLeeds/App/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "$(APP_DISPLAY_NAME)";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1728,20 +1728,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		A11CE57000000000000000E1 /* XCRemoteSwiftPackageReference "swift-dependencies" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/pointfreeco/swift-dependencies";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
-			};
-		};
 		74F5EF8A2A4B4352008D9413 /* XCRemoteSwiftPackageReference "ReadabilityModifier" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/yazio/ReadabilityModifier";
 			requirement = {
 				kind = exactVersion;
 				version = 1.0.0;
+			};
+		};
+		A11CE57000000000000000E1 /* XCRemoteSwiftPackageReference "swift-dependencies" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-dependencies";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
 			};
 		};
 		AE5EFD71289DC1D000464FE1 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */ = {
@@ -1755,6 +1755,15 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		39093D62C747210F6BA83C1E /* Dependencies */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A11CE57000000000000000E1 /* XCRemoteSwiftPackageReference "swift-dependencies" */;
+			productName = Dependencies;
+		};
+		631E9D02432C1E1A187A3E03 /* NetworkKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = NetworkKit;
+		};
 		74F5EF8B2A4B4352008D9413 /* ReadabilityModifier */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 74F5EF8A2A4B4352008D9413 /* XCRemoteSwiftPackageReference "ReadabilityModifier" */;
@@ -1768,6 +1777,14 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = SettingsUI;
 		};
+		7B8C3ECE2EE4A9F70089C6CF /* SharedAssets */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SharedAssets;
+		};
+		7BE081532EE5BF13004BCD1F /* SharedAssets */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SharedAssets;
+		};
 		A11CE57000000000000000C1 /* AuthenticationUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = AuthenticationUI;
@@ -1775,6 +1792,14 @@
 		A11CE57000000000000000C2 /* AuthenticationFeature */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = AuthenticationFeature;
+		};
+		A11CE57000000000000000C3 /* SecureStorageKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SecureStorageKit;
+		};
+		A11CE57000000000000000C4 /* SecureStorageKitKeychain */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SecureStorageKitKeychain;
 		};
 		A11CE57000000000000000C5 /* LogKit */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -1788,9 +1813,10 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = NetworkKit;
 		};
-		631E9D02432C1E1A187A3E03 /* NetworkKit */ = {
+		A11CE57000000000000000C8 /* Dependencies */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = NetworkKit;
+			package = A11CE57000000000000000E1 /* XCRemoteSwiftPackageReference "swift-dependencies" */;
+			productName = Dependencies;
 		};
 		A11CE57000000000000000C9 /* SponsorsFeature */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -1799,18 +1825,6 @@
 		A11CE57000000000000000CA /* UIComponents */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = UIComponents;
-		};
-		A11CE570000000000000F4A2 /* UIDesign */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = UIDesign;
-		};
-		A11CE57000000000000000E7 /* ScheduleUI */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = ScheduleUI;
-		};
-		A11CE57000000000000000E9 /* ScheduleUI */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = ScheduleUI;
 		};
 		A11CE57000000000000000CC /* SponsorsUI */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -1824,9 +1838,30 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = ScheduleFeature;
 		};
+		A11CE57000000000000000E5 /* Dependencies */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A11CE57000000000000000E1 /* XCRemoteSwiftPackageReference "swift-dependencies" */;
+			productName = Dependencies;
+		};
+		A11CE57000000000000000E7 /* ScheduleUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ScheduleUI;
+		};
+		A11CE57000000000000000E9 /* ScheduleUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ScheduleUI;
+		};
+		A11CE57000000000000000EB /* NetworkKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = NetworkKit;
+		};
 		A11CE570000000000000F0C1 /* LocalFeature */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = LocalFeature;
+		};
+		A11CE570000000000000F0C2 /* LocalUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = LocalUI;
 		};
 		A11CE570000000000000F1C1 /* AboutFeature */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -1840,44 +1875,9 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = ColorTheme;
 		};
-		A11CE570000000000000F0C2 /* LocalUI */ = {
+		A11CE570000000000000F4A2 /* UIDesign */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = LocalUI;
-		};
-		39093D62C747210F6BA83C1E /* Dependencies */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A11CE57000000000000000E1 /* XCRemoteSwiftPackageReference "swift-dependencies" */;
-			productName = Dependencies;
-		};
-		A11CE57000000000000000EB /* NetworkKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = NetworkKit;
-		};
-		A11CE57000000000000000E5 /* Dependencies */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A11CE57000000000000000E1 /* XCRemoteSwiftPackageReference "swift-dependencies" */;
-			productName = Dependencies;
-		};
-		A11CE57000000000000000C3 /* SecureStorageKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = SecureStorageKit;
-		};
-		A11CE57000000000000000C4 /* SecureStorageKitKeychain */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = SecureStorageKitKeychain;
-		};
-		A11CE57000000000000000C8 /* Dependencies */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A11CE57000000000000000E1 /* XCRemoteSwiftPackageReference "swift-dependencies" */;
-			productName = Dependencies;
-		};
-		7B8C3ECE2EE4A9F70089C6CF /* SharedAssets */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = SharedAssets;
-		};
-		7BE081532EE5BF13004BCD1F /* SharedAssets */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = SharedAssets;
+			productName = UIDesign;
 		};
 		AE5EFD72289DC1D000464FE1 /* CachedAsyncImage */ = {
 			isa = XCSwiftPackageProductDependency;
