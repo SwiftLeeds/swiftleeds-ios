@@ -590,6 +590,13 @@ jobs:
       - name: Check every configuration writes to the app group it is granted
         run: python3 .github/scripts/check-app-groups.py
 
+      # ConferenceConfig calls fatalError when CFBundleDisplayName is missing,
+      # and a build setting in the project file overrides Info.plist, so a
+      # literal there can show the wrong brand. Run it locally:
+      # python3 .github/scripts/check-display-name.py
+      - name: Check every configuration shows its brand's display name
+        run: python3 .github/scripts/check-display-name.py
+
       # The simulator job runs one xcodebuild call against the SnapshotTests
       # scheme, so a target that scheme does not name never runs on iOS. It
       # would still compile on macOS and do nothing there, which is the gap
