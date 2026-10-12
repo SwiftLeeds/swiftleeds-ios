@@ -16,9 +16,10 @@
 set -uo pipefail
 
 # `swift format` has no `excluded` setting. The formatter in Xcode 27.0 honours a
-# `.swift-format-ignore` file, but only in a directory that holds one, and build
-# output appears in new places without one. A bare `--recursive .` would then
-# rewrite third-party dependency source in place.
+# `.swift-format-ignore` file in a folder and its subfolders, but that file is a
+# second list of what to skip, kept apart from `.gitignore`. A bare
+# `--recursive .` with a stale one would rewrite third-party dependency source in
+# place.
 #
 # So ask git for the files instead of naming directories. Build output is
 # ignored, so it can never be reached: not `.build-shared`, not a package's own
