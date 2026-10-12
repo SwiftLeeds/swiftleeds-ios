@@ -134,8 +134,9 @@ disabled_rules:
   # Contradictions. The formatter writes what the rule forbids, so fixing the
   # violations by hand would be undone by the next format run.
   #
-  # `trailing_comma`: the formatter puts a comma on a collection of two or more
-  # elements and removes it from a collection of one.
+  # `trailing_comma`: the formatter puts a comma on every multi-line list of two
+  # or more elements, collections and argument lists alike, and removes it from
+  # a list of one.
   # `sorted_imports`: `OrderedImports` sorts by code point, where a capital
   # letter precedes every lowercase one, and this rule ignores case. No ordering
   # satisfies both, so any module named lowercase, such as `os`, splits them.
