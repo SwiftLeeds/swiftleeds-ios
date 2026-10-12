@@ -15,7 +15,7 @@ public struct Activity: Codable, Identifiable, Sendable {
         subtitle: String?,
         description: String?,
         image: String?,
-        metadataURL: String?
+        metadataURL: String?,
     ) {
         self.id = id
         self.title = title
@@ -39,6 +39,6 @@ extension Activity {
             vast selection. Don't forget your handmade brownie or Bakewell slice 😋
             """,
         image: "IMG_6298.jpg-93D1F0E2-6F47-4149-944B-FB824EFB2549",
-        metadataURL: ""
+        metadataURL: "",
     )
 }

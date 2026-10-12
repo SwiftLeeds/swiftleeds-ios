@@ -24,7 +24,7 @@ extension SessionStore {
                 @Dependency(\.secureStorage) var secureStorage
                 return try await secureStorage.data(key)
                     .flatMap { try JSONDecoder().decode(CachedSession.self, from: $0).session }
-            }
+            },
         )
     }
 }

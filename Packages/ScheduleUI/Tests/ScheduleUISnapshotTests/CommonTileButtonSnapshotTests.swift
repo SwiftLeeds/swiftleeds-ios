@@ -13,7 +13,7 @@ import Testing
             primaryColor: .white,
             secondaryColor: .white.opacity(0.8),
             backgroundStyle: LinearGradient(colors: [.blue, .teal], startPoint: .leading, endPoint: .trailing),
-            onTap: {}
+            onTap: {},
         )
 
         assertTileSnapshots(of: view, width: fullTileWidth)

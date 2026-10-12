@@ -9,7 +9,7 @@ extension Profile {
             emailAddress: "ada@example.com",
             avatarURL: URL(string: "https://example.com/avatar.png")!,
             ticketReference: "ABCD-1",
-            ticketSlug: try! TicketSlug("ti_pxqFKr9pPWd6VeYKvMBKpjQ")
+            ticketSlug: try! TicketSlug("ti_pxqFKr9pPWd6VeYKvMBKpjQ"),
         )
     }
 }

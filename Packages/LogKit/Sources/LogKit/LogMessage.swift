@@ -20,7 +20,7 @@ public struct LogMessage: Sendable, ExpressibleByStringInterpolation {
     public init(stringInterpolation: Interpolation) {
         template = MessageTemplate(
             leadingText: stringInterpolation.leadingText,
-            gaps: stringInterpolation.gaps
+            gaps: stringInterpolation.gaps,
         )
         values = LogFields(stringInterpolation.values)
     }
@@ -54,7 +54,7 @@ extension LogMessage {
 
             gaps[last] = MessageTemplate.Gap(
                 placeholder: gaps[last].placeholder,
-                trailingText: gaps[last].trailingText + literal
+                trailingText: gaps[last].trailingText + literal,
             )
         }
 
@@ -71,7 +71,7 @@ extension LogMessage {
         public mutating func appendInterpolation(
             _ value: some LogValueRepresentable,
             name: String? = nil,
-            privacy: Sensitivity
+            privacy: Sensitivity,
         ) {
             append(value, name: name, privacy: privacy)
         }
@@ -90,7 +90,7 @@ extension LogMessage {
         public mutating func appendInterpolation(
             _ error: any Error,
             name: String? = nil,
-            privacy: Sensitivity
+            privacy: Sensitivity,
         ) {
             append(String(logDescribing: error), name: name, privacy: privacy)
         }
@@ -104,7 +104,7 @@ extension LogMessage {
         private mutating func append(
             _ value: some LogValueRepresentable,
             name: String?,
-            privacy: Sensitivity
+            privacy: Sensitivity,
         ) {
             let placeholder = FieldName.positional(GapIndex(gaps.count), label: name)
 

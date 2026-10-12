@@ -9,7 +9,7 @@ package struct SessionStore: Sendable {
     package init(
         establish: @escaping @Sendable (Session) async throws -> Void,
         clear: @escaping @Sendable () async throws -> Void,
-        current: @escaping @Sendable () async throws -> Session?
+        current: @escaping @Sendable () async throws -> Session?,
     ) {
         self.establish = establish
         self.clear = clear
@@ -21,7 +21,7 @@ extension SessionStore: TestDependencyKey {
     package static let testValue = SessionStore(
         establish: unimplemented("SessionStore.establish"),
         clear: unimplemented("SessionStore.clear"),
-        current: unimplemented("SessionStore.current")
+        current: unimplemented("SessionStore.current"),
     )
 }
 

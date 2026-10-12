@@ -9,7 +9,7 @@ struct LoggedProfileFetchOutcome {
     /// of them belong in a log line that says the load worked.
     static let success = LoggedProfileFetchOutcome(
         level: .info,
-        message: "The profile loaded"
+        message: "The profile loaded",
     )
 
     static func failure(_ error: AttendeeFetchError) -> LoggedProfileFetchOutcome {
@@ -18,23 +18,23 @@ struct LoggedProfileFetchOutcome {
             // Expected: the session expired or was revoked. Not a fault in the app.
             LoggedProfileFetchOutcome(
                 level: .notice,
-                message: "Loading the profile did not finish: the session was not accepted"
+                message: "Loading the profile did not finish: the session was not accepted",
             )
         case .couldNotReachServer:
             // Expected: the device is offline. The user can retry.
             LoggedProfileFetchOutcome(
                 level: .notice,
-                message: "Loading the profile did not finish: the server could not be reached"
+                message: "Loading the profile did not finish: the server could not be reached",
             )
         case .invalidResponse:
             LoggedProfileFetchOutcome(
                 level: .error,
-                message: "Loading the profile did not finish: the server's answer was rejected"
+                message: "Loading the profile did not finish: the server's answer was rejected",
             )
         case .unknown:
             LoggedProfileFetchOutcome(
                 level: .error,
-                message: "Loading the profile did not finish: the reason is not known"
+                message: "Loading the profile did not finish: the reason is not known",
             )
         }
     }

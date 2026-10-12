@@ -31,7 +31,7 @@ extension TeamMember {
                     .linkedIn(try #require(URL(string: "https://linkedin.example.com/member-one"))),
                     .twitter(try #require(URL(string: "https://twitter.example.com/member-one"))),
                     .slack(try #require(URL(string: "https://slack.example.com/member-one"))),
-                ]
+                ],
             )
         }
     }

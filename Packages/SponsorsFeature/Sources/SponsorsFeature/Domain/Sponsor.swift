@@ -22,7 +22,7 @@ public struct Sponsor: Equatable, Hashable, Identifiable, Sendable {
         level: SponsorLevel,
         logoURL: URL?,
         websiteURL: URL?,
-        jobs: [Job]
+        jobs: [Job],
     ) {
         self.id = id
         self.name = name

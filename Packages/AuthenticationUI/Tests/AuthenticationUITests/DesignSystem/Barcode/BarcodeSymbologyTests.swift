@@ -45,7 +45,7 @@ extension BarcodeSymbologyTests {
         let detector = CIDetector(
             ofType: CIDetectorTypeQRCode,
             context: nil,
-            options: [CIDetectorAccuracy: CIDetectorAccuracyHigh]
+            options: [CIDetectorAccuracy: CIDetectorAccuracyHigh],
         )
         let features = detector?.features(in: CIImage(cgImage: image)) ?? []
         return features.compactMap { ($0 as? CIQRCodeFeature)?.messageString }.first
@@ -86,7 +86,7 @@ extension BarcodeSymbologyTests {
                 bitsPerComponent: 8,
                 bytesPerRow: image.width,
                 space: CGColorSpaceCreateDeviceGray(),
-                bitmapInfo: CGImageAlphaInfo.none.rawValue
+                bitmapInfo: CGImageAlphaInfo.none.rawValue,
             )
         else { return nil }
         context.draw(image, in: CGRect(x: 0, y: 0, width: image.width, height: image.height))

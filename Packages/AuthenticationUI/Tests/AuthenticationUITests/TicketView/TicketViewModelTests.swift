@@ -86,11 +86,11 @@ private final class DisplaySpy {
     func install(_ values: inout DependencyValues) {
         values.screenBrightness = ScreenBrightness(
             current: { self.brightness },
-            set: { self.brightness = $0 }
+            set: { self.brightness = $0 },
         )
         values.screenAutoLock = ScreenAutoLock(
             enable: { self.autoLockEnabled = true },
-            disable: { self.autoLockEnabled = false }
+            disable: { self.autoLockEnabled = false },
         )
     }
 }

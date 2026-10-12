@@ -9,7 +9,7 @@ import Testing
         let view = StackedTileView(
             primaryText: "Practical Swift concurrency",
             secondaryText: "What actors buy you, and what they cost.",
-            secondaryColor: Color.primary
+            secondaryColor: Color.primary,
         )
 
         assertTileSnapshots(of: view, width: fullTileWidth)

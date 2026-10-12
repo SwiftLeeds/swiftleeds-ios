@@ -10,7 +10,7 @@ import Testing
                 level: .critical,
                 category: event.category,
                 message: event.message,
-                source: event.source
+                source: event.source,
             )
         }
 
@@ -75,7 +75,7 @@ import Testing
                 category: "auth",
                 message: "signed in",
                 fields: [.open("scheme", "ticket"), .secret("token", "abc"), .hashed("email", "a@b.c")],
-                source: .here()
+                source: .here(),
             )
         )
 
@@ -92,7 +92,7 @@ import Testing
                 category: "app",
                 message: "launched",
                 fields: [.open("cold", true)],
-                source: .here()
+                source: .here(),
             )
         )
 

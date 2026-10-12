@@ -10,7 +10,7 @@ package struct AccountDetailView: View {
 
     package init(
         profile: Profile,
-        signOut: @escaping @MainActor () async -> Void
+        signOut: @escaping @MainActor () async -> Void,
     ) {
         self.profile = profile
         self.signOut = signOut

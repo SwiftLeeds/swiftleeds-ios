@@ -85,7 +85,7 @@ import Testing
     ])
     func whenCodeIsInDefinedClass_shouldDeriveCategoryFromFirstDigit(
         code: Int,
-        category: HTTPStatus.Category
+        category: HTTPStatus.Category,
     ) {
         #expect(HTTPStatus(code: HTTPStatusCode(code)).category == category)
     }
@@ -105,7 +105,7 @@ import Testing
     ])
     func whenCategoryNameIsExtracted_shouldReturnStableName(
         category: HTTPStatus.Category,
-        name: String
+        name: String,
     ) {
         #expect(String(category) == name)
     }

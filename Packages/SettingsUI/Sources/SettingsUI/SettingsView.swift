@@ -17,7 +17,7 @@ public struct SettingsView<Header: View>: View {
     public init(
         contactEmail: ContactEmail,
         appVersion: AppVersion,
-        @ViewBuilder header: () -> Header = { EmptyView() }
+        @ViewBuilder header: () -> Header = { EmptyView() },
     ) {
         _viewModel = State(initialValue: SettingsViewModel(contactEmail: contactEmail, appVersion: appVersion))
         self.header = header()
@@ -36,7 +36,7 @@ public struct SettingsView<Header: View>: View {
                                 isSelected: viewModel.currentIcon == iconOption,
                                 action: {
                                     Task { await viewModel.changeAppIcon(to: iconOption) }
-                                }
+                                },
                             )
                         }
                     }

@@ -16,7 +16,7 @@ import Testing
         let view = LocalCell(
             label: "Drinks",
             imageName: "wineglass.fill",
-            foregroundColor: .accent
+            foregroundColor: .accent,
         )
 
         assertSheetSnapshots(of: view)
@@ -25,7 +25,7 @@ import Testing
     @Test func longLabel() {
         let view = LocalCell(
             label: "Independent coffee shops near the venue",
-            imageName: "cup.and.saucer.fill"
+            imageName: "cup.and.saucer.fill",
         )
 
         assertSheetSnapshots(of: view)

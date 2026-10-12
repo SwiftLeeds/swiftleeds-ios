@@ -9,7 +9,7 @@ package struct ScreenAutoLock: Sendable {
 
     package init(
         enable: @escaping @MainActor @Sendable () -> Void,
-        disable: @escaping @MainActor @Sendable () -> Void
+        disable: @escaping @MainActor @Sendable () -> Void,
     ) {
         self.enable = enable
         self.disable = disable
@@ -21,7 +21,7 @@ extension ScreenAutoLock: DependencyKey {
         #if os(iOS)
         ScreenAutoLock(
             enable: { UIApplication.shared.isIdleTimerDisabled = false },
-            disable: { UIApplication.shared.isIdleTimerDisabled = true }
+            disable: { UIApplication.shared.isIdleTimerDisabled = true },
         )
         #else
         ScreenAutoLock(enable: {}, disable: {})
@@ -31,7 +31,7 @@ extension ScreenAutoLock: DependencyKey {
     package static var testValue: ScreenAutoLock {
         ScreenAutoLock(
             enable: { reportIssue("ScreenAutoLock.enable is unimplemented") },
-            disable: { reportIssue("ScreenAutoLock.disable is unimplemented") }
+            disable: { reportIssue("ScreenAutoLock.disable is unimplemented") },
         )
     }
 }

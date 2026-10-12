@@ -14,7 +14,7 @@ import Testing
     @Test(arguments: [("ABCD1", "ABCD-1"), ("ABCD12", "ABCD-12")])
     func whenParsingTicketReferenceWithoutHyphen_shouldNormaliseToHyphenated(
         _ input: String,
-        _ expected: String
+        _ expected: String,
     ) throws {
         let reference = try TicketReference(input)
         #expect(String(reference) == expected)

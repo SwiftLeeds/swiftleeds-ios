@@ -35,7 +35,7 @@ extension Log {
                 \(message, privacy: .public) \
                 \(fields, privacy: .public) \
                 \(secrets, privacy: .sensitive)
-                """
+                """,
             )
         }
     }

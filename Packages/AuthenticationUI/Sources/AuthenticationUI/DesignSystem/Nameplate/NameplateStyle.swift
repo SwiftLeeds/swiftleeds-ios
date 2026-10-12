@@ -54,7 +54,7 @@ package struct ProminentNameplateStyle: NameplateStyle {
                 iconSize: min(iconSize, 96),
                 spacing: 12,
                 titleFont: .title3.weight(.semibold),
-                detailFont: .subheadline
+                detailFont: .subheadline,
             )
             .padding(.vertical, 8)
         }
@@ -79,7 +79,7 @@ package struct CompactNameplateStyle: NameplateStyle {
                 iconSize: min(iconSize, 72),
                 spacing: 10,
                 titleFont: .subheadline.weight(.semibold),
-                detailFont: .footnote
+                detailFont: .footnote,
             )
         }
     }

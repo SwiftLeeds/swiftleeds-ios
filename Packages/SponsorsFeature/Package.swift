@@ -23,7 +23,7 @@ let package = Package(
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "LogKit", package: "LogKit"),
                 .product(name: "NetworkKit", package: "NetworkKit"),
-            ]
+            ],
         ),
         .testTarget(
             name: "SponsorsFeatureTests",
@@ -34,7 +34,7 @@ let package = Package(
                 .product(name: "LogKitTestSupport", package: "LogKit"),
                 .product(name: "NetworkKit", package: "NetworkKit"),
                 .product(name: "NetworkKitTestSupport", package: "NetworkKit"),
-            ]
+            ],
         ),
-    ]
+    ],
 )

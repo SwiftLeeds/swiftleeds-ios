@@ -5,7 +5,7 @@ import NetworkKitTestSupport
 extension HTTPClient {
     static func recordingRequests(
         into recorder: RequestRecorder,
-        responding data: Data
+        responding data: Data,
     ) -> HTTPClient {
         HTTPClient { request in
             await recorder.record(request)
@@ -14,7 +14,7 @@ extension HTTPClient {
                     url: url,
                     statusCode: 200,
                     httpVersion: nil,
-                    headerFields: nil
+                    headerFields: nil,
                 )
             else { throw StubError.couldNotBuildResponse }
             return (data, response)

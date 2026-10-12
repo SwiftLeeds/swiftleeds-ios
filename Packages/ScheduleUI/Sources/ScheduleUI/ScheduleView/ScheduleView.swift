@@ -17,7 +17,7 @@ public struct ScheduleView: View {
             },
             retry: {
                 Task { await viewModel.retry() }
-            }
+            },
         )
         .task {
             await viewModel.load()

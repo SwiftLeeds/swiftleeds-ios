@@ -149,7 +149,7 @@ private final class LocalScheduleStoreSpy: @unchecked Sendable {
     var store: LocalScheduleStore {
         LocalScheduleStore(
             load: { [self] request in lock.withLock { entries[request] } },
-            save: { [self] stored, request in lock.withLock { entries[request] = stored } }
+            save: { [self] stored, request in lock.withLock { entries[request] = stored } },
         )
     }
 }

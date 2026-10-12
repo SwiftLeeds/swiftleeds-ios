@@ -51,7 +51,7 @@ public struct Schedule: Codable, Sendable {
             try self.init(
                 event: container.decode(Event.self, forKey: .event),
                 events: container.decode([Event].self, forKey: .events),
-                days: container.decode([Day].self, forKey: .days)
+                days: container.decode([Day].self, forKey: .days),
             )
         }
     }
@@ -162,7 +162,7 @@ public struct Schedule: Codable, Sendable {
             startTime: String,
             duration: Int,
             activity: Activity?,
-            presentation: Presentation?
+            presentation: Presentation?,
         ) {
             self.id = id
             self.date = date

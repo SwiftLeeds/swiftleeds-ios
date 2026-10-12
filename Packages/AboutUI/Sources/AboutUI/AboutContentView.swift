@@ -45,7 +45,7 @@ package struct AboutContentView: View {
         VStack(spacing: Padding.cellGap) {
             FancyHeaderView(
                 title: "About",
-                foregroundImage: Image.swiftLeedsIcon
+                foregroundImage: Image.swiftLeedsIcon,
             )
 
             VStack(spacing: Padding.cellGap) {
@@ -74,7 +74,7 @@ package struct AboutContentView: View {
                 .padding(Padding.cell)
                 .background(
                     Color.cellBackground,
-                    in: RoundedRectangle(cornerRadius: Constants.cellRadius)
+                    in: RoundedRectangle(cornerRadius: Constants.cellRadius),
                 )
                 .accessibilityElement(children: .ignore)
                 .accessibilityLabel("About SwiftLeeds. \(viewModel.truncatedAboutText). Tap More for full details.")
@@ -84,35 +84,35 @@ package struct AboutContentView: View {
                         icon: "exclamationmark.triangle.fill",
                         title: "Report a\nProblem",
                         accessibilityHint: "Opens a web view to allow a problem to be reported",
-                        action: { isReportAProblemShown = true }
+                        action: { isReportAProblemShown = true },
                     )
 
                     CompactActionItem(
                         icon: "doc.text.fill",
                         title: "Code of\nConduct",
                         accessibilityHint: "Opens a web page showing our code of conduct",
-                        action: { openURL(url: viewModel.codeOfConductURL) }
+                        action: { openURL(url: viewModel.codeOfConductURL) },
                     )
 
                     CompactActionItem(
                         icon: "location.fill",
                         title: "Venue\nInfo",
                         accessibilityHint: "Opens a web page showing our venue information",
-                        action: { openURL(url: viewModel.venueURL) }
+                        action: { openURL(url: viewModel.venueURL) },
                     )
 
                     CompactActionItem(
                         icon: "message.fill",
                         title: "Join our\nSlack",
                         accessibilityHint: "Opens an invite link to join the SwiftLeeds Slack workspace",
-                        action: { openURL(url: viewModel.slackURL) }
+                        action: { openURL(url: viewModel.slackURL) },
                     )
 
                     CompactActionItem(
                         icon: "play.rectangle.fill",
                         title: "YouTube\nChannel",
                         accessibilityHint: "Opens the SwiftLeeds YouTube channel",
-                        action: { openURL(url: viewModel.youtubeURL) }
+                        action: { openURL(url: viewModel.youtubeURL) },
                     )
                 }
                 .padding(.vertical, 8)
@@ -140,7 +140,7 @@ package struct AboutContentView: View {
                             .padding(Padding.cell)
                             .background(
                                 Color.cellBackground,
-                                in: RoundedRectangle(cornerRadius: Constants.cellRadius)
+                                in: RoundedRectangle(cornerRadius: Constants.cellRadius),
                             )
                     }
                     .padding(Padding.screen)
@@ -175,7 +175,7 @@ package struct AboutContentView: View {
             .padding(Padding.cell)
             .background(
                 Color.cellBackground,
-                in: RoundedRectangle(cornerRadius: Constants.cellRadius)
+                in: RoundedRectangle(cornerRadius: Constants.cellRadius),
             )
 
             LazyVGrid(columns: teamGridColumns, spacing: Padding.cellGap) {

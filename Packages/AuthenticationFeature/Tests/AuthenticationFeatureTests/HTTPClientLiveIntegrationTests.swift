@@ -25,7 +25,7 @@ struct HTTPClientLiveIntegrationTests {
             response: try #require(
                 HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)
             ),
-            error: nil
+            error: nil,
         )
         let store = InMemorySessionStore()
 
@@ -47,7 +47,7 @@ struct HTTPClientLiveIntegrationTests {
             response: try #require(
                 HTTPURLResponse(url: url, statusCode: 500, httpVersion: nil, headerFields: nil)
             ),
-            error: nil
+            error: nil,
         )
         let recorder = LogRecorder()
         let store = InMemorySessionStore()
@@ -69,7 +69,7 @@ struct HTTPClientLiveIntegrationTests {
             response: try #require(
                 HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)
             ),
-            error: nil
+            error: nil,
         )
         let store = InMemorySessionStore(stored: Session(token: try SessionToken("jwt-abc-123")))
 
@@ -91,7 +91,7 @@ struct HTTPClientLiveIntegrationTests {
             response: try #require(
                 HTTPURLResponse(url: url, statusCode: 401, httpVersion: nil, headerFields: nil)
             ),
-            error: nil
+            error: nil,
         )
         let store = InMemorySessionStore(stored: Session(token: try SessionToken("jwt-abc-123")))
 
@@ -102,7 +102,7 @@ struct HTTPClientLiveIntegrationTests {
             } operation: {
                 let sut = HTTPClient.live(
                     urlSession: URLProtocolStub.session(),
-                    onSessionExpiry: { expired() }
+                    onSessionExpiry: { expired() },
                 )
                 return try await sut.send(URLRequest(url: url))
             }

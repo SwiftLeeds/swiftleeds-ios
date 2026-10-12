@@ -79,8 +79,8 @@ import UIDesign
                 status: AvatarStatus(
                     "Waitlisted",
                     icon: Icon(.exclamationmarkCircleFill),
-                    tint: .warning
-                )
+                    tint: .warning,
+                ),
             )
         }
 

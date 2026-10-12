@@ -31,7 +31,7 @@ import Testing
 
         recorder.log.error(
             "\(1, name: "first", privacy: .open) \("x", name: "second", privacy: .hashed) \(true, name: "third", privacy: .secret)",
-            in: "push"
+            in: "push",
         )
 
         #expect(recorder.events.first?.fields.map { String($0.name) } == ["first", "second", "third"])

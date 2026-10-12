@@ -13,7 +13,7 @@ extension LocalScheduleStore {
             save: { stored, request in
                 guard let data = try? PropertyListEncoder().encode(stored) else { return }
                 UserDefaults(suiteName: suiteName)?.set(data, forKey: key(for: request))
-            }
+            },
         )
     }
 

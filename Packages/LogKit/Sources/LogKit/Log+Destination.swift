@@ -19,7 +19,7 @@ extension Log {
     public static func destination(
         salt: LogSalt,
         secrets: SecretPolicy = .remove,
-        write: @escaping @Sendable (LogEvent) -> Void
+        write: @escaping @Sendable (LogEvent) -> Void,
     ) -> Log {
         Log { event in
             write(event.classified(salt: salt, secrets: secrets))
@@ -39,7 +39,7 @@ extension LogEvent {
             category: category,
             message: message,
             fields: fields.classified(salt: salt, secrets: secrets),
-            source: source
+            source: source,
         )
     }
 }

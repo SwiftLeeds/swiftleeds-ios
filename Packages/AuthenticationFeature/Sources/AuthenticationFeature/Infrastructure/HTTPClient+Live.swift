@@ -27,7 +27,7 @@ extension HTTPClient {
     ///   - onSessionExpiry: Called when a bearer-carrying request gets a 401.
     public static func live(
         urlSession: URLSession,
-        onSessionExpiry: @escaping @Sendable () async -> Void
+        onSessionExpiry: @escaping @Sendable () async -> Void,
     ) -> HTTPClient {
         HTTPClient.urlSession(urlSession)
             .logging()

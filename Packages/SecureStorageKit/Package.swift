@@ -20,20 +20,20 @@ let package = Package(
             name: "SecureStorageKit",
             dependencies: [
                 .product(name: "Dependencies", package: "swift-dependencies")
-            ]
+            ],
         ),
         .target(
             name: "SecureStorageKitKeychain",
             dependencies: [
                 "SecureStorageKit"
-            ]
+            ],
         ),
         .testTarget(
             name: "SecureStorageKitKeychainTests",
             dependencies: [
                 "SecureStorageKit",
                 "SecureStorageKitKeychain",
-            ]
+            ],
         ),
-    ]
+    ],
 )

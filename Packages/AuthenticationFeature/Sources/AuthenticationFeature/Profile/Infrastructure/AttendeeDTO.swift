@@ -36,13 +36,13 @@ extension AttendeeDTO {
             emailAddress: try parsed(.email) { try EmailAddress(ticket.email) },
             avatarURL: AvatarURL(ticket.avatarURL),
             ticketReference: try parsed(.reference) { try TicketReference(ticket.reference) },
-            ticketSlug: try parsed(.slug) { try TicketSlug(ticket.slug) }
+            ticketSlug: try parsed(.slug) { try TicketSlug(ticket.slug) },
         )
     }
 
     private func parsed<Value>(
         _ field: Ticket.CodingKeys,
-        _ parse: () throws -> Value
+        _ parse: () throws -> Value,
     ) throws(FieldError) -> Value {
         do {
             return try parse()

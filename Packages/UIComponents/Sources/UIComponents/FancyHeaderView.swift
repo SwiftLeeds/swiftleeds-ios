@@ -47,7 +47,7 @@ public struct FancyHeaderView: View {
             }
             .frame(
                 width: geometry.frame(in: .global).width,
-                height: geometry.frame(in: .global).height
+                height: geometry.frame(in: .global).height,
             )
             .offset(y: geometry.size.height / 2)
             .onAppear {
@@ -125,12 +125,12 @@ struct FancyHeaderView_Previews: PreviewProvider {
                 Text(verbatim: "Local Asset")
                 FancyHeaderView(
                     title: "Some Long Text here",
-                    foregroundImage: Image.swiftLeedsIcon
+                    foregroundImage: Image.swiftLeedsIcon,
                 )
                 Text(verbatim: "Remote Data")
                 FancyHeaderView(
                     title: "Swift Taylor",
-                    foregroundImageURLs: remoteImageURLs
+                    foregroundImageURLs: remoteImageURLs,
                 )
 
             }
@@ -139,13 +139,13 @@ struct FancyHeaderView_Previews: PreviewProvider {
                 VStack {
                     FancyHeaderView(
                         title: "Kannan Prasad",
-                        foregroundImage: Image.swiftLeedsIcon
+                        foregroundImage: Image.swiftLeedsIcon,
                     )
                 }
                 Text(verbatim: "Remote Data")
                 FancyHeaderView(
                     title: "Swift Taylor",
-                    foregroundImageURLs: remoteImageURLs
+                    foregroundImageURLs: remoteImageURLs,
                 )
             }
         }

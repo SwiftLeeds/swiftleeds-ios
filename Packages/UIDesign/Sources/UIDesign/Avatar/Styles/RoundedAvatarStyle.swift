@@ -20,7 +20,7 @@ public struct RoundedAvatarStyle: AvatarStyle {
     public func makeBody(configuration: Configuration) -> some View {
         ClippedAvatar(
             configuration: configuration,
-            shape: .rect(cornerRadius: CGFloat(cornerRadius))
+            shape: .rect(cornerRadius: CGFloat(cornerRadius)),
         )
     }
 }

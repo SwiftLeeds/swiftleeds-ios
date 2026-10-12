@@ -105,7 +105,7 @@ import Testing
 
     private func logEvent(
         forBody data: Data = Data(),
-        statusCode: HTTPStatusCode = 200
+        statusCode: HTTPStatusCode = 200,
     ) throws -> LogEvent? {
         let recorder = LogRecorder()
         let response = try HTTPURLResponse.fixture(url: url, statusCode: statusCode)

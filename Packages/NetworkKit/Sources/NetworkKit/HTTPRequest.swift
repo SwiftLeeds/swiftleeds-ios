@@ -15,7 +15,7 @@ public struct HTTPRequest: Equatable, Hashable, Sendable {
         path: URLPath,
         content: HTTPContent?,
         queryItems: [URLQueryItem] = [],
-        headerFields: [HTTPHeaderField] = []
+        headerFields: [HTTPHeaderField] = [],
     ) {
         self.method = method
         self.path = path
@@ -70,7 +70,7 @@ public struct HTTPRequest: Equatable, Hashable, Sendable {
             path: path,
             content: content,
             queryItems: self.queryItems + queryItems,
-            headerFields: headerFields
+            headerFields: headerFields,
         )
     }
 
@@ -86,7 +86,7 @@ public struct HTTPRequest: Equatable, Hashable, Sendable {
             path: path,
             content: content,
             queryItems: queryItems,
-            headerFields: headerFields + [HTTPHeaderField(name: name, value: value)]
+            headerFields: headerFields + [HTTPHeaderField(name: name, value: value)],
         )
     }
 

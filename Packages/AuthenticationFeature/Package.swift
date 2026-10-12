@@ -26,11 +26,11 @@ let package = Package(
                 .product(name: "LogKit", package: "LogKit"),
                 .product(name: "NetworkKit", package: "NetworkKit"),
                 .product(name: "SecureStorageKit", package: "SecureStorageKit"),
-            ]
+            ],
         ),
         .target(
             name: "AuthenticationFeatureTestSupport",
-            dependencies: ["AuthenticationFeature"]
+            dependencies: ["AuthenticationFeature"],
         ),
         .testTarget(
             name: "AuthenticationFeatureTests",
@@ -42,7 +42,7 @@ let package = Package(
                 .product(name: "NetworkKit", package: "NetworkKit"),
                 .product(name: "NetworkKitTestSupport", package: "NetworkKit"),
                 .product(name: "SecureStorageKit", package: "SecureStorageKit"),
-            ]
+            ],
         ),
-    ]
+    ],
 )

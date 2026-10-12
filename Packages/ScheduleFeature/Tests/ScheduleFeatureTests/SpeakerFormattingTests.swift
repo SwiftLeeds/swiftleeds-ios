@@ -32,7 +32,7 @@ extension Speaker {
             biography: "",
             profileImage: "",
             organisation: organisation,
-            twitter: nil
+            twitter: nil,
         )
     }
 }

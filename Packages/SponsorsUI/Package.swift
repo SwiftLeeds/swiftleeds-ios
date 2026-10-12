@@ -31,7 +31,7 @@ let package = Package(
                 .product(name: "SharedAssets", package: "SwiftLeedsPackage"),
                 .product(name: "SponsorsFeature", package: "SponsorsFeature"),
                 .product(name: "UIComponents", package: "UIComponents"),
-            ]
+            ],
         ),
         .testTarget(
             name: "SponsorsUISnapshotTests",
@@ -39,7 +39,7 @@ let package = Package(
                 "SponsorsUI",
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
                 .product(name: "SponsorsFeature", package: "SponsorsFeature"),
-            ]
+            ],
         ),
-    ]
+    ],
 )

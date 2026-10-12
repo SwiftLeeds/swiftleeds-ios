@@ -12,7 +12,7 @@ package struct Attendee: Equatable, Hashable, Sendable {
         emailAddress: EmailAddress,
         avatarURL: AvatarURL,
         ticketReference: TicketReference,
-        ticketSlug: TicketSlug
+        ticketSlug: TicketSlug,
     ) {
         self.name = name
         self.emailAddress = emailAddress

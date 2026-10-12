@@ -7,7 +7,7 @@ extension TeamDTO.MemberDTO {
         linkedin: String? = nil,
         twitter: String? = nil,
         slack: String? = nil,
-        imageURL: String = "/img/team/member-one.jpg"
+        imageURL: String = "/img/team/member-one.jpg",
     ) -> Self {
         TeamDTO.MemberDTO(
             name: name,
@@ -15,7 +15,7 @@ extension TeamDTO.MemberDTO {
             linkedin: linkedin,
             twitter: twitter,
             slack: slack,
-            imageURL: imageURL
+            imageURL: imageURL,
         )
     }
 }

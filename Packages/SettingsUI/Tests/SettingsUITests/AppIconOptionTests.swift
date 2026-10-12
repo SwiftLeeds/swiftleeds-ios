@@ -14,7 +14,7 @@ import Testing
     @Test(
         arguments: zip(
             [AppIconOption.generic, .space, .olympics],
-            ["AppIcon", "AppIcon-Space", "AppIcon-Olympics"]
+            ["AppIcon", "AppIcon-Space", "AppIcon-Olympics"],
         ))
     func whenIconIsStored_shouldWriteItsRawValue(icon: AppIconOption, storedValue: String) {
         #expect(icon.rawValue == storedValue)

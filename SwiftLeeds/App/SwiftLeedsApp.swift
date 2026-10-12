@@ -35,7 +35,8 @@ struct SwiftLeedsApp: App {
                 onSessionExpiry: {
                     @Dependency(\.signOut) var signOut
                     try? await signOut()
-                })
+                },
+            )
             $0.signIn = SignIn.liveValue.logging()
             $0.signOut = SignOut.liveValue.logging()
             $0.fetchProfile = FetchProfile.liveValue.logging()
@@ -58,7 +59,7 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
         // UIApplicationDelegate declares the launch options dictionary, so it stays optional here.
         // The disable sits above the parameter rather than on it because the line has no room.
         // swiftlint:disable:next discouraged_optional_collection
-        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
+        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil,
     ) -> Bool {
         URLCache.shared.diskCapacity = 100_000_000
 
@@ -74,7 +75,8 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
         guard let url = URL(string: ConferenceConfig.pushURL) else {
             log.error(
                 "The push URL is not a valid URL: \(ConferenceConfig.pushURL, name: "pushURL", privacy: .open)",
-                in: .push)
+                in: .push,
+            )
             return
         }
         sendPushRegistrationDatails(to: url, deviceToken: deviceToken)

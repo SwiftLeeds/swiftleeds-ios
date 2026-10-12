@@ -25,7 +25,7 @@ package struct CommonTileButton<BackgroundType: ShapeStyle>: View {
         primaryColor: Color = Color.primary,
         secondaryColor: Color = Color.secondary,
         backgroundStyle: Color = Color.cellBackground,
-        onTap: @escaping () -> Void
+        onTap: @escaping () -> Void,
     ) where BackgroundType == Color {
         self.icon = icon
         self.primaryText = primaryText
@@ -49,7 +49,7 @@ package struct CommonTileButton<BackgroundType: ShapeStyle>: View {
         primaryColor: Color = Color.primary,
         secondaryColor: Color = Color.secondary,
         backgroundStyle: BackgroundType,
-        onTap: @escaping () -> Void
+        onTap: @escaping () -> Void,
     ) {
         self.icon = icon
         self.primaryText = primaryText
@@ -73,7 +73,7 @@ package struct CommonTileButton<BackgroundType: ShapeStyle>: View {
                 showChevron: showChevron,
                 primaryColor: primaryColor,
                 secondaryColor: secondaryColor,
-                backgroundStyle: backgroundStyle
+                backgroundStyle: backgroundStyle,
             )
         }
         .buttonStyle(SquishyButtonStyle())
@@ -90,18 +90,18 @@ struct CommonTileButtton_Previews: PreviewProvider {
                 CommonTileButton(
                     primaryText: "Primary",
                     secondaryText: "Secondary",
-                    onTap: {}
+                    onTap: {},
                 )
                 CommonTileButton(
                     primaryText: "Primary",
                     showChevron: true,
-                    onTap: {}
+                    onTap: {},
                 )
                 CommonTileButton(
                     primaryText: "Primary",
                     secondaryText: "Secondary",
                     backgroundStyle: .red,
-                    onTap: {}
+                    onTap: {},
                 )
             }
             .padding()

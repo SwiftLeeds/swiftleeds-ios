@@ -6,7 +6,7 @@ import Testing
     @Test func whenDescribed_shouldShowEmailAndTicketReference() throws {
         let credential = Credential(
             email: try EmailAddress("person@example.com"),
-            ticketReference: try TicketReference("ABCD-1")
+            ticketReference: try TicketReference("ABCD-1"),
         )
 
         let described = String(describing: credential)
