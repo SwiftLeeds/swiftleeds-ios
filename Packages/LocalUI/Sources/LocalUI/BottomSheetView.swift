@@ -32,7 +32,7 @@ package struct BottomSheetView: View {
         isOpen: Binding<Bool>,
         selectedCategory: Binding<LocationCategory?>,
         categories: [LocationCategory],
-        maxHeight: CGFloat
+        maxHeight: CGFloat,
     ) {
         self.minHeight = maxHeight * Constants.minHeightRatio
         self.maxHeight = maxHeight
@@ -49,7 +49,7 @@ package struct BottomSheetView: View {
                     SectionHeader(
                         title: "Local",
                         fontStyle: .title2.weight(.semibold),
-                        foregroundColor: .primary
+                        foregroundColor: .primary,
                     )
                     .fitToReadableContentGuide(type: .width)
                     ScrollView {
@@ -58,7 +58,7 @@ package struct BottomSheetView: View {
                                 label: category.name,
                                 imageName: category.symbolName,
                                 foregroundColor: (category == selectedCategory ? .accent : .cellForeground),
-                                labelFontStyle: .body
+                                labelFontStyle: .body,
                             ) {
                                 selectedCategory = category
                             }
@@ -108,7 +108,7 @@ struct BottomSheet_Previews: PreviewProvider {
                 isOpen: .constant(true),
                 selectedCategory: .constant(items.first),
                 categories: items,
-                maxHeight: proxy.size.height * Constants.maxHeightRatio
+                maxHeight: proxy.size.height * Constants.maxHeightRatio,
             )
             .background(.blue)
             .previewDevice(PreviewDevice(rawValue: "iPhone 13"))
@@ -125,8 +125,8 @@ struct BottomSheet_Previews: PreviewProvider {
                     location: try location(
                         "Trinity Kitchen",
                         link: "https://trinityleeds.com/shops/trinity-kitchen",
-                        coordinate: try Coordinate(latitude: 53.797378, longitude: -1.545209)
-                    )
+                        coordinate: try Coordinate(latitude: 53.797378, longitude: -1.545209),
+                    ),
                 ),
                 category(
                     "Drinks",
@@ -134,8 +134,8 @@ struct BottomSheet_Previews: PreviewProvider {
                     location: try location(
                         "Brew Society",
                         link: "https://www.brewsociety.co.uk/",
-                        coordinate: try Coordinate(latitude: 53.79584058588689, longitude: -1.550339186509128)
-                    )
+                        coordinate: try Coordinate(latitude: 53.79584058588689, longitude: -1.550339186509128),
+                    ),
                 ),
             ]
         }

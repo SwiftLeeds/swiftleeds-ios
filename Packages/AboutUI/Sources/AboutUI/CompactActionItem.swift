@@ -43,7 +43,7 @@ package struct CompactActionItem: View {
             .padding(.horizontal, 8)
             .background(
                 Color.cellBackground,
-                in: RoundedRectangle(cornerRadius: Constants.cellRadius)
+                in: RoundedRectangle(cornerRadius: Constants.cellRadius),
             )
         }
         .buttonStyle(SquishyButtonStyle())

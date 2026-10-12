@@ -6,7 +6,7 @@ public struct LocalScheduleStore: Sendable {
 
     package init(
         load: @escaping @Sendable (ScheduleRequest) -> StoredSchedule?,
-        save: @escaping @Sendable (StoredSchedule, ScheduleRequest) -> Void
+        save: @escaping @Sendable (StoredSchedule, ScheduleRequest) -> Void,
     ) {
         self.load = load
         self.save = save

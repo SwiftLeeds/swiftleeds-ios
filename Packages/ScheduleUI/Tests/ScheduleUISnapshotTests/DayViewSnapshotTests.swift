@@ -14,7 +14,7 @@ import Testing
                     .fixture(startTime: "10:30", activity: .coffeeBreak),
                     .fixture(startTime: "11:00", presentation: .twoSpeakers),
                 ],
-                showSlido: false
+                showSlido: false,
             )
         }
 

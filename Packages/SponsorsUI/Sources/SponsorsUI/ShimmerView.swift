@@ -24,7 +24,7 @@ struct ShimmerView: View {
                     LinearGradient(
                         colors: colors,
                         startPoint: UnitPoint(x: shimmerOffset - 1, y: 0),
-                        endPoint: UnitPoint(x: shimmerOffset, y: 0)
+                        endPoint: UnitPoint(x: shimmerOffset, y: 0),
                     )
                 )
                 .onAppear {

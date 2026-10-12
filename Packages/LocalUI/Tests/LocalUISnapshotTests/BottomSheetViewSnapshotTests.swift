@@ -15,7 +15,7 @@ import Testing
                 isOpen: .constant(true),
                 selectedCategory: .constant(categories.first),
                 categories: categories,
-                maxHeight: proxy.size.height * Constants.maxHeightRatio
+                maxHeight: proxy.size.height * Constants.maxHeightRatio,
             )
         }
 
@@ -34,9 +34,9 @@ extension [LocationCategory] {
                         try .location(
                             named: "Trinity Kitchen",
                             websiteURL: "https://trinityleeds.com/shops/trinity-kitchen",
-                            coordinate: try Coordinate(latitude: 53.797378, longitude: -1.545209)
+                            coordinate: try Coordinate(latitude: 53.797378, longitude: -1.545209),
                         )
-                    ]
+                    ],
                 ),
                 .category(
                     named: "Drinks",
@@ -45,9 +45,9 @@ extension [LocationCategory] {
                         try .location(
                             named: "Brew Society",
                             websiteURL: "https://www.brewsociety.co.uk/",
-                            coordinate: try Coordinate(latitude: 53.795840, longitude: -1.550339)
+                            coordinate: try Coordinate(latitude: 53.795840, longitude: -1.550339),
                         )
-                    ]
+                    ],
                 ),
             ]
         }
@@ -61,7 +61,7 @@ extension LocationCategory {
             id: LocationCategoryID(UUID()),
             name: name,
             symbolName: symbolName,
-            locations: locations
+            locations: locations,
         )
     }
 }
@@ -73,7 +73,7 @@ extension Location {
             id: LocationID(UUID()),
             name: name,
             websiteURL: try #require(URL(string: websiteURL)),
-            coordinate: coordinate
+            coordinate: coordinate,
         )
     }
 }

@@ -23,7 +23,7 @@ package enum KeychainQuery {
     package static func add(
         service: KeychainService,
         key: SecureStorageKey,
-        data: Data
+        data: Data,
     ) -> [String: Any] {
         var query = identity(service: service, key: key)
         query[kSecValueData as String] = data

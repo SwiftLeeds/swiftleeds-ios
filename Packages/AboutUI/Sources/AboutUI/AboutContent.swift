@@ -21,7 +21,7 @@ extension AboutContent {
             codeOfConduct: "/conduct",
             reportAProblem: "https://forms.gle/PJie9aRNAtzQUdUu9",
             slack: "https://join.slack.com/t/swiftleedsworkspace/shared_invite/zt-3dex3vb3k-JNYQ~ollX6R619D_tZVfXQ",
-            youtube: "https://www.youtube.com/@swiftleeds"
+            youtube: "https://www.youtube.com/@swiftleeds",
         ),
         truncatedAboutText: """
             Adam Rush founded SwiftLeeds in 2019, born from over ten years of experience attending \
@@ -42,6 +42,6 @@ extension AboutContent {
 
             In-person conferences are the best way to meet like-minded people who enjoy building apps with \
             Swift. You can also learn from the best people in the industry and chat about all things Swift.
-            """
+            """,
     )
 }

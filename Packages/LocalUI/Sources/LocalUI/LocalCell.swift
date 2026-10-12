@@ -15,7 +15,7 @@ package struct LocalCell: View {
         imageName: String,
         foregroundColor: Color = .cellForeground,
         labelFontStyle: Font = .headline.weight(.medium),
-        onTap: @escaping () -> Void = {}
+        onTap: @escaping () -> Void = {},
     ) {
         self.label = label
         self.imageName = imageName

@@ -44,7 +44,7 @@ extension TeamMember {
                 name: "Member One",
                 role: "Organizer",
                 photoURL: try photo,
-                links: []
+                links: [],
             )
         }
     }
@@ -56,7 +56,7 @@ extension TeamMember {
                 name: "Member Two",
                 role: "Volunteer",
                 photoURL: try photo,
-                links: []
+                links: [],
             )
         }
     }

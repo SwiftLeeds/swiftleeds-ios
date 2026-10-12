@@ -45,7 +45,7 @@ import Testing
             .fixture(
                 linkedin: "https://linkedin.example.com/member-one",
                 twitter: "https://twitter.example.com/member-one",
-                slack: "https://slack.example.com/member-one"
+                slack: "https://slack.example.com/member-one",
             )
         ])
 
@@ -78,7 +78,7 @@ import Testing
             name: "Member One",
             linkedin: field == .linkedin ? "" : nil,
             twitter: field == .twitter ? "" : nil,
-            slack: field == .slack ? "" : nil
+            slack: field == .slack ? "" : nil,
         )
 
         let error = try #require(throws: TeamMapper.MappingError.self) {

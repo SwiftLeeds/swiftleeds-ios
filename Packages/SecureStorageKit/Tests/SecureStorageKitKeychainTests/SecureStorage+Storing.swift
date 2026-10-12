@@ -11,7 +11,7 @@ extension SecureStorage {
     func storing<T>(
         _ data: Data,
         at key: SecureStorageKey,
-        during body: () async throws -> T
+        during body: () async throws -> T,
     ) async throws -> T {
         try await set(data, key)
         return try await removingAfterwards(key, during: body)
@@ -23,7 +23,7 @@ extension SecureStorage {
     /// ``storing(_:at:during:)`` but still have to clean up on failure.
     func removingAfterwards<T>(
         _ key: SecureStorageKey,
-        during body: () async throws -> T
+        during body: () async throws -> T,
     ) async throws -> T {
         do {
             let result = try await body()

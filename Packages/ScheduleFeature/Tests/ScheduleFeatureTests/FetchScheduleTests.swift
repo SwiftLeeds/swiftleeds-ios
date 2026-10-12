@@ -48,7 +48,7 @@ extension ScheduleRepository {
             fetchSchedule: { event async throws(ScheduleFetchError) -> Schedule in
                 await spy.record(event)
                 return answer
-            }
+            },
         )
     }
 }

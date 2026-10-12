@@ -78,7 +78,7 @@ public struct SignInView: View {
                 if !isPresented {
                     viewModel.dismissError()
                 }
-            }
+            },
         )
     }
 }

@@ -4,7 +4,7 @@ import ScheduleFeature
 extension Schedule {
     static func fixture(
         eventNamed name: String = "SwiftLeeds 2026",
-        eventID: UUID = UUID()
+        eventID: UUID = UUID(),
     ) throws -> Schedule {
         Schedule(
             data: try Schedule.Data(
@@ -21,11 +21,11 @@ extension Schedule {
                                 startTime: "09:45",
                                 duration: 30,
                                 activity: .lunch,
-                                presentation: nil
+                                presentation: nil,
                             )
-                        ]
+                        ],
                     )
-                ]
+                ],
             )
         )
     }
@@ -34,13 +34,13 @@ extension Schedule {
 extension Schedule.Event {
     static func fixture(
         named name: String = "SwiftLeeds 2026",
-        id: UUID = UUID()
+        id: UUID = UUID(),
     ) -> Schedule.Event {
         Schedule.Event(
             id: id,
             name: name,
             location: "The Playhouse, Leeds",
-            date: Date(timeIntervalSince1970: 0)
+            date: Date(timeIntervalSince1970: 0),
         )
     }
 }

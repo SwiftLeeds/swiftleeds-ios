@@ -9,7 +9,7 @@ extension SponsorListDTO.SponsorDTO {
         image: String = "https://example.invalid/logo.png",
         sponsorLevel: String = "platinum",
         url: String = "https://example.invalid",
-        jobs: [SponsorListDTO.JobDTO] = []
+        jobs: [SponsorListDTO.JobDTO] = [],
     ) -> Self {
         SponsorListDTO.SponsorDTO(
             id: id,
@@ -18,7 +18,7 @@ extension SponsorListDTO.SponsorDTO {
             image: image,
             sponsorLevel: sponsorLevel,
             url: url,
-            jobs: jobs
+            jobs: jobs,
         )
     }
 }
@@ -29,7 +29,7 @@ extension SponsorListDTO.JobDTO {
         title: String = "Senior iOS Engineer",
         details: String = "Bringing all your Swift skills to the fore",
         location: String = "Leeds",
-        url: String = "https://example.invalid/job"
+        url: String = "https://example.invalid/job",
     ) -> Self {
         SponsorListDTO.JobDTO(id: id, title: title, details: details, location: location, url: url)
     }

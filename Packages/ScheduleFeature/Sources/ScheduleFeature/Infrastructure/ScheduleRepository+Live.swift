@@ -11,7 +11,7 @@ extension ScheduleRepository: DependencyKey {
             },
             fetchSchedule: { event async throws(ScheduleFetchError) -> Schedule in
                 try await schedule(for: .event(event))
-            }
+            },
         )
     }
 

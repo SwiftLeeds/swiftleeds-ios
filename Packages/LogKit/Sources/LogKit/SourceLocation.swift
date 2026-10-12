@@ -30,7 +30,7 @@ public struct SourceLocation: Hashable, Sendable {
     public static func here(
         file: String = #fileID,
         function: String = #function,
-        line: Int = #line
+        line: Int = #line,
     ) -> SourceLocation {
         SourceLocation(file: file, function: function, line: line)
     }

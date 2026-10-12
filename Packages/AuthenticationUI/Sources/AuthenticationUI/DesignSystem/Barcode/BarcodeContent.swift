@@ -6,7 +6,7 @@ package struct BarcodeContent {
 
     package init<Symbology: BarcodeSymbology>(
         _ payload: Symbology.Payload,
-        drawnBy symbology: Symbology
+        drawnBy symbology: Symbology,
     ) {
         draw = { symbology.makeImage(encoding: payload) }
     }

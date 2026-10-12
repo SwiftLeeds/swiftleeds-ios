@@ -25,10 +25,10 @@ import Testing
         let view = ScheduleContentView(
             state: .loaded(
                 days: [.fixture(named: "Day 1"), .fixture(named: "Day 2")],
-                showSlido: true
+                showSlido: true,
             ),
             events: conferences,
-            currentEvent: conferences.last
+            currentEvent: conferences.last,
         )
 
         assertScreenSnapshots(of: view)
@@ -45,7 +45,7 @@ import Testing
         let view = ScheduleContentView(
             state: .failed(conference: "SwiftLeeds 2022", reason: .couldNotReachServer),
             events: conferences,
-            currentEvent: conferences.first
+            currentEvent: conferences.first,
         )
 
         assertScreenSnapshots(of: view)

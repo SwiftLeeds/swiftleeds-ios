@@ -35,7 +35,7 @@ extension AppDelegate {
 
         log.debug(
             "Registering for push with token \(deviceToken.map { String(format: "%02x", $0) }.joined(), name: "deviceToken", privacy: .hashed)",
-            in: .push
+            in: .push,
         )
 
         var request = URLRequest(url: url)
@@ -52,7 +52,7 @@ extension AppDelegate {
                 guard let statusCode, 200..<399 ~= statusCode else {
                     log.error(
                         "Push registration was rejected with status \(statusCode.map(String.init) ?? "none", name: "statusCode", privacy: .open)",
-                        in: .push
+                        in: .push,
                     )
                     return
                 }
@@ -71,7 +71,7 @@ extension AppDelegate {
 // MARK: - UNUserNotificationCenterDelegate
 extension AppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(
-        _ center: UNUserNotificationCenter, willPresent notification: UNNotification
+        _ center: UNUserNotificationCenter, willPresent notification: UNNotification,
     ) async -> UNNotificationPresentationOptions {
         [.banner, .sound, .badge]
     }

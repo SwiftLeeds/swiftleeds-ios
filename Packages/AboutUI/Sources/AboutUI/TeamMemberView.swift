@@ -21,7 +21,7 @@ package struct TeamMemberView: View {
                         LinearGradient(
                             colors: [.accentColor.opacity(0.8), .accentColor],
                             startPoint: .topLeading,
-                            endPoint: .bottomTrailing
+                            endPoint: .bottomTrailing,
                         )
                     )
                     .frame(width: 80, height: 80)
@@ -74,7 +74,7 @@ package struct TeamMemberView: View {
         .padding(Padding.cell)
         .background(
             Color.cellBackground,
-            in: RoundedRectangle(cornerRadius: Constants.cellRadius)
+            in: RoundedRectangle(cornerRadius: Constants.cellRadius),
         )
     }
 
@@ -131,9 +131,9 @@ struct TeamMemberView_Previews: PreviewProvider {
                     photo: "/img/team/member-one.jpg",
                     linkedIn: "https://linkedin.example.com/member-one",
                     twitter: "https://twitter.example.com/member-one",
-                    slack: "https://slack.example.com/member-one"
+                    slack: "https://slack.example.com/member-one",
                 ),
-                named: "With Role & All Links"
+                named: "With Role & All Links",
             )
 
             preview(
@@ -142,9 +142,9 @@ struct TeamMemberView_Previews: PreviewProvider {
                     role: nil,
                     photo: "/img/team/member-two.jpg",
                     linkedIn: "https://linkedin.example.com/member-two",
-                    slack: "https://slack.example.com/member-two"
+                    slack: "https://slack.example.com/member-two",
                 ),
-                named: "No Role & Partial Links"
+                named: "No Role & Partial Links",
             )
 
             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 16) {
@@ -166,14 +166,14 @@ struct TeamMemberView_Previews: PreviewProvider {
                 role: "Production",
                 photo: "/img/team/member-three.jpg",
                 linkedIn: "https://linkedin.example.com/member-three",
-                twitter: "https://twitter.example.com/member-three"
+                twitter: "https://twitter.example.com/member-three",
             ),
             member(
                 "Member Four",
                 role: "Camera",
                 photo: "/img/team/member-four.jpg",
                 twitter: "https://twitter.example.com/member-four",
-                slack: "https://slack.example.com/member-four"
+                slack: "https://slack.example.com/member-four",
             ),
         ]
         .compactMap(\.self)
@@ -195,7 +195,7 @@ struct TeamMemberView_Previews: PreviewProvider {
         photo: String,
         linkedIn: String? = nil,
         twitter: String? = nil,
-        slack: String? = nil
+        slack: String? = nil,
     ) -> TeamMember? {
         guard let photoURL = URL(string: "https://example.com\(photo)") else { return nil }
         let links = [
@@ -208,7 +208,7 @@ struct TeamMemberView_Previews: PreviewProvider {
             name: name,
             role: role,
             photoURL: photoURL,
-            links: links.compactMap(\.self)
+            links: links.compactMap(\.self),
         )
     }
 }

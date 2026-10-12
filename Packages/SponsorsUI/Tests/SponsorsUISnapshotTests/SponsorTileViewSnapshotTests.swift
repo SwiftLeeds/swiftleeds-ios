@@ -28,7 +28,7 @@ extension Sponsor {
         level: .platinum,
         logoURL: nil,
         websiteURL: nil,
-        jobs: [.seniorEngineer]
+        jobs: [.seniorEngineer],
     )
 
     fileprivate static let goldWithoutJobs = Sponsor(
@@ -38,7 +38,7 @@ extension Sponsor {
         level: .gold,
         logoURL: nil,
         websiteURL: nil,
-        jobs: []
+        jobs: [],
     )
 }
 
@@ -48,7 +48,7 @@ extension Job {
         title: "Senior iOS Engineer",
         details: "Bringing all your Swift skills to the fore",
         location: "Leeds",
-        url: nil
+        url: nil,
     )
 }
 #endif

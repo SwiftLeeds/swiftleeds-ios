@@ -57,7 +57,7 @@ public struct Avatar<Fallback: View>: View {
         url: URL?,
         size: AvatarSize = .medium,
         status: AvatarStatus? = nil,
-        @ViewBuilder fallback: () -> Fallback
+        @ViewBuilder fallback: () -> Fallback,
     ) {
         self.url = url
         self.size = size
@@ -134,7 +134,7 @@ extension Avatar where Fallback == AvatarFallback {
         url: URL?,
         size: AvatarSize = .medium,
         status: AvatarStatus? = nil,
-        fallback: AvatarFallback = .symbol
+        fallback: AvatarFallback = .symbol,
     ) {
         self.init(url: url, size: size, status: status) { fallback }
     }
@@ -178,8 +178,8 @@ private let previewName = PersonNameComponents(givenName: "Member", familyName: 
                 status: AvatarStatus(
                     "Waitlisted",
                     icon: Icon(.exclamationmarkCircleFill),
-                    tint: .warning
-                )
+                    tint: .warning,
+                ),
             )
         }
 

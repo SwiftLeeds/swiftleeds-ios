@@ -1,4 +1,4 @@
-// swift-tools-version: 6.0
+// swift-tools-version: 6.1
 
 import PackageDescription
 
@@ -20,7 +20,7 @@ let package = Package(
             name: "ColorTheme",
             dependencies: [
                 .product(name: "Sharing", package: "swift-sharing")
-            ]
+            ],
         ),
         .testTarget(
             name: "ColorThemeTests",
@@ -29,7 +29,7 @@ let package = Package(
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "DependenciesTestSupport", package: "swift-dependencies"),
                 .product(name: "Sharing", package: "swift-sharing"),
-            ]
+            ],
         ),
-    ]
+    ],
 )

@@ -27,7 +27,7 @@ package struct CommonTileView<BackgroundType: ShapeStyle>: View {
         showChevron: Bool = false,
         primaryColor: Color = Color.primary,
         secondaryColor: Color = Color.secondary,
-        backgroundStyle: BackgroundType
+        backgroundStyle: BackgroundType,
     ) {
         self.icon = icon
         self.primaryText = primaryText
@@ -47,7 +47,7 @@ package struct CommonTileView<BackgroundType: ShapeStyle>: View {
         showChevron: Bool = false,
         primaryColor: Color = Color.primary,
         secondaryColor: Color = Color.secondary,
-        backgroundStyle: Color = Color.cellBackground
+        backgroundStyle: Color = Color.cellBackground,
     ) where BackgroundType == Color {
         self.icon = icon
         self.primaryText = primaryText
@@ -94,7 +94,7 @@ package struct CommonTileView<BackgroundType: ShapeStyle>: View {
         .frame(minHeight: Constants.compactCellMinimumHeight)
         .background(
             backgroundStyle,
-            in: RoundedRectangle(cornerRadius: Constants.cellRadius)
+            in: RoundedRectangle(cornerRadius: Constants.cellRadius),
         )
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(
@@ -124,7 +124,7 @@ struct CommonTileView_Previews: PreviewProvider {
             Color.listBackground.edgesIgnoringSafeArea(.all)
             VStack(spacing: Padding.cellGap) {
                 CommonTileView(
-                    primaryText: "Primary", secondaryText: "Secondary", subtitleText: "More details", showChevron: true
+                    primaryText: "Primary", secondaryText: "Secondary", subtitleText: "More details", showChevron: true,
                 )
                 CommonTileView(
                     primaryText: "Primary"
@@ -132,7 +132,7 @@ struct CommonTileView_Previews: PreviewProvider {
                 CommonTileView(
                     primaryText: "Primary",
                     secondaryText: "Secondary",
-                    backgroundStyle: .red
+                    backgroundStyle: .red,
                 )
             }
             .padding()

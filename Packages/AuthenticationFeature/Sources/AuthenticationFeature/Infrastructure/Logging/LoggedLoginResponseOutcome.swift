@@ -9,7 +9,7 @@ struct LoggedLoginResponseOutcome {
     // log line saying the response parsed.
     static let success = LoggedLoginResponseOutcome(
         level: .debug,
-        message: "The sign-in response was accepted"
+        message: "The sign-in response was accepted",
     )
 
     static func failure(_ error: LoginMapper.ResponseError) -> LoggedLoginResponseOutcome {
@@ -18,7 +18,7 @@ struct LoggedLoginResponseOutcome {
             // Expected: someone mistyped a ticket reference. Not a fault in the app.
             LoggedLoginResponseOutcome(
                 level: .notice,
-                message: "The sign-in credentials were rejected"
+                message: "The sign-in credentials were rejected",
             )
         case let .unexpectedStatus(status):
             LoggedLoginResponseOutcome(
@@ -27,12 +27,12 @@ struct LoggedLoginResponseOutcome {
                     Sign-in got an unexpected status \
                     \(Int(status.code), name: "statusCode", privacy: .open) \
                     (\(String(status.category), name: "statusCategory", privacy: .open))
-                    """
+                    """,
             )
         case let .invalidToken(reason):
             LoggedLoginResponseOutcome(
                 level: .error,
-                message: "The server's sign-in token was rejected: \(reason, name: "reason", privacy: .open)"
+                message: "The server's sign-in token was rejected: \(reason, name: "reason", privacy: .open)",
             )
         }
     }

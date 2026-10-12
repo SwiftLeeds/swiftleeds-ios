@@ -9,7 +9,7 @@ extension Sponsor {
         level: SponsorLevel = .platinum,
         logoURL: URL? = URL(string: "https://example.invalid/logo.png"),
         websiteURL: URL? = URL(string: "https://example.invalid"),
-        jobs: [Job] = []
+        jobs: [Job] = [],
     ) -> Sponsor {
         Sponsor(
             id: id,
@@ -18,7 +18,7 @@ extension Sponsor {
             level: level,
             logoURL: logoURL,
             websiteURL: websiteURL,
-            jobs: jobs
+            jobs: jobs,
         )
     }
 }

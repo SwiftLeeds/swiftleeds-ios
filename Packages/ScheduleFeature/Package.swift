@@ -1,4 +1,4 @@
-// swift-tools-version: 6.0
+// swift-tools-version: 6.1
 
 import PackageDescription
 
@@ -21,7 +21,7 @@ let package = Package(
             dependencies: [
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "NetworkKit", package: "NetworkKit"),
-            ]
+            ],
         ),
         .testTarget(
             name: "ScheduleFeatureTests",
@@ -30,7 +30,7 @@ let package = Package(
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "NetworkKit", package: "NetworkKit"),
                 .product(name: "NetworkKitTestSupport", package: "NetworkKit"),
-            ]
+            ],
         ),
-    ]
+    ],
 )

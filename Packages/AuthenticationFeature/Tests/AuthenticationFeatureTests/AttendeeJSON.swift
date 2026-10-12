@@ -2,7 +2,7 @@ import Foundation
 
 func attendeeJSON(
     email: String = "ada@example.com",
-    reference: String = "ABCD-12"
+    reference: String = "ABCD-12",
 ) -> Data {
     Data(
         """

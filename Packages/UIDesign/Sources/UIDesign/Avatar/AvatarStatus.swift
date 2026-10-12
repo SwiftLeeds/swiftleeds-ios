@@ -35,7 +35,7 @@ public struct AvatarStatus: Equatable {
     public init(
         _ label: LocalizedStringKey,
         icon: Icon = Icon(.checkmarkCircleFill),
-        tint: Color = .success
+        tint: Color = .success,
     ) {
         self.label = label
         self.icon = icon

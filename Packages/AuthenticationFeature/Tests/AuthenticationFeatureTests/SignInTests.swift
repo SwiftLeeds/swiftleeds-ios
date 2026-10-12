@@ -50,6 +50,6 @@ private enum StubError: Error, Equatable {
 private func credential() throws -> Credential {
     try Credential(
         email: EmailAddress("attendee@example.com"),
-        ticketReference: TicketReference("ABCD-12")
+        ticketReference: TicketReference("ABCD-12"),
     )
 }

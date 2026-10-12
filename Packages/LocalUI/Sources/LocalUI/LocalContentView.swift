@@ -49,12 +49,12 @@ package struct LocalContentView: View {
                 if let category = shownCategory {
                     Map(
                         coordinateRegion: $mapRegion,
-                        annotationItems: category.locations
+                        annotationItems: category.locations,
                     ) { location in
                         MapAnnotation(
                             coordinate: CLLocationCoordinate2D(
                                 latitude: location.coordinate.latitude,
-                                longitude: location.coordinate.longitude
+                                longitude: location.coordinate.longitude,
                             )
                         ) {
                             symbolImage(named: category.symbolName)
@@ -89,10 +89,10 @@ package struct LocalContentView: View {
                     isOpen: $bottomSheetShown,
                     selectedCategory: Binding(
                         get: { shownCategory },
-                        set: { selectedCategoryID = $0?.id }
+                        set: { selectedCategoryID = $0?.id },
                     ),
                     categories: categories,
-                    maxHeight: geometry.size.height * Constants.maxHeightRatio
+                    maxHeight: geometry.size.height * Constants.maxHeightRatio,
                 )
             }
         }
@@ -162,7 +162,7 @@ extension MKCoordinateRegion {
     // Leeds Playhouse, where both SwiftLeeds and KotlinLeeds take place.
     fileprivate static let aroundVenue = MKCoordinateRegion(
         center: CLLocationCoordinate2D(latitude: 53.7981911, longitude: -1.53507),
-        span: MKCoordinateSpan(latitudeDelta: 0.04, longitudeDelta: 0.04)
+        span: MKCoordinateSpan(latitudeDelta: 0.04, longitudeDelta: 0.04),
     )
 }
 #endif

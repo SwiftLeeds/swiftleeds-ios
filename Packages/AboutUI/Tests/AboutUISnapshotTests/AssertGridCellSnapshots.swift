@@ -15,7 +15,7 @@ func assertGridCellSnapshots(
     file filePath: StaticString = #filePath,
     testName: String = #function,
     line: UInt = #line,
-    column: UInt = #column
+    column: UInt = #column,
 ) {
     assertSnapshots(
         of: view.inGridCell(columns: columns),
@@ -24,7 +24,7 @@ func assertGridCellSnapshots(
         file: filePath,
         testName: testName,
         line: line,
-        column: column
+        column: column,
     )
 }
 

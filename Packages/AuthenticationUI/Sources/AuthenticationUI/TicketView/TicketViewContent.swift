@@ -71,7 +71,7 @@ struct TicketViewContent: View {
     TicketViewContent(
         code: TicketCode(drawing: .qr(QRCode.Payload(String(Profile.preview.ticketSlug)))),
         reference: Profile.preview.ticketReference,
-        name: Profile.preview.name
+        name: Profile.preview.name,
     )
 }
 
@@ -79,7 +79,7 @@ struct TicketViewContent: View {
     TicketViewContent(
         code: .unavailable,
         reference: Profile.preview.ticketReference,
-        name: Profile.preview.name
+        name: Profile.preview.name,
     )
 }
 #endif

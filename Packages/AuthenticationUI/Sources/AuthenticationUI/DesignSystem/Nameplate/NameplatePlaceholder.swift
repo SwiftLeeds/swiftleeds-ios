@@ -6,7 +6,7 @@ package struct NameplatePlaceholder: View {
     package var body: some View {
         Nameplate(
             Text(verbatim: "──────────"),
-            detail: Text(verbatim: "────────────")
+            detail: Text(verbatim: "────────────"),
         ) {
             Avatar(url: nil) {
                 EmptyView()

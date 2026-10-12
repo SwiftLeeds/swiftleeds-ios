@@ -1,4 +1,4 @@
-// swift-tools-version: 6.0
+// swift-tools-version: 6.1
 
 import PackageDescription
 
@@ -22,7 +22,7 @@ let package = Package(
             dependencies: [
                 "AuthenticationFeature",
                 .product(name: "Dependencies", package: "swift-dependencies"),
-            ]
+            ],
         ),
         .testTarget(
             name: "AuthenticationUITests",
@@ -30,7 +30,7 @@ let package = Package(
                 "AuthenticationUI",
                 .product(name: "AuthenticationFeatureTestSupport", package: "AuthenticationFeature"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
-            ]
+            ],
         ),
         // Separate so CI can build and run the snapshot tests without compiling
         // anything else. The `AuthenticationUISnapshotTests` scheme is what makes
@@ -40,7 +40,7 @@ let package = Package(
             dependencies: [
                 "AuthenticationUI",
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
-            ]
+            ],
         ),
-    ]
+    ],
 )

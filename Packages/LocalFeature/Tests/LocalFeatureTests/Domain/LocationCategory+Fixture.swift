@@ -6,7 +6,7 @@ extension LocationCategory {
         id: LocationCategoryID = LocationCategoryID(UUID()),
         name: String = "Food",
         symbolName: String = "fork.knife",
-        locations: [Location] = []
+        locations: [Location] = [],
     ) -> Self {
         LocationCategory(id: id, name: name, symbolName: symbolName, locations: locations)
     }

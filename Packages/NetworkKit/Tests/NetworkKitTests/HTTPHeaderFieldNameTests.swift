@@ -71,7 +71,7 @@ import Testing
     @Test(arguments: registeredNames)
     func whenRegisteredNameIsExtracted_shouldSpellHeaderFieldItRegisters(
         name: HTTPHeaderField.Name,
-        spelling: String
+        spelling: String,
     ) {
         #expect(String(name) == spelling)
     }

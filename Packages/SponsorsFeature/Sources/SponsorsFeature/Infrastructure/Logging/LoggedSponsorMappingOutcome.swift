@@ -7,7 +7,7 @@ struct LoggedSponsorMappingOutcome {
     static func success(count: Int) -> LoggedSponsorMappingOutcome {
         LoggedSponsorMappingOutcome(
             level: .debug,
-            message: "The sponsor list was mapped: \(count, name: "count", privacy: .open)"
+            message: "The sponsor list was mapped: \(count, name: "count", privacy: .open)",
         )
     }
 
@@ -18,7 +18,7 @@ struct LoggedSponsorMappingOutcome {
                 The sponsor \(error.sponsor, name: "sponsor", privacy: .open) had an invalid \
                 \(error.field.rawValue, name: "field", privacy: .open): \
                 \(error.value, name: "value", privacy: .open)
-                """
+                """,
         )
     }
 }

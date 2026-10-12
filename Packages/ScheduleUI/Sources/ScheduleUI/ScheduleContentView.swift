@@ -26,7 +26,7 @@ package struct ScheduleContentView: View {
         events: [Schedule.Event] = [],
         currentEvent: Schedule.Event? = nil,
         selectEvent: @escaping (Schedule.Event) -> Void = { _ in },
-        retry: @escaping () -> Void = {}
+        retry: @escaping () -> Void = {},
     ) {
         self.state = state
         self.events = events

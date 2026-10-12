@@ -9,7 +9,7 @@ import Testing
             icon: "exclamationmark.triangle.fill",
             title: "Report a\nProblem",
             accessibilityHint: "Opens a form to report a problem",
-            action: {}
+            action: {},
         )
 
         assertGridCellSnapshots(of: view, columns: 3)

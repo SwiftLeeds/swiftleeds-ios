@@ -30,7 +30,7 @@ package struct SpeakerView: View {
         LinearGradient(
             gradient: Gradient(colors: [.buyTicketGradientStart, .buyTicketGradientEnd]),
             startPoint: .leading,
-            endPoint: .trailing
+            endPoint: .trailing,
         )
     }
 
@@ -42,7 +42,7 @@ package struct SpeakerView: View {
                 }
                 FancyHeaderView(
                     title: presentation.speakers.joinedNames,
-                    foregroundImageURLs: imageURLs
+                    foregroundImageURLs: imageURLs,
                 )
             }
 
@@ -50,7 +50,7 @@ package struct SpeakerView: View {
                 StackedTileView(
                     primaryText: presentation.title,
                     secondaryText: presentation.synopsis,
-                    secondaryColor: Color.primary
+                    secondaryColor: Color.primary,
                 )
 
                 if let videoURL = presentation.videoURL.flatMap({ URL(string: $0) }) {
@@ -58,7 +58,7 @@ package struct SpeakerView: View {
                         icon: "video.fill",
                         primaryText: "Watch video",
                         showChevron: true,
-                        secondaryColor: Color.primary
+                        secondaryColor: Color.primary,
                     )
                     .accessibilityHint("Opens the video")
                     .accessibilityAddTraits(.isButton)
@@ -77,7 +77,7 @@ package struct SpeakerView: View {
                         backgroundStyle: slidoGradient,
                         onTap: {
                             showWebSheet.toggle()
-                        }
+                        },
                     )
                 }
 
@@ -86,7 +86,7 @@ package struct SpeakerView: View {
                         StackedTileView(
                             primaryText: "About\(presentation.speakers.count == 1 ? "" : ": \(speaker.name)")",
                             secondaryText: speaker.biography,
-                            secondaryColor: Color.primary
+                            secondaryColor: Color.primary,
                         )
                     }
 
@@ -97,7 +97,7 @@ package struct SpeakerView: View {
                         CommonTileView(
                             primaryText: "Twitter",
                             secondaryText: "@\(twitter)",
-                            secondaryColor: Color.primary
+                            secondaryColor: Color.primary,
                         )
                         .accessibilityHint("Opens twitter for this speaker")
                         .accessibilityAddTraits(.isButton)

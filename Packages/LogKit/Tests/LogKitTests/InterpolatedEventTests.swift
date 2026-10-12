@@ -11,7 +11,7 @@ import Testing
 
     private func recorded(
         secrets: SecretPolicy,
-        _ write: (Log) -> Void
+        _ write: (Log) -> Void,
     ) -> LogEvent? {
         let recorder = LogRecorder()
         let sut =

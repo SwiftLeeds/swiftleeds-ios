@@ -17,7 +17,7 @@ public struct SecureStorage: Sendable {
     public init(
         data: @escaping @Sendable (SecureStorageKey) async throws -> Data?,
         set: @escaping @Sendable (Data, SecureStorageKey) async throws -> Void,
-        remove: @escaping @Sendable (SecureStorageKey) async throws -> Void
+        remove: @escaping @Sendable (SecureStorageKey) async throws -> Void,
     ) {
         self.data = data
         self.set = set
@@ -37,7 +37,7 @@ extension SecureStorage: TestDependencyKey {
             },
             remove: { _ in
                 reportIssue("SecureStorage.remove is unimplemented")
-            }
+            },
         )
     }
 }
