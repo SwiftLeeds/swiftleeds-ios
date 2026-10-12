@@ -231,7 +231,7 @@ struct SignInScreen: View {
                 .controlSize(.large)
                 .tint(.brandPrimary)
             }
-            .padding(.horizontal)
+            .padding(.large)
         }
     }
 
