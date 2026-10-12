@@ -23,7 +23,7 @@ jobs:
   # of the app covers all three.
   build-app:
     name: Build ${{ matrix.brand }}
-    runs-on: macos-26
+    runs-on: xcode-27
     strategy:
       # Without this, one brand failing cancels the other, and a run reports
       # only the first failure.
@@ -41,7 +41,7 @@ jobs:
       - name: Select Xcode
         uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: '26.5'
+          xcode-version: '27.0'
 
       # Release compiles out every `#if DEBUG` block, so this build fails when
       # the app's shipping code uses a DEBUG-only symbol, and a Debug build
@@ -55,7 +55,7 @@ jobs:
   # that relies on DEBUG-only test isolation. Both lanes run the same script.
   test-packages:
     name: ${{ matrix.name }}
-    runs-on: macos-26
+    runs-on: xcode-27
     strategy:
       # Without this, one configuration failing cancels the other, and a run
       # reports only the first failure.
@@ -75,7 +75,7 @@ jobs:
       - name: Select Xcode
         uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: '26.5'
+          xcode-version: '27.0'
 
       - name: Run every package test suite (${{ matrix.configuration }})
         env:
@@ -220,9 +220,10 @@ jobs:
   # targets, because a target the scheme omits would never run on iOS.
   test-snapshots-ios:
     name: Test Snapshots (iOS Simulator)
-    runs-on: macos-26
+    runs-on: xcode-27
     env:
-      DESTINATION: 'platform=iOS Simulator,name=iPhone 17 Pro,OS=26.5'
+      # Without OS=, xcodebuild picks a runtime and never says which.
+      DESTINATION: 'platform=iOS Simulator,name=iPhone 18 Pro,OS=27.0'
       # Empty on a push, which is how the step below knows to run everything.
       BASE_REF: ${{ github.base_ref }}
     steps:
@@ -235,17 +236,24 @@ jobs:
       - name: Select Xcode
         uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: '26.5'
+          xcode-version: '27.0'
 
-      # The runner carries three iOS runtimes, each with its own iPhone 17 Pro.
-      # Without OS= xcodebuild picks one and never says which, so an image roll
-      # could change the runtime silently, which would break every reference
-      # image at once. Checking here turns a missing runtime into one legible
-      # line instead of a confusing xcodebuild error.
+      # The reference images were recorded on this exact runtime build. An image
+      # roll that changes the build, even within iOS 27.0, could move pixels and
+      # break every reference at once. `OS=27.0` names a version, not a build, so
+      # this also fails when a second iOS 27.0 build sits beside it and
+      # xcodebuild could pick either. Either case becomes one legible line
+      # instead of hundreds of failed images.
       - name: Check the pinned simulator runtime is present
         run: |
           set -euo pipefail
-          xcrun simctl list runtimes | grep 'iOS 26.5'
+          runtimes=$(xcrun simctl list runtimes)
+          echo "$runtimes"
+          count=$(grep -cF 'iOS 27.0 (' <<< "$runtimes" || true)
+          if [ "$count" -ne 1 ] || ! grep -qF 'iOS 27.0 (27.0 - 24A434)' <<< "$runtimes"; then
+            echo "::error::The references need iOS 27.0 (24A434) as the only iOS 27.0 runtime. This runner has $count iOS 27.0 runtime(s), listed above."
+            exit 1
+          fi
 
       - name: Run the snapshot tests on the simulator
         run: |
@@ -369,7 +377,7 @@ jobs:
   # process is gone a few seconds later. The script runs locally too.
   launch-app-clip:
     name: Launch ${{ matrix.brand }} App Clip (iOS Simulator)
-    runs-on: macos-26
+    runs-on: xcode-27
     # One runner per brand. The two builds share nothing, so running them side
     # by side halves the wait and gives each brand its own time limit.
     strategy:
@@ -402,7 +410,7 @@ jobs:
       - name: Select Xcode
         uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: '26.5'
+          xcode-version: '27.0'
 
       # A pull request skips the launch only when every file it changes sits
       # in a local package the App Clip does not depend on. Any change outside
