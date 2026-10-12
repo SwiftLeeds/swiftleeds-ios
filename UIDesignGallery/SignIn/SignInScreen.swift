@@ -108,7 +108,11 @@ struct SignInScreen: View {
             }
         }
         .listStyle(.insetGrouped)
-        .toolbar { keyboardBar }
+        .safeAreaBar(edge: .bottom) {
+            if focus != nil {
+                keyboardBar
+            }
+        }
         .task(id: phase) {
             guard phase == .submitting else { return }
             // The task modifier cancels this when the view leaves, so the
@@ -191,27 +195,43 @@ struct SignInScreen: View {
     }
 
     /// The controls above the keyboard that move between fields and close it.
-    @ToolbarContentBuilder private var keyboardBar: some ToolbarContent {
-        ToolbarItemGroup(placement: .keyboard) {
-            Button {
-                focus = .email
-            } label: {
-                Label("Previous field", systemImage: "chevron.up")
-            }
-            .disabled(focus == .email)
+    private var keyboardBar: some View {
+        GlassEffectContainer {
+            HStack {
+                HStack(spacing: 0) {
+                    Button {
+                        focus = .email
+                    } label: {
+                        Label("Previous field", systemImage: "chevron.up")
+                            .frame(minWidth: 44, minHeight: 44)
+                    }
+                    .disabled(focus == .email)
 
-            Button {
-                focus = .ticketReference
-            } label: {
-                Label("Next field", systemImage: "chevron.down")
-            }
-            .disabled(focus == .ticketReference)
+                    Button {
+                        focus = .ticketReference
+                    } label: {
+                        Label("Next field", systemImage: "chevron.down")
+                            .frame(minWidth: 44, minHeight: 44)
+                    }
+                    .disabled(focus == .ticketReference)
+                }
+                .labelStyle(.iconOnly)
+                .glassEffect(.regular.interactive(), in: .capsule)
 
-            Spacer()
+                Spacer()
 
-            Button(role: .confirm) {
-                focus = nil
+                Button(role: .confirm) {
+                    focus = nil
+                } label: {
+                    Label("Done", systemImage: "checkmark")
+                }
+                .labelStyle(.iconOnly)
+                .buttonStyle(.glassProminent)
+                .buttonBorderShape(.circle)
+                .controlSize(.large)
+                .tint(.brandPrimary)
             }
+            .padding(.horizontal)
         }
     }
 
