@@ -10,12 +10,6 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "SwiftLeeds",
-            targets: [
-                "SwiftLeedsCore"
-            ],
-        ),
-        .library(
             name: "DesignKit",
             targets: [
                 "DesignKit"
@@ -32,9 +26,6 @@ let package = Package(
         .package(url: "https://github.com/shadone/SwiftGenPlugin", branch: "6.6.2+deriveddatafix")
     ],
     targets: [
-        .target(
-            name: "SwiftLeedsCore"
-        ),
         .target(
             name: "DesignKit"
         ),
