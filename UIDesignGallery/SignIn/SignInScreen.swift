@@ -190,7 +190,7 @@ struct SignInScreen: View {
             .disabled(phase == .submitting)
     }
 
-    /// The controls above the keyboard that move between the fields.
+    /// The controls above the keyboard that move between fields and close it.
     @ToolbarContentBuilder private var keyboardBar: some ToolbarContent {
         ToolbarItemGroup(placement: .keyboard) {
             Button {
@@ -206,6 +206,14 @@ struct SignInScreen: View {
                 Label("Next field", systemImage: "chevron.down")
             }
             .disabled(focus == .ticketReference)
+        }
+
+        ToolbarSpacer(.flexible, placement: .keyboard)
+
+        ToolbarItem(placement: .keyboard) {
+            Button("Done") {
+                focus = nil
+            }
         }
     }
 
