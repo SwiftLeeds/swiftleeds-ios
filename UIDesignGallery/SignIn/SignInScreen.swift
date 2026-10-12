@@ -206,11 +206,9 @@ struct SignInScreen: View {
                 Label("Next field", systemImage: "chevron.down")
             }
             .disabled(focus == .ticketReference)
-        }
 
-        ToolbarSpacer(.flexible, placement: .keyboard)
+            Spacer()
 
-        ToolbarItem(placement: .keyboard) {
             Button(role: .confirm) {
                 focus = nil
             }
