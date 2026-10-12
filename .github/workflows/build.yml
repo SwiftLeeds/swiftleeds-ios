@@ -222,6 +222,7 @@ jobs:
     name: Test Snapshots (iOS Simulator)
     runs-on: xcode-27
     env:
+      # Without OS=, xcodebuild picks a runtime and never says which.
       DESTINATION: 'platform=iOS Simulator,name=iPhone 18 Pro,OS=27.0'
       # Empty on a push, which is how the step below knows to run everything.
       BASE_REF: ${{ github.base_ref }}
@@ -239,14 +240,18 @@ jobs:
 
       # The reference images were recorded on this exact runtime build. An image
       # roll that changes the build, even within iOS 27.0, could move pixels and
-      # break every reference at once. Checking the build here turns that into
-      # one legible line instead of hundreds of failed images.
+      # break every reference at once. `OS=27.0` names a version, not a build, so
+      # this also fails when a second iOS 27.0 build sits beside it and
+      # xcodebuild could pick either. Either case becomes one legible line
+      # instead of hundreds of failed images.
       - name: Check the pinned simulator runtime is present
         run: |
           set -euo pipefail
-          if ! xcrun simctl list runtimes | grep -F 'iOS 27.0 (27.0 - 24A434)'; then
-            echo "::error::The references were recorded on iOS 27.0 (24A434). This runner has:"
-            xcrun simctl list runtimes
+          runtimes=$(xcrun simctl list runtimes)
+          echo "$runtimes"
+          count=$(grep -cF 'iOS 27.0 (' <<< "$runtimes" || true)
+          if [ "$count" -ne 1 ] || ! grep -qF 'iOS 27.0 (27.0 - 24A434)' <<< "$runtimes"; then
+            echo "::error::The references need iOS 27.0 (24A434) as the only iOS 27.0 runtime. This runner has $count iOS 27.0 runtime(s), listed above."
             exit 1
           fi
 
