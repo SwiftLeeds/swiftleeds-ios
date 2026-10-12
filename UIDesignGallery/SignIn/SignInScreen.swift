@@ -211,7 +211,7 @@ struct SignInScreen: View {
         ToolbarSpacer(.flexible, placement: .keyboard)
 
         ToolbarItem(placement: .keyboard) {
-            Button("Done") {
+            Button(role: .confirm) {
                 focus = nil
             }
         }
