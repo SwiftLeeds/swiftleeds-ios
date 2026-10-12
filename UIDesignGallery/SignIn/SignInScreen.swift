@@ -108,6 +108,7 @@ struct SignInScreen: View {
             }
         }
         .listStyle(.insetGrouped)
+        .toolbar { keyboardBar }
         .task(id: phase) {
             guard phase == .submitting else { return }
             // The task modifier cancels this when the view leaves, so the
@@ -187,6 +188,25 @@ struct SignInScreen: View {
             }
             .onChange(of: ticketReference) { clearRejection() }
             .disabled(phase == .submitting)
+    }
+
+    /// The controls above the keyboard that move between the fields.
+    @ToolbarContentBuilder private var keyboardBar: some ToolbarContent {
+        ToolbarItemGroup(placement: .keyboard) {
+            Button {
+                focus = .email
+            } label: {
+                Label("Previous field", systemImage: "chevron.up")
+            }
+            .disabled(focus == .email)
+
+            Button {
+                focus = .ticketReference
+            } label: {
+                Label("Next field", systemImage: "chevron.down")
+            }
+            .disabled(focus == .ticketReference)
+        }
     }
 
     /// The message explaining why the server refused the typed fields.
