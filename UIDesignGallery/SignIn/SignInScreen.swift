@@ -25,6 +25,62 @@ struct SignInScreen: View {
         case rejected
     }
 
+    /// The controls above the keyboard that move between fields and close it.
+    private struct KeyboardBar: View {
+        /// The width and height of each keyboard bar control, in points.
+        ///
+        /// It grows with the body text style.
+        @ScaledMetric(relativeTo: .body) private var controlSide: CGFloat = 44
+
+        /// Which field holds the keyboard focus.
+        let focus: FocusState<Field?>.Binding
+
+        var body: some View {
+            GlassEffectContainer {
+                HStack {
+                    HStack(spacing: 0) {
+                        Button {
+                            focus.wrappedValue = .email
+                        } label: {
+                            Label("Previous field", systemImage: "chevron.up")
+                                .frame(width: controlSide, height: controlSide)
+                                .contentShape(.rect)
+                        }
+                        .accessibilityShowsLargeContentViewer()
+                        .disabled(focus.wrappedValue == .email)
+
+                        Button {
+                            focus.wrappedValue = .ticketReference
+                        } label: {
+                            Label("Next field", systemImage: "chevron.down")
+                                .frame(width: controlSide, height: controlSide)
+                                .contentShape(.rect)
+                        }
+                        .accessibilityShowsLargeContentViewer()
+                        .disabled(focus.wrappedValue == .ticketReference)
+                    }
+                    .labelStyle(.iconOnly)
+                    .glassEffect(.regular.interactive(), in: .capsule)
+
+                    Spacer()
+
+                    Button(role: .confirm) {
+                        focus.wrappedValue = nil
+                    } label: {
+                        Label("Done", systemImage: "checkmark")
+                            .frame(width: controlSide, height: controlSide)
+                            .contentShape(.rect)
+                    }
+                    .labelStyle(.iconOnly)
+                    .foregroundStyle(.textOnBrand)
+                    .glassEffect(.regular.tint(.brandPrimary).interactive(), in: .circle)
+                    .accessibilityShowsLargeContentViewer()
+                }
+                .padding(.large)
+            }
+        }
+    }
+
     /// How long the gallery pretends the server takes to answer.
     private static let pretendDelay = Duration.seconds(1)
 
@@ -110,7 +166,8 @@ struct SignInScreen: View {
         .listStyle(.insetGrouped)
         .safeAreaBar(edge: .bottom) {
             if focus != nil {
-                keyboardBar
+                KeyboardBar(focus: $focus)
+                    .dynamicTypeSize(...DynamicTypeSize.xxxLarge)
             }
         }
         .task(id: phase) {
@@ -192,47 +249,6 @@ struct SignInScreen: View {
             }
             .onChange(of: ticketReference) { clearRejection() }
             .disabled(phase == .submitting)
-    }
-
-    /// The controls above the keyboard that move between fields and close it.
-    private var keyboardBar: some View {
-        GlassEffectContainer {
-            HStack {
-                HStack(spacing: 0) {
-                    Button {
-                        focus = .email
-                    } label: {
-                        Label("Previous field", systemImage: "chevron.up")
-                            .frame(minWidth: 44, minHeight: 44)
-                    }
-                    .disabled(focus == .email)
-
-                    Button {
-                        focus = .ticketReference
-                    } label: {
-                        Label("Next field", systemImage: "chevron.down")
-                            .frame(minWidth: 44, minHeight: 44)
-                    }
-                    .disabled(focus == .ticketReference)
-                }
-                .labelStyle(.iconOnly)
-                .glassEffect(.regular.interactive(), in: .capsule)
-
-                Spacer()
-
-                Button(role: .confirm) {
-                    focus = nil
-                } label: {
-                    Label("Done", systemImage: "checkmark")
-                }
-                .labelStyle(.iconOnly)
-                .buttonStyle(.glassProminent)
-                .buttonBorderShape(.circle)
-                .controlSize(.large)
-                .tint(.brandPrimary)
-            }
-            .padding(.large)
-        }
     }
 
     /// The message explaining why the server refused the typed fields.
