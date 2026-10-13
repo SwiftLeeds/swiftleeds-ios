@@ -40,7 +40,7 @@ package struct ProfileCardContent: View {
                     detail: Text(verbatim: profile.emailAddress),
                 ) {
                     Avatar(url: profile.avatarURL) {
-                        Text(verbatim: Initials.from(profile.name))
+                        Text(verbatim: profile.name.formatted(.name(style: .abbreviated)))
                     }
                 }
 
