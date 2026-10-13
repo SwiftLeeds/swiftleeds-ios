@@ -59,7 +59,8 @@ struct MockNotice: View {
 
     /// The button that puts the notice away.
     private var close: some View {
-        Button {} label: {
+        Button {
+        } label: {
             Image(systemName: "xmark")
                 .font(.footnote.weight(.semibold))
                 .foregroundStyle(.textTertiary)
@@ -75,7 +76,8 @@ struct MockNotice: View {
     /// It takes the tint as its text and no fill at all. A filled action here
     /// would outrank the screen's own.
     private var action: some View {
-        Button {} label: {
+        Button {
+        } label: {
             Text(actionTitle)
                 .font(.subheadline.weight(.semibold))
                 .foregroundStyle(.brandPrimary)

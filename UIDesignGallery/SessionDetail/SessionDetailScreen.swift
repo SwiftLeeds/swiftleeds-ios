@@ -32,7 +32,7 @@ struct SessionDetailScreen: View {
                     Avatar(
                         url: nil,
                         size: .medium,
-                        fallback: .initials(session.speakerName)
+                        fallback: .initials(session.speakerName),
                     )
                 }
             }
@@ -44,21 +44,24 @@ struct SessionDetailScreen: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                Button {} label: {
+                Button {
+                } label: {
                     Label("Calendar", systemImage: "calendar.badge.plus")
                 }
                 .tint(.textPrimary)
             }
 
             ToolbarItem(placement: .topBarTrailing) {
-                Button {} label: {
+                Button {
+                } label: {
                     Label("Share", systemImage: "square.and.arrow.up")
                 }
                 .tint(.textPrimary)
             }
 
             ToolbarItem(placement: .topBarTrailing) {
-                Button {} label: {
+                Button {
+                } label: {
                     Label("More", systemImage: "ellipsis")
                 }
                 .tint(.textPrimary)
@@ -88,7 +91,8 @@ struct SessionDetailScreen: View {
     /// It is the screen's only filled control, which is what marks it as the
     /// one the screen is for.
     private var favoriteAction: some View {
-        Button {} label: {
+        Button {
+        } label: {
             Label("Favourite", systemImage: "star")
                 .font(.headline)
                 .frame(maxWidth: .infinity)

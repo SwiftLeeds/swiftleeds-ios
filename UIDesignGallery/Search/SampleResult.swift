@@ -82,7 +82,7 @@ extension SampleResult {
             title: session.title,
             detail: "\(session.time) • \(session.room)",
             session: session,
-            nameComponents: nil
+            nameComponents: nil,
         )
     }
 
@@ -94,7 +94,7 @@ extension SampleResult {
             title: session.speaker,
             detail: session.speakerDetail,
             session: nil,
-            nameComponents: session.speakerName
+            nameComponents: session.speakerName,
         )
     }
 
@@ -105,7 +105,7 @@ extension SampleResult {
     /// no heading to carry it.
     static let sponsors: [SampleResult] =
         tier("Headline sponsor", SampleSponsor.headline)
-            + tier("Gold sponsor", SampleSponsor.gold)
+        + tier("Gold sponsor", SampleSponsor.gold)
 
     /// Returns one tier's companies as results.
     ///
@@ -120,7 +120,7 @@ extension SampleResult {
                 title: sponsor.name,
                 detail: name,
                 session: nil,
-                nameComponents: nil
+                nameComponents: nil,
             )
         }
     }

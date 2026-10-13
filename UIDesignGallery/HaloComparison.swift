@@ -13,7 +13,7 @@ struct HaloComparison: View {
     /// separation the organizer's purple and blue use. No role holds a pink.
     static let brandPink = ConferenceRole(
         name: "Brand and pink",
-        colors: [.brandPrimary, .init(red: 0.95, green: 0.27, blue: 0.86)]
+        colors: [.brandPrimary, .init(red: 0.95, green: 0.27, blue: 0.86)],
     )
 
     /// The brand's red run toward the conference's own gold.
@@ -22,7 +22,7 @@ struct HaloComparison: View {
     /// which sits 44 degrees around the hue circle from the red.
     static let brandGold = ConferenceRole(
         name: "Brand and gold",
-        colors: [.brandPrimary, .init(red: 0.976, green: 0.835, blue: 0.341)]
+        colors: [.brandPrimary, .init(red: 0.976, green: 0.835, blue: 0.341)],
     )
 
     /// How thick the ring is, matching the schedule's bar item.
@@ -68,7 +68,7 @@ struct HaloComparison: View {
     ///   - content: A content builder that creates the row's treatments.
     private func group(
         _ title: String,
-        @ViewBuilder content: () -> some View
+        @ViewBuilder content: () -> some View,
     ) -> some View {
         VStack(alignment: .leading, spacing: .medium) {
             Text(title)
@@ -93,7 +93,7 @@ struct HaloComparison: View {
         _ name: String,
         edge: HaloEdge = .feathered,
         strength: Double = 0.7,
-        glows: Bool = false
+        glows: Bool = false,
     ) -> some View {
         VStack(spacing: .small) {
             MockRoleRing(
@@ -102,12 +102,12 @@ struct HaloComparison: View {
                 edge: edge,
                 strength: strength,
                 glows: glows,
-                ring: Circle()
+                ring: Circle(),
             ) {
                 Avatar(
                     url: nil,
                     size: .medium,
-                    fallback: .initials(SampleAttendee.signedIn.nameComponents)
+                    fallback: .initials(SampleAttendee.signedIn.nameComponents),
                 )
             }
 

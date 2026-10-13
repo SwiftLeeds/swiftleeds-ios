@@ -76,7 +76,7 @@ struct MockRoleRing<Ring: InsettableShape, Content: View>: View {
         ring
             .strokeBorder(
                 AngularGradient(colors: role.colors + [role.colors[0]], center: .center),
-                lineWidth: width
+                lineWidth: width,
             )
             .opacity(strength)
     }

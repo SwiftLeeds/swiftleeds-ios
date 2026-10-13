@@ -27,7 +27,8 @@ struct ResourceRow: View {
             }
 
         case .page:
-            Button {} label: {
+            Button {
+            } label: {
                 line(mark: "arrow.up.right")
             }
             .buttonStyle(.plain)

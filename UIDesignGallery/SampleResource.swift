@@ -37,7 +37,7 @@ extension SampleResource {
         title: "Playhouse Square, Quarry Hill",
         detail: "Leeds LS2 7UP",
         symbol: "mappin.and.ellipse",
-        destination: .page
+        destination: .page,
     )
 
     /// What a person needs to read before they arrive.
@@ -49,28 +49,28 @@ extension SampleResource {
             title: "Code of conduct",
             detail: "What we expect of everyone here",
             symbol: "hand.raised",
-            destination: .screen
+            destination: .screen,
         ),
         SampleResource(
             id: "accommodation",
             title: "Accommodation",
             detail: "Places to stay near the venue",
             symbol: "bed.double",
-            destination: .screen
+            destination: .screen,
         ),
         SampleResource(
             id: "joining",
             title: "Joining instructions",
             detail: "When to arrive, and what to bring",
             symbol: "doc.text",
-            destination: .screen
+            destination: .screen,
         ),
         SampleResource(
             id: "faq",
             title: "FAQ",
             detail: "Answers to what we get asked most",
             symbol: "questionmark.circle",
-            destination: .page
+            destination: .page,
         ),
     ]
 
@@ -84,14 +84,14 @@ extension SampleResource {
             title: "Code of conduct",
             detail: "What we expect of everyone here",
             symbol: "hand.raised",
-            destination: .screen
+            destination: .screen,
         ),
         SampleResource(
             id: "privacy",
             title: "Privacy policy",
             detail: "What we keep about you, and why",
             symbol: "lock",
-            destination: .page
+            destination: .page,
         ),
     ]
 
@@ -102,21 +102,21 @@ extension SampleResource {
             title: "Website",
             detail: nil,
             symbol: "safari",
-            destination: .page
+            destination: .page,
         ),
         SampleResource(
             id: "podcast",
             title: "Podcast",
             detail: nil,
             symbol: "mic",
-            destination: .page
+            destination: .page,
         ),
         SampleResource(
             id: "youtube",
             title: "YouTube",
             detail: nil,
             symbol: "play.rectangle",
-            destination: .page
+            destination: .page,
         ),
     ]
 
@@ -130,14 +130,14 @@ extension SampleResource {
             title: "Email the organizers",
             detail: "hello@swiftleeds.co.uk",
             symbol: "envelope",
-            destination: .page
+            destination: .page,
         ),
         SampleResource(
             id: "x",
             title: "Message us on X",
             detail: "@swift_leeds",
             symbol: "at",
-            destination: .page
+            destination: .page,
         ),
     ]
 
@@ -149,7 +149,7 @@ extension SampleResource {
                 title: "About SwiftLeeds",
                 detail: "Who runs the conference",
                 symbol: "info.circle",
-                destination: .screen
+                destination: .screen,
             )
         ] + outreach
 }

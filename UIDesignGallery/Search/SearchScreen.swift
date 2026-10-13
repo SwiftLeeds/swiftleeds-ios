@@ -45,7 +45,7 @@ struct SearchScreen: View {
             ContentUnavailableView(
                 "Search SwiftLeeds",
                 systemImage: "magnifyingglass",
-                description: Text("Find a talk, a speaker or a sponsor.")
+                description: Text("Find a talk, a speaker or a sponsor."),
             )
         } else if matches.isEmpty {
             ContentUnavailableView.search(text: query)

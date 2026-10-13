@@ -85,79 +85,81 @@ struct ScheduleScreen: View {
     var body: some View {
         NavigationStack(path: $path) {
             rows
-            .navigationTitle(conference)
-            .navigationSubtitle("Starts in 12 days")
-            .navigationDestination(for: SampleSession.self) { session in
-                SessionDetailScreen(session: session)
-            }
-            .sheet(item: $sheet) { item in
-                switch item {
-                case .settings: settingsSheet
-                case .signIn(let state): signInSheet(opensWith: state)
+                .navigationTitle(conference)
+                .navigationSubtitle("Starts in 12 days")
+                .navigationDestination(for: SampleSession.self) { session in
+                    SessionDetailScreen(session: session)
                 }
-            }
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Button {
-                        sheet = .settings
-                    } label: {
-                        // The halo says this person holds a standing at the
-                        // conference. Their own profile spells it out, so the
-                        // ring is a reminder rather than the only statement.
-                        MockRoleRing(
-                            role: SampleAttendee.signedIn.role,
-                            width: Self.haloWidth,
-                            edge: haloEdge,
-                            ring: Circle()
-                        ) {
-                            Avatar(
-                                url: nil,
-                                size: .medium,
-                                fallback: .initials(SampleAttendee.signedIn.nameComponents)
-                            )
+                .sheet(item: $sheet) { item in
+                    switch item {
+                    case .settings: settingsSheet
+                    case .signIn(let state): signInSheet(opensWith: state)
+                    }
+                }
+                .toolbar {
+                    ToolbarItem(placement: .topBarLeading) {
+                        Button {
+                            sheet = .settings
+                        } label: {
+                            // The halo says this person holds a standing at the
+                            // conference. Their own profile spells it out, so the
+                            // ring is a reminder rather than the only statement.
+                            MockRoleRing(
+                                role: SampleAttendee.signedIn.role,
+                                width: Self.haloWidth,
+                                edge: haloEdge,
+                                ring: Circle(),
+                            ) {
+                                Avatar(
+                                    url: nil,
+                                    size: .medium,
+                                    fallback: .initials(SampleAttendee.signedIn.nameComponents),
+                                )
+                            }
+                        }
+                        .accessibilityLabel("Settings, \(SampleAttendee.signedIn.role.name)")
+                        .padding(.leading, Self.avatarLead)
+                    }
+                    // Apple's shape rule is a circle for one bar item and a capsule
+                    // for a group. The system draws a wide capsule around a lone
+                    // custom label, and `buttonBorderShape(.circle)` does not move
+                    // it, so the avatar draws its own circle instead.
+                    .sharedBackgroundVisibility(.hidden)
+
+                    ToolbarTitleMenu {
+                        Picker("Conference", selection: $conference) {
+                            ForEach(Self.conferences, id: \.self) { name in
+                                Text(name).tag(name)
+                            }
                         }
                     }
-                    .accessibilityLabel("Settings, \(SampleAttendee.signedIn.role.name)")
-                    .padding(.leading, Self.avatarLead)
-                }
-                // Apple's shape rule is a circle for one bar item and a capsule
-                // for a group. The system draws a wide capsule around a lone
-                // custom label, and `buttonBorderShape(.circle)` does not move
-                // it, so the avatar draws its own circle instead.
-                .sharedBackgroundVisibility(.hidden)
 
-                ToolbarTitleMenu {
-                    Picker("Conference", selection: $conference) {
-                        ForEach(Self.conferences, id: \.self) { name in
-                            Text(name).tag(name)
+                    // Chrome glyphs stay neutral. The tint is reserved for the
+                    // selected tab and for an action that changes something.
+                    ToolbarItem(placement: .topBarTrailing) {
+                        filterMenu
+                    }
+
+                    // Apple groups related actions in one capsule. The filter changes
+                    // what the schedule shows; the two beside it open something else.
+                    ToolbarSpacer(.fixed, placement: .topBarTrailing)
+
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button {
+                        } label: {
+                            Label("Notifications", systemImage: "bell")
                         }
+                        .tint(.textPrimary)
+                    }
+
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button {
+                        } label: {
+                            Label("Ticket", systemImage: "ticket")
+                        }
+                        .tint(.textPrimary)
                     }
                 }
-
-                // Chrome glyphs stay neutral. The tint is reserved for the
-                // selected tab and for an action that changes something.
-                ToolbarItem(placement: .topBarTrailing) {
-                    filterMenu
-                }
-
-                // Apple groups related actions in one capsule. The filter changes
-                // what the schedule shows; the two beside it open something else.
-                ToolbarSpacer(.fixed, placement: .topBarTrailing)
-
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {} label: {
-                        Label("Notifications", systemImage: "bell")
-                    }
-                    .tint(.textPrimary)
-                }
-
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {} label: {
-                        Label("Ticket", systemImage: "ticket")
-                    }
-                    .tint(.textPrimary)
-                }
-            }
         }
         .onAppear {
             switch opensWith {
@@ -295,7 +297,7 @@ struct ScheduleScreen: View {
                 } else {
                     includedKinds.remove(kind)
                 }
-            }
+            },
         )
     }
 

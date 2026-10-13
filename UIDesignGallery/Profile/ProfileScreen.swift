@@ -53,7 +53,7 @@ struct ProfileScreen: View {
                 role: attendee.role,
                 width: Self.haloWidth,
                 edge: haloEdge,
-                ring: Circle()
+                ring: Circle(),
             ) {
                 Avatar(url: nil, size: .xLarge, fallback: .initials(attendee.nameComponents))
             }

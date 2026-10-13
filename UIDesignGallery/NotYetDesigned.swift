@@ -26,7 +26,7 @@ struct NotYetDesigned: View {
         ContentUnavailableView(
             "Not designed yet",
             systemImage: symbol,
-            description: Text("This screen is still to come.")
+            description: Text("This screen is still to come."),
         )
     }
 }

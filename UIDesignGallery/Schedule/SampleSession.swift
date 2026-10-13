@@ -41,7 +41,7 @@ struct SampleSession: Identifiable, Equatable, Hashable, Sendable {
         let parts = speaker.split(separator: " ")
         return PersonNameComponents(
             givenName: parts.first.map(String.init),
-            familyName: parts.last.map(String.init)
+            familyName: parts.last.map(String.init),
         )
     }
 }
@@ -64,7 +64,7 @@ extension SampleSession {
         summary: """
             A design system earns its keep the year after it ships. This talk is \
             about the parts that rot, and the parts that hold.
-            """
+            """,
     )
 
     /// A lightning talk, which shows the neutral kind badge.
@@ -78,7 +78,7 @@ extension SampleSession {
         kind: "Lightning",
         startsIn: nil,
         isFavorite: false,
-        summary: "What changed once the compiler started checking the hard part."
+        summary: "What changed once the compiler started checking the hard part.",
     )
 
     /// A workshop, which shows a longer kind badge.
@@ -92,6 +92,6 @@ extension SampleSession {
         kind: "Workshop",
         startsIn: nil,
         isFavorite: false,
-        summary: "Switch Control, Voice Control and the settings nobody tests."
+        summary: "Switch Control, Voice Control and the settings nobody tests.",
     )
 }

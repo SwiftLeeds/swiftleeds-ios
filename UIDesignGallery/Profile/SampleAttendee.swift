@@ -40,7 +40,7 @@ struct SampleAttendee: Identifiable, Equatable, Hashable, Sendable {
         let parts = name.split(separator: " ")
         return PersonNameComponents(
             givenName: parts.first.map(String.init),
-            familyName: parts.last.map(String.init)
+            familyName: parts.last.map(String.init),
         )
     }
 }
@@ -56,6 +56,6 @@ extension SampleAttendee {
         joined: "Joined August 2019",
         ticket: "Conference and workshops",
         savedSessions: "6",
-        email: "ada@northern.software"
+        email: "ada@northern.software",
     )
 }

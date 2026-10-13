@@ -53,7 +53,7 @@ struct VenueScreen: View {
                 MockNotice(
                     symbol: "ticket",
                     message: SampleVenue.lunch,
-                    actionTitle: SampleVenue.lunchAction
+                    actionTitle: SampleVenue.lunchAction,
                 )
                 .listRowInsets(EdgeInsets())
             }

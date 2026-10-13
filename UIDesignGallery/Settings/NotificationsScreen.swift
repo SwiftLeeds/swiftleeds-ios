@@ -54,7 +54,7 @@ struct NotificationsScreen: View {
                 withAnimation(reduceMotion ? nil : .default) {
                     allowsNotifications = isOn
                 }
-            }
+            },
         )
     }
 
@@ -84,7 +84,7 @@ struct NotificationsScreen: View {
                 } else {
                     remindedKinds.remove(kind)
                 }
-            }
+            },
         )
     }
 }

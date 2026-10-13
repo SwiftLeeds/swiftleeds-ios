@@ -21,7 +21,7 @@ struct SampleSponsor: Identifiable, Equatable, Hashable, Sendable {
 extension SampleSponsor {
     /// The one company at the top tier.
     static let headline: [SampleSponsor] = [
-        SampleSponsor(name: "Northern Software", detail: "3 open roles"),
+        SampleSponsor(name: "Northern Software", detail: "3 open roles")
     ]
 
     /// The companies at the tier below, one with an offer and one without.

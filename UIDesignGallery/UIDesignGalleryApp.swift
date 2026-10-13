@@ -83,7 +83,7 @@ struct UIDesignGalleryApp: App {
             Tab(
                 GalleryTab.schedule.title,
                 systemImage: GalleryTab.schedule.symbol,
-                value: GalleryTab.schedule
+                value: GalleryTab.schedule,
             ) {
                 ScheduleScreen(opensWith: opensWith, haloEdge: haloEdge)
             }
@@ -91,7 +91,7 @@ struct UIDesignGalleryApp: App {
             Tab(
                 GalleryTab.venue.title,
                 systemImage: GalleryTab.venue.symbol,
-                value: GalleryTab.venue
+                value: GalleryTab.venue,
             ) {
                 VenueScreen()
             }
@@ -99,7 +99,7 @@ struct UIDesignGalleryApp: App {
             Tab(
                 GalleryTab.sponsors.title,
                 systemImage: GalleryTab.sponsors.symbol,
-                value: GalleryTab.sponsors
+                value: GalleryTab.sponsors,
             ) {
                 SponsorsScreen()
             }
