@@ -22,7 +22,7 @@ func assertHeaderSnapshots(
     file filePath: StaticString = #filePath,
     testName: String = #function,
     line: UInt = #line,
-    column: UInt = #column
+    column: UInt = #column,
 ) {
     assertSnapshots(
         of: view.headerCard(),
@@ -31,12 +31,12 @@ func assertHeaderSnapshots(
         file: filePath,
         testName: testName,
         line: line,
-        column: column
+        column: column,
     )
 }
 
-private extension View {
-    func headerCard(width: CGFloat = 390, titleSpace: CGFloat = 220) -> some View {
+extension View {
+    fileprivate func headerCard(width: CGFloat = 390, titleSpace: CGFloat = 220) -> some View {
         VStack(spacing: 0) {
             self
             Color.clear.frame(height: titleSpace)

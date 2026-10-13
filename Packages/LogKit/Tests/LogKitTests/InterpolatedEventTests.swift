@@ -11,10 +11,11 @@ import Testing
 
     private func recorded(
         secrets: SecretPolicy,
-        _ write: (Log) -> Void
+        _ write: (Log) -> Void,
     ) -> LogEvent? {
         let recorder = LogRecorder()
-        let sut = Log
+        let sut =
+            Log
             .destination(salt: salt, secrets: secrets, write: recorder.log.write)
             .enriching(with: { [.open("sessionID", "abc123")] })
 
@@ -71,7 +72,8 @@ import Testing
     /// Middleware appends an authored field. It must not be able to fill a gap, however it is named.
     @Test func whenMiddlewareInjectsField_shouldNotFillAnyGap() throws {
         let recorder = LogRecorder()
-        let sut = Log
+        let sut =
+            Log
             .destination(salt: salt, write: recorder.log.write)
             .enriching(with: { [.open("0", "impostor")] })
 

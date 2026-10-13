@@ -17,7 +17,7 @@ public struct Presentation: Codable, Identifiable, Sendable {
         speakers: [Speaker],
         image: String?,
         slidoURL: String?,
-        videoURL: String?
+        videoURL: String?,
     ) {
         self.id = id
         self.title = title
@@ -51,12 +51,12 @@ extension Presentation {
                 profileImage: "https://swiftleeds-speakers.s3.eu-west-2.amazonaws.com/"
                     + "jOaeQ1Og_400x400.jpeg-AEAB9C2A-9572-4E6A-A63E-C3534EE5C321",
                 organisation: "DonnyWals.com",
-                twitter: "donnywals"
-            ),
+                twitter: "donnywals",
+            )
         ],
         image: nil,
         slidoURL: "https://app.sli.do/event/2x7itwrn",
-        videoURL: nil
+        videoURL: nil,
     )
 
     public static let skyBet = Presentation(
@@ -89,7 +89,7 @@ extension Presentation {
                 profileImage: "https://swiftleeds-speakers.s3.eu-west-2.amazonaws.com/"
                     + "4769-0o0o0-YroTPVoSrXCZvVwZXEvMUt.png-0DCB39D9-EA7C-4DCA-B4B2-B4712D2A8FCE",
                 organisation: "Sky Betting & Gaming",
-                twitter: nil
+                twitter: nil,
             ),
             .init(
                 id: UUID(),
@@ -101,11 +101,11 @@ extension Presentation {
                 profileImage: "https://swiftleeds-speakers.s3.eu-west-2.amazonaws.com/"
                     + "5b00-0o0o0-nwCWuRFWhXd8QZVQBSB5G2.jpeg-3A19F66F-6A15-44E7-810E-EDF37463B537",
                 organisation: "Sky Betting & Gaming",
-                twitter: "SanaaShahzadi"
+                twitter: "SanaaShahzadi",
             ),
         ],
         image: nil,
         slidoURL: nil,
-        videoURL: "https://www.youtube.com/watch?v=x4ZAh-iNQO8&t=2s"
+        videoURL: "https://www.youtube.com/watch?v=x4ZAh-iNQO8&t=2s",
     )
 }

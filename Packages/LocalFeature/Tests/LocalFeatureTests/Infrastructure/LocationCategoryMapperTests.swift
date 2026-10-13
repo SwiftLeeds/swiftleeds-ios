@@ -31,7 +31,7 @@ import Testing
             .fixture(locations: [
                 .fixture(id: trinity, name: "Trinity Kitchen"),
                 .fixture(id: brewSociety, name: "Brew Society"),
-            ]),
+            ])
         ])
 
         let locations = try #require(sut.map(list).first?.locations)
@@ -43,8 +43,8 @@ import Testing
     @Test func whenLocationHasValidLinkAndCoordinate_shouldReturnWebsiteURLAndCoordinate() throws {
         let list = LocationCategoryListDTO(data: [
             .fixture(locations: [
-                .fixture(lat: 53.797378, lon: -1.545209, url: "https://example.invalid/trinity-kitchen"),
-            ]),
+                .fixture(lat: 53.797378, lon: -1.545209, url: "https://example.invalid/trinity-kitchen")
+            ])
         ])
 
         let location = try #require(sut.map(list).first?.locations.first)
@@ -57,7 +57,7 @@ import Testing
 
     @Test func whenLatitudeIsOutOfRange_shouldThrowErrorWithLocationFieldAndValue() throws {
         let list = LocationCategoryListDTO(data: [
-            .fixture(locations: [.fixture(name: "Trinity Kitchen", lat: 91)]),
+            .fixture(locations: [.fixture(name: "Trinity Kitchen", lat: 91)])
         ])
 
         do {
@@ -72,7 +72,7 @@ import Testing
 
     @Test func whenLongitudeIsOutOfRange_shouldThrowErrorWithLocationFieldAndValue() throws {
         let list = LocationCategoryListDTO(data: [
-            .fixture(locations: [.fixture(name: "Trinity Kitchen", lon: -181)]),
+            .fixture(locations: [.fixture(name: "Trinity Kitchen", lon: -181)])
         ])
 
         do {
@@ -87,7 +87,7 @@ import Testing
 
     @Test func whenLinkIsNotURL_shouldThrowErrorWithLocationFieldAndValue() throws {
         let list = LocationCategoryListDTO(data: [
-            .fixture(locations: [.fixture(name: "Trinity Kitchen", url: "")]),
+            .fixture(locations: [.fixture(name: "Trinity Kitchen", url: "")])
         ])
 
         do {

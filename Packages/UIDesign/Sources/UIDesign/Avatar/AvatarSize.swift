@@ -15,23 +15,23 @@ public struct AvatarSize: Equatable, Hashable, Sendable {
     }
 }
 
-public extension AvatarSize {
+extension AvatarSize {
     /// An avatar in a dense row, or in a group of them.
-    static let small = AvatarSize(28)
+    public static let small = AvatarSize(28)
 
     /// An avatar in a list row. This is the size a nameplate's row uses.
-    static let medium = AvatarSize(40)
+    public static let medium = AvatarSize(40)
 
     /// An avatar in a heading that names a screen's subject.
-    static let large = AvatarSize(56)
+    public static let large = AvatarSize(56)
 
     /// An avatar that is the screen's subject, such as on a profile.
-    static let xLarge = AvatarSize(80)
+    public static let xLarge = AvatarSize(80)
 }
 
-public extension CGFloat {
+extension CGFloat {
     /// Creates a length from an avatar size.
-    init(_ size: AvatarSize) {
+    public init(_ size: AvatarSize) {
         self = size.points
     }
 }

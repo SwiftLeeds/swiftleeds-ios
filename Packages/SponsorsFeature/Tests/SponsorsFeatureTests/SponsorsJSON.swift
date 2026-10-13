@@ -13,7 +13,7 @@ enum SponsorsJSON {
         image: String = "https://example.invalid/codemagic.png",
         level: String = "platinum",
         url: String = "https://example.invalid/codemagic",
-        jobs: String = "[]"
+        jobs: String = "[]",
     ) -> String {
         """
         {
@@ -33,7 +33,7 @@ enum SponsorsJSON {
         title: String = "Senior iOS Engineer",
         details: String = "Bringing all your Swift skills to the fore",
         location: String = "Leeds",
-        url: String = "https://example.invalid/job"
+        url: String = "https://example.invalid/job",
     ) -> String {
         """
         {

@@ -1,4 +1,4 @@
-// swift-tools-version: 6.0
+// swift-tools-version: 6.1
 
 import PackageDescription
 
@@ -9,7 +9,7 @@ let package = Package(
         .macOS(.v15),
     ],
     products: [
-        .library(name: "ScheduleUI", targets: ["ScheduleUI"]),
+        .library(name: "ScheduleUI", targets: ["ScheduleUI"])
     ],
     dependencies: [
         .package(path: "../../SwiftLeedsPackage"),
@@ -31,7 +31,7 @@ let package = Package(
                 .product(name: "ScheduleFeature", package: "ScheduleFeature"),
                 .product(name: "SharedAssets", package: "SwiftLeedsPackage"),
                 .product(name: "UIComponents", package: "UIComponents"),
-            ]
+            ],
         ),
         .testTarget(
             name: "ScheduleUISnapshotTests",
@@ -40,7 +40,7 @@ let package = Package(
                 .product(name: "DesignKit", package: "SwiftLeedsPackage"),
                 .product(name: "ScheduleFeature", package: "ScheduleFeature"),
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
-            ]
+            ],
         ),
-    ]
+    ],
 )

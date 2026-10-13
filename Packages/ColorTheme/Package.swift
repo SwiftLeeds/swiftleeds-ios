@@ -1,4 +1,4 @@
-// swift-tools-version: 6.0
+// swift-tools-version: 6.1
 
 import PackageDescription
 
@@ -9,7 +9,7 @@ let package = Package(
         .macOS(.v15),
     ],
     products: [
-        .library(name: "ColorTheme", targets: ["ColorTheme"]),
+        .library(name: "ColorTheme", targets: ["ColorTheme"])
     ],
     dependencies: [
         .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.0.0"),
@@ -19,16 +19,17 @@ let package = Package(
         .target(
             name: "ColorTheme",
             dependencies: [
-                .product(name: "Sharing", package: "swift-sharing"),
-            ]
+                .product(name: "Sharing", package: "swift-sharing")
+            ],
         ),
         .testTarget(
             name: "ColorThemeTests",
             dependencies: [
                 "ColorTheme",
                 .product(name: "Dependencies", package: "swift-dependencies"),
+                .product(name: "DependenciesTestSupport", package: "swift-dependencies"),
                 .product(name: "Sharing", package: "swift-sharing"),
-            ]
+            ],
         ),
-    ]
+    ],
 )

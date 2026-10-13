@@ -47,8 +47,8 @@ package struct TicketView: View {
     }
 }
 
-private extension View {
-    func inlineNavigationTitle() -> some View {
+extension View {
+    fileprivate func inlineNavigationTitle() -> some View {
         #if os(iOS)
         navigationBarTitleDisplayMode(.inline)
         #else
@@ -62,7 +62,7 @@ private extension View {
     TicketView(
         slug: Profile.preview.ticketSlug,
         reference: Profile.preview.ticketReference,
-        name: Profile.preview.name
+        name: Profile.preview.name,
     )
 }
 #endif

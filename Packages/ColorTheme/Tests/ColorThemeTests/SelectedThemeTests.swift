@@ -1,9 +1,10 @@
 import ColorTheme
 import Dependencies
+import DependenciesTestSupport
 import Sharing
 import Testing
 
-@Suite struct SelectedThemeTests {
+@Suite(.dependencies) struct SelectedThemeTests {
     @Test func whenNoThemeIsStored_shouldReturnSystem() {
         @Shared(.selectedTheme) var theme
 

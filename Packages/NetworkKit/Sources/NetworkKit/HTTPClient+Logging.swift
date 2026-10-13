@@ -16,7 +16,7 @@ extension HTTPClient {
                 let (data, response) = try await send(request)
                 let entry = LoggedHTTPRequestOutcome.success(
                     request: request,
-                    status: response.status
+                    status: response.status,
                 )
                 log(entry.level, .network, entry.message)
                 return (data, response)

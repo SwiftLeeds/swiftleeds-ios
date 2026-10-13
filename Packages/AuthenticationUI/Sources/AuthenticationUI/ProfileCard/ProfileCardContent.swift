@@ -12,7 +12,7 @@ package struct ProfileCardContent: View {
     package init(
         state: ProfileCardState,
         retry: @escaping @MainActor () async -> Void,
-        signOut: @escaping @MainActor () async -> Void
+        signOut: @escaping @MainActor () async -> Void,
     ) {
         self.state = state
         self.retry = retry
@@ -37,10 +37,10 @@ package struct ProfileCardContent: View {
             HStack(spacing: 12) {
                 Nameplate(
                     Text(verbatim: profile.name.formatted()),
-                    detail: Text(verbatim: profile.emailAddress)
+                    detail: Text(verbatim: profile.emailAddress),
                 ) {
                     Avatar(url: profile.avatarURL) {
-                        Text(verbatim: Initials.from(profile.name))
+                        Text(verbatim: profile.name.formatted(.name(style: .abbreviated)))
                     }
                 }
 
@@ -58,7 +58,7 @@ package struct ProfileCardContent: View {
             TicketView(
                 slug: profile.ticketSlug,
                 reference: profile.ticketReference,
-                name: profile.name
+                name: profile.name,
             )
         }
     }

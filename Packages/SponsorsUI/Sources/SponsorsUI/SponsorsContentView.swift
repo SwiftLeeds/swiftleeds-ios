@@ -29,7 +29,7 @@ package struct SponsorsContentView: View {
             VStack(spacing: 0) {
                 FancyHeaderView(
                     title: "Sponsors",
-                    foregroundImage: Image.swiftLeedsIcon
+                    foregroundImage: Image.swiftLeedsIcon,
                 )
 
                 content
@@ -125,7 +125,7 @@ package struct SponsorsContentView: View {
                 FilterChip(
                     title: "All",
                     isSelected: selectedLevel == nil,
-                    action: { selectedLevel = nil }
+                    action: { selectedLevel = nil },
                 )
 
                 ForEach(SponsorLevel.allCases, id: \.self) { level in
@@ -136,7 +136,7 @@ package struct SponsorsContentView: View {
                             withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
                                 selectedLevel = level == selectedLevel ? nil : level
                             }
-                        }
+                        },
                     )
                 }
             }
@@ -182,7 +182,7 @@ package struct SponsorsContentView: View {
                 LazyVGrid(
                     columns: gridColumns,
                     alignment: .leading,
-                    spacing: Padding.cellGap
+                    spacing: Padding.cellGap,
                 ) {
                     tiles(for: level, in: sponsors)
                 }
@@ -194,10 +194,11 @@ package struct SponsorsContentView: View {
     private func tiles(for level: SponsorLevel, in sponsors: Sponsors) -> some View {
         ForEach(sponsors.sponsors(at: level)) { sponsor in
             SponsorTileView(sponsor: sponsor)
-                .transition(.asymmetric(
-                    insertion: .scale.combined(with: .opacity),
-                    removal: .scale.combined(with: .opacity)
-                ))
+                .transition(
+                    .asymmetric(
+                        insertion: .scale.combined(with: .opacity),
+                        removal: .scale.combined(with: .opacity),
+                    ))
         }
     }
 

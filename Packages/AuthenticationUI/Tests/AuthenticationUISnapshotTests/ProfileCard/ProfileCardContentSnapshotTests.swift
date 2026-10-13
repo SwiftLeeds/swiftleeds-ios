@@ -39,7 +39,7 @@ import Testing
             emailAddress: "ada@example.com",
             avatarURL: try #require(URL(string: "https://example.invalid/avatar.png")),
             ticketReference: "ABCD-1",
-            ticketSlug: try TicketSlug("ti_abc")
+            ticketSlug: try TicketSlug("ti_abc"),
         )
     }
 }

@@ -6,7 +6,7 @@ extension Credential {
         get throws {
             try Credential(
                 email: EmailAddress("attendee@example.com"),
-                ticketReference: TicketReference("ABCD-12")
+                ticketReference: TicketReference("ABCD-12"),
             )
         }
     }

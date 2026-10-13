@@ -5,7 +5,7 @@ extension EnvironmentValues {
     @Entry public var avatarStyle: any AvatarStyle = .automatic
 }
 
-public extension View {
+extension View {
     /// Sets the style for avatars within this view.
     ///
     /// ```swift
@@ -17,7 +17,7 @@ public extension View {
     /// ```
     ///
     /// - Parameter style: The avatar style to apply.
-    func avatarStyle(_ style: some AvatarStyle) -> some View {
+    public func avatarStyle(_ style: some AvatarStyle) -> some View {
         environment(\.avatarStyle, style)
     }
 }

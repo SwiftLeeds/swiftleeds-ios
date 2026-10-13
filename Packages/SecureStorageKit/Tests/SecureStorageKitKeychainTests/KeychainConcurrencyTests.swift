@@ -46,7 +46,10 @@ import Testing
             return try await withThrowingTaskGroup(of: Data?.self, returning: [Data?].self) { group in
                 for _ in 0..<20 {
                     group.addTask { try await storage.data(self.key) }
-                    group.addTask { try await storage.set(second, self.key); return nil }
+                    group.addTask {
+                        try await storage.set(second, self.key)
+                        return nil
+                    }
                 }
                 return try await group.reduce(into: []) { $0.append($1) }
             }

@@ -52,13 +52,13 @@ package enum QRCode {
     }
 }
 
-package extension BarcodeContent {
+extension BarcodeContent {
     /// Content drawn as a QR code.
     ///
     /// - Parameters:
     ///   - payload: The text the code carries.
     ///   - correction: How much damage the code should survive. Defaults to `high`.
-    static func qr(_ payload: QRCode.Payload, correction: QRCode.Correction = .high) -> BarcodeContent {
+    package static func qr(_ payload: QRCode.Payload, correction: QRCode.Correction = .high) -> BarcodeContent {
         BarcodeContent(payload, drawnBy: QRCode.Symbology(correction: correction))
     }
 }

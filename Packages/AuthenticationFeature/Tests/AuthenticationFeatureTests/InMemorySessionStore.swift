@@ -11,7 +11,7 @@ actor InMemorySessionStore {
         SessionStore(
             establish: { await self.store($0) },
             clear: { await self.clear() },
-            current: { await self.stored }
+            current: { await self.stored },
         )
     }
 

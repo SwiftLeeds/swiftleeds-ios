@@ -22,7 +22,7 @@ import UIComponents
     @Test func longTitle() {
         let view = FancyHeaderView(
             title: "A title long enough to wrap onto a second line",
-            foregroundImage: Image.swiftLeedsIcon
+            foregroundImage: Image.swiftLeedsIcon,
         )
 
         assertHeaderSnapshots(of: view)

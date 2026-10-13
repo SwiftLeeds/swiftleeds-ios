@@ -2,14 +2,14 @@ import AuthenticationFeature
 import Foundation
 
 #if DEBUG
-package extension Profile {
-    static var preview: Profile {
+extension Profile {
+    package static var preview: Profile {
         Profile(
             name: PersonNameComponents(givenName: "Ada", familyName: "Lovelace"),
             emailAddress: "ada@example.com",
             avatarURL: URL(string: "https://example.com/avatar.png")!,
             ticketReference: "ABCD-1",
-            ticketSlug: try! TicketSlug("ti_pxqFKr9pPWd6VeYKvMBKpjQ")
+            ticketSlug: try! TicketSlug("ti_pxqFKr9pPWd6VeYKvMBKpjQ"),
         )
     }
 }

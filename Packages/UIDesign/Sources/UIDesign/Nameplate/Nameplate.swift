@@ -59,7 +59,7 @@ public struct Nameplate<Title: View, Detail: View, Icon: View>: View {
     public init(
         @ViewBuilder title: () -> Title,
         @ViewBuilder detail: () -> Detail,
-        @ViewBuilder icon: () -> Icon
+        @ViewBuilder icon: () -> Icon,
     ) {
         self.title = title()
         self.detail = detail()
@@ -77,7 +77,7 @@ public struct Nameplate<Title: View, Detail: View, Icon: View>: View {
     }
 }
 
-public extension Nameplate where Title == Text, Detail == Text {
+extension Nameplate where Title == Text, Detail == Text {
     /// Creates a nameplate with a title and a detail generated from localized
     /// strings.
     ///
@@ -85,10 +85,10 @@ public extension Nameplate where Title == Text, Detail == Text {
     ///   - titleKey: A title generated from a localized string.
     ///   - detail: A detail generated from a localized string.
     ///   - icon: A content builder that creates the nameplate's icon.
-    init(
+    public init(
         _ titleKey: LocalizedStringKey,
         detail: LocalizedStringKey,
-        @ViewBuilder icon: () -> Icon
+        @ViewBuilder icon: () -> Icon,
     ) {
         self.init(title: { Text(titleKey) }, detail: { Text(detail) }, icon: icon)
     }
@@ -102,22 +102,22 @@ public extension Nameplate where Title == Text, Detail == Text {
     ///   - title: A string used as the nameplate's title.
     ///   - detail: A string used as the nameplate's detail.
     ///   - icon: A content builder that creates the nameplate's icon.
-    init(
+    public init(
         _ title: some StringProtocol,
         detail: some StringProtocol,
-        @ViewBuilder icon: () -> Icon
+        @ViewBuilder icon: () -> Icon,
     ) {
         self.init(title: { Text(title) }, detail: { Text(detail) }, icon: icon)
     }
 }
 
-public extension Nameplate where Title == Text, Detail == EmptyView {
+extension Nameplate where Title == Text, Detail == EmptyView {
     /// Creates a nameplate with a title generated from a localized string.
     ///
     /// - Parameters:
     ///   - titleKey: A title generated from a localized string.
     ///   - icon: A content builder that creates the nameplate's icon.
-    init(_ titleKey: LocalizedStringKey, @ViewBuilder icon: () -> Icon) {
+    public init(_ titleKey: LocalizedStringKey, @ViewBuilder icon: () -> Icon) {
         self.init(title: { Text(titleKey) }, detail: { EmptyView() }, icon: icon)
     }
 
@@ -126,7 +126,7 @@ public extension Nameplate where Title == Text, Detail == EmptyView {
     /// - Parameters:
     ///   - title: A string used as the nameplate's title.
     ///   - icon: A content builder that creates the nameplate's icon.
-    init(_ title: some StringProtocol, @ViewBuilder icon: () -> Icon) {
+    public init(_ title: some StringProtocol, @ViewBuilder icon: () -> Icon) {
         self.init(title: { Text(title) }, detail: { EmptyView() }, icon: icon)
     }
 }
@@ -141,7 +141,7 @@ private let previewCompany = "Northern Software"
 /// The preview name in parts, so the avatar can abbreviate it.
 private let previewNameComponents = PersonNameComponents(
     givenName: "Ada",
-    familyName: "Archer"
+    familyName: "Archer",
 )
 
 #Preview("Row") {
@@ -167,7 +167,7 @@ private let previewNameComponents = PersonNameComponents(
             url: nil,
             size: .large,
             status: AvatarStatus("Checked in"),
-            fallback: .initials(previewNameComponents)
+            fallback: .initials(previewNameComponents),
         )
     }
     .nameplateStyle(.prominent)

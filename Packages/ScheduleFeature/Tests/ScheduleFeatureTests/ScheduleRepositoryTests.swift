@@ -125,8 +125,8 @@ import Testing
 private let now = Date(timeIntervalSince1970: 1_000_000)
 private let twoDays: TimeInterval = 60 * 60 * 24 * 2
 
-private extension RemoteScheduleStore {
-    static func failing(with error: ScheduleFetchError) -> RemoteScheduleStore {
+extension RemoteScheduleStore {
+    fileprivate static func failing(with error: ScheduleFetchError) -> RemoteScheduleStore {
         RemoteScheduleStore(
             fetch: { _ async throws(ScheduleFetchError) -> Schedule in throw error }
         )
@@ -149,7 +149,7 @@ private final class LocalScheduleStoreSpy: @unchecked Sendable {
     var store: LocalScheduleStore {
         LocalScheduleStore(
             load: { [self] request in lock.withLock { entries[request] } },
-            save: { [self] stored, request in lock.withLock { entries[request] = stored } }
+            save: { [self] stored, request in lock.withLock { entries[request] = stored } },
         )
     }
 }

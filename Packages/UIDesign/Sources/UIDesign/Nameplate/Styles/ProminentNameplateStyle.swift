@@ -18,8 +18,8 @@ public struct ProminentNameplateStyle: NameplateStyle {
     }
 }
 
-public extension NameplateStyle where Self == ProminentNameplateStyle {
+extension NameplateStyle where Self == ProminentNameplateStyle {
     /// A nameplate style that draws a heading, with the title in the title 3
     /// text style and vertical padding around the row.
-    static var prominent: ProminentNameplateStyle { ProminentNameplateStyle() }
+    public static var prominent: ProminentNameplateStyle { ProminentNameplateStyle() }
 }

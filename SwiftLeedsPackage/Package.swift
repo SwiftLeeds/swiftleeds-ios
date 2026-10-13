@@ -10,31 +10,22 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "SwiftLeeds",
-            targets: [
-                "SwiftLeedsCore",
-            ]
-        ),
-        .library(
             name: "DesignKit",
             targets: [
                 "DesignKit"
-            ]
+            ],
         ),
         .library(
             name: "SharedAssets",
             targets: [
-                "SharedAssets",
-            ]
+                "SharedAssets"
+            ],
         ),
     ],
     dependencies: [
-        .package(url: "https://github.com/shadone/SwiftGenPlugin", branch: "6.6.2+deriveddatafix"),
+        .package(url: "https://github.com/shadone/SwiftGenPlugin", branch: "6.6.2+deriveddatafix")
     ],
     targets: [
-        .target(
-            name: "SwiftLeedsCore"
-        ),
         .target(
             name: "DesignKit"
         ),
@@ -43,15 +34,15 @@ let package = Package(
             // SwiftGen's generated code reads Bundle.module, which SwiftPM
             // synthesises only for a target that declares resources.
             resources: [
-                .process("Resources"),
+                .process("Resources")
             ],
             plugins: [
-              .plugin(name: "SwiftGenPlugin", package: "SwiftGenPlugin"),
-            ]
+                .plugin(name: "SwiftGenPlugin", package: "SwiftGenPlugin")
+            ],
         ),
     ],
     // Set to v5 to avoid strict concurrency checking in pre swift 6 code
     swiftLanguageModes: [
-        .v5,
-    ]
+        .v5
+    ],
 )

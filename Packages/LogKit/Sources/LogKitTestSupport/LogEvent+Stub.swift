@@ -11,7 +11,7 @@ extension LogEvent {
     package static func stub(
         _ message: MessageTemplate = "event",
         level: LogLevel = .info,
-        category: LogCategory = "test"
+        category: LogCategory = "test",
     ) -> LogEvent {
         LogEvent(level: level, category: category, message: message, source: .here())
     }

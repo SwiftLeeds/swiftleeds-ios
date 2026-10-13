@@ -10,7 +10,7 @@ package struct AccountDetailView: View {
 
     package init(
         profile: Profile,
-        signOut: @escaping @MainActor () async -> Void
+        signOut: @escaping @MainActor () async -> Void,
     ) {
         self.profile = profile
         self.signOut = signOut
@@ -21,7 +21,7 @@ package struct AccountDetailView: View {
             Section {
                 VStack(spacing: 8) {
                     Avatar(url: profile.avatarURL) {
-                        Text(verbatim: Initials.from(profile.name))
+                        Text(verbatim: profile.name.formatted(.name(style: .abbreviated)))
                     }
                     .font(.largeTitle.weight(.semibold))
                     .foregroundStyle(.tint)
@@ -55,8 +55,8 @@ package struct AccountDetailView: View {
     }
 }
 
-private extension View {
-    func inlineNavigationTitle() -> some View {
+extension View {
+    fileprivate func inlineNavigationTitle() -> some View {
         #if os(iOS)
         navigationBarTitleDisplayMode(.inline)
         #else

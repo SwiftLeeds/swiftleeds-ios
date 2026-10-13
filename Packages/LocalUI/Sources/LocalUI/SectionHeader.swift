@@ -15,7 +15,7 @@ package struct SectionHeader: View {
         foregroundColor: Color = .secondary,
         maxWidth: CGFloat = .infinity,
         alignment: Alignment = .leading,
-        accessibilityTraits: AccessibilityTraits = .isHeader
+        accessibilityTraits: AccessibilityTraits = .isHeader,
     ) {
         self.title = title
         self.fontStyle = fontStyle

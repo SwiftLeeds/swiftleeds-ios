@@ -1,4 +1,4 @@
-// swift-tools-version: 6.0
+// swift-tools-version: 6.1
 
 import PackageDescription
 
@@ -9,7 +9,7 @@ let package = Package(
         .macOS(.v15),
     ],
     products: [
-        .library(name: "SettingsUI", targets: ["SettingsUI"]),
+        .library(name: "SettingsUI", targets: ["SettingsUI"])
     ],
     dependencies: [
         .package(path: "../ColorTheme"),
@@ -26,7 +26,7 @@ let package = Package(
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "NetworkKit", package: "NetworkKit"),
                 .product(name: "Sharing", package: "swift-sharing"),
-            ]
+            ],
         ),
         .testTarget(
             name: "SettingsUITests",
@@ -36,7 +36,7 @@ let package = Package(
                 .product(name: "DependenciesTestSupport", package: "swift-dependencies"),
                 .product(name: "NetworkKit", package: "NetworkKit"),
                 .product(name: "Sharing", package: "swift-sharing"),
-            ]
+            ],
         ),
         .testTarget(
             name: "SettingsUISnapshotTests",
@@ -45,7 +45,7 @@ let package = Package(
                 .product(name: "ColorTheme", package: "ColorTheme"),
                 .product(name: "Sharing", package: "swift-sharing"),
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
-            ]
+            ],
         ),
-    ]
+    ],
 )

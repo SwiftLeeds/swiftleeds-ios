@@ -10,7 +10,7 @@ import Testing
         let view = TalkCell(
             time: "11:00",
             details: presentation.title,
-            speakers: presentation.speakers
+            speakers: presentation.speakers,
         )
 
         assertTileSnapshots(of: view, width: fullTileWidth)
@@ -21,7 +21,7 @@ import Testing
         let view = TalkCell(
             time: "13:30",
             details: presentation.title,
-            speakers: presentation.speakers
+            speakers: presentation.speakers,
         )
 
         assertTileSnapshots(of: view, width: fullTileWidth)

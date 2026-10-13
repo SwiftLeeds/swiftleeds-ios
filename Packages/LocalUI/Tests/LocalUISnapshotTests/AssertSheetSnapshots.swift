@@ -26,7 +26,7 @@ func assertSheetSnapshots(
     file filePath: StaticString = #filePath,
     testName: String = #function,
     line: UInt = #line,
-    column: UInt = #column
+    column: UInt = #column,
 ) {
     assertSnapshots(
         of: view.onSheet(),
@@ -35,12 +35,12 @@ func assertSheetSnapshots(
         file: filePath,
         testName: testName,
         line: line,
-        column: column
+        column: column,
     )
 }
 
-private extension View {
-    func onSheet() -> some View {
+extension View {
+    fileprivate func onSheet() -> some View {
         self
             .frame(width: sheetContentWidth)
             .fixedSize(horizontal: false, vertical: true)

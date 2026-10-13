@@ -47,7 +47,7 @@ import Testing
     @Test func whenTransportFails_shouldNotLogQueryThroughTheReason() async throws {
         let offline = URLError(
             .notConnectedToInternet,
-            userInfo: [NSURLErrorFailingURLStringErrorKey: String(describing: url)]
+            userInfo: [NSURLErrorFailingURLStringErrorKey: String(describing: url)],
         )
 
         let event = try #require(await attempt(URLRequest(url: url), failingWith: offline))
@@ -142,7 +142,7 @@ import Testing
 
     private func attempt(
         _ request: URLRequest,
-        failingWith error: some Error & Sendable = StubError.couldNotBuildResponse
+        failingWith error: some Error & Sendable = StubError.couldNotBuildResponse,
     ) async -> LogEvent? {
         let recorder = LogRecorder()
 

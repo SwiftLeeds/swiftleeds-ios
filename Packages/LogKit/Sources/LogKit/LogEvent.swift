@@ -28,7 +28,7 @@ public struct LogEvent: Hashable, Sendable {
         category: LogCategory,
         message: MessageTemplate,
         fields: LogFields = LogFields(),
-        source: SourceLocation
+        source: SourceLocation,
     ) {
         self.level = level
         self.category = category

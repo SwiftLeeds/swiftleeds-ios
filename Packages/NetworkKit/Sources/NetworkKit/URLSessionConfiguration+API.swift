@@ -10,7 +10,7 @@ extension URLSessionConfiguration {
     /// - Returns: A fresh configuration. Callers own what they do with it.
     public static func api(
         timeout: TimeInterval = 30,
-        cache: URLCache? = nil
+        cache: URLCache? = nil,
     ) -> URLSessionConfiguration {
         let configuration = URLSessionConfiguration.default
         configuration.timeoutIntervalForRequest = timeout

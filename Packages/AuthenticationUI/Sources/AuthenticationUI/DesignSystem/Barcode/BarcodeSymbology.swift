@@ -21,7 +21,8 @@ enum BarcodeImage {
 
     /// Renders `image`, widening its light margin by `modules` on every side.
     static func render(_ image: CIImage, addingQuietZoneOf modules: CGFloat) -> CGImage? {
-        let source = modules > 0
+        let source =
+            modules > 0
             ? image.composited(over: quietZone(around: image.extent, of: modules))
             : image
         return context.createCGImage(source, from: source.extent)

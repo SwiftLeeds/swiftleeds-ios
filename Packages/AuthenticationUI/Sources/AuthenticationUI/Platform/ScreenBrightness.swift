@@ -30,7 +30,7 @@ package struct ScreenBrightness: Sendable {
 
     package init(
         current: @escaping @MainActor @Sendable () -> Level,
-        set: @escaping @MainActor @Sendable (Level) -> Void
+        set: @escaping @MainActor @Sendable (Level) -> Void,
     ) {
         self.current = current
         self.set = set
@@ -49,7 +49,7 @@ extension ScreenBrightness: DependencyKey {
         #if os(iOS)
         ScreenBrightness(
             current: { Level(Double(activeScreen()?.brightness ?? 0)) },
-            set: { activeScreen()?.brightness = Double($0) }
+            set: { activeScreen()?.brightness = Double($0) },
         )
         #else
         ScreenBrightness(current: { .brightest }, set: { _ in })
@@ -64,7 +64,7 @@ extension ScreenBrightness: DependencyKey {
             },
             set: { _ in
                 reportIssue("ScreenBrightness.set is unimplemented")
-            }
+            },
         )
     }
 }

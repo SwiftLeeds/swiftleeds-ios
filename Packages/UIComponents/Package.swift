@@ -1,4 +1,4 @@
-// swift-tools-version: 6.0
+// swift-tools-version: 6.1
 
 import PackageDescription
 
@@ -9,7 +9,7 @@ let package = Package(
         .macOS(.v15),
     ],
     products: [
-        .library(name: "UIComponents", targets: ["UIComponents"]),
+        .library(name: "UIComponents", targets: ["UIComponents"])
     ],
     dependencies: [
         .package(path: "../../SwiftLeedsPackage"),
@@ -21,7 +21,7 @@ let package = Package(
             dependencies: [
                 .product(name: "DesignKit", package: "SwiftLeedsPackage"),
                 .product(name: "SharedAssets", package: "SwiftLeedsPackage"),
-            ]
+            ],
         ),
         .testTarget(
             name: "UIComponentsSnapshotTests",
@@ -29,7 +29,7 @@ let package = Package(
                 "UIComponents",
                 .product(name: "SharedAssets", package: "SwiftLeedsPackage"),
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
-            ]
+            ],
         ),
-    ]
+    ],
 )

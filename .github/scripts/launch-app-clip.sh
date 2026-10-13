@@ -21,10 +21,10 @@ mkdir -p "$derived_data"
 derived_data=$(cd "$derived_data" && pwd)
 cd "$(git -C "$(dirname "$0")" rev-parse --show-toplevel)"
 
-# The same device and runtime the snapshot job pins, for the same reason: an
+# The same device and iOS version the snapshot job uses, for the same reason: an
 # image roll must not change the simulator silently.
-device_name="iPhone 17 Pro"
-runtime="com.apple.CoreSimulator.SimRuntime.iOS-26-5"
+device_name="iPhone 18 Pro"
+runtime="com.apple.CoreSimulator.SimRuntime.iOS-27-0"
 seconds_alive=10
 
 udid=$(xcrun simctl list devices available --json \

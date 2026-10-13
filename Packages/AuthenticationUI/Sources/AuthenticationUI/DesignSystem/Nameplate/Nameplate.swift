@@ -12,7 +12,7 @@ package struct Nameplate<Title: View, Detail: View, Icon: View>: View {
         role: NameplateRole = .standard,
         @ViewBuilder title: () -> Title,
         @ViewBuilder detail: () -> Detail,
-        @ViewBuilder icon: () -> Icon
+        @ViewBuilder icon: () -> Icon,
     ) {
         self.role = role
         self.title = title()
@@ -26,29 +26,29 @@ package struct Nameplate<Title: View, Detail: View, Icon: View>: View {
                 title: NameplateStyleConfiguration.Title(base: AnyView(title)),
                 detail: NameplateStyleConfiguration.Detail(base: AnyView(detail)),
                 icon: NameplateStyleConfiguration.Icon(base: AnyView(icon.accessibilityHidden(true))),
-                role: role
+                role: role,
             )
         )
         .accessibilityElement(children: .combine)
     }
 }
 
-package extension Nameplate where Title == Text, Detail == Text {
-    init(
+extension Nameplate where Title == Text, Detail == Text {
+    package init(
         _ title: Text,
         detail: Text,
         role: NameplateRole = .standard,
-        @ViewBuilder icon: () -> Icon
+        @ViewBuilder icon: () -> Icon,
     ) {
         self.init(role: role, title: { title }, detail: { detail }, icon: icon)
     }
 }
 
-package extension Nameplate where Title == Text, Detail == EmptyView {
-    init(
+extension Nameplate where Title == Text, Detail == EmptyView {
+    package init(
         _ title: Text,
         role: NameplateRole = .standard,
-        @ViewBuilder icon: () -> Icon
+        @ViewBuilder icon: () -> Icon,
     ) {
         self.init(role: role, title: { title }, detail: { EmptyView() }, icon: icon)
     }

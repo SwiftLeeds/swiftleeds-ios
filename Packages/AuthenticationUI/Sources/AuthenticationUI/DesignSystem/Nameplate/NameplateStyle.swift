@@ -54,7 +54,7 @@ package struct ProminentNameplateStyle: NameplateStyle {
                 iconSize: min(iconSize, 96),
                 spacing: 12,
                 titleFont: .title3.weight(.semibold),
-                detailFont: .subheadline
+                detailFont: .subheadline,
             )
             .padding(.vertical, 8)
         }
@@ -79,7 +79,7 @@ package struct CompactNameplateStyle: NameplateStyle {
                 iconSize: min(iconSize, 72),
                 spacing: 10,
                 titleFont: .subheadline.weight(.semibold),
-                detailFont: .footnote
+                detailFont: .footnote,
             )
         }
     }
@@ -115,8 +115,8 @@ private struct NameplateLayout: View {
     }
 }
 
-private extension NameplateRole {
-    var detailStyle: AnyShapeStyle {
+extension NameplateRole {
+    fileprivate var detailStyle: AnyShapeStyle {
         switch self {
         case .standard: AnyShapeStyle(.secondary)
         case .unresolved: AnyShapeStyle(.tertiary)
@@ -124,12 +124,12 @@ private extension NameplateRole {
     }
 }
 
-package extension NameplateStyle where Self == ProminentNameplateStyle {
-    static var prominent: ProminentNameplateStyle { ProminentNameplateStyle() }
+extension NameplateStyle where Self == ProminentNameplateStyle {
+    package static var prominent: ProminentNameplateStyle { ProminentNameplateStyle() }
 }
 
-package extension NameplateStyle where Self == CompactNameplateStyle {
-    static var compact: CompactNameplateStyle { CompactNameplateStyle() }
+extension NameplateStyle where Self == CompactNameplateStyle {
+    package static var compact: CompactNameplateStyle { CompactNameplateStyle() }
 }
 
 struct AnyNameplateStyle {
@@ -151,8 +151,8 @@ extension EnvironmentValues {
     }
 }
 
-package extension View {
-    func nameplateStyle<S: NameplateStyle>(_ style: S) -> some View {
+extension View {
+    package func nameplateStyle<S: NameplateStyle>(_ style: S) -> some View {
         environment(\.nameplateStyle, AnyNameplateStyle(style))
     }
 }

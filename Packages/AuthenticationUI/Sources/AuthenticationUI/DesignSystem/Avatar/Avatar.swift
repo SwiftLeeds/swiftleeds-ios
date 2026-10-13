@@ -26,7 +26,7 @@ package struct Avatar<Content: View, Placeholder: View, Failure: View>: View {
         url: URL?,
         @ViewBuilder content: @escaping (Image) -> Content,
         @ViewBuilder placeholder: @escaping () -> Placeholder,
-        @ViewBuilder failure: @escaping () -> Failure
+        @ViewBuilder failure: @escaping () -> Failure,
     ) {
         self.url = url
         self.content = content
@@ -58,34 +58,34 @@ package struct Avatar<Content: View, Placeholder: View, Failure: View>: View {
         style.makeBody(
             AvatarStyleConfiguration(
                 content: AvatarStyleConfiguration.Content(base: content),
-                kind: kind
+                kind: kind,
             )
         )
     }
 }
 
-package extension Avatar where Placeholder == Failure {
-    init(
+extension Avatar where Placeholder == Failure {
+    package init(
         url: URL?,
         @ViewBuilder content: @escaping (Image) -> Content,
-        @ViewBuilder fallback: @escaping () -> Failure
+        @ViewBuilder fallback: @escaping () -> Failure,
     ) {
         self.init(url: url, content: content, placeholder: fallback, failure: fallback)
     }
 }
 
-package extension Avatar where Content == AvatarImage {
-    init(
+extension Avatar where Content == AvatarImage {
+    package init(
         url: URL?,
         @ViewBuilder placeholder: @escaping () -> Placeholder,
-        @ViewBuilder failure: @escaping () -> Failure
+        @ViewBuilder failure: @escaping () -> Failure,
     ) {
         self.init(url: url, content: { AvatarImage($0) }, placeholder: placeholder, failure: failure)
     }
 }
 
-package extension Avatar where Content == AvatarImage, Placeholder == Failure {
-    init(url: URL?, @ViewBuilder fallback: @escaping () -> Failure) {
+extension Avatar where Content == AvatarImage, Placeholder == Failure {
+    package init(url: URL?, @ViewBuilder fallback: @escaping () -> Failure) {
         self.init(url: url, content: { AvatarImage($0) }, placeholder: fallback, failure: fallback)
     }
 }

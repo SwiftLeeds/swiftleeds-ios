@@ -26,8 +26,8 @@ import Testing
     }
 }
 
-private extension Sponsors {
-    static let everyLevel = Sponsors([
+extension Sponsors {
+    fileprivate static let everyLevel = Sponsors([
         .sponsor(named: "Sky", at: .platinum, jobs: [.seniorEngineer]),
         .sponsor(named: "Deliveroo", at: .gold),
         .sponsor(named: "Monzo", at: .gold),
@@ -36,11 +36,11 @@ private extension Sponsors {
     ])
 }
 
-private extension Sponsor {
-    static func sponsor(
+extension Sponsor {
+    fileprivate static func sponsor(
         named name: String,
         at level: SponsorLevel,
-        jobs: [Job] = []
+        jobs: [Job] = [],
     ) -> Sponsor {
         Sponsor(
             id: SponsorID(name.lowercased()),
@@ -49,18 +49,18 @@ private extension Sponsor {
             level: level,
             logoURL: nil,
             websiteURL: nil,
-            jobs: jobs
+            jobs: jobs,
         )
     }
 }
 
-private extension Job {
-    static let seniorEngineer = Job(
+extension Job {
+    fileprivate static let seniorEngineer = Job(
         id: JobID(UUID()),
         title: "Senior iOS Engineer",
         details: "Bringing all your Swift skills to the fore",
         location: "Leeds",
-        url: nil
+        url: nil,
     )
 }
 #endif

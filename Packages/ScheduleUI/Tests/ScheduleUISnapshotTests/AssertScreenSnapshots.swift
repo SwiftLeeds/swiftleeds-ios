@@ -21,7 +21,7 @@ func assertScreenSnapshots(
     file filePath: StaticString = #filePath,
     testName: String = #function,
     line: UInt = #line,
-    column: UInt = #column
+    column: UInt = #column,
 ) {
     assertSnapshots(
         of: view,
@@ -30,7 +30,7 @@ func assertScreenSnapshots(
         file: filePath,
         testName: testName,
         line: line,
-        column: column
+        column: column,
     )
 }
 
@@ -43,7 +43,7 @@ private func variants<V: View>() -> [String: Snapshotting<V, UIImage>] {
                     traits: .init(traitsFrom: [
                         .init(userInterfaceStyle: scheme.style),
                         .init(displayScale: 1),
-                    ])
+                    ]),
                 )
                 .pullback { AnyView($0.dynamicTypeSize(textSize.size)) }
         }

@@ -25,7 +25,7 @@ extension SponsorMapper {
                 throw MappingError(
                     sponsor: dto.name,
                     field: .sponsorLevel,
-                    value: dto.sponsorLevel
+                    value: dto.sponsorLevel,
                 )
             }
             sponsors.append(
@@ -36,7 +36,7 @@ extension SponsorMapper {
                     level: level,
                     logoURL: link(dto.image),
                     websiteURL: link(dto.url),
-                    jobs: dto.jobs.map(job)
+                    jobs: dto.jobs.map(job),
                 )
             )
         }
@@ -49,7 +49,7 @@ extension SponsorMapper {
             title: dto.title,
             details: dto.details,
             location: dto.location,
-            url: link(dto.url)
+            url: link(dto.url),
         )
     }
 

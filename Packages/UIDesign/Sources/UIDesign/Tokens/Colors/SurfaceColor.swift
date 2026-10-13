@@ -1,9 +1,9 @@
 import SwiftUI
 
 /// The backgrounds a screen is built from, in three levels of depth.
-public extension ShapeStyle where Self == Color {
+extension ShapeStyle where Self == Color {
     /// The background of a screen.
-    static var surface: Color {
+    public static var surface: Color {
         #if os(iOS)
         Color(.systemBackground)
         #else
@@ -12,7 +12,7 @@ public extension ShapeStyle where Self == Color {
     }
 
     /// The background of grouped content on a screen.
-    static var secondarySurface: Color {
+    public static var secondarySurface: Color {
         #if os(iOS)
         Color(.secondarySystemBackground)
         #else
@@ -21,7 +21,7 @@ public extension ShapeStyle where Self == Color {
     }
 
     /// The background of an element inside grouped content.
-    static var tertiarySurface: Color {
+    public static var tertiarySurface: Color {
         #if os(iOS)
         Color(.tertiarySystemBackground)
         #else

@@ -24,54 +24,144 @@ package struct IconSpecimen: View {
 
 // MARK: - Groups
 
-private extension IconSpecimen {
-    var navigationGroup: some View {
+extension IconSpecimen {
+    fileprivate var navigationGroup: some View {
         SpecimenGroup("Navigation") {
-            GridRow { Text("back"); Glyph(.back) }
-            GridRow { Text("forward"); Glyph(.forward) }
-            GridRow { Text("close"); Glyph(.close) }
-            GridRow { Text("more"); Glyph(.more) }
+            GridRow {
+                Text("back")
+                Glyph(.back)
+            }
+            GridRow {
+                Text("forward")
+                Glyph(.forward)
+            }
+            GridRow {
+                Text("close")
+                Glyph(.close)
+            }
+            GridRow {
+                Text("more")
+                Glyph(.more)
+            }
         }
     }
 
-    var actionGroup: some View {
+    fileprivate var actionGroup: some View {
         SpecimenGroup("Action") {
-            GridRow { Text("share"); Glyph(.share) }
-            GridRow { Text("favorite"); Glyph(.favorite) }
-            GridRow { Text("favoriteFilled"); Glyph(.favoriteFilled) }
-            GridRow { Text("add"); Glyph(.add) }
-            GridRow { Text("delete"); Glyph(.delete) }
-            GridRow { Text("edit"); Glyph(.edit) }
-            GridRow { Text("search"); Glyph(.search) }
-            GridRow { Text("filter"); Glyph(.filter) }
-            GridRow { Text("sort"); Glyph(.sort) }
-            GridRow { Text("refresh"); Glyph(.refresh) }
-            GridRow { Text("copy"); Glyph(.copy) }
-            GridRow { Text("openExternal"); Glyph(.openExternal) }
+            GridRow {
+                Text("share")
+                Glyph(.share)
+            }
+            GridRow {
+                Text("favorite")
+                Glyph(.favorite)
+            }
+            GridRow {
+                Text("favoriteFilled")
+                Glyph(.favoriteFilled)
+            }
+            GridRow {
+                Text("add")
+                Glyph(.add)
+            }
+            GridRow {
+                Text("delete")
+                Glyph(.delete)
+            }
+            GridRow {
+                Text("edit")
+                Glyph(.edit)
+            }
+            GridRow {
+                Text("search")
+                Glyph(.search)
+            }
+            GridRow {
+                Text("filter")
+                Glyph(.filter)
+            }
+            GridRow {
+                Text("sort")
+                Glyph(.sort)
+            }
+            GridRow {
+                Text("refresh")
+                Glyph(.refresh)
+            }
+            GridRow {
+                Text("copy")
+                Glyph(.copy)
+            }
+            GridRow {
+                Text("openExternal")
+                Glyph(.openExternal)
+            }
         }
     }
 
-    var stateGroup: some View {
+    fileprivate var stateGroup: some View {
         SpecimenGroup("State") {
-            GridRow { Text("success"); Glyph(.success) }
-            GridRow { Text("warning"); Glyph(.warning) }
-            GridRow { Text("error"); Glyph(.error) }
-            GridRow { Text("info"); Glyph(.info) }
-            GridRow { Text("locked"); Glyph(.locked) }
-            GridRow { Text("live"); Glyph(.live) }
+            GridRow {
+                Text("success")
+                Glyph(.success)
+            }
+            GridRow {
+                Text("warning")
+                Glyph(.warning)
+            }
+            GridRow {
+                Text("error")
+                Glyph(.error)
+            }
+            GridRow {
+                Text("info")
+                Glyph(.info)
+            }
+            GridRow {
+                Text("locked")
+                Glyph(.locked)
+            }
+            GridRow {
+                Text("live")
+                Glyph(.live)
+            }
         }
     }
 
-    var contentGroup: some View {
+    fileprivate var contentGroup: some View {
         SpecimenGroup("Content") {
-            GridRow { Text("calendar"); Glyph(.calendar) }
-            GridRow { Text("clock"); Glyph(.clock) }
-            GridRow { Text("location"); Glyph(.location) }
-            GridRow { Text("person"); Glyph(.person) }
-            GridRow { Text("link"); Glyph(.link) }
-            GridRow { Text("document"); Glyph(.document) }
-            GridRow { Text("video"); Glyph(.video) }
-            GridRow { Text("ticket"); Glyph(.ticket) }
+            GridRow {
+                Text("calendar")
+                Glyph(.calendar)
+            }
+            GridRow {
+                Text("clock")
+                Glyph(.clock)
+            }
+            GridRow {
+                Text("location")
+                Glyph(.location)
+            }
+            GridRow {
+                Text("person")
+                Glyph(.person)
+            }
+            GridRow {
+                Text("link")
+                Glyph(.link)
+            }
+            GridRow {
+                Text("document")
+                Glyph(.document)
+            }
+            GridRow {
+                Text("video")
+                Glyph(.video)
+            }
+            GridRow {
+                Text("ticket")
+                Glyph(.ticket)
+            }
         }
     }
 }

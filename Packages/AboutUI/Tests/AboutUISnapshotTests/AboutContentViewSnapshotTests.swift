@@ -36,27 +36,27 @@ import Testing
     }
 }
 
-private extension TeamMember {
-    static var one: TeamMember {
+extension TeamMember {
+    fileprivate static var one: TeamMember {
         get throws {
             TeamMember(
                 id: TeamMemberID("Member One"),
                 name: "Member One",
                 role: "Organizer",
                 photoURL: try photo,
-                links: []
+                links: [],
             )
         }
     }
 
-    static var two: TeamMember {
+    fileprivate static var two: TeamMember {
         get throws {
             TeamMember(
                 id: TeamMemberID("Member Two"),
                 name: "Member Two",
                 role: "Volunteer",
                 photoURL: try photo,
-                links: []
+                links: [],
             )
         }
     }

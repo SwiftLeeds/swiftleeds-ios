@@ -29,7 +29,7 @@ extension LocationCategoryMapper {
             id: LocationCategoryID(dto.id),
             name: dto.name,
             symbolName: dto.symbolName,
-            locations: try dto.locations.map { dto throws(MappingError) in try location(dto) }
+            locations: try dto.locations.map { dto throws(MappingError) in try location(dto) },
         )
     }
 
@@ -42,7 +42,7 @@ extension LocationCategoryMapper {
             id: LocationID(dto.id),
             name: dto.name,
             websiteURL: websiteURL,
-            coordinate: try coordinate(dto)
+            coordinate: try coordinate(dto),
         )
     }
 

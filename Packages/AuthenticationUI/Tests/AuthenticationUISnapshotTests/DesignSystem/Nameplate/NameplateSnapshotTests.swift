@@ -17,7 +17,7 @@ import Testing
     @Test func redacted() {
         let view = Nameplate(
             Text(verbatim: "Ada Lovelace"),
-            detail: Text(verbatim: "ada@example.com")
+            detail: Text(verbatim: "ada@example.com"),
         ) {
             personAvatar
         }
@@ -46,7 +46,7 @@ import Testing
     @Test func narrow() {
         let view = Nameplate(
             Text(verbatim: "Augusta Ada King-Noel"),
-            detail: Text(verbatim: "ada.lovelace@example.com")
+            detail: Text(verbatim: "ada.lovelace@example.com"),
         ) {
             initialsAvatar
         }
@@ -70,7 +70,7 @@ import Testing
         VStack(alignment: .leading, spacing: 16) {
             Nameplate(
                 Text(verbatim: "Ada Lovelace"),
-                detail: Text(verbatim: "ada@example.com")
+                detail: Text(verbatim: "ada@example.com"),
             ) {
                 initialsAvatar
             }

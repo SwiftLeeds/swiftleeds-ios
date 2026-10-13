@@ -13,7 +13,7 @@ public struct AppVersion: Equatable, Hashable, Sendable {
     public init(_ text: String) throws(ParsingError) {
         let components = text.split(separator: ".", omittingEmptySubsequences: false)
         guard (1...Self.maximumComponents).contains(components.count),
-              components.allSatisfy(Self.isWholeNumber)
+            components.allSatisfy(Self.isWholeNumber)
         else {
             throw .notAVersion(text)
         }
@@ -31,8 +31,8 @@ extension String {
     }
 }
 
-private extension Character {
-    var isASCIIDigit: Bool {
+extension Character {
+    fileprivate var isASCIIDigit: Bool {
         isASCII && isNumber
     }
 }

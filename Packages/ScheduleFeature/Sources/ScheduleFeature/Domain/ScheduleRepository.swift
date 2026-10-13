@@ -7,7 +7,7 @@ package struct ScheduleRepository: Sendable {
 
     package init(
         fetchCurrentSchedule: @escaping @Sendable () async throws(ScheduleFetchError) -> Schedule,
-        fetchSchedule: @escaping @Sendable (UUID) async throws(ScheduleFetchError) -> Schedule
+        fetchSchedule: @escaping @Sendable (UUID) async throws(ScheduleFetchError) -> Schedule,
     ) {
         self.fetchCurrentSchedule = fetchCurrentSchedule
         self.fetchSchedule = fetchSchedule
@@ -23,7 +23,7 @@ extension ScheduleRepository: TestDependencyKey {
         fetchSchedule: { _ async throws(ScheduleFetchError) -> Schedule in
             reportIssue("ScheduleRepository.fetchSchedule is unimplemented")
             throw .unknown
-        }
+        },
     )
 }
 

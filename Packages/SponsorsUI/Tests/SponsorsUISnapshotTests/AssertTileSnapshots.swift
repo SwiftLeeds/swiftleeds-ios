@@ -29,7 +29,7 @@ func assertTileSnapshots(
     file filePath: StaticString = #filePath,
     testName: String = #function,
     line: UInt = #line,
-    column: UInt = #column
+    column: UInt = #column,
 ) {
     assertSnapshots(
         of: view.tileCard(width: width),
@@ -38,12 +38,12 @@ func assertTileSnapshots(
         file: filePath,
         testName: testName,
         line: line,
-        column: column
+        column: column,
     )
 }
 
-private extension View {
-    func tileCard(width: CGFloat) -> some View {
+extension View {
+    fileprivate func tileCard(width: CGFloat) -> some View {
         self
             .frame(width: width)
             .fixedSize(horizontal: false, vertical: true)

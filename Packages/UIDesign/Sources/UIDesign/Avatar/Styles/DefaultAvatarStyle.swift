@@ -14,8 +14,8 @@ public struct DefaultAvatarStyle: AvatarStyle {
     }
 }
 
-public extension AvatarStyle where Self == DefaultAvatarStyle {
+extension AvatarStyle where Self == DefaultAvatarStyle {
     /// The default avatar style, which draws a circle with any status on its
     /// lower trailing edge.
-    static var automatic: DefaultAvatarStyle { DefaultAvatarStyle() }
+    public static var automatic: DefaultAvatarStyle { DefaultAvatarStyle() }
 }

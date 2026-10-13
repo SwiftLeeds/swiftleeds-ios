@@ -23,7 +23,7 @@ package struct ActivityView: View {
         VStack(spacing: Padding.stackGap) {
             FancyHeaderView(
                 title: activity.title,
-                foregroundImageURLs: foregroundImageURLs
+                foregroundImageURLs: foregroundImageURLs,
             )
 
             let hasSubtitle = activity.subtitle?.isEmpty == false
@@ -33,7 +33,7 @@ package struct ActivityView: View {
                 StackedTileView(
                     primaryText: activity.subtitle,
                     secondaryText: activity.description,
-                    secondaryColor: Color.primary
+                    secondaryColor: Color.primary,
                 )
                 .padding(Padding.screen)
             }
@@ -42,9 +42,10 @@ package struct ActivityView: View {
 
     private var foregroundImageURLs: [URL] {
         if let image = activity.image,
-           !image.isEmpty,
-           let encodedImage = image.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed),
-           let url = URL(string: encodedImage) {
+            !image.isEmpty,
+            let encodedImage = image.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed),
+            let url = URL(string: encodedImage)
+        {
             return [url]
         } else {
             return []

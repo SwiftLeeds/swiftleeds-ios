@@ -19,9 +19,11 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # The app target embeds the App Clip and the widget extension, so one build
+  # of the app covers all three.
   build-app:
-    name: Build ${{ matrix.brand }} (DEBUG)
-    runs-on: macos-26
+    name: Build ${{ matrix.brand }}
+    runs-on: xcode-27
     strategy:
       # Without this, one brand failing cancels the other, and a run reports
       # only the first failure.
@@ -29,9 +31,9 @@ jobs:
       matrix:
         include:
           - brand: SwiftLeeds
-            lane: build_swiftleeds
+            configuration: Release
           - brand: KotlinLeeds
-            lane: build_kotlinleeds
+            configuration: Release-KotlinLeeds
     steps:
       - name: Checkout iOS Repository
         uses: actions/checkout@v4
@@ -39,14 +41,33 @@ jobs:
       - name: Select Xcode
         uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: '26.5'
+          xcode-version: '27.0'
 
-      - name: Build ${{ matrix.brand }} via Fastlane
-        run: fastlane ${{ matrix.lane }}
+      # Release compiles out every `#if DEBUG` block, so this build fails when
+      # the app's shipping code uses a DEBUG-only symbol, and a Debug build
+      # cannot. Debug is not built here: the test jobs compile the packages in
+      # Debug and Release, the launch jobs compile the App Clip in Debug, and a
+      # second build would double this job's time.
+      - name: Build ${{ matrix.brand }} (${{ matrix.configuration }})
+        run: fastlane build scheme:${{ matrix.brand }} configuration:${{ matrix.configuration }}
 
+  # Release catches what Debug cannot: a test that uses a DEBUG-only symbol, or
+  # that relies on DEBUG-only test isolation. Both lanes run the same script.
   test-packages:
-    name: Test Swift Packages
-    runs-on: macos-26
+    name: ${{ matrix.name }}
+    runs-on: xcode-27
+    strategy:
+      # Without this, one configuration failing cancels the other, and a run
+      # reports only the first failure.
+      fail-fast: false
+      matrix:
+        include:
+          # This name is a required status check on `main`. Renaming it blocks
+          # every pull request until that branch rule is edited too.
+          - name: Test Swift Packages
+            configuration: debug
+          - name: Test Swift Packages (Release)
+            configuration: release
     steps:
       - name: Checkout iOS Repository
         uses: actions/checkout@v4
@@ -54,15 +75,17 @@ jobs:
       - name: Select Xcode
         uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: '26.5'
+          xcode-version: '27.0'
 
-      - name: Run every package test suite
+      - name: Run every package test suite (${{ matrix.configuration }})
         env:
+          CONFIGURATION: ${{ matrix.configuration }}
           # Packages tested at once. 2 lanes 238s against 3 lanes 285s, medians
           # of 5 paired runs; 1 lane was 311s, one sample. 3 loses because each
           # lane needs its own scratch path, so it recompiles the shared
           # dependencies, and one swift test already asks for all 3 cores.
-          # Memory ruled out: both arms swapped 0 MB.
+          # Memory ruled out: both arms swapped 0 MB. Measured in Debug; the
+          # Release lane has not been measured and takes the same value.
           LANE_COUNT: 2
         run: |
           set -uo pipefail
@@ -112,6 +135,7 @@ jobs:
               if swift test \
                 --package-path "Packages/$package" \
                 --scratch-path "$scratch" \
+                --configuration "$CONFIGURATION" \
                 --force-resolved-versions 2>&1 \
                 | sed -l "s/^/[$package] /"
               then
@@ -155,7 +179,29 @@ jobs:
           if [ "$failed" -ne 0 ]; then
             exit 1
           fi
-          echo "Tested $tested package(s) in $LANE_COUNT lane(s)"
+          echo "Tested $tested package(s) in $LANE_COUNT lane(s), $CONFIGURATION configuration"
+
+      # `swift format` ships with the toolchain, so this needs the Xcode the
+      # step above already selected. It rides in this job rather than taking one
+      # of its own: the workflow declares 7 macOS jobs against an account limit
+      # of 5, so two already wait for a runner and another job would be a
+      # third. The cost here is seconds.
+      # Formatting does not depend on the configuration, so only the Debug lane
+      # runs it.
+      #
+      # A formatting failure must not hide the test results above, so this runs
+      # even when that step failed. `!cancelled()` rather than `always()`,
+      # because this workflow cancels a superseded run and a cancelled run has
+      # nothing to report.
+      #
+      # The failure shows in the pull request under this job's name, which says
+      # "Test Swift Packages". A reviewer seeing it red should read the job
+      # summary before looking for a broken test. The name is a required status
+      # check on `main`, so renaming it would block every pull request until
+      # that branch rule is edited too.
+      - name: Check formatting
+        if: ${{ !cancelled() && matrix.configuration == 'debug' }}
+        run: .github/scripts/format.sh --check
 
   # Snapshot tests are the only tests that must run on iOS: they are the only
   # ones behind `#if os(iOS)`, so the macOS job above cannot see them. Every
@@ -174,9 +220,10 @@ jobs:
   # targets, because a target the scheme omits would never run on iOS.
   test-snapshots-ios:
     name: Test Snapshots (iOS Simulator)
-    runs-on: macos-26
+    runs-on: xcode-27
     env:
-      DESTINATION: 'platform=iOS Simulator,name=iPhone 17 Pro,OS=26.5'
+      # Without OS=, xcodebuild picks a runtime and never says which.
+      DESTINATION: 'platform=iOS Simulator,name=iPhone 18 Pro,OS=27.0'
       # Empty on a push, which is how the step below knows to run everything.
       BASE_REF: ${{ github.base_ref }}
     steps:
@@ -189,17 +236,24 @@ jobs:
       - name: Select Xcode
         uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: '26.5'
+          xcode-version: '27.0'
 
-      # The runner carries three iOS runtimes, each with its own iPhone 17 Pro.
-      # Without OS= xcodebuild picks one and never says which, so an image roll
-      # could change the runtime silently, which would break every reference
-      # image at once. Checking here turns a missing runtime into one legible
-      # line instead of a confusing xcodebuild error.
+      # The reference images were recorded on this exact runtime build. An image
+      # roll that changes the build, even within iOS 27.0, could move pixels and
+      # break every reference at once. `OS=27.0` names a version, not a build, so
+      # this also fails when a second iOS 27.0 build sits beside it and
+      # xcodebuild could pick either. Either case becomes one legible line
+      # instead of hundreds of failed images.
       - name: Check the pinned simulator runtime is present
         run: |
           set -euo pipefail
-          xcrun simctl list runtimes | grep 'iOS 26.5'
+          runtimes=$(xcrun simctl list runtimes)
+          echo "$runtimes"
+          count=$(grep -cF 'iOS 27.0 (' <<< "$runtimes" || true)
+          if [ "$count" -ne 1 ] || ! grep -qF 'iOS 27.0 (27.0 - 24A434)' <<< "$runtimes"; then
+            echo "::error::The references need iOS 27.0 (24A434) as the only iOS 27.0 runtime. This runner has $count iOS 27.0 runtime(s), listed above."
+            exit 1
+          fi
 
       - name: Run the snapshot tests on the simulator
         run: |
@@ -323,7 +377,7 @@ jobs:
   # process is gone a few seconds later. The script runs locally too.
   launch-app-clip:
     name: Launch ${{ matrix.brand }} App Clip (iOS Simulator)
-    runs-on: macos-26
+    runs-on: xcode-27
     # One runner per brand. The two builds share nothing, so running them side
     # by side halves the wait and gives each brand its own time limit.
     strategy:
@@ -356,7 +410,7 @@ jobs:
       - name: Select Xcode
         uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: '26.5'
+          xcode-version: '27.0'
 
       # A pull request skips the launch only when every file it changes sits
       # in a local package the App Clip does not depend on. Any change outside
@@ -536,9 +590,17 @@ jobs:
       - name: Check every configuration writes to the app group it is granted
         run: python3 .github/scripts/check-app-groups.py
 
+      # ConferenceConfig calls fatalError when CFBundleDisplayName is missing,
+      # and a build setting in the project file overrides Info.plist, so a
+      # literal there can show the wrong brand. Run it locally:
+      # python3 .github/scripts/check-display-name.py
+      - name: Check every configuration shows its brand's display name
+        run: python3 .github/scripts/check-display-name.py
+
       # The simulator job runs one xcodebuild call against the SnapshotTests
       # scheme, so a target that scheme does not name never runs on iOS. It
       # would still compile on macOS and do nothing there, which is the gap
       # this closes.
       - name: Check the snapshot scheme lists every snapshot target
         run: python3 .github/scripts/check-snapshot-scheme.py
+

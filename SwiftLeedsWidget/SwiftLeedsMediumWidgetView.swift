@@ -96,7 +96,7 @@ struct SwiftLeedsMediumWidgetView_Previews: PreviewProvider {
                 startTime: "11:00 AM",
                 duration: 1,
                 activity: nil,
-                presentation: Presentation.donnyWalls
+                presentation: Presentation.donnyWalls,
             )
         )
         .previewContext(WidgetPreviewContext(family: .systemMedium))
@@ -108,7 +108,7 @@ struct SwiftLeedsMediumWidgetView_Previews: PreviewProvider {
                 startTime: "11:00 AM",
                 duration: 1,
                 activity: nil,
-                presentation: Presentation.donnyWalls
+                presentation: Presentation.donnyWalls,
             )
         )
         .environment(\.colorScheme, .dark)

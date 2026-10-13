@@ -9,17 +9,17 @@ public struct BorderWidth: Equatable, Hashable, Sendable {
     }
 }
 
-public extension BorderWidth {
+extension BorderWidth {
     /// A hairline. Draws as one device pixel at a display scale of two or more.
-    static let thin = BorderWidth(0.5)
+    public static let thin = BorderWidth(0.5)
 
-    static let medium = BorderWidth(1)
-    static let thick = BorderWidth(2)
+    public static let medium = BorderWidth(1)
+    public static let thick = BorderWidth(2)
 }
 
-public extension CGFloat {
+extension CGFloat {
     /// Creates a length from a border width.
-    init(_ width: BorderWidth) {
+    public init(_ width: BorderWidth) {
         self = width.points
     }
 }

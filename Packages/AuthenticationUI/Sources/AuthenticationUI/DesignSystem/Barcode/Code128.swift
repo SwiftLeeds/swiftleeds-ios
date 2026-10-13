@@ -47,13 +47,13 @@ package enum Code128 {
     }
 }
 
-package extension BarcodeContent {
+extension BarcodeContent {
     /// Content drawn as a Code 128 barcode.
     ///
     /// - Parameters:
     ///   - payload: The text the barcode carries. Must be 7-bit ASCII.
     ///   - quietSpace: The light margin, in multiples of the narrowest bar. Defaults to ten.
-    static func code128(_ payload: Code128.Payload, quietSpace: Float = 10) -> BarcodeContent {
+    package static func code128(_ payload: Code128.Payload, quietSpace: Float = 10) -> BarcodeContent {
         BarcodeContent(payload, drawnBy: Code128.Symbology(quietSpace: quietSpace))
     }
 }

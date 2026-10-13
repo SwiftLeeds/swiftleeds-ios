@@ -1,4 +1,4 @@
-/// Proof that a user is signed in. Sealed so only `AuthenticationFeature` can mint one.
+/// Proof that a user is signed in. Sealed so only this package can mint one.
 package struct Session: Equatable, Hashable, Sendable {
     package let token: SessionToken
 

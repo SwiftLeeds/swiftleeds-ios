@@ -20,35 +20,35 @@ import Testing
     }
 }
 
-private extension Sponsor {
-    static let platinumWithJobs = Sponsor(
+extension Sponsor {
+    fileprivate static let platinumWithJobs = Sponsor(
         id: SponsorID("platinum-sponsor"),
         name: "Sky",
         subtitle: "Believe in better",
         level: .platinum,
         logoURL: nil,
         websiteURL: nil,
-        jobs: [.seniorEngineer]
+        jobs: [.seniorEngineer],
     )
 
-    static let goldWithoutJobs = Sponsor(
+    fileprivate static let goldWithoutJobs = Sponsor(
         id: SponsorID("gold-sponsor"),
         name: "Deliveroo",
         subtitle: "Food delivery, at speed",
         level: .gold,
         logoURL: nil,
         websiteURL: nil,
-        jobs: []
+        jobs: [],
     )
 }
 
-private extension Job {
-    static let seniorEngineer = Job(
+extension Job {
+    fileprivate static let seniorEngineer = Job(
         id: JobID(UUID()),
         title: "Senior iOS Engineer",
         details: "Bringing all your Swift skills to the fore",
         location: "Leeds",
-        url: nil
+        url: nil,
     )
 }
 #endif

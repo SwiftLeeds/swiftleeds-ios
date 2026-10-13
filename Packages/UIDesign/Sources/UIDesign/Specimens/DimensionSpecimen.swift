@@ -25,55 +25,133 @@ package struct DimensionSpecimen: View {
 
 // MARK: - Groups
 
-private extension DimensionSpecimen {
-    var spacingGroup: some View {
+extension DimensionSpecimen {
+    fileprivate var spacingGroup: some View {
         SpecimenGroup("Spacing") {
-            GridRow { Text("xxSmall"); Bar(width: .xxSmall) }
-            GridRow { Text("xSmall"); Bar(width: .xSmall) }
-            GridRow { Text("small"); Bar(width: .small) }
-            GridRow { Text("medium"); Bar(width: .medium) }
-            GridRow { Text("large"); Bar(width: .large) }
-            GridRow { Text("xLarge"); Bar(width: .xLarge) }
-            GridRow { Text("xxLarge"); Bar(width: .xxLarge) }
+            GridRow {
+                Text("xxSmall")
+                Bar(width: .xxSmall)
+            }
+            GridRow {
+                Text("xSmall")
+                Bar(width: .xSmall)
+            }
+            GridRow {
+                Text("small")
+                Bar(width: .small)
+            }
+            GridRow {
+                Text("medium")
+                Bar(width: .medium)
+            }
+            GridRow {
+                Text("large")
+                Bar(width: .large)
+            }
+            GridRow {
+                Text("xLarge")
+                Bar(width: .xLarge)
+            }
+            GridRow {
+                Text("xxLarge")
+                Bar(width: .xxLarge)
+            }
         }
     }
 
-    var cornerRadiusGroup: some View {
+    fileprivate var cornerRadiusGroup: some View {
         SpecimenGroup("Radius") {
-            GridRow { Text("none"); Corner(radius: .none) }
-            GridRow { Text("small"); Corner(radius: .small) }
-            GridRow { Text("medium"); Corner(radius: .medium) }
-            GridRow { Text("large"); Corner(radius: .large) }
-            GridRow { Text("xLarge"); Corner(radius: .xLarge) }
-            GridRow { Text("full"); Corner(radius: .full) }
+            GridRow {
+                Text("none")
+                Corner(radius: .none)
+            }
+            GridRow {
+                Text("small")
+                Corner(radius: .small)
+            }
+            GridRow {
+                Text("medium")
+                Corner(radius: .medium)
+            }
+            GridRow {
+                Text("large")
+                Corner(radius: .large)
+            }
+            GridRow {
+                Text("xLarge")
+                Corner(radius: .xLarge)
+            }
+            GridRow {
+                Text("full")
+                Corner(radius: .full)
+            }
         }
     }
 
-    var borderWidthGroup: some View {
+    fileprivate var borderWidthGroup: some View {
         SpecimenGroup("Border") {
-            GridRow { Text("thin"); Border(width: .thin) }
-            GridRow { Text("medium"); Border(width: .medium) }
-            GridRow { Text("thick"); Border(width: .thick) }
+            GridRow {
+                Text("thin")
+                Border(width: .thin)
+            }
+            GridRow {
+                Text("medium")
+                Border(width: .medium)
+            }
+            GridRow {
+                Text("thick")
+                Border(width: .thick)
+            }
         }
     }
 
-    var iconSizeGroup: some View {
+    fileprivate var iconSizeGroup: some View {
         SpecimenGroup("Icon") {
-            GridRow { Text("xSmall"); Square(side: .xSmall) }
-            GridRow { Text("small"); Square(side: .small) }
-            GridRow { Text("medium"); Square(side: .medium) }
-            GridRow { Text("large"); Square(side: .large) }
-            GridRow { Text("xLarge"); Square(side: .xLarge) }
-            GridRow { Text("xxLarge"); Square(side: .xxLarge) }
+            GridRow {
+                Text("xSmall")
+                Square(side: .xSmall)
+            }
+            GridRow {
+                Text("small")
+                Square(side: .small)
+            }
+            GridRow {
+                Text("medium")
+                Square(side: .medium)
+            }
+            GridRow {
+                Text("large")
+                Square(side: .large)
+            }
+            GridRow {
+                Text("xLarge")
+                Square(side: .xLarge)
+            }
+            GridRow {
+                Text("xxLarge")
+                Square(side: .xxLarge)
+            }
         }
     }
 
-    var avatarSizeGroup: some View {
+    fileprivate var avatarSizeGroup: some View {
         SpecimenGroup("Avatar") {
-            GridRow { Text("small"); Dot(diameter: .small) }
-            GridRow { Text("medium"); Dot(diameter: .medium) }
-            GridRow { Text("large"); Dot(diameter: .large) }
-            GridRow { Text("xLarge"); Dot(diameter: .xLarge) }
+            GridRow {
+                Text("small")
+                Dot(diameter: .small)
+            }
+            GridRow {
+                Text("medium")
+                Dot(diameter: .medium)
+            }
+            GridRow {
+                Text("large")
+                Dot(diameter: .large)
+            }
+            GridRow {
+                Text("xLarge")
+                Dot(diameter: .xLarge)
+            }
         }
     }
 }

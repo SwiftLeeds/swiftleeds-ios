@@ -1,4 +1,4 @@
-// swift-tools-version: 6.0
+// swift-tools-version: 6.1
 
 import PackageDescription
 
@@ -9,7 +9,7 @@ let package = Package(
         .macOS(.v15),
     ],
     products: [
-        .library(name: "LocalUI", targets: ["LocalUI"]),
+        .library(name: "LocalUI", targets: ["LocalUI"])
     ],
     dependencies: [
         .package(path: "../../SwiftLeedsPackage"),
@@ -30,10 +30,10 @@ let package = Package(
                 .product(
                     name: "ReadabilityModifier",
                     package: "ReadabilityModifier",
-                    condition: .when(platforms: [.iOS])
+                    condition: .when(platforms: [.iOS]),
                 ),
                 .product(name: "SharedAssets", package: "SwiftLeedsPackage"),
-            ]
+            ],
         ),
         .testTarget(
             name: "LocalUISnapshotTests",
@@ -43,7 +43,7 @@ let package = Package(
                 .product(name: "LocalFeature", package: "LocalFeature"),
                 .product(name: "SharedAssets", package: "SwiftLeedsPackage"),
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
-            ]
+            ],
         ),
-    ]
+    ],
 )

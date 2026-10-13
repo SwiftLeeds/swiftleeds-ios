@@ -127,6 +127,6 @@ private func expectedAttendee() throws -> Attendee {
         emailAddress: try EmailAddress("ada@example.com"),
         avatarURL: AvatarURL(try #require(URL(string: "https://example.com/avatar.png"))),
         ticketReference: try TicketReference("ABCD-12"),
-        ticketSlug: try TicketSlug("ti_pxqFKr9pPWd6VeYKvMBKpjQ")
+        ticketSlug: try TicketSlug("ti_pxqFKr9pPWd6VeYKvMBKpjQ"),
     )
 }

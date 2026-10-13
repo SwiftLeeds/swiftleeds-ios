@@ -27,8 +27,11 @@ import Testing
     @Test func whenInterpolatedWithoutName_shouldNameTheFieldByPosition() {
         let sut: LogMessage = "\(1, privacy: .open) then \(2, privacy: .open)"
 
-        #expect(sut.values.map(\.name) == [.positional(GapIndex(0), label: nil),
-                                           .positional(GapIndex(1), label: nil)])
+        #expect(
+            sut.values.map(\.name) == [
+                .positional(GapIndex(0), label: nil),
+                .positional(GapIndex(1), label: nil),
+            ])
     }
 
     @Test func whenInterpolatedWithName_shouldLabelTheField() {
@@ -40,8 +43,11 @@ import Testing
     @Test func whenTwoInterpolationsShareName_shouldStayDistinct() {
         let sut: LogMessage = "\("a", name: "user", privacy: .open) and \("b", name: "user", privacy: .secret)"
 
-        #expect(sut.values.map(\.name) == [.positional(GapIndex(0), label: "user"),
-                                           .positional(GapIndex(1), label: "user")])
+        #expect(
+            sut.values.map(\.name) == [
+                .positional(GapIndex(0), label: "user"),
+                .positional(GapIndex(1), label: "user"),
+            ])
         #expect(sut.values.map(\.sensitivity) == [.open, .secret])
     }
 

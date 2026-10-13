@@ -107,19 +107,20 @@ extension HTTPURLResponse {
 extension String {
     /// Creates the category's stable name for a log field.
     public init(_ category: HTTPStatus.Category) {
-        self = switch category {
-        case .informational:
-            "informational"
-        case .successful:
-            "successful"
-        case .redirection:
-            "redirection"
-        case .clientError:
-            "clientError"
-        case .serverError:
-            "serverError"
-        case .invalid:
-            "invalid"
-        }
+        self =
+            switch category {
+            case .informational:
+                "informational"
+            case .successful:
+                "successful"
+            case .redirection:
+                "redirection"
+            case .clientError:
+                "clientError"
+            case .serverError:
+                "serverError"
+            case .invalid:
+                "invalid"
+            }
     }
 }

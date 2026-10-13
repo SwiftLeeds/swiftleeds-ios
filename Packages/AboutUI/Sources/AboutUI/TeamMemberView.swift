@@ -17,11 +17,13 @@ package struct TeamMemberView: View {
         VStack(spacing: 12) {
             ZStack {
                 Circle()
-                    .fill(LinearGradient(
-                        colors: [.accentColor.opacity(0.8), .accentColor],
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
-                    ))
+                    .fill(
+                        LinearGradient(
+                            colors: [.accentColor.opacity(0.8), .accentColor],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing,
+                        )
+                    )
                     .frame(width: 80, height: 80)
 
                 CachedAsyncImage(url: member.photoURL) { image in
@@ -72,7 +74,7 @@ package struct TeamMemberView: View {
         .padding(Padding.cell)
         .background(
             Color.cellBackground,
-            in: RoundedRectangle(cornerRadius: Constants.cellRadius)
+            in: RoundedRectangle(cornerRadius: Constants.cellRadius),
         )
     }
 
@@ -84,8 +86,8 @@ package struct TeamMemberView: View {
     }
 }
 
-private extension SocialLink {
-    var url: URL {
+extension SocialLink {
+    fileprivate var url: URL {
         switch self {
         case .linkedIn(let url):
             url
@@ -96,7 +98,7 @@ private extension SocialLink {
         }
     }
 
-    var symbolName: String {
+    fileprivate var symbolName: String {
         switch self {
         case .linkedIn:
             "person.crop.rectangle"
@@ -107,7 +109,7 @@ private extension SocialLink {
         }
     }
 
-    func accessibilityLabel(for name: String) -> String {
+    fileprivate func accessibilityLabel(for name: String) -> String {
         switch self {
         case .linkedIn:
             "LinkedIn profile for \(name)"
@@ -129,9 +131,9 @@ struct TeamMemberView_Previews: PreviewProvider {
                     photo: "/img/team/member-one.jpg",
                     linkedIn: "https://linkedin.example.com/member-one",
                     twitter: "https://twitter.example.com/member-one",
-                    slack: "https://slack.example.com/member-one"
+                    slack: "https://slack.example.com/member-one",
                 ),
-                named: "With Role & All Links"
+                named: "With Role & All Links",
             )
 
             preview(
@@ -140,9 +142,9 @@ struct TeamMemberView_Previews: PreviewProvider {
                     role: nil,
                     photo: "/img/team/member-two.jpg",
                     linkedIn: "https://linkedin.example.com/member-two",
-                    slack: "https://slack.example.com/member-two"
+                    slack: "https://slack.example.com/member-two",
                 ),
-                named: "No Role & Partial Links"
+                named: "No Role & Partial Links",
             )
 
             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 16) {
@@ -164,14 +166,14 @@ struct TeamMemberView_Previews: PreviewProvider {
                 role: "Production",
                 photo: "/img/team/member-three.jpg",
                 linkedIn: "https://linkedin.example.com/member-three",
-                twitter: "https://twitter.example.com/member-three"
+                twitter: "https://twitter.example.com/member-three",
             ),
             member(
                 "Member Four",
                 role: "Camera",
                 photo: "/img/team/member-four.jpg",
                 twitter: "https://twitter.example.com/member-four",
-                slack: "https://slack.example.com/member-four"
+                slack: "https://slack.example.com/member-four",
             ),
         ]
         .compactMap(\.self)
@@ -193,7 +195,7 @@ struct TeamMemberView_Previews: PreviewProvider {
         photo: String,
         linkedIn: String? = nil,
         twitter: String? = nil,
-        slack: String? = nil
+        slack: String? = nil,
     ) -> TeamMember? {
         guard let photoURL = URL(string: "https://example.com\(photo)") else { return nil }
         let links = [
@@ -206,7 +208,7 @@ struct TeamMemberView_Previews: PreviewProvider {
             name: name,
             role: role,
             photoURL: photoURL,
-            links: links.compactMap(\.self)
+            links: links.compactMap(\.self),
         )
     }
 }

@@ -6,7 +6,7 @@ import SwiftUI
 private let tallIPhone = ViewImageConfig(
     safeArea: ViewImageConfig.iPhone13Pro.safeArea,
     size: CGSize(width: 390, height: 3200),
-    traits: ViewImageConfig.iPhone13Pro.traits
+    traits: ViewImageConfig.iPhone13Pro.traits,
 )
 
 @MainActor
@@ -16,7 +16,7 @@ func assertScreenSnapshots(
     file filePath: StaticString = #filePath,
     testName: String = #function,
     line: UInt = #line,
-    column: UInt = #column
+    column: UInt = #column,
 ) {
     assertSnapshots(
         of: view,
@@ -25,7 +25,7 @@ func assertScreenSnapshots(
         file: filePath,
         testName: testName,
         line: line,
-        column: column
+        column: column,
     )
 }
 #endif

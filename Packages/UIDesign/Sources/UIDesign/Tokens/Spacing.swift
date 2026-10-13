@@ -9,19 +9,19 @@ public struct Spacing: Equatable, Hashable, Sendable {
     }
 }
 
-public extension Spacing {
-    static let xxSmall = Spacing(2)
-    static let xSmall = Spacing(4)
-    static let small = Spacing(8)
-    static let medium = Spacing(12)
-    static let large = Spacing(16)
-    static let xLarge = Spacing(24)
-    static let xxLarge = Spacing(32)
+extension Spacing {
+    public static let xxSmall = Spacing(2)
+    public static let xSmall = Spacing(4)
+    public static let small = Spacing(8)
+    public static let medium = Spacing(12)
+    public static let large = Spacing(16)
+    public static let xLarge = Spacing(24)
+    public static let xxLarge = Spacing(32)
 }
 
-public extension CGFloat {
+extension CGFloat {
     /// Creates a length from a space.
-    init(_ spacing: Spacing) {
+    public init(_ spacing: Spacing) {
         self = spacing.points
     }
 }

@@ -47,16 +47,16 @@ package struct PlainBarcodeStyle: BarcodeStyle {
     }
 }
 
-package extension BarcodeStyle where Self == InsetBarcodeStyle {
-    static var inset: InsetBarcodeStyle { InsetBarcodeStyle() }
+extension BarcodeStyle where Self == InsetBarcodeStyle {
+    package static var inset: InsetBarcodeStyle { InsetBarcodeStyle() }
 
-    static func inset(cornerRadius: CGFloat) -> InsetBarcodeStyle {
+    package static func inset(cornerRadius: CGFloat) -> InsetBarcodeStyle {
         InsetBarcodeStyle(cornerRadius: cornerRadius)
     }
 }
 
-package extension BarcodeStyle where Self == PlainBarcodeStyle {
-    static var plain: PlainBarcodeStyle { PlainBarcodeStyle() }
+extension BarcodeStyle where Self == PlainBarcodeStyle {
+    package static var plain: PlainBarcodeStyle { PlainBarcodeStyle() }
 }
 
 struct AnyBarcodeStyle {
@@ -78,9 +78,9 @@ extension EnvironmentValues {
     }
 }
 
-package extension View {
+extension View {
     /// Sets the look of scannable codes in this view.
-    func barcodeStyle<S: BarcodeStyle>(_ style: S) -> some View {
+    package func barcodeStyle<S: BarcodeStyle>(_ style: S) -> some View {
         environment(\.barcodeStyle, AnyBarcodeStyle(style))
     }
 }

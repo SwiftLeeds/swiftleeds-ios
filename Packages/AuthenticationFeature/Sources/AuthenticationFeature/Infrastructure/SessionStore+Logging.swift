@@ -46,7 +46,7 @@ extension SessionStore {
                     log(entry.level, .auth, entry.message)
                     throw error
                 }
-            }
+            },
         )
     }
 }

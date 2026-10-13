@@ -49,8 +49,8 @@ package struct RoundedAvatarStyle: AvatarStyle {
     }
 }
 
-package extension AvatarContentKind {
-    var fill: AnyShapeStyle {
+extension AvatarContentKind {
+    package var fill: AnyShapeStyle {
         switch self {
         case .image: AnyShapeStyle(.clear)
         case .placeholder, .failure: AnyShapeStyle(.tint.opacity(0.15))
@@ -58,14 +58,14 @@ package extension AvatarContentKind {
     }
 }
 
-package extension AvatarStyle where Self == CircularAvatarStyle {
-    static var circular: CircularAvatarStyle { CircularAvatarStyle() }
+extension AvatarStyle where Self == CircularAvatarStyle {
+    package static var circular: CircularAvatarStyle { CircularAvatarStyle() }
 }
 
-package extension AvatarStyle where Self == RoundedAvatarStyle {
-    static var rounded: RoundedAvatarStyle { RoundedAvatarStyle() }
+extension AvatarStyle where Self == RoundedAvatarStyle {
+    package static var rounded: RoundedAvatarStyle { RoundedAvatarStyle() }
 
-    static func rounded(cornerRadius: CGFloat) -> RoundedAvatarStyle {
+    package static func rounded(cornerRadius: CGFloat) -> RoundedAvatarStyle {
         RoundedAvatarStyle(cornerRadius: cornerRadius)
     }
 }
@@ -89,8 +89,8 @@ extension EnvironmentValues {
     }
 }
 
-package extension View {
-    func avatarStyle<S: AvatarStyle>(_ style: S) -> some View {
+extension View {
+    package func avatarStyle<S: AvatarStyle>(_ style: S) -> some View {
         environment(\.avatarStyle, AnyAvatarStyle(style))
     }
 }

@@ -24,15 +24,15 @@ import Testing
     }
 }
 
-private extension Speaker {
-    static func fixture(name: String, organisation: String) -> Speaker {
+extension Speaker {
+    fileprivate static func fixture(name: String, organisation: String) -> Speaker {
         Speaker(
             id: UUID(),
             name: name,
             biography: "",
             profileImage: "",
             organisation: organisation,
-            twitter: nil
+            twitter: nil,
         )
     }
 }

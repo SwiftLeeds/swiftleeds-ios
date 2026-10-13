@@ -22,7 +22,7 @@ import Testing
                 for \("ada@example.com", name: "email", privacy: .hashed) \
                 ref \("ABCD-1", name: "reference", privacy: .hashed) \
                 token \("abc123", name: "token", privacy: .secret)
-                """
+                """,
             )
         }
     }

@@ -9,7 +9,7 @@ package struct AccountViewContent: View {
     package init(
         state: AccountViewState,
         onSignOut: @escaping @MainActor (SignOutReason) -> Void,
-        onSignedIn: @escaping @MainActor () -> Void
+        onSignedIn: @escaping @MainActor () -> Void,
     ) {
         self.state = state
         self.onSignOut = onSignOut

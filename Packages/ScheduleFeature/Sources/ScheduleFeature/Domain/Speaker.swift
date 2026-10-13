@@ -14,7 +14,7 @@ public struct Speaker: Codable, Identifiable, Sendable {
         biography: String,
         profileImage: String,
         organisation: String,
-        twitter: String?
+        twitter: String?,
     ) {
         self.id = id
         self.name = name
