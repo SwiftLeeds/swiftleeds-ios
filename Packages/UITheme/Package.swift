@@ -3,13 +3,13 @@
 import PackageDescription
 
 let package = Package(
-    name: "ColorTheme",
+    name: "UITheme",
     platforms: [
         .iOS(.v18),
         .macOS(.v15),
     ],
     products: [
-        .library(name: "ColorTheme", targets: ["ColorTheme"])
+        .library(name: "UITheme", targets: ["UITheme"])
     ],
     dependencies: [
         .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.0.0"),
@@ -17,15 +17,15 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "ColorTheme",
+            name: "UITheme",
             dependencies: [
                 .product(name: "Sharing", package: "swift-sharing")
             ],
         ),
         .testTarget(
-            name: "ColorThemeTests",
+            name: "UIThemeTests",
             dependencies: [
-                "ColorTheme",
+                "UITheme",
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "DependenciesTestSupport", package: "swift-dependencies"),
                 .product(name: "Sharing", package: "swift-sharing"),

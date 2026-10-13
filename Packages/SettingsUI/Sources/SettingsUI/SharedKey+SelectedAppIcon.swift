@@ -1,5 +1,5 @@
-import ColorTheme
 import Sharing
+import UITheme
 
 extension PreferenceKey {
     static let selectedAppIcon = PreferenceKey("selectedAppIcon")
