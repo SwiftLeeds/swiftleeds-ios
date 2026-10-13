@@ -140,15 +140,9 @@ struct AnyNameplateStyle {
     }
 }
 
-private struct NameplateStyleKey: EnvironmentKey {
-    static var defaultValue: AnyNameplateStyle { AnyNameplateStyle(ProminentNameplateStyle()) }
-}
-
 extension EnvironmentValues {
-    var nameplateStyle: AnyNameplateStyle {
-        get { self[NameplateStyleKey.self] }
-        set { self[NameplateStyleKey.self] = newValue }
-    }
+    /// The nameplate style of this environment.
+    @Entry var nameplateStyle = AnyNameplateStyle(ProminentNameplateStyle())
 }
 
 extension View {
