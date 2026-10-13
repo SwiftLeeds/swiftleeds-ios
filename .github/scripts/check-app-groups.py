@@ -24,7 +24,8 @@ base_config = re.compile(r"baseConfigurationReference = [0-9A-F]{24} /\* (?P<fil
 # search reads its YES as a file path.
 entitlements = re.compile(r"^\s*CODE_SIGN_ENTITLEMENTS = \"?(?P<path>[^\";]+?)\"?;", re.MULTILINE)
 info_plist = re.compile(r"^\s*INFOPLIST_FILE = \"?(?P<path>[^\";]+?)\"?;", re.MULTILINE)
-setting = re.compile(r"^\s*(?P<key>[A-Z_]+)\s*=\s*(?P<value>.+?)\s*$", re.MULTILINE)
+# Horizontal space only: \s would let an empty value swallow the next line.
+setting = re.compile(r"^[ \t]*(?P<key>[A-Z_]+)[ \t]*=[ \t]*(?P<value>[^ \t\n].*?)[ \t]*$", re.MULTILINE)
 
 xcconfigs = {path.name: path for path in Path("Configuration").glob("*.xcconfig")}
 
