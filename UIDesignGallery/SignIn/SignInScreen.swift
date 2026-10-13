@@ -255,7 +255,7 @@ struct SignInScreen: View {
     private var rejectionSection: some View {
         Label(
             "We can't find a ticket for that email address and ticket reference. Check them and try again.",
-            systemImage: "exclamationmark.circle"
+            systemImage: "exclamationmark.circle",
         )
         .foregroundStyle(.error)
         .accessibilityFocused($isRejectionFocused)
