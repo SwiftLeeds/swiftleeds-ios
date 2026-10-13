@@ -1,7 +1,7 @@
 #if canImport(UIKit)
-import ColorTheme
 import Sharing
 import SwiftUI
+import UITheme
 
 public struct SettingsView<Header: View>: View {
     @Shared(.selectedTheme) private var theme

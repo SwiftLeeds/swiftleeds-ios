@@ -1,5 +1,4 @@
 import AuthenticationFeature
-import ColorTheme
 import Dependencies
 import Foundation
 import LogKit
@@ -9,6 +8,7 @@ import ScheduleFeature
 import SecureStorageKit
 import SecureStorageKitKeychain
 import SwiftUI
+import UITheme
 
 @main
 struct SwiftLeedsApp: App {

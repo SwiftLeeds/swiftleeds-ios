@@ -1,9 +1,9 @@
 #if os(iOS)
-import ColorTheme
 import SettingsUI
 import Sharing
 import SwiftUI
 import Testing
+import UITheme
 
 @MainActor
 @Suite struct SettingsViewSnapshotTests {
