@@ -58,9 +58,38 @@ scope=$1
 min_files=$2
 shift 2
 
+# A relative log path means relative to where the caller stands, so resolve each
+# one before moving to the repository root.
+logs=()
+for log in "$@"; do
+    case "$log" in
+        /*) logs+=("$log") ;;
+        *) logs+=("$PWD/$log") ;;
+    esac
+done
+set -- "${logs[@]}"
+
 cd "$(dirname "$0")/../.." || exit 1
 
-work=${RUNNER_TEMP:-$(mktemp -d)}
+# On Actions the runner cleans RUNNER_TEMP itself. Locally the script makes a
+# folder of its own and removes it on a clean run. A failed run keeps it, because
+# the error log inside is what the failure message points at.
+work=${RUNNER_TEMP:-}
+made_work=""
+if [ -z "$work" ]; then
+    work=$(mktemp -d)
+    made_work=$work
+fi
+config=""
+cleanup () {
+    local exit_status=$?
+    [ -z "$config" ] || rm -f "$config"
+    if [ -n "$made_work" ] && [ "$exit_status" -eq 0 ]; then
+        rm -rf "$made_work"
+    fi
+}
+trap cleanup EXIT
+
 errors="$work/analyze-errors.log"
 : > "$errors"
 
@@ -121,19 +150,50 @@ cat "$@" > "$joined"
 
 # Keeps every setting of .swiftlint.yml, and swaps its `included:` list for the
 # scope's. The `included:` block is the lines up to the next top-level key.
+#
+# The rewrite reads lines, not YAML, so a shape it does not expect would leave
+# the old list in place and quietly widen the scope. It fails instead when:
+#   * either key is missing, or has anything after the colon (`included: [...]`)
+#   * a comment or blank line sits inside the `included:` list, with an entry
+#     after it
 config=".swiftlint-analyze-$scope.yml"
-trap 'rm -f "$config"' EXIT
-awk -v included="$included" -v also_excluded="$also_excluded" '
+if ! awk -v included="$included" -v also_excluded="$also_excluded" '
     function emit(list,    n, parts, i) {
         n = split(list, parts, " ")
         for (i = 1; i <= n; i++) print "  - \"" parts[i] "\""
     }
-    skipping && /^[[:space:]]*-/ { next }
-    { skipping = 0 }
-    /^included:/ { print; emit(included); skipping = 1; next }
-    /^excluded:/ { print; emit(also_excluded); next }
+    function problem(message) {
+        print "error: .swiftlint.yml line " NR ": " message > "/dev/stderr"
+        failed = 1
+    }
+    skipping && /^[[:space:]]*-/ {
+        if (gap && !gap_reported) {
+            problem("an entry follows a comment or blank line inside included:")
+            gap_reported = 1
+        }
+        next
+    }
+    skipping && /^[[:space:]]*(#.*)?$/ { gap = 1; print; next }
+    { skipping = 0; gap = 0 }
+    /^included:/ {
+        if ($0 !~ /^included:[[:space:]]*(#.*)?$/) problem("included: must be a block list")
+        print; emit(included); skipping = 1; rewrote_included = 1; next
+    }
+    /^excluded:/ {
+        if ($0 !~ /^excluded:[[:space:]]*(#.*)?$/) problem("excluded: must be a block list")
+        print; emit(also_excluded); rewrote_excluded = 1; next
+    }
     { print }
+    END {
+        if (!rewrote_included) problem("no included: key found")
+        if (!rewrote_excluded) problem("no excluded: key found")
+        exit failed
+    }
 ' .swiftlint.yml > "$config"
+then
+    fatal ".swiftlint.yml does not have the shape this script rewrites, so the $scope scope could not be set. See the lines above."
+    exit 1
+fi
 
 echo "Analysing the $scope scope with $# log(s), at least $min_files file(s) expected"
 
