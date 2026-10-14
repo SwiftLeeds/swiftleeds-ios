@@ -1,14 +1,17 @@
 import Foundation
 
+/// An attendee's email address.
 public struct EmailAddress: Equatable, Hashable, Sendable {
+    /// The reason a string cannot become an email address.
     public enum ParsingError: Error, Equatable {
+        /// An empty string, or one of only whitespace.
         case empty
     }
 
     /// The address, trimmed.
     fileprivate let storage: String
 
-    /// Creates an email address from the given string, trimming surrounding whitespace.
+    /// Creates an email address, trimming surrounding whitespace.
     /// - Parameter value: The email address.
     /// - Throws: ``ParsingError/empty`` if `value` is empty once trimmed.
     public init(_ value: String) throws(ParsingError) {
