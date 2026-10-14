@@ -1,5 +1,3 @@
-import Foundation
-
 extension String {
     var noEmojis: String {
         self.unicodeScalars
