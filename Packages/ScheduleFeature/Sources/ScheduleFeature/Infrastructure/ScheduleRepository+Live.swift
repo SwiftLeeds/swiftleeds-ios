@@ -1,5 +1,4 @@
 import Dependencies
-import Foundation
 
 extension ScheduleRepository: DependencyKey {
     package static var liveValue: ScheduleRepository { live }
