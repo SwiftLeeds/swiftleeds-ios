@@ -2,7 +2,6 @@
 import DesignKit
 import LocalFeature
 import MapKit
-import SharedAssets
 import SwiftUI
 
 /// The local screen, drawn from a state it is given. It fetches nothing.
@@ -24,6 +23,12 @@ package struct LocalContentView: View {
     @State private var mapRegion = MKCoordinateRegion.aroundVenue
     @State private var selectedCategoryID: LocationCategoryID?
     @State private var selectedLocation: Location?
+
+    /// Whether VoiceOver focus sits on the location card.
+    @AccessibilityFocusState private var isLocationCardFocused: Bool
+
+    /// The map annotation VoiceOver focus should return to on dismissal.
+    @AccessibilityFocusState private var focusedAnnotationID: LocationID?
 
     /// Creates the screen.
     ///
@@ -66,6 +71,7 @@ package struct LocalContentView: View {
                                 .onTapGesture {
                                     selectedLocation = location
                                 }
+                                .accessibilityFocused($focusedAnnotationID, equals: location.id)
                         }
                     }
                     .ignoresSafeArea()
@@ -75,13 +81,20 @@ package struct LocalContentView: View {
                     ZStack {
                         Color.black.opacity(0.3)
                             .ignoresSafeArea(.all)
+                            .accessibilityHidden(true)
                             .onTapGesture {
                                 selectedLocation = nil
                             }
 
-                        locationInfoView(category: category, location: location)
-                            .padding(.bottom, bottomSheetShown ? geometry.size.height * Constants.maxHeightRatio : 0)
-                            .animation(.easeInOut, value: bottomSheetShown)
+                        LocationCard(
+                            symbolName: category.symbolName,
+                            name: location.name,
+                            websiteURL: location.websiteURL,
+                            dismiss: { selectedLocation = nil },
+                        )
+                        .padding(.bottom, bottomSheetShown ? geometry.size.height * Constants.maxHeightRatio : 0)
+                        .animation(.easeInOut, value: bottomSheetShown)
+                        .accessibilityFocused($isLocationCardFocused)
                     }
                 }
 
@@ -94,6 +107,13 @@ package struct LocalContentView: View {
                     categories: categories,
                     maxHeight: geometry.size.height * Constants.maxHeightRatio,
                 )
+            }
+        }
+        .onChange(of: selectedLocation) { previousLocation, newLocation in
+            if newLocation != nil {
+                isLocationCardFocused = true
+            } else if let previousLocation {
+                focusedAnnotationID = previousLocation.id
             }
         }
     }
@@ -123,38 +143,6 @@ package struct LocalContentView: View {
             }
         }
         .background(Color.background, ignoresSafeAreaEdges: .all)
-    }
-
-    private func symbolImage(named name: String) -> Image {
-        Image(uiImage: UIImage(systemName: name) ?? UIImage(imageLiteralResourceName: name))
-    }
-
-    private func locationInfoView(category: LocationCategory, location: Location) -> some View {
-        VStack(spacing: 10) {
-            symbolImage(named: category.symbolName)
-                .renderingMode(.template)
-                .frame(width: 44, height: 44)
-
-            Text(location.name)
-
-            Button {
-                UIApplication.shared.open(location.websiteURL)
-            } label: {
-                Text(verbatim: "View More")
-                    .bold()
-                    .padding(12)
-                    .frame(maxWidth: .infinity)
-                    .foregroundColor(Color.accent)
-                    .background(Color.accent.opacity(0.5))
-                    .clipShape(RoundedRectangle(cornerRadius: 6))
-            }
-        }
-        .padding(10)
-        .padding(.bottom, 5)
-        .frame(width: 200)
-        .foregroundColor(Color.cellForeground)
-        .background(Color.cellBackground)
-        .clipShape(RoundedRectangle(cornerRadius: 8))
     }
 }
 

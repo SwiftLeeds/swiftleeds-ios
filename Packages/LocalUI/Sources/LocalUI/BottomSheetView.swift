@@ -122,7 +122,7 @@ struct BottomSheet_Previews: PreviewProvider {
                 category(
                     "Food",
                     symbolName: "takeoutbag.and.cup.and.straw.fill",
-                    location: try location(
+                    location: location(
                         "Trinity Kitchen",
                         link: "https://trinityleeds.com/shops/trinity-kitchen",
                         coordinate: try Coordinate(latitude: 53.797378, longitude: -1.545209),
@@ -131,7 +131,7 @@ struct BottomSheet_Previews: PreviewProvider {
                 category(
                     "Drinks",
                     symbolName: "wineglass.fill",
-                    location: try location(
+                    location: location(
                         "Brew Society",
                         link: "https://www.brewsociety.co.uk/",
                         coordinate: try Coordinate(latitude: 53.79584058588689, longitude: -1.550339186509128),
@@ -145,9 +145,8 @@ struct BottomSheet_Previews: PreviewProvider {
         LocationCategory(id: LocationCategoryID(UUID()), name: name, symbolName: symbolName, locations: [location])
     }
 
-    private static func location(_ name: String, link: String, coordinate: Coordinate) throws -> Location {
-        guard let websiteURL = URL(string: link) else { throw URLError(.badURL) }
-        return Location(id: LocationID(UUID()), name: name, websiteURL: websiteURL, coordinate: coordinate)
+    private static func location(_ name: String, link: String, coordinate: Coordinate) -> Location {
+        Location(id: LocationID(UUID()), name: name, websiteURL: URL(string: link), coordinate: coordinate)
     }
 }
 #endif
