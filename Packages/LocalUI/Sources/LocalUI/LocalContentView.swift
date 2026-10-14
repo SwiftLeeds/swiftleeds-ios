@@ -79,9 +79,13 @@ package struct LocalContentView: View {
                                 selectedLocation = nil
                             }
 
-                        locationInfoView(category: category, location: location)
-                            .padding(.bottom, bottomSheetShown ? geometry.size.height * Constants.maxHeightRatio : 0)
-                            .animation(.easeInOut, value: bottomSheetShown)
+                        LocationCard(
+                            symbolName: category.symbolName,
+                            name: location.name,
+                            websiteURL: location.websiteURL,
+                        )
+                        .padding(.bottom, bottomSheetShown ? geometry.size.height * Constants.maxHeightRatio : 0)
+                        .animation(.easeInOut, value: bottomSheetShown)
                     }
                 }
 
@@ -123,38 +127,6 @@ package struct LocalContentView: View {
             }
         }
         .background(Color.background, ignoresSafeAreaEdges: .all)
-    }
-
-    private func symbolImage(named name: String) -> Image {
-        Image(uiImage: UIImage(systemName: name) ?? UIImage(imageLiteralResourceName: name))
-    }
-
-    private func locationInfoView(category: LocationCategory, location: Location) -> some View {
-        VStack(spacing: 10) {
-            symbolImage(named: category.symbolName)
-                .renderingMode(.template)
-                .frame(width: 44, height: 44)
-
-            Text(location.name)
-
-            Button {
-                UIApplication.shared.open(location.websiteURL)
-            } label: {
-                Text(verbatim: "View More")
-                    .bold()
-                    .padding(12)
-                    .frame(maxWidth: .infinity)
-                    .foregroundColor(Color.accent)
-                    .background(Color.accent.opacity(0.5))
-                    .clipShape(RoundedRectangle(cornerRadius: 6))
-            }
-        }
-        .padding(10)
-        .padding(.bottom, 5)
-        .frame(width: 200)
-        .foregroundColor(Color.cellForeground)
-        .background(Color.cellBackground)
-        .clipShape(RoundedRectangle(cornerRadius: 8))
     }
 }
 
