@@ -5,9 +5,11 @@ public struct HTTPHeaderField: Equatable, Hashable, Sendable {
     /// A field name. Case-insensitive, so `Accept` and `accept` are one name.
     ///
     /// `String(name)` gives back the casing you wrote. Every field RFC 9110 and
-    /// RFC 9111 define is a constant. Anything else, such as CORS, cookies and
-    /// WebSocket, uses `init(_:)`.
+    /// RFC 9111 define is a constant, except the three they deprecate:
+    /// Accept-Charset, Pragma and Warning. Anything else, such as CORS, cookies
+    /// and WebSocket, uses `init(_:)`.
     public struct Name: Equatable, Hashable, Sendable {
+        /// The name, as given.
         fileprivate let value: String
 
         /// Creates a field name the constants below do not cover.
@@ -31,6 +33,7 @@ public struct HTTPHeaderField: Equatable, Hashable, Sendable {
 
     /// A field value. Sent exactly as written, and case-sensitive.
     public struct Value: Equatable, Hashable, Sendable {
+        /// The value, as given.
         fileprivate let value: String
 
         /// Creates a field value.

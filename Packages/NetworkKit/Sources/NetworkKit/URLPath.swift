@@ -4,7 +4,7 @@ public struct URLPath: Equatable, Hashable, Sendable {
     fileprivate let value: String
 
     /// Creates a path.
-    /// - Parameter value: The path, such as `/api/v1/schedule`.
+    /// - Parameter value: The path, such as `api/v1/login/ticket`.
     public init(_ value: String) {
         self.value = value
     }

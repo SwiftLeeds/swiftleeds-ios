@@ -4,7 +4,7 @@ public struct HTTPStatusCode: Equatable, Hashable, Sendable {
     fileprivate let value: Int
 
     /// Creates a status code.
-    /// - Parameter value: The three-digit code the server sent.
+    /// - Parameter value: The code, such as `404`.
     public init(_ value: Int) {
         self.value = value
     }

@@ -20,10 +20,7 @@ public struct MediaType: Equatable, Hashable, Sendable {
 }
 
 extension MediaType {
-    /// The subtypes of the application top-level type.
-    ///
-    /// A top-level type arrives with its first used subtype, since the subtype
-    /// registry is open-ended.
+    /// The application subtypes the app sends.
     public static let application = Application()
 }
 
