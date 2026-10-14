@@ -4,7 +4,7 @@ public struct SponsorID: Equatable, Hashable, Sendable {
     fileprivate let storage: String
 
     /// Creates a sponsor identity.
-    /// - Parameter value: The identifier the backend sent.
+    /// - Parameter value: The identifier.
     public init(_ value: String) {
         self.storage = value
     }
