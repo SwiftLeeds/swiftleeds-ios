@@ -31,13 +31,13 @@ package enum QRCode {
     /// Higher levels survive more damage but need more modules for the same
     /// text.
     package enum Correction: String, Sendable, CaseIterable {
-        /// A code that recovers from about 7% damage.
+        /// Recovery from about 7% damage.
         case low = "L"
-        /// A code that recovers from about 15% damage.
+        /// Recovery from about 15% damage.
         case medium = "M"
-        /// A code that recovers from about 25% damage.
+        /// Recovery from about 25% damage.
         case quartile = "Q"
-        /// A code that recovers from about 30% damage.
+        /// Recovery from about 30% damage.
         case high = "H"
     }
 
