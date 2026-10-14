@@ -1,5 +1,4 @@
 import Dependencies
-import Foundation
 import LogKit
 
 extension HTTPClient {
