@@ -13,10 +13,10 @@ struct BandPatternView: View {
     @Environment(\.accessibilityDifferentiateWithoutColor) private var differentiateWithoutColor
 
     /// How strong the white is.
-    private static let opacity: Double = 0.10
+    private static let opacity: Double = 0.08
 
     /// How strong the white is when the person differentiates without color.
-    private static let boldOpacity: Double = 0.25
+    private static let boldOpacity: Double = 0.20
 
     /// The distance between the lines or stripes.
     private static let gap: CGFloat = 12
@@ -79,12 +79,18 @@ struct BandPatternView: View {
 
     /// Returns slanted lines that cover a region.
     ///
+    /// Each line runs one line width past every edge, so the square ends of
+    /// the strokes fall outside the region and leave no notches.
+    ///
     /// - Parameter size: The size of the region to cover.
     private func diagonalLines(in size: CGSize) -> Path {
         var path = Path()
-        for start in stride(from: -size.height, through: size.width, by: Self.gap) {
-            path.move(to: CGPoint(x: start, y: size.height))
-            path.addLine(to: CGPoint(x: start + size.height, y: 0))
+        let overshoot = lineWidth
+        let first = -size.height - overshoot
+        let last = size.width + overshoot
+        for start in stride(from: first, through: last, by: Self.gap) {
+            path.move(to: CGPoint(x: start - overshoot, y: size.height + overshoot))
+            path.addLine(to: CGPoint(x: start + size.height + overshoot, y: -overshoot))
         }
         return path
     }
