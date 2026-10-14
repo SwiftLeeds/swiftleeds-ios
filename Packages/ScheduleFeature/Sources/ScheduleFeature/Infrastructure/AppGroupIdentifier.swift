@@ -1,4 +1,4 @@
-/// The app group the app and its extensions share, from the entitlements.
+/// The app group the app and its extensions share.
 public struct AppGroupIdentifier: Equatable, Hashable, Sendable {
     /// The group's identifier.
     fileprivate let identifier: String
