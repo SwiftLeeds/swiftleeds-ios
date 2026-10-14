@@ -1,6 +1,8 @@
 #if canImport(UIKit)
-import DesignKit
+import Foundation
+import SharedAssets
 import SwiftUI
+import UIKit
 
 /// A card naming a place, with a link to its website when it has one.
 package struct LocationCard: View {
