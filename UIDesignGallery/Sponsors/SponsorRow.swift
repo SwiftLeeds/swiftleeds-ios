@@ -32,10 +32,18 @@ struct SponsorRow: View {
         }
     }
 
-    /// The square that stands in for the company's logo.
-    private var logo: some View {
+    /// The shape of the logo's square.
+    private var logoShape: RoundedRectangle {
         RoundedRectangle(cornerRadius: CGFloat(CornerRadius.small), style: .continuous)
+    }
+
+    /// The square that stands in for the company's logo.
+    ///
+    /// The edge keeps the square visible on a surface of the same color.
+    private var logo: some View {
+        logoShape
             .fill(.tertiarySurface)
+            .strokeBorder(.borderPrimary, lineWidth: CGFloat(BorderWidth.thin))
             .frame(width: logoSide, height: logoSide)
             .overlay {
                 Text(String(sponsor.name.prefix(1)))
