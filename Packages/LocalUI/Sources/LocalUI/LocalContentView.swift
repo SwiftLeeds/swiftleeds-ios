@@ -75,6 +75,7 @@ package struct LocalContentView: View {
                     ZStack {
                         Color.black.opacity(0.3)
                             .ignoresSafeArea(.all)
+                            .accessibilityHidden(true)
                             .onTapGesture {
                                 selectedLocation = nil
                             }
@@ -86,6 +87,10 @@ package struct LocalContentView: View {
                         )
                         .padding(.bottom, bottomSheetShown ? geometry.size.height * Constants.maxHeightRatio : 0)
                         .animation(.easeInOut, value: bottomSheetShown)
+                    }
+                    .accessibilityAddTraits(.isModal)
+                    .accessibilityAction(.escape) {
+                        selectedLocation = nil
                     }
                 }
 

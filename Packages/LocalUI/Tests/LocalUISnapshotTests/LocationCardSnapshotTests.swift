@@ -15,5 +15,15 @@ import Testing
 
         assertSheetSnapshots(of: view)
     }
+
+    @Test func withoutLink() {
+        let view = LocationCard(
+            symbolName: "takeoutbag.and.cup.and.straw.fill",
+            name: "Trinity Kitchen",
+            websiteURL: nil,
+        )
+
+        assertSheetSnapshots(of: view)
+    }
 }
 #endif
