@@ -5,7 +5,8 @@ public struct TicketReference: Equatable, Hashable, Sendable {
         case invalidFormat
     }
 
-    private let storage: String
+    /// The reference, in `XXXX-#` form.
+    fileprivate let storage: String
 
     /// Creates a ticket reference from the given string, normalising it to the
     /// canonical `XXXX-#` form. Surrounding whitespace is trimmed, the hyphen is
@@ -21,14 +22,12 @@ public struct TicketReference: Equatable, Hashable, Sendable {
             .map { match in "\(match.output.1)-\(match.output.2)" }
             .unwrap(orThrow: ParsingError.invalidFormat)
     }
-
-    fileprivate var stringValue: String { storage }
 }
 
 extension String {
     /// Creates a string from a ticket reference.
     /// - Parameter ticketReference: The ticket reference to convert.
     public init(_ ticketReference: TicketReference) {
-        self = ticketReference.stringValue
+        self = ticketReference.storage
     }
 }

@@ -6,7 +6,7 @@
 /// literals.
 public struct LogCategory: Hashable, Sendable, ExpressibleByStringLiteral {
     /// The name.
-    private let storage: String
+    fileprivate let storage: String
 
     /// Creates a category.
     ///
@@ -18,9 +18,6 @@ public struct LogCategory: Hashable, Sendable, ExpressibleByStringLiteral {
     public init(stringLiteral value: String) {
         self.init(value)
     }
-
-    /// The name.
-    fileprivate var stringValue: String { storage }
 }
 
 extension String {
@@ -28,6 +25,6 @@ extension String {
     ///
     /// - Parameter category: The category to read the name from.
     public init(_ category: LogCategory) {
-        self = category.stringValue
+        self = category.storage
     }
 }

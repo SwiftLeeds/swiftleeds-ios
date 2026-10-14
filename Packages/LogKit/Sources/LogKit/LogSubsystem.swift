@@ -14,7 +14,7 @@ public struct LogSubsystem: Hashable, Sendable {
     }
 
     /// The name.
-    private let storage: String
+    fileprivate let storage: String
 
     /// Creates a subsystem, refusing a name that is empty or only whitespace.
     ///
@@ -24,9 +24,6 @@ public struct LogSubsystem: Hashable, Sendable {
 
         storage = value
     }
-
-    /// The name.
-    fileprivate var stringValue: String { storage }
 }
 
 extension String {
@@ -34,6 +31,6 @@ extension String {
     ///
     /// - Parameter subsystem: The subsystem to read the name from.
     public init(_ subsystem: LogSubsystem) {
-        self = subsystem.stringValue
+        self = subsystem.storage
     }
 }
