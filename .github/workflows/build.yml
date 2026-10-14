@@ -56,28 +56,14 @@ jobs:
 
       # SwiftLint's analyzer rules (an unused import, a captured variable that
       # changes) need the compiler's own view of each file, so they run on a
-      # build log and not on source. The step installs the same version as the
+      # build log and not on source. The script installs the same version as the
       # Linux lint job, from the macOS asset: the Linux binary cannot run here.
-      # The checksum is that asset's digest. Bumping .swiftlint-version means
-      # updating it as well, or the download check below fails.
       #
       # SwiftLeeds only: both brands compile the same sources, so analysing the
       # second would repeat the first at the cost of a runner's minutes.
       - name: Install SwiftLint
         if: ${{ matrix.brand == 'SwiftLeeds' }}
-        env:
-          SWIFTLINT_SHA256: 'c1e429b0599cf1b516f369a2d9ec04eaf0e436f3c12b637df8851fa52ff694d0'
-        run: |
-          set -euo pipefail
-          version=$(cat .swiftlint-version)
-          cd "$RUNNER_TEMP"
-          curl -sSL --retry 3 -o portable_swiftlint.zip \
-            "https://github.com/realm/SwiftLint/releases/download/${version}/portable_swiftlint.zip"
-          echo "${SWIFTLINT_SHA256}  portable_swiftlint.zip" | shasum -a 256 -c -
-          unzip -q portable_swiftlint.zip -d swiftlint
-          # unzip does not always carry the executable bit.
-          chmod +x swiftlint/swiftlint
-          echo "$RUNNER_TEMP/swiftlint" >> "$GITHUB_PATH"
+        run: .github/scripts/install-swiftlint.sh
 
       # This build is the one log that judges the app and package sources: a
       # file judged by two logs could pass one and fail the other, because an
@@ -161,15 +147,60 @@ jobs:
           rm -rf "$claims" "$failures"
           mkdir -p "$claims"
 
-          # Where each package's raw output goes. Only Debug asks for the
-          # compile commands the analyzer reads; Release is left as it was.
+          # Only Debug asks SwiftPM for the compile commands the analyzer reads,
+          # and keeps each package's raw output in a file for it. Release runs
+          # as it always did.
           build_logs="$RUNNER_TEMP/package-build-logs"
-          rm -rf "$build_logs"
-          mkdir -p "$build_logs"
           verbose=""
           if [ "$CONFIGURATION" = debug ]; then
             verbose="-v"
+            rm -rf "$build_logs"
+            mkdir -p "$build_logs"
           fi
+
+          # What -v adds to the output: a tool's path then a space (a
+          # diagnostic has a colon after its path), `cd` and indented `builtin-`
+          # or `name -- /path` steps, and the manifest compile that SwiftPM
+          # prefixes with `warning: 'package':`. Matching these shapes drops the
+          # commands and nothing else, however long a test failure runs.
+          command_line='^( */[^ :]+ | +cd /|warning: [^ ]+ /[^ :]+ | +[A-Za-z0-9_.-]+ -- /| +builtin-)'
+
+          # Runs one package's tests. $verbose is empty in Release, so it is
+          # left unquoted on purpose.
+          #
+          # --force-resolved-versions uses each package's committed
+          # Package.resolved instead of resolving again, which was 91s. A
+          # file that cannot satisfy the manifest now fails the job instead
+          # of quietly resolving something newer. It does not touch the
+          # app's own Package.resolved; CLAUDE.md covers keeping those two
+          # in step.
+          swift_test () {
+            swift test \
+              --package-path "Packages/$1" \
+              --scratch-path "$2" \
+              --configuration "$CONFIGURATION" \
+              $verbose \
+              --force-resolved-versions 2>&1
+          }
+
+          # Runs one package and prefixes each output line with its name. The
+          # Debug lane writes the raw output to a file per package first,
+          # because the shared stdout cannot be the log: the lanes interleave on
+          # it, and a command line over 512 bytes is not written atomically, so
+          # it would arrive cut by the other lane's text. Only then does it drop
+          # the command lines from the job log, where they would bury the test
+          # output. The status is the pipeline's, so a failing swift test fails
+          # it through pipefail.
+          run_package () {
+            if [ -n "$verbose" ]; then
+              swift_test "$1" "$2" \
+                | tee "$build_logs/$1.log" \
+                | { grep --line-buffered -Ev "$command_line" || true; } \
+                | sed -l "s/^/[$1] /"
+            else
+              swift_test "$1" "$2" | sed -l "s/^/[$1] /"
+            fi
+          }
 
           # SwiftPM file-locks its scratch path, so lanes sharing one would
           # queue instead of overlapping. Each lane gets its own, which repeats
@@ -184,41 +215,12 @@ jobs:
               # lanes never take the same package. A queue keeps them balanced:
               # a fixed 8/8 split ran 168s against 107s, the queue 182s and 190s.
               mkdir "$claims/$package" 2>/dev/null || continue
-              # --force-resolved-versions uses each package's committed
-              # Package.resolved instead of resolving again, which was 91s. A
-              # file that cannot satisfy the manifest now fails the job instead
-              # of quietly resolving something newer. It does not touch the
-              # app's own Package.resolved; CLAUDE.md covers keeping those two
-              # in step.
-              #
               # Not folded into a ::group::, because GitHub timestamps each line
               # as it arrives and those timestamps are the only record of the
               # phase boundaries. `sed -l` flushes per line. A line over 512
               # bytes is not written atomically, so a long diagnostic can land
               # under the other lane's prefix.
-              #
-              # The Debug lane adds -v, so SwiftPM prints every compile command,
-              # which the analyzer step below reads. The raw output goes to a
-              # file per package, before the prefix, because the shared stdout
-              # cannot be the log: the lanes interleave on it, and a command
-              # line over 512 bytes is not written atomically, so it would
-              # arrive cut by the other lane's text. The grep then drops the
-              # command lines from the job log, which would otherwise bury the
-              # test output. They take three shapes: a tool's path then a
-              # space (a diagnostic has a colon after its path), an indented
-              # `builtin-` step or `name -- /path` step, and any line over 400
-              # characters. Checked against one local `swift build -v` log:
-              # it drops 1747 of 13681 lines and no diagnostic.
-              if swift test \
-                --package-path "Packages/$package" \
-                --scratch-path "$scratch" \
-                --configuration "$CONFIGURATION" \
-                $verbose \
-                --force-resolved-versions 2>&1 \
-                | tee "$build_logs/$package.log" \
-                | { grep --line-buffered -Ev '^(/[^ :]+ | +[A-Za-z0-9_.-]+ -- /| +builtin-)|^.{400,}$' || true; } \
-                | sed -l "s/^/[$package] /"
-              then
+              if run_package "$package" "$scratch"; then
                 touch "$claims/$package/passed"
               else
                 echo "$package" >> "$failures"
@@ -293,37 +295,21 @@ jobs:
       # only there. The script's header explains the split.
       - name: Install SwiftLint
         if: ${{ !cancelled() && matrix.configuration == 'debug' }}
-        env:
-          # The macOS asset's digest. Bumping .swiftlint-version means updating
-          # it as well, or the download check below fails.
-          SWIFTLINT_SHA256: 'c1e429b0599cf1b516f369a2d9ec04eaf0e436f3c12b637df8851fa52ff694d0'
-        run: |
-          set -euo pipefail
-          version=$(cat .swiftlint-version)
-          cd "$RUNNER_TEMP"
-          curl -sSL --retry 3 -o portable_swiftlint.zip \
-            "https://github.com/realm/SwiftLint/releases/download/${version}/portable_swiftlint.zip"
-          echo "${SWIFTLINT_SHA256}  portable_swiftlint.zip" | shasum -a 256 -c -
-          unzip -q portable_swiftlint.zip -d swiftlint
-          # unzip does not always carry the executable bit.
-          chmod +x swiftlint/swiftlint
-          echo "$RUNNER_TEMP/swiftlint" >> "$GITHUB_PATH"
+        run: .github/scripts/install-swiftlint.sh
 
       # An analyzer failure must not hide the test results above, so this runs
       # even when that step failed, for the reason the formatting check gives.
       #
-      # 130 is 5% below the 137 files this scope analysed on one local run. The
+      # 136 is 5% below the 143 files this scope analysed on one local run. The
       # floor exists to catch a log that lost its files, which analyses 0 and
       # still exits 0.
       #
-      # The failure shows in the pull request under this job's name, which says
-      # "Test Swift Packages". A reviewer seeing it red should read the step
-      # log before looking for a broken test. The name is a required status
-      # check on `main`, so renaming it would block every pull request until
-      # that branch rule is edited too.
+      # The failure shows in the pull request under this job's name. A reviewer
+      # seeing it red should read the step log before looking for a broken test.
+      # Renaming the job is covered by the warning on the matrix above.
       - name: Analyse the package tests
         if: ${{ !cancelled() && matrix.configuration == 'debug' }}
-        run: .github/scripts/analyze.sh tests 130 "$RUNNER_TEMP"/package-build-logs/*.log
+        run: .github/scripts/analyze.sh tests 136 "$RUNNER_TEMP"/package-build-logs/*.log
 
   # Snapshot tests are the only tests that must run on iOS: they are the only
   # ones behind `#if os(iOS)`, so the macOS job above cannot see them. Every
@@ -519,21 +505,7 @@ jobs:
       # skipped; a failed test step skips it too, as there is no verdict to add.
       - name: Install SwiftLint
         if: ${{ steps.snapshots.outputs.analyze == 'true' }}
-        env:
-          # The macOS asset's digest. Bumping .swiftlint-version means updating
-          # it as well, or the download check below fails.
-          SWIFTLINT_SHA256: 'c1e429b0599cf1b516f369a2d9ec04eaf0e436f3c12b637df8851fa52ff694d0'
-        run: |
-          set -euo pipefail
-          version=$(cat .swiftlint-version)
-          cd "$RUNNER_TEMP"
-          curl -sSL --retry 3 -o portable_swiftlint.zip \
-            "https://github.com/realm/SwiftLint/releases/download/${version}/portable_swiftlint.zip"
-          echo "${SWIFTLINT_SHA256}  portable_swiftlint.zip" | shasum -a 256 -c -
-          unzip -q portable_swiftlint.zip -d swiftlint
-          # unzip does not always carry the executable bit.
-          chmod +x swiftlint/swiftlint
-          echo "$RUNNER_TEMP/swiftlint" >> "$GITHUB_PATH"
+        run: .github/scripts/install-swiftlint.sh
 
       - name: Analyse the snapshot tests
         if: ${{ steps.snapshots.outputs.analyze == 'true' }}
