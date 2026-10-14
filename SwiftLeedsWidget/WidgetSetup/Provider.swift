@@ -1,6 +1,6 @@
 import Dependencies
+import Foundation
 import ScheduleFeature
-import SwiftUI
 import WidgetKit
 
 struct Provider: TimelineProvider {
