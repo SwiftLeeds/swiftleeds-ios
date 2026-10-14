@@ -1,5 +1,3 @@
-import Foundation
-
 struct CachedSession: Codable {
     let token: String
 }

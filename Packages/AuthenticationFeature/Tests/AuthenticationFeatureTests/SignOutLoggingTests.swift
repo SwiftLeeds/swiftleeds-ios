@@ -3,6 +3,7 @@ import Dependencies
 import LogKit
 import LogKitTestSupport
 import NetworkKitTestSupport
+import SecureStorageKit
 import Testing
 
 /// Both call sites move the UI to signed out and discard the error with `try?`, so this line is the

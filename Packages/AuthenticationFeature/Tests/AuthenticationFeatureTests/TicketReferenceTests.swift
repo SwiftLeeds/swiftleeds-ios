@@ -1,4 +1,5 @@
 import AuthenticationFeature
+import Foundation
 import Testing
 
 @Suite struct TicketReferenceTests {

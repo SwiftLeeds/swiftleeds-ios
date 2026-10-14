@@ -1,8 +1,8 @@
 import AuthenticationFeature
 import Dependencies
 import Foundation
+import LogKit
 import LogKitTestSupport
-import NetworkKit
 import NetworkKitTestSupport
 import Testing
 

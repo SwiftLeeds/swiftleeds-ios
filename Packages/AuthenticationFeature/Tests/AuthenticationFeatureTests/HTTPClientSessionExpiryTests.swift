@@ -1,6 +1,7 @@
 import AuthenticationFeature
 import Foundation
 import NetworkKit
+import NetworkKitTestSupport
 import Testing
 
 @Suite struct HTTPClientSessionExpiryTests {

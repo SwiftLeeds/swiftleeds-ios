@@ -2,7 +2,7 @@ import AuthenticationFeature
 import Dependencies
 import LogKit
 import LogKitTestSupport
-import NetworkKit
+import NetworkKitTestSupport
 import Testing
 
 /// The cause reaches the log at the mapper or the transport. These assert the outcome the user got.
