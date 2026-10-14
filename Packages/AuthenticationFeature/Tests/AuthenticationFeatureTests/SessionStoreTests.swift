@@ -19,6 +19,7 @@ import Testing
         }
     }
 
+    /// A session stored as `{"token": …}` in the Keychain reads back as that session.
     @Test func whenStoredTokenIsValid_shouldReturnStoredSession() async throws {
         let spy = SecureStorageSpy()
         let expected = Session(token: try SessionToken("jwt-abc-123"))
