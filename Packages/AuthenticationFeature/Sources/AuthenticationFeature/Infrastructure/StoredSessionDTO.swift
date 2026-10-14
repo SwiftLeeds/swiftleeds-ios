@@ -1,10 +1,10 @@
 import Foundation
 
-struct CachedSession: Codable {
+struct StoredSessionDTO: Codable {
     let token: String
 }
 
-extension CachedSession {
+extension StoredSessionDTO {
     init(_ session: Session) {
         self.init(token: String(session.token))
     }
