@@ -9,6 +9,7 @@ import ScheduleFeature
 import SecureStorageKit
 import SecureStorageKitKeychain
 import SwiftUI
+import UIKit
 
 @main
 struct SwiftLeedsApp: App {
