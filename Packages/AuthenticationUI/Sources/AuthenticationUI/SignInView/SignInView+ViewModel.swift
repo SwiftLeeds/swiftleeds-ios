@@ -49,7 +49,7 @@ extension SignInView {
 
         package var credential: Credential? {
             try? Credential(
-                email: EmailAddress(email),
+                emailAddress: EmailAddress(email),
                 ticketReference: TicketReference(ticketReference),
             )
         }

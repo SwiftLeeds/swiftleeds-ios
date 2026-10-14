@@ -3,9 +3,9 @@ import Testing
 
 @Suite struct CredentialTests {
     // Fails if Credential gains a description of its own that hides its members.
-    @Test func whenDescribed_shouldShowEmailAndTicketReference() throws {
+    @Test func whenDescribed_shouldShowEmailAddressAndTicketReference() throws {
         let credential = Credential(
-            email: try EmailAddress("person@example.com"),
+            emailAddress: try EmailAddress("person@example.com"),
             ticketReference: try TicketReference("ABCD-1"),
         )
 
