@@ -2,6 +2,7 @@
 import DesignKit
 import SharedAssets
 import SwiftUI
+import UIKit
 
 package struct LocalCell: View {
     private let label: String

@@ -1,7 +1,6 @@
 #if os(iOS)
 import LocalUI
 import SharedAssets
-import SwiftUI
 import Testing
 
 @MainActor

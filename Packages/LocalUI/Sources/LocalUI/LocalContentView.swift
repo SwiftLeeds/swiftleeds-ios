@@ -1,9 +1,11 @@
 #if canImport(UIKit)
+import _LocationEssentials
 import DesignKit
 import LocalFeature
 import MapKit
 import SharedAssets
 import SwiftUI
+import UIKit
 
 /// The local screen, drawn from a state it is given. It fetches nothing.
 package struct LocalContentView: View {

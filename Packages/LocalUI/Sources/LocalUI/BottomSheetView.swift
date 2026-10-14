@@ -1,5 +1,6 @@
 #if canImport(UIKit)
 import DesignKit
+import Foundation
 import LocalFeature
 import ReadabilityModifier
 import SharedAssets
