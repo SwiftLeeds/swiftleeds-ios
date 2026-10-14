@@ -17,6 +17,10 @@ struct RoleBand: View {
     /// How much black the color takes when contrast is increased.
     private static let darkening: Double = 0.2
 
+    /// The blur radius of each of the three stacked shadows that clear the
+    /// pattern from around the label.
+    private static let haloRadius: CGFloat = 1.5
+
     /// The color of the band, darker when contrast is increased.
     private var fill: Color {
         switch contrast {
@@ -29,6 +33,9 @@ struct RoleBand: View {
         Label(role.name, systemImage: role.symbol)
             .font(.title3.weight(.semibold))
             .foregroundStyle(.white)
+            .shadow(color: fill, radius: Self.haloRadius)
+            .shadow(color: fill, radius: Self.haloRadius)
+            .shadow(color: fill, radius: Self.haloRadius)
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal, .large)
             .padding(.vertical, .medium)
