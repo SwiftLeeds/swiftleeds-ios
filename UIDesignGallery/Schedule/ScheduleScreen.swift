@@ -11,6 +11,9 @@ struct ScheduleScreen: View {
         /// The screen that signs a person in with their ticket.
         case signIn(SignInState)
 
+        /// A ticket, shown full size.
+        case ticket(SampleTicket)
+
         var id: Self { self }
     }
 
@@ -57,6 +60,9 @@ struct ScheduleScreen: View {
     /// How the halo's outer edge meets the screen behind it.
     var haloEdge: HaloEdge = .feathered
 
+    /// Whether the role band on a ticket draws the role's texture.
+    var bandVariant: BandVariant = .plain
+
     /// The sessions pushed on top of the schedule.
     @State private var path: [SampleSession] = []
 
@@ -94,6 +100,7 @@ struct ScheduleScreen: View {
                     switch item {
                     case .settings: settingsSheet
                     case .signIn(let state): signInSheet(opensWith: state)
+                    case .ticket(let ticket): ticketSheet(for: ticket)
                     }
                 }
                 .toolbar {
@@ -154,6 +161,7 @@ struct ScheduleScreen: View {
 
                     ToolbarItem(placement: .topBarTrailing) {
                         Button {
+                            sheet = .ticket(.signedIn)
                         } label: {
                             Label("Ticket", systemImage: "ticket")
                         }
@@ -172,6 +180,7 @@ struct ScheduleScreen: View {
                 sheet = .settings
                 settingsPath.append(category)
             case .signIn(let state): sheet = .signIn(state)
+            case .ticket(let ticket): sheet = .ticket(ticket)
             case nil: break
             }
         }
@@ -214,6 +223,24 @@ struct ScheduleScreen: View {
                     }
                 }
         }
+    }
+
+    /// A ticket, over the schedule rather than after it.
+    ///
+    /// - Parameter ticket: The ticket to show.
+    private func ticketSheet(for ticket: SampleTicket) -> some View {
+        NavigationStack {
+            TicketScreen(ticket: ticket, bandVariant: bandVariant)
+                .navigationTitle("Ticket")
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItem(placement: .topBarLeading) {
+                        Button("Close", systemImage: "xmark") { sheet = nil }
+                            .tint(.textPrimary)
+                    }
+                }
+        }
+        .presentationSizing(.form)
     }
 
     /// The schedule as a dense list, separated by a hairline.

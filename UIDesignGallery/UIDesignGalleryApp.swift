@@ -13,9 +13,11 @@ import UIDesign
 /// `-category about` presents Settings with that part of it pushed on top,
 /// `-signin blank` or `-signin filled` presents Sign in with its fields
 /// empty or filled in, `-halo hard` or `-halo soft` swaps the halo's outer
-/// edge for the one it feathers between, and `-halos role`, `-halos pink` or
-/// `-halos gold` shows every halo treatment at once, in those colors,
-/// instead of the app.
+/// edge for the one it feathers between, `-ticket attendee`, `-ticket speaker`,
+/// `-ticket sponsor`, `-ticket staff` or `-ticket unavailable` presents that
+/// ticket, `-band patterned` draws each role's texture on the ticket's band,
+/// and `-halos role`, `-halos pink` or `-halos gold` shows every halo
+/// treatment at once, in those colors, instead of the app.
 @main
 struct UIDesignGalleryApp: App {
     /// The destination on screen.
@@ -30,6 +32,9 @@ struct UIDesignGalleryApp: App {
     /// How the halo's outer edge meets the screen behind it.
     private let haloEdge: HaloEdge
 
+    /// Whether the role band on a ticket draws the role's texture.
+    private let bandVariant: BandVariant
+
     /// The standing whose colors the halo treatments draw, or `nil` when the
     /// gallery shows the app instead of the treatments.
     private let comparedHalo: ConferenceRole?
@@ -40,7 +45,9 @@ struct UIDesignGalleryApp: App {
         let name = defaults.string(forKey: "tab") ?? ""
         _tab = State(initialValue: GalleryTab(rawValue: name) ?? .schedule)
         let category = defaults.string(forKey: "category") ?? ""
-        if let category = SettingsCategory(rawValue: category) {
+        if let ticket = SampleTicket.named(defaults.string(forKey: "ticket") ?? "") {
+            opensWith = .ticket(ticket)
+        } else if let category = SettingsCategory(rawValue: category) {
             opensWith = .settingsCategory(category)
         } else if let state = SignInState(rawValue: defaults.string(forKey: "signin") ?? "") {
             opensWith = .signIn(state)
@@ -55,6 +62,7 @@ struct UIDesignGalleryApp: App {
         }
         let halo = defaults.string(forKey: "halo") ?? ""
         haloEdge = HaloEdge(rawValue: halo) ?? .feathered
+        bandVariant = BandVariant(rawValue: defaults.string(forKey: "band") ?? "") ?? .plain
         switch defaults.string(forKey: "halos") {
         case "pink":
             comparedHalo = HaloComparison.brandPink
@@ -85,7 +93,7 @@ struct UIDesignGalleryApp: App {
                 systemImage: GalleryTab.schedule.symbol,
                 value: GalleryTab.schedule,
             ) {
-                ScheduleScreen(opensWith: opensWith, haloEdge: haloEdge)
+                ScheduleScreen(opensWith: opensWith, haloEdge: haloEdge, bandVariant: bandVariant)
             }
 
             Tab(

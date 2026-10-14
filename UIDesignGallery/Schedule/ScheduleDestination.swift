@@ -18,4 +18,7 @@ enum ScheduleDestination: Equatable, Hashable {
 
     /// The screen that signs a person in with their ticket.
     case signIn(SignInState)
+
+    /// A ticket, shown full size.
+    case ticket(SampleTicket)
 }
