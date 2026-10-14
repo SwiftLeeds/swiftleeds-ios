@@ -8,8 +8,9 @@ public struct Location: Equatable, Hashable, Identifiable, Sendable {
     /// The place's name.
     public let name: String
 
-    /// The place's website. Absent when the backend sent no usable web
-    /// address.
+    /// The place's website.
+    ///
+    /// Absent when the place has no usable web address.
     public let websiteURL: URL?
 
     /// The place's location on the map.

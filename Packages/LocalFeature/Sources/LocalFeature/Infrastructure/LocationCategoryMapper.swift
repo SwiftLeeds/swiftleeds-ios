@@ -57,10 +57,11 @@ extension LocationCategoryMapper {
 }
 
 extension URL {
-    /// Whether this is an http or https address with a host.
+    /// A Boolean value indicating whether this is an http or https address
+    /// with a host.
     ///
-    /// `URL(string:)` accepts "trinityleeds.com" as a relative URL with no
-    /// scheme, which a browser cannot open.
+    /// `URL(string:)` accepts "trinityleeds.com" as a relative reference
+    /// with no scheme, which a browser cannot open.
     fileprivate var isWebAddress: Bool {
         guard let scheme = scheme?.lowercased(), host != nil else { return false }
         return scheme == "http" || scheme == "https"

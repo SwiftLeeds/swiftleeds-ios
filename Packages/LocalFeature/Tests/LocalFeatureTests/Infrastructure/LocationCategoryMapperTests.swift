@@ -63,6 +63,50 @@ import Testing
         #expect(location.websiteURL == URL(string: "http://example.invalid/trinity-kitchen"))
     }
 
+    @Test func whenLocationHasUppercaseScheme_shouldReturnWebsiteURL() throws {
+        let list = LocationCategoryListDTO(data: [
+            .fixture(locations: [.fixture(url: "HTTPS://example.invalid/trinity-kitchen")])
+        ])
+
+        let location = try #require(sut.map(list).first?.locations.first)
+
+        #expect(location.websiteURL != nil)
+    }
+
+    @Test(
+        arguments: [
+            "",
+            "trinityleeds.com",
+            "tel:01130000000",
+            "https://",
+            "//example.com",
+        ]
+    )
+    func whenLinkIsNotWebAddress_shouldReturnLocationWithNoWebsite(url: String) throws {
+        let list = LocationCategoryListDTO(data: [
+            .fixture(locations: [.fixture(url: url)])
+        ])
+
+        let location = try #require(sut.map(list).first?.locations.first)
+
+        #expect(location.websiteURL == nil)
+    }
+
+    @Test func whenOneLocationHasGoodLinkAndOtherHasBadLink_shouldReturnBothLocations() throws {
+        let list = LocationCategoryListDTO(data: [
+            .fixture(locations: [
+                .fixture(name: "Trinity Kitchen", url: "https://example.invalid/trinity-kitchen"),
+                .fixture(name: "Brew Society", url: "trinityleeds.com"),
+            ])
+        ])
+
+        let locations = try #require(sut.map(list).first?.locations)
+
+        #expect(locations.map(\.name) == ["Trinity Kitchen", "Brew Society"])
+        #expect(locations[0].websiteURL == URL(string: "https://example.invalid/trinity-kitchen"))
+        #expect(locations[1].websiteURL == nil)
+    }
+
     // MARK: - Refusals
 
     @Test func whenLatitudeIsOutOfRange_shouldThrowErrorWithLocationFieldAndValue() throws {
@@ -93,25 +137,6 @@ import Testing
             #expect(error.field == .lon)
             #expect(error.value == "-181.0")
         }
-    }
-
-    @Test(
-        arguments: [
-            "",
-            "trinityleeds.com",
-            "tel:01130000000",
-            "https://",
-            "//example.com",
-        ]
-    )
-    func whenLinkIsNotWebAddress_shouldReturnLocationWithNoWebsite(url: String) throws {
-        let list = LocationCategoryListDTO(data: [
-            .fixture(locations: [.fixture(url: url)])
-        ])
-
-        let location = try #require(sut.map(list).first?.locations.first)
-
-        #expect(location.websiteURL == nil)
     }
 
     @Test func whenOneLocationIsInvalid_shouldThrowForWholeList() throws {
