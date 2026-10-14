@@ -13,12 +13,12 @@ import Testing
     }
 
     @Test func whenParsingEmailAddressWithSurroundingWhitespace_shouldTrim() throws {
-        let email = try EmailAddress("  person@example.com  ")
-        #expect(String(email) == "person@example.com")
+        let sut = try EmailAddress("  person@example.com  ")
+        #expect(String(sut) == "person@example.com")
     }
 
     @Test func whenDescribed_shouldShowValue() throws {
-        let email = try EmailAddress("person@example.com")
-        #expect(String(describing: email).contains("person@example.com"))
+        let sut = try EmailAddress("person@example.com")
+        #expect(String(describing: sut).contains("person@example.com"))
     }
 }
