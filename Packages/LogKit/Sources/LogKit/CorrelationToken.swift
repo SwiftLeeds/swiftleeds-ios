@@ -15,7 +15,7 @@ struct CorrelationToken {
     private static let keptByteCount = 8
 
     /// The token, as lowercase hexadecimal digits.
-    private let storage: String
+    fileprivate let storage: String
 
     /// Creates a token standing in for the given value.
     ///
@@ -37,9 +37,6 @@ struct CorrelationToken {
             .map(\.hexadecimalPair)
             .joined()
     }
-
-    /// The token, as lowercase hexadecimal digits.
-    fileprivate var stringValue: String { storage }
 }
 
 extension String {
@@ -47,7 +44,7 @@ extension String {
     ///
     /// - Parameter token: The token to read the digits from.
     init(_ token: CorrelationToken) {
-        self = token.stringValue
+        self = token.storage
     }
 }
 

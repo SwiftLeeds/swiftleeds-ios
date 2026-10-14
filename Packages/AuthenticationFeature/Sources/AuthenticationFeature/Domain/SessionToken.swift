@@ -5,7 +5,8 @@ package struct SessionToken: Equatable, Hashable, Sendable {
         case empty
     }
 
-    private let storage: String
+    /// The token, trimmed.
+    fileprivate let storage: String
 
     /// Creates a session token, trimming surrounding whitespace.
     /// - Throws: ``ParsingError/empty`` if `value` is blank once trimmed.
@@ -14,12 +15,10 @@ package struct SessionToken: Equatable, Hashable, Sendable {
         guard !trimmed.isEmpty else { throw .empty }
         storage = trimmed
     }
-
-    fileprivate var stringValue: String { storage }
 }
 
 extension String {
     package init(_ token: SessionToken) {
-        self = token.stringValue
+        self = token.storage
     }
 }

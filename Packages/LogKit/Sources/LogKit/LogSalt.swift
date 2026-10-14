@@ -10,7 +10,7 @@ public struct LogSalt: Hashable, Sendable {
     private static let byteCount = 16
 
     /// The bytes.
-    private let storage: Data
+    fileprivate let storage: Data
 
     /// Creates a salt from the given bytes.
     ///
@@ -25,9 +25,6 @@ public struct LogSalt: Hashable, Sendable {
         let bytes = (0..<byteCount).map { _ in UInt8.random(in: .min ... .max, using: &generator) }
         return LogSalt(Data(bytes))
     }
-
-    /// The bytes.
-    fileprivate var dataValue: Data { storage }
 }
 
 extension Data {
@@ -35,6 +32,6 @@ extension Data {
     ///
     /// - Parameter salt: The salt to read the bytes from.
     public init(_ salt: LogSalt) {
-        self = salt.dataValue
+        self = salt.storage
     }
 }

@@ -5,7 +5,8 @@ public struct EmailAddress: Equatable, Hashable, Sendable {
         case empty
     }
 
-    private let storage: String
+    /// The address, trimmed.
+    fileprivate let storage: String
 
     /// Creates an email address from the given string, trimming surrounding whitespace.
     /// - Parameter value: The email address.
@@ -15,14 +16,12 @@ public struct EmailAddress: Equatable, Hashable, Sendable {
         guard !trimmed.isEmpty else { throw .empty }
         self.storage = trimmed
     }
-
-    fileprivate var stringValue: String { storage }
 }
 
 extension String {
     /// Creates a string from an email address.
     /// - Parameter email: The email address to convert.
     public init(_ email: EmailAddress) {
-        self = email.stringValue
+        self = email.storage
     }
 }
