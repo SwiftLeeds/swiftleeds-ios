@@ -53,6 +53,16 @@ import Testing
         #expect(location.coordinate == (try Coordinate(latitude: 53.797378, longitude: -1.545209)))
     }
 
+    @Test func whenLocationHasHTTPLink_shouldReturnWebsiteURL() throws {
+        let list = LocationCategoryListDTO(data: [
+            .fixture(locations: [.fixture(url: "http://example.invalid/trinity-kitchen")])
+        ])
+
+        let location = try #require(sut.map(list).first?.locations.first)
+
+        #expect(location.websiteURL == URL(string: "http://example.invalid/trinity-kitchen"))
+    }
+
     // MARK: - Refusals
 
     @Test func whenLatitudeIsOutOfRange_shouldThrowErrorWithLocationFieldAndValue() throws {
@@ -85,19 +95,23 @@ import Testing
         }
     }
 
-    @Test func whenLinkIsNotURL_shouldThrowErrorWithLocationFieldAndValue() throws {
+    @Test(
+        arguments: [
+            "",
+            "trinityleeds.com",
+            "tel:01130000000",
+            "https://",
+            "//example.com",
+        ]
+    )
+    func whenLinkIsNotWebAddress_shouldReturnLocationWithNoWebsite(url: String) throws {
         let list = LocationCategoryListDTO(data: [
-            .fixture(locations: [.fixture(name: "Trinity Kitchen", url: "")])
+            .fixture(locations: [.fixture(url: url)])
         ])
 
-        do {
-            _ = try sut.map(list)
-            Issue.record("Expected a link that is not a URL to throw")
-        } catch {
-            #expect(error.location == "Trinity Kitchen")
-            #expect(error.field == .url)
-            #expect(error.value == "")
-        }
+        let location = try #require(sut.map(list).first?.locations.first)
+
+        #expect(location.websiteURL == nil)
     }
 
     @Test func whenOneLocationIsInvalid_shouldThrowForWholeList() throws {

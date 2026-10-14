@@ -2,12 +2,21 @@ import Foundation
 
 /// A place near the conference.
 public struct Location: Equatable, Hashable, Identifiable, Sendable {
+    /// The place's unique identifier.
     public let id: LocationID
+
+    /// The place's name.
     public let name: String
-    public let websiteURL: URL
+
+    /// The place's website. Absent when the backend sent no usable web
+    /// address.
+    public let websiteURL: URL?
+
+    /// The place's location on the map.
     public let coordinate: Coordinate
 
-    public init(id: LocationID, name: String, websiteURL: URL, coordinate: Coordinate) {
+    /// Creates a place.
+    public init(id: LocationID, name: String, websiteURL: URL?, coordinate: Coordinate) {
         self.id = id
         self.name = name
         self.websiteURL = websiteURL
