@@ -95,13 +95,15 @@ struct BandPatternView: View {
         return path
     }
 
-    /// Returns a grid of dots that covers a region.
+    /// Returns a grid of dots that covers a region, centered in it.
+    ///
+    /// The margin is the same at all four edges.
     ///
     /// - Parameter size: The size of the region to cover.
     private func dots(in size: CGSize) -> Path {
         var path = Path()
-        for x in stride(from: Self.dotGap / 2, through: size.width, by: Self.dotGap) {
-            for y in stride(from: Self.dotGap / 2, through: size.height, by: Self.dotGap) {
+        for x in centeredPositions(along: size.width) {
+            for y in centeredPositions(along: size.height) {
                 path.addEllipse(
                     in: CGRect(
                         x: x - Self.dotRadius,
@@ -113,5 +115,14 @@ struct BandPatternView: View {
             }
         }
         return path
+    }
+
+    /// Returns the centers of the dots along one side, with equal margins at both ends.
+    ///
+    /// - Parameter length: The length of the side.
+    private func centeredPositions(along length: CGFloat) -> [CGFloat] {
+        let count = Int(length / Self.dotGap)
+        let first = (length - CGFloat(count - 1) * Self.dotGap) / 2
+        return (0..<count).map { first + CGFloat($0) * Self.dotGap }
     }
 }
