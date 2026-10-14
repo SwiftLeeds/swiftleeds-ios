@@ -69,7 +69,7 @@ public struct SettingsView<Header: View>: View {
                 }
             }
             .navigationTitle("Settings")
-            .alert("We can't change the app icon", isPresented: $viewModel.showingIconError) {
+            .alert("We can't change the app icon.", isPresented: $viewModel.showingIconError) {
                 Button("OK", role: .cancel) {}
             } message: {
                 Text("Try again later.")
