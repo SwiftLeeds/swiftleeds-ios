@@ -48,8 +48,62 @@ jobs:
       # cannot. Debug is not built here: the test jobs compile the packages in
       # Debug and Release, the launch jobs compile the App Clip in Debug, and a
       # second build would double this job's time.
+      # buildlog_path makes gym keep its raw xcodebuild log in a folder this job
+      # knows, because the analyzer step below reads every compile command from
+      # it. Both brands pass it so the two lanes run the same command.
       - name: Build ${{ matrix.brand }} (${{ matrix.configuration }})
-        run: fastlane build scheme:${{ matrix.brand }} configuration:${{ matrix.configuration }}
+        run: fastlane build scheme:${{ matrix.brand }} configuration:${{ matrix.configuration }} buildlog_path:"$RUNNER_TEMP/build-log"
+
+      # SwiftLint's analyzer rules (an unused import, a captured variable that
+      # changes) need the compiler's own view of each file, so they run on a
+      # build log and not on source. The step installs the same version as the
+      # Linux lint job, from the macOS asset: the Linux binary cannot run here.
+      # The checksum is that asset's digest. Bumping .swiftlint-version means
+      # updating it as well, or the download check below fails.
+      #
+      # SwiftLeeds only: both brands compile the same sources, so analysing the
+      # second would repeat the first at the cost of a runner's minutes.
+      - name: Install SwiftLint
+        if: ${{ matrix.brand == 'SwiftLeeds' }}
+        env:
+          SWIFTLINT_SHA256: 'c1e429b0599cf1b516f369a2d9ec04eaf0e436f3c12b637df8851fa52ff694d0'
+        run: |
+          set -euo pipefail
+          version=$(cat .swiftlint-version)
+          cd "$RUNNER_TEMP"
+          curl -sSL --retry 3 -o portable_swiftlint.zip \
+            "https://github.com/realm/SwiftLint/releases/download/${version}/portable_swiftlint.zip"
+          echo "${SWIFTLINT_SHA256}  portable_swiftlint.zip" | shasum -a 256 -c -
+          unzip -q portable_swiftlint.zip -d swiftlint
+          # unzip does not always carry the executable bit.
+          chmod +x swiftlint/swiftlint
+          echo "$RUNNER_TEMP/swiftlint" >> "$GITHUB_PATH"
+
+      # This build is the one log that judges the app and package sources: a
+      # file judged by two logs could pass one and fail the other, because an
+      # `#if` branch changes which imports a file uses. The script's header
+      # explains the split.
+      #
+      # 282 is 5% below the 297 files this scope analysed on one local run. The
+      # floor exists to catch a log that lost its files, which analyses 0 and
+      # still exits 0. A few files may drop out when a branch is removed, so the
+      # floor leaves room for that without letting a lost log pass.
+      #
+      # Only a build that succeeded has a log worth reading, so this step keeps
+      # the default condition. The failure shows in the pull request under this
+      # job's name, "Build SwiftLeeds", so a reviewer seeing it red should read
+      # the step log before looking for a broken build.
+      - name: Analyse the app and package sources
+        if: ${{ matrix.brand == 'SwiftLeeds' }}
+        run: |
+          set -euo pipefail
+          logs=("$RUNNER_TEMP"/build-log/*.log)
+          # gym names the file itself, so the folder must hold exactly one.
+          if [ "${#logs[@]}" -ne 1 ] || [ ! -f "${logs[0]}" ]; then
+            echo "::error::Expected one gym build log in $RUNNER_TEMP/build-log, found ${#logs[@]}: ${logs[*]}"
+            exit 1
+          fi
+          .github/scripts/analyze.sh app 282 "${logs[0]}"
 
   # Release catches what Debug cannot: a test that uses a DEBUG-only symbol, or
   # that relies on DEBUG-only test isolation. Both lanes run the same script.
@@ -107,6 +161,16 @@ jobs:
           rm -rf "$claims" "$failures"
           mkdir -p "$claims"
 
+          # Where each package's raw output goes. Only Debug asks for the
+          # compile commands the analyzer reads; Release is left as it was.
+          build_logs="$RUNNER_TEMP/package-build-logs"
+          rm -rf "$build_logs"
+          mkdir -p "$build_logs"
+          verbose=""
+          if [ "$CONFIGURATION" = debug ]; then
+            verbose="-v"
+          fi
+
           # SwiftPM file-locks its scratch path, so lanes sharing one would
           # queue instead of overlapping. Each lane gets its own, which repeats
           # 14% of the dependency compilation (241s in one path against 168s
@@ -132,11 +196,27 @@ jobs:
               # phase boundaries. `sed -l` flushes per line. A line over 512
               # bytes is not written atomically, so a long diagnostic can land
               # under the other lane's prefix.
+              #
+              # The Debug lane adds -v, so SwiftPM prints every compile command,
+              # which the analyzer step below reads. The raw output goes to a
+              # file per package, before the prefix, because the shared stdout
+              # cannot be the log: the lanes interleave on it, and a command
+              # line over 512 bytes is not written atomically, so it would
+              # arrive cut by the other lane's text. The grep then drops the
+              # command lines from the job log, which would otherwise bury the
+              # test output. They take three shapes: a tool's path then a
+              # space (a diagnostic has a colon after its path), an indented
+              # `builtin-` step or `name -- /path` step, and any line over 400
+              # characters. Checked against one local `swift build -v` log:
+              # it drops 1747 of 13681 lines and no diagnostic.
               if swift test \
                 --package-path "Packages/$package" \
                 --scratch-path "$scratch" \
                 --configuration "$CONFIGURATION" \
+                $verbose \
                 --force-resolved-versions 2>&1 \
+                | tee "$build_logs/$package.log" \
+                | { grep --line-buffered -Ev '^(/[^ :]+ | +[A-Za-z0-9_.-]+ -- /| +builtin-)|^.{400,}$' || true; } \
                 | sed -l "s/^/[$package] /"
               then
                 touch "$claims/$package/passed"
@@ -203,6 +283,48 @@ jobs:
         if: ${{ !cancelled() && matrix.configuration == 'debug' }}
         run: .github/scripts/format.sh --check
 
+      # The analyzer rules read the compile commands the Debug lane saved above,
+      # so they ride in this job and need no build of their own. Release is
+      # left out: it did not print the commands, and the Debug build compiled
+      # the same test files.
+      #
+      # The macOS build is the one log that judges the package tests. The
+      # snapshot targets are judged by the iOS job instead, because they compile
+      # only there. The script's header explains the split.
+      - name: Install SwiftLint
+        if: ${{ !cancelled() && matrix.configuration == 'debug' }}
+        env:
+          # The macOS asset's digest. Bumping .swiftlint-version means updating
+          # it as well, or the download check below fails.
+          SWIFTLINT_SHA256: 'c1e429b0599cf1b516f369a2d9ec04eaf0e436f3c12b637df8851fa52ff694d0'
+        run: |
+          set -euo pipefail
+          version=$(cat .swiftlint-version)
+          cd "$RUNNER_TEMP"
+          curl -sSL --retry 3 -o portable_swiftlint.zip \
+            "https://github.com/realm/SwiftLint/releases/download/${version}/portable_swiftlint.zip"
+          echo "${SWIFTLINT_SHA256}  portable_swiftlint.zip" | shasum -a 256 -c -
+          unzip -q portable_swiftlint.zip -d swiftlint
+          # unzip does not always carry the executable bit.
+          chmod +x swiftlint/swiftlint
+          echo "$RUNNER_TEMP/swiftlint" >> "$GITHUB_PATH"
+
+      # An analyzer failure must not hide the test results above, so this runs
+      # even when that step failed, for the reason the formatting check gives.
+      #
+      # 130 is 5% below the 137 files this scope analysed on one local run. The
+      # floor exists to catch a log that lost its files, which analyses 0 and
+      # still exits 0.
+      #
+      # The failure shows in the pull request under this job's name, which says
+      # "Test Swift Packages". A reviewer seeing it red should read the step
+      # log before looking for a broken test. The name is a required status
+      # check on `main`, so renaming it would block every pull request until
+      # that branch rule is edited too.
+      - name: Analyse the package tests
+        if: ${{ !cancelled() && matrix.configuration == 'debug' }}
+        run: .github/scripts/analyze.sh tests 130 "$RUNNER_TEMP"/package-build-logs/*.log
+
   # Snapshot tests are the only tests that must run on iOS: they are the only
   # ones behind `#if os(iOS)`, so the macOS job above cannot see them. Every
   # other test compiles and runs there, and the app build jobs compile the
@@ -256,6 +378,7 @@ jobs:
           fi
 
       - name: Run the snapshot tests on the simulator
+        id: snapshots
         run: |
           set -uo pipefail
           # A pull request runs only the snapshot targets its diff can change:
@@ -356,10 +479,14 @@ jobs:
           status=0
           # This call compiles and then tests, so the figure covers both.
           .github/scripts/memory-pressure.sh start
+          # tee keeps the raw output in a file as well as the log. It holds every
+          # compile command, which the analyzer step below reads. One process
+          # writes it, so no line is cut.
           xcodebuild test -project SwiftLeeds.xcodeproj "${args[@]}" \
             -destination "$DESTINATION" \
             -derivedDataPath "$RUNNER_TEMP/snapshot-derived-data" \
-            -skipPackagePluginValidation \
+            -skipPackagePluginValidation 2>&1 \
+            | tee "$RUNNER_TEMP/snapshot-build.log" \
             || status=$?
           echo "::endgroup::"
           .github/scripts/memory-pressure.sh report
@@ -371,6 +498,48 @@ jobs:
             exit "$status"
           fi
           echo "Tested $count snapshot target(s) on the simulator:$selected"
+
+          # The analyzer needs a floor on the files it sees, and the floor
+          # depends on how much was built. A run of everything compiled all 42
+          # snapshot files, so fewer means the log lost some. A pull request
+          # builds only the affected targets, and one target may hold a single
+          # file, so the floor there is 1: it still catches a log that lost
+          # everything.
+          if $run_all; then
+            min_files=42
+          else
+            min_files=1
+          fi
+          echo "min_files=$min_files" >> "$GITHUB_OUTPUT"
+          echo "analyze=true" >> "$GITHUB_OUTPUT"
+
+      # The iOS build is the one log that judges the snapshot targets, because
+      # they compile only on iOS. The script's header explains the split. A step
+      # that selected no target sets no output, so nothing was built and this is
+      # skipped; a failed test step skips it too, as there is no verdict to add.
+      - name: Install SwiftLint
+        if: ${{ steps.snapshots.outputs.analyze == 'true' }}
+        env:
+          # The macOS asset's digest. Bumping .swiftlint-version means updating
+          # it as well, or the download check below fails.
+          SWIFTLINT_SHA256: 'c1e429b0599cf1b516f369a2d9ec04eaf0e436f3c12b637df8851fa52ff694d0'
+        run: |
+          set -euo pipefail
+          version=$(cat .swiftlint-version)
+          cd "$RUNNER_TEMP"
+          curl -sSL --retry 3 -o portable_swiftlint.zip \
+            "https://github.com/realm/SwiftLint/releases/download/${version}/portable_swiftlint.zip"
+          echo "${SWIFTLINT_SHA256}  portable_swiftlint.zip" | shasum -a 256 -c -
+          unzip -q portable_swiftlint.zip -d swiftlint
+          # unzip does not always carry the executable bit.
+          chmod +x swiftlint/swiftlint
+          echo "$RUNNER_TEMP/swiftlint" >> "$GITHUB_PATH"
+
+      - name: Analyse the snapshot tests
+        if: ${{ steps.snapshots.outputs.analyze == 'true' }}
+        env:
+          MIN_FILES: ${{ steps.snapshots.outputs.min_files }}
+        run: .github/scripts/analyze.sh snapshots "$MIN_FILES" "$RUNNER_TEMP/snapshot-build.log"
 
   # The app build jobs compile the App Clip for both brands, but a trap at
   # launch compiles cleanly. This installs and launches it, and fails if the
