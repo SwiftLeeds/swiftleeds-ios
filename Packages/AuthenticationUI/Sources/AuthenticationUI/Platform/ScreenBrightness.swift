@@ -4,7 +4,8 @@ import Dependencies
 package struct ScreenBrightness: Sendable {
     /// How bright the display is, from dimmest to brightest.
     package struct Level: ExpressibleByFloatLiteral, Equatable, Sendable {
-        private let storage: Double
+        /// The level, from 0 to 1.
+        fileprivate let storage: Double
 
         /// Creates a level, pinning `value` to the range the display accepts.
         ///
@@ -19,8 +20,6 @@ package struct ScreenBrightness: Sendable {
 
         /// The brightest the display goes.
         package static let brightest = Level(1)
-
-        fileprivate var doubleValue: Double { storage }
     }
 
     /// Reads the current level.
@@ -40,7 +39,7 @@ package struct ScreenBrightness: Sendable {
 extension Double {
     /// Creates a number from a brightness level, for handing to the system.
     package init(_ level: ScreenBrightness.Level) {
-        self = level.doubleValue
+        self = level.storage
     }
 }
 
