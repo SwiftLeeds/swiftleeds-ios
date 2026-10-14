@@ -1,3 +1,4 @@
+import Foundation
 import SwiftUI
 
 /// A view that identifies a subject with an icon, a title and a detail.
