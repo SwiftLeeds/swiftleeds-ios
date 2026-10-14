@@ -16,7 +16,7 @@ extension HTTPClient {
                     url: url,
                     statusCode: Int(statusCode),
                     httpVersion: nil,
-                    headerFields: nil
+                    headerFields: nil,
                 )
             else { throw StubError.couldNotBuildResponse }
             return (data, response)

@@ -1,4 +1,4 @@
-// swift-tools-version: 6.0
+// swift-tools-version: 6.1
 
 import PackageDescription
 
@@ -12,8 +12,8 @@ let package = Package(
         .library(name: "SettingsUI", targets: ["SettingsUI"])
     ],
     dependencies: [
-        .package(path: "../ColorTheme"),
         .package(path: "../NetworkKit"),
+        .package(path: "../UITheme"),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.0.0"),
         .package(url: "https://github.com/pointfreeco/swift-sharing", from: "2.10.1"),
         .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", from: "1.19.4"),
@@ -22,11 +22,11 @@ let package = Package(
         .target(
             name: "SettingsUI",
             dependencies: [
-                .product(name: "ColorTheme", package: "ColorTheme"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "NetworkKit", package: "NetworkKit"),
                 .product(name: "Sharing", package: "swift-sharing"),
-            ]
+                .product(name: "UITheme", package: "UITheme"),
+            ],
         ),
         .testTarget(
             name: "SettingsUITests",
@@ -36,16 +36,16 @@ let package = Package(
                 .product(name: "DependenciesTestSupport", package: "swift-dependencies"),
                 .product(name: "NetworkKit", package: "NetworkKit"),
                 .product(name: "Sharing", package: "swift-sharing"),
-            ]
+            ],
         ),
         .testTarget(
             name: "SettingsUISnapshotTests",
             dependencies: [
                 "SettingsUI",
-                .product(name: "ColorTheme", package: "ColorTheme"),
                 .product(name: "Sharing", package: "swift-sharing"),
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
-            ]
+                .product(name: "UITheme", package: "UITheme"),
+            ],
         ),
-    ]
+    ],
 )

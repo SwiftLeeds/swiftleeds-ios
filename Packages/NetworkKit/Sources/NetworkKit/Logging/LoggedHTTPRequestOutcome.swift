@@ -15,7 +15,7 @@ struct LoggedHTTPRequestOutcome {
                 A response arrived: \
                 \(request.loggedSummary, name: "request", privacy: .open), \
                 \(Int(status.code), name: "statusCode", privacy: .open)
-                """
+                """,
         )
     }
 
@@ -27,7 +27,7 @@ struct LoggedHTTPRequestOutcome {
                 A request did not reach the server: \
                 \(request.loggedSummary, name: "request", privacy: .open), \
                 \(reason.name, name: "reason", privacy: .open)
-                """
+                """,
         )
     }
 }

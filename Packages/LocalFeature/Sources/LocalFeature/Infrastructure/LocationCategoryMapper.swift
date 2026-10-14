@@ -29,20 +29,16 @@ extension LocationCategoryMapper {
             id: LocationCategoryID(dto.id),
             name: dto.name,
             symbolName: dto.symbolName,
-            locations: try dto.locations.map { dto throws(MappingError) in try location(dto) }
+            locations: try dto.locations.map { dto throws(MappingError) in try location(dto) },
         )
     }
 
     private static func location(_ dto: LocationCategoryListDTO.LocationDTO) throws(MappingError) -> Location {
-        guard let websiteURL = URL(string: dto.url) else {
-            throw MappingError(location: dto.name, field: .url, value: dto.url)
-        }
-
-        return Location(
+        Location(
             id: LocationID(dto.id),
             name: dto.name,
-            websiteURL: websiteURL,
-            coordinate: try coordinate(dto)
+            websiteURL: URL(string: dto.url).flatMap { $0.isWebAddress ? $0 : nil },
+            coordinate: try coordinate(dto),
         )
     }
 
@@ -57,6 +53,18 @@ extension LocationCategoryMapper {
                 throw MappingError(location: dto.name, field: .lon, value: String(dto.lon))
             }
         }
+    }
+}
+
+extension URL {
+    /// A Boolean value indicating whether this is an http or https address
+    /// with a host.
+    ///
+    /// `URL(string:)` accepts "trinityleeds.com" as a relative reference
+    /// with no scheme, which a browser cannot open.
+    fileprivate var isWebAddress: Bool {
+        guard let scheme = scheme?.lowercased(), host != nil else { return false }
+        return scheme == "http" || scheme == "https"
     }
 }
 

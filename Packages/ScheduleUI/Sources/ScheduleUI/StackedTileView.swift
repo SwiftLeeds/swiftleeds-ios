@@ -15,7 +15,7 @@ package struct StackedTileView<BackgroundType: ShapeStyle>: View {
         secondaryText: String?,
         primaryColor: Color = Color.primary,
         secondaryColor: Color = Color.secondary,
-        backgroundStyle: BackgroundType
+        backgroundStyle: BackgroundType,
     ) {
         self.primaryText = primaryText
         self.secondaryText = secondaryText
@@ -29,7 +29,7 @@ package struct StackedTileView<BackgroundType: ShapeStyle>: View {
         secondaryText: String?,
         primaryColor: Color = Color.primary,
         secondaryColor: Color = Color.secondary,
-        backgroundStyle: Color = Color.cellBackground
+        backgroundStyle: Color = Color.cellBackground,
     ) where BackgroundType == Color {
         self.primaryText = primaryText
         self.secondaryText = secondaryText
@@ -57,7 +57,7 @@ package struct StackedTileView<BackgroundType: ShapeStyle>: View {
         .padding(Padding.cell)
         .background(
             backgroundStyle,
-            in: RoundedRectangle(cornerRadius: Constants.cellRadius)
+            in: RoundedRectangle(cornerRadius: Constants.cellRadius),
         )
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(accessibilityLabel)
@@ -82,7 +82,7 @@ struct StackedTileView_Previews: PreviewProvider {
     private static let gradient = LinearGradient(
         colors: [.blue, .teal],
         startPoint: .leading,
-        endPoint: .trailing
+        endPoint: .trailing,
     )
 
     static var previews: some View {
@@ -95,14 +95,14 @@ struct StackedTileView_Previews: PreviewProvider {
                     secondaryText: longBody,
                     primaryColor: .white,
                     secondaryColor: .white,
-                    backgroundStyle: .red
+                    backgroundStyle: .red,
                 )
                 StackedTileView(
                     primaryText: "Primary",
                     secondaryText: longBody,
                     primaryColor: .white,
                     secondaryColor: .white.opacity(0.8),
-                    backgroundStyle: gradient
+                    backgroundStyle: gradient,
                 )
             }
             .padding()

@@ -46,7 +46,7 @@ extension ScheduleMapper {
 
             throw DecodingError.dataCorruptedError(
                 in: container,
-                debugDescription: "Expected an ISO8601 or dd-MM-yyyy date, got: \(dateString)"
+                debugDescription: "Expected an ISO8601 or dd-MM-yyyy date, got: \(dateString)",
             )
         }
         return decoder

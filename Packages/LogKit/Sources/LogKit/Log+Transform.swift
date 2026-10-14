@@ -22,7 +22,7 @@ extension Log {
                 category: event.category,
                 message: event.message,
                 fields: transform(event.fields),
-                source: event.source
+                source: event.source,
             )
         }
     }

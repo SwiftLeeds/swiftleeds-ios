@@ -15,7 +15,7 @@ import Testing
         let view = SectionHeader(
             title: "Local",
             fontStyle: .title2.weight(.semibold),
-            foregroundColor: .primary
+            foregroundColor: .primary,
         )
 
         assertSheetSnapshots(of: view)

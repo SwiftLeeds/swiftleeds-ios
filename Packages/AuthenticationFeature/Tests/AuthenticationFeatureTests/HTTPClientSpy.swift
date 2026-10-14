@@ -23,7 +23,7 @@ actor HTTPClientSpy {
                 url: url,
                 statusCode: statusCode,
                 httpVersion: nil,
-                headerFields: nil
+                headerFields: nil,
             )
         else { throw StubError.couldNotBuildResponse }
         return (data, response)

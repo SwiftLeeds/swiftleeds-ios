@@ -13,13 +13,13 @@ let package = Package(
             name: "DesignKit",
             targets: [
                 "DesignKit"
-            ]
+            ],
         ),
         .library(
             name: "SharedAssets",
             targets: [
                 "SharedAssets"
-            ]
+            ],
         ),
     ],
     dependencies: [
@@ -38,11 +38,11 @@ let package = Package(
             ],
             plugins: [
                 .plugin(name: "SwiftGenPlugin", package: "SwiftGenPlugin")
-            ]
+            ],
         ),
     ],
     // Set to v5 to avoid strict concurrency checking in pre swift 6 code
     swiftLanguageModes: [
         .v5
-    ]
+    ],
 )

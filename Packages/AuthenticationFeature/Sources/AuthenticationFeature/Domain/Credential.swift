@@ -1,9 +1,9 @@
 public struct Credential: Equatable, Hashable, Sendable {
-    public let email: EmailAddress
+    public let emailAddress: EmailAddress
     public let ticketReference: TicketReference
 
-    public init(email: EmailAddress, ticketReference: TicketReference) {
-        self.email = email
+    public init(emailAddress: EmailAddress, ticketReference: TicketReference) {
+        self.emailAddress = emailAddress
         self.ticketReference = ticketReference
     }
 }

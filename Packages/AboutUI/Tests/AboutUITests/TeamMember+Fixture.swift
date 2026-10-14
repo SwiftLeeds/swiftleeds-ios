@@ -10,7 +10,7 @@ extension TeamMember {
                 name: "Member One",
                 role: "Organizer",
                 photoURL: try #require(URL(string: "https://photos.example.invalid/member-one.jpg")),
-                links: []
+                links: [],
             )
         }
     }

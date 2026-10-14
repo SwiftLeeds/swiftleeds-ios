@@ -5,7 +5,7 @@ extension SessionStore {
         SessionStore(
             establish: { _ in throw error },
             clear: { throw error },
-            current: { throw error }
+            current: { throw error },
         )
     }
 }

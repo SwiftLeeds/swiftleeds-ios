@@ -5,8 +5,8 @@ extension Credential {
     static var fixture: Credential {
         get throws {
             try Credential(
-                email: EmailAddress("attendee@example.com"),
-                ticketReference: TicketReference("ABCD-12")
+                emailAddress: EmailAddress("attendee@example.com"),
+                ticketReference: TicketReference("ABCD-12"),
             )
         }
     }

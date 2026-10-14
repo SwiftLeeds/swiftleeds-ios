@@ -44,7 +44,7 @@ import UIDesign
                 url: nil,
                 size: AvatarSize.medium,
                 status: AvatarStatus("Checked in"),
-                fallback: .initials(Self.nameComponents)
+                fallback: .initials(Self.nameComponents),
             )
         }
 
@@ -62,7 +62,7 @@ import UIDesign
                     Avatar(
                         url: nil,
                         size: AvatarSize.medium,
-                        fallback: .initials(Self.nameComponents)
+                        fallback: .initials(Self.nameComponents),
                     )
                 }
             }
@@ -111,7 +111,7 @@ import UIDesign
     /// The name in parts, so the avatar can abbreviate it.
     private static let nameComponents = PersonNameComponents(
         givenName: "Ada",
-        familyName: "Archer"
+        familyName: "Archer",
     )
 
     /// Three made-up names, so a skeleton's bars vary in width the way real

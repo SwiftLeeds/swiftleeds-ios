@@ -15,7 +15,7 @@ import Testing
     @Test func whenGapHasField_shouldUseItsValue() {
         let sut = MessageTemplate(
             leadingText: "Signed in as ",
-            gaps: [.init(placeholder: user, trailingText: " now")]
+            gaps: [.init(placeholder: user, trailingText: " now")],
         )
 
         #expect(sut.rendered(with: [.open(user, "ada")]) == "Signed in as ada now")
@@ -24,7 +24,7 @@ import Testing
     @Test func whenGapHasNoField_shouldRenderMarker() {
         let sut = MessageTemplate(
             leadingText: "Signed in as ",
-            gaps: [.init(placeholder: user, trailingText: "")]
+            gaps: [.init(placeholder: user, trailingText: "")],
         )
 
         #expect(sut.rendered(with: []) == "Signed in as <redacted>")
@@ -36,7 +36,7 @@ import Testing
     @Test func whenFieldIsSecret_shouldRenderMarkerEvenThoughFieldIsPresent() {
         let sut = MessageTemplate(
             leadingText: "Token ",
-            gaps: [.init(placeholder: token, trailingText: " rejected")]
+            gaps: [.init(placeholder: token, trailingText: " rejected")],
         )
 
         let rendered = sut.rendered(with: [.secret(token, "supersecret")])
@@ -51,7 +51,7 @@ import Testing
             gaps: [
                 .init(placeholder: user, trailingText: " token "),
                 .init(placeholder: token, trailingText: ""),
-            ]
+            ],
         )
 
         let rendered = sut.rendered(with: [.open(user, "ada"), .secret(token, "abc")])
@@ -63,7 +63,7 @@ import Testing
     @Test func whenInjectedFieldSharesGapLabel_shouldNotFillTheGap() {
         let sut = MessageTemplate(
             leadingText: "Signed in as ",
-            gaps: [.init(placeholder: user, trailingText: "")]
+            gaps: [.init(placeholder: user, trailingText: "")],
         )
 
         #expect(sut.rendered(with: [.open("user", "impostor")]) == "Signed in as <redacted>")

@@ -13,7 +13,7 @@ enum TeamJSON {
         linkedin: String? = nil,
         twitter: String? = nil,
         slack: String? = "https://slack.example.com/member-one",
-        imageURL: String = "/img/team/member-one.jpg"
+        imageURL: String = "/img/team/member-one.jpg",
     ) -> String {
         let fields: [(key: String, value: String?)] = [
             ("name", name),

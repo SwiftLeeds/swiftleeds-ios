@@ -1,4 +1,4 @@
-// swift-tools-version: 6.0
+// swift-tools-version: 6.1
 
 import PackageDescription
 
@@ -21,23 +21,23 @@ let package = Package(
             name: "LogKit",
             dependencies: [
                 .product(name: "Dependencies", package: "swift-dependencies")
-            ]
+            ],
         ),
         .target(
             name: "LogKitUnified",
-            dependencies: ["LogKit"]
+            dependencies: ["LogKit"],
         ),
         .target(
             name: "LogKitTestSupport",
-            dependencies: ["LogKit"]
+            dependencies: ["LogKit"],
         ),
         .testTarget(
             name: "LogKitTests",
-            dependencies: ["LogKit", "LogKitTestSupport"]
+            dependencies: ["LogKit", "LogKitTestSupport"],
         ),
         .testTarget(
             name: "LogKitUnifiedTests",
-            dependencies: ["LogKitUnified"]
+            dependencies: ["LogKitUnified"],
         ),
-    ]
+    ],
 )

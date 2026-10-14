@@ -29,12 +29,13 @@ package struct DayView: View {
                         NavigationLink {
                             SpeakerView(
                                 presentation: presentation,
-                                showSlido: showSlido)
+                                showSlido: showSlido,
+                            )
                         } label: {
                             TalkCell(
                                 time: slot.startTime,
                                 details: presentation.title,
-                                speakers: presentation.speakers
+                                speakers: presentation.speakers,
                             )
                             .transition(.opacity)
                         }

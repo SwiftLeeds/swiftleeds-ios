@@ -1,9 +1,9 @@
-import ColorTheme
 import Dependencies
 import DependenciesTestSupport
 import Foundation
 import Sharing
 import Testing
+import UITheme
 
 @Suite(.dependencies) struct SelectedThemeTests {
     @Test func whenNoThemeIsStored_shouldReturnSystem() {

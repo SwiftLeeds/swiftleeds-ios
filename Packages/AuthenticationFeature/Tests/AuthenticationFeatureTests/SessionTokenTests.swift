@@ -4,9 +4,9 @@ import Testing
 
 @Suite struct SessionTokenTests {
     @Test func whenDescribed_shouldShowValue() throws {
-        let token = try SessionToken("jwt-abc-123")
+        let sut = try SessionToken("jwt-abc-123")
 
-        #expect(String(describing: token).contains("jwt-abc-123"))
+        #expect(String(describing: sut).contains("jwt-abc-123"))
     }
 
     @Test func whenCreatedWithSurroundingWhitespace_shouldTrim() throws {

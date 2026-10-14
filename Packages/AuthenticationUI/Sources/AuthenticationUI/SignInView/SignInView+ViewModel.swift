@@ -49,8 +49,8 @@ extension SignInView {
 
         package var credential: Credential? {
             try? Credential(
-                email: EmailAddress(email),
-                ticketReference: TicketReference(ticketReference)
+                emailAddress: EmailAddress(email),
+                ticketReference: TicketReference(ticketReference),
             )
         }
 

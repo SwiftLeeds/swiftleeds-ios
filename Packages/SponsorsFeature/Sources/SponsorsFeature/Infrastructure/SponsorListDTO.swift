@@ -34,7 +34,7 @@ package struct SponsorListDTO: Decodable {
             image: String,
             sponsorLevel: String,
             url: String,
-            jobs: [JobDTO]
+            jobs: [JobDTO],
         ) {
             self.id = id
             self.name = name

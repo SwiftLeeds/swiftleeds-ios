@@ -52,6 +52,6 @@ private func expectedProfile() throws -> Profile {
         emailAddress: "ada@example.com",
         avatarURL: try #require(URL(string: "https://example.com/avatar.png")),
         ticketReference: "ABCD-12",
-        ticketSlug: try TicketSlug("ti_abc")
+        ticketSlug: try TicketSlug("ti_abc"),
     )
 }

@@ -205,7 +205,7 @@ import Testing
     @Test(arguments: requestsWithoutContent)
     func whenMethodHasNoDefinedContent_shouldBuildWithoutContent(
         request: HTTPRequest,
-        token: String
+        token: String,
     ) throws {
         let built = try request.urlRequest(baseURL: baseURL)
 
@@ -216,7 +216,7 @@ import Testing
     @Test(arguments: requestsWithContent)
     func whenMethodDefinesContent_shouldBuildWithContent(
         request: HTTPRequest,
-        token: String
+        token: String,
     ) throws {
         let built = try request.urlRequest(baseURL: baseURL)
 

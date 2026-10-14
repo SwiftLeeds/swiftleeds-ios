@@ -1,5 +1,5 @@
-import ColorTheme
 import Testing
+import UITheme
 
 @Suite struct ThemeOptionTests {
     @Test(arguments: zip([ThemeOption.system, .light, .dark], ["system", "light", "dark"]))

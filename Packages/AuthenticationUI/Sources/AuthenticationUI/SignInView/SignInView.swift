@@ -62,12 +62,12 @@ public struct SignInView: View {
             }
         }
         .disabled(viewModel.isSubmitting)
-        .alert("We can't connect", isPresented: presenting(.cannotConnect)) {
+        .alert("We can't connect.", isPresented: presenting(.cannotConnect)) {
             Button("OK", role: .cancel) {}
         } message: {
             Text("Check your connection and try again.")
         }
-        .alert("We can't sign you in", isPresented: presenting(.unexpected)) {
+        .alert("We can't sign you in.", isPresented: presenting(.unexpected)) {
             Button("OK", role: .cancel) {}
         } message: {
             Text("Something went wrong at our end. Try again in a moment.")
@@ -81,7 +81,7 @@ public struct SignInView: View {
                 if !isPresented {
                     viewModel.dismissError()
                 }
-            }
+            },
         )
     }
 }

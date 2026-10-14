@@ -62,7 +62,7 @@ extension View {
     TicketView(
         slug: Profile.preview.ticketSlug,
         reference: Profile.preview.ticketReference,
-        name: Profile.preview.name
+        name: Profile.preview.name,
     )
 }
 #endif

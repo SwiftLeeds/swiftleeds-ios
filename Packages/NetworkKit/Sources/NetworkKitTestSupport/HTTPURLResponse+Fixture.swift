@@ -10,7 +10,7 @@ extension HTTPURLResponse {
     ///   - statusCode: The status code the response carries.
     public static func fixture(
         url: String = "https://example.com",
-        statusCode: HTTPStatusCode
+        statusCode: HTTPStatusCode,
     ) throws(StubError) -> HTTPURLResponse {
         guard let parsed = URL(string: url) else {
             throw StubError.couldNotParseURL
@@ -20,7 +20,7 @@ extension HTTPURLResponse {
                 url: parsed,
                 statusCode: Int(statusCode),
                 httpVersion: nil,
-                headerFields: nil
+                headerFields: nil,
             )
         else {
             throw StubError.couldNotBuildResponse

@@ -14,7 +14,7 @@ func assertSnapshots(
     file filePath: StaticString = #filePath,
     testName: String = #function,
     line: UInt = #line,
-    column: UInt = #column
+    column: UInt = #column,
 ) {
     assertSnapshots(
         of: view,
@@ -23,7 +23,7 @@ func assertSnapshots(
         file: filePath,
         testName: testName,
         line: line,
-        column: column
+        column: column,
     )
 }
 
@@ -47,7 +47,7 @@ func assertCompactSnapshots(
     file filePath: StaticString = #filePath,
     testName: String = #function,
     line: UInt = #line,
-    column: UInt = #column
+    column: UInt = #column,
 ) {
     assertSnapshots(
         of: view,
@@ -56,7 +56,7 @@ func assertCompactSnapshots(
         file: filePath,
         testName: testName,
         line: line,
-        column: column
+        column: column,
     )
 }
 
@@ -75,7 +75,7 @@ func assertSpecimenSnapshots(
     file filePath: StaticString = #filePath,
     testName: String = #function,
     line: UInt = #line,
-    column: UInt = #column
+    column: UInt = #column,
 ) {
     assertSnapshots(
         of: view,
@@ -84,7 +84,7 @@ func assertSpecimenSnapshots(
         file: filePath,
         testName: testName,
         line: line,
-        column: column
+        column: column,
     )
 }
 
@@ -123,7 +123,7 @@ private let defaultTextSize: (name: String, size: DynamicTypeSize) = ("default",
 @MainActor
 private func variants<V: View>(
     width: CGFloat?,
-    textSizes: [(name: String, size: DynamicTypeSize)]
+    textSizes: [(name: String, size: DynamicTypeSize)],
 ) -> [String: Snapshotting<V, UIImage>] {
     let prefix = width == nil ? "" : "compact-"
     return colorSchemes.reduce(into: [:]) { strategies, scheme in

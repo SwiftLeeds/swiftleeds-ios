@@ -15,7 +15,7 @@ actor SecureStorageSpy {
         SecureStorage(
             data: { await self.data($0) },
             set: { await self.set($0, $1) },
-            remove: { await self.remove($0) }
+            remove: { await self.remove($0) },
         )
     }
 

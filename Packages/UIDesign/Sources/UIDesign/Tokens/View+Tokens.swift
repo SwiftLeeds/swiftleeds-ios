@@ -30,7 +30,7 @@ extension HStack {
     public init(
         alignment: VerticalAlignment = .center,
         spacing: Spacing,
-        @ViewBuilder content: () -> Content
+        @ViewBuilder content: () -> Content,
     ) {
         self.init(alignment: alignment, spacing: CGFloat(spacing), content: content)
     }
@@ -41,7 +41,7 @@ extension VStack {
     public init(
         alignment: HorizontalAlignment = .center,
         spacing: Spacing,
-        @ViewBuilder content: () -> Content
+        @ViewBuilder content: () -> Content,
     ) {
         self.init(alignment: alignment, spacing: CGFloat(spacing), content: content)
     }

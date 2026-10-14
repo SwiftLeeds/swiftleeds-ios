@@ -16,7 +16,7 @@ package struct SignOutButton: View {
         .confirmationDialog(
             "Sign out of your account?",
             isPresented: $isConfirming,
-            titleVisibility: .visible
+            titleVisibility: .visible,
         ) {
             Button("Sign Out", role: .destructive) {
                 Task { await signOut() }

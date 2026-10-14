@@ -12,7 +12,7 @@ extension SecureStorage {
         return SecureStorage(
             data: { key in try await store.data(for: key) },
             set: { data, key in try await store.set(data, for: key) },
-            remove: { key in try await store.remove(key) }
+            remove: { key in try await store.remove(key) },
         )
     }
 }

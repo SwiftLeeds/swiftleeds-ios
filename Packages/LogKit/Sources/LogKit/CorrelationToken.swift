@@ -28,7 +28,7 @@ struct CorrelationToken {
     init(_ value: String, salt: LogSalt) {
         let code = HMAC<SHA256>.authenticationCode(
             for: Data(value.utf8),
-            using: SymmetricKey(data: Data(salt))
+            using: SymmetricKey(data: Data(salt)),
         )
 
         storage =

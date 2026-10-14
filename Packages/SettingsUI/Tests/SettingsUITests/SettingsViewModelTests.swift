@@ -38,7 +38,7 @@ import Testing
     @Test func whenContactUsIsOpened_shouldOpenMailtoLinkForContactEmail() async throws {
         let sut = try SettingsViewModel(
             contactEmail: ContactEmail("organizers@conference.example"),
-            appVersion: .fixture
+            appVersion: .fixture,
         )
         let opened = LockIsolated<[URL]>([])
 
@@ -68,7 +68,7 @@ import Testing
 
     private func changingIcon(
         to icon: AppIconOption,
-        result: Result<Void, AppIconChangeError>
+        result: Result<Void, AppIconChangeError>,
     ) async throws -> SettingsViewModel {
         let sut = try SettingsViewModel.fixture
         await withDependencies {

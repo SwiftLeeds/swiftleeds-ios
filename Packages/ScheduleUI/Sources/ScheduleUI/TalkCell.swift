@@ -19,7 +19,7 @@ package struct TalkCell: View {
         details: String,
         isNext: Bool = false,
         speakers: [Speaker] = [],
-        gradientColors: [Color] = []
+        gradientColors: [Color] = [],
     ) {
         self.time = time
         self.details = details
@@ -65,7 +65,7 @@ package struct TalkCell: View {
                                                 .opacity(0.3)
                                                 .frame(maxWidth: 40, maxHeight: 40)
                                                 .clipShape(Circle())
-                                        }
+                                        },
                                     )
                                 }
                             }

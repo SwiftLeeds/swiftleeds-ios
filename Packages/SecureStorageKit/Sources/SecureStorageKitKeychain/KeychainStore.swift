@@ -17,7 +17,7 @@ actor KeychainStore {
         var result: CFTypeRef?
         let status = SecItemCopyMatching(
             KeychainQuery.read(service: service, key: key) as CFDictionary,
-            &result
+            &result,
         )
 
         switch status {
@@ -61,7 +61,7 @@ actor KeychainStore {
     private func add(_ data: Data, for key: SecureStorageKey) throws {
         let status = SecItemAdd(
             KeychainQuery.add(service: service, key: key, data: data) as CFDictionary,
-            nil
+            nil,
         )
 
         switch status {
@@ -81,7 +81,7 @@ actor KeychainStore {
     private func update(_ data: Data, for key: SecureStorageKey) -> OSStatus {
         SecItemUpdate(
             KeychainQuery.identity(service: service, key: key) as CFDictionary,
-            KeychainQuery.update(data: data) as CFDictionary
+            KeychainQuery.update(data: data) as CFDictionary,
         )
     }
 }

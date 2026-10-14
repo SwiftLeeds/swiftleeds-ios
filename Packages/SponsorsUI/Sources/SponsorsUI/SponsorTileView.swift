@@ -43,7 +43,7 @@ package struct SponsorTileView: View {
                     imageSection
                     infoSection
                 }
-            }
+            },
         )
         .buttonStyle(SquishyButtonStyle())
     }
@@ -71,7 +71,7 @@ package struct SponsorTileView: View {
                             LinearGradient(
                                 colors: [Color.cellBackground, Color.cellBackground.opacity(0.8)],
                                 startPoint: .top,
-                                endPoint: .bottom
+                                endPoint: .bottom,
                             )
                         )
                         .clipped()
@@ -82,7 +82,7 @@ package struct SponsorTileView: View {
                         .overlay(
                             ShimmerView()
                         )
-                }
+                },
             )
             .aspectRatio(1.66, contentMode: .fit)
             .accessibilityHidden(true)
@@ -102,7 +102,7 @@ package struct SponsorTileView: View {
                                         LinearGradient(
                                             colors: [.purple, .purple.opacity(0.8)],
                                             startPoint: .leading,
-                                            endPoint: .trailing
+                                            endPoint: .trailing,
                                         )
                                     )
                             )
@@ -189,7 +189,7 @@ package struct SponsorTileView: View {
                     }
                     .padding()
                     .background(Color.accent.opacity(0.05))
-                }
+                },
             )
 
             if showingJobs {
@@ -201,7 +201,7 @@ package struct SponsorTileView: View {
                 .transition(
                     .asymmetric(
                         insertion: .push(from: .top).combined(with: .opacity),
-                        removal: .push(from: .bottom).combined(with: .opacity)
+                        removal: .push(from: .bottom).combined(with: .opacity),
                     ))
             }
         }
@@ -253,7 +253,7 @@ struct JobRowView: View {
                     .padding()
                     .background(isPressed ? Color.accent.opacity(0.05) : Color.clear)
                 }
-            }
+            },
         )
         .scaleEffect(isPressed ? 0.97 : 1.0)
         .onLongPressGesture(
@@ -262,7 +262,8 @@ struct JobRowView: View {
                 withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
                     isPressed = pressing
                 }
-            }, perform: {})
+            }, perform: {},
+        )
     }
 }
 
@@ -285,7 +286,7 @@ struct SponsorTileView_Previews: PreviewProvider {
         level: .platinum,
         logoURL: sampleLogoURL,
         websiteURL: nil,
-        jobs: [sampleJob]
+        jobs: [sampleJob],
     )
 
     private static let sampleLogoURL = URL(
@@ -298,6 +299,6 @@ struct SponsorTileView_Previews: PreviewProvider {
         title: "Senior iOS Engineer",
         details: "Bringing all your Swift skills to the fore",
         location: "Leeds",
-        url: URL(string: "https://example.com")
+        url: URL(string: "https://example.com"),
     )
 }

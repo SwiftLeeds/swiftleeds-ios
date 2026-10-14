@@ -33,7 +33,7 @@ package struct BottomSheetView: View {
         isOpen: Binding<Bool>,
         selectedCategory: Binding<LocationCategory?>,
         categories: [LocationCategory],
-        maxHeight: CGFloat
+        maxHeight: CGFloat,
     ) {
         self.minHeight = maxHeight * Constants.minHeightRatio
         self.maxHeight = maxHeight
@@ -50,7 +50,7 @@ package struct BottomSheetView: View {
                     SectionHeader(
                         title: "Local",
                         fontStyle: .title2.weight(.semibold),
-                        foregroundColor: .primary
+                        foregroundColor: .primary,
                     )
                     .fitToReadableContentGuide(type: .width)
                     ScrollView {
@@ -59,7 +59,7 @@ package struct BottomSheetView: View {
                                 label: category.name,
                                 imageName: category.symbolName,
                                 foregroundColor: (category == selectedCategory ? .accent : .cellForeground),
-                                labelFontStyle: .body
+                                labelFontStyle: .body,
                             ) {
                                 selectedCategory = category
                             }
@@ -109,7 +109,7 @@ struct BottomSheet_Previews: PreviewProvider {
                 isOpen: .constant(true),
                 selectedCategory: .constant(items.first),
                 categories: items,
-                maxHeight: proxy.size.height * Constants.maxHeightRatio
+                maxHeight: proxy.size.height * Constants.maxHeightRatio,
             )
             .background(.blue)
             .previewDevice(PreviewDevice(rawValue: "iPhone 13"))
@@ -123,20 +123,20 @@ struct BottomSheet_Previews: PreviewProvider {
                 category(
                     "Food",
                     symbolName: "takeoutbag.and.cup.and.straw.fill",
-                    location: try location(
+                    location: location(
                         "Trinity Kitchen",
                         link: "https://trinityleeds.com/shops/trinity-kitchen",
-                        coordinate: try Coordinate(latitude: 53.797378, longitude: -1.545209)
-                    )
+                        coordinate: try Coordinate(latitude: 53.797378, longitude: -1.545209),
+                    ),
                 ),
                 category(
                     "Drinks",
                     symbolName: "wineglass.fill",
-                    location: try location(
+                    location: location(
                         "Brew Society",
                         link: "https://www.brewsociety.co.uk/",
-                        coordinate: try Coordinate(latitude: 53.79584058588689, longitude: -1.550339186509128)
-                    )
+                        coordinate: try Coordinate(latitude: 53.79584058588689, longitude: -1.550339186509128),
+                    ),
                 ),
             ]
         }
@@ -146,9 +146,8 @@ struct BottomSheet_Previews: PreviewProvider {
         LocationCategory(id: LocationCategoryID(UUID()), name: name, symbolName: symbolName, locations: [location])
     }
 
-    private static func location(_ name: String, link: String, coordinate: Coordinate) throws -> Location {
-        guard let websiteURL = URL(string: link) else { throw URLError(.badURL) }
-        return Location(id: LocationID(UUID()), name: name, websiteURL: websiteURL, coordinate: coordinate)
+    private static func location(_ name: String, link: String, coordinate: Coordinate) -> Location {
+        Location(id: LocationID(UUID()), name: name, websiteURL: URL(string: link), coordinate: coordinate)
     }
 }
 #endif

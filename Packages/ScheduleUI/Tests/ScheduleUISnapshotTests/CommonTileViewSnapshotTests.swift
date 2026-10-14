@@ -9,7 +9,7 @@ import Testing
         let view = CommonTileView(
             primaryText: "Twitter",
             secondaryText: "@alexfletcher",
-            secondaryColor: Color.primary
+            secondaryColor: Color.primary,
         )
 
         assertTileSnapshots(of: view, width: fullTileWidth)
@@ -20,7 +20,7 @@ import Testing
             icon: "video.fill",
             primaryText: "Watch video",
             showChevron: true,
-            secondaryColor: Color.primary
+            secondaryColor: Color.primary,
         )
 
         assertTileSnapshots(of: view, width: fullTileWidth)

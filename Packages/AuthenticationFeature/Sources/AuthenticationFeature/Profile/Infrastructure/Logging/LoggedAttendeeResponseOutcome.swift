@@ -8,7 +8,7 @@ struct LoggedAttendeeResponseOutcome {
     // Carries no field. The accepted value holds a name, an email address and a ticket reference.
     static let success = LoggedAttendeeResponseOutcome(
         level: .debug,
-        message: "The attendee response was accepted"
+        message: "The attendee response was accepted",
     )
 
     static func failure(_ error: AttendeeMapper.ResponseError) -> LoggedAttendeeResponseOutcome {
@@ -16,7 +16,7 @@ struct LoggedAttendeeResponseOutcome {
         case let .couldNotDecode(cause):
             LoggedAttendeeResponseOutcome(
                 level: .error,
-                message: "The attendee response could not be decoded: \(cause, name: "reason", privacy: .open)"
+                message: "The attendee response could not be decoded: \(cause, name: "reason", privacy: .open)",
             )
         case let .invalidField(invalid):
             LoggedAttendeeResponseOutcome(
@@ -24,13 +24,13 @@ struct LoggedAttendeeResponseOutcome {
                 message: """
                     The attendee response had an invalid \(invalid.field.rawValue, name: "field", privacy: .open): \
                     \(invalid.reason, name: "reason", privacy: .open)
-                    """
+                    """,
             )
         case .unauthorized:
             // Expected: the session expired or was revoked. Not a fault in the app.
             LoggedAttendeeResponseOutcome(
                 level: .notice,
-                message: "The attendee request was not authorized"
+                message: "The attendee request was not authorized",
             )
         case let .unexpectedStatus(status):
             LoggedAttendeeResponseOutcome(
@@ -39,7 +39,7 @@ struct LoggedAttendeeResponseOutcome {
                     The attendee request got an unexpected status \
                     \(Int(status.code), name: "statusCode", privacy: .open) \
                     (\(String(status.category), name: "statusCategory", privacy: .open))
-                    """
+                    """,
             )
         }
     }

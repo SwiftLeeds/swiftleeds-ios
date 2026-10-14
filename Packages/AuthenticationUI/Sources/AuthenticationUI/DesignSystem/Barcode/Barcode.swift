@@ -32,7 +32,7 @@ package struct Barcode<Placeholder: View, Failure: View>: View {
     private init(
         source: Source,
         @ViewBuilder placeholder: @escaping () -> Placeholder,
-        @ViewBuilder failure: @escaping () -> Failure
+        @ViewBuilder failure: @escaping () -> Failure,
     ) {
         self.source = source
         self.placeholder = placeholder
@@ -91,7 +91,7 @@ extension Barcode {
     package init(
         url: URL?,
         @ViewBuilder placeholder: @escaping () -> Placeholder,
-        @ViewBuilder failure: @escaping () -> Failure
+        @ViewBuilder failure: @escaping () -> Failure,
     ) {
         self.init(source: .remote(url), placeholder: placeholder, failure: failure)
     }

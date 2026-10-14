@@ -130,6 +130,7 @@ cut -d: -f1 < "$work/findings.log" | sort -u > "$work/files.txt"
 count=$(wc -l < "$work/files.txt" | tr -d ' ')
 
 fatal "$count file(s) are not formatted"
+echo "If '[Spacing] add 1 space' follows a ',)' after a format run, put that closing bracket on its own line." >&2
 {
     echo "### 🎨 Formatting"
     echo
@@ -140,6 +141,10 @@ fatal "$count file(s) are not formatted"
     echo '```sh'
     echo ".github/scripts/format.sh"
     echo '```'
+    echo
+    echo "If the check still fails after that with \`[Spacing] add 1 space\` after a"
+    echo "\`,)\`, move that closing bracket onto its own line. The formatter puts a comma"
+    echo "before a bracket on the same line, and then rejects its own output."
     echo
     echo "<details><summary>The files</summary>"
     echo

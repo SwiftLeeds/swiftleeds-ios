@@ -11,7 +11,7 @@ package struct ProfileCard: View {
         ProfileCardContent(
             state: viewModel.state,
             retry: { await viewModel.load() },
-            signOut: { await viewModel.signOut() }
+            signOut: { await viewModel.signOut() },
         )
         .task { await viewModel.load() }
     }

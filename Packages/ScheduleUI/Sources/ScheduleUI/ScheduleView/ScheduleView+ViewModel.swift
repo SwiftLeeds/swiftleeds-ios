@@ -51,7 +51,7 @@ extension ScheduleView {
 
         private func showSchedule(
             for event: Schedule.Event,
-            keepingSpinnerForAtLeast minimum: Duration
+            keepingSpinnerForAtLeast minimum: Duration,
         ) async {
             @Dependency(\.fetchSchedule) var fetchSchedule
             let spinnerMinimum = startTimer(lasting: minimum)
@@ -90,7 +90,7 @@ extension ScheduleView {
                     Schedule.Day(
                         date: day.date,
                         name: day.name,
-                        slots: day.slots.sorted { $0.startTime < $1.startTime }
+                        slots: day.slots.sorted { $0.startTime < $1.startTime },
                     )
                 }
 

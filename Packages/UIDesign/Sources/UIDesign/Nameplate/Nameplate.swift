@@ -60,7 +60,7 @@ public struct Nameplate<Title: View, Detail: View, Icon: View>: View {
     public init(
         @ViewBuilder title: () -> Title,
         @ViewBuilder detail: () -> Detail,
-        @ViewBuilder icon: () -> Icon
+        @ViewBuilder icon: () -> Icon,
     ) {
         self.title = title()
         self.detail = detail()
@@ -89,7 +89,7 @@ extension Nameplate where Title == Text, Detail == Text {
     public init(
         _ titleKey: LocalizedStringKey,
         detail: LocalizedStringKey,
-        @ViewBuilder icon: () -> Icon
+        @ViewBuilder icon: () -> Icon,
     ) {
         self.init(title: { Text(titleKey) }, detail: { Text(detail) }, icon: icon)
     }
@@ -106,7 +106,7 @@ extension Nameplate where Title == Text, Detail == Text {
     public init(
         _ title: some StringProtocol,
         detail: some StringProtocol,
-        @ViewBuilder icon: () -> Icon
+        @ViewBuilder icon: () -> Icon,
     ) {
         self.init(title: { Text(title) }, detail: { Text(detail) }, icon: icon)
     }
@@ -142,7 +142,7 @@ private let previewCompany = "Northern Software"
 /// The preview name in parts, so the avatar can abbreviate it.
 private let previewNameComponents = PersonNameComponents(
     givenName: "Ada",
-    familyName: "Archer"
+    familyName: "Archer",
 )
 
 #Preview("Row") {
@@ -168,7 +168,7 @@ private let previewNameComponents = PersonNameComponents(
             url: nil,
             size: .large,
             status: AvatarStatus("Checked in"),
-            fallback: .initials(previewNameComponents)
+            fallback: .initials(previewNameComponents),
         )
     }
     .nameplateStyle(.prominent)

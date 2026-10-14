@@ -1,9 +1,9 @@
 #if os(iOS)
-import ColorTheme
 import SettingsUI
 import Sharing
 import SwiftUI
 import Testing
+import UITheme
 
 @MainActor
 @Suite struct SettingsViewSnapshotTests {
@@ -23,7 +23,7 @@ import Testing
     private func settingsView() throws -> some View {
         SettingsView(
             contactEmail: try ContactEmail("hello@conference.example"),
-            appVersion: try AppVersion("2.1.0")
+            appVersion: try AppVersion("2.1.0"),
         )
     }
 }

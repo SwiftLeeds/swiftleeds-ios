@@ -21,7 +21,7 @@ struct HTTPClientURLSessionTests {
             response: try #require(
                 HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)
             ),
-            error: nil
+            error: nil,
         )
         let sut = HTTPClient.urlSession(URLProtocolStub.session())
 
@@ -48,7 +48,7 @@ struct HTTPClientURLSessionTests {
         URLProtocolStub.stub(
             data: Data(),
             response: URLResponse(url: url, mimeType: nil, expectedContentLength: 0, textEncodingName: nil),
-            error: nil
+            error: nil,
         )
         let sut = HTTPClient.urlSession(URLProtocolStub.session())
 

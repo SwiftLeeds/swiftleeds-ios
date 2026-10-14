@@ -15,7 +15,7 @@ extension Log {
         in category: LogCategory,
         file: String = #fileID,
         function: String = #function,
-        line: Int = #line
+        line: Int = #line,
     ) {
         record(.debug, category, message, SourceLocation(file: file, function: function, line: line))
     }
@@ -33,7 +33,7 @@ extension Log {
         in category: LogCategory,
         file: String = #fileID,
         function: String = #function,
-        line: Int = #line
+        line: Int = #line,
     ) {
         record(.info, category, message, SourceLocation(file: file, function: function, line: line))
     }
@@ -51,7 +51,7 @@ extension Log {
         in category: LogCategory,
         file: String = #fileID,
         function: String = #function,
-        line: Int = #line
+        line: Int = #line,
     ) {
         record(.notice, category, message, SourceLocation(file: file, function: function, line: line))
     }
@@ -69,7 +69,7 @@ extension Log {
         in category: LogCategory,
         file: String = #fileID,
         function: String = #function,
-        line: Int = #line
+        line: Int = #line,
     ) {
         record(.warning, category, message, SourceLocation(file: file, function: function, line: line))
     }
@@ -87,7 +87,7 @@ extension Log {
         in category: LogCategory,
         file: String = #fileID,
         function: String = #function,
-        line: Int = #line
+        line: Int = #line,
     ) {
         record(.error, category, message, SourceLocation(file: file, function: function, line: line))
     }
@@ -105,7 +105,7 @@ extension Log {
         in category: LogCategory,
         file: String = #fileID,
         function: String = #function,
-        line: Int = #line
+        line: Int = #line,
     ) {
         record(.critical, category, message, SourceLocation(file: file, function: function, line: line))
     }

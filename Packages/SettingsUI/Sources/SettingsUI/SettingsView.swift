@@ -1,7 +1,7 @@
 #if canImport(UIKit)
-import ColorTheme
 import Sharing
 import SwiftUI
+import UITheme
 
 public struct SettingsView<Header: View>: View {
     @Shared(.selectedTheme) private var theme
@@ -17,7 +17,7 @@ public struct SettingsView<Header: View>: View {
     public init(
         contactEmail: ContactEmail,
         appVersion: AppVersion,
-        @ViewBuilder header: () -> Header = { EmptyView() }
+        @ViewBuilder header: () -> Header = { EmptyView() },
     ) {
         _viewModel = State(initialValue: SettingsViewModel(contactEmail: contactEmail, appVersion: appVersion))
         self.header = header()
@@ -36,7 +36,7 @@ public struct SettingsView<Header: View>: View {
                                 isSelected: viewModel.currentIcon == iconOption,
                                 action: {
                                     Task { await viewModel.changeAppIcon(to: iconOption) }
-                                }
+                                },
                             )
                         }
                     }
@@ -69,10 +69,10 @@ public struct SettingsView<Header: View>: View {
                 }
             }
             .navigationTitle("Settings")
-            .alert("Icon Change Failed", isPresented: $viewModel.showingIconError) {
-                Button("OK") {}
+            .alert("We can't change the app icon.", isPresented: $viewModel.showingIconError) {
+                Button("OK", role: .cancel) {}
             } message: {
-                Text("Unable to change app icon. Please try again.")
+                Text("Try again later.")
             }
         }
     }

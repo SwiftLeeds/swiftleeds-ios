@@ -39,7 +39,7 @@ extension Sponsor {
     fileprivate static func sponsor(
         named name: String,
         at level: SponsorLevel,
-        jobs: [Job] = []
+        jobs: [Job] = [],
     ) -> Sponsor {
         Sponsor(
             id: SponsorID(name.lowercased()),
@@ -48,7 +48,7 @@ extension Sponsor {
             level: level,
             logoURL: nil,
             websiteURL: nil,
-            jobs: jobs
+            jobs: jobs,
         )
     }
 }
@@ -59,7 +59,7 @@ extension Job {
         title: "Senior iOS Engineer",
         details: "Bringing all your Swift skills to the fore",
         location: "Leeds",
-        url: nil
+        url: nil,
     )
 }
 #endif

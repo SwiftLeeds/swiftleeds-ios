@@ -29,7 +29,7 @@ package struct TeamDTO: Decodable {
             linkedin: String?,
             twitter: String?,
             slack: String?,
-            imageURL: String
+            imageURL: String,
         ) {
             self.name = name
             self.role = role

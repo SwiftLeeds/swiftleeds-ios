@@ -17,13 +17,13 @@ extension Log {
         _ message: LogMessage,
         file: String = #fileID,
         function: String = #function,
-        line: Int = #line
+        line: Int = #line,
     ) {
         record(
             level,
             category,
             message,
-            SourceLocation(file: file, function: function, line: line)
+            SourceLocation(file: file, function: function, line: line),
         )
     }
 
@@ -41,7 +41,7 @@ extension Log {
         _ level: LogLevel,
         _ category: LogCategory,
         _ message: LogMessage,
-        _ source: SourceLocation
+        _ source: SourceLocation,
     ) {
         write(
             LogEvent(
@@ -49,7 +49,7 @@ extension Log {
                 category: category,
                 message: message.template,
                 fields: message.values,
-                source: source
+                source: source,
             )
         )
     }

@@ -12,7 +12,7 @@ public struct Profile: Equatable, Hashable, Sendable {
         emailAddress: String,
         avatarURL: URL,
         ticketReference: String,
-        ticketSlug: TicketSlug
+        ticketSlug: TicketSlug,
     ) {
         self.name = name
         self.emailAddress = emailAddress
@@ -29,7 +29,7 @@ extension Profile {
             emailAddress: String(attendee.emailAddress),
             avatarURL: URL(attendee.avatarURL),
             ticketReference: String(attendee.ticketReference),
-            ticketSlug: attendee.ticketSlug
+            ticketSlug: attendee.ticketSlug,
         )
     }
 }
