@@ -1,5 +1,5 @@
 #if canImport(UIKit)
-import _LocationEssentials
+import CoreLocation
 import DesignKit
 import LocalFeature
 import MapKit

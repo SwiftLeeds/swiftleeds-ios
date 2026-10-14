@@ -158,6 +158,10 @@ unused_import:
       allowed_transitive_imports:
         - CoreFoundation
         - CoreGraphics
+    # CoreLocation re-exports the private module that holds `CLLocationCoordinate2D`.
+    - module: CoreLocation
+      allowed_transitive_imports:
+        - _LocationEssentials
     # `swift-dependencies` re-exports these two with `@_exported`.
     - module: Dependencies
       allowed_transitive_imports:
