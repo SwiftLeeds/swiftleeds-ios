@@ -7,7 +7,7 @@ struct LoginRequestDTO: Encodable {
     }
 
     init(_ credential: Credential) {
-        email = String(credential.email)
+        email = String(credential.emailAddress)
         ticket = String(credential.ticketReference)
     }
 
