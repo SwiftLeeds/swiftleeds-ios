@@ -25,10 +25,10 @@ struct BandPatternView: View {
     private static let lineWidth: CGFloat = 3
 
     /// The radius of a dot.
-    private static let dotRadius: CGFloat = 2.5
+    private static let dotRadius: CGFloat = 2
 
     /// The distance between the centers of two dots.
-    private static let dotGap: CGFloat = 14
+    private static let dotGap: CGFloat = 10
 
     /// The strength of the white, stronger when the person differentiates
     /// without color.
