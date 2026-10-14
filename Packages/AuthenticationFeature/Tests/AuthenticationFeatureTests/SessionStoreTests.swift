@@ -19,6 +19,21 @@ import Testing
         }
     }
 
+    @Test func whenStoredTokenIsValid_shouldReturnStoredSession() async throws {
+        let spy = SecureStorageSpy()
+        let expected = Session(token: try SessionToken("jwt-abc-123"))
+
+        try await withDependencies {
+            $0.secureStorage = spy.secureStorage
+        } operation: {
+            try await spy.secureStorage.set(Data(#"{"token":"jwt-abc-123"}"#.utf8), SecureStorageKey("auth.session"))
+
+            let sut = SessionStore.liveValue
+            let current = try await sut.current()
+            #expect(current == expected)
+        }
+    }
+
     @Test func whenSessionEstablished_shouldReadBackSameSession() async throws {
         let session = Session(token: try SessionToken("jwt-abc-123"))
 
