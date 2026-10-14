@@ -6,7 +6,7 @@ public struct LocationID: Equatable, Hashable, Sendable {
     fileprivate let storage: UUID
 
     /// Creates a location identity.
-    /// - Parameter value: The identifier the backend sent.
+    /// - Parameter value: The identifier.
     public init(_ value: UUID) {
         self.storage = value
     }

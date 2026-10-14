@@ -6,7 +6,7 @@ public struct LocationCategoryID: Equatable, Hashable, Sendable {
     fileprivate let storage: UUID
 
     /// Creates a category identity.
-    /// - Parameter value: The identifier the backend sent.
+    /// - Parameter value: The identifier.
     public init(_ value: UUID) {
         self.storage = value
     }
