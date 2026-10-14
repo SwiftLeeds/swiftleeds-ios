@@ -52,7 +52,7 @@ extension Icon {
     public static let share = Icon(.squareAndArrowUp)
     /// A plus, for creating an item.
     public static let add = Icon(.plus)
-    /// A bin, for removing an item.
+    /// A trash can, for removing an item.
     public static let delete = Icon(.trash)
     /// A pencil, for changing an item.
     public static let edit = Icon(.pencil)
