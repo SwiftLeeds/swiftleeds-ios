@@ -5,7 +5,7 @@ import SponsorsFeature
 import SwiftUI
 import UIComponents
 
-#if canImport(UIKit)
+#if os(iOS)
 import UIKit
 #endif
 
