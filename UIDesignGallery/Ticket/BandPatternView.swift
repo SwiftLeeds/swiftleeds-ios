@@ -83,12 +83,14 @@ struct BandPatternView: View {
         return path
     }
 
-    /// Returns level stripes that cover a region.
+    /// Returns level stripes that cover a region, centered in it.
+    ///
+    /// The margin is the same at the top and the bottom.
     ///
     /// - Parameter size: The size of the region to cover.
     private func stripes(in size: CGSize) -> Path {
         var path = Path()
-        for height in stride(from: Self.gap / 2, through: size.height, by: Self.gap) {
+        for height in centeredPositions(along: size.height, spacing: Self.gap) {
             path.move(to: CGPoint(x: 0, y: height))
             path.addLine(to: CGPoint(x: size.width, y: height))
         }
@@ -102,8 +104,8 @@ struct BandPatternView: View {
     /// - Parameter size: The size of the region to cover.
     private func dots(in size: CGSize) -> Path {
         var path = Path()
-        for x in centeredPositions(along: size.width) {
-            for y in centeredPositions(along: size.height) {
+        for x in centeredPositions(along: size.width, spacing: Self.dotGap) {
+            for y in centeredPositions(along: size.height, spacing: Self.dotGap) {
                 path.addEllipse(
                     in: CGRect(
                         x: x - Self.dotRadius,
@@ -117,12 +119,14 @@ struct BandPatternView: View {
         return path
     }
 
-    /// Returns the centers of the dots along one side, with equal margins at both ends.
+    /// Returns evenly spaced positions along one side, with equal margins at both ends.
     ///
-    /// - Parameter length: The length of the side.
-    private func centeredPositions(along length: CGFloat) -> [CGFloat] {
-        let count = Int(length / Self.dotGap)
-        let first = (length - CGFloat(count - 1) * Self.dotGap) / 2
-        return (0..<count).map { first + CGFloat($0) * Self.dotGap }
+    /// - Parameters:
+    ///   - length: The length of the side.
+    ///   - spacing: The distance between two neighboring positions.
+    private func centeredPositions(along length: CGFloat, spacing: CGFloat) -> [CGFloat] {
+        let count = Int(length / spacing)
+        let first = (length - CGFloat(count - 1) * spacing) / 2
+        return (0..<count).map { first + CGFloat($0) * spacing }
     }
 }
