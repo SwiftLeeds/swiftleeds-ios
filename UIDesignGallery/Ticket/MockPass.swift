@@ -1,19 +1,15 @@
 import SwiftUI
 import UIDesign
 
-/// A view that stands in for the ticket pass: a raised card with a role band, a name and a code.
+/// A view that stands in for the ticket pass: a card with a role band, a name and a code.
 ///
-/// The pass is content, so it has no glass. Its shadow falls below it rather
-/// than around it, which reads as a card lying on the screen.
+/// The pass is content, so it has no glass and no shadow.
 struct MockPass: View {
     /// The ticket the pass shows.
     let ticket: SampleTicket
 
     /// Whether the role band draws the role's texture.
     let bandVariant: BandVariant
-
-    /// Whether the screen is light or dark, which decides the shadow.
-    @Environment(\.colorScheme) private var colorScheme
 
     /// The name of the conference.
     private static let conference = "SwiftLeeds 2026"
@@ -27,29 +23,9 @@ struct MockPass: View {
     /// far from any corner of the pass, so without this they would be square.
     private static let bandMinimumRadius: Edge.Corner.Style = 12
 
-    /// How far the shadow blurs.
-    private static let shadowRadius: CGFloat = 10
-
-    /// How far the shadow falls. It is at least the blur, so none shows above.
-    private static let shadowOffset: CGFloat = 12
-
-    /// How strong the shadow is in light mode.
-    private static let lightShadowOpacity: Double = 0.18
-
-    /// How strong the shadow is in dark mode.
-    private static let darkShadowOpacity: Double = 0.10
-
     /// The shape of the pass.
     private var shape: RoundedRectangle {
         RoundedRectangle(cornerRadius: CGFloat(CornerRadius.xLarge), style: .continuous)
-    }
-
-    /// The color of the shadow: black in light mode, white in dark mode.
-    private var shadowColor: Color {
-        switch colorScheme {
-        case .dark: .white.opacity(Self.darkShadowOpacity)
-        default: .black.opacity(Self.lightShadowOpacity)
-        }
     }
 
     var body: some View {
@@ -65,11 +41,7 @@ struct MockPass: View {
         }
         .clipShape(shape)
         .containerShape(shape)
-        .background {
-            shape
-                .fill(.secondarySurface)
-                .shadow(color: shadowColor, radius: Self.shadowRadius, x: 0, y: Self.shadowOffset)
-        }
+        .background(.secondarySurface, in: shape)
     }
 
     /// The band, the conference and the holder, which VoiceOver reads as one.
