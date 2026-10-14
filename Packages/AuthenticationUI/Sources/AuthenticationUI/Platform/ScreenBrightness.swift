@@ -10,6 +10,7 @@ package struct ScreenBrightness: Sendable {
         /// Creates a level, pinning `value` to the range the display accepts.
         ///
         /// A value that is not a number is treated as the dimmest setting.
+        /// - Parameter value: The fraction of full brightness.
         package init(_ value: Double) {
             storage = value.isNaN ? 0 : min(max(value, 0), 1)
         }
@@ -27,6 +28,7 @@ package struct ScreenBrightness: Sendable {
     /// Sets the level.
     package var set: @MainActor @Sendable (Level) -> Void
 
+    /// Creates a brightness control.
     package init(
         current: @escaping @MainActor @Sendable () -> Level,
         set: @escaping @MainActor @Sendable (Level) -> Void,
@@ -38,6 +40,7 @@ package struct ScreenBrightness: Sendable {
 
 extension Double {
     /// Creates a number from a brightness level, for handing to the system.
+    /// - Parameter level: The level to convert.
     package init(_ level: ScreenBrightness.Level) {
         self = level.storage
     }
@@ -69,6 +72,7 @@ extension ScreenBrightness: DependencyKey {
 }
 
 extension DependencyValues {
+    /// The control for the display's brightness.
     package var screenBrightness: ScreenBrightness {
         get { self[ScreenBrightness.self] }
         set { self[ScreenBrightness.self] = newValue }
@@ -78,9 +82,11 @@ extension DependencyValues {
 #if os(iOS)
 import UIKit
 
-// UIScreen.main is deprecated; the replacement is to find the screen through the active scene.
+/// Returns the screen of the foreground scene, if any.
 @MainActor
 private func activeScreen() -> UIScreen? {
+    // UIScreen.main is deprecated; the replacement is to find the screen
+    // through the active scene.
     UIApplication.shared.connectedScenes
         .compactMap { $0 as? UIWindowScene }
         .first { $0.activationState == .foregroundActive }?

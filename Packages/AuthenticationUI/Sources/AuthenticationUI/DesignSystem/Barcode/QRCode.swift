@@ -7,8 +7,11 @@ import Foundation
 package enum QRCode {
     /// The text a QR code carries.
     package struct Payload: ExpressibleByStringLiteral, Equatable, Sendable {
+        /// The text.
         private let storage: String
 
+        /// Creates a payload from the given text.
+        /// - Parameter value: The text the code carries.
         package init(_ value: String) {
             storage = value
         }
@@ -17,24 +20,35 @@ package enum QRCode {
             self.init(value)
         }
 
-        /// The bytes handed to the generator. QR codes carry arbitrary bytes, so any text encodes.
+        /// The bytes handed to the generator.
+        ///
+        /// QR codes carry arbitrary bytes, so any text encodes.
         package var data: Data { Data(storage.utf8) }
     }
 
     /// How much of a code can be obscured and still read, from `low` to `high`.
     ///
-    /// Higher levels survive more damage but need more modules for the same text.
+    /// Higher levels survive more damage but need more modules for the same
+    /// text.
     package enum Correction: String, Sendable, CaseIterable {
+        /// A code that recovers from about 7% damage.
         case low = "L"
+        /// A code that recovers from about 15% damage.
         case medium = "M"
+        /// A code that recovers from about 25% damage.
         case quartile = "Q"
+        /// A code that recovers from about 30% damage.
         case high = "H"
     }
 
     /// Draws QR codes.
     package struct Symbology: BarcodeSymbology {
+        /// The correction level drawn codes use.
         private let correction: Correction
 
+        /// Creates a symbology that draws codes at a correction level.
+        /// - Parameter correction: How much damage the code should survive.
+        ///   Defaults to `high`.
         package init(correction: Correction = .high) {
             self.correction = correction
         }
@@ -47,7 +61,8 @@ package enum QRCode {
             return BarcodeImage.render(output, addingQuietZoneOf: Self.missingQuietZoneModules)
         }
 
-        /// The generator leaves a one-module margin; the specification asks for four.
+        /// The generator leaves a one-module margin; the specification asks
+        /// for four.
         private static let missingQuietZoneModules: CGFloat = 3
     }
 }
@@ -57,7 +72,8 @@ extension BarcodeContent {
     ///
     /// - Parameters:
     ///   - payload: The text the code carries.
-    ///   - correction: How much damage the code should survive. Defaults to `high`.
+    ///   - correction: How much damage the code should survive. Defaults to
+    ///     `high`.
     package static func qr(_ payload: QRCode.Payload, correction: QRCode.Correction = .high) -> BarcodeContent {
         BarcodeContent(payload, drawnBy: QRCode.Symbology(correction: correction))
     }
