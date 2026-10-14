@@ -1,6 +1,5 @@
 #if os(iOS)
 import SharedAssets
-import SnapshotTesting
 import SwiftUI
 import Testing
 import UIComponents
