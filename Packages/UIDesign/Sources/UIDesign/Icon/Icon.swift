@@ -12,7 +12,7 @@ import SFSafeSymbols
 /// ```
 public struct Icon: Equatable, Hashable, Sendable {
     // SFSymbol is a class with unchecked Sendable. Storing its name keeps this a value type.
-    private let systemName: String
+    fileprivate let systemName: String
 
     /// Creates an icon from an SF Symbol.
     ///
@@ -25,12 +25,8 @@ public struct Icon: Equatable, Hashable, Sendable {
 extension String {
     /// Creates the icon's SF Symbol name.
     public init(_ icon: Icon) {
-        self = icon.name
+        self = icon.systemName
     }
-}
-
-extension Icon {
-    fileprivate var name: String { systemName }
 }
 
 // MARK: - Navigation
