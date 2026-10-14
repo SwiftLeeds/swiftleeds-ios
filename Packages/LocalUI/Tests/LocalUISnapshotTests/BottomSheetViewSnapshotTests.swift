@@ -31,7 +31,7 @@ extension [LocationCategory] {
                     named: "Food",
                     symbolName: "takeoutbag.and.cup.and.straw.fill",
                     locations: [
-                        try .location(
+                        .location(
                             named: "Trinity Kitchen",
                             websiteURL: "https://trinityleeds.com/shops/trinity-kitchen",
                             coordinate: try Coordinate(latitude: 53.797378, longitude: -1.545209),
@@ -42,7 +42,7 @@ extension [LocationCategory] {
                     named: "Drinks",
                     symbolName: "wineglass.fill",
                     locations: [
-                        try .location(
+                        .location(
                             named: "Brew Society",
                             websiteURL: "https://www.brewsociety.co.uk/",
                             coordinate: try Coordinate(latitude: 53.795840, longitude: -1.550339),
@@ -67,12 +67,11 @@ extension LocationCategory {
 }
 
 extension Location {
-    fileprivate static func location(named name: String, websiteURL: String, coordinate: Coordinate) throws -> Location
-    {
+    fileprivate static func location(named name: String, websiteURL: String, coordinate: Coordinate) -> Location {
         Location(
             id: LocationID(UUID()),
             name: name,
-            websiteURL: try #require(URL(string: websiteURL)),
+            websiteURL: URL(string: websiteURL),
             coordinate: coordinate,
         )
     }
