@@ -4,7 +4,7 @@ import SwiftUI
 ///
 /// The pattern is decoration. The label on top keeps its own contrast.
 /// When the person turns on Differentiate Without Color, the pattern gets
-/// bolder, so the roles tell apart in greyscale at a glance.
+/// stronger, so the roles tell apart in greyscale at a glance.
 struct BandPatternView: View {
     /// The pattern to draw.
     let pattern: BandPattern
@@ -24,31 +24,19 @@ struct BandPatternView: View {
     /// The width of a line or a stripe.
     private static let lineWidth: CGFloat = 3
 
-    /// The width of a line or a stripe when the person differentiates without color.
-    private static let boldLineWidth: CGFloat = 4
-
     /// The radius of a dot.
     private static let dotRadius: CGFloat = 2.5
-
-    /// The radius of a dot when the person differentiates without color.
-    private static let boldDotRadius: CGFloat = 3.5
 
     /// The distance between the centers of two dots.
     private static let dotGap: CGFloat = 14
 
-    /// The strength of the white, bolder when the person differentiates without color.
+    /// The strength of the white, stronger when the person differentiates
+    /// without color.
+    ///
+    /// Only the strength changes. The lines and dots keep their size, so the
+    /// halo around the label still clears them.
     private var opacity: Double {
         differentiateWithoutColor ? Self.boldOpacity : Self.opacity
-    }
-
-    /// The width of a line or a stripe, bolder when the person differentiates without color.
-    private var lineWidth: CGFloat {
-        differentiateWithoutColor ? Self.boldLineWidth : Self.lineWidth
-    }
-
-    /// The radius of a dot, bolder when the person differentiates without color.
-    private var dotRadius: CGFloat {
-        differentiateWithoutColor ? Self.boldDotRadius : Self.dotRadius
     }
 
     var body: some View {
@@ -69,11 +57,11 @@ struct BandPatternView: View {
         case .blank:
             break
         case .diagonalLines:
-            context.stroke(diagonalLines(in: size), with: .color(ink), lineWidth: lineWidth)
+            context.stroke(diagonalLines(in: size), with: .color(ink), lineWidth: Self.lineWidth)
         case .dots:
             context.fill(dots(in: size), with: .color(ink))
         case .horizontalStripes:
-            context.stroke(stripes(in: size), with: .color(ink), lineWidth: lineWidth)
+            context.stroke(stripes(in: size), with: .color(ink), lineWidth: Self.lineWidth)
         }
     }
 
@@ -85,7 +73,7 @@ struct BandPatternView: View {
     /// - Parameter size: The size of the region to cover.
     private func diagonalLines(in size: CGSize) -> Path {
         var path = Path()
-        let overshoot = lineWidth
+        let overshoot = Self.lineWidth
         let first = -size.height - overshoot
         let last = size.width + overshoot
         for start in stride(from: first, through: last, by: Self.gap) {
@@ -116,10 +104,10 @@ struct BandPatternView: View {
             for y in stride(from: Self.dotGap / 2, through: size.height, by: Self.dotGap) {
                 path.addEllipse(
                     in: CGRect(
-                        x: x - dotRadius,
-                        y: y - dotRadius,
-                        width: dotRadius * 2,
-                        height: dotRadius * 2,
+                        x: x - Self.dotRadius,
+                        y: y - Self.dotRadius,
+                        width: Self.dotRadius * 2,
+                        height: Self.dotRadius * 2,
                     )
                 )
             }
