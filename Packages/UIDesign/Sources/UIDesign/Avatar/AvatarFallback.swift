@@ -1,3 +1,4 @@
+import Foundation
 import SwiftUI
 
 /// A view that stands in for an avatar's photo when there is none.

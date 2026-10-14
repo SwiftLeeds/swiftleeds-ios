@@ -1,5 +1,9 @@
 import SwiftUI
 
+#if os(iOS)
+import UIKit
+#endif
+
 /// The colors a border or a divider draws in.
 extension ShapeStyle where Self == Color {
     /// A border that lets the surface show through.

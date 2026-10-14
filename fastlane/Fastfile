@@ -5,9 +5,9 @@ default_platform(:ios)
 skip_docs
 
 platform :ios do
-  desc "Build a scheme in a configuration. Both scheme: and configuration: are required"
+  desc "Build a scheme in a configuration. Both scheme: and configuration: are required; buildlog_path: is optional"
   lane :build do |options|
-    build_app(
+    params = {
       project: "SwiftLeeds.xcodeproj",
       # A missing option must fail the lane, never build a default.
       configuration: options.fetch(:configuration),
@@ -16,6 +16,12 @@ platform :ios do
       skip_archive: true,
       skip_codesigning: true,
       xcargs: "-skipPackagePluginValidation"
-    )
+    }
+    # The folder gym keeps its raw xcodebuild log in. The log holds every compile
+    # command, which `swiftlint analyze` reads. Without the option gym writes to
+    # its default folder under ~/Library/Logs, which a caller cannot rely on. The
+    # key is added only when given, so an absent option leaves gym's default.
+    params[:buildlog_path] = options[:buildlog_path] if options[:buildlog_path]
+    build_app(params)
   end
 end

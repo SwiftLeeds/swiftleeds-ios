@@ -2,7 +2,6 @@
 import AuthenticationFeature
 import AuthenticationUI
 import Foundation
-import SnapshotTesting
 import Testing
 
 @MainActor

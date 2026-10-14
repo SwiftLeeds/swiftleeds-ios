@@ -1,6 +1,9 @@
 import AuthenticationFeature
-import Dependencies
 import SwiftUI
+
+#if os(iOS)
+import UIKit
+#endif
 
 public struct SignInView: View {
     @State private var viewModel: ViewModel

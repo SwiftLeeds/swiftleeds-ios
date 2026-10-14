@@ -1,3 +1,4 @@
+import Foundation
 import SwiftUI
 
 package struct AvatarImage: View {

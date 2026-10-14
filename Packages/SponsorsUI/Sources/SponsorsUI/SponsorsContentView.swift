@@ -1,8 +1,13 @@
 import DesignKit
+import Foundation
 import SharedAssets
 import SponsorsFeature
 import SwiftUI
 import UIComponents
+
+#if os(iOS)
+import UIKit
+#endif
 
 /// The sponsors screen, drawn from a state it is given. It fetches nothing.
 package struct SponsorsContentView: View {

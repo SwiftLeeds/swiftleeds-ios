@@ -1,5 +1,3 @@
-import Foundation
-
 /// `DecodingError` renders readably on macOS but reflects into a dump on iOS,
 /// so logs would otherwise differ by platform. The debug description is
 /// dropped: it restates the case, and for a corrupted body it can quote the

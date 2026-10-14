@@ -125,6 +125,49 @@ opt_in_rules:
   - raw_value_for_camel_cased_codable_enum
   - static_operator
 
+# Analyzer rules read the compiler log, so they run only through
+# `swiftlint analyze`, never `swiftlint lint`.
+analyzer_rules:
+  # An import the file does not use, or one it uses only through another module.
+  - unused_import
+  # A captured variable that changes after the closure is made.
+  - capture_variable
+
+unused_import:
+  # Every module a file uses is imported by name, so a file never relies on
+  # another import to bring one in.
+  require_explicit_imports: true
+  # Each entry names a module and the modules it brings in on its own. A file may
+  # use those without importing them, because nobody writes `import Darwin` to
+  # call a Foundation API.
+  allowed_transitive_imports:
+    - module: Foundation
+      allowed_transitive_imports:
+        - CoreFoundation
+        - ObjectiveC
+        - Darwin
+    - module: SwiftUI
+      allowed_transitive_imports:
+        - CoreFoundation
+        - CoreGraphics
+        - DeveloperToolsSupport
+    - module: CoreGraphics
+      allowed_transitive_imports:
+        - CoreFoundation
+    - module: CoreImage
+      allowed_transitive_imports:
+        - CoreFoundation
+        - CoreGraphics
+    # CoreLocation re-exports the private module that holds `CLLocationCoordinate2D`.
+    - module: CoreLocation
+      allowed_transitive_imports:
+        - _LocationEssentials
+    # `swift-dependencies` re-exports these two with `@_exported`.
+    - module: Dependencies
+      allowed_transitive_imports:
+        - IssueReporting
+        - ConcurrencyExtras
+
 disabled_rules:
   # `swift format` owns layout, so a SwiftLint rule about where a character goes
   # is either a contradiction or a duplicate. Both are off. Several below are

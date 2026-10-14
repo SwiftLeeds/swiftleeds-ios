@@ -1,3 +1,4 @@
+import Foundation
 import SwiftUI
 
 /// A machine-readable code, drawn so that a scanner can read it.

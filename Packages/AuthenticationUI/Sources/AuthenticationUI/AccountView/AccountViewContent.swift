@@ -1,4 +1,3 @@
-import AuthenticationFeature
 import SwiftUI
 
 package struct AccountViewContent: View {

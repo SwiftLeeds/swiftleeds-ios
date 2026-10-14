@@ -1,9 +1,11 @@
 #if canImport(UIKit)
 import DesignKit
+import Foundation
 import ReadabilityModifier
 import SharedAssets
 import SwiftUI
 import UIComponents
+import UIKit
 
 package struct AboutContentView: View {
     private let viewModel: AboutViewModel

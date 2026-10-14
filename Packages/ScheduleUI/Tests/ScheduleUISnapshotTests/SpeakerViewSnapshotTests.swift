@@ -1,7 +1,5 @@
 #if os(iOS)
-import ScheduleFeature
 import ScheduleUI
-import SwiftUI
 import Testing
 
 @MainActor

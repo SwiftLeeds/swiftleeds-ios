@@ -1,5 +1,9 @@
 import SwiftUI
 
+#if os(iOS)
+import UIKit
+#endif
+
 /// The backgrounds a screen is built from, in three levels of depth.
 extension ShapeStyle where Self == Color {
     /// The background of a screen.

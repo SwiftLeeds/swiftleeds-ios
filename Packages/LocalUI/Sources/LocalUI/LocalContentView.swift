@@ -1,7 +1,9 @@
 #if canImport(UIKit)
+import CoreLocation
 import DesignKit
 import LocalFeature
 import MapKit
+import SharedAssets
 import SwiftUI
 
 /// The local screen, drawn from a state it is given. It fetches nothing.

@@ -1,6 +1,7 @@
 import Dependencies
 import Foundation
 import NetworkKit
+import NetworkKitTestSupport
 import ScheduleFeature
 import Testing
 

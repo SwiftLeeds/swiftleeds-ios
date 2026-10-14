@@ -1,4 +1,5 @@
 import Dependencies
+import Foundation
 import SettingsUI
 import Sharing
 import Testing

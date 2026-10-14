@@ -1,6 +1,5 @@
 #if os(iOS)
 import Foundation
-import SnapshotTesting
 import SponsorsFeature
 import SponsorsUI
 import Testing

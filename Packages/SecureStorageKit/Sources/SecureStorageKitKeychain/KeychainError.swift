@@ -1,4 +1,5 @@
 import Foundation
+import Security
 
 /// A Keychain operation that did not succeed.
 ///

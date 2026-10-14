@@ -1,3 +1,4 @@
+import Foundation
 import SwiftUI
 
 package struct Nameplate<Title: View, Detail: View, Icon: View>: View {

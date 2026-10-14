@@ -1,5 +1,9 @@
 import SwiftUI
 
+#if os(iOS)
+import UIKit
+#endif
+
 /// The colors text draws in, from most to least prominent.
 extension ShapeStyle where Self == Color {
     /// The main text on a surface.

@@ -1,4 +1,3 @@
-import Foundation
 import SponsorsFeature
 import Testing
 
