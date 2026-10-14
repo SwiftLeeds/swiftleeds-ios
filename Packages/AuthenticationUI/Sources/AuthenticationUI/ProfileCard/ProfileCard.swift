@@ -1,4 +1,3 @@
-import AuthenticationFeature
 import SwiftUI
 
 package struct ProfileCard: View {

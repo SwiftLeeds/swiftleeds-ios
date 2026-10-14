@@ -1,6 +1,5 @@
 #if os(iOS)
 import AuthenticationUI
-import SnapshotTesting
 import SwiftUI
 import Testing
 
