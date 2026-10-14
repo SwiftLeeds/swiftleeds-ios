@@ -2,8 +2,6 @@ import SwiftUI
 import UIDesign
 
 /// A view that names a ticket's role in white on a flat band of the role's color.
-///
-/// The band runs the full width of the pass. The pass clips it to its corners.
 struct RoleBand: View {
     /// The role the band names.
     let role: TicketRole

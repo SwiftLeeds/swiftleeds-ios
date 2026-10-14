@@ -21,6 +21,12 @@ struct MockPass: View {
     /// The days the conference runs.
     private static let dates = "8 to 9 October"
 
+    /// The smallest corner radius the role band takes.
+    ///
+    /// The band's top corners follow the pass's corners. Its bottom corners are
+    /// far from any corner of the pass, so without this they would be square.
+    private static let bandMinimumRadius: Edge.Corner.Style = 12
+
     /// How far the shadow blurs.
     private static let shadowRadius: CGFloat = 10
 
@@ -34,7 +40,7 @@ struct MockPass: View {
     private static let darkShadowOpacity: Double = 0.10
 
     /// The shape of the pass.
-    private var shape: some Shape {
+    private var shape: RoundedRectangle {
         RoundedRectangle(cornerRadius: CGFloat(CornerRadius.xLarge), style: .continuous)
     }
 
@@ -58,6 +64,7 @@ struct MockPass: View {
             .padding(.large)
         }
         .clipShape(shape)
+        .containerShape(shape)
         .background {
             shape
                 .fill(.secondarySurface)
@@ -69,6 +76,8 @@ struct MockPass: View {
     private var identity: some View {
         VStack(alignment: .leading, spacing: 0) {
             RoleBand(role: ticket.role, variant: bandVariant)
+                .clipShape(ConcentricRectangle(corners: .concentric(minimum: Self.bandMinimumRadius)))
+                .padding(.small)
 
             VStack(alignment: .leading, spacing: .large) {
                 conference
