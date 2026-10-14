@@ -11,7 +11,7 @@ import SFSafeSymbols
 /// let icon = Icon(.figureRun)
 /// ```
 public struct Icon: Equatable, Hashable, Sendable {
-    // SFSymbol is a class with unchecked Sendable. Storing its name keeps this a value type.
+    /// The SF Symbol's name, such as `star.fill`.
     fileprivate let systemName: String
 
     /// Creates an icon from an SF Symbol.
