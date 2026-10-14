@@ -1,6 +1,5 @@
 import Foundation
 import SecureStorageKit
-import SecureStorageKitKeychain
 import Testing
 
 /// Covers the write path under concurrent callers, which the actor and the
