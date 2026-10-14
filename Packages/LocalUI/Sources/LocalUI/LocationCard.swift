@@ -2,23 +2,31 @@
 import DesignKit
 import SwiftUI
 
-/// A card that names a place and links to its website.
+/// A card naming a place, with a link to its website when it has one.
 package struct LocationCard: View {
+    /// The place's category symbol: an SF Symbol, or asset catalog image name.
     private let symbolName: String
+
+    /// The place's name.
     private let name: String
+
+    /// The place's website. Absent when the place has no usable web address.
     private let websiteURL: URL?
 
+    /// Called when the person dismisses the card.
+    private let dismiss: () -> Void
+
     /// Creates a card for a place.
-    ///
-    /// - Parameters:
-    ///   - symbolName: The name of the SF Symbol, or asset catalog image, for the place's
-    ///     category.
-    ///   - name: The place's name.
-    ///   - websiteURL: The place's website. Absent when the place has no usable web address.
-    package init(symbolName: String, name: String, websiteURL: URL?) {
+    package init(
+        symbolName: String,
+        name: String,
+        websiteURL: URL?,
+        dismiss: @escaping () -> Void,
+    ) {
         self.symbolName = symbolName
         self.name = name
         self.websiteURL = websiteURL
+        self.dismiss = dismiss
     }
 
     package var body: some View {
@@ -26,6 +34,7 @@ package struct LocationCard: View {
             symbolImage(named: symbolName)
                 .renderingMode(.template)
                 .frame(width: 44, height: 44)
+                .accessibilityHidden(true)
 
             Text(name)
 
@@ -49,15 +58,10 @@ package struct LocationCard: View {
         .foregroundColor(Color.cellForeground)
         .background(Color.cellBackground)
         .clipShape(RoundedRectangle(cornerRadius: 8))
+        .accessibilityElement(children: .contain)
+        .accessibilityAddTraits(.isModal)
+        .accessibilityAction(.escape, dismiss)
     }
-}
-
-/// Resolves a symbol by name, falling back to an asset catalog image of the same name.
-///
-/// - Parameter name: The SF Symbol, or asset catalog image, name.
-/// - Returns: The resolved image.
-func symbolImage(named name: String) -> Image {
-    Image(uiImage: UIImage(systemName: name) ?? UIImage(imageLiteralResourceName: name))
 }
 
 #Preview("With link") {
@@ -65,6 +69,7 @@ func symbolImage(named name: String) -> Image {
         symbolName: "takeoutbag.and.cup.and.straw.fill",
         name: "Trinity Kitchen",
         websiteURL: URL(string: "https://example.com"),
+        dismiss: {},
     )
 }
 
@@ -73,6 +78,7 @@ func symbolImage(named name: String) -> Image {
         symbolName: "takeoutbag.and.cup.and.straw.fill",
         name: "Trinity Kitchen",
         websiteURL: nil,
+        dismiss: {},
     )
 }
 #endif

@@ -1,7 +1,6 @@
 #if os(iOS)
 import Foundation
 import LocalUI
-import SwiftUI
 import Testing
 
 @MainActor
@@ -11,6 +10,7 @@ import Testing
             symbolName: "takeoutbag.and.cup.and.straw.fill",
             name: "Trinity Kitchen",
             websiteURL: try #require(URL(string: "https://example.com")),
+            dismiss: {},
         )
 
         assertSheetSnapshots(of: view)
@@ -21,6 +21,7 @@ import Testing
             symbolName: "takeoutbag.and.cup.and.straw.fill",
             name: "Trinity Kitchen",
             websiteURL: nil,
+            dismiss: {},
         )
 
         assertSheetSnapshots(of: view)

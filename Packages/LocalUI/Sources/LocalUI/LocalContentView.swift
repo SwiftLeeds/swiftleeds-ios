@@ -2,7 +2,6 @@
 import DesignKit
 import LocalFeature
 import MapKit
-import SharedAssets
 import SwiftUI
 
 /// The local screen, drawn from a state it is given. It fetches nothing.
@@ -24,6 +23,12 @@ package struct LocalContentView: View {
     @State private var mapRegion = MKCoordinateRegion.aroundVenue
     @State private var selectedCategoryID: LocationCategoryID?
     @State private var selectedLocation: Location?
+
+    /// Whether VoiceOver focus sits on the location card.
+    @AccessibilityFocusState private var isLocationCardFocused: Bool
+
+    /// The map annotation VoiceOver focus should return to on dismissal.
+    @AccessibilityFocusState private var focusedAnnotationID: LocationID?
 
     /// Creates the screen.
     ///
@@ -66,6 +71,7 @@ package struct LocalContentView: View {
                                 .onTapGesture {
                                     selectedLocation = location
                                 }
+                                .accessibilityFocused($focusedAnnotationID, equals: location.id)
                         }
                     }
                     .ignoresSafeArea()
@@ -84,13 +90,11 @@ package struct LocalContentView: View {
                             symbolName: category.symbolName,
                             name: location.name,
                             websiteURL: location.websiteURL,
+                            dismiss: { selectedLocation = nil },
                         )
                         .padding(.bottom, bottomSheetShown ? geometry.size.height * Constants.maxHeightRatio : 0)
                         .animation(.easeInOut, value: bottomSheetShown)
-                    }
-                    .accessibilityAddTraits(.isModal)
-                    .accessibilityAction(.escape) {
-                        selectedLocation = nil
+                        .accessibilityFocused($isLocationCardFocused)
                     }
                 }
 
@@ -103,6 +107,13 @@ package struct LocalContentView: View {
                     categories: categories,
                     maxHeight: geometry.size.height * Constants.maxHeightRatio,
                 )
+            }
+        }
+        .onChange(of: selectedLocation) { previousLocation, newLocation in
+            if newLocation != nil {
+                isLocationCardFocused = true
+            } else if let previousLocation {
+                focusedAnnotationID = previousLocation.id
             }
         }
     }
