@@ -57,9 +57,7 @@ struct SessionDetailScreen: View {
         .navigationDestination(isPresented: $showsVenue) {
             VenueContent()
         }
-        // The title is long enough that the bar would truncate it to one line,
-        // so the content carries it and the bar stays bare.
-        .navigationTitle("")
+        .navigationTitle(session.title)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
