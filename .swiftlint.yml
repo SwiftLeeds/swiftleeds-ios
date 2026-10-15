@@ -13,7 +13,7 @@
 # and the pre-commit hook checks against. Rule defaults change between versions,
 # so re-run the suite after a bump.
 
-# The violations left after the mechanical fixes, 37 as of 2026-10-08, down from
+# The violations left after the mechanical fixes, 36 as of 2026-10-15, down from
 # 78. They stay recorded rather than fixed, so linting starts green and new code
 # is held to the full rule set. Read the current list with
 # `swiftlint baseline report .swiftlint.baseline --reporter summary`.
@@ -28,8 +28,6 @@ included:
   - SwiftLeeds
   - SwiftLeedsAppClip
   - SwiftLeedsPackage
-  - SwiftLeedsTests
-  - SwiftLeedsUITests
   - SwiftLeedsWidget
 
 # Each package resolves its dependencies into its own .build directory, so the
