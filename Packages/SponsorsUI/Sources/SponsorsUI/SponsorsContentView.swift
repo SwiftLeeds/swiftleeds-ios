@@ -112,7 +112,7 @@ package struct SponsorsContentView: View {
         VStack(spacing: Padding.cellGap) {
             filterChips
 
-            if displayedLevels(in: sponsors).isEmpty && selectedLevel != nil {
+            if displayedLevels(in: sponsors).isEmpty, selectedLevel != nil {
                 tierEmptyStateView
             } else {
                 ForEach(displayedLevels(in: sponsors), id: \.self) { level in
