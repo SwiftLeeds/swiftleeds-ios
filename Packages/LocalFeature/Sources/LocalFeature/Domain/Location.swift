@@ -2,7 +2,6 @@ import Foundation
 
 /// A place near the conference.
 public struct Location: Equatable, Hashable, Identifiable, Sendable {
-    /// The place's unique identifier.
     public let id: LocationID
 
     /// The place's name.
