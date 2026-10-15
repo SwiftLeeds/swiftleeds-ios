@@ -75,6 +75,7 @@
 		7CA11E000000000000000218 /* MockNotice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000118 /* MockNotice.swift */; };
 		7CA11E000000000000000219 /* SampleResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000119 /* SampleResource.swift */; };
 		7CA11E00000000000000021A /* SampleVenue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E00000000000000011A /* SampleVenue.swift */; };
+		7CA11E0000000000000FE002 /* VenueContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E0000000000000FE001 /* VenueContent.swift */; };
 		7CA11E00000000000000021B /* VenueScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E00000000000000011B /* VenueScreen.swift */; };
 		7CA11E00000000000000021C /* SampleResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E00000000000000011C /* SampleResult.swift */; };
 		7CA11E00000000000000021D /* SearchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E00000000000000011D /* SearchScreen.swift */; };
@@ -308,6 +309,7 @@
 		7CA11E000000000000000119 /* SampleResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleResource.swift; sourceTree = "<group>"; };
 		7CA11E00000000000000011A /* SampleVenue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleVenue.swift; sourceTree = "<group>"; };
 		7CA11E00000000000000011B /* VenueScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VenueScreen.swift; sourceTree = "<group>"; };
+		7CA11E0000000000000FE001 /* VenueContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VenueContent.swift; sourceTree = "<group>"; };
 		7CA11E00000000000000011C /* SampleResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleResult.swift; sourceTree = "<group>"; };
 		7CA11E00000000000000011D /* SearchScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchScreen.swift; sourceTree = "<group>"; };
 		7CA11E00000000000000011E /* ReflowingStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReflowingStack.swift; sourceTree = "<group>"; };
@@ -733,6 +735,7 @@
 			isa = PBXGroup;
 			children = (
 				7CA11E00000000000000011A /* SampleVenue.swift */,
+				7CA11E0000000000000FE001 /* VenueContent.swift */,
 				7CA11E00000000000000011B /* VenueScreen.swift */,
 			);
 			path = Venue;
@@ -1129,6 +1132,7 @@
 				7CA11E000000000000000218 /* MockNotice.swift in Sources */,
 				7CA11E000000000000000219 /* SampleResource.swift in Sources */,
 				7CA11E00000000000000021A /* SampleVenue.swift in Sources */,
+				7CA11E0000000000000FE002 /* VenueContent.swift in Sources */,
 				7CA11E00000000000000021B /* VenueScreen.swift in Sources */,
 				7CA11E00000000000000021C /* SampleResult.swift in Sources */,
 				7CA11E00000000000000021D /* SearchScreen.swift in Sources */,
