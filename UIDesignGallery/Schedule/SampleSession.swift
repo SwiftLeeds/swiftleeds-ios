@@ -49,6 +49,26 @@ struct SampleSession: Identifiable, Equatable, Hashable, Sendable {
 }
 
 extension SampleSession {
+    /// The day the session runs, relative to now.
+    ///
+    /// "Today" or "Tomorrow" when either applies, else the weekday and date.
+    var dayLabel: String {
+        let calendar = Calendar.current
+        if calendar.isDateInToday(start) || calendar.isDateInTomorrow(start) {
+            let relative = start.formatted(
+                Date.RelativeFormatStyle(
+                    allowedFields: [.day],
+                    presentation: .named,
+                    unitsStyle: .wide,
+                )
+            )
+            return relative.prefix(1).uppercased() + relative.dropFirst()
+        }
+        return start.formatted(.dateTime.weekday(.abbreviated).day().month(.abbreviated))
+    }
+}
+
+extension SampleSession {
     /// Returns a moment a number of days from today, at the given time.
     ///
     /// - Parameters:

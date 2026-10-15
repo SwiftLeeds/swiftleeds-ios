@@ -42,6 +42,7 @@
 		7CA11E000000000000000203 /* NotYetDesigned.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000103 /* NotYetDesigned.swift */; };
 		7CA11E000000000000000204 /* SampleSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000104 /* SampleSession.swift */; };
 		7CA11E000000000000000205 /* SessionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000105 /* SessionRow.swift */; };
+		7CA11E000000000000000912 /* SessionBadges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000911 /* SessionBadges.swift */; };
 		7CA11E000000000000000206 /* ScheduleScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000106 /* ScheduleScreen.swift */; };
 		7CA11E000000000000000207 /* SessionDetailScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000107 /* SessionDetailScreen.swift */; };
 		7CA11E000000000000000209 /* SampleSponsor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000109 /* SampleSponsor.swift */; };
@@ -275,6 +276,7 @@
 		7CA11E000000000000000103 /* NotYetDesigned.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotYetDesigned.swift; sourceTree = "<group>"; };
 		7CA11E000000000000000104 /* SampleSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleSession.swift; sourceTree = "<group>"; };
 		7CA11E000000000000000105 /* SessionRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionRow.swift; sourceTree = "<group>"; };
+		7CA11E000000000000000911 /* SessionBadges.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionBadges.swift; sourceTree = "<group>"; };
 		7CA11E000000000000000106 /* ScheduleScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleScreen.swift; sourceTree = "<group>"; };
 		7CA11E000000000000000107 /* SessionDetailScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionDetailScreen.swift; sourceTree = "<group>"; };
 		7CA11E000000000000000109 /* SampleSponsor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleSponsor.swift; sourceTree = "<group>"; };
@@ -656,6 +658,7 @@
 			children = (
 				7CA11E000000000000000104 /* SampleSession.swift */,
 				7CA11E000000000000000105 /* SessionRow.swift */,
+				7CA11E000000000000000911 /* SessionBadges.swift */,
 				7CA11E000000000000000106 /* ScheduleScreen.swift */,
 				7CA11E000000000000000116 /* ScheduleDestination.swift */,
 			);
@@ -1113,6 +1116,7 @@
 				7CA11E000000000000000203 /* NotYetDesigned.swift in Sources */,
 				7CA11E000000000000000204 /* SampleSession.swift in Sources */,
 				7CA11E000000000000000205 /* SessionRow.swift in Sources */,
+				7CA11E000000000000000912 /* SessionBadges.swift in Sources */,
 				7CA11E000000000000000206 /* ScheduleScreen.swift in Sources */,
 				7CA11E000000000000000207 /* SessionDetailScreen.swift in Sources */,
 				7CA11E000000000000000209 /* SampleSponsor.swift in Sources */,
