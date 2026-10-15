@@ -9,6 +9,9 @@ struct SessionDetailScreen: View {
     /// Whether this person favourited the session.
     @State private var isFavorite: Bool
 
+    /// Whether the venue page is pushed, to find the session's room.
+    @State private var showsVenue = false
+
     /// Creates a screen for one session.
     ///
     /// - Parameter session: The session this screen describes.
@@ -51,6 +54,9 @@ struct SessionDetailScreen: View {
             }
         }
         .listStyle(.insetGrouped)
+        .navigationDestination(isPresented: $showsVenue) {
+            VenueContent()
+        }
         // The title is long enough that the bar would truncate it to one line,
         // so the content carries it and the bar stays bare.
         .navigationTitle("")
@@ -87,7 +93,7 @@ struct SessionDetailScreen: View {
         .tint(.textPrimary)
     }
 
-    /// The menu of actions that take this session out of the app.
+    /// The menu of actions that lead away from this session.
     private var moreMenu: some View {
         Menu {
             Button {
@@ -96,6 +102,16 @@ struct SessionDetailScreen: View {
                     Text("Add to Calendar")
                 } icon: {
                     Image(icon: .calendar)
+                }
+            }
+
+            Button {
+                showsVenue = true
+            } label: {
+                Label {
+                    Text("Find the room")
+                } icon: {
+                    Image(icon: .location)
                 }
             }
         } label: {
