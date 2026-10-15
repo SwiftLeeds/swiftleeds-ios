@@ -147,6 +147,18 @@ opt_in_rules:
   # new String or Array on every step and throws the previous one away.
   - reduce_into
 
+  # `isEmpty` names the question, and on a collection that is not random access
+  # `count` walks every element to answer it.
+  - empty_count
+
+  # An `async` function with no `await` never suspends, yet every caller must
+  # still `await` it. Its one hit is suppressed inline, with the reason.
+  - async_without_await
+
+  # A closure the body only calls directly needs no `@escaping`. Leaving it off
+  # tells the caller the closure cannot run after the function returns.
+  - unneeded_escaping
+
 # Analyzer rules read the compiler log, so they run only through
 # `swiftlint analyze`, never `swiftlint lint`.
 analyzer_rules:

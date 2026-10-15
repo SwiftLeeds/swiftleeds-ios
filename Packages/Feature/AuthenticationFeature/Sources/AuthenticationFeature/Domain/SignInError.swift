@@ -10,5 +10,6 @@ public enum SignInError: Error, Equatable {
     /// Does not distinguish a device with no connection from a server that is down.
     case couldNotReachServer
 
+    /// Any other failure, including a server answer we cannot read.
     case unknown
 }
