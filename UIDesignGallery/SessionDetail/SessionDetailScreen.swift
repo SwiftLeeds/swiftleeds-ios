@@ -131,13 +131,41 @@ struct SessionDetailScreen: View {
                 .font(.largeTitle.weight(.bold))
                 .foregroundStyle(.textPrimary)
 
-            HStack(spacing: .medium) {
-                Label(session.time, systemImage: "clock")
-                Label(session.room, systemImage: "mappin.and.ellipse")
-            }
-            .font(.subheadline)
-            .foregroundStyle(.textSecondary)
+            facts
+
+            SessionBadges(session: session)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    /// When and where the session runs, side by side while they fit.
+    ///
+    /// Each fact is its own text, so a large text size stacks the facts
+    /// rather than breaking one across lines, and the row mirrors
+    /// right-to-left.
+    private var facts: some View {
+        ViewThatFits(in: .horizontal) {
+            HStack(spacing: .medium) {
+                factTexts
+            }
+
+            VStack(alignment: .leading, spacing: .xSmall) {
+                factTexts
+            }
+        }
+        .font(.subheadline)
+        .foregroundStyle(.textSecondary)
+    }
+
+    /// The day, the time range and the room, each led by its symbol.
+    ///
+    /// A no-break space keeps each symbol with its words.
+    private var factTexts: some View {
+        Group {
+            Text("\(Image(icon: .calendar))\u{00A0}\(session.dayLabel)")
+            Text("\(Image(icon: .clock))\u{00A0}\(session.time)")
+            Text("\(Image(icon: .location))\u{00A0}\(session.room)")
+        }
+        .fixedSize()
     }
 }
