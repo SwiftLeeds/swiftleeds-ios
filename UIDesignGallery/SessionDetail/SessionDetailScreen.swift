@@ -6,19 +6,28 @@ struct SessionDetailScreen: View {
     /// The session this screen describes.
     let session: SampleSession
 
+    /// Whether this person favourited the session.
+    @State private var isFavorite: Bool
+
+    /// Creates a screen for one session.
+    ///
+    /// - Parameter session: The session this screen describes.
+    init(session: SampleSession) {
+        self.session = session
+        _isFavorite = State(initialValue: session.isFavorite)
+    }
+
     var body: some View {
         List {
-            // The artwork, the title and the action are the screen's subject
-            // rather than a list of facts about it, so they sit on the page
-            // with no card and no separators between them.
+            // The artwork and the title are the screen's subject rather than
+            // a list of facts about it, so they sit on the page with no card
+            // and no separators between them.
             Section {
                 MockArtwork(seed: session.id)
                     .aspectRatio(16 / 9, contentMode: .fit)
                     .listRowInsets(EdgeInsets())
 
                 heading
-
-                favoriteAction
             }
             .listRowBackground(Color.clear)
             .listRowSeparator(.hidden)
@@ -47,6 +56,10 @@ struct SessionDetailScreen: View {
         .navigationTitle("")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                FavoriteButton(isFavorite: $isFavorite)
+            }
+
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
                 } label: {
@@ -88,21 +101,5 @@ struct SessionDetailScreen: View {
             .foregroundStyle(.textSecondary)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-    }
-
-    /// The one action this screen is for, at the screen's highest contrast.
-    ///
-    /// It is the screen's only filled control, which is what marks it as the
-    /// one the screen is for.
-    private var favoriteAction: some View {
-        Button {
-        } label: {
-            Label("Favourite", systemImage: "star")
-                .font(.headline)
-                .frame(maxWidth: .infinity)
-        }
-        .buttonStyle(.borderedProminent)
-        .controlSize(.large)
-        .tint(.brandPrimary)
     }
 }
