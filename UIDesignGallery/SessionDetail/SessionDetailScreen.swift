@@ -125,6 +125,9 @@ struct SessionDetailScreen: View {
     }
 
     /// What the session is called, and when and where it runs.
+    ///
+    /// VoiceOver reads it as one heading: the title, then the day, the time,
+    /// the room and the badges, in that order.
     private var heading: some View {
         VStack(alignment: .leading, spacing: .small) {
             Text(session.title)
@@ -136,6 +139,8 @@ struct SessionDetailScreen: View {
             SessionBadges(session: session)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
+        .accessibilityElement(children: .combine)
+        .accessibilityAddTraits(.isHeader)
     }
 
     /// When and where the session runs, side by side while they fit.
