@@ -29,6 +29,9 @@ included:
   - Packages/*/Package.swift
   - Packages/*/Sources
   - Packages/*/Tests
+  - Packages/*/*/Package.swift
+  - Packages/*/*/Sources
+  - Packages/*/*/Tests
   - SwiftLeeds
   - SwiftLeedsAppClip
   - SwiftLeedsPackage

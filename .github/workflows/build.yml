@@ -132,8 +132,10 @@ jobs:
           # The runner the figures above were measured on.
           echo "cores: $(sysctl -n hw.ncpu), memory: $(sysctl -n hw.memsize) bytes"
 
+          # A package sits at Packages/<Name> or Packages/<Folder>/<Name>. The
+          # list holds base names, which name the claim and log files below.
           packages=()
-          for dir in Packages/*/; do
+          for dir in Packages/*/ Packages/*/*/; do
             [ -f "${dir}Package.swift" ] || continue
             packages+=("$(basename "$dir")")
           done
@@ -141,6 +143,20 @@ jobs:
             echo "No Swift packages found under Packages/" >&2
             exit 1
           fi
+
+          # Prints the one folder that holds the package with this base name.
+          # Two matches would be ambiguous, so that fails like no match does.
+          package_path () {
+            local matches=() candidate
+            for candidate in "Packages/$1" Packages/*/"$1"; do
+              [ -f "$candidate/Package.swift" ] && matches+=("$candidate")
+            done
+            if [ ${#matches[@]} -ne 1 ]; then
+              echo "Expected one package named $1 under Packages/, found ${#matches[@]}" >&2
+              return 1
+            fi
+            echo "${matches[0]}"
+          }
 
           claims="$RUNNER_TEMP/package-test-claims"
           failures="$RUNNER_TEMP/package-test-failures"
@@ -175,8 +191,10 @@ jobs:
           # app's own Package.resolved; CLAUDE.md covers keeping those two
           # in step.
           swift_test () {
+            local path
+            path=$(package_path "$1") || return 1
             swift test \
-              --package-path "Packages/$1" \
+              --package-path "$path" \
               --scratch-path "$2" \
               --configuration "$CONFIGURATION" \
               $verbose \
@@ -569,7 +587,17 @@ jobs:
           if [ -n "$BASE_REF" ] && changed=$(git diff --name-only --no-renames "origin/$BASE_REF...HEAD"); then
             if ! grep -qv '^Packages/' <<< "$changed"; then
               affected=false
-              for root in Packages/ScheduleUI Packages/NetworkKit; do
+              for name in ScheduleUI NetworkKit; do
+                # The package sits at Packages/<name> or
+                # Packages/<Folder>/<name>. A name that resolves to nothing
+                # counts as affected, like the failures below.
+                root=""
+                for candidate in "Packages/$name" Packages/*/"$name"; do
+                  [ -f "$candidate/Package.swift" ] || continue
+                  root=$candidate
+                  break
+                done
+                [ -n "$root" ] || { affected=true; break; }
                 # When the dependencies cannot be listed, or the list does not
                 # name the root itself, count the App Clip as affected. A
                 # failure here must run the launch, never skip it.
@@ -654,8 +682,22 @@ jobs:
       - name: Check snapshot tests live in a snapshot target
         run: |
           set -uo pipefail
-          stray=$(grep -rl "assertSnapshots(" Packages/*/Tests \
-            | grep -v "/Tests/[^/]*SnapshotTests/" || true)
+          # Both depths: Packages/<Name>/Tests and Packages/<Folder>/<Name>/Tests.
+          # An unmatched glob stays literal, so test for a real folder. No
+          # Tests folder at all means the layout moved, never a clean tree.
+          test_dirs=()
+          for dir in Packages/*/Tests Packages/*/*/Tests; do
+            [ -d "$dir" ] && test_dirs+=("$dir")
+          done
+          if [ ${#test_dirs[@]} -eq 0 ]; then
+            echo "::error::Found no Packages/*/Tests folder, so this check is broken"
+            exit 1
+          fi
+          # grep exits 1 for no match, which is fine, and 2 for a real error.
+          found=$(grep -rl "assertSnapshots(" "${test_dirs[@]}") || {
+            [ $? -eq 1 ] || { echo "::error::grep failed while searching the Tests folders"; exit 1; }
+          }
+          stray=$(grep -v "/Tests/[^/]*SnapshotTests/" <<< "$found" || true)
           if [ -n "$stray" ]; then
             echo "::error::These call assertSnapshots but sit outside a *SnapshotTests target:"
             echo "$stray"
@@ -695,6 +737,7 @@ jobs:
 
           files = sorted(Path().glob("*.xcodeproj/project.pbxproj"))
           files += sorted(Path().glob("Packages/*/*.xcodeproj/project.pbxproj"))
+          files += sorted(Path().glob("Packages/*/*/*.xcodeproj/project.pbxproj"))
           if not files:
               print("::error::Found no project.pbxproj to check")
               sys.exit(1)

@@ -19,14 +19,18 @@
 # Each file is judged by one log only, so the verdict does not depend on how
 # many builds happen to mention it:
 #
-#     app        Packages/*/Sources, except the *TestSupport targets, and the
+#     app        Packages/[*/]*/Sources, except the *TestSupport targets, and the
 #                app, App Clip, widget and SwiftLeedsPackage folders
 #                                            the iOS app Release build
-#     tests      Packages/*/Tests, except the *SnapshotTests folders, and the
+#     tests      Packages/[*/]*/Tests, except the *SnapshotTests folders, and the
 #                *TestSupport targets, which no app links
 #                                            the macOS package build
-#     snapshots  Packages/*/Tests/*SnapshotTests
+#     snapshots  Packages/[*/]*/Tests/*SnapshotTests
 #                                            the iOS snapshot-test build
+#
+# A package sits at Packages/<Name> or Packages/<Folder>/<Name>, so each scope
+# lists both depths. The globs go into a config file for SwiftLint, never through
+# the shell, and SwiftLint ignores a glob that matches nothing.
 #
 # A source file compiles differently on each platform, and an import is used or
 # unused depending on which `#if` branch compiled. A file judged by two logs could
@@ -109,15 +113,15 @@ fatal () {
 # SwiftLint's `included:` and `excluded:` take them.
 case "$scope" in
     app)
-        included="Packages/*/Sources SwiftLeeds SwiftLeedsAppClip SwiftLeedsWidget SwiftLeedsPackage"
-        also_excluded="Packages/*/Sources/*TestSupport"
+        included="Packages/*/Sources Packages/*/*/Sources SwiftLeeds SwiftLeedsAppClip SwiftLeedsWidget SwiftLeedsPackage"
+        also_excluded="Packages/*/Sources/*TestSupport Packages/*/*/Sources/*TestSupport"
         ;;
     tests)
-        included="Packages/*/Tests Packages/*/Sources/*TestSupport"
-        also_excluded="Packages/*/Tests/*SnapshotTests"
+        included="Packages/*/Tests Packages/*/*/Tests Packages/*/Sources/*TestSupport Packages/*/*/Sources/*TestSupport"
+        also_excluded="Packages/*/Tests/*SnapshotTests Packages/*/*/Tests/*SnapshotTests"
         ;;
     snapshots)
-        included="Packages/*/Tests/*SnapshotTests"
+        included="Packages/*/Tests/*SnapshotTests Packages/*/*/Tests/*SnapshotTests"
         also_excluded=""
         ;;
     *)
