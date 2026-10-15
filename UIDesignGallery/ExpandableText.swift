@@ -42,8 +42,14 @@ struct ExpandableText: View {
         cutText
 
         if isCut || isExpanded {
-            Button(isExpanded ? "See less" : "See more") {
+            // A plain button takes taps on its label only, so the label fills
+            // the row and the whole row answers.
+            Button {
                 isExpanded.toggle()
+            } label: {
+                Text(isExpanded ? "See less" : "See more")
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .contentShape(.rect)
             }
             .buttonStyle(.plain)
             .font(.body)
