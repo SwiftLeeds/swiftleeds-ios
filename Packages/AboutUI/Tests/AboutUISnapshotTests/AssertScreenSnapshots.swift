@@ -5,7 +5,7 @@ import SwiftUI
 // An iPhone 13 Pro made tall enough to show the whole About screen, team included.
 private let tallIPhone = ViewImageConfig(
     safeArea: ViewImageConfig.iPhone13Pro.safeArea,
-    size: CGSize(width: 390, height: 3200),
+    size: CGSize(width: 390, height: 3_200),
     traits: ViewImageConfig.iPhone13Pro.traits,
 )
 

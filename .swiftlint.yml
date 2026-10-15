@@ -139,6 +139,10 @@ opt_in_rules:
   - shorthand_optional_binding
   - superfluous_else
 
+  # A number of four or more digits takes `_` between groups, so `3_200` is
+  # read at a glance and `1000` is never mistaken for `10000`.
+  - number_separator
+
 # Analyzer rules read the compiler log, so they run only through
 # `swiftlint analyze`, never `swiftlint lint`.
 analyzer_rules:
