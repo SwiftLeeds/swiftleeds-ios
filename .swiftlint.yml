@@ -138,6 +138,7 @@ opt_in_rules:
   - prefer_condition_list
   - shorthand_optional_binding
   - superfluous_else
+  - self_binding
 
   # A number of four or more digits takes `_` between groups, so `3_200` is
   # read at a glance and `1000` is never mistaken for `10000`.
