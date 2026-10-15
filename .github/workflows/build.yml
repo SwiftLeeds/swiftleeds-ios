@@ -745,3 +745,46 @@ jobs:
       - name: Check the snapshot scheme lists every snapshot target
         run: python3 .github/scripts/check-snapshot-scheme.py
 
+  # This uploads the committed reference images to Screenshotbot, so a reviewer
+  # sees each changed image in the pull request. Git still owns the images and
+  # the simulator job still compares pixels. This job only shows them.
+  #
+  # It runs on Linux because it needs no simulator, only the PNG files, and the
+  # macOS runners are an account limit of 5 that this workflow already fills.
+  #
+  # The name of this job and the `ios-snapshot-tests` status it posts are both
+  # required checks on `main`. Renaming either blocks every pull request until
+  # that branch rule is edited too.
+  upload-screenshots:
+    name: Upload Screenshots (Screenshotbot)
+    runs-on: ubuntu-24.04
+    steps:
+      # The default checkout of a pull request is a temporary merge commit. Its
+      # SHA never appears on the pull request, so a status posted to it would not
+      # satisfy a branch rule. The head SHA is the commit the branch rule sees.
+      # A push to `main` has no pull request, so it falls back to its own SHA.
+      # Full history lets the recorder find the merge base.
+      - name: Checkout iOS Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+
+      # The version and checksum are pinned in the script. Screenshotbot's own
+      # install command downloads whatever is current and runs it unchecked.
+      - name: Install the Screenshotbot recorder
+        run: .github/scripts/install-recorder.sh
+
+      # A fork pull request gets no secrets, so the script skips it. A maintainer
+      # pushes the fork's commits to a branch in this repository and merges that
+      # pull request instead.
+      #
+      # A missing secret fails the job on purpose. A silent skip on `main` would
+      # leave that commit with no baseline for later pull requests to compare to.
+      - name: Upload the snapshot references
+        env:
+          SCREENSHOTBOT_API_KEY: ${{ secrets.SCREENSHOTBOT_API_KEY }}
+          SCREENSHOTBOT_API_SECRET: ${{ secrets.SCREENSHOTBOT_API_SECRET }}
+          IS_FORK: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository }}
+        run: .github/scripts/upload-screenshots.sh
+
