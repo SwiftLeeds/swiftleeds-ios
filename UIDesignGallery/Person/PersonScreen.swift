@@ -16,14 +16,8 @@ struct PersonScreen: View {
     /// Whether the person is a favourite.
     @State private var isFavorite: Bool
 
-    /// Whether the bio shows in full.
-    @State private var isBioExpanded: Bool
-
-    /// How tall the bio is when it shows in full.
-    @State private var fullBioHeight: CGFloat = 0
-
-    /// How tall the bio is when it is cut to its first lines.
-    @State private var cutBioHeight: CGFloat = 0
+    /// Whether the bio shows in full when the screen appears.
+    private let opensBioExpanded: Bool
 
     /// Creates a screen for one person.
     ///
@@ -40,7 +34,7 @@ struct PersonScreen: View {
     ) {
         self.person = person
         _isFavorite = State(initialValue: opensFavorite)
-        _isBioExpanded = State(initialValue: opensBioExpanded)
+        self.opensBioExpanded = opensBioExpanded
     }
 
     var body: some View {
@@ -208,66 +202,13 @@ extension PersonScreen {
     private var about: some View {
         if let bio = person.bio {
             Section("About") {
-                bioText(bio)
-
-                if isBioCut || isBioExpanded {
-                    Button(isBioExpanded ? "See less" : "See more") {
-                        isBioExpanded.toggle()
-                    }
-                    .buttonStyle(.plain)
-                    .font(.body)
-                    .foregroundStyle(.brandPrimary)
-                }
+                ExpandableText(
+                    bio,
+                    lines: Self.collapsedBioLines,
+                    opensExpanded: opensBioExpanded,
+                )
             }
         }
-    }
-
-    /// Whether the bio is longer than the lines it shows until expanded.
-    private var isBioCut: Bool {
-        fullBioHeight > cutBioHeight
-    }
-
-    /// Returns the bio, cut to its first lines until it is expanded.
-    ///
-    /// Two hidden copies measure the bio in full and cut, so the button shows
-    /// only when there is something more to read. VoiceOver reads the whole
-    /// string whether or not the text is cut.
-    ///
-    /// - Parameter bio: What the person says about themselves.
-    private func bioText(_ bio: String) -> some View {
-        Text(bio)
-            .font(.body)
-            .foregroundStyle(.textPrimary)
-            .lineLimit(isBioExpanded ? nil : Self.collapsedBioLines)
-            .fixedSize(horizontal: false, vertical: true)
-            .background {
-                measure(bio, lines: nil, into: $fullBioHeight)
-                measure(bio, lines: Self.collapsedBioLines, into: $cutBioHeight)
-            }
-    }
-
-    /// Returns an invisible copy of the bio that reports its height.
-    ///
-    /// - Parameters:
-    ///   - bio: What the person says about themselves.
-    ///   - lines: The most lines the copy takes, or `nil` for no limit.
-    ///   - height: Where the copy's height goes.
-    private func measure(
-        _ bio: String,
-        lines: Int?,
-        into height: Binding<CGFloat>,
-    ) -> some View {
-        Text(bio)
-            .font(.body)
-            .lineLimit(lines)
-            .fixedSize(horizontal: false, vertical: true)
-            .hidden()
-            .accessibilityHidden(true)
-            .onGeometryChange(for: CGFloat.self) {
-                $0.size.height
-            } action: { new in
-                height.wrappedValue = new
-            }
     }
 
     /// The pages this person publishes, if any.
