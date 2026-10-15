@@ -129,7 +129,7 @@ struct SessionDetailScreen: View {
     private var heading: some View {
         VStack(alignment: .leading, spacing: .small) {
             Text(session.title)
-                .font(.largeTitle.weight(.bold))
+                .font(.title.weight(.bold))
                 .foregroundStyle(.textPrimary)
 
             facts
