@@ -39,8 +39,8 @@ struct TalkRow: View {
     /// and date.
     private var dayLabel: String {
         let calendar = Calendar.current
-        if calendar.isDateInToday(session.date) || calendar.isDateInTomorrow(session.date) {
-            let relative = session.date.formatted(
+        if calendar.isDateInToday(session.start) || calendar.isDateInTomorrow(session.start) {
+            let relative = session.start.formatted(
                 Date.RelativeFormatStyle(
                     allowedFields: [.day],
                     presentation: .named,
@@ -49,7 +49,7 @@ struct TalkRow: View {
             )
             return relative.prefix(1).uppercased() + relative.dropFirst()
         }
-        return session.date.formatted(.dateTime.weekday(.abbreviated).day().month(.abbreviated))
+        return session.start.formatted(.dateTime.weekday(.abbreviated).day().month(.abbreviated))
     }
 
     /// When the talk starts and what kind of talk it is, if either is known.

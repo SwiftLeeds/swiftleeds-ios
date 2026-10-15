@@ -2,9 +2,9 @@ import Foundation
 
 /// A session made up for the gallery.
 ///
-/// Every field is display text rather than a domain value. The gallery exists
-/// to show what a screen looks like, so it needs strings to draw and no rules
-/// to enforce. The real `Session` lives in `ScheduleFeature`.
+/// Its text fields are display text rather than domain values, and its dates
+/// are built relative to today so "Today" and "Tomorrow" stay true. The real
+/// `Session` lives in `ScheduleFeature`.
 struct SampleSession: Identifiable, Equatable, Hashable, Sendable {
     /// Tells one sample session from another.
     let id: String
@@ -15,11 +15,11 @@ struct SampleSession: Identifiable, Equatable, Hashable, Sendable {
     /// Which day of the conference the session runs on.
     let day: String
 
-    /// The date the session runs on.
-    let date: Date
+    /// When the session starts.
+    let start: Date
 
-    /// When the session runs, as the row prints it.
-    let time: String
+    /// When the session ends.
+    let end: Date
 
     /// Where the session runs.
     let room: String
@@ -41,15 +41,24 @@ struct SampleSession: Identifiable, Equatable, Hashable, Sendable {
 
     /// What the session is about.
     let summary: String
+
+    /// When the session runs, as a time range in the current locale.
+    var time: String {
+        (start..<end).formatted(Date.IntervalFormatStyle(date: .omitted, time: .shortened))
+    }
 }
 
 extension SampleSession {
-    /// Returns the date a number of days from today, read at launch.
+    /// Returns a moment a number of days from today, at the given time.
     ///
-    /// - Parameter days: How many days from today. A negative number is the
-    ///   past.
-    private static func daysFromToday(_ days: Int) -> Date {
-        Calendar.current.date(byAdding: .day, value: days, to: .now) ?? .now
+    /// - Parameters:
+    ///   - days: How many days from today. A negative number is the past.
+    ///   - hour: The hour, on a 24-hour clock.
+    ///   - minute: The minute past the hour.
+    private static func daysFromToday(_ days: Int, at hour: Int, _ minute: Int) -> Date {
+        let calendar = Calendar.current
+        let day = calendar.date(byAdding: .day, value: days, to: .now) ?? .now
+        return calendar.date(bySettingHour: hour, minute: minute, second: 0, of: day) ?? day
     }
 
     /// The three sessions the gallery shows on day one.
@@ -63,8 +72,8 @@ extension SampleSession {
         id: "opening",
         conference: "SwiftLeeds 2026",
         day: "Day 1",
-        date: daysFromToday(0),
-        time: "09:30 - 10:15",
+        start: daysFromToday(0, at: 9, 30),
+        end: daysFromToday(0, at: 10, 15),
         room: "Main Hall",
         title: "Building a design system that survives its second year",
         speakers: [.dana],
@@ -82,8 +91,8 @@ extension SampleSession {
         id: "concurrency",
         conference: "SwiftLeeds 2026",
         day: "Day 1",
-        date: daysFromToday(0),
-        time: "10:30 - 11:00",
+        start: daysFromToday(0, at: 10, 30),
+        end: daysFromToday(0, at: 11, 0),
         room: "Main Hall",
         title: "Swift concurrency, one year on",
         speakers: [.blake],
@@ -98,8 +107,8 @@ extension SampleSession {
         id: "accessibility",
         conference: "SwiftLeeds 2026",
         day: "Day 2",
-        date: daysFromToday(1),
-        time: "11:15 - 12:30",
+        start: daysFromToday(1, at: 11, 15),
+        end: daysFromToday(1, at: 12, 30),
         room: "Studio",
         title: "Accessibility beyond VoiceOver",
         speakers: [.casey, .fay],
@@ -115,8 +124,8 @@ extension SampleSession {
         id: "untestable",
         conference: "SwiftLeeds 2025",
         day: "Day 2",
-        date: daysFromToday(-365),
-        time: "14:00 - 14:40",
+        start: daysFromToday(-365, at: 14, 0),
+        end: daysFromToday(-365, at: 14, 40),
         room: "Main Hall",
         title: "Testing the untestable",
         speakers: [.dana],
