@@ -3,7 +3,7 @@
 
 One line per target: "<target> <package path>".
 
-The simulator job used `swift package describe` on all 17 packages to find the
+The simulator job used `swift package describe` on all 16 packages to find the
 seven that have snapshot tests, which cost 26s. The scheme already names them,
 and a lint check fails when the scheme and the manifests name different
 targets, so the target names cannot drift unnoticed.
