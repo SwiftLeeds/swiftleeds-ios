@@ -4,7 +4,7 @@ public struct Sponsors: Equatable, Hashable, Sendable {
     private let levels: [SponsorLevel: [Sponsor]]
 
     /// Creates the grouping from a flat list of sponsors.
-    /// - Parameter sponsors: The sponsors to group by level, in any order.
+    /// - Parameter sponsors: The sponsors to group. Each level keeps their order.
     public init(_ sponsors: [Sponsor]) {
         // Grouping never yields an empty array, so a level is absent or full.
         levels = Dictionary(grouping: sponsors, by: \.level)
@@ -22,7 +22,7 @@ public struct Sponsors: Equatable, Hashable, Sendable {
 
     /// Returns the sponsors at a level.
     /// - Parameter level: The level to read.
-    /// - Returns: The sponsors at that level, or an empty array when it has none.
+    /// - Returns: The sponsors at that level, or an empty array if none.
     public func sponsors(at level: SponsorLevel) -> [Sponsor] {
         levels[level, default: []]
     }

@@ -7,7 +7,7 @@ public struct Sponsor: Equatable, Hashable, Identifiable, Sendable {
     /// The sponsor's name.
     public let name: String
 
-    /// A short line about the sponsor.
+    /// A line about the sponsor.
     public let subtitle: String
 
     /// The level the sponsor bought.

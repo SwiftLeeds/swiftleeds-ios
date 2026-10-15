@@ -2,7 +2,7 @@ import Dependencies
 
 /// The source of the sponsors.
 package struct SponsorsRepository: Sendable {
-    /// Fetches every sponsor, grouped by level.
+    /// Fetches the sponsors.
     /// - Throws: A ``SponsorFetchError`` when the server cannot be reached, or
     ///   its response is refused or unexpected.
     package var fetch: @Sendable () async throws(SponsorFetchError) -> Sponsors
