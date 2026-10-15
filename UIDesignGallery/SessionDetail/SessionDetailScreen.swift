@@ -61,29 +61,51 @@ struct SessionDetailScreen: View {
             }
 
             ToolbarItem(placement: .topBarTrailing) {
-                Button {
-                } label: {
-                    Label("Calendar", systemImage: "calendar.badge.plus")
-                }
-                .tint(.textPrimary)
+                shareButton
             }
 
-            ToolbarItem(placement: .topBarTrailing) {
-                Button {
-                } label: {
-                    Label("Share", systemImage: "square.and.arrow.up")
-                }
-                .tint(.textPrimary)
-            }
+            // Favourite and Share act on this session. More holds what
+            // leaves it, so it sits apart in its own capsule.
+            ToolbarSpacer(.fixed, placement: .topBarTrailing)
 
             ToolbarItem(placement: .topBarTrailing) {
-                Button {
-                } label: {
-                    Label("More", systemImage: "ellipsis")
-                }
-                .tint(.textPrimary)
+                moreMenu
             }
         }
+    }
+
+    /// The button that shares this session.
+    private var shareButton: some View {
+        Button {
+        } label: {
+            Label {
+                Text("Share")
+            } icon: {
+                Image(icon: .share)
+            }
+        }
+        .tint(.textPrimary)
+    }
+
+    /// The menu of actions that take this session out of the app.
+    private var moreMenu: some View {
+        Menu {
+            Button {
+            } label: {
+                Label {
+                    Text("Add to Calendar")
+                } icon: {
+                    Image(icon: .calendar)
+                }
+            }
+        } label: {
+            Label {
+                Text("More")
+            } icon: {
+                Image(icon: .more)
+            }
+        }
+        .tint(.textPrimary)
     }
 
     /// What the session is called, and when and where it runs.
