@@ -80,7 +80,7 @@ public struct FancyHeaderView: View {
                     }
                 }
             }
-        } else if let foregroundImage = foregroundImage {
+        } else if let foregroundImage {
             createRectangleImage(for: foregroundImage)
         } else {
             createRectangleImage(for: Image.swiftLeedsIcon)

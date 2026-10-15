@@ -190,7 +190,7 @@ package struct AboutContentView: View {
     }
 
     private func openURL(url: URL?) {
-        guard let url = url else { return }
+        guard let url else { return }
         UIApplication.shared.open(url)
     }
 }

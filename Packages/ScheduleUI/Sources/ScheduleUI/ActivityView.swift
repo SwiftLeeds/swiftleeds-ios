@@ -48,9 +48,8 @@ package struct ActivityView: View {
             let url = URL(string: encodedImage)
         {
             return [url]
-        } else {
-            return []
         }
+        return []
     }
 }
 

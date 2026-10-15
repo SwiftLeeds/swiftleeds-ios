@@ -90,7 +90,7 @@ import Testing
         #expect(HTTPStatus(code: HTTPStatusCode(code)).category == category)
     }
 
-    @Test(arguments: [99, 600, 0, -1, 1000])
+    @Test(arguments: [99, 600, 0, -1, 1_000])
     func whenCodeIsOutsideValidRange_shouldBeInvalid(code: Int) {
         #expect(HTTPStatus(code: HTTPStatusCode(code)).category == .invalid)
     }
