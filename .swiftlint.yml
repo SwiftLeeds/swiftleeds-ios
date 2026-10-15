@@ -61,8 +61,8 @@ opt_in_rules:
   # "A `Task` handles what it throws."
   - unhandled_throwing_task
 
-  # Rules nothing here breaks. Each found zero violations when it was added on
-  # 2026-09-24, so none of them changed a line of source.
+  # Rules nothing here breaks. Each found zero violations when it was added, so
+  # none of them changed a line of source.
 
   # "Favour functional style. Treat `Optional` and `Result` as functors: `map`,
   # `flatMap`, `compactMap`." These name the call that says what you mean.
@@ -82,6 +82,7 @@ opt_in_rules:
   # no meaning.
   - direct_return
   - empty_collection_literal
+  - empty_string
   - explicit_init
   - prefer_self_type_over_type_of_self
   - prefer_zero_over_explicit_init
