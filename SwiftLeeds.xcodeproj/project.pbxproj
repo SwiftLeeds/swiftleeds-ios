@@ -63,6 +63,11 @@
 		7CA11E000000000000000404 /* TicketRole.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000304 /* TicketRole.swift */; };
 		7CA11E000000000000000405 /* BandPattern.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000305 /* BandPattern.swift */; };
 		7CA11E000000000000000406 /* BandVariant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000306 /* BandVariant.swift */; };
+		7CA11E000000000000000601 /* Roles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000501 /* Roles.swift */; };
+		7CA11E000000000000000602 /* SamplePerson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000502 /* SamplePerson.swift */; };
+		7CA11E000000000000000603 /* SampleLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000503 /* SampleLink.swift */; };
+		7CA11E000000000000000605 /* PersonScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000505 /* PersonScreen.swift */; };
+		7CA11E000000000000000606 /* TalkRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000506 /* TalkRow.swift */; };
 		7CA11E000000000000000407 /* SampleTicket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000307 /* SampleTicket.swift */; };
 		7CA11E000000000000000408 /* TicketCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000308 /* TicketCode.swift */; };
 		7CA11E000000000000000409 /* BandPatternView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000309 /* BandPatternView.swift */; };
@@ -289,6 +294,11 @@
 		7CA11E000000000000000304 /* TicketRole.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketRole.swift; sourceTree = "<group>"; };
 		7CA11E000000000000000305 /* BandPattern.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandPattern.swift; sourceTree = "<group>"; };
 		7CA11E000000000000000306 /* BandVariant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandVariant.swift; sourceTree = "<group>"; };
+		7CA11E000000000000000501 /* Roles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Roles.swift; sourceTree = "<group>"; };
+		7CA11E000000000000000502 /* SamplePerson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SamplePerson.swift; sourceTree = "<group>"; };
+		7CA11E000000000000000503 /* SampleLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleLink.swift; sourceTree = "<group>"; };
+		7CA11E000000000000000505 /* PersonScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonScreen.swift; sourceTree = "<group>"; };
+		7CA11E000000000000000506 /* TalkRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TalkRow.swift; sourceTree = "<group>"; };
 		7CA11E000000000000000307 /* SampleTicket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleTicket.swift; sourceTree = "<group>"; };
 		7CA11E000000000000000308 /* TicketCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketCode.swift; sourceTree = "<group>"; };
 		7CA11E000000000000000309 /* BandPatternView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandPatternView.swift; sourceTree = "<group>"; };
@@ -623,6 +633,7 @@
 				7CA11E00000000000000011F /* ResourceRow.swift */,
 				7CA11E00000000000000000E /* Schedule */,
 				7CA11E000000000000000017 /* Ticket */,
+				7CA11E000000000000000018 /* Person */,
 				7CA11E00000000000000000F /* SessionDetail */,
 				7CA11E000000000000000012 /* Profile */,
 				7CA11E000000000000000010 /* Sponsors */,
@@ -660,6 +671,18 @@
 				7CA11E000000000000000308 /* TicketCode.swift */,
 			);
 			path = Ticket;
+			sourceTree = "<group>";
+		};
+		7CA11E000000000000000018 /* Person */ = {
+			isa = PBXGroup;
+			children = (
+				7CA11E000000000000000501 /* Roles.swift */,
+				7CA11E000000000000000502 /* SamplePerson.swift */,
+				7CA11E000000000000000503 /* SampleLink.swift */,
+				7CA11E000000000000000505 /* PersonScreen.swift */,
+				7CA11E000000000000000506 /* TalkRow.swift */,
+			);
+			path = Person;
 			sourceTree = "<group>";
 		};
 		7CA11E00000000000000000F /* SessionDetail */ = {
@@ -1129,6 +1152,11 @@
 				7CA11E000000000000000407 /* SampleTicket.swift in Sources */,
 				7CA11E000000000000000408 /* TicketCode.swift in Sources */,
 				7CA11E000000000000000409 /* BandPatternView.swift in Sources */,
+				7CA11E000000000000000601 /* Roles.swift in Sources */,
+				7CA11E000000000000000602 /* SamplePerson.swift in Sources */,
+				7CA11E000000000000000603 /* SampleLink.swift in Sources */,
+				7CA11E000000000000000605 /* PersonScreen.swift in Sources */,
+				7CA11E000000000000000606 /* TalkRow.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

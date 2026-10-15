@@ -63,8 +63,17 @@ struct ScheduleScreen: View {
     /// Whether the role band on a ticket draws the role's texture.
     var bandVariant: BandVariant = .plain
 
-    /// The sessions pushed on top of the schedule.
-    @State private var path: [SampleSession] = []
+    /// Whether a person page opens with the person already saved.
+    var opensSaved = false
+
+    /// Whether a person page opens with the bio in full.
+    var opensBioExpanded = false
+
+    /// The screens pushed on top of the schedule.
+    ///
+    /// The schedule pushes three kinds of thing, a session, a person and a
+    /// sponsor, so the path is untyped.
+    @State private var path = NavigationPath()
 
     /// The sheet the schedule shows, or nil for none.
     @State private var sheet: Sheet?
@@ -95,6 +104,17 @@ struct ScheduleScreen: View {
                 .navigationSubtitle("Starts in 12 days")
                 .navigationDestination(for: SampleSession.self) { session in
                     SessionDetailScreen(session: session)
+                }
+                .navigationDestination(for: SamplePerson.self) { person in
+                    PersonScreen(
+                        person: person,
+                        opensSaved: opensSaved,
+                        opensBioExpanded: opensBioExpanded,
+                    )
+                }
+                .navigationDestination(for: SampleSponsor.self) { sponsor in
+                    NotYetDesigned(destination: .sponsors)
+                        .navigationTitle(sponsor.name)
                 }
                 .sheet(item: $sheet) { item in
                     switch item {
@@ -171,7 +191,8 @@ struct ScheduleScreen: View {
         }
         .onAppear {
             switch opensWith {
-            case .session(let session): path = [session]
+            case .session(let session): path.append(session)
+            case .person(let person): path.append(person)
             case .settings: sheet = .settings
             case .profile:
                 sheet = .settings

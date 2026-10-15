@@ -16,8 +16,12 @@ import UIDesign
 /// edge for the one it feathers between, `-ticket attendee`, `-ticket speaker`,
 /// `-ticket sponsor`, `-ticket staff` or `-ticket unavailable` presents that
 /// ticket, `-band patterned` draws each role's texture on the ticket's band,
-/// and `-halos role`, `-halos pink` or `-halos gold` shows every halo
-/// treatment at once, in those colors, instead of the app.
+/// `-person dana`, `-person blake`, `-person casey`, `-person eli`,
+/// `-person fay` or `-person gus` pushes that person's page, `-saved 1` opens
+/// it with the person saved, `-bio expanded` opens it with the bio in full,
+/// `-detail accessibility` pushes the two-speaker workshop's detail, and
+/// `-halos role`, `-halos pink` or `-halos gold` shows every halo treatment at
+/// once, in those colors, instead of the app.
 @main
 struct UIDesignGalleryApp: App {
     /// The destination on screen.
@@ -35,6 +39,12 @@ struct UIDesignGalleryApp: App {
     /// Whether the role band on a ticket draws the role's texture.
     private let bandVariant: BandVariant
 
+    /// Whether the person page opens with the person already saved.
+    private let opensSaved: Bool
+
+    /// Whether the person page opens with the bio in full.
+    private let opensBioExpanded: Bool
+
     /// The standing whose colors the halo treatments draw, or `nil` when the
     /// gallery shows the app instead of the treatments.
     private let comparedHalo: ConferenceRole?
@@ -44,25 +54,12 @@ struct UIDesignGalleryApp: App {
         let defaults = UserDefaults.standard
         let name = defaults.string(forKey: "tab") ?? ""
         _tab = State(initialValue: GalleryTab(rawValue: name) ?? .schedule)
-        let category = defaults.string(forKey: "category") ?? ""
-        if let ticket = SampleTicket.named(defaults.string(forKey: "ticket") ?? "") {
-            opensWith = .ticket(ticket)
-        } else if let category = SettingsCategory(rawValue: category) {
-            opensWith = .settingsCategory(category)
-        } else if let state = SignInState(rawValue: defaults.string(forKey: "signin") ?? "") {
-            opensWith = .signIn(state)
-        } else if defaults.bool(forKey: "profile") {
-            opensWith = .profile
-        } else if defaults.bool(forKey: "settings") {
-            opensWith = .settings
-        } else if defaults.bool(forKey: "detail") {
-            opensWith = .session(.opening)
-        } else {
-            opensWith = nil
-        }
+        opensWith = Self.destination(from: defaults)
         let halo = defaults.string(forKey: "halo") ?? ""
         haloEdge = HaloEdge(rawValue: halo) ?? .feathered
         bandVariant = BandVariant(rawValue: defaults.string(forKey: "band") ?? "") ?? .plain
+        opensSaved = defaults.bool(forKey: "saved")
+        opensBioExpanded = defaults.string(forKey: "bio") == "expanded"
         switch defaults.string(forKey: "halos") {
         case "pink":
             comparedHalo = HaloComparison.brandPink
@@ -72,6 +69,36 @@ struct UIDesignGalleryApp: App {
             comparedHalo = SampleAttendee.signedIn.role
         case .none:
             comparedHalo = nil
+        }
+    }
+
+    /// Returns the screen the launch arguments ask the schedule to open with,
+    /// or `nil` when they name none.
+    ///
+    /// The first argument found wins, in the order the app's doc comment lists
+    /// them.
+    ///
+    /// - Parameter defaults: Where the launch arguments were read into.
+    private static func destination(from defaults: UserDefaults) -> ScheduleDestination? {
+        let category = defaults.string(forKey: "category") ?? ""
+        if let ticket = SampleTicket.named(defaults.string(forKey: "ticket") ?? "") {
+            return .ticket(ticket)
+        } else if let person = SamplePerson.named(defaults.string(forKey: "person") ?? "") {
+            return .person(person)
+        } else if let category = SettingsCategory(rawValue: category) {
+            return .settingsCategory(category)
+        } else if let state = SignInState(rawValue: defaults.string(forKey: "signin") ?? "") {
+            return .signIn(state)
+        } else if defaults.bool(forKey: "profile") {
+            return .profile
+        } else if defaults.bool(forKey: "settings") {
+            return .settings
+        } else if defaults.string(forKey: "detail") == "accessibility" {
+            return .session(.accessibility)
+        } else if defaults.bool(forKey: "detail") {
+            return .session(.opening)
+        } else {
+            return nil
         }
     }
 
@@ -93,7 +120,13 @@ struct UIDesignGalleryApp: App {
                 systemImage: GalleryTab.schedule.symbol,
                 value: GalleryTab.schedule,
             ) {
-                ScheduleScreen(opensWith: opensWith, haloEdge: haloEdge, bandVariant: bandVariant)
+                ScheduleScreen(
+                    opensWith: opensWith,
+                    haloEdge: haloEdge,
+                    bandVariant: bandVariant,
+                    opensSaved: opensSaved,
+                    opensBioExpanded: opensBioExpanded,
+                )
             }
 
             Tab(

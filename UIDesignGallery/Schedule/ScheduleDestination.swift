@@ -6,6 +6,9 @@ enum ScheduleDestination: Equatable, Hashable {
     /// What one session is about, and what a person can do about it.
     case session(SampleSession)
 
+    /// Who a person is, what they speak about and where to find them.
+    case person(SamplePerson)
+
     /// What a person can change about the app.
     case settings
 
