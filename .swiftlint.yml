@@ -137,6 +137,7 @@ opt_in_rules:
   # `if` for an `else`, and `self` for a second name bound to it.
   - prefer_condition_list
   - shorthand_optional_binding
+  - superfluous_else
 
 # Analyzer rules read the compiler log, so they run only through
 # `swiftlint analyze`, never `swiftlint lint`.
