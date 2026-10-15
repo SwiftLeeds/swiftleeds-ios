@@ -25,9 +25,6 @@ struct PersonScreen: View {
     /// How tall the bio is when it is cut to its first lines.
     @State private var cutBioHeight: CGFloat = 0
 
-    /// Whether this person has asked to reduce motion.
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
-
     /// Creates a screen for one person.
     ///
     /// - Parameters:
@@ -67,7 +64,7 @@ struct PersonScreen: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                saveButton
+                FavoriteButton(isFavorite: $isSaved)
             }
 
             ToolbarItem(placement: .topBarTrailing) {
@@ -134,38 +131,6 @@ extension PersonScreen {
     private var roleBadges: some View {
         ForEach(person.roles.all, id: \.name) { role in
             MockRoleBadge(role: role)
-        }
-    }
-}
-
-// MARK: - Toolbar
-
-extension PersonScreen {
-    /// The button that saves this person, or takes them off the saved list.
-    private var saveButton: some View {
-        Button {
-            toggleSaved()
-        } label: {
-            Label {
-                Text(isSaved ? "Unsave" : "Save")
-            } icon: {
-                Image(systemName: isSaved ? "star.fill" : "star")
-                    .contentTransition(reduceMotion ? .identity : .symbolEffect(.replace))
-            }
-        }
-        .tint(.textPrimary)
-        .sensoryFeedback(.success, trigger: isSaved)
-    }
-
-    /// Saves this person, or takes them off the saved list.
-    ///
-    /// The symbol replaces itself with an animation, unless this person has
-    /// asked to reduce motion.
-    private func toggleSaved() {
-        if reduceMotion {
-            isSaved.toggle()
-        } else {
-            withAnimation { isSaved.toggle() }
         }
     }
 }

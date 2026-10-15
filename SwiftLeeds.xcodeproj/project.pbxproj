@@ -79,6 +79,7 @@
 		7CA11E00000000000000021C /* SampleResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E00000000000000011C /* SampleResult.swift */; };
 		7CA11E00000000000000021D /* SearchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E00000000000000011D /* SearchScreen.swift */; };
 		7CA11E00000000000000021E /* ReflowingStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E00000000000000011E /* ReflowingStack.swift */; };
+		7CA11E0000000000000000FB02 /* FavoriteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E0000000000000000FB01 /* FavoriteButton.swift */; };
 		7CA11E00000000000000021F /* ResourceRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E00000000000000011F /* ResourceRow.swift */; };
 		7CA11E000000000000000220 /* SampleAppIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000120 /* SampleAppIcon.swift */; };
 		7CA11E000000000000000222 /* SettingsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000122 /* SettingsScreen.swift */; };
@@ -310,6 +311,7 @@
 		7CA11E00000000000000011C /* SampleResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleResult.swift; sourceTree = "<group>"; };
 		7CA11E00000000000000011D /* SearchScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchScreen.swift; sourceTree = "<group>"; };
 		7CA11E00000000000000011E /* ReflowingStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReflowingStack.swift; sourceTree = "<group>"; };
+		7CA11E0000000000000000FB01 /* FavoriteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteButton.swift; sourceTree = "<group>"; };
 		7CA11E00000000000000011F /* ResourceRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceRow.swift; sourceTree = "<group>"; };
 		7CA11E000000000000000120 /* SampleAppIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleAppIcon.swift; sourceTree = "<group>"; };
 		7CA11E000000000000000122 /* SettingsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsScreen.swift; sourceTree = "<group>"; };
@@ -629,6 +631,7 @@
 				7CA11E000000000000000115 /* HaloEdge.swift */,
 				7CA11E000000000000000117 /* HaloComparison.swift */,
 				7CA11E00000000000000011E /* ReflowingStack.swift */,
+				7CA11E0000000000000000FB01 /* FavoriteButton.swift */,
 				7CA11E000000000000000119 /* SampleResource.swift */,
 				7CA11E00000000000000011F /* ResourceRow.swift */,
 				7CA11E00000000000000000E /* Schedule */,
@@ -1130,6 +1133,7 @@
 				7CA11E00000000000000021C /* SampleResult.swift in Sources */,
 				7CA11E00000000000000021D /* SearchScreen.swift in Sources */,
 				7CA11E00000000000000021E /* ReflowingStack.swift in Sources */,
+				7CA11E0000000000000000FB02 /* FavoriteButton.swift in Sources */,
 				7CA11E00000000000000021F /* ResourceRow.swift in Sources */,
 				7CA11E000000000000000220 /* SampleAppIcon.swift in Sources */,
 				7CA11E000000000000000222 /* SettingsScreen.swift in Sources */,
