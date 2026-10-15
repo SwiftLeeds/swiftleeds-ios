@@ -17,7 +17,11 @@ struct SwiftLeedsApp: App {
 
     @StateObject private var appState = AppState()
 
+    /// The disk limit for the shared cache, which holds mostly remote images.
+    private static let sharedURLCacheDiskCapacityInBytes = 100_000_000
+
     init() {
+        Self.sizeSharedURLCache()
         prepareDependencies {
             // A fresh salt each launch, so hashed values correlate within a session but never
             // between them. Without a subsystem there is no honest place to write (this ships
@@ -44,6 +48,11 @@ struct SwiftLeedsApp: App {
         }
     }
 
+    /// Gives the shared URL cache room on disk for remote images.
+    private static func sizeSharedURLCache() {
+        URLCache.shared.diskCapacity = sharedURLCacheDiskCapacityInBytes
+    }
+
     var body: some Scene {
         WindowGroup {
             Tabs()
@@ -62,8 +71,6 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
         // swiftlint:disable:next discouraged_optional_collection
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil,
     ) -> Bool {
-        URLCache.shared.diskCapacity = 100_000_000
-
         UITabBar.appearance().backgroundColor = UIColor(named: "TabBarBackground")
 
         requestPushAuthorization(application: application)
