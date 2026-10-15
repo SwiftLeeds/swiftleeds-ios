@@ -27,13 +27,17 @@ struct SessionDetailScreen: View {
                 Text(session.summary)
             }
 
-            Section("Speaker") {
-                Nameplate(session.speaker, detail: "Speaker • \(session.speakerDetail)") {
-                    Avatar(
-                        url: nil,
-                        size: .medium,
-                        fallback: .initials(session.speakerName),
-                    )
+            Section(session.speakers.count == 1 ? "Speaker" : "Speakers") {
+                ForEach(session.speakers) { speaker in
+                    NavigationLink(value: speaker) {
+                        Nameplate(speaker.name, detail: speaker.detail) {
+                            Avatar(
+                                url: nil,
+                                size: .medium,
+                                fallback: .initials(speaker.nameComponents),
+                            )
+                        }
+                    }
                 }
             }
         }

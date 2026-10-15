@@ -11,8 +11,8 @@ struct SampleResult: Identifiable, Equatable, Hashable, Sendable {
         /// A session on the schedule.
         case talk
 
-        /// A person giving a session.
-        case speaker
+        /// Someone at the conference.
+        case person
 
         /// A company paying for the conference.
         case sponsor
@@ -24,7 +24,7 @@ struct SampleResult: Identifiable, Equatable, Hashable, Sendable {
         var heading: String {
             switch self {
             case .talk: "Talks"
-            case .speaker: "Speakers"
+            case .person: "People"
             case .sponsor: "Sponsors"
             }
         }
@@ -33,7 +33,7 @@ struct SampleResult: Identifiable, Equatable, Hashable, Sendable {
         var symbol: String {
             switch self {
             case .talk: "text.bubble"
-            case .speaker: "person"
+            case .person: "person"
             case .sponsor: "building.2"
             }
         }
@@ -54,9 +54,9 @@ struct SampleResult: Identifiable, Equatable, Hashable, Sendable {
     /// The session this result opens, or `nil` when its screen is still to come.
     let session: SampleSession?
 
-    /// The name split so an avatar can abbreviate it, or `nil` for a result
-    /// that is not a person.
-    let nameComponents: PersonNameComponents?
+    /// The person this result opens, or `nil` for a result that is not a
+    /// person.
+    let person: SamplePerson?
 
     /// Returns whether this result answers what a person typed.
     ///
@@ -72,7 +72,7 @@ struct SampleResult: Identifiable, Equatable, Hashable, Sendable {
 
 extension SampleResult {
     /// Everything search can find.
-    static let all: [SampleResult] = talks + speakers + sponsors
+    static let all: [SampleResult] = talks + people + sponsors
 
     /// Every session on the schedule, as a result.
     static let talks: [SampleResult] = SampleSession.dayOne.map { session in
@@ -82,19 +82,22 @@ extension SampleResult {
             title: session.title,
             detail: "\(session.time) • \(session.room)",
             session: session,
-            nameComponents: nil,
+            person: nil,
         )
     }
 
-    /// Everyone giving a session, as a result.
-    static let speakers: [SampleResult] = SampleSession.dayOne.map { session in
-        SampleResult(
-            id: "speaker-\(session.id)",
-            kind: .speaker,
-            title: session.speaker,
-            detail: session.speakerDetail,
+    /// Everyone at the conference, as a result.
+    ///
+    /// The detail names the person's standings, then what they do.
+    static let people: [SampleResult] = SamplePerson.all.map { person in
+        let roles = person.roles.all.map(\.name).joined(separator: " • ")
+        return SampleResult(
+            id: "person-\(person.id)",
+            kind: .person,
+            title: person.name,
+            detail: "\(roles) • \(person.detail)",
             session: nil,
-            nameComponents: session.speakerName,
+            person: person,
         )
     }
 
@@ -120,7 +123,7 @@ extension SampleResult {
                 title: sponsor.name,
                 detail: name,
                 session: nil,
-                nameComponents: nil,
+                person: nil,
             )
         }
     }

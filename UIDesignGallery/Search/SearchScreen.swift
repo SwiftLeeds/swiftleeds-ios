@@ -1,7 +1,7 @@
 import SwiftUI
 import UIDesign
 
-/// A view that finds a talk, a speaker or a sponsor in one place.
+/// A view that finds a talk, a person or a sponsor in one place.
 struct SearchScreen: View {
     /// Which kinds of result the list keeps.
     private enum Scope: Equatable, Hashable {
@@ -25,8 +25,19 @@ struct SearchScreen: View {
                 .navigationDestination(for: SampleResult.self) { result in
                     destination(for: result)
                 }
+                // A person's page pushes the talks and the sponsor it names.
+                .navigationDestination(for: SamplePerson.self) { person in
+                    PersonScreen(person: person)
+                }
+                .navigationDestination(for: SampleSession.self) { session in
+                    SessionDetailScreen(session: session)
+                }
+                .navigationDestination(for: SampleSponsor.self) { sponsor in
+                    NotYetDesigned(destination: .sponsors)
+                        .navigationTitle(sponsor.name)
+                }
         }
-        .searchable(text: $query, prompt: "Talks, speakers and sponsors")
+        .searchable(text: $query, prompt: "Talks, people and sponsors")
         // The picker waits for the first keystroke by default. Showing it as
         // search opens says what can be narrowed before anything is typed.
         .searchScopes($scope, activation: .onSearchPresentation) {
@@ -45,7 +56,7 @@ struct SearchScreen: View {
             ContentUnavailableView(
                 "Search SwiftLeeds",
                 systemImage: "magnifyingglass",
-                description: Text("Find a talk, a speaker or a sponsor."),
+                description: Text("Find a talk, a person or a sponsor."),
             )
         } else if matches.isEmpty {
             ContentUnavailableView.search(text: query)
@@ -87,7 +98,7 @@ struct SearchScreen: View {
 
     /// Returns one result as a row that opens it.
     ///
-    /// - Parameter result: The talk, speaker or sponsor the row names.
+    /// - Parameter result: The talk, person or sponsor the row names.
     private func row(_ result: SampleResult) -> some View {
         NavigationLink(value: result) {
             Nameplate {
@@ -102,15 +113,15 @@ struct SearchScreen: View {
 
     /// Returns what stands for one result beside its name.
     ///
-    /// A speaker takes an avatar, because search shows a person the way every
+    /// A person takes an avatar, because search shows a person the way every
     /// other screen does. Everything else takes the symbol for its kind, at the
     /// same width, so the names stay in one column.
     ///
-    /// - Parameter result: The talk, speaker or sponsor the row names.
+    /// - Parameter result: The talk, person or sponsor the row names.
     @ViewBuilder
     private func icon(for result: SampleResult) -> some View {
-        if let nameComponents = result.nameComponents {
-            Avatar(url: nil, size: .medium, fallback: .initials(nameComponents))
+        if let person = result.person {
+            Avatar(url: nil, size: .medium, fallback: .initials(person.nameComponents))
         } else {
             Image(systemName: result.kind.symbol)
                 .font(.body)
@@ -135,11 +146,13 @@ struct SearchScreen: View {
 
     /// Returns the screen one result opens.
     ///
-    /// - Parameter result: The talk, speaker or sponsor the row names.
+    /// - Parameter result: The talk, person or sponsor the row names.
     @ViewBuilder
     private func destination(for result: SampleResult) -> some View {
         if let session = result.session {
             SessionDetailScreen(session: session)
+        } else if let person = result.person {
+            PersonScreen(person: person)
         } else {
             NotYetDesigned(destination: .search)
                 .navigationTitle(result.title)
