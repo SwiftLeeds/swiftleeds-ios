@@ -7,8 +7,11 @@ import Foundation
 package enum Code128 {
     /// The text a Code 128 barcode carries.
     package struct Payload: ExpressibleByStringLiteral, Equatable, Sendable {
+        /// The text.
         private let storage: String
 
+        /// Creates a payload from the given text.
+        /// - Parameter value: The text the barcode carries.
         package init(_ value: String) {
             storage = value
         }
@@ -28,10 +31,12 @@ package enum Code128 {
 
     /// Draws Code 128 barcodes.
     package struct Symbology: BarcodeSymbology {
+        /// The light margin around the bars.
         private let quietSpace: Float
 
-        /// - Parameter quietSpace: The light margin, in multiples of the narrowest bar.
-        ///   The specification asks for ten.
+        /// Creates a symbology that draws barcodes with a quiet space.
+        /// - Parameter quietSpace: The light margin, in multiples of the
+        ///   narrowest bar. The specification asks for ten.
         package init(quietSpace: Float = 10) {
             self.quietSpace = quietSpace
         }
@@ -52,7 +57,8 @@ extension BarcodeContent {
     ///
     /// - Parameters:
     ///   - payload: The text the barcode carries. Must be 7-bit ASCII.
-    ///   - quietSpace: The light margin, in multiples of the narrowest bar. Defaults to ten.
+    ///   - quietSpace: The light margin, in multiples of the narrowest bar.
+    ///     Defaults to ten.
     package static func code128(_ payload: Code128.Payload, quietSpace: Float = 10) -> BarcodeContent {
         BarcodeContent(payload, drawnBy: Code128.Symbology(quietSpace: quietSpace))
     }
