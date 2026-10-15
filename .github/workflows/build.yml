@@ -132,10 +132,19 @@ jobs:
           # The runner the figures above were measured on.
           echo "cores: $(sysctl -n hw.ncpu), memory: $(sysctl -n hw.memsize) bytes"
 
-          # A package sits at Packages/<Name> or Packages/<Folder>/<Name>. The
-          # list holds base names, which name the claim and log files below.
+          # A package sits at Packages/<Folder>/<Name>. One at Packages/<Name>
+          # would drop out of lint and tests without a word, so it fails here.
+          misplaced=0
+          for manifest in Packages/*/Package.swift; do
+            [ -f "$manifest" ] || continue
+            echo "::error file=$manifest::Packages belong in Packages/<Folder>/<Name>, not directly under Packages/"
+            misplaced=1
+          done
+          [ "$misplaced" -eq 0 ] || exit 1
+
+          # The list holds base names, which name the claim and log files below.
           packages=()
-          for dir in Packages/*/ Packages/*/*/; do
+          for dir in Packages/*/*/; do
             [ -f "${dir}Package.swift" ] || continue
             packages+=("$(basename "$dir")")
           done
@@ -148,7 +157,7 @@ jobs:
           # Two matches would be ambiguous, so that fails like no match does.
           package_path () {
             local matches=() candidate
-            for candidate in "Packages/$1" Packages/*/"$1"; do
+            for candidate in Packages/*/"$1"; do
               [ -f "$candidate/Package.swift" ] && matches+=("$candidate")
             done
             if [ ${#matches[@]} -ne 1 ]; then
@@ -588,11 +597,10 @@ jobs:
             if ! grep -qv '^Packages/' <<< "$changed"; then
               affected=false
               for name in ScheduleUI NetworkKit; do
-                # The package sits at Packages/<name> or
-                # Packages/<Folder>/<name>. A name that resolves to nothing
-                # counts as affected, like the failures below.
+                # The package sits at Packages/<Folder>/<name>. A name that
+                # resolves to nothing counts as affected, like the failures below.
                 root=""
-                for candidate in "Packages/$name" Packages/*/"$name"; do
+                for candidate in Packages/*/"$name"; do
                   [ -f "$candidate/Package.swift" ] || continue
                   root=$candidate
                   break
@@ -682,15 +690,14 @@ jobs:
       - name: Check snapshot tests live in a snapshot target
         run: |
           set -uo pipefail
-          # Both depths: Packages/<Name>/Tests and Packages/<Folder>/<Name>/Tests.
           # An unmatched glob stays literal, so test for a real folder. No
           # Tests folder at all means the layout moved, never a clean tree.
           test_dirs=()
-          for dir in Packages/*/Tests Packages/*/*/Tests; do
+          for dir in Packages/*/*/Tests; do
             [ -d "$dir" ] && test_dirs+=("$dir")
           done
           if [ ${#test_dirs[@]} -eq 0 ]; then
-            echo "::error::Found no Packages/*/Tests folder, so this check is broken"
+            echo "::error::Found no Packages/*/*/Tests folder, so this check is broken"
             exit 1
           fi
           # grep exits 1 for no match, which is fine, and 2 for a real error.
@@ -736,7 +743,6 @@ jobs:
           definition = re.compile(r"^\t\t([0-9A-F]{24})[ =]")
 
           files = sorted(Path().glob("*.xcodeproj/project.pbxproj"))
-          files += sorted(Path().glob("Packages/*/*.xcodeproj/project.pbxproj"))
           files += sorted(Path().glob("Packages/*/*/*.xcodeproj/project.pbxproj"))
           if not files:
               print("::error::Found no project.pbxproj to check")

@@ -21,14 +21,13 @@ SCHEME = Path("SwiftLeeds.xcodeproj/xcshareddata/xcschemes/SnapshotTests.xcschem
 declaration = re.compile(r'\.testTarget\(\s*name:\s*"(\w+SnapshotTests)"')
 targets = {
     name
-    for pattern in ("*/Package.swift", "*/*/Package.swift")
-    for manifest in Path("Packages").glob(pattern)
+    for manifest in Path("Packages").glob("*/*/Package.swift")
     for name in declaration.findall(manifest.read_text())
 }
 
 # Zero targets means the manifests moved, not that the repository is clean.
 if not targets:
-    print("::error::Found no *SnapshotTests target in Packages/*/Package.swift or Packages/*/*/Package.swift, so this check is broken")
+    print("::error::Found no *SnapshotTests target in Packages/*/*/Package.swift, so this check is broken")
     sys.exit(1)
 
 if not SCHEME.is_file():
