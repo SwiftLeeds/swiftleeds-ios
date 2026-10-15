@@ -1,4 +1,4 @@
-/// Whether a user is signed in.
+/// The user's sign-in state.
 public enum AuthenticationState: Equatable, Hashable, Sendable {
     /// A user is signed in, with the proof a caller can pass on.
     case signedIn(SignedInProof)

@@ -4,7 +4,8 @@ import Dependencies
 package struct AttendeeRepository: Sendable {
     /// Fetches the attendee for the current session.
     /// - Throws: An ``AttendeeFetchError`` when the session is refused, the
-    ///   server cannot be reached, or its response is refused or unexpected.
+    ///   server cannot be reached, its answer cannot be read, or the status is
+    ///   unexpected.
     package var fetch: @Sendable () async throws(AttendeeFetchError) -> Attendee
 
     /// Creates a repository.

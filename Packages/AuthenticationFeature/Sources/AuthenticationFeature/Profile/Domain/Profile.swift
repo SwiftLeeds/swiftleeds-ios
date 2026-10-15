@@ -1,6 +1,6 @@
 import Foundation
 
-/// An attendee's details, as plain values.
+/// An attendee's details, for callers outside the package.
 public struct Profile: Equatable, Hashable, Sendable {
     /// The attendee's name.
     public let name: PersonNameComponents
@@ -34,7 +34,7 @@ public struct Profile: Equatable, Hashable, Sendable {
 }
 
 extension Profile {
-    /// Creates a profile from an attendee, unwrapping its typed values.
+    /// Creates a profile from an attendee.
     /// - Parameter attendee: The attendee to convert.
     package init(_ attendee: Attendee) {
         self.init(

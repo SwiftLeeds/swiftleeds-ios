@@ -1,6 +1,6 @@
 import Foundation
 
-/// A person who holds a ticket, as the backend describes them.
+/// A person who holds a ticket.
 package struct Attendee: Equatable, Hashable, Sendable {
     /// The attendee's name.
     package let name: PersonNameComponents

@@ -4,7 +4,7 @@ import Dependencies
 package struct AuthGateway: Sendable {
     /// Exchanges a credential for a session token.
     /// - Throws: A ``SignInError`` when the credential is refused, the server
-    ///   cannot be reached, or anything else goes wrong.
+    ///   cannot be reached, or its answer is unexpected.
     package var authenticate: @Sendable (Credential) async throws -> SessionToken
 
     /// Creates a gateway.
