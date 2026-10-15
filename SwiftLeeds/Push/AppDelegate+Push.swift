@@ -74,7 +74,8 @@ extension AppDelegate {
 extension AppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(
         _ center: UNUserNotificationCenter, willPresent notification: UNNotification,
-    ) async -> UNNotificationPresentationOptions {
+        // The body has nothing to await. The completion-handler form would lift this.
+    ) async -> UNNotificationPresentationOptions {  // swiftlint:disable:this async_without_await
         [.banner, .sound, .badge]
     }
 }
