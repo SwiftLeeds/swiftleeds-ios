@@ -22,7 +22,7 @@ struct ScheduleScreen: View {
         /// Every session at the conference.
         case all
 
-        /// Only the sessions this person saved.
+        /// Only the sessions this person favourited.
         case mine
     }
 
@@ -63,8 +63,8 @@ struct ScheduleScreen: View {
     /// Whether the role band on a ticket draws the role's texture.
     var bandVariant: BandVariant = .plain
 
-    /// Whether a person page opens with the person already saved.
-    var opensSaved = false
+    /// Whether a person page opens with the person already a favourite.
+    var opensFavorite = false
 
     /// Whether a person page opens with the bio in full.
     var opensBioExpanded = false
@@ -108,7 +108,7 @@ struct ScheduleScreen: View {
                 .navigationDestination(for: SamplePerson.self) { person in
                     PersonScreen(
                         person: person,
-                        opensSaved: opensSaved,
+                        opensFavorite: opensFavorite,
                         opensBioExpanded: opensBioExpanded,
                     )
                 }

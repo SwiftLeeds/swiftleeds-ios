@@ -24,7 +24,7 @@ struct ProfileScreen: View {
 
             Section("Conference") {
                 LabeledContent("Ticket", value: attendee.ticket)
-                LabeledContent("Saved sessions", value: attendee.savedSessions)
+                LabeledContent("Favourite sessions", value: attendee.favoriteSessions)
             }
 
             Section("Details") {

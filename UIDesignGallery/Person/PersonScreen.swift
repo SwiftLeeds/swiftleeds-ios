@@ -13,8 +13,8 @@ struct PersonScreen: View {
     /// The person this screen describes.
     let person: SamplePerson
 
-    /// Whether the person is saved.
-    @State private var isSaved: Bool
+    /// Whether the person is a favourite.
+    @State private var isFavorite: Bool
 
     /// Whether the bio shows in full.
     @State private var isBioExpanded: Bool
@@ -29,17 +29,17 @@ struct PersonScreen: View {
     ///
     /// - Parameters:
     ///   - person: The person this screen describes.
-    ///   - opensSaved: Whether the person is already saved when the screen
-    ///     appears.
+    ///   - opensFavorite: Whether the person is already a favourite when the
+    ///     screen appears.
     ///   - opensBioExpanded: Whether the bio shows in full when the screen
     ///     appears.
     init(
         person: SamplePerson,
-        opensSaved: Bool = false,
+        opensFavorite: Bool = false,
         opensBioExpanded: Bool = false,
     ) {
         self.person = person
-        _isSaved = State(initialValue: opensSaved)
+        _isFavorite = State(initialValue: opensFavorite)
         _isBioExpanded = State(initialValue: opensBioExpanded)
     }
 
@@ -64,7 +64,7 @@ struct PersonScreen: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                FavoriteButton(isFavorite: $isSaved)
+                FavoriteButton(isFavorite: $isFavorite)
             }
 
             ToolbarItem(placement: .topBarTrailing) {

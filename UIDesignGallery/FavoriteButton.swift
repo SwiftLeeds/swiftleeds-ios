@@ -1,9 +1,9 @@
 import SwiftUI
 import UIDesign
 
-/// A toolbar button whose label and symbol follow whether a subject is saved.
+/// A toolbar button that favourites a subject, or takes the mark away.
 struct FavoriteButton: View {
-    /// Whether the subject is saved.
+    /// Whether the subject is a favourite.
     @Binding var isFavorite: Bool
 
     /// Whether this person has asked to reduce motion.
@@ -14,9 +14,9 @@ struct FavoriteButton: View {
             toggle()
         } label: {
             Label {
-                Text(isFavorite ? "Unsave" : "Save")
+                Text(isFavorite ? "Unfavourite" : "Favourite")
             } icon: {
-                Image(systemName: isFavorite ? "star.fill" : "star")
+                Image(icon: isFavorite ? .favoriteFilled : .favorite)
                     .contentTransition(reduceMotion ? .identity : .symbolEffect(.replace))
             }
         }
@@ -24,7 +24,7 @@ struct FavoriteButton: View {
         .sensoryFeedback(.success, trigger: isFavorite)
     }
 
-    /// Saves the subject, or takes it off the saved list.
+    /// Marks the subject as a favourite, or takes the mark away.
     ///
     /// The symbol replaces itself with an animation, unless this person has
     /// asked to reduce motion.

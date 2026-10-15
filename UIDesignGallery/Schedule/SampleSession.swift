@@ -36,7 +36,7 @@ struct SampleSession: Identifiable, Equatable, Hashable, Sendable {
     /// How long until the session starts, or `nil` once it is not imminent.
     let startsIn: String?
 
-    /// Whether this person saved the session.
+    /// Whether this person favourited the session.
     let isFavorite: Bool
 
     /// What the session is about.

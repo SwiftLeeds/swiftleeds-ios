@@ -40,7 +40,7 @@ enum SettingsCategory: String, CaseIterable, Equatable, Hashable {
     var detail: String {
         switch self {
         case .appearance: "Choose the icon the app shows on your Home Screen."
-        case .notifications: "Hear about the sessions you've saved before they start."
+        case .notifications: "Hear about your favourite sessions before they start."
         case .about: "Who runs SwiftLeeds, and where to find us online."
         case .contact: "Ways to reach the organizers before, during and after the conference."
         }

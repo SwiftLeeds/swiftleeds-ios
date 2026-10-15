@@ -20,10 +20,10 @@ struct SessionRow: View {
                 Spacer(minLength: 0)
 
                 if session.isFavorite {
-                    Image(systemName: "star.fill")
+                    Image(icon: .favoriteFilled)
                         .font(.footnote)
                         .foregroundStyle(.warning)
-                        .accessibilityLabel("Saved")
+                        .accessibilityLabel("Favourite")
                 }
             }
 

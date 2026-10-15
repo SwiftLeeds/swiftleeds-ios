@@ -29,8 +29,8 @@ struct SampleAttendee: Identifiable, Equatable, Hashable, Sendable {
     /// What this person's ticket admits them to.
     let ticket: String
 
-    /// How many sessions this person has saved.
-    let savedSessions: String
+    /// How many sessions this person has favourited.
+    let favoriteSessions: String
 
     /// Where the conference writes to this person.
     let email: String
@@ -55,7 +55,7 @@ extension SampleAttendee {
         number: "Attendee #412",
         joined: "Joined August 2019",
         ticket: "Conference and workshops",
-        savedSessions: "6",
+        favoriteSessions: "6",
         email: "ada@northern.software",
     )
 }

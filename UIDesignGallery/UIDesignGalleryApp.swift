@@ -17,11 +17,11 @@ import UIDesign
 /// `-ticket sponsor`, `-ticket staff` or `-ticket unavailable` presents that
 /// ticket, `-band patterned` draws each role's texture on the ticket's band,
 /// `-person dana`, `-person blake`, `-person casey`, `-person eli`,
-/// `-person fay` or `-person gus` pushes that person's page, `-saved 1` opens
-/// it with the person saved, `-bio expanded` opens it with the bio in full,
-/// `-detail accessibility` pushes the two-speaker workshop's detail, and
-/// `-halos role`, `-halos pink` or `-halos gold` shows every halo treatment at
-/// once, in those colors, instead of the app.
+/// `-person fay` or `-person gus` pushes that person's page, `-favorite 1` opens
+/// it with the person already a favourite, `-bio expanded` opens it with the
+/// bio in full, `-detail accessibility` pushes the two-speaker workshop's
+/// detail, and `-halos role`, `-halos pink` or `-halos gold` shows every halo
+/// treatment at once, in those colors, instead of the app.
 @main
 struct UIDesignGalleryApp: App {
     /// The destination on screen.
@@ -39,8 +39,8 @@ struct UIDesignGalleryApp: App {
     /// Whether the role band on a ticket draws the role's texture.
     private let bandVariant: BandVariant
 
-    /// Whether the person page opens with the person already saved.
-    private let opensSaved: Bool
+    /// Whether the person page opens with the person already a favourite.
+    private let opensFavorite: Bool
 
     /// Whether the person page opens with the bio in full.
     private let opensBioExpanded: Bool
@@ -58,7 +58,7 @@ struct UIDesignGalleryApp: App {
         let halo = defaults.string(forKey: "halo") ?? ""
         haloEdge = HaloEdge(rawValue: halo) ?? .feathered
         bandVariant = BandVariant(rawValue: defaults.string(forKey: "band") ?? "") ?? .plain
-        opensSaved = defaults.bool(forKey: "saved")
+        opensFavorite = defaults.bool(forKey: "favorite")
         opensBioExpanded = defaults.string(forKey: "bio") == "expanded"
         switch defaults.string(forKey: "halos") {
         case "pink":
@@ -124,7 +124,7 @@ struct UIDesignGalleryApp: App {
                     opensWith: opensWith,
                     haloEdge: haloEdge,
                     bandVariant: bandVariant,
-                    opensSaved: opensSaved,
+                    opensFavorite: opensFavorite,
                     opensBioExpanded: opensBioExpanded,
                 )
             }
