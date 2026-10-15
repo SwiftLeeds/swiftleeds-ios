@@ -1,12 +1,23 @@
 import Foundation
 
+/// An attendee's details, as plain values.
 public struct Profile: Equatable, Hashable, Sendable {
+    /// The attendee's name.
     public let name: PersonNameComponents
+
+    /// The attendee's email address.
     public let emailAddress: String
+
+    /// The address of the attendee's avatar image.
     public let avatarURL: URL
+
+    /// The attendee's ticket reference.
     public let ticketReference: String
+
+    /// The ticketing provider's identifier for the ticket.
     public let ticketSlug: TicketSlug
 
+    /// Creates a profile.
     public init(
         name: PersonNameComponents,
         emailAddress: String,
@@ -23,6 +34,8 @@ public struct Profile: Equatable, Hashable, Sendable {
 }
 
 extension Profile {
+    /// Creates a profile from an attendee, unwrapping its typed values.
+    /// - Parameter attendee: The attendee to convert.
     package init(_ attendee: Attendee) {
         self.init(
             name: attendee.name,
