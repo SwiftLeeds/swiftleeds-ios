@@ -8,6 +8,6 @@ public enum SocialLink: Equatable, Hashable, Sendable {
     /// A link to the member on Twitter.
     case twitter(URL)
 
-    /// A Slack link for the member.
+    /// A link to the member on Slack.
     case slack(URL)
 }

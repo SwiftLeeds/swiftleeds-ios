@@ -3,8 +3,8 @@ import Dependencies
 /// The source of the conference team.
 package struct TeamRepository: Sendable {
     /// Fetches the conference team.
-    /// - Throws: A ``TeamFetchError`` when the request fails or the response
-    ///   cannot be read.
+    /// - Throws: A ``TeamFetchError`` when the server cannot be reached, or its
+    ///   response is refused or unexpected.
     package var fetch: @Sendable () async throws(TeamFetchError) -> [TeamMember]
 
     /// Creates a repository.
@@ -14,7 +14,7 @@ package struct TeamRepository: Sendable {
 }
 
 extension TeamRepository: TestDependencyKey {
-    /// A repository that reports an issue, then throws ``TeamFetchError/unknown``.
+    /// A stub that reports an issue, then throws ``TeamFetchError/unknown``.
     package static let testValue = TeamRepository(
         fetch: { () async throws(TeamFetchError) -> [TeamMember] in
             reportIssue("TeamRepository.fetch is unimplemented")

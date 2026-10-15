@@ -4,7 +4,7 @@ import Foundation
 public struct TeamMember: Equatable, Hashable, Identifiable, Sendable {
     public let id: TeamMemberID
 
-    /// The member's name, which also identifies them.
+    /// The member's name.
     public let name: String
 
     /// What the member does for the conference. Some members have no role.
