@@ -9,6 +9,15 @@ struct SampleSession: Identifiable, Equatable, Hashable, Sendable {
     /// Tells one sample session from another.
     let id: String
 
+    /// Which conference the session belongs to, as a heading prints it.
+    let conference: String
+
+    /// Which day of the conference the session runs on.
+    let day: String
+
+    /// The date the session runs on.
+    let date: Date
+
     /// When the session runs, as the row prints it.
     let time: String
 
@@ -18,11 +27,8 @@ struct SampleSession: Identifiable, Equatable, Hashable, Sendable {
     /// What the session is called.
     let title: String
 
-    /// Who gives the session.
-    let speaker: String
-
-    /// What the speaker does, and where.
-    let speakerDetail: String
+    /// Who gives the session, in the order the screen lists them.
+    let speakers: [SamplePerson]
 
     /// What kind of session it is, or `nil` for an ordinary talk.
     let kind: String?
@@ -35,29 +41,33 @@ struct SampleSession: Identifiable, Equatable, Hashable, Sendable {
 
     /// What the session is about.
     let summary: String
-
-    /// The speaker's name, split so an avatar can abbreviate it.
-    var speakerName: PersonNameComponents {
-        let parts = speaker.split(separator: " ")
-        return PersonNameComponents(
-            givenName: parts.first.map(String.init),
-            familyName: parts.last.map(String.init),
-        )
-    }
 }
 
 extension SampleSession {
+    /// Returns the date a number of days from today, read at launch.
+    ///
+    /// - Parameter days: How many days from today. A negative number is the
+    ///   past.
+    private static func daysFromToday(_ days: Int) -> Date {
+        Calendar.current.date(byAdding: .day, value: days, to: .now) ?? .now
+    }
+
     /// The three sessions the gallery shows on day one.
     static let dayOne: [SampleSession] = [opening, concurrency, accessibility]
+
+    /// The sessions given at earlier conferences.
+    static let earlier: [SampleSession] = [untestable]
 
     /// The session the gallery pushes when asked for a detail screen.
     static let opening = SampleSession(
         id: "opening",
+        conference: "SwiftLeeds 2026",
+        day: "Day 1",
+        date: daysFromToday(0),
         time: "09:30 - 10:15",
         room: "Main Hall",
         title: "Building a design system that survives its second year",
-        speaker: "Ada Archer",
-        speakerDetail: "Northern Software",
+        speakers: [.dana],
         kind: nil,
         startsIn: "in 12 min",
         isFavorite: true,
@@ -70,28 +80,49 @@ extension SampleSession {
     /// A lightning talk, which shows the neutral kind badge.
     static let concurrency = SampleSession(
         id: "concurrency",
+        conference: "SwiftLeeds 2026",
+        day: "Day 1",
+        date: daysFromToday(0),
         time: "10:30 - 11:00",
         room: "Main Hall",
         title: "Swift concurrency, one year on",
-        speaker: "Blake Brooks",
-        speakerDetail: "Pennine Labs",
+        speakers: [.blake],
         kind: "Lightning",
         startsIn: nil,
         isFavorite: false,
         summary: "What changed once the compiler started checking the hard part.",
     )
 
-    /// A workshop, which shows a longer kind badge.
+    /// A workshop with two speakers, which shows a longer kind badge.
     static let accessibility = SampleSession(
         id: "accessibility",
+        conference: "SwiftLeeds 2026",
+        day: "Day 2",
+        date: daysFromToday(1),
         time: "11:15 - 12:30",
         room: "Studio",
         title: "Accessibility beyond VoiceOver",
-        speaker: "Casey Cole",
-        speakerDetail: "Aire Systems",
+        speakers: [.casey, .fay],
         kind: "Workshop",
         startsIn: nil,
         isFavorite: false,
         summary: "Switch Control, Voice Control and the settings nobody tests.",
+    )
+
+    /// A talk from the year before, which shows under a speaker's previous
+    /// talks.
+    static let untestable = SampleSession(
+        id: "untestable",
+        conference: "SwiftLeeds 2025",
+        day: "Day 2",
+        date: daysFromToday(-365),
+        time: "14:00 - 14:40",
+        room: "Main Hall",
+        title: "Testing the untestable",
+        speakers: [.dana],
+        kind: nil,
+        startsIn: nil,
+        isFavorite: false,
+        summary: "Putting a test around the code everyone is afraid to touch.",
     )
 }

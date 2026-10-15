@@ -33,7 +33,7 @@ struct SessionRow: View {
                 .fixedSize(horizontal: false, vertical: true)
 
             HStack(spacing: .small) {
-                Text(session.speaker)
+                Text(session.speakers.map(\.name).joined(separator: ", "))
                     .font(.subheadline)
                     .foregroundStyle(.textSecondary)
 
