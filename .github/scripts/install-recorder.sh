@@ -59,7 +59,8 @@ case "$system" in
         ;;
 esac
 
-# A folder of its own, so the installer cannot mix with other files.
+# A fresh folder each run, so a half-written download from an earlier attempt
+# cannot be the file the checksum reads.
 download="$work/recorder-download"
 rm -rf "$download"
 mkdir -p "$download" || { fatal "Could not create $download"; exit 1; }
