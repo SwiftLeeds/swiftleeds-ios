@@ -69,6 +69,9 @@ struct ScheduleScreen: View {
     /// Whether a person page opens with the bio in full.
     var opensBioExpanded = false
 
+    /// Whether a session detail opens with its summary in full.
+    var opensSummaryExpanded = false
+
     /// The screens pushed on top of the schedule.
     ///
     /// The schedule pushes three kinds of thing, a session, a person and a
@@ -103,7 +106,10 @@ struct ScheduleScreen: View {
                 .navigationTitle(conference)
                 .navigationSubtitle("Starts in 12 days")
                 .navigationDestination(for: SampleSession.self) { session in
-                    SessionDetailScreen(session: session)
+                    SessionDetailScreen(
+                        session: session,
+                        opensSummaryExpanded: opensSummaryExpanded,
+                    )
                 }
                 .navigationDestination(for: SamplePerson.self) { person in
                     PersonScreen(

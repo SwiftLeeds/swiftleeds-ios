@@ -3,8 +3,14 @@ import UIDesign
 
 /// A view that describes one session and what a person can do about it.
 struct SessionDetailScreen: View {
+    /// The most lines the summary takes until a person asks for the rest.
+    private static let collapsedSummaryLines = 4
+
     /// The session this screen describes.
     let session: SampleSession
+
+    /// Whether the summary shows in full when the screen appears.
+    private let opensSummaryExpanded: Bool
 
     /// Whether this person favourited the session.
     @State private var isFavorite: Bool
@@ -14,9 +20,13 @@ struct SessionDetailScreen: View {
 
     /// Creates a screen for one session.
     ///
-    /// - Parameter session: The session this screen describes.
-    init(session: SampleSession) {
+    /// - Parameters:
+    ///   - session: The session this screen describes.
+    ///   - opensSummaryExpanded: Whether the summary shows in full when the
+    ///     screen appears.
+    init(session: SampleSession, opensSummaryExpanded: Bool = false) {
         self.session = session
+        self.opensSummaryExpanded = opensSummaryExpanded
         _isFavorite = State(initialValue: session.isFavorite)
     }
 
@@ -36,7 +46,11 @@ struct SessionDetailScreen: View {
             .listRowSeparator(.hidden)
 
             Section("About") {
-                Text(session.summary)
+                ExpandableText(
+                    session.summary,
+                    lines: Self.collapsedSummaryLines,
+                    opensExpanded: opensSummaryExpanded,
+                )
             }
 
             Section(session.speakers.count == 1 ? "Speaker" : "Speakers") {

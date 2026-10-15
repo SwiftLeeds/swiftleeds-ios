@@ -19,7 +19,8 @@ import UIDesign
 /// `-person dana`, `-person blake`, `-person casey`, `-person eli`,
 /// `-person fay` or `-person gus` pushes that person's page, `-favorite 1` opens
 /// it with the person already a favourite, `-bio expanded` opens it with the
-/// bio in full, `-detail accessibility` pushes the two-speaker workshop's
+/// bio in full, `-summary expanded` opens a session detail with its summary
+/// in full, `-detail accessibility` pushes the two-speaker workshop's
 /// detail, and `-halos role`, `-halos pink` or `-halos gold` shows every halo
 /// treatment at once, in those colors, instead of the app.
 @main
@@ -45,6 +46,9 @@ struct UIDesignGalleryApp: App {
     /// Whether the person page opens with the bio in full.
     private let opensBioExpanded: Bool
 
+    /// Whether a session detail opens with its summary in full.
+    private let opensSummaryExpanded: Bool
+
     /// The standing whose colors the halo treatments draw, or `nil` when the
     /// gallery shows the app instead of the treatments.
     private let comparedHalo: ConferenceRole?
@@ -60,6 +64,7 @@ struct UIDesignGalleryApp: App {
         bandVariant = BandVariant(rawValue: defaults.string(forKey: "band") ?? "") ?? .plain
         opensFavorite = defaults.bool(forKey: "favorite")
         opensBioExpanded = defaults.string(forKey: "bio") == "expanded"
+        opensSummaryExpanded = defaults.string(forKey: "summary") == "expanded"
         switch defaults.string(forKey: "halos") {
         case "pink":
             comparedHalo = HaloComparison.brandPink
@@ -126,6 +131,7 @@ struct UIDesignGalleryApp: App {
                     bandVariant: bandVariant,
                     opensFavorite: opensFavorite,
                     opensBioExpanded: opensBioExpanded,
+                    opensSummaryExpanded: opensSummaryExpanded,
                 )
             }
 

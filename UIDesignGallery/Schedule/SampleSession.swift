@@ -135,7 +135,13 @@ extension SampleSession {
         kind: "Workshop",
         startsIn: nil,
         isFavorite: false,
-        summary: "Switch Control, Voice Control and the settings nobody tests.",
+        summary: """
+            Switch Control, Voice Control and the settings nobody tests. Most \
+            apps are checked with VoiceOver and little else. In this workshop \
+            you will drive your own app with a single switch, then with your \
+            voice alone, and fix what breaks. You will leave with a short list \
+            of checks that your team can run before every release.
+            """,
     )
 
     /// A talk from the year before, which shows under a speaker's previous
