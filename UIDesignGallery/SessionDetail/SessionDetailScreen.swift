@@ -57,11 +57,20 @@ struct SessionDetailScreen: View {
                 ForEach(session.speakers) { speaker in
                     NavigationLink(value: speaker) {
                         Nameplate(speaker.name, detail: speaker.detail) {
+                            // The initials disc is the row's own color, so it
+                            // takes an edge to be seen, as the person page's
+                            // avatar does.
                             Avatar(
                                 url: nil,
                                 size: .medium,
                                 fallback: .initials(speaker.nameComponents),
                             )
+                            .overlay {
+                                Circle().strokeBorder(
+                                    .borderPrimary,
+                                    lineWidth: CGFloat(BorderWidth.thin),
+                                )
+                            }
                         }
                     }
                 }
