@@ -745,3 +745,54 @@ jobs:
       - name: Check the snapshot scheme lists every snapshot target
         run: python3 .github/scripts/check-snapshot-scheme.py
 
+  # Uploads the committed reference images to Screenshotbot for review. The
+  # script's header says what that covers. It runs on Linux because it needs
+  # no simulator, only the PNG files, and the macOS runners are an account
+  # limit of 5 that this workflow already fills.
+  #
+  # The name of this job and the `ios-snapshot-tests` status it posts are meant
+  # to be required checks on `main`, added to the branch rule once the first
+  # run has posted the status. From then on, renaming either blocks every pull
+  # request until that rule is edited too.
+  upload-screenshots:
+    name: Upload Screenshots (Screenshotbot)
+    runs-on: ubuntu-24.04
+    steps:
+      # The default checkout of a pull request is a temporary merge commit. Its
+      # SHA never appears on the pull request, so a status posted to it would not
+      # satisfy a branch rule. The head SHA is the commit the branch rule sees.
+      # A push to `main` has no pull request, so it falls back to its own SHA.
+      # Full history lets the recorder find the merge base.
+      - name: Checkout iOS Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+
+      # The version and checksum are pinned in the script. Screenshotbot's own
+      # install command downloads whatever is current and runs it unchecked.
+      - name: Install the Screenshotbot recorder
+        run: .github/scripts/install-recorder.sh
+
+      # A fork pull request gets no secrets, so the script skips it. A maintainer
+      # pushes the fork's commits to a branch in this repository and merges that
+      # pull request instead.
+      #
+      # A missing secret fails the job on purpose. A silent skip on `main` would
+      # leave that commit with no baseline for later pull requests to compare to.
+      #
+      # The recorder works out the branch, the commit and the pull request on
+      # some CI services, and GitHub Actions is not one of them, so they are
+      # passed in. The checkout above is a bare SHA, so git cannot name the
+      # branch either. The pull request URL is empty on a push.
+      - name: Upload the snapshot references
+        env:
+          SCREENSHOTBOT_API_KEY: ${{ secrets.SCREENSHOTBOT_API_KEY }}
+          SCREENSHOTBOT_API_SECRET: ${{ secrets.SCREENSHOTBOT_API_SECRET }}
+          IS_FORK: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository }}
+          WORK_BRANCH: ${{ github.head_ref || github.ref_name }}
+          COMMIT_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+          PULL_REQUEST_URL: ${{ github.event.pull_request.html_url }}
+          BUILD_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: .github/scripts/upload-screenshots.sh
+
