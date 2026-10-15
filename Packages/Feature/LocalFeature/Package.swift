@@ -12,7 +12,7 @@ let package = Package(
         .library(name: "LocalFeature", targets: ["LocalFeature"])
     ],
     dependencies: [
-        .package(path: "../NetworkKit"),
+        .package(path: "../../Kit/NetworkKit"),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.0.0"),
     ],
     targets: [

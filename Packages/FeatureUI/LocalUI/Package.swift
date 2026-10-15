@@ -12,8 +12,8 @@ let package = Package(
         .library(name: "LocalUI", targets: ["LocalUI"])
     ],
     dependencies: [
-        .package(path: "../../SwiftLeedsPackage"),
-        .package(path: "../LocalFeature"),
+        .package(path: "../../../SwiftLeedsPackage"),
+        .package(path: "../../Feature/LocalFeature"),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.0.0"),
         .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", from: "1.19.4"),
         .package(url: "https://github.com/yazio/ReadabilityModifier", from: "1.0.0"),
