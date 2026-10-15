@@ -147,6 +147,10 @@ opt_in_rules:
   # new String or Array on every step and throws the previous one away.
   - reduce_into
 
+  # `isEmpty` names the question, and on a collection that is not random access
+  # `count` walks every element to answer it.
+  - empty_count
+
 # Analyzer rules read the compiler log, so they run only through
 # `swiftlint analyze`, never `swiftlint lint`.
 analyzer_rules:
