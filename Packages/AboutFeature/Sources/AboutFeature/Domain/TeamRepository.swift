@@ -3,7 +3,8 @@ import Dependencies
 /// The source of the conference team.
 package struct TeamRepository: Sendable {
     /// Fetches the conference team.
-    /// - Throws: A ``TeamFetchError`` when the request fails or the response cannot be read.
+    /// - Throws: A ``TeamFetchError`` when the request fails or the response
+    ///   cannot be read.
     package var fetch: @Sendable () async throws(TeamFetchError) -> [TeamMember]
 
     /// Creates a repository.
