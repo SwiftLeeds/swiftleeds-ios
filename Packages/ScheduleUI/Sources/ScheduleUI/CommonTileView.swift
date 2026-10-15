@@ -82,7 +82,7 @@ package struct CommonTileView<BackgroundType: ShapeStyle>: View {
                 Spacer()
             }
 
-            if let secondaryText = secondaryText {
+            if let secondaryText {
                 Text(secondaryText)
                     .font(.subheadline.weight(.medium))
                     .foregroundColor(secondaryColor)

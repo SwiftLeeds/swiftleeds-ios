@@ -40,13 +40,13 @@ package struct StackedTileView<BackgroundType: ShapeStyle>: View {
 
     package var body: some View {
         VStack(alignment: .leading, spacing: Padding.stackGap) {
-            if let primaryText = primaryText, primaryText.isEmpty == false {
+            if let primaryText, primaryText.isEmpty == false {
                 Text(primaryText)
                     .font(.headline.weight(.semibold))
                     .foregroundColor(primaryColor)
             }
 
-            if let secondaryText = secondaryText, secondaryText.isEmpty == false {
+            if let secondaryText, secondaryText.isEmpty == false {
                 Text(.init(secondaryText))
                     .font(.subheadline.weight(.regular))
                     .accentColor(.accent)
