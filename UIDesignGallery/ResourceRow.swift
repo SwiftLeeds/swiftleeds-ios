@@ -29,7 +29,7 @@ struct ResourceRow: View {
         case .page:
             Button {
             } label: {
-                line(mark: "arrow.up.right")
+                line(mark: "arrow.up.forward")
             }
             .buttonStyle(.plain)
             // The gallery opens nothing, so the trait is what tells VoiceOver
