@@ -3,8 +3,14 @@ import Foundation
 /// A company sponsoring the conference.
 public struct Sponsor: Equatable, Hashable, Identifiable, Sendable {
     public let id: SponsorID
+
+    /// The sponsor's name.
     public let name: String
+
+    /// A short line about the sponsor.
     public let subtitle: String
+
+    /// The level the sponsor bought.
     public let level: SponsorLevel
 
     /// Absent when the sponsor has no logo.
@@ -13,8 +19,10 @@ public struct Sponsor: Equatable, Hashable, Identifiable, Sendable {
     /// Absent when the sponsor supplied no link.
     public let websiteURL: URL?
 
+    /// The vacancies the sponsor is advertising.
     public let jobs: [Job]
 
+    /// Creates a sponsor.
     public init(
         id: SponsorID,
         name: String,
