@@ -24,7 +24,7 @@ extension LocationCategoriesRepository: TestDependencyKey {
 }
 
 extension DependencyValues {
-    /// The location category repository the current context uses.
+    /// The location categories repository the current context uses.
     package var locationCategoriesRepository: LocationCategoriesRepository {
         get { self[LocationCategoriesRepository.self] }
         set { self[LocationCategoriesRepository.self] = newValue }

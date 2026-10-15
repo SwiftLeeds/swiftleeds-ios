@@ -4,7 +4,7 @@ public enum LocationCategoryFetchError: Error, Equatable {
     /// down are not told apart.
     case couldNotReachServer
 
-    /// The server answered, but not with something we accept.
+    /// The server answered 200 OK, but with a body we cannot read.
     case invalidResponse
 
     /// Any other failure, including a status other than 200 OK.

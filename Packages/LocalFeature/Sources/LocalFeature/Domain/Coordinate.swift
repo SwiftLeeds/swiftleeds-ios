@@ -25,8 +25,9 @@ public struct Coordinate: Equatable, Hashable, Sendable {
     /// - Parameters:
     ///   - latitude: The latitude in degrees, from -90 to 90.
     ///   - longitude: The longitude in degrees, from -180 to 180.
-    /// - Throws: ``ParsingError/latitudeOutOfRange`` or
-    ///   ``ParsingError/longitudeOutOfRange`` when a value is out of range.
+    /// - Throws: ``ParsingError/latitudeOutOfRange`` when the latitude is out
+    ///   of range, or else ``ParsingError/longitudeOutOfRange`` when the
+    ///   longitude is.
     public init(latitude: Double, longitude: Double) throws(ParsingError) {
         guard Self.latitudes.contains(latitude) else { throw .latitudeOutOfRange }
         guard Self.longitudes.contains(longitude) else { throw .longitudeOutOfRange }
