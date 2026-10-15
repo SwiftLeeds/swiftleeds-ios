@@ -6,11 +6,17 @@ struct SessionDetailScreen: View {
     /// The most lines the summary takes until a person asks for the rest.
     private static let collapsedSummaryLines = 4
 
+    /// How much of the width the artwork takes beside the heading.
+    private static let artworkShare: CGFloat = 0.4
+
     /// The session this screen describes.
     let session: SampleSession
 
     /// Whether the summary shows in full when the screen appears.
     private let opensSummaryExpanded: Bool
+
+    /// Whether the screen has a compact or a regular width.
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
     /// Whether this person favourited the session.
     @State private var isFavorite: Bool
@@ -34,13 +40,25 @@ struct SessionDetailScreen: View {
         List {
             // The artwork and the title are the screen's subject rather than
             // a list of facts about it, so they sit on the page with no card
-            // and no separators between them.
+            // and no separators between them. At a regular width the artwork
+            // sits beside the heading, so the page's first screen holds the
+            // facts and not only a picture.
             Section {
-                MockArtwork(seed: session.id)
-                    .aspectRatio(16 / 9, contentMode: .fit)
-                    .listRowInsets(EdgeInsets())
+                if horizontalSizeClass == .regular {
+                    HStack(alignment: .top, spacing: .large) {
+                        artwork
+                            .containerRelativeFrame(.horizontal) { width, _ in
+                                width * Self.artworkShare
+                            }
 
-                heading
+                        heading
+                    }
+                } else {
+                    artwork
+                        .listRowInsets(EdgeInsets())
+
+                    heading
+                }
             }
             .listRowBackground(Color.clear)
             .listRowSeparator(.hidden)
@@ -99,6 +117,12 @@ struct SessionDetailScreen: View {
                 moreMenu
             }
         }
+    }
+
+    /// The session's artwork, sized to the 16 by 9 shape.
+    private var artwork: some View {
+        MockArtwork(seed: session.id)
+            .aspectRatio(16 / 9, contentMode: .fit)
     }
 
     /// The button that shares this session.
