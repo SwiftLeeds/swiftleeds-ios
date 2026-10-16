@@ -12,7 +12,7 @@ let package = Package(
         .library(name: "UIDesign", targets: ["UIDesign"])
     ],
     dependencies: [
-        .package(path: "../../SwiftLeedsPackage"),
+        .package(path: "../../../SwiftLeedsPackage"),
         .package(url: "https://github.com/SFSafeSymbols/SFSafeSymbols", from: "7.0.0"),
         .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", from: "1.19.4"),
     ],

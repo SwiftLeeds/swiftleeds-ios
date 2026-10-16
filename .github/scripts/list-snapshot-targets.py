@@ -30,7 +30,7 @@ for testable in ElementTree.parse(SCHEME).findall("./TestAction/Testables/Testab
         continue
     for reference in testable.findall("./BuildableReference"):
         target = reference.get("BlueprintName")
-        # "container:Packages/AboutUI" names the package folder.
+        # "container:Packages/<path to package>" names the package folder.
         container = reference.get("ReferencedContainer", "")
         package = container.removeprefix("container:")
         if not target or not package:

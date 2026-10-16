@@ -308,25 +308,57 @@
 		A11CE57000000000000000B2 /* Packages */ = {
 			isa = PBXGroup;
 			children = (
-				A11CE57000000000000000A1 /* SecureStorageKit */,
-				A11CE57000000000000000A2 /* AuthenticationFeature */,
-				A11CE57000000000000000A5 /* LogKit */,
-				A11CE57000000000000000A6 /* SponsorsFeature */,
-				A11CE57000000000000000A7 /* UIComponents */,
-				A11CE57000000000000000A8 /* SponsorsUI */,
-				A11CE57000000000000000A9 /* ScheduleFeature */,
-				A11CE57000000000000000AA /* ScheduleUI */,
-				A11CE570000000000000F0A1 /* LocalFeature */,
-				A11CE570000000000000F1A1 /* AboutFeature */,
-				A11CE570000000000000F1A2 /* AboutUI */,
-				A11CE570000000000000F2A1 /* UITheme */,
-				A11CE570000000000000F2A2 /* SettingsUI */,
-				A11CE570000000000000F0A2 /* LocalUI */,
-				A11CE57000000000000000A4 /* NetworkKit */,
-				A11CE57000000000000000A3 /* AuthenticationUI */,
-				A11CE570000000000000F4A1 /* UIDesign */,
+				A11CE57000000000000000B3 /* DesignSystem */,
+				A11CE57000000000000000B4 /* Feature */,
+				A11CE57000000000000000B5 /* FeatureUI */,
+				A11CE57000000000000000B6 /* Kit */,
 			);
 			path = Packages;
+			sourceTree = "<group>";
+		};
+		A11CE57000000000000000B3 /* DesignSystem */ = {
+			isa = PBXGroup;
+			children = (
+				A11CE57000000000000000A7 /* UIComponents */,
+				A11CE570000000000000F4A1 /* UIDesign */,
+				A11CE570000000000000F2A1 /* UITheme */,
+			);
+			path = DesignSystem;
+			sourceTree = "<group>";
+		};
+		A11CE57000000000000000B4 /* Feature */ = {
+			isa = PBXGroup;
+			children = (
+				A11CE570000000000000F1A1 /* AboutFeature */,
+				A11CE57000000000000000A2 /* AuthenticationFeature */,
+				A11CE570000000000000F0A1 /* LocalFeature */,
+				A11CE57000000000000000A9 /* ScheduleFeature */,
+				A11CE57000000000000000A6 /* SponsorsFeature */,
+			);
+			path = Feature;
+			sourceTree = "<group>";
+		};
+		A11CE57000000000000000B5 /* FeatureUI */ = {
+			isa = PBXGroup;
+			children = (
+				A11CE570000000000000F1A2 /* AboutUI */,
+				A11CE57000000000000000A3 /* AuthenticationUI */,
+				A11CE570000000000000F0A2 /* LocalUI */,
+				A11CE57000000000000000AA /* ScheduleUI */,
+				A11CE570000000000000F2A2 /* SettingsUI */,
+				A11CE57000000000000000A8 /* SponsorsUI */,
+			);
+			path = FeatureUI;
+			sourceTree = "<group>";
+		};
+		A11CE57000000000000000B6 /* Kit */ = {
+			isa = PBXGroup;
+			children = (
+				A11CE57000000000000000A5 /* LogKit */,
+				A11CE57000000000000000A4 /* NetworkKit */,
+				A11CE57000000000000000A1 /* SecureStorageKit */,
+			);
+			path = Kit;
 			sourceTree = "<group>";
 		};
 		AE8C1B2928C4B38400AF7318 /* Push */ = {

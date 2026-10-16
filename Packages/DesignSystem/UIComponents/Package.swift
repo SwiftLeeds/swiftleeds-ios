@@ -12,7 +12,7 @@ let package = Package(
         .library(name: "UIComponents", targets: ["UIComponents"])
     ],
     dependencies: [
-        .package(path: "../../SwiftLeedsPackage"),
+        .package(path: "../../../SwiftLeedsPackage"),
         .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", from: "1.19.4"),
     ],
     targets: [

@@ -13,9 +13,9 @@ let package = Package(
         .library(name: "AuthenticationFeatureTestSupport", targets: ["AuthenticationFeatureTestSupport"]),
     ],
     dependencies: [
-        .package(path: "../LogKit"),
-        .package(path: "../NetworkKit"),
-        .package(path: "../SecureStorageKit"),
+        .package(path: "../../Kit/LogKit"),
+        .package(path: "../../Kit/NetworkKit"),
+        .package(path: "../../Kit/SecureStorageKit"),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.0.0"),
     ],
     targets: [

@@ -64,16 +64,19 @@ package struct LocalContentView: View {
                                 longitude: location.coordinate.longitude,
                             )
                         ) {
-                            symbolImage(named: category.symbolName)
-                                .frame(width: 44, height: 44)
-                                .background(
-                                    RoundedRectangle(cornerRadius: 6)
-                                        .fill(.white)
-                                )
-                                .onTapGesture {
-                                    selectedLocation = location
-                                }
-                                .accessibilityFocused($focusedAnnotationID, equals: location.id)
+                            Button {
+                                selectedLocation = location
+                            } label: {
+                                symbolImage(named: category.symbolName)
+                                    .frame(width: 44, height: 44)
+                                    .background(
+                                        RoundedRectangle(cornerRadius: 6)
+                                            .fill(.white)
+                                    )
+                            }
+                            .buttonStyle(.plain)
+                            .accessibilityLabel(Text(verbatim: location.name))
+                            .accessibilityFocused($focusedAnnotationID, equals: location.id)
                         }
                     }
                     .ignoresSafeArea()

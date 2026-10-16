@@ -12,9 +12,9 @@ let package = Package(
         .library(name: "ScheduleUI", targets: ["ScheduleUI"])
     ],
     dependencies: [
-        .package(path: "../../SwiftLeedsPackage"),
-        .package(path: "../ScheduleFeature"),
-        .package(path: "../UIComponents"),
+        .package(path: "../../../SwiftLeedsPackage"),
+        .package(path: "../../Feature/ScheduleFeature"),
+        .package(path: "../../DesignSystem/UIComponents"),
         // 2.1.2 declares visionOS under a tools version that predates it, so its
         // manifest fails to load and resolution stops before it reaches us.
         .package(url: "https://github.com/lorenzofiamingo/swiftui-cached-async-image", exact: "2.1.1"),

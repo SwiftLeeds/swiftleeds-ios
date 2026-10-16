@@ -12,7 +12,7 @@ let package = Package(
         .library(name: "AuthenticationUI", targets: ["AuthenticationUI"])
     ],
     dependencies: [
-        .package(path: "../AuthenticationFeature"),
+        .package(path: "../../Feature/AuthenticationFeature"),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.0.0"),
         .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", from: "1.19.4"),
     ],

@@ -26,9 +26,9 @@
 baseline: .swiftlint.baseline
 
 included:
-  - Packages/*/Package.swift
-  - Packages/*/Sources
-  - Packages/*/Tests
+  - Packages/*/*/Package.swift
+  - Packages/*/*/Sources
+  - Packages/*/*/Tests
   - SwiftLeeds
   - SwiftLeedsAppClip
   - SwiftLeedsPackage
@@ -158,6 +158,10 @@ opt_in_rules:
   # A closure the body only calls directly needs no `@escaping`. Leaving it off
   # tells the caller the closure cannot run after the function returns.
   - unneeded_escaping
+
+  # `onTapGesture` alone does not mark a view as a button, so VoiceOver, Switch
+  # Control and Voice Control do not offer it as one. Use a `Button`.
+  - accessibility_trait_for_button
 
 # Analyzer rules read the compiler log, so they run only through
 # `swiftlint analyze`, never `swiftlint lint`.
