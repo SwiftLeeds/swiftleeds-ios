@@ -5,8 +5,8 @@ import PackageDescription
 let package = Package(
     name: "LocalUI",
     platforms: [
-        .iOS(.v18),
-        .macOS(.v15),
+        .iOS(.v26),
+        .macOS(.v26),
     ],
     products: [
         .library(name: "LocalUI", targets: ["LocalUI"])
