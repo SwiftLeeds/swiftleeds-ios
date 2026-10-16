@@ -71,8 +71,6 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
         // swiftlint:disable:next discouraged_optional_collection
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil,
     ) -> Bool {
-        UITabBar.appearance().backgroundColor = UIColor(named: "TabBarBackground")
-
         requestPushAuthorization(application: application)
 
         return true
