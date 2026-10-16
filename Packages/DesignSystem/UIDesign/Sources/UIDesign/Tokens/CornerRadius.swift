@@ -10,7 +10,8 @@ public struct CornerRadius: Equatable, Hashable, Sendable {
 }
 
 extension CornerRadius {
-    public static let none = CornerRadius(0)
+    /// A square corner, with no rounding.
+    public static let zero = CornerRadius(0)
     public static let small = CornerRadius(8)
     public static let medium = CornerRadius(12)
     public static let large = CornerRadius(16)

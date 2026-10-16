@@ -129,7 +129,7 @@ opt_in_rules:
   - static_operator
 
   # Rules that needed a sweep. Each had 1 to 5 violations when it was turned on,
-  # 2026-10-15.
+  # 2026-10-15 and 2026-10-16.
 
   # "Code reads like clean English." Each of these takes the shorter form Swift
   # offers: a comma for `&&`, `if let x` for `if let x = x`, a return after the
@@ -162,6 +162,10 @@ opt_in_rules:
   # `onTapGesture` alone does not mark a view as a button, so VoiceOver, Switch
   # Control and Voice Control do not offer it as one. Use a `Button`.
   - accessibility_trait_for_button
+
+  # An enum case or static member named `none` reads as `Optional.none`, so a
+  # reader of `x ?? .none` cannot tell which is meant. Name it for what it is.
+  - discouraged_none_name
 
 # Analyzer rules read the compiler log, so they run only through
 # `swiftlint analyze`, never `swiftlint lint`.

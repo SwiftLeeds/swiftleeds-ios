@@ -4,8 +4,9 @@ import LogKitTestSupport
 import Testing
 
 @Suite struct LogDependencyTests {
-    /// The default is `Log.none`, so a test that forgets to override gets silence rather than
-    /// real output. That it writes nowhere is covered by `LogCombineTests`.
+    /// The default is `Log.silent`, so a test that forgets to override gets
+    /// silence rather than real output. That it writes nowhere is covered by
+    /// `LogCombineTests`.
     @Test func whenNotConfigured_shouldNotTrap() {
         @Dependency(\.log) var log
 

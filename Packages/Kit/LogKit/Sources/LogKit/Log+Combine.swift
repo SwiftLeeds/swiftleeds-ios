@@ -3,7 +3,7 @@ extension Log {
     ///
     /// Use it to include a destination conditionally without branching, or to
     /// silence logging entirely. Combining with it changes nothing.
-    public static let none = Log { _ in }
+    public static let silent = Log { _ in }
 
     /// Writes each event to every given log, in order.
     ///

@@ -30,7 +30,7 @@ struct SwiftLeedsApp: App {
                 Bundle.main.bundleIdentifier
                 .flatMap { try? LogSubsystem($0) }
                 .map { Log.unified(subsystem: $0, salt: .random()) }
-                ?? .none
+                ?? .silent
             $0.secureStorage = .keychain(service: KeychainService("uk.co.swiftleeds.authentication"))
             $0.apiConfiguration = APIConfiguration(baseURL: URL(string: "https://\(ConferenceConfig.apiHost)")!)
             $0.httpClient = HTTPClient.urlSession(.unauthenticated).logging()

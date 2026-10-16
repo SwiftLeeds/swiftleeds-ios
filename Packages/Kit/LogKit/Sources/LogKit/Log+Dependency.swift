@@ -3,7 +3,7 @@ import Dependencies
 extension Log: TestDependencyKey {
     /// A log that writes nowhere, so a test that does not override the
     /// dependency stays silent.
-    public static let testValue = Log.none
+    public static let testValue = Log.silent
 }
 
 extension DependencyValues {
