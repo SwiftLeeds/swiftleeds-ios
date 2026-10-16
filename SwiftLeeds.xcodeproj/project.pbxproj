@@ -252,13 +252,13 @@
 		0B4CB3C628EAF19100246E62 /* SwiftLeedsAppClip */ = {
 			isa = PBXGroup;
 			children = (
-				0B4CB3C728EAF19100246E62 /* SwiftLeedsAppClipApp.swift */,
-				0B4CB3D028EAF19100246E62 /* Info.plist */,
-				0B4CB3D128EAF19100246E62 /* SwiftLeedsAppClip.entitlements */,
 				0BB52A782A5FDC2614FF7243 /* KotlinLeedsAppClip.entitlements */,
-				0B4CB3CD28EAF19100246E62 /* Preview Content */,
-				4301D0D3F1C8979276E77084 /* SwiftLeedsAssets.xcassets */,
+				0B4CB3D128EAF19100246E62 /* SwiftLeedsAppClip.entitlements */,
+				0B4CB3D028EAF19100246E62 /* Info.plist */,
+				0B4CB3C728EAF19100246E62 /* SwiftLeedsAppClipApp.swift */,
 				75075F01455C8AD72C71783C /* KotlinLeedsAssets.xcassets */,
+				4301D0D3F1C8979276E77084 /* SwiftLeedsAssets.xcassets */,
+				0B4CB3CD28EAF19100246E62 /* Preview Content */,
 			);
 			path = SwiftLeedsAppClip;
 			sourceTree = "<group>";
@@ -274,14 +274,14 @@
 		74A09FE228C6778C00E03F39 /* SwiftLeedsWidget */ = {
 			isa = PBXGroup;
 			children = (
-				74B14FAE28CE13E4004C0A40 /* WidgetSetup */,
+				74A09FE728C6779300E03F39 /* Info.plist */,
 				74E62F7328CAAB30004422F9 /* SwiftLeedsMediumWidgetView.swift */,
 				74E62F7128CA98EA004422F9 /* SwiftLeedsSmallWidgetView.swift */,
-				74B14FB328CE2245004C0A40 /* SwiftLeedsWidgetEntryView.swift */,
 				74A09FE328C6778C00E03F39 /* SwiftLeedsWidget.swift */,
-				74A09FE728C6779300E03F39 /* Info.plist */,
-				3275AD6541323F056786E508 /* SwiftLeedsAssets.xcassets */,
+				74B14FB328CE2245004C0A40 /* SwiftLeedsWidgetEntryView.swift */,
 				ED1AFB8A37EDA9676DB1C998 /* KotlinLeedsAssets.xcassets */,
+				3275AD6541323F056786E508 /* SwiftLeedsAssets.xcassets */,
+				74B14FAE28CE13E4004C0A40 /* WidgetSetup */,
 			);
 			path = SwiftLeedsWidget;
 			sourceTree = "<group>";
@@ -299,8 +299,8 @@
 		7D158F62E4F9CC9BE188EB59 /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
-				5F9FC40FEADC49E608696F7A /* SwiftLeeds.xcconfig */,
 				1AA9B4909D551477D0C04106 /* KotlinLeeds.xcconfig */,
+				5F9FC40FEADC49E608696F7A /* SwiftLeeds.xcconfig */,
 			);
 			path = Configuration;
 			sourceTree = "<group>";
@@ -374,16 +374,16 @@
 			isa = PBXGroup;
 			children = (
 				7B8108412E5CA00E00CCB2F5 /* SwiftLeedsPackage */,
-				A11CE57000000000000000B2 /* Packages */,
-				74B14FAD28CB22B4004C0A40 /* SwiftLeedsWidgetExtension.entitlements */,
-				C1725A0182E1989D761551B2 /* KotlinLeedsWidgetExtension.entitlements */,
-				AECB295527417F9D00CDC983 /* SwiftLeeds */,
 				AE1C801328A7BCD000996659 /* Settings.bundle */,
-				74A09FE228C6778C00E03F39 /* SwiftLeedsWidget */,
-				0B4CB3C628EAF19100246E62 /* SwiftLeedsAppClip */,
-				AECB295427417F9D00CDC983 /* Products */,
-				FAF74EDA288B44BE00A0926C /* Frameworks */,
+				C1725A0182E1989D761551B2 /* KotlinLeedsWidgetExtension.entitlements */,
+				74B14FAD28CB22B4004C0A40 /* SwiftLeedsWidgetExtension.entitlements */,
 				7D158F62E4F9CC9BE188EB59 /* Configuration */,
+				FAF74EDA288B44BE00A0926C /* Frameworks */,
+				A11CE57000000000000000B2 /* Packages */,
+				AECB295427417F9D00CDC983 /* Products */,
+				AECB295527417F9D00CDC983 /* SwiftLeeds */,
+				0B4CB3C628EAF19100246E62 /* SwiftLeedsAppClip */,
+				74A09FE228C6778C00E03F39 /* SwiftLeedsWidget */,
 			);
 			sourceTree = "<group>";
 		};
@@ -391,8 +391,8 @@
 			isa = PBXGroup;
 			children = (
 				AECB295327417F9D00CDC983 /* SwiftLeeds.app */,
-				74A09FDD28C6778C00E03F39 /* SwiftLeedsWidgetExtension.appex */,
 				0B4CB3C528EAF19000246E62 /* SwiftLeedsAppClip.app */,
+				74A09FDD28C6778C00E03F39 /* SwiftLeedsWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -400,13 +400,13 @@
 		AECB295527417F9D00CDC983 /* SwiftLeeds */ = {
 			isa = PBXGroup;
 			children = (
+				7804F8767E529D8F3A0D8BE4 /* KotlinLeeds.entitlements */,
+				AE8C1B2C28C4B8D800AF7318 /* SwiftLeeds.entitlements */,
 				AECB29862741AC5800CDC983 /* App */,
 				AECB298027418D9800CDC983 /* Extension */,
 				AE8C1B2928C4B38400AF7318 /* Push */,
 				AECB29842741AC2500CDC983 /* Resources */,
-				AE8C1B2C28C4B8D800AF7318 /* SwiftLeeds.entitlements */,
 				AECB29852741AC4B00CDC983 /* Views */,
-				7804F8767E529D8F3A0D8BE4 /* KotlinLeeds.entitlements */,
 			);
 			path = SwiftLeeds;
 			sourceTree = "<group>";
@@ -422,10 +422,10 @@
 		AECB29842741AC2500CDC983 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				EEFB1E37D5A542A1798C92D5 /* SwiftLeedsAssets.xcassets */,
-				893A122D593379F84605F70C /* SwiftLeedsColors.xcassets */,
 				40AEBC0F9109732F54C608A9 /* KotlinLeedsAssets.xcassets */,
 				0B3FFD994DBE3F62216150F8 /* KotlinLeedsColors.xcassets */,
+				EEFB1E37D5A542A1798C92D5 /* SwiftLeedsAssets.xcassets */,
+				893A122D593379F84605F70C /* SwiftLeedsColors.xcassets */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -442,12 +442,12 @@
 			isa = PBXGroup;
 			children = (
 				AECB29832741ABFD00CDC983 /* Info.plist */,
-				AECB295627417F9D00CDC983 /* SwiftLeedsApp.swift */,
-				AECB2A0027417F9D00CDC901 /* LogCategories.swift */,
-				A11CE570000000000000F3A1 /* ContactEmail+Conference.swift */,
-				A11CE570000000000000F3A2 /* AppVersion+Current.swift */,
 				740162D92A7053A000C2D1B3 /* AppState.swift */,
+				A11CE570000000000000F3A2 /* AppVersion+Current.swift */,
 				67624B7470D6BA62D4912236 /* ConferenceConfig.swift */,
+				A11CE570000000000000F3A1 /* ContactEmail+Conference.swift */,
+				AECB2A0027417F9D00CDC901 /* LogCategories.swift */,
+				AECB295627417F9D00CDC983 /* SwiftLeedsApp.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -466,8 +466,8 @@
 		FAF74EDA288B44BE00A0926C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				74A09FDE28C6778C00E03F39 /* WidgetKit.framework */,
 				74A09FE028C6778C00E03F39 /* SwiftUI.framework */,
+				74A09FDE28C6778C00E03F39 /* WidgetKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
