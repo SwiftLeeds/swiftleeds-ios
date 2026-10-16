@@ -3,6 +3,21 @@ import UIDesign
 
 /// A view that describes one session and what a person can do about it.
 struct SessionDetailScreen: View {
+    /// Where the list is scrolled to, and how far the bar covers its top.
+    private struct ScrollSample: Equatable {
+        /// The vertical offset of the content, which is negative at rest.
+        let offset: CGFloat
+
+        /// The height of the bar over the top of the content.
+        let topInset: CGFloat
+
+        /// The content position that sits just under the bar.
+        var contentTop: CGFloat { offset + topInset }
+    }
+
+    /// How far from rest still counts as at rest, in points.
+    private static let restTolerance: CGFloat = 1
+
     /// The most lines the summary takes until a person asks for the rest.
     private static let collapsedSummaryLines = 4
 
@@ -30,6 +45,17 @@ struct SessionDetailScreen: View {
 
     /// Whether the venue page is pushed, to find the session's room.
     @State private var showsVenue = false
+
+    /// Where the heading's title ends in the list's frame, or `nil` until it
+    /// has been measured. It goes stale once the title scrolls out of sight.
+    @State private var titleBottomInView: CGFloat?
+
+    /// Where the heading's title ends in the content, or `nil` until it has
+    /// been measured at rest. The content does not move, so this stays true.
+    @State private var titleBottom: CGFloat?
+
+    /// Where the list is scrolled to, or `nil` until it first reports.
+    @State private var scroll: ScrollSample?
 
     /// Creates a screen for one session.
     ///
@@ -85,12 +111,28 @@ struct SessionDetailScreen: View {
             }
         }
         .listStyle(.insetGrouped)
+        .onScrollGeometryChange(for: ScrollSample.self) { geometry in
+            ScrollSample(
+                offset: geometry.contentOffset.y,
+                topInset: geometry.contentInsets.top,
+            )
+        } action: { _, newValue in
+            updateScroll(newValue)
+        }
         .navigationDestination(isPresented: $showsVenue) {
             VenueContent()
         }
         .navigationTitle(session.title)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
+            ToolbarItem(placement: .principal) {
+                Text(session.title)
+                    .font(.headline)
+                    .lineLimit(1)
+                    .opacity(showsBarTitle ? 1 : 0)
+                    .accessibilityHidden(!showsBarTitle)
+            }
+
             ToolbarItem(placement: .topBarTrailing) {
                 FavoriteButton(isFavorite: $isFavorite)
             }
@@ -157,6 +199,33 @@ struct SessionDetailScreen: View {
             }
         }
         .tint(.textPrimary)
+    }
+
+    /// Whether the title in the navigation bar shows.
+    ///
+    /// It shows once the heading's title has scrolled under the bar.
+    private var showsBarTitle: Bool {
+        guard let titleBottom, let scroll else { return false }
+        return scroll.contentTop >= titleBottom
+    }
+
+    /// Records where the list is scrolled to, animating the bar title.
+    ///
+    /// - Parameter sample: Where the list is scrolled to.
+    private func updateScroll(_ sample: ScrollSample) {
+        withAnimation { scroll = sample }
+        measureTitleAtRest()
+    }
+
+    /// Fixes the title's place in the content, when the list is at rest.
+    ///
+    /// The list reports the title in its own frame, which moves as the list
+    /// scrolls. At rest the offset is known exactly, so the sum is exact too.
+    private func measureTitleAtRest() {
+        guard let titleBottomInView, let scroll,
+            abs(scroll.contentTop) < Self.restTolerance
+        else { return }
+        titleBottom = titleBottomInView + scroll.offset
     }
 
     /// The heading, with the speakers under it.
@@ -233,6 +302,12 @@ struct SessionDetailScreen: View {
                 .font(.title.weight(.bold))
                 .foregroundStyle(.textPrimary)
                 .fixedSize(horizontal: false, vertical: true)
+                .onGeometryChange(for: CGFloat.self) { proxy in
+                    proxy.frame(in: .scrollView).maxY
+                } action: { bottom in
+                    titleBottomInView = bottom
+                    measureTitleAtRest()
+                }
 
             facts
 
