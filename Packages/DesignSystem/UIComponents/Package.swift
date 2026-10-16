@@ -3,31 +3,31 @@
 import PackageDescription
 
 let package = Package(
-    name: "UIDesign",
+    name: "UIComponents",
     platforms: [
         .iOS(.v18),
         .macOS(.v15),
     ],
     products: [
-        .library(name: "UIDesign", targets: ["UIDesign"])
+        .library(name: "UIComponents", targets: ["UIComponents"])
     ],
     dependencies: [
-        .package(path: "../../SwiftLeedsPackage"),
-        .package(url: "https://github.com/SFSafeSymbols/SFSafeSymbols", from: "7.0.0"),
+        .package(path: "../../../SwiftLeedsPackage"),
         .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", from: "1.19.4"),
     ],
     targets: [
         .target(
-            name: "UIDesign",
+            name: "UIComponents",
             dependencies: [
-                .product(name: "SFSafeSymbols", package: "SFSafeSymbols"),
+                .product(name: "DesignKit", package: "SwiftLeedsPackage"),
                 .product(name: "SharedAssets", package: "SwiftLeedsPackage"),
             ],
         ),
         .testTarget(
-            name: "UIDesignSnapshotTests",
+            name: "UIComponentsSnapshotTests",
             dependencies: [
-                "UIDesign",
+                "UIComponents",
+                .product(name: "SharedAssets", package: "SwiftLeedsPackage"),
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
             ],
         ),

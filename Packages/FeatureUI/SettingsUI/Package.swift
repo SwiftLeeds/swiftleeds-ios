@@ -12,8 +12,8 @@ let package = Package(
         .library(name: "SettingsUI", targets: ["SettingsUI"])
     ],
     dependencies: [
-        .package(path: "../NetworkKit"),
-        .package(path: "../UITheme"),
+        .package(path: "../../Kit/NetworkKit"),
+        .package(path: "../../DesignSystem/UITheme"),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.0.0"),
         .package(url: "https://github.com/pointfreeco/swift-sharing", from: "2.10.1"),
         .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", from: "1.19.4"),

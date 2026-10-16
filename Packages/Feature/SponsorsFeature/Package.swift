@@ -3,31 +3,35 @@
 import PackageDescription
 
 let package = Package(
-    name: "AboutFeature",
+    name: "SponsorsFeature",
     platforms: [
         .iOS(.v18),
         .macOS(.v15),
     ],
     products: [
-        .library(name: "AboutFeature", targets: ["AboutFeature"])
+        .library(name: "SponsorsFeature", targets: ["SponsorsFeature"])
     ],
     dependencies: [
-        .package(path: "../NetworkKit"),
+        .package(path: "../../Kit/LogKit"),
+        .package(path: "../../Kit/NetworkKit"),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.0.0"),
     ],
     targets: [
         .target(
-            name: "AboutFeature",
+            name: "SponsorsFeature",
             dependencies: [
                 .product(name: "Dependencies", package: "swift-dependencies"),
+                .product(name: "LogKit", package: "LogKit"),
                 .product(name: "NetworkKit", package: "NetworkKit"),
             ],
         ),
         .testTarget(
-            name: "AboutFeatureTests",
+            name: "SponsorsFeatureTests",
             dependencies: [
-                "AboutFeature",
+                "SponsorsFeature",
                 .product(name: "Dependencies", package: "swift-dependencies"),
+                .product(name: "LogKit", package: "LogKit"),
+                .product(name: "LogKitTestSupport", package: "LogKit"),
                 .product(name: "NetworkKit", package: "NetworkKit"),
                 .product(name: "NetworkKitTestSupport", package: "NetworkKit"),
             ],
