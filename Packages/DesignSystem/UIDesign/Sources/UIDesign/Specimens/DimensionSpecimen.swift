@@ -62,8 +62,8 @@ extension DimensionSpecimen {
     fileprivate var cornerRadiusGroup: some View {
         SpecimenGroup("Radius") {
             GridRow {
-                Text("none")
-                Corner(radius: .none)
+                Text("zero")
+                Corner(radius: .zero)
             }
             GridRow {
                 Text("small")

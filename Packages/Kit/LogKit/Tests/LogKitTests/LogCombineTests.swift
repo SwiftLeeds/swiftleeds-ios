@@ -14,14 +14,14 @@ import Testing
         #expect(second.events.map(\.message) == ["shared"])
     }
 
-    @Test func whenCombiningNoLogs_shouldMatchNone() {
+    @Test func whenCombiningNoLogs_shouldMatchSilent() {
         let viaEmpty = LogRecorder()
-        let viaNone = LogRecorder()
+        let viaSilent = LogRecorder()
 
         Log.combine([.combine([]), viaEmpty.log]).write(.stub("empty"))
-        Log.combine([.none, viaNone.log]).write(.stub("empty"))
+        Log.combine([.silent, viaSilent.log]).write(.stub("empty"))
 
-        #expect(viaEmpty.events == viaNone.events)
+        #expect(viaEmpty.events == viaSilent.events)
     }
 
     @Test func whenSameLogAppearsTwice_shouldWriteTwice() {
@@ -33,21 +33,21 @@ import Testing
         #expect(recorder.events.count == 2)
     }
 
-    @Test func whenNoneIsOnTheLeft_shouldMatchLogAlone() {
+    @Test func whenSilentIsOnTheLeft_shouldMatchLogAlone() {
         let combined = LogRecorder()
         let alone = LogRecorder()
 
-        Log.combine([.none, combined.log]).write(.stub("identity"))
+        Log.combine([.silent, combined.log]).write(.stub("identity"))
         alone.log.write(.stub("identity"))
 
         #expect(combined.events == alone.events)
     }
 
-    @Test func whenNoneIsOnTheRight_shouldMatchLogAlone() {
+    @Test func whenSilentIsOnTheRight_shouldMatchLogAlone() {
         let combined = LogRecorder()
         let alone = LogRecorder()
 
-        Log.combine([combined.log, .none]).write(.stub("identity"))
+        Log.combine([combined.log, .silent]).write(.stub("identity"))
         alone.log.write(.stub("identity"))
 
         #expect(combined.events == alone.events)
