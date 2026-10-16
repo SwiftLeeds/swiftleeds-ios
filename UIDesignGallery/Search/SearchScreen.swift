@@ -36,7 +36,10 @@ struct SearchScreen: View {
                     PersonScreen(person: person)
                 }
                 .navigationDestination(for: SampleSession.self) { session in
-                    SessionDetailScreen(session: session)
+                    SessionDetailScreen(
+                        session: session,
+                        showSpeaker: { path.append($0) },
+                    )
                 }
                 .navigationDestination(for: SampleSponsor.self) { sponsor in
                     NotYetDesigned(destination: .sponsors)
@@ -156,7 +159,10 @@ struct SearchScreen: View {
     @ViewBuilder
     private func destination(for result: SampleResult) -> some View {
         if let session = result.session {
-            SessionDetailScreen(session: session)
+            SessionDetailScreen(
+                session: session,
+                showSpeaker: { path.append($0) },
+            )
         } else if let person = result.person {
             PersonScreen(person: person)
         } else {

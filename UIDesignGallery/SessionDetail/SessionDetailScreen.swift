@@ -9,8 +9,15 @@ struct SessionDetailScreen: View {
     /// How much of the width the artwork takes beside the heading.
     private static let artworkShare: CGFloat = 0.4
 
+    /// The shortest a speaker's nameplate stands, so it is a comfortable tap
+    /// target.
+    private static let minimumTapHeight: CGFloat = 44
+
     /// The session this screen describes.
     let session: SampleSession
+
+    /// The action that shows a speaker's page.
+    let showSpeaker: (SamplePerson) -> Void
 
     /// Whether the summary shows in full when the screen appears.
     private let opensSummaryExpanded: Bool
@@ -30,9 +37,15 @@ struct SessionDetailScreen: View {
     ///   - session: The session this screen describes.
     ///   - opensSummaryExpanded: Whether the summary shows in full when the
     ///     screen appears.
-    init(session: SampleSession, opensSummaryExpanded: Bool = false) {
+    ///   - showSpeaker: The action that shows a speaker's page.
+    init(
+        session: SampleSession,
+        opensSummaryExpanded: Bool = false,
+        showSpeaker: @escaping (SamplePerson) -> Void,
+    ) {
         self.session = session
         self.opensSummaryExpanded = opensSummaryExpanded
+        self.showSpeaker = showSpeaker
         _isFavorite = State(initialValue: session.isFavorite)
     }
 
@@ -51,13 +64,13 @@ struct SessionDetailScreen: View {
                                 width * Self.artworkShare
                             }
 
-                        heading
+                        headingWithSpeakers
                     }
                 } else {
                     artwork
                         .listRowInsets(EdgeInsets())
 
-                    heading
+                    headingWithSpeakers
                 }
             }
             .listRowBackground(Color.clear)
@@ -69,29 +82,6 @@ struct SessionDetailScreen: View {
                     lines: Self.collapsedSummaryLines,
                     opensExpanded: opensSummaryExpanded,
                 )
-            }
-
-            Section(session.speakers.count == 1 ? "Speaker" : "Speakers") {
-                ForEach(session.speakers) { speaker in
-                    NavigationLink(value: speaker) {
-                        Nameplate(speaker.name, detail: speaker.detail) {
-                            // The initials disc is the row's own color, so it
-                            // takes an edge to be seen, as the person page's
-                            // avatar does.
-                            Avatar(
-                                url: nil,
-                                size: .medium,
-                                fallback: .initials(speaker.nameComponents),
-                            )
-                            .overlay {
-                                Circle().strokeBorder(
-                                    .borderPrimary,
-                                    lineWidth: CGFloat(BorderWidth.thin),
-                                )
-                            }
-                        }
-                    }
-                }
             }
         }
         .listStyle(.insetGrouped)
@@ -169,6 +159,70 @@ struct SessionDetailScreen: View {
         .tint(.textPrimary)
     }
 
+    /// The heading, with the speakers under it.
+    private var headingWithSpeakers: some View {
+        VStack(alignment: .leading, spacing: .medium) {
+            heading
+
+            speakers
+        }
+    }
+
+    /// The speakers, one nameplate under another.
+    private var speakers: some View {
+        VStack(alignment: .leading, spacing: .medium) {
+            ForEach(session.speakers) { speaker in
+                speakerButton(speaker)
+            }
+        }
+    }
+
+    /// A button that shows the speaker's page, drawn as the speaker's
+    /// nameplate.
+    ///
+    /// The nameplate's style fixes the title's font, so the font sits on the
+    /// title's own text, which the style cannot override.
+    ///
+    /// - Parameter speaker: The speaker the nameplate names.
+    private func speakerButton(_ speaker: SamplePerson) -> some View {
+        Button {
+            showSpeaker(speaker)
+        } label: {
+            Nameplate {
+                Text(speaker.name).font(.subheadline)
+            } detail: {
+                EmptyView()
+            } icon: {
+                avatar(for: speaker)
+            }
+            .multilineTextAlignment(.leading)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .frame(minHeight: Self.minimumTapHeight)
+            .contentShape(.rect)
+        }
+        .buttonStyle(.borderless)
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    /// A speaker's initials on a small disc with an edge.
+    ///
+    /// - Parameter speaker: The speaker the avatar names.
+    private func avatar(for speaker: SamplePerson) -> some View {
+        // The initials disc is the row's own color, so it takes an edge to be
+        // seen, as the person page's avatar does.
+        Avatar(
+            url: nil,
+            size: .small,
+            fallback: .initials(speaker.nameComponents),
+        )
+        .overlay {
+            Circle().strokeBorder(
+                .borderPrimary,
+                lineWidth: CGFloat(BorderWidth.thin),
+            )
+        }
+    }
+
     /// What the session is called, and when and where it runs.
     ///
     /// VoiceOver reads it as one heading: the title, then the day, the time,
@@ -178,6 +232,7 @@ struct SessionDetailScreen: View {
             Text(session.title)
                 .font(.title.weight(.bold))
                 .foregroundStyle(.textPrimary)
+                .fixedSize(horizontal: false, vertical: true)
 
             facts
 

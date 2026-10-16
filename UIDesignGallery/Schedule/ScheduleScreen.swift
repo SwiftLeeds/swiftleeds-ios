@@ -109,6 +109,7 @@ struct ScheduleScreen: View {
                     SessionDetailScreen(
                         session: session,
                         opensSummaryExpanded: opensSummaryExpanded,
+                        showSpeaker: { path.append($0) },
                     )
                 }
                 .navigationDestination(for: SamplePerson.self) { person in
