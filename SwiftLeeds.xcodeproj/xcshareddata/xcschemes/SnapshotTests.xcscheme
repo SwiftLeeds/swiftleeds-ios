@@ -23,7 +23,7 @@
                BlueprintIdentifier = "AboutUISnapshotTests"
                BuildableName = "AboutUISnapshotTests"
                BlueprintName = "AboutUISnapshotTests"
-               ReferencedContainer = "container:Packages/AboutUI">
+               ReferencedContainer = "container:Packages/FeatureUI/AboutUI">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -33,7 +33,7 @@
                BlueprintIdentifier = "AuthenticationUISnapshotTests"
                BuildableName = "AuthenticationUISnapshotTests"
                BlueprintName = "AuthenticationUISnapshotTests"
-               ReferencedContainer = "container:Packages/AuthenticationUI">
+               ReferencedContainer = "container:Packages/FeatureUI/AuthenticationUI">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -43,7 +43,7 @@
                BlueprintIdentifier = "LocalUISnapshotTests"
                BuildableName = "LocalUISnapshotTests"
                BlueprintName = "LocalUISnapshotTests"
-               ReferencedContainer = "container:Packages/LocalUI">
+               ReferencedContainer = "container:Packages/FeatureUI/LocalUI">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -53,7 +53,7 @@
                BlueprintIdentifier = "ScheduleUISnapshotTests"
                BuildableName = "ScheduleUISnapshotTests"
                BlueprintName = "ScheduleUISnapshotTests"
-               ReferencedContainer = "container:Packages/ScheduleUI">
+               ReferencedContainer = "container:Packages/FeatureUI/ScheduleUI">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -63,7 +63,7 @@
                BlueprintIdentifier = "SettingsUISnapshotTests"
                BuildableName = "SettingsUISnapshotTests"
                BlueprintName = "SettingsUISnapshotTests"
-               ReferencedContainer = "container:Packages/SettingsUI">
+               ReferencedContainer = "container:Packages/FeatureUI/SettingsUI">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -73,7 +73,7 @@
                BlueprintIdentifier = "SponsorsUISnapshotTests"
                BuildableName = "SponsorsUISnapshotTests"
                BlueprintName = "SponsorsUISnapshotTests"
-               ReferencedContainer = "container:Packages/SponsorsUI">
+               ReferencedContainer = "container:Packages/FeatureUI/SponsorsUI">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -83,7 +83,7 @@
                BlueprintIdentifier = "UIComponentsSnapshotTests"
                BuildableName = "UIComponentsSnapshotTests"
                BlueprintName = "UIComponentsSnapshotTests"
-               ReferencedContainer = "container:Packages/UIComponents">
+               ReferencedContainer = "container:Packages/DesignSystem/UIComponents">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -93,7 +93,7 @@
                BlueprintIdentifier = "UIDesignSnapshotTests"
                BuildableName = "UIDesignSnapshotTests"
                BlueprintName = "UIDesignSnapshotTests"
-               ReferencedContainer = "container:Packages/UIDesign">
+               ReferencedContainer = "container:Packages/DesignSystem/UIDesign">
             </BuildableReference>
          </TestableReference>
       </Testables>

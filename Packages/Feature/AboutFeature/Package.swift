@@ -3,30 +3,30 @@
 import PackageDescription
 
 let package = Package(
-    name: "ScheduleFeature",
+    name: "AboutFeature",
     platforms: [
         .iOS(.v18),
         .macOS(.v15),
     ],
     products: [
-        .library(name: "ScheduleFeature", targets: ["ScheduleFeature"])
+        .library(name: "AboutFeature", targets: ["AboutFeature"])
     ],
     dependencies: [
-        .package(path: "../NetworkKit"),
+        .package(path: "../../Kit/NetworkKit"),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.0.0"),
     ],
     targets: [
         .target(
-            name: "ScheduleFeature",
+            name: "AboutFeature",
             dependencies: [
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "NetworkKit", package: "NetworkKit"),
             ],
         ),
         .testTarget(
-            name: "ScheduleFeatureTests",
+            name: "AboutFeatureTests",
             dependencies: [
-                "ScheduleFeature",
+                "AboutFeature",
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "NetworkKit", package: "NetworkKit"),
                 .product(name: "NetworkKitTestSupport", package: "NetworkKit"),
