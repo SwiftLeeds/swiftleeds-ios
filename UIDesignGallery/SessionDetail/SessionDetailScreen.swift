@@ -92,6 +92,8 @@ struct SessionDetailScreen: View {
 
                         headingWithSpeakers
                     }
+                    .listRowInsets(.leading, 0)
+                    .listRowInsets(.trailing, 0)
                 } else {
                     artwork
                         .listRowInsets(EdgeInsets())
