@@ -234,8 +234,11 @@ disabled_rules:
   # multi-line condition.
   # `extension_access_modifier`: it wants the access level hoisted onto the
   # extension declaration, and the formatter moves it onto each member instead.
-  # The three `multiline_*` rules: each wants one argument per line, and
+  # `multiline_arguments`, `multiline_arguments_brackets` and
+  # `multiline_call_arguments`: each wants one argument per line, and
   # `.swift-format` keeps the formatter's fill wrapping.
+  # `multiline_function_chains`: when a chain is too long, the formatter wraps
+  # one call's arguments, so the chain carries on after the closing bracket.
   - trailing_comma
   - sorted_imports
   - opening_brace
@@ -243,6 +246,7 @@ disabled_rules:
   - multiline_arguments
   - multiline_arguments_brackets
   - multiline_call_arguments
+  - multiline_function_chains
   #
   # Duplicates. The formatter already enforces these, and its own check gates
   # every pull request, so a second gate on the same lines adds nothing.
