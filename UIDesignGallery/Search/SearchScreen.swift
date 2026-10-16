@@ -18,8 +18,14 @@ struct SearchScreen: View {
     /// Which kinds of result the list keeps.
     @State private var scope: Scope = .everything
 
+    /// The screens pushed on top of Search.
+    ///
+    /// Search pushes several kinds of thing, a result, a person, a session and
+    /// a sponsor, so the path is untyped.
+    @State private var path = NavigationPath()
+
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $path) {
             found
                 .navigationTitle("Search")
                 .navigationDestination(for: SampleResult.self) { result in
