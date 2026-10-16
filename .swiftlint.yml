@@ -167,6 +167,10 @@ opt_in_rules:
   # reader of `x ?? .none` cannot tell which is meant. Name it for what it is.
   - discouraged_none_name
 
+  # The formatter neither adds nor removes a blank line around a `let` or
+  # `var`, so this rule can own it without the two tools disagreeing.
+  - let_var_whitespace
+
 # Analyzer rules read the compiler log, so they run only through
 # `swiftlint analyze`, never `swiftlint lint`.
 analyzer_rules:
@@ -211,10 +215,11 @@ unused_import:
         - ConcurrencyExtras
 
 disabled_rules:
-  # `swift format` owns layout, so a SwiftLint rule about where a character goes
-  # is either a contradiction or a duplicate. Both are off. Several below are
-  # opt-in rules that were never enabled; they are listed so nobody turns them on
-  # and re-derives why they do not work here.
+  # `swift format` owns layout. A SwiftLint rule about where a character goes is
+  # off when the formatter contradicts it or duplicates it. A rule the formatter
+  # has no opinion on, such as `let_var_whitespace`, can be on. Several below
+  # are opt-in rules that were never enabled; they are listed so nobody turns
+  # them on and re-derives why they do not work here.
   #
   # Contradictions. The formatter writes what the rule forbids, so fixing the
   # violations by hand would be undone by the next format run.

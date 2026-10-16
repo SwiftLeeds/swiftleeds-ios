@@ -48,6 +48,7 @@ import Testing
 
 private enum Conforming: Error, LogDescribable {
     case boom
+
     var logDescription: String { "CUSTOM" }
 }
 
