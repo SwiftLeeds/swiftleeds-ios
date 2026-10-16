@@ -133,7 +133,6 @@ struct FancyHeaderView_Previews: PreviewProvider {
                     title: "Swift Taylor",
                     foregroundImageURLs: remoteImageURLs,
                 )
-
             }
             ScrollView {
                 Text(verbatim: "Local Asset")

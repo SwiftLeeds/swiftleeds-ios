@@ -73,7 +73,6 @@ package struct CommonTileView<BackgroundType: ShapeStyle>: View {
                 if let subtitleText {
                     Text(subtitleText)
                         .font(.subheadline.weight(.light))
-
                 }
             }
             .foregroundColor(primaryColor)

@@ -239,15 +239,22 @@ disabled_rules:
   - multiline_arguments_brackets
   - multiline_call_arguments
   #
-  # Duplicates. The formatter already enforces these and its own check gates
-  # every pull request, so a second gate could only ever disagree with the first.
+  # Duplicates. The formatter already enforces these, and its own check gates
+  # every pull request, so a second gate on the same lines adds nothing.
   #
   # `indentation_width`: the pretty-printer owns indentation. This rule also
   # reads indentation inside `"""` literals, which here is JSON fixture data.
   # `no_extension_access_modifier`: the formatter's
   # `NoAccessLevelOnExtensionDeclaration` is on and does the same thing.
+  # `vertical_whitespace_opening_braces` and
+  # `vertical_whitespace_closing_braces`: the formatter's
+  # `NoEmptyLinesOpeningClosingBraces` removes a blank line after `{` and before
+  # `}`. These rules also check `(` and `[`, which nothing else checks. That is
+  # a choice: no kind of line has two owners.
   - indentation_width
   - no_extension_access_modifier
+  - vertical_whitespace_opening_braces
+  - vertical_whitespace_closing_braces
 
 # `.swift-format` sets `lineLength` to this number. Pin it here rather than
 # inheriting SwiftLint's default, so a version bump cannot move one tool's limit
