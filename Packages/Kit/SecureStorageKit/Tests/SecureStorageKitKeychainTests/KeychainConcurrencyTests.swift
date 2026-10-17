@@ -18,11 +18,11 @@ import Testing
         let stored = try await storage.removingAfterwards(key) {
             try await withThrowingTaskGroup(of: Void.self) { group in
                 for value in values {
-                    group.addTask { try await storage.set(value, self.key) }
+                    group.addTask { try await storage.set(value, key) }
                 }
                 try await group.waitForAll()
             }
-            return try await storage.data(self.key)
+            return try await storage.data(key)
         }
 
         let value = try #require(stored)
@@ -41,13 +41,13 @@ import Testing
         let second = Data("second".utf8)
 
         let reads = try await storage.removingAfterwards(key) {
-            try await storage.set(first, self.key)
+            try await storage.set(first, key)
 
             return try await withThrowingTaskGroup(of: Data?.self, returning: [Data?].self) { group in
                 for _ in 0..<20 {
-                    group.addTask { try await storage.data(self.key) }
+                    group.addTask { try await storage.data(key) }
                     group.addTask {
-                        try await storage.set(second, self.key)
+                        try await storage.set(second, key)
                         return nil
                     }
                 }

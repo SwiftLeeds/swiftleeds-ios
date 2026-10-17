@@ -71,22 +71,22 @@ package struct BottomSheetView: View {
                 }
                 .padding(Padding.screen)
             }
-            .frame(width: geometry.size.width, height: self.maxHeight, alignment: .top)
+            .frame(width: geometry.size.width, height: maxHeight, alignment: .top)
             .background(Color.background)
             .cornerRadius(Constants.bottomSheetRadius)
             .frame(height: geometry.size.height + Padding.screen, alignment: .bottom)
-            .offset(y: max(self.offsetY + self.translation, 0))
+            .offset(y: max(offsetY + translation, 0))
             .animation(.interactiveSpring(), value: isOpen)
             .animation(.interactiveSpring(), value: translation)
             .gesture(
-                DragGesture().updating(self.$translation) { value, state, _ in
+                DragGesture().updating($translation) { value, state, _ in
                     state = value.translation.height
                 }.onEnded { value in
-                    let snapDistance = self.maxHeight * Constants.snapRatio
+                    let snapDistance = maxHeight * Constants.snapRatio
                     guard abs(value.translation.height) > snapDistance else {
                         return
                     }
-                    self.isOpen = value.translation.height < 0
+                    isOpen = value.translation.height < 0
                 }
             )
             .ignoresSafeArea(edges: .bottom)
