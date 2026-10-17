@@ -25,7 +25,8 @@ import Testing
             return try await storage.data(self.key)
         }
 
-        #expect(stored.map(values.contains) == true)
+        let value = try #require(stored)
+        #expect(values.contains(value))
     }
 
     /// Guards that a read returns a whole value rather than a mixture of two.
