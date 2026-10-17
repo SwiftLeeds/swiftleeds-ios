@@ -32,7 +32,7 @@ let package = Package(
                     package: "ReadabilityModifier",
                     condition: .when(platforms: [.iOS]),
                 ),
-                .product(name: "SharedAssets", package: "SwiftLeedsPackage"),
+                .product(name: "UIAssets", package: "SwiftLeedsPackage"),
             ],
         ),
         .testTarget(
@@ -41,8 +41,8 @@ let package = Package(
                 "LocalUI",
                 .product(name: "DesignKit", package: "SwiftLeedsPackage"),
                 .product(name: "LocalFeature", package: "LocalFeature"),
-                .product(name: "SharedAssets", package: "SwiftLeedsPackage"),
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
+                .product(name: "UIAssets", package: "SwiftLeedsPackage"),
             ],
         ),
     ],

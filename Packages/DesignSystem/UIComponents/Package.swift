@@ -20,15 +20,15 @@ let package = Package(
             name: "UIComponents",
             dependencies: [
                 .product(name: "DesignKit", package: "SwiftLeedsPackage"),
-                .product(name: "SharedAssets", package: "SwiftLeedsPackage"),
+                .product(name: "UIAssets", package: "SwiftLeedsPackage"),
             ],
         ),
         .testTarget(
             name: "UIComponentsSnapshotTests",
             dependencies: [
                 "UIComponents",
-                .product(name: "SharedAssets", package: "SwiftLeedsPackage"),
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
+                .product(name: "UIAssets", package: "SwiftLeedsPackage"),
             ],
         ),
     ],

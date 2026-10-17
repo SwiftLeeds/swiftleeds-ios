@@ -29,7 +29,7 @@ let package = Package(
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "DesignKit", package: "SwiftLeedsPackage"),
                 .product(name: "ScheduleFeature", package: "ScheduleFeature"),
-                .product(name: "SharedAssets", package: "SwiftLeedsPackage"),
+                .product(name: "UIAssets", package: "SwiftLeedsPackage"),
                 .product(name: "UIComponents", package: "UIComponents"),
             ],
         ),

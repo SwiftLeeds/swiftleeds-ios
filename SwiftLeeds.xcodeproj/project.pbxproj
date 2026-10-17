@@ -34,8 +34,8 @@
 		79E3CB724EF853948BC7D906 /* ConferenceConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67624B7470D6BA62D4912236 /* ConferenceConfig.swift */; };
 		7B31C8EB2ED0959000FEEDF7 /* DesignKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7B31C8EA2ED0959000FEEDF7 /* DesignKit */; };
 		7B31C8F12ED0A7BF00FEEDF7 /* SettingsUI in Frameworks */ = {isa = PBXBuildFile; productRef = 7B31C8F02ED0A7BF00FEEDF7 /* SettingsUI */; };
-		7B8C3ECF2EE4A9F70089C6CF /* SharedAssets in Frameworks */ = {isa = PBXBuildFile; productRef = 7B8C3ECE2EE4A9F70089C6CF /* SharedAssets */; };
-		7BE081542EE5BF13004BCD1F /* SharedAssets in Frameworks */ = {isa = PBXBuildFile; productRef = 7BE081532EE5BF13004BCD1F /* SharedAssets */; };
+		7B8C3ECF2EE4A9F70089C6CF /* UIAssets in Frameworks */ = {isa = PBXBuildFile; productRef = 7B8C3ECE2EE4A9F70089C6CF /* UIAssets */; };
+		7BE081542EE5BF13004BCD1F /* UIAssets in Frameworks */ = {isa = PBXBuildFile; productRef = 7BE081532EE5BF13004BCD1F /* UIAssets */; };
 		7DD216398B20B302618BCB90 /* SwiftLeedsAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3275AD6541323F056786E508 /* SwiftLeedsAssets.xcassets */; };
 		802D63D966D0A9337F66041C /* KotlinLeedsAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 75075F01455C8AD72C71783C /* KotlinLeedsAssets.xcassets */; };
 		920187EBD71395160F1059C1 /* KotlinLeedsColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B3FFD994DBE3F62216150F8 /* KotlinLeedsColors.xcassets */; };
@@ -206,7 +206,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7BE081542EE5BF13004BCD1F /* SharedAssets in Frameworks */,
+				7BE081542EE5BF13004BCD1F /* UIAssets in Frameworks */,
 				74A09FE128C6778C00E03F39 /* SwiftUI.framework in Frameworks */,
 				74A09FDF28C6778C00E03F39 /* WidgetKit.framework in Frameworks */,
 				A11CE57000000000000000DF /* ScheduleFeature in Frameworks */,
@@ -219,7 +219,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7B8C3ECF2EE4A9F70089C6CF /* SharedAssets in Frameworks */,
+				7B8C3ECF2EE4A9F70089C6CF /* UIAssets in Frameworks */,
 				7B31C8F12ED0A7BF00FEEDF7 /* SettingsUI in Frameworks */,
 				74F5EF8C2A4B4352008D9413 /* ReadabilityModifier in Frameworks */,
 				AE5EFD73289DC1D000464FE1 /* CachedAsyncImage in Frameworks */,
@@ -511,7 +511,7 @@
 			);
 			name = SwiftLeedsWidgetExtension;
 			packageProductDependencies = (
-				7BE081532EE5BF13004BCD1F /* SharedAssets */,
+				7BE081532EE5BF13004BCD1F /* UIAssets */,
 				A11CE57000000000000000CF /* ScheduleFeature */,
 				A11CE57000000000000000E5 /* Dependencies */,
 				A11CE57000000000000000EB /* NetworkKit */,
@@ -542,7 +542,7 @@
 				74F5EF8B2A4B4352008D9413 /* ReadabilityModifier */,
 				7B31C8EA2ED0959000FEEDF7 /* DesignKit */,
 				7B31C8F02ED0A7BF00FEEDF7 /* SettingsUI */,
-				7B8C3ECE2EE4A9F70089C6CF /* SharedAssets */,
+				7B8C3ECE2EE4A9F70089C6CF /* UIAssets */,
 				A11CE57000000000000000C1 /* AuthenticationUI */,
 				A11CE57000000000000000C2 /* AuthenticationFeature */,
 				A11CE57000000000000000C5 /* LogKit */,
@@ -1467,13 +1467,13 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = SettingsUI;
 		};
-		7B8C3ECE2EE4A9F70089C6CF /* SharedAssets */ = {
+		7B8C3ECE2EE4A9F70089C6CF /* UIAssets */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = SharedAssets;
+			productName = UIAssets;
 		};
-		7BE081532EE5BF13004BCD1F /* SharedAssets */ = {
+		7BE081532EE5BF13004BCD1F /* UIAssets */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = SharedAssets;
+			productName = UIAssets;
 		};
 		A11CE57000000000000000C1 /* AuthenticationUI */ = {
 			isa = XCSwiftPackageProductDependency;

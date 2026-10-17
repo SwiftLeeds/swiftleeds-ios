@@ -21,7 +21,7 @@ let package = Package(
             name: "UIDesign",
             dependencies: [
                 .product(name: "SFSafeSymbols", package: "SFSafeSymbols"),
-                .product(name: "SharedAssets", package: "SwiftLeedsPackage"),
+                .product(name: "UIAssets", package: "SwiftLeedsPackage"),
             ],
         ),
         .testTarget(

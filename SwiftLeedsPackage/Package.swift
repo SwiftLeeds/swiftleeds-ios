@@ -16,7 +16,7 @@ let package = Package(
             ],
         ),
         .library(
-            name: "SharedAssets",
+            name: "UIAssets",
             targets: [
                 "UIAssets"
             ],
