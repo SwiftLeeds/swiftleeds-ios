@@ -64,11 +64,12 @@ import Testing
         #expect(recorder.events.first?.fields.map { String($0.name) } == ["first", "second", "third"])
     }
 
-    @Test func whenRecordingEvent_shouldCaptureCallSite() {
+    @Test func whenRecordingEvent_shouldCaptureCallSite() throws {
         let recorder = LogRecorder()
 
         recorder.log(.info, "push", "located")
 
-        #expect(recorder.events.first?.source.file.hasSuffix("LogWriteTests.swift") == true)
+        let event = try #require(recorder.events.first)
+        #expect(event.source.file.hasSuffix("LogWriteTests.swift"))
     }
 }

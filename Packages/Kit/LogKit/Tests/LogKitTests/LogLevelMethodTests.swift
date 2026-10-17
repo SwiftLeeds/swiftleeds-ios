@@ -38,12 +38,13 @@ import Testing
     }
 
     /// The literals must expand where the developer wrote the call, not inside the level method.
-    @Test func whenLogging_shouldCaptureTheCallSiteNotTheHelper() {
+    @Test func whenLogging_shouldCaptureTheCallSiteNotTheHelper() throws {
         let recorder = LogRecorder()
 
         recorder.log.error("located", in: "push")
 
-        #expect(recorder.events.first?.source.file.hasSuffix("LogLevelMethodTests.swift") == true)
+        let event = try #require(recorder.events.first)
+        #expect(event.source.file.hasSuffix("LogLevelMethodTests.swift"))
     }
 
     @Test func whenLevelIsBelowMinimum_shouldNotWrite() {
