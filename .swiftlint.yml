@@ -10,8 +10,9 @@
 # would need a sweep does not belong there: it needs a decision first.
 #
 # The third group, "rules that needed a sweep", holds rules that were decided
-# on and then fixed at every site. The config line and the fixes land in one
-# commit per rule, so `git log -S<rule>` shows what each rule changed.
+# on and then fixed at every site, or suppressed inline, with the reason, at a
+# site left as it is. The config line and the fixes land in one commit per
+# rule, so `git log -S<rule>` shows what each rule changed.
 #
 # Tuned against the SwiftLint version in .swiftlint-version, which CI installs
 # and the pre-commit hook checks against. Rule defaults change between versions,
@@ -128,16 +129,18 @@ opt_in_rules:
   - raw_value_for_camel_cased_codable_enum
   - static_operator
 
-  # Rules that needed a sweep. Each had 1 to 5 violations when it was turned on,
-  # 2026-10-15 and 2026-10-16.
+  # Rules that needed a sweep. Each had 1 to 11 violations when it was turned
+  # on, 2026-10-15 to 2026-10-17.
 
   # "Code reads like clean English." Each of these takes the shorter form Swift
   # offers: a comma for `&&`, `if let x` for `if let x = x`, a return after the
-  # `if` for an `else`, and `self` for a second name bound to it.
+  # `if` for an `else`, `self` for a second name bound to it, and no `self.` in
+  # a closure where Swift lets you leave it out.
   - prefer_condition_list
   - shorthand_optional_binding
   - superfluous_else
   - self_binding
+  - redundant_self
 
   # A number of four or more digits takes `_` between groups, so `3_200` is
   # read at a glance and `1000` is never mistaken for `10000`.
