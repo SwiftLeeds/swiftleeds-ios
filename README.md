@@ -53,6 +53,7 @@ npx skills experimental_install
 
 The first command restores the skills into `.agents/skills/`. The second links each one into `.claude/skills/`, where Claude Code looks. It never replaces anything that is already there.
 
+- The `simulator` agent needs the RocketSim app. Its skill ships inside the app, so it is not in `skills-lock.json`. Link it once per clone: `ln -s /Applications/RocketSim.app/Contents/Resources/Agent-Skill/rocketsim .claude/skills/rocketsim`
 - A session hook uses `jq`. Install it with `brew install jq`. Without it the hook stays quiet.
 - Do not run `swift build` or `swift test` inside a package. Each run writes its own `.build` folder with a full copy of every dependency. Use `.claude/scripts/package-test.sh <PackageName>` for tests, and pass `--scratch-path` for any other `swift` command. A hook denies a `swift` command at the start of a line that has no `--scratch-path`.
 - A new skill of your own needs its own `!` line in `.gitignore`. Everything else in `.claude/skills/` is ignored.

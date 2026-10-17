@@ -9,6 +9,7 @@
       "Bash(git --no-pager ls-files *)",
       "Bash(.claude/scripts/package-test.sh *)",
       "Bash(shasum *)",
+      "Bash(rocketsim *)",
       "Bash(python3 .claude/scripts/xcode-device.py *)",
       "Bash(.claude/scripts/link-skills.sh)",
       "Bash(.claude/scripts/link-skills.sh *)",
