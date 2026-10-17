@@ -64,6 +64,15 @@ extension Activity {
         image: nil,
         metadataURL: nil,
     )
+
+    static let atriumLunch = Activity(
+        id: UUID(),
+        title: "Lunch",
+        subtitle: nil,
+        description: "Served in the atrium from noon.",
+        image: nil,
+        metadataURL: nil,
+    )
 }
 
 extension Schedule.Event {
