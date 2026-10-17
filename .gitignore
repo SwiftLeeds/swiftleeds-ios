@@ -37,6 +37,23 @@ playground.xcworkspace
 .build-shared/
 *.DS_Store
 
+# Derived data from a local xcodebuild -derivedDataPath at the repository root
+dd/
+dd-*/
+
+# Claude Code
+#
+# Each person's own settings and worktrees stay local. Third-party skills install into
+# .agents/ and link into .claude/skills/ from skills-lock.json, so only this repo's own
+# skills are committed. A new skill folder needs its own ! line here.
+.claude/settings.local.json
+.claude/scripts/*.log
+.claude/worktrees/
+.agents/
+.claude/skills/*
+!.claude/skills/stacked-prs/
+!.claude/skills/driving-the-simulator/
+
 # CocoaPods
 #
 # We recommend against adding the Pods directory to your .gitignore. However
