@@ -33,7 +33,7 @@ import Testing
     @Test func whenCodeFallsOutsideRange_shouldNotMatchRangePattern() {
         let redirection: ClosedRange<HTTPStatusCode> = 300...399
 
-        #expect(redirection.contains(299) == false)
-        #expect(redirection.contains(400) == false)
+        #expect(!redirection.contains(299))
+        #expect(!redirection.contains(400))
     }
 }

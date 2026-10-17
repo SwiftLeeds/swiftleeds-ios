@@ -29,6 +29,6 @@ import Testing
     }
 
     @Test func whenConfigurationIsMade_shouldFailFastWithoutConnectivity() {
-        #expect(URLSessionConfiguration.api().waitsForConnectivity == false)
+        #expect(!URLSessionConfiguration.api().waitsForConnectivity)
     }
 }
