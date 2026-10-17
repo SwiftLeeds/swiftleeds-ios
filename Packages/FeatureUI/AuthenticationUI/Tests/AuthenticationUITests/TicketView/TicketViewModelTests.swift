@@ -13,7 +13,7 @@ import Testing
             sut.beginDisplaying()
 
             #expect(display.brightness == .brightest)
-            #expect(display.autoLockEnabled == false)
+            #expect(!display.autoLockEnabled)
         }
     }
 
@@ -27,7 +27,7 @@ import Testing
             sut.endDisplaying()
 
             #expect(display.brightness == 0.4)
-            #expect(display.autoLockEnabled == true)
+            #expect(display.autoLockEnabled)
         }
     }
 
@@ -69,7 +69,7 @@ import Testing
             sut.endDisplaying()
 
             #expect(display.brightness == 0.4)
-            #expect(display.autoLockEnabled == true)
+            #expect(display.autoLockEnabled)
         }
     }
 }
