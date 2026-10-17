@@ -27,10 +27,7 @@ package struct ActivityView: View {
                 foregroundImageURLs: foregroundImageURLs,
             )
 
-            let hasSubtitle = activity.subtitle?.isEmpty == false
-            let hasDescription = activity.description?.isEmpty == false
-
-            if hasSubtitle || hasDescription {
+            if hasText {
                 StackedTileView(
                     primaryText: activity.subtitle,
                     secondaryText: activity.description,
@@ -39,6 +36,13 @@ package struct ActivityView: View {
                 .padding(Padding.screen)
             }
         }
+    }
+
+    /// Whether the activity has a subtitle or a description to show.
+    private var hasText: Bool {
+        [activity.subtitle, activity.description]
+            .compactMap { $0 }
+            .contains { !$0.isEmpty }
     }
 
     private var foregroundImageURLs: [URL] {

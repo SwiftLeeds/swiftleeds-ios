@@ -37,7 +37,7 @@ package struct SpeakerView: View {
 
     private var content: some View {
         VStack(spacing: Padding.stackGap) {
-            if presentation.speakers.isEmpty == false {
+            if !presentation.speakers.isEmpty {
                 let imageURLs = presentation.speakers.compactMap { speaker in
                     speaker.profileImage.isEmpty ? nil : URL(string: speaker.profileImage)
                 }
@@ -68,7 +68,7 @@ package struct SpeakerView: View {
                     }
                 }
 
-                if showSlido, presentation.slidoURL?.isEmpty == false {
+                if showSlido, let slidoURL = presentation.slidoURL, !slidoURL.isEmpty {
                     CommonTileButton(
                         icon: "questionmark.bubble.fill",
                         primaryText: "Ask Questions Now",
@@ -92,7 +92,7 @@ package struct SpeakerView: View {
                     }
 
                     if let twitter = speaker.twitter,
-                        twitter.isEmpty == false,
+                        !twitter.isEmpty,
                         let twitterURL = URL(string: "https://twitter.com/\(twitter)")
                     {
                         CommonTileView(

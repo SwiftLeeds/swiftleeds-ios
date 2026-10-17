@@ -47,26 +47,26 @@ import Testing
 
     // MARK: - Hashed values
 
-    @Test func whenFieldIsHashed_shouldReceiveNoFragmentOfTheValue() {
+    @Test func whenFieldIsHashed_shouldReceiveNoFragmentOfTheValue() throws {
         let recorder = LogRecorder()
         let sut = Log.destination(salt: salt, write: recorder.log.write)
 
         sut.write(event(.hashed("email", "ada@example.com")))
 
-        let value = recorder.events.first?.fields.map(\.value).first?.rendered
-        #expect(value?.contains("ada") == false)
-        #expect(value?.contains("@") == false)
+        let rendered = try #require(recorder.events.first?.fields.map(\.value).first?.rendered)
+        #expect(!rendered.contains("ada"))
+        #expect(!rendered.contains("@"))
     }
 
-    @Test func whenFieldIsHashed_shouldReceiveSixteenHexadecimalCharacters() {
+    @Test func whenFieldIsHashed_shouldReceiveSixteenHexadecimalCharacters() throws {
         let recorder = LogRecorder()
         let sut = Log.destination(salt: salt, write: recorder.log.write)
 
         sut.write(event(.hashed("email", "ada@example.com")))
 
-        let value = recorder.events.first?.fields.map(\.value).first?.rendered
-        #expect(value?.count == 16)
-        #expect(value?.allSatisfy(\.isHexDigit) == true)
+        let rendered = try #require(recorder.events.first?.fields.map(\.value).first?.rendered)
+        #expect(rendered.count == 16)
+        #expect(rendered.allSatisfy { $0.isHexDigit })
     }
 
     /// Zero padding in the digest's hexadecimal is load-bearing: without it a byte below 16 renders

@@ -62,7 +62,7 @@ public struct FancyHeaderView: View {
 
     @ViewBuilder
     private var foregroundImages: some View {
-        if foregroundImageURLs.isEmpty == false {
+        if !foregroundImageURLs.isEmpty {
             HStack {
                 ForEach(foregroundImageURLs, id: \.self) { foregroundImageURL in
                     AsyncImage(url: foregroundImageURL) { phase in

@@ -9,5 +9,17 @@ import Testing
 
         assertScreenSnapshots(of: view)
     }
+
+    @Test func registration() {
+        let view = ActivityView(activity: .registration)
+
+        assertScreenSnapshots(of: view)
+    }
+
+    @Test func atriumLunch() {
+        let view = ActivityView(activity: .atriumLunch)
+
+        assertScreenSnapshots(of: view)
+    }
 }
 #endif

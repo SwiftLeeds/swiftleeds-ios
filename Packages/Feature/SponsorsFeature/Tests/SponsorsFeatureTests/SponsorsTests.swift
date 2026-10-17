@@ -41,6 +41,6 @@ import Testing
     }
 
     @Test func whenAnySponsor_shouldNotBeEmpty() {
-        #expect(Sponsors([.fixture()]).isEmpty == false)
+        #expect(!Sponsors([.fixture()]).isEmpty)
     }
 }

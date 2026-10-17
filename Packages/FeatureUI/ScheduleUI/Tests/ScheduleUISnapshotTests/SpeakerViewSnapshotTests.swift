@@ -17,6 +17,12 @@ import Testing
         assertScreenSnapshots(of: view)
     }
 
+    @Test func duringConferenceWithoutSlido() {
+        let view = SpeakerView(presentation: .twoSpeakers, showSlido: true)
+
+        assertScreenSnapshots(of: view)
+    }
+
     @Test func twoSpeakers() {
         let view = SpeakerView(presentation: .twoSpeakers, showSlido: false)
 

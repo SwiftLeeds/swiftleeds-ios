@@ -44,7 +44,7 @@ extension ScheduleView {
             } catch {
                 await spinnerMinimum.value
                 // Leaving the screen cancels this load, and the next appearance starts another.
-                guard Task.isCancelled == false else { return }
+                guard !Task.isCancelled else { return }
                 state = .failed(conference: currentEvent?.name, reason: error)
             }
         }

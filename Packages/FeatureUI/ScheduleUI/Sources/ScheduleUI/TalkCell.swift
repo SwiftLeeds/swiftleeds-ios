@@ -34,7 +34,7 @@ package struct TalkCell: View {
 
             HStack {
                 VStack(alignment: .leading, spacing: 8) {
-                    if speakers.isEmpty == false {
+                    if !speakers.isEmpty {
                         HStack {
                             VStack(alignment: .leading, spacing: 4) {
                                 Text(speakers.joinedNames)
@@ -114,7 +114,7 @@ package struct TalkCell: View {
 
     private var accessibilityLabel: String {
         [time, speakers.joinedNames, speakers.joinedOrganisations, details.noEmojis]
-            .filter { $0.isEmpty == false }
+            .filter { !$0.isEmpty }
             .joined(separator: ", ")
     }
 }

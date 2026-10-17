@@ -291,3 +291,20 @@ identifier_name:
     # HTTP spells these, and we do not get to rename them.
     - ok
     - te
+
+# "Never compare a `Bool` with `== true` or `== false`. Write `x` or `!x`."
+# SwiftLint has no built-in rule for this, so a regex holds it. Its fixes landed
+# before it, one commit per package: `git log --grep "test a Bool directly"`.
+custom_rules:
+  bool_literal_comparison:
+    name: "Bool Literal Comparison"
+    regex: '(==|!=)\s*(true|false)\b|\b(true|false)\s*(==|!=)'
+    excluded_match_kinds:
+      - comment
+      - comment.mark
+      - comment.url
+      - doccomment
+      - doccomment.field
+      - string
+    message: "Test a Bool directly: write `x` or `!x`. On an optional chain, unwrap first: `if let text, !text.isEmpty`."
+    severity: warning
