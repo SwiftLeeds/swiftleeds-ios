@@ -17,7 +17,7 @@ import Testing
         }
 
         let url = try #require(await recorder.requests.first?.url?.absoluteString)
-        #expect(url.contains("event=") == false)
+        #expect(!url.contains("event="))
     }
 
     @Test func whenAnEventIsGiven_shouldSendItsIdAsAQueryItem() async throws {

@@ -37,7 +37,7 @@ public struct Schedule: Codable, Sendable {
 
         /// Creates a payload, refusing one that carries no days.
         public init(event: Event, events: [Event], days: [Day]) throws(ParsingError) {
-            guard days.isEmpty == false else { throw .noDays }
+            guard !days.isEmpty else { throw .noDays }
 
             self.event = event
             self.events = events
