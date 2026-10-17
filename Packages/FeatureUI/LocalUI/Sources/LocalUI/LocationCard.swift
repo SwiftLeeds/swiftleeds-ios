@@ -1,7 +1,7 @@
 #if canImport(UIKit)
 import Foundation
-import SharedAssets
 import SwiftUI
+import UIAssets
 import UIKit
 
 /// A card naming a place, with a link to its website when it has one.

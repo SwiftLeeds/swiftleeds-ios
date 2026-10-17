@@ -1,7 +1,7 @@
 #if canImport(UIKit)
 import DesignKit
-import SharedAssets
 import SwiftUI
+import UIAssets
 
 /// A small tile with a symbol and a short title that runs an action when tapped.
 package struct CompactActionItem: View {

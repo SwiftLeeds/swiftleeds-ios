@@ -1,7 +1,7 @@
 #if os(iOS)
 import LocalUI
-import SharedAssets
 import Testing
+import UIAssets
 
 @MainActor
 @Suite struct LocalCellSnapshotTests {

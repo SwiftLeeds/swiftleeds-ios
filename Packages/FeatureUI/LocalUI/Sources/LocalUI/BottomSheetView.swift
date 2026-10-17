@@ -3,8 +3,8 @@ import DesignKit
 import Foundation
 import LocalFeature
 import ReadabilityModifier
-import SharedAssets
 import SwiftUI
+import UIAssets
 
 /// The sheet that lists the categories and marks the selected one. Drag it to open or close it.
 package struct BottomSheetView: View {

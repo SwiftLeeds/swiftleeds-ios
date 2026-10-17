@@ -2,8 +2,8 @@
 import DesignKit
 import Foundation
 import ReadabilityModifier
-import SharedAssets
 import SwiftUI
+import UIAssets
 import UIComponents
 import UIKit
 

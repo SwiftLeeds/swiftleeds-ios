@@ -1,8 +1,8 @@
 #if os(iOS)
 import DesignKit
-import SharedAssets
 import SnapshotTesting
 import SwiftUI
+import UIAssets
 import UIKit
 
 private let colorSchemes: [(name: String, style: UIUserInterfaceStyle)] = [

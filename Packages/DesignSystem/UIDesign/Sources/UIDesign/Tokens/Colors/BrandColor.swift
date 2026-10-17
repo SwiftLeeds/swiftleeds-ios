@@ -1,5 +1,5 @@
-import SharedAssets
 import SwiftUI
+import UIAssets
 
 /// The conference's own colors.
 ///

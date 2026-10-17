@@ -1,8 +1,8 @@
 import DesignKit
 import Foundation
-import SharedAssets
 import SponsorsFeature
 import SwiftUI
+import UIAssets
 import UIComponents
 
 #if os(iOS)

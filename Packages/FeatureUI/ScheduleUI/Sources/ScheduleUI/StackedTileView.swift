@@ -1,6 +1,6 @@
 import DesignKit
-import SharedAssets
 import SwiftUI
+import UIAssets
 
 /// Used when there's lots of content to display.
 package struct StackedTileView<BackgroundType: ShapeStyle>: View {
