@@ -167,6 +167,10 @@ opt_in_rules:
   # reader of `x ?? .none` cannot tell which is meant. Name it for what it is.
   - discouraged_none_name
 
+  # The formatter neither adds nor removes a blank line around a `let` or
+  # `var`, so this rule can own it without the two tools disagreeing.
+  - let_var_whitespace
+
 # Analyzer rules read the compiler log, so they run only through
 # `swiftlint analyze`, never `swiftlint lint`.
 analyzer_rules:
@@ -211,10 +215,11 @@ unused_import:
         - ConcurrencyExtras
 
 disabled_rules:
-  # `swift format` owns layout, so a SwiftLint rule about where a character goes
-  # is either a contradiction or a duplicate. Both are off. Several below are
-  # opt-in rules that were never enabled; they are listed so nobody turns them on
-  # and re-derives why they do not work here.
+  # `swift format` owns layout. A SwiftLint rule about where a character goes is
+  # off when the formatter contradicts it or duplicates it. A rule the formatter
+  # has no opinion on, such as `let_var_whitespace`, can be on. Several below
+  # are opt-in rules that were never enabled; they are listed so nobody turns
+  # them on and re-derives why they do not work here.
   #
   # Contradictions. The formatter writes what the rule forbids, so fixing the
   # violations by hand would be undone by the next format run.
@@ -229,8 +234,11 @@ disabled_rules:
   # multi-line condition.
   # `extension_access_modifier`: it wants the access level hoisted onto the
   # extension declaration, and the formatter moves it onto each member instead.
-  # The three `multiline_*` rules: each wants one argument per line, and
+  # `multiline_arguments`, `multiline_arguments_brackets` and
+  # `multiline_call_arguments`: each wants one argument per line, and
   # `.swift-format` keeps the formatter's fill wrapping.
+  # `multiline_function_chains`: when a chain is too long, the formatter wraps
+  # one call's arguments, so the chain carries on after the closing bracket.
   - trailing_comma
   - sorted_imports
   - opening_brace
@@ -238,16 +246,24 @@ disabled_rules:
   - multiline_arguments
   - multiline_arguments_brackets
   - multiline_call_arguments
+  - multiline_function_chains
   #
-  # Duplicates. The formatter already enforces these and its own check gates
-  # every pull request, so a second gate could only ever disagree with the first.
+  # Duplicates. The formatter already enforces these, and its own check gates
+  # every pull request, so a second gate on the same lines adds nothing.
   #
   # `indentation_width`: the pretty-printer owns indentation. This rule also
   # reads indentation inside `"""` literals, which here is JSON fixture data.
   # `no_extension_access_modifier`: the formatter's
   # `NoAccessLevelOnExtensionDeclaration` is on and does the same thing.
+  # `vertical_whitespace_opening_braces` and
+  # `vertical_whitespace_closing_braces`: the formatter's
+  # `NoEmptyLinesOpeningClosingBraces` removes a blank line after `{` and before
+  # `}`. These rules also check `(` and `[`, which nothing else checks. That is
+  # a choice: no kind of line has two owners.
   - indentation_width
   - no_extension_access_modifier
+  - vertical_whitespace_opening_braces
+  - vertical_whitespace_closing_braces
 
 # `.swift-format` sets `lineLength` to this number. Pin it here rather than
 # inheriting SwiftLint's default, so a version bump cannot move one tool's limit

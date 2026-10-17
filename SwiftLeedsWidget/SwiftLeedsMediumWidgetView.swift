@@ -5,7 +5,6 @@ import SwiftUI
 import WidgetKit
 
 struct SwiftLeedsMediumWidgetView: View {
-
     // MARK: - Pivate Properties
 
     private let slot: Schedule.Slot
