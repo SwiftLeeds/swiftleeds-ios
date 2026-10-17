@@ -10,8 +10,9 @@
 # would need a sweep does not belong there: it needs a decision first.
 #
 # The third group, "rules that needed a sweep", holds rules that were decided
-# on and then fixed at every site. The config line and the fixes land in one
-# commit per rule, so `git log -S<rule>` shows what each rule changed.
+# on and then fixed at every site, or suppressed inline, with the reason, at a
+# site left as it is. The config line and the fixes land in one commit per
+# rule, so `git log -S<rule>` shows what each rule changed.
 #
 # Tuned against the SwiftLint version in .swiftlint-version, which CI installs
 # and the pre-commit hook checks against. Rule defaults change between versions,
