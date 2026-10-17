@@ -1,7 +1,7 @@
 #if os(iOS)
-import SharedAssets
 import SwiftUI
 import Testing
+import UIAssets
 import UIComponents
 
 @MainActor

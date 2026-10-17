@@ -1,8 +1,8 @@
 #if os(iOS)
 import DesignKit
-import SharedAssets
 import SnapshotTesting
 import SwiftUI
+import UIAssets
 
 // The About screen's content width on an iPhone: the screen less its horizontal padding.
 private let contentWidth: CGFloat = 390 - Padding.screen * 2

@@ -2,8 +2,8 @@
 import DesignKit
 import Foundation
 import ScheduleFeature
-import SharedAssets
 import SwiftUI
+import UIAssets
 import UIComponents
 
 package struct SpeakerView: View {

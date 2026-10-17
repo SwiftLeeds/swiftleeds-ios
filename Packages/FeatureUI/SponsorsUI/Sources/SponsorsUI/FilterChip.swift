@@ -1,5 +1,5 @@
-import SharedAssets
 import SwiftUI
+import UIAssets
 
 struct FilterChip: View {
     let title: String

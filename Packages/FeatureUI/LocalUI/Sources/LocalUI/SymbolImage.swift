@@ -6,7 +6,7 @@ import UIKit
 ///
 /// Falls back to an asset catalog image of the same name. That lookup checks
 /// only the main bundle, so a symbol shipped in a package's own resource
-/// bundle, such as SharedAssets, is not found this way.
+/// bundle, such as UIAssets, is not found this way.
 ///
 /// - Parameter name: The SF Symbol, or asset catalog image, name.
 func symbolImage(named name: String) -> Image {

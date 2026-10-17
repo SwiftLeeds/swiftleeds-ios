@@ -1,7 +1,7 @@
 #if canImport(UIKit)
 import DesignKit
-import SharedAssets
 import SwiftUI
+import UIAssets
 import UIKit
 
 package struct LocalCell: View {

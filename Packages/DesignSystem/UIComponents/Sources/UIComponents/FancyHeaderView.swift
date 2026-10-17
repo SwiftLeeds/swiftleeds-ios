@@ -1,7 +1,7 @@
 import DesignKit
 import Foundation
-import SharedAssets
 import SwiftUI
+import UIAssets
 
 /// A screen header: a venue photograph, images overlapping its lower edge, and a title.
 public struct FancyHeaderView: View {

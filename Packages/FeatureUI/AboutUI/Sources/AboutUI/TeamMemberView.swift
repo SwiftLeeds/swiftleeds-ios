@@ -3,8 +3,8 @@ import AboutFeature
 import CachedAsyncImage
 import DesignKit
 import Foundation
-import SharedAssets
 import SwiftUI
+import UIAssets
 import UIKit
 
 /// A card for one team member: photo, name, role and links.

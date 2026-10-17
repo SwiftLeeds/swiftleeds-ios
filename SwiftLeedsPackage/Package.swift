@@ -18,7 +18,7 @@ let package = Package(
         .library(
             name: "SharedAssets",
             targets: [
-                "SharedAssets"
+                "UIAssets"
             ],
         ),
     ],
@@ -30,7 +30,7 @@ let package = Package(
             name: "DesignKit"
         ),
         .target(
-            name: "SharedAssets",
+            name: "UIAssets",
             // SwiftGen's generated code reads Bundle.module, which SwiftPM
             // synthesises only for a target that declares resources.
             resources: [
