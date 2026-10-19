@@ -1,10 +1,10 @@
 #if canImport(UIKit)
 import AboutFeature
 import CachedAsyncImage
-import DesignKit
 import Foundation
 import SwiftUI
 import UIAssets
+import UIComponents
 import UIKit
 
 /// A card for one team member: photo, name, role and links.

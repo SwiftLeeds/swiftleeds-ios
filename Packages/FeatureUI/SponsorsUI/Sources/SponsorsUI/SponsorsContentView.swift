@@ -1,4 +1,3 @@
-import DesignKit
 import Foundation
 import SponsorsFeature
 import SwiftUI

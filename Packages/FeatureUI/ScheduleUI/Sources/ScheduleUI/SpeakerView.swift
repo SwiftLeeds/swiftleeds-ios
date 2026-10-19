@@ -1,5 +1,4 @@
 #if canImport(UIKit)
-import DesignKit
 import Foundation
 import ScheduleFeature
 import SwiftUI

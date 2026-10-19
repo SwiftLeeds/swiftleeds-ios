@@ -1,7 +1,7 @@
 #if canImport(UIKit)
-import DesignKit
 import ScheduleFeature
 import SwiftUI
+import UIComponents
 
 package struct DayView: View {
     private let slots: [Schedule.Slot]

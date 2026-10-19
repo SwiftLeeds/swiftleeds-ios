@@ -1,10 +1,10 @@
 #if os(iOS)
-import DesignKit
 import Foundation
 import LocalFeature
 import LocalUI
 import SwiftUI
 import Testing
+import UIComponents
 
 @MainActor
 @Suite struct BottomSheetViewSnapshotTests {

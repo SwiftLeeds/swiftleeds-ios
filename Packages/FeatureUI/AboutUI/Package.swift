@@ -30,7 +30,6 @@ let package = Package(
                 .product(name: "AboutFeature", package: "AboutFeature"),
                 .product(name: "CachedAsyncImage", package: "swiftui-cached-async-image"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
-                .product(name: "DesignKit", package: "SwiftLeedsPackage"),
                 .product(name: "NetworkKit", package: "NetworkKit"),
                 // ReadabilityModifier declares iOS only, so it fails to build for
                 // macOS. Every view is inside `#if canImport(UIKit)`.
@@ -58,9 +57,9 @@ let package = Package(
                 "AboutUI",
                 .product(name: "AboutFeature", package: "AboutFeature"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
-                .product(name: "DesignKit", package: "SwiftLeedsPackage"),
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
                 .product(name: "UIAssets", package: "SwiftLeedsPackage"),
+                .product(name: "UIComponents", package: "UIComponents"),
             ],
         ),
     ],
