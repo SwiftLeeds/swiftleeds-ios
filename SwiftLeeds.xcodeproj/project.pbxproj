@@ -32,7 +32,6 @@
 		74F5EF8C2A4B4352008D9413 /* ReadabilityModifier in Frameworks */ = {isa = PBXBuildFile; productRef = 74F5EF8B2A4B4352008D9413 /* ReadabilityModifier */; };
 		7640E1784CFF7D166DA3E292 /* SwiftLeedsAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EEFB1E37D5A542A1798C92D5 /* SwiftLeedsAssets.xcassets */; };
 		79E3CB724EF853948BC7D906 /* ConferenceConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67624B7470D6BA62D4912236 /* ConferenceConfig.swift */; };
-		7B31C8EB2ED0959000FEEDF7 /* DesignKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7B31C8EA2ED0959000FEEDF7 /* DesignKit */; };
 		7B31C8F12ED0A7BF00FEEDF7 /* SettingsUI in Frameworks */ = {isa = PBXBuildFile; productRef = 7B31C8F02ED0A7BF00FEEDF7 /* SettingsUI */; };
 		7B8C3ECF2EE4A9F70089C6CF /* UIAssets in Frameworks */ = {isa = PBXBuildFile; productRef = 7B8C3ECE2EE4A9F70089C6CF /* UIAssets */; };
 		7BE081542EE5BF13004BCD1F /* UIAssets in Frameworks */ = {isa = PBXBuildFile; productRef = 7BE081532EE5BF13004BCD1F /* UIAssets */; };
@@ -223,7 +222,6 @@
 				7B31C8F12ED0A7BF00FEEDF7 /* SettingsUI in Frameworks */,
 				74F5EF8C2A4B4352008D9413 /* ReadabilityModifier in Frameworks */,
 				AE5EFD73289DC1D000464FE1 /* CachedAsyncImage in Frameworks */,
-				7B31C8EB2ED0959000FEEDF7 /* DesignKit in Frameworks */,
 				A11CE57000000000000000D1 /* AuthenticationUI in Frameworks */,
 				A11CE57000000000000000D2 /* AuthenticationFeature in Frameworks */,
 				A11CE57000000000000000D5 /* LogKit in Frameworks */,
@@ -540,7 +538,6 @@
 			packageProductDependencies = (
 				AE5EFD72289DC1D000464FE1 /* CachedAsyncImage */,
 				74F5EF8B2A4B4352008D9413 /* ReadabilityModifier */,
-				7B31C8EA2ED0959000FEEDF7 /* DesignKit */,
 				7B31C8F02ED0A7BF00FEEDF7 /* SettingsUI */,
 				7B8C3ECE2EE4A9F70089C6CF /* UIAssets */,
 				A11CE57000000000000000C1 /* AuthenticationUI */,
@@ -1458,10 +1455,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 74F5EF8A2A4B4352008D9413 /* XCRemoteSwiftPackageReference "ReadabilityModifier" */;
 			productName = ReadabilityModifier;
-		};
-		7B31C8EA2ED0959000FEEDF7 /* DesignKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = DesignKit;
 		};
 		7B31C8F02ED0A7BF00FEEDF7 /* SettingsUI */ = {
 			isa = XCSwiftPackageProductDependency;
