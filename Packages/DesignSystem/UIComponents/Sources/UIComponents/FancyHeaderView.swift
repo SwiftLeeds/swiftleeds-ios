@@ -1,4 +1,3 @@
-@_exported import DesignKit
 import Foundation
 import SwiftUI
 import UIAssets
