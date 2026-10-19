@@ -66,7 +66,8 @@ import Testing
 
         let rendered = try #require(recorder.events.first?.fields.map(\.value).first?.rendered)
         #expect(rendered.count == 16)
-        #expect(rendered.allSatisfy { $0.isHexDigit })
+        let isHexadecimal = rendered.allSatisfy(\.isHexDigit)
+        #expect(isHexadecimal, "rendered: \(rendered)")
     }
 
     /// Zero padding in the digest's hexadecimal is load-bearing: without it a byte below 16 renders

@@ -28,12 +28,12 @@ public struct Speaker: Codable, Identifiable, Sendable {
 // MARK: - Formatting helpers
 extension Array where Element == Speaker {
     public var joinedNames: String {
-        ListFormatter.localizedString(byJoining: self.map { $0.name })
+        ListFormatter.localizedString(byJoining: map(\.name))
     }
 
     public var joinedOrganisations: String {
         var seen: Set<String> = []
-        let organisations = self.map { $0.organisation }.filter { seen.insert($0).inserted }
+        let organisations = map(\.organisation).filter { seen.insert($0).inserted }
         return ListFormatter.localizedString(byJoining: organisations)
     }
 }

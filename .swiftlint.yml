@@ -130,7 +130,7 @@ opt_in_rules:
   - static_operator
 
   # Rules that needed a sweep. Each had 1 to 11 violations when it was turned
-  # on, 2026-10-15 to 2026-10-17.
+  # on, 2026-10-15 to 2026-10-19.
 
   # "Code reads like clean English." Each of these takes the shorter form Swift
   # offers: a comma for `&&`, `if let x` for `if let x = x`, a return after the
@@ -173,6 +173,10 @@ opt_in_rules:
   # The formatter neither adds nor removes a blank line around a `let` or
   # `var`, so this rule can own it without the two tools disagreeing.
   - let_var_whitespace
+
+  # "Favour functional style." A closure that only reads a property is
+  # written as the key path to it: `map(\.name)`, not `map { $0.name }`.
+  - prefer_key_path
 
 # Analyzer rules read the compiler log, so they run only through
 # `swiftlint analyze`, never `swiftlint lint`.
@@ -272,6 +276,11 @@ disabled_rules:
 # inheriting SwiftLint's default, so a version bump cannot move one tool's limit
 # without the other. `--strict` is what makes the warning threshold a gate.
 line_length: 120
+
+# "Stop short of point-free cleverness." An identity closure such as
+# `compactMap { $0 }` stays a closure; `\.self` would be the clever form.
+prefer_key_path:
+  ignore_identity_closures: true
 
 # A view model nests under its view, and its own `Phase` and `Alert` enums nest
 # under that. The default of one level rejects the house pattern.
