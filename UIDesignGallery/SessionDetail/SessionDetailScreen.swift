@@ -20,10 +20,6 @@ struct SessionDetailScreen: View {
     /// Apple's list margin.
     private static let padMargin: CGFloat = 20
 
-    /// The shortest a speaker's nameplate stands, so it is a comfortable tap
-    /// target.
-    private static let minimumTapHeight: CGFloat = 44
-
     /// The session this screen describes.
     let session: SampleSession
 
@@ -138,77 +134,18 @@ extension SessionDetailScreen {
         UIDevice.current.userInterfaceIdiom == .pad ? Self.padMargin : Self.phoneMargin
     }
 
-    /// The speakers, then the About text, at the page margin.
+    /// The About text, then the speakers, at the page margin.
     private var below: some View {
         VStack(alignment: .leading, spacing: .xLarge) {
-            speakers
-
             aboutCard
                 .frame(maxWidth: Self.readableWidth, alignment: .leading)
+
+            SpeakerRows(speakers: session.speakers, showSpeaker: showSpeaker)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.horizontal, margin)
         .padding(.top, .large)
         .padding(.bottom, .large)
-    }
-}
-
-// MARK: - Speakers
-
-extension SessionDetailScreen {
-    /// The speakers, one nameplate under another.
-    private var speakers: some View {
-        VStack(alignment: .leading, spacing: .medium) {
-            ForEach(session.speakers) { speaker in
-                speakerButton(speaker)
-            }
-        }
-    }
-
-    /// A button that shows the speaker's page, drawn as the speaker's
-    /// nameplate.
-    ///
-    /// The nameplate's style fixes the title's font, so the font sits on the
-    /// title's own text, which the style cannot override.
-    ///
-    /// - Parameter speaker: The speaker the nameplate names.
-    private func speakerButton(_ speaker: SamplePerson) -> some View {
-        Button {
-            showSpeaker(speaker)
-        } label: {
-            Nameplate {
-                Text(speaker.name).font(.subheadline)
-            } detail: {
-                EmptyView()
-            } icon: {
-                avatar(for: speaker)
-            }
-            .multilineTextAlignment(.leading)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .frame(minHeight: Self.minimumTapHeight)
-            .contentShape(.rect)
-        }
-        .buttonStyle(.borderless)
-        .frame(maxWidth: .infinity, alignment: .leading)
-    }
-
-    /// A speaker's initials on a small disc with an edge.
-    ///
-    /// - Parameter speaker: The speaker the avatar names.
-    private func avatar(for speaker: SamplePerson) -> some View {
-        // The initials disc is the row's own color, so it takes an edge to be
-        // seen, as the person page's avatar does.
-        Avatar(
-            url: nil,
-            size: .small,
-            fallback: .initials(speaker.nameComponents),
-        )
-        .overlay {
-            Circle().strokeBorder(
-                .borderPrimary,
-                lineWidth: CGFloat(BorderWidth.thin),
-            )
-        }
     }
 }
 

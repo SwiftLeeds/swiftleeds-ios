@@ -46,6 +46,9 @@
 		7CA11E000000000000000914 /* SessionKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000913 /* SessionKind.swift */; };
 		7CA11E000000000000000916 /* KindArtwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000915 /* KindArtwork.swift */; };
 		7CA11E000000000000000918 /* SessionHero.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000917 /* SessionHero.swift */; };
+		7CA11E00000000000000091A /* SpeakerRows.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000919 /* SpeakerRows.swift */; };
+		7CA11E00000000000000091C /* EqualColumns.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E00000000000000091B /* EqualColumns.swift */; };
+		7CA11E00000000000000091E /* QuietInitials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E00000000000000091D /* QuietInitials.swift */; };
 		7CA11E000000000000000206 /* ScheduleScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000106 /* ScheduleScreen.swift */; };
 		7CA11E000000000000000207 /* SessionDetailScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000107 /* SessionDetailScreen.swift */; };
 		7CA11E000000000000000209 /* SampleSponsor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000109 /* SampleSponsor.swift */; };
@@ -284,6 +287,9 @@
 		7CA11E000000000000000913 /* SessionKind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionKind.swift; sourceTree = "<group>"; };
 		7CA11E000000000000000915 /* KindArtwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KindArtwork.swift; sourceTree = "<group>"; };
 		7CA11E000000000000000917 /* SessionHero.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionHero.swift; sourceTree = "<group>"; };
+		7CA11E000000000000000919 /* SpeakerRows.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakerRows.swift; sourceTree = "<group>"; };
+		7CA11E00000000000000091B /* EqualColumns.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EqualColumns.swift; sourceTree = "<group>"; };
+		7CA11E00000000000000091D /* QuietInitials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuietInitials.swift; sourceTree = "<group>"; };
 		7CA11E000000000000000106 /* ScheduleScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleScreen.swift; sourceTree = "<group>"; };
 		7CA11E000000000000000107 /* SessionDetailScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionDetailScreen.swift; sourceTree = "<group>"; };
 		7CA11E000000000000000109 /* SampleSponsor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleSponsor.swift; sourceTree = "<group>"; };
@@ -709,6 +715,9 @@
 				7CA11E000000000000000107 /* SessionDetailScreen.swift */,
 				7CA11E000000000000000915 /* KindArtwork.swift */,
 				7CA11E000000000000000917 /* SessionHero.swift */,
+				7CA11E000000000000000919 /* SpeakerRows.swift */,
+				7CA11E00000000000000091B /* EqualColumns.swift */,
+				7CA11E00000000000000091D /* QuietInitials.swift */,
 			);
 			path = SessionDetail;
 			sourceTree = "<group>";
@@ -1132,6 +1141,9 @@
 				7CA11E000000000000000914 /* SessionKind.swift in Sources */,
 				7CA11E000000000000000916 /* KindArtwork.swift in Sources */,
 				7CA11E000000000000000918 /* SessionHero.swift in Sources */,
+				7CA11E00000000000000091A /* SpeakerRows.swift in Sources */,
+				7CA11E00000000000000091C /* EqualColumns.swift in Sources */,
+				7CA11E00000000000000091E /* QuietInitials.swift in Sources */,
 				7CA11E000000000000000206 /* ScheduleScreen.swift in Sources */,
 				7CA11E000000000000000207 /* SessionDetailScreen.swift in Sources */,
 				7CA11E000000000000000209 /* SampleSponsor.swift in Sources */,
