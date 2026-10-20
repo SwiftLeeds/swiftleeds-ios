@@ -21,9 +21,10 @@ import UIDesign
 /// it with the person already a favourite, `-bio expanded` opens it with the
 /// bio in full, `-summary expanded` opens a session detail with its summary
 /// in full, `-detail accessibility` pushes the two-speaker workshop's
-/// detail, `-detail dropin` pushes the drop-in session's detail, and
-/// `-halos role`, `-halos pink` or `-halos gold` shows every halo treatment at
-/// once, in those colors, instead of the app.
+/// detail, `-detail dropin` pushes the drop-in session's detail, `-sidebar 1`
+/// shows the tabs as a sidebar on a regular width, and `-halos role`,
+/// `-halos pink` or `-halos gold` shows every halo treatment at once, in those
+/// colors, instead of the app.
 @main
 struct UIDesignGalleryApp: App {
     /// The destination on screen.
@@ -50,6 +51,9 @@ struct UIDesignGalleryApp: App {
     /// Whether a session detail opens with its summary in full.
     private let opensSummaryExpanded: Bool
 
+    /// Whether the tab bar adapts into a sidebar on a regular width.
+    private let usesSidebar: Bool
+
     /// The standing whose colors the halo treatments draw, or `nil` when the
     /// gallery shows the app instead of the treatments.
     private let comparedHalo: ConferenceRole?
@@ -66,6 +70,7 @@ struct UIDesignGalleryApp: App {
         opensFavorite = defaults.bool(forKey: "favorite")
         opensBioExpanded = defaults.string(forKey: "bio") == "expanded"
         opensSummaryExpanded = defaults.string(forKey: "summary") == "expanded"
+        usesSidebar = defaults.bool(forKey: "sidebar")
         switch defaults.string(forKey: "halos") {
         case "pink":
             comparedHalo = HaloComparison.brandPink
@@ -120,8 +125,20 @@ struct UIDesignGalleryApp: App {
         }
     }
 
-    /// The gallery's own screens, under the system's tab bar.
+    /// The gallery's own screens, in a sidebar when the launch argument asks.
+    @ViewBuilder
     private var app: some View {
+        if usesSidebar {
+            tabs
+                .tabViewStyle(.sidebarAdaptable)
+                .defaultAdaptableTabBarPlacement(.sidebar)
+        } else {
+            tabs
+        }
+    }
+
+    /// The gallery's own screens, under the system's tab bar.
+    private var tabs: some View {
         TabView(selection: $tab) {
             Tab(
                 GalleryTab.schedule.title,
