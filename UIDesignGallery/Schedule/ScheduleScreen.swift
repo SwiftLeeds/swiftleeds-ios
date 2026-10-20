@@ -54,6 +54,9 @@ struct ScheduleScreen: View {
     /// These are display text, for the reason `SampleSession` gives.
     private static let conferences = ["SwiftLeeds 2026", "SwiftLeeds 2025", "SwiftLeeds 2024"]
 
+    /// The kinds of session the filter menu lists, in the order it lists them.
+    private static let listedKinds: [SessionKind] = [.talk, .lightningTalk, .workshop]
+
     /// The screen the schedule opens with already pushed, if any.
     let opensWith: ScheduleDestination?
 
@@ -98,7 +101,7 @@ struct ScheduleScreen: View {
     @State private var order: Order = .time
 
     /// The kinds of session the schedule includes.
-    @State private var includedKinds: Set<String> = ["Talk", "Lightning", "Workshop"]
+    @State private var includedKinds = Set(ScheduleScreen.listedKinds)
 
     var body: some View {
         NavigationStack(path: $path) {
@@ -293,7 +296,7 @@ struct ScheduleScreen: View {
     }
 
     /// Every kind of session, which is what no filter means.
-    private static let everyKind: Set<String> = ["Talk", "Lightning", "Workshop"]
+    private static let everyKind = Set(listedKinds)
 
     /// Whether the schedule is showing less than everything.
     private var isFiltered: Bool {
@@ -311,7 +314,7 @@ struct ScheduleScreen: View {
 
     /// The sessions this day, once the filter and the order have been applied.
     private var sessions: [SampleSession] {
-        let kept = SampleSession.dayOne.filter { includedKinds.contains($0.kind ?? "Talk") }
+        let kept = SampleSession.dayOne.filter { includedKinds.contains($0.kind) }
         switch order {
         case .time: return kept
         case .title: return kept.sorted { $0.title < $1.title }
@@ -330,8 +333,8 @@ struct ScheduleScreen: View {
             }
 
             Section("Kind") {
-                ForEach(["Talk", "Lightning", "Workshop"], id: \.self) { kind in
-                    Toggle(kind, isOn: binding(for: kind))
+                ForEach(Self.listedKinds, id: \.self) { kind in
+                    Toggle(kind.displayName, isOn: binding(for: kind))
                 }
             }
         } label: {
@@ -343,7 +346,7 @@ struct ScheduleScreen: View {
     /// Returns whether the schedule includes a kind of session.
     ///
     /// - Parameter kind: The kind of session to include or leave out.
-    private func binding(for kind: String) -> Binding<Bool> {
+    private func binding(for kind: SessionKind) -> Binding<Bool> {
         Binding(
             get: { includedKinds.contains(kind) },
             set: { isOn in

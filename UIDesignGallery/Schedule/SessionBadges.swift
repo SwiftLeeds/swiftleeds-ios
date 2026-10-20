@@ -1,7 +1,7 @@
 import SwiftUI
 import UIDesign
 
-/// A view that shows when a session starts and what kind it is, if known.
+/// A view that shows when a session starts and what kind it is, unless it is a talk.
 struct SessionBadges: View {
     /// The session the badges describe.
     let session: SampleSession
@@ -12,8 +12,8 @@ struct SessionBadges: View {
                 MockBadge(text: startsIn, tint: .success)
             }
 
-            if let kind = session.kind {
-                MockNeutralBadge(text: kind)
+            if session.kind != .talk {
+                MockNeutralBadge(text: session.kind.displayName)
             }
         }
     }

@@ -30,8 +30,8 @@ struct SampleSession: Identifiable, Equatable, Hashable, Sendable {
     /// Who gives the session, in the order the screen lists them.
     let speakers: [SamplePerson]
 
-    /// What kind of session it is, or `nil` for an ordinary talk.
-    let kind: String?
+    /// What kind of session it is.
+    let kind: SessionKind
 
     /// How long until the session starts, or `nil` once it is not imminent.
     let startsIn: String?
@@ -97,7 +97,7 @@ extension SampleSession {
         room: "Main Hall",
         title: "Building a design system that survives its second year",
         speakers: [.dana],
-        kind: nil,
+        kind: .talk,
         startsIn: "in 12 min",
         isFavorite: true,
         summary: """
@@ -106,7 +106,7 @@ extension SampleSession {
             """,
     )
 
-    /// A lightning talk, which shows the neutral kind badge.
+    /// A lightning talk.
     static let concurrency = SampleSession(
         id: "concurrency",
         conference: "SwiftLeeds 2026",
@@ -116,13 +116,13 @@ extension SampleSession {
         room: "Main Hall",
         title: "Swift concurrency, one year on",
         speakers: [.blake],
-        kind: "Lightning",
+        kind: .lightningTalk,
         startsIn: nil,
         isFavorite: false,
         summary: "What changed once the compiler started checking the hard part.",
     )
 
-    /// A workshop with two speakers, which shows a longer kind badge.
+    /// A workshop with two speakers.
     static let accessibility = SampleSession(
         id: "accessibility",
         conference: "SwiftLeeds 2026",
@@ -132,7 +132,7 @@ extension SampleSession {
         room: "Studio",
         title: "Accessibility beyond VoiceOver",
         speakers: [.casey, .fay],
-        kind: "Workshop",
+        kind: .workshop,
         startsIn: nil,
         isFavorite: false,
         summary: """
@@ -155,7 +155,7 @@ extension SampleSession {
         room: "Main Hall",
         title: "Testing the untestable",
         speakers: [.dana],
-        kind: nil,
+        kind: .talk,
         startsIn: nil,
         isFavorite: false,
         summary: "Putting a test around the code everyone is afraid to touch.",

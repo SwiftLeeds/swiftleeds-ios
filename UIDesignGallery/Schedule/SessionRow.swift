@@ -39,8 +39,8 @@ struct SessionRow: View {
 
                 Spacer(minLength: 0)
 
-                if let kind = session.kind {
-                    MockNeutralBadge(text: kind)
+                if session.kind != .talk {
+                    MockNeutralBadge(text: session.kind.displayName)
                 }
             }
         }
