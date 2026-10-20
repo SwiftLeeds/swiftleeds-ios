@@ -21,8 +21,9 @@ import UIDesign
 /// it with the person already a favourite, `-bio expanded` opens it with the
 /// bio in full, `-summary expanded` opens a session detail with its summary
 /// in full, `-detail accessibility` pushes the two-speaker workshop's
-/// detail, and `-halos role`, `-halos pink` or `-halos gold` shows every halo
-/// treatment at once, in those colors, instead of the app.
+/// detail, `-detail dropin` pushes the drop-in session's detail, and
+/// `-halos role`, `-halos pink` or `-halos gold` shows every halo treatment at
+/// once, in those colors, instead of the app.
 @main
 struct UIDesignGalleryApp: App {
     /// The destination on screen.
@@ -100,6 +101,8 @@ struct UIDesignGalleryApp: App {
             return .settings
         } else if defaults.string(forKey: "detail") == "accessibility" {
             return .session(.accessibility)
+        } else if defaults.string(forKey: "detail") == "dropin" {
+            return .session(.dropIn)
         } else if defaults.bool(forKey: "detail") {
             return .session(.opening)
         } else {

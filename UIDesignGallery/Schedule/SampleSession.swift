@@ -144,6 +144,22 @@ extension SampleSession {
             """,
     )
 
+    /// A drop-in session in the second room, which the schedule does not list.
+    static let dropIn = SampleSession(
+        id: "dropin",
+        conference: "SwiftLeeds 2026",
+        day: "Day 1",
+        start: daysFromToday(0, at: 13, 0),
+        end: daysFromToday(0, at: 14, 0),
+        room: "Studio",
+        title: "Ask the accessibility team",
+        speakers: [.casey],
+        kind: .dropIn,
+        startsIn: nil,
+        isFavorite: false,
+        summary: "Bring a screen from your app and get a second pair of eyes on it.",
+    )
+
     /// A talk from the year before, which shows under a speaker's previous
     /// talks.
     static let untestable = SampleSession(
