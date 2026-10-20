@@ -3,26 +3,22 @@ import UIDesign
 
 /// A view that describes one session and what a person can do about it.
 struct SessionDetailScreen: View {
-    /// Where the list is scrolled to, and how far the bar covers its top.
-    private struct ScrollSample: Equatable {
-        /// The vertical offset of the content, which is negative at rest.
-        let offset: CGFloat
-
-        /// The height of the bar over the top of the content.
-        let topInset: CGFloat
-
-        /// The content position that sits just under the bar.
-        var contentTop: CGFloat { offset + topInset }
-    }
-
-    /// How far from rest still counts as at rest, in points.
-    private static let restTolerance: CGFloat = 1
+    /// The height of the clear space that follows the content with `-tall 1`.
+    private static let tailHeight: CGFloat = 800
 
     /// The most lines the summary takes until a person asks for the rest.
     private static let collapsedSummaryLines = 4
 
-    /// How much of the width the artwork takes beside the heading.
-    private static let artworkShare: CGFloat = 0.4
+    /// The widest the About text grows, so its lines stay readable on an iPad.
+    private static let readableWidth: CGFloat = 672
+
+    /// How far content sits in from the safe area on an iPhone, which is
+    /// Apple's list margin.
+    private static let phoneMargin: CGFloat = 16
+
+    /// How far content sits in from the safe area on an iPad, which is
+    /// Apple's list margin.
+    private static let padMargin: CGFloat = 20
 
     /// The shortest a speaker's nameplate stands, so it is a comfortable tap
     /// target.
@@ -37,8 +33,12 @@ struct SessionDetailScreen: View {
     /// Whether the summary shows in full when the screen appears.
     private let opensSummaryExpanded: Bool
 
-    /// Whether the screen has a compact or a regular width.
-    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+    /// Whether clear space follows the content, so the title can scroll fully
+    /// under the bar. The launch argument `-tall 1` turns it on.
+    private let addsTail: Bool
+
+    /// How big the page is, or `nil` until it is measured.
+    @State private var page: SessionHero.PageSize?
 
     /// Whether this person favourited the session.
     @State private var isFavorite: Bool
@@ -46,18 +46,12 @@ struct SessionDetailScreen: View {
     /// Whether the venue page is pushed, to find the session's room.
     @State private var showsVenue = false
 
-    /// Where the heading's title ends in the list's frame, or `nil` until it
-    /// has been measured. It goes stale once the title scrolls out of sight.
-    @State private var titleBottomInView: CGFloat?
-
-    /// Where the heading's title ends in the content, or `nil` until it has
-    /// been measured at rest. The content does not move, so this stays true.
-    @State private var titleBottom: CGFloat?
-
-    /// Where the list is scrolled to, or `nil` until it first reports.
-    @State private var scroll: ScrollSample?
+    /// How far the bars cover the list, or `nil` until it first reports.
+    @State private var bars: SessionHero.BarInsets?
 
     /// Creates a screen for one session.
+    ///
+    /// The launch argument `-tall` adds clear space after the content.
     ///
     /// - Parameters:
     ///   - session: The session this screen describes.
@@ -72,69 +66,42 @@ struct SessionDetailScreen: View {
         self.session = session
         self.opensSummaryExpanded = opensSummaryExpanded
         self.showSpeaker = showSpeaker
+        addsTail = UserDefaults.standard.bool(forKey: "tall")
         _isFavorite = State(initialValue: session.isFavorite)
     }
 
     var body: some View {
-        List {
-            // The artwork and the title are the screen's subject rather than
-            // a list of facts about it, so they sit on the page with no card
-            // and no separators between them. At a regular width the artwork
-            // sits beside the heading, so the page's first screen holds the
-            // facts and not only a picture.
-            Section {
-                if horizontalSizeClass == .regular {
-                    HStack(alignment: .top, spacing: .large) {
-                        artwork
-                            .containerRelativeFrame(.horizontal) { width, _ in
-                                width * Self.artworkShare
-                            }
+        ScrollView {
+            VStack(spacing: 0) {
+                content
 
-                        headingWithSpeakers
-                    }
-                    .listRowInsets(.leading, 0)
-                    .listRowInsets(.trailing, 0)
-                } else {
-                    artwork
-                        .listRowInsets(EdgeInsets())
-
-                    headingWithSpeakers
+                if addsTail {
+                    Color.clear.frame(height: Self.tailHeight)
                 }
             }
-            .listRowBackground(Color.clear)
-            .listRowSeparator(.hidden)
-
-            Section("About") {
-                ExpandableText(
-                    session.summary,
-                    lines: Self.collapsedSummaryLines,
-                    opensExpanded: opensSummaryExpanded,
-                )
-            }
         }
-        .listStyle(.insetGrouped)
-        .onScrollGeometryChange(for: ScrollSample.self) { geometry in
-            ScrollSample(
-                offset: geometry.contentOffset.y,
-                topInset: geometry.contentInsets.top,
+        .onGeometryChange(for: SessionHero.PageSize.self) { proxy in
+            SessionHero.PageSize(
+                width: proxy.size.width,
+                height: proxy.size.height + proxy.safeAreaInsets.top + proxy.safeAreaInsets.bottom,
             )
+        } action: { size in
+            page = size
+        }
+        .background(.surface)
+        .scrollEdgeEffectStyle(.soft, for: .top)
+        .onScrollGeometryChange(for: SessionHero.BarInsets.self) { geometry in
+            SessionHero.BarInsets(top: geometry.contentInsets.top, bottom: geometry.contentInsets.bottom)
         } action: { _, newValue in
-            updateScroll(newValue)
+            bars = newValue
         }
         .navigationDestination(isPresented: $showsVenue) {
             VenueContent()
         }
         .navigationTitle(session.title)
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar(removing: .title)
         .toolbar {
-            ToolbarItem(placement: .principal) {
-                Text(session.title)
-                    .font(.headline)
-                    .lineLimit(1)
-                    .opacity(showsBarTitle ? 1 : 0)
-                    .accessibilityHidden(!showsBarTitle)
-            }
-
             ToolbarItem(placement: .topBarTrailing) {
                 FavoriteButton(isFavorite: $isFavorite)
             }
@@ -152,93 +119,43 @@ struct SessionDetailScreen: View {
             }
         }
     }
+}
 
-    /// The session's artwork, sized to the 16 by 9 shape.
-    private var artwork: some View {
-        MockArtwork(seed: session.id)
-            .aspectRatio(16 / 9, contentMode: .fit)
-    }
+// MARK: - Layout
 
-    /// The button that shares this session.
-    private var shareButton: some View {
-        Button {
-        } label: {
-            Label {
-                Text("Share")
-            } icon: {
-                Image(icon: .share)
-            }
+extension SessionDetailScreen {
+    /// The page's content, from the top of the page to its foot.
+    private var content: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            SessionHero(session: session, page: page, bars: bars, margin: margin)
+
+            below
         }
-        .tint(.textPrimary)
     }
 
-    /// The menu of actions that lead away from this session.
-    private var moreMenu: some View {
-        Menu {
-            Button {
-            } label: {
-                Label {
-                    Text("Add to Calendar")
-                } icon: {
-                    Image(icon: .calendar)
-                }
-            }
-
-            Button {
-                showsVenue = true
-            } label: {
-                Label {
-                    Text("Find the room")
-                } icon: {
-                    Image(icon: .location)
-                }
-            }
-        } label: {
-            Label {
-                Text("More")
-            } icon: {
-                Image(icon: .more)
-            }
-        }
-        .tint(.textPrimary)
+    /// The margin on each side of the page, from the safe area to the content.
+    private var margin: CGFloat {
+        UIDevice.current.userInterfaceIdiom == .pad ? Self.padMargin : Self.phoneMargin
     }
 
-    /// Whether the title in the navigation bar shows.
-    ///
-    /// It shows once the heading's title has scrolled under the bar.
-    private var showsBarTitle: Bool {
-        guard let titleBottom, let scroll else { return false }
-        return scroll.contentTop >= titleBottom
-    }
-
-    /// Records where the list is scrolled to, animating the bar title.
-    ///
-    /// - Parameter sample: Where the list is scrolled to.
-    private func updateScroll(_ sample: ScrollSample) {
-        withAnimation { scroll = sample }
-        measureTitleAtRest()
-    }
-
-    /// Fixes the title's place in the content, when the list is at rest.
-    ///
-    /// The list reports the title in its own frame, which moves as the list
-    /// scrolls. At rest the offset is known exactly, so the sum is exact too.
-    private func measureTitleAtRest() {
-        guard let titleBottomInView, let scroll,
-            abs(scroll.contentTop) < Self.restTolerance
-        else { return }
-        titleBottom = titleBottomInView + scroll.offset
-    }
-
-    /// The heading, with the speakers under it.
-    private var headingWithSpeakers: some View {
-        VStack(alignment: .leading, spacing: .medium) {
-            heading
-
+    /// The speakers, then the About text, at the page margin.
+    private var below: some View {
+        VStack(alignment: .leading, spacing: .xLarge) {
             speakers
-        }
-    }
 
+            aboutCard
+                .frame(maxWidth: Self.readableWidth, alignment: .leading)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.horizontal, margin)
+        .padding(.top, .large)
+        .padding(.bottom, .large)
+    }
+}
+
+// MARK: - Speakers
+
+extension SessionDetailScreen {
     /// The speakers, one nameplate under another.
     private var speakers: some View {
         VStack(alignment: .leading, spacing: .medium) {
@@ -293,61 +210,82 @@ struct SessionDetailScreen: View {
             )
         }
     }
+}
 
-    /// What the session is called, and when and where it runs.
-    ///
-    /// VoiceOver reads it as one heading: the title, then the day, the time,
-    /// the room and the badges, in that order.
-    private var heading: some View {
+// MARK: - About
+
+extension SessionDetailScreen {
+    /// The summary on a rounded surface, under its heading.
+    private var aboutCard: some View {
         VStack(alignment: .leading, spacing: .small) {
-            Text(session.title)
-                .font(.title.weight(.bold))
-                .foregroundStyle(.textPrimary)
-                .fixedSize(horizontal: false, vertical: true)
-                .onGeometryChange(for: CGFloat.self) { proxy in
-                    proxy.frame(in: .scrollView).maxY
-                } action: { bottom in
-                    titleBottomInView = bottom
-                    measureTitleAtRest()
+            Text("About")
+                .font(.headline)
+                .accessibilityAddTraits(.isHeader)
+
+            VStack(alignment: .leading, spacing: .medium) {
+                ExpandableText(
+                    session.summary,
+                    lines: Self.collapsedSummaryLines,
+                    opensExpanded: opensSummaryExpanded,
+                )
+            }
+            .padding(.large)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(
+                .secondarySurface,
+                in: RoundedRectangle(
+                    cornerRadius: CGFloat(CornerRadius.large),
+                    style: .continuous,
+                ),
+            )
+        }
+    }
+}
+
+// MARK: - Toolbar
+
+extension SessionDetailScreen {
+    /// The button that shares this session.
+    private var shareButton: some View {
+        Button {
+        } label: {
+            Label {
+                Text("Share")
+            } icon: {
+                Image(icon: .share)
+            }
+        }
+        .tint(.textPrimary)
+    }
+
+    /// The menu of actions that lead away from this session.
+    private var moreMenu: some View {
+        Menu {
+            Button {
+            } label: {
+                Label {
+                    Text("Add to Calendar")
+                } icon: {
+                    Image(icon: .calendar)
                 }
-
-            facts
-
-            SessionBadges(session: session)
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .accessibilityElement(children: .combine)
-        .accessibilityAddTraits(.isHeader)
-    }
-
-    /// When and where the session runs, side by side while they fit.
-    ///
-    /// Each fact is its own text, so a large text size stacks the facts
-    /// rather than breaking one across lines, and the row mirrors
-    /// right-to-left.
-    private var facts: some View {
-        ViewThatFits(in: .horizontal) {
-            HStack(spacing: .medium) {
-                factTexts
             }
 
-            VStack(alignment: .leading, spacing: .xSmall) {
-                factTexts
+            Button {
+                showsVenue = true
+            } label: {
+                Label {
+                    Text("Find the room")
+                } icon: {
+                    Image(icon: .location)
+                }
+            }
+        } label: {
+            Label {
+                Text("More")
+            } icon: {
+                Image(icon: .more)
             }
         }
-        .font(.subheadline)
-        .foregroundStyle(.textSecondary)
-    }
-
-    /// The day, the time range and the room, each led by its symbol.
-    ///
-    /// A no-break space keeps each symbol with its words.
-    private var factTexts: some View {
-        Group {
-            Text("\(Image(icon: .calendar))\u{00A0}\(session.dayLabel)")
-            Text("\(Image(icon: .clock))\u{00A0}\(session.time)")
-            Text("\(Image(icon: .location))\u{00A0}\(session.room)")
-        }
-        .fixedSize()
+        .tint(.textPrimary)
     }
 }

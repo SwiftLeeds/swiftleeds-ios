@@ -42,6 +42,11 @@ struct SampleSession: Identifiable, Equatable, Hashable, Sendable {
     /// What the session is about.
     let summary: String
 
+    /// How long the session runs.
+    var duration: Duration {
+        .seconds(end.timeIntervalSince(start))
+    }
+
     /// When the session runs, as a time range in the current locale.
     var time: String {
         (start..<end).formatted(Date.IntervalFormatStyle(date: .omitted, time: .shortened))
