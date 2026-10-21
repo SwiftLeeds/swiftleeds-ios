@@ -14,6 +14,9 @@ struct HeroBlock: View {
     /// The width the block's content has, or `nil` until the page is measured.
     private let availableWidth: CGFloat?
 
+    /// The action that shows a speaker's page.
+    private let showSpeaker: (SamplePerson) -> Void
+
     /// Whether this person favorited the session.
     @Binding private var isFavorite: Bool
 
@@ -26,6 +29,9 @@ struct HeroBlock: View {
     /// Whether this person asked for more contrast.
     @Environment(\.colorSchemeContrast) private var contrast
 
+    /// How many pixels make one point on this screen.
+    @Environment(\.displayScale) private var displayScale
+
     /// Creates a block for one session.
     ///
     /// - Parameters:
@@ -33,6 +39,7 @@ struct HeroBlock: View {
     ///   - moment: Where a person is in the session's day. It decides the chip above the title and
     ///     the capsule beside the star.
     ///   - availableWidth: The width the block's content has, or `nil` until the page is measured.
+    ///   - showSpeaker: The action that shows a speaker's page. A tap on a credited name runs it.
     ///   - isFavorite: Whether this person favorited the session. The star changes it.
     ///   - marks: Where the chip and the title sit, in the hero's coordinates. The block writes it.
     ///   - height: How tall the block is. The block writes it.
@@ -40,6 +47,7 @@ struct HeroBlock: View {
         session: SampleSession,
         moment: SessionMoment,
         availableWidth: CGFloat?,
+        showSpeaker: @escaping (SamplePerson) -> Void,
         isFavorite: Binding<Bool>,
         marks: Binding<SessionHero.HeroMarks>,
         height: Binding<CGFloat>,
@@ -47,12 +55,14 @@ struct HeroBlock: View {
         self.session = session
         self.moment = moment
         self.availableWidth = availableWidth
+        self.showSpeaker = showSpeaker
         _isFavorite = isFavorite
         _marks = marks
         _height = height
     }
 
-    /// The chip and heading, the actions and the facts, at the leading edge.
+    /// The chip and heading, the actions, a divider, the teaser, the credits and the facts, at the
+    /// leading edge.
     var body: some View {
         VStack(alignment: .leading, spacing: .medium) {
             chipAndHeading
@@ -61,6 +71,17 @@ struct HeroBlock: View {
                 moment: moment,
                 isFavorite: $isFavorite,
                 availableWidth: availableWidth,
+            )
+
+            divider
+
+            teaserText
+
+            HeroCredits(
+                kind: session.kind,
+                speakers: session.speakers,
+                leadColor: supportingText,
+                showSpeaker: showSpeaker,
             )
 
             facts
@@ -86,6 +107,15 @@ extension HeroBlock {
 
     /// How opaque the facts are, against white.
     private static let supportingTextOpacity: Double = 0.7
+
+    /// The most lines the teaser takes.
+    private static let teaserLines = 2
+
+    /// How opaque the divider is, against white.
+    private static let dividerOpacity: Double = 0.25
+
+    /// How opaque the divider is, against white, with more contrast.
+    private static let increasedDividerOpacity: Double = 0.5
 }
 
 // MARK: - Heading
@@ -157,6 +187,29 @@ extension HeroBlock {
     }
 }
 
+// MARK: - Teaser
+
+extension HeroBlock {
+    /// A thin line across the block's width, between the actions and the teaser.
+    private var divider: some View {
+        let opacity = contrast == .increased ? Self.increasedDividerOpacity : Self.dividerOpacity
+        return Rectangle()
+            .fill(SessionHero.onHero.opacity(opacity))
+            .frame(height: 1 / displayScale)
+            .accessibilityHidden(true)
+    }
+
+    /// The session's short summary, two lines at most.
+    private var teaserText: some View {
+        Text(session.teaser)
+            .font(.subheadline)
+            .foregroundStyle(supportingText)
+            .lineLimit(Self.teaserLines)
+            .multilineTextAlignment(.leading)
+            .fixedSize(horizontal: false, vertical: true)
+    }
+}
+
 // MARK: - Colors
 
 extension HeroBlock {
@@ -173,7 +226,7 @@ extension HeroBlock {
         onHero(Self.kindLineOpacity)
     }
 
-    /// The color of the facts, grey.
+    /// The color of the teaser, the facts and the credits' lead word, grey.
     private var supportingText: Color {
         onHero(Self.supportingTextOpacity)
     }

@@ -42,6 +42,9 @@ struct SampleSession: Identifiable, Equatable, Hashable, Sendable {
     /// What the session is about.
     let summary: String
 
+    /// A line or two that sells the session, for the top of its detail screen.
+    let teaser: String
+
     /// How long the session runs.
     var duration: Duration {
         .seconds(end.timeIntervalSince(start))
@@ -118,6 +121,7 @@ extension SampleSession {
             A design system earns its keep the year after it ships. This talk is \
             about the parts that rot, and the parts that hold.
             """,
+        teaser: "Why most design systems stall in year two, and the habits that keep one alive.",
     )
 
     /// A lightning talk.
@@ -134,6 +138,7 @@ extension SampleSession {
         startsIn: nil,
         isFavorite: false,
         summary: "What changed once the compiler started checking the hard part.",
+        teaser: "Twelve months of strict checking, and what it caught in real apps.",
     )
 
     /// A workshop with two speakers.
@@ -156,6 +161,7 @@ extension SampleSession {
             voice alone, and fix what breaks. You will leave with a short list \
             of checks that your team can run before every release.
             """,
+        teaser: "Drive your own app with one switch, then your voice, and fix what breaks.",
     )
 
     /// A drop-in session in the second room, which the schedule does not list.
@@ -172,6 +178,7 @@ extension SampleSession {
         startsIn: nil,
         isFavorite: false,
         summary: "Bring a screen from your app and get a second pair of eyes on it.",
+        teaser: "Show the team a screen you are unsure about and leave with a fix.",
     )
 
     /// A talk from the year before, which shows under a speaker's previous
@@ -189,5 +196,6 @@ extension SampleSession {
         startsIn: nil,
         isFavorite: false,
         summary: "Putting a test around the code everyone is afraid to touch.",
+        teaser: "A practical way to cover the code that nobody dares to change.",
     )
 }

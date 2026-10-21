@@ -138,6 +138,7 @@ extension SessionDetailScreen {
                 bars: bars,
                 margin: margin,
                 moment: moment,
+                showSpeaker: showSpeaker,
                 isFavorite: $isFavorite,
             )
 

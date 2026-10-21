@@ -56,6 +56,16 @@ enum SessionKind: Equatable, Hashable, Sendable {
         }
     }
 
+    /// The words that lead the speakers' names, such as "Led by".
+    var creditVerb: String {
+        switch self {
+        case .talk: "Presented by"
+        case .lightningTalk: "Presented by"
+        case .workshop: "Led by"
+        case .dropIn: "Hosted by"
+        }
+    }
+
     /// The name of the kind's SF Symbol.
     var symbol: String {
         // A bare name, because `Icon` names no symbol for a kind and `UIDesign` is not edited on
