@@ -76,6 +76,7 @@ package struct SponsorsContentView: View {
             Image(systemName: "sparkles")
                 .font(.system(size: 50))
                 .foregroundColor(.secondary)
+                .accessibilityHidden(true)
             Text("No sponsors available")
                 .font(.headline)
             Text("Check back later for updates")
@@ -92,6 +93,7 @@ package struct SponsorsContentView: View {
                 Image(systemName: iconForLevel(selectedLevel))
                     .font(.system(size: 50))
                     .foregroundColor(.secondary.opacity(0.6))
+                    .accessibilityHidden(true)
 
                 Text("No \(selectedLevel.rawValue.capitalized) Sponsors")
                     .font(.headline)
@@ -211,6 +213,7 @@ package struct SponsorsContentView: View {
             Image(systemName: iconForLevel(level))
                 .font(.caption)
                 .foregroundColor(colorForLevel(level))
+                .accessibilityHidden(true)
 
             Text("\(level.rawValue.capitalized) Sponsors")
                 .font(.headline.weight(.semibold))

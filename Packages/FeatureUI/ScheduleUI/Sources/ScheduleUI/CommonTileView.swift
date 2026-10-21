@@ -87,6 +87,7 @@ package struct CommonTileView<BackgroundType: ShapeStyle>: View {
                     .foregroundColor(secondaryColor)
             } else if showChevron {
                 Image(systemName: "chevron.right")
+                    .accessibilityHidden(true)
             }
         })
         .padding(Padding.cell)

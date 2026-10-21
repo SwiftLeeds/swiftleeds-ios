@@ -78,6 +78,7 @@ package struct ScheduleContentView: View {
             VStack(spacing: 10) {
                 Image(systemName: "wifi.exclamationmark")
                     .font(.system(size: 60))
+                    .accessibilityHidden(true)
 
                 Text(conference.map { "Can't show \($0)" } ?? "Can't show the schedule")
                     .font(.title)
@@ -126,6 +127,7 @@ package struct ScheduleContentView: View {
                         Text(currentEvent.name)
                         Image(systemName: "chevron.up.chevron.down")
                             .font(.caption)
+                            .accessibilityHidden(true)
                     }
                 }
                 .accentColor(Color("AccentColor"))

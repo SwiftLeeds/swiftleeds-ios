@@ -73,6 +73,7 @@ public struct AvatarFallback: View {
                 Image(icon: .person)
                     .font(.system(size: CGFloat(diameter) * Self.symbolProportion))
                     .foregroundStyle(.textSecondary)
+                    .accessibilityHidden(true)
             }
     }
 

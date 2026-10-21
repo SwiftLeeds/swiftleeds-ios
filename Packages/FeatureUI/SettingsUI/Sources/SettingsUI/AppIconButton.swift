@@ -19,6 +19,7 @@ struct AppIconButton: View {
                             RoundedRectangle(cornerRadius: 12)
                                 .stroke(isSelected ? Color.accentColor : Color.clear, lineWidth: 3)
                         )
+                        .accessibilityHidden(true)
                 } else {
                     RoundedRectangle(cornerRadius: 12)
                         .fill(Color.gray.opacity(0.3))
@@ -27,6 +28,7 @@ struct AppIconButton: View {
                             Image(systemName: "questionmark.app")
                                 .font(.system(size: 24, weight: .medium))
                                 .foregroundColor(.gray)
+                                .accessibilityHidden(true)
                         )
                         .overlay(
                             RoundedRectangle(cornerRadius: 12)

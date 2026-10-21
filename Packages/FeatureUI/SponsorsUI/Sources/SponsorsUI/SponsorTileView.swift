@@ -240,6 +240,7 @@ struct JobRowView: View {
                             HStack(spacing: 4) {
                                 Image(systemName: "location.fill")
                                     .font(.caption2)
+                                    .accessibilityHidden(true)
                                 Text(job.location)
                                     .font(.caption)
                             }
@@ -251,6 +252,7 @@ struct JobRowView: View {
                         Image(systemName: "arrow.right.circle")
                             .font(.title3)
                             .foregroundColor(.accent.opacity(0.5))
+                            .accessibilityHidden(true)
                     }
                     .padding()
                     .background(isPressed ? Color.accent.opacity(0.05) : Color.clear)
