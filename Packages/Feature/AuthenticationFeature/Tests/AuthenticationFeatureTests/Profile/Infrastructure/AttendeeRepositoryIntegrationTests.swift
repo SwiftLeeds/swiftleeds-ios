@@ -76,7 +76,7 @@ import Testing
         }
     }
 
-    @Test func whenResponseIsRejected_shouldLogThroughLiveComposition() async throws {
+    @Test func whenResponseIsRejected_shouldLogThroughLiveComposition() async {
         let recorder = LogRecorder()
 
         try? await withDependencies {

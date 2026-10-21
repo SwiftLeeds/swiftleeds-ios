@@ -37,7 +37,7 @@ import Testing
         let team = [try TeamMember.fixture]
 
         await withDependencies {
-            $0.fetchTeam = FetchTeam { () async throws(TeamFetchError) -> [TeamMember] in
+            $0.fetchTeam = FetchTeam { () async -> [TeamMember] in
                 fetches.withValue { $0 += 1 }
                 return team
             }
@@ -50,7 +50,7 @@ import Testing
         #expect(fetches.value == 1)
     }
 
-    @Test func whenLoadFailed_shouldFetchAgainOnNextLoad() async throws {
+    @Test func whenLoadFailed_shouldFetchAgainOnNextLoad() async {
         let fetches = LockIsolated(0)
 
         await withDependencies {

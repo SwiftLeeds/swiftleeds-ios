@@ -129,8 +129,8 @@ opt_in_rules:
   - raw_value_for_camel_cased_codable_enum
   - static_operator
 
-  # Rules that needed a sweep. Each had 1 to 11 violations when it was turned
-  # on, 2026-10-15 to 2026-10-19.
+  # Rules that needed a sweep. Each had 1 to 26 violations when it was turned
+  # on, 2026-10-15 to 2026-10-21.
 
   # "Code reads like clean English." Each of these takes the shorter form Swift
   # offers: a comma for `&&`, `if let x` for `if let x = x`, a return after the
@@ -177,6 +177,10 @@ opt_in_rules:
   # "Favour functional style." A closure that only reads a property is
   # written as the key path to it: `map(\.name)`, not `map { $0.name }`.
   - prefer_key_path
+
+  # A function or closure marked `throws` or `rethrows` that cannot throw tells
+  # a reader it can fail. Every hit when it was turned on was in a test.
+  - unneeded_throws_rethrows
 
 # Analyzer rules read the compiler log, so they run only through
 # `swiftlint analyze`, never `swiftlint lint`.

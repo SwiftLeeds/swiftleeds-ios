@@ -109,7 +109,7 @@ import Testing
 
     // MARK: - Refusals
 
-    @Test func whenLatitudeIsOutOfRange_shouldThrowErrorWithLocationFieldAndValue() throws {
+    @Test func whenLatitudeIsOutOfRange_shouldThrowErrorWithLocationFieldAndValue() {
         let list = LocationCategoryListDTO(data: [
             .fixture(locations: [.fixture(name: "Trinity Kitchen", lat: 91)])
         ])
@@ -124,7 +124,7 @@ import Testing
         }
     }
 
-    @Test func whenLongitudeIsOutOfRange_shouldThrowErrorWithLocationFieldAndValue() throws {
+    @Test func whenLongitudeIsOutOfRange_shouldThrowErrorWithLocationFieldAndValue() {
         let list = LocationCategoryListDTO(data: [
             .fixture(locations: [.fixture(name: "Trinity Kitchen", lon: -181)])
         ])

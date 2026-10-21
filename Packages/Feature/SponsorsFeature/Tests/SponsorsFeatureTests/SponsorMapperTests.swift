@@ -79,7 +79,7 @@ import Testing
         }
     }
 
-    @Test func whenLevelIsUnknown_shouldNameTheSponsorTheFieldAndTheValue() throws {
+    @Test func whenLevelIsUnknown_shouldNameTheSponsorTheFieldAndTheValue() {
         let list = SponsorListDTO(data: [.fixture(name: "Bronze Co", sponsorLevel: "bronze")])
 
         do {
