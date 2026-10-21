@@ -1,5 +1,4 @@
 #if canImport(UIKit)
-import DesignKit
 import Foundation
 import ReadabilityModifier
 import SwiftUI

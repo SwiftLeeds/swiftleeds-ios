@@ -27,7 +27,6 @@ let package = Package(
             dependencies: [
                 .product(name: "CachedAsyncImage", package: "swiftui-cached-async-image"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
-                .product(name: "DesignKit", package: "SwiftLeedsPackage"),
                 .product(name: "SponsorsFeature", package: "SponsorsFeature"),
                 .product(name: "UIAssets", package: "SwiftLeedsPackage"),
                 .product(name: "UIComponents", package: "UIComponents"),
@@ -39,6 +38,7 @@ let package = Package(
                 "SponsorsUI",
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
                 .product(name: "SponsorsFeature", package: "SponsorsFeature"),
+                .product(name: "UIComponents", package: "UIComponents"),
             ],
         ),
     ],

@@ -1,6 +1,6 @@
-import DesignKit
 import SwiftUI
 import UIAssets
+import UIComponents
 
 /// Generic primary secondary view
 package struct CommonTileView<BackgroundType: ShapeStyle>: View {

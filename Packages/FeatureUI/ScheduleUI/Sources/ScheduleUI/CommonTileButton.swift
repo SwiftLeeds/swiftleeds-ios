@@ -1,6 +1,6 @@
-import DesignKit
 import SwiftUI
 import UIAssets
+import UIComponents
 
 package struct CommonTileButton<BackgroundType: ShapeStyle>: View {
     let icon: String?

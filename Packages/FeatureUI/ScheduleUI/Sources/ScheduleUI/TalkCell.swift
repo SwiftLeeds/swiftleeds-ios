@@ -1,9 +1,9 @@
 import CachedAsyncImage
-import DesignKit
 import Foundation
 import ScheduleFeature
 import SwiftUI
 import UIAssets
+import UIComponents
 
 package struct TalkCell: View {
     private let time: String

@@ -19,8 +19,7 @@ let package = Package(
         .target(
             name: "UIComponents",
             dependencies: [
-                .product(name: "DesignKit", package: "SwiftLeedsPackage"),
-                .product(name: "UIAssets", package: "SwiftLeedsPackage"),
+                .product(name: "UIAssets", package: "SwiftLeedsPackage")
             ],
         ),
         .testTarget(
