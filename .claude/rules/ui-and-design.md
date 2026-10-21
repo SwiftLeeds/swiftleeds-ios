@@ -171,3 +171,14 @@ Extends `ios-design-guidelines`.
 - Stated for complications, so the reader is small and moving. Treat it as the floor wherever a
   stroke has to be read rather than felt.
 - A hairline separator is a different thing. It is a system-drawn edge, not a mark carrying meaning.
+
+## A style's environment file is named `EnvironmentValues+<Component>Style.swift`
+
+Overrides `swiftui-style-driven-components`, which names it
+`EnvironmentKeys/<Component>StyleKey.swift`.
+
+- **SwiftLint's `file_name` rule fails the skill's name.** The file declares no `...StyleKey` type,
+  only an `extension EnvironmentValues` with an `@Entry` and the `View` modifier that sets it.
+- **So the file takes the extended type's name**, as `EnvironmentValues+AvatarStyle.swift` and
+  `EnvironmentValues+NameplateStyle.swift` do. It stays in the `EnvironmentKeys/` folder.
+- A token file follows the same pattern: `ShapeStyle+BorderColor.swift`, not `BorderColor.swift`.

@@ -191,6 +191,10 @@ opt_in_rules:
   # structure. Split it into named views. The limit is set below.
   - closure_body_length
 
+  # "One type per file, named after the type." A file of extensions is named
+  # `Type+Topic.swift`, as `Log+Transform.swift` is. The exceptions are below.
+  - file_name
+
 # Analyzer rules read the compiler log, so they run only through
 # `swiftlint analyze`, never `swiftlint lint`.
 analyzer_rules:
@@ -300,6 +304,24 @@ prefer_key_path:
 # `--strict` makes the warning a gate, so no error level is set.
 closure_body_length:
   warning: 60
+
+# Setting `excluded` replaces the default list, `LinuxMain.swift` and
+# `main.swift`; neither exists here.
+# - `LogCategories.swift` holds each module's `extension LogCategory`, and
+#   the name is the one every module uses.
+# - `RequiredSwiftFileForSPM.swift` gives a resource-only target a Swift
+#   source. Its name says that role, not the placeholder view inside it.
+# - Each `Assert...Snapshots.swift` test helper is named for the assertion it
+#   adds, not for a type.
+# - ScheduleUI's `ScheduleFixtures.swift` holds fixtures for six types, from
+#   `Speaker` to `Schedule.Slot`, so no one type names it.
+file_name:
+  excluded:
+    - LogCategories.swift
+    - RequiredSwiftFileForSPM.swift
+  excluded_paths:
+    - "/Tests/.*/Assert[A-Za-z]*Snapshots[.]swift$"
+    - "/ScheduleUISnapshotTests/ScheduleFixtures[.]swift$"
 
 # A view model nests under its view, and its own `Phase` and `Alert` enums nest
 # under that. The default of one level rejects the house pattern.
