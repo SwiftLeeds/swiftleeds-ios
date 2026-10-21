@@ -41,6 +41,7 @@ struct AppIconButton: View {
             }
         }
         .buttonStyle(PlainButtonStyle())
+        .accessibilityAddTraits(isSelected ? .isSelected : [])
     }
 }
 #endif
