@@ -20,6 +20,9 @@ struct SampleSponsor: Identifiable, Equatable, Hashable, Sendable {
     /// The placeholder that stands in for the company's logo.
     let logo: SampleLogo
 
+    /// The company's own website.
+    let website: SampleLink
+
     /// The jobs the company is hiring for, which is empty when it has none.
     let jobs: [SampleJob]
 
@@ -46,6 +49,7 @@ extension SampleSponsor {
             tier: .platinum,
             tagline: "Software for the north, built in the north",
             logo: SampleLogo(symbol: "network"),
+            website: .website("northern.example.com"),
             jobs: [
                 job("Senior iOS Engineer", in: "Leeds"),
                 job("Mobile Platform Engineer", in: "Manchester"),
@@ -57,6 +61,7 @@ extension SampleSponsor {
             tier: .platinum,
             tagline: nil,
             logo: SampleLogo(symbol: "waveform"),
+            website: .website("calder.example.com"),
             jobs: [],
         ),
         SampleSponsor(
@@ -64,6 +69,7 @@ extension SampleSponsor {
             tier: .gold,
             tagline: "Tools that make developers faster",
             logo: SampleLogo(symbol: "flask"),
+            website: .website("pennine.example.com"),
             jobs: [job("Developer Advocate", in: "Leeds")],
         ),
         SampleSponsor(
@@ -71,6 +77,7 @@ extension SampleSponsor {
             tier: .gold,
             tagline: nil,
             logo: SampleLogo(symbol: "drop"),
+            website: .website("aire.example.com"),
             jobs: [],
         ),
         SampleSponsor(
@@ -78,6 +85,7 @@ extension SampleSponsor {
             tier: .gold,
             tagline: "Apps for people who work outdoors",
             logo: SampleLogo(symbol: "mountain.2"),
+            website: .website("dales.example.com"),
             jobs: [
                 job("iOS Engineer", in: "York"),
                 job("QA Engineer", in: "Remote"),
@@ -88,6 +96,7 @@ extension SampleSponsor {
             tier: .silver,
             tagline: nil,
             logo: SampleLogo(symbol: "square.stack.3d.up"),
+            website: .website("ouse.example.com"),
             jobs: [],
         ),
         SampleSponsor(
@@ -95,6 +104,7 @@ extension SampleSponsor {
             tier: .silver,
             tagline: "A co-operative of mobile engineers",
             logo: SampleLogo(symbol: "leaf"),
+            website: .website("roundhay.example.com"),
             jobs: [job("Swift Engineer", in: "Leeds")],
         ),
         SampleSponsor(
@@ -102,6 +112,7 @@ extension SampleSponsor {
             tier: .silver,
             tagline: nil,
             logo: SampleLogo(symbol: "hammer"),
+            website: .website("skipton.example.com"),
             jobs: [],
         ),
         SampleSponsor(
@@ -109,6 +120,7 @@ extension SampleSponsor {
             tier: .silver,
             tagline: nil,
             logo: SampleLogo(symbol: "wrench.and.screwdriver"),
+            website: .website("tyke.example.com"),
             jobs: [],
         ),
     ]

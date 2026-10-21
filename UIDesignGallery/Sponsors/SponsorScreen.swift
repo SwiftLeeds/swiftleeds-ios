@@ -1,7 +1,7 @@
 import SwiftUI
 import UIDesign
 
-/// A view that shows who a sponsor is and what it is hiring for.
+/// A view that shows who a sponsor is, what it is hiring for and where to find it.
 ///
 /// The roles section appears only when the sponsor has a job to advertise.
 struct SponsorScreen: View {
@@ -28,6 +28,10 @@ struct SponsorScreen: View {
             }
 
             roles
+
+            Section("Links") {
+                ResourceRow(resource: sponsor.website.resource)
+            }
         }
         .listStyle(.insetGrouped)
         .navigationTitle(sponsor.name)
