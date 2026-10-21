@@ -11,14 +11,26 @@ struct HeroBlock: View {
     /// Where a person is in the session's day.
     private let moment: SessionMoment
 
+    /// How the block arranges its text, in one column or two.
+    private let columns: SessionHero.HeroLayout
+
     /// The width the block's content has, or `nil` until the page is measured.
     private let availableWidth: CGFloat?
+
+    /// The width of the leading column in two columns, in points.
+    private let leadingColumnWidth: CGFloat
+
+    /// The width of the trailing column in two columns, in points.
+    private let trailingColumnWidth: CGFloat
 
     /// The action that shows a speaker's page.
     private let showSpeaker: (SamplePerson) -> Void
 
     /// Whether this person favorited the session.
     @Binding private var isFavorite: Bool
+
+    /// The capsule's width on one line, in points, or `nil` until measured.
+    @Binding private var capsuleWidth: CGFloat?
 
     /// Where the chip and the title sit, in the hero's coordinates.
     @Binding private var marks: SessionHero.HeroMarks
@@ -38,53 +50,50 @@ struct HeroBlock: View {
     ///   - session: The session this block introduces.
     ///   - moment: Where a person is in the session's day. It decides the chip above the title and
     ///     the capsule beside the star.
+    ///   - columns: How the block arranges its text. Two columns need the leading and trailing
+    ///     column widths.
     ///   - availableWidth: The width the block's content has, or `nil` until the page is measured.
+    ///   - leadingColumnWidth: The width of the leading column in two columns, in points.
+    ///   - trailingColumnWidth: The width of the trailing column in two columns, in points.
     ///   - showSpeaker: The action that shows a speaker's page. A tap on a credited name runs it.
     ///   - isFavorite: Whether this person favorited the session. The star changes it.
+    ///   - capsuleWidth: The capsule's width on one line, in points, or `nil` until measured. The
+    ///     block writes it.
     ///   - marks: Where the chip and the title sit, in the hero's coordinates. The block writes it.
     ///   - height: How tall the block is. The block writes it.
     init(
         session: SampleSession,
         moment: SessionMoment,
+        columns: SessionHero.HeroLayout,
         availableWidth: CGFloat?,
+        leadingColumnWidth: CGFloat,
+        trailingColumnWidth: CGFloat,
         showSpeaker: @escaping (SamplePerson) -> Void,
         isFavorite: Binding<Bool>,
+        capsuleWidth: Binding<CGFloat?>,
         marks: Binding<SessionHero.HeroMarks>,
         height: Binding<CGFloat>,
     ) {
         self.session = session
         self.moment = moment
+        self.columns = columns
         self.availableWidth = availableWidth
+        self.leadingColumnWidth = leadingColumnWidth
+        self.trailingColumnWidth = trailingColumnWidth
         self.showSpeaker = showSpeaker
         _isFavorite = isFavorite
+        _capsuleWidth = capsuleWidth
         _marks = marks
         _height = height
     }
 
-    /// The chip and heading, the actions, a divider, the teaser, the credits and the facts, at the
-    /// leading edge.
+    /// The block's content in one column or two, at the leading edge.
     var body: some View {
-        VStack(alignment: .leading, spacing: .medium) {
-            chipAndHeading
-
-            HeroActions(
-                moment: moment,
-                isFavorite: $isFavorite,
-                availableWidth: availableWidth,
-            )
-
-            divider
-
-            teaserText
-
-            HeroCredits(
-                kind: session.kind,
-                speakers: session.speakers,
-                leadColor: supportingText,
-                showSpeaker: showSpeaker,
-            )
-
-            facts
+        Group {
+            switch columns {
+            case .oneColumn: oneColumnBlock
+            case .twoColumns: twoColumnBlock
+            }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .foregroundStyle(SessionHero.onHero)
@@ -116,6 +125,101 @@ extension HeroBlock {
 
     /// How opaque the divider is, against white, with more contrast.
     private static let increasedDividerOpacity: Double = 0.5
+}
+
+// MARK: - Columns
+
+extension HeroBlock {
+    /// The chip and heading, the actions, a divider, the teaser, the credits and the facts, in
+    /// one column.
+    private var oneColumnBlock: some View {
+        VStack(alignment: .leading, spacing: .medium) {
+            chipAndHeading
+
+            actions
+
+            divider
+
+            teaserText
+
+            credits
+
+            facts
+        }
+    }
+
+    /// The leading column of chip, title, kind line, teaser and facts, beside the trailing column
+    /// of the actions and the credits.
+    ///
+    /// The columns share rows, so the credits' first line sits on the baseline of the teaser's
+    /// first line.
+    private var twoColumnBlock: some View {
+        Grid(
+            alignment: .leading,
+            horizontalSpacing: SessionHero.columnGap,
+            verticalSpacing: CGFloat(Spacing.medium),
+        ) {
+            // An HStack, not a GridRow: a GridRow with a custom vertical alignment leaves the
+            // alignment offset out of the row's height, so the stacked star overlapped the divider.
+            HStack(alignment: SessionHero.titleTop, spacing: SessionHero.columnGap) {
+                chipAndHeading
+                    .frame(width: leadingColumnWidth, alignment: .leading)
+
+                actions
+                    .frame(width: trailingColumnWidth, alignment: .leading)
+                    .alignmentGuide(SessionHero.titleTop) { dimensions in
+                        dimensions[.top]
+                    }
+            }
+
+            GridRow {
+                divider
+                    .gridCellColumns(2)
+            }
+
+            GridRow(alignment: .firstTextBaseline) {
+                teaserText
+                    .frame(width: leadingColumnWidth, alignment: .leading)
+
+                credits
+                    .frame(width: trailingColumnWidth, alignment: .leading)
+            }
+
+            GridRow {
+                facts
+                    .frame(width: leadingColumnWidth, alignment: .leading)
+            }
+        }
+    }
+
+    /// The width the capsule and the star share, or `nil` until the page is measured.
+    private var actionsWidth: CGFloat? {
+        switch columns {
+        case .oneColumn: availableWidth
+        case .twoColumns: trailingColumnWidth
+        }
+    }
+
+    /// The capsule that suits the moment, with the star beside it or under it.
+    private var actions: some View {
+        HeroActions(
+            moment: moment,
+            columns: columns,
+            isFavorite: $isFavorite,
+            availableWidth: actionsWidth,
+            capsuleWidth: $capsuleWidth,
+        )
+    }
+
+    /// The speakers' names, in the teaser's text style.
+    private var credits: some View {
+        HeroCredits(
+            kind: session.kind,
+            speakers: session.speakers,
+            leadColor: supportingText,
+            showSpeaker: showSpeaker,
+        )
+    }
 }
 
 // MARK: - Heading
@@ -168,6 +272,9 @@ extension HeroBlock {
             .font(.title.weight(.bold))
             .fixedSize(horizontal: false, vertical: true)
             .accessibilityAddTraits(.isHeader)
+            .alignmentGuide(SessionHero.titleTop) { dimensions in
+                dimensions[.top]
+            }
             .onGeometryChange(for: CGFloat.self) { proxy in
                 proxy.frame(in: SessionHero.heroSpace).minY
             } action: { top in

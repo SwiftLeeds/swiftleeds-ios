@@ -41,6 +41,23 @@ struct SessionHero: View {
         var titleTop: CGFloat?
     }
 
+    /// How the hero's text is arranged, decided by the width measured.
+    enum HeroLayout: Equatable {
+        /// One column of text.
+        case oneColumn
+
+        /// A wide column of text beside a narrow one of actions and credits.
+        case twoColumns
+    }
+
+    /// Where the title's top edge sits, so two columns can line up on it.
+    private enum TitleTopAlignment: AlignmentID {
+        /// The top of the view, unless the view moves it.
+        static func defaultValue(in context: ViewDimensions) -> CGFloat {
+            context[.top]
+        }
+    }
+
     /// The session this hero introduces.
     private let session: SampleSession
 
@@ -71,8 +88,21 @@ struct SessionHero: View {
     /// Whether this person asked for more contrast.
     @Environment(\.colorSchemeContrast) private var contrast
 
+    /// The text size this person chose.
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+
+    /// The height of the capsule and the size of the star, which grow with the text.
+    @ScaledMetric(relativeTo: .headline)
+    private var actionHeight: CGFloat = HeroActions.actionHeightAtDefaultSize
+
+    /// The content width from which two columns fit, which grows with the text.
+    @ScaledMetric(relativeTo: .body) private var twoColumnThreshold: CGFloat = twoColumnWidth
+
     /// How tall the hero's text block is, or 0 until measured.
     @State private var blockHeight: CGFloat = 0
+
+    /// The capsule's width on one line, padding included, in points, or `nil` until measured.
+    @State private var capsuleWidth: CGFloat?
 
     /// Where the hero's elements sit, as far as they are measured.
     @State private var marks = HeroMarks()
@@ -133,6 +163,12 @@ extension SessionHero {
     /// scrolls.
     static let heroSpace = NamedCoordinateSpace.named("sessionHero")
 
+    /// The alignment that lines columns up on the title's top edge.
+    static let titleTop = VerticalAlignment(TitleTopAlignment.self)
+
+    /// The space between the two columns, in points.
+    static let columnGap: CGFloat = 32
+
     /// The space above and below the hero's text block.
     private static let heroVerticalMargin: CGFloat = 24
 
@@ -145,14 +181,26 @@ extension SessionHero {
     /// The hero's height until the page has been measured.
     private static let unmeasuredHeroHeight: CGFloat = 360
 
-    /// The tallest the hero grows in a tall page, as a share of the page's
+    /// The content width from which the hero uses two columns, at the default text size.
+    private static let twoColumnWidth: CGFloat = 576
+
+    /// The narrowest the trailing column grows, in points.
+    private static let trailingColumnMinimum: CGFloat = 264
+
+    /// The share of the content width the trailing column takes, at the least.
+    private static let trailingColumnShare: CGFloat = 0.3
+
+    /// The tallest a one-column hero grows in a tall page, as a share of the page's
     /// height.
     private static let oneColumnHeightShare: CGFloat = 0.75
 
-    /// The height of the hero in a tall page, as a share of its width.
+    /// The height of a one-column hero in a tall page, as a share of its width.
     private static let oneColumnAspect: CGFloat = 1.5
 
-    /// The height of the hero in a wide page, as a share of the page's height.
+    /// The height of a two-column hero in a tall page, as a share of the page's height.
+    private static let tallHeroShare: CGFloat = 0.6
+
+    /// The height of a hero in a wide page, as a share of the page's height.
     private static let wideHeroShare: CGFloat = 0.5
 
     /// The color of text on the hero, in both color schemes.
@@ -225,10 +273,51 @@ extension SessionHero {
             return neededHeight
         }
         let isTall = page.height > page.width
-        if isTall {
+        switch (layout, isTall) {
+        case (.oneColumn, true):
             return min(page.width * Self.oneColumnAspect, page.height * Self.oneColumnHeightShare)
+        case (.twoColumns, true):
+            return page.height * Self.tallHeroShare
+        case (.oneColumn, false):
+            return page.height * Self.wideHeroShare
+        case (.twoColumns, false):
+            return page.height * Self.wideHeroShare
         }
-        return page.height * Self.wideHeroShare
+    }
+}
+
+// MARK: - Layout
+
+extension SessionHero {
+    /// How the hero's text is arranged, from the width measured.
+    ///
+    /// Two columns need the content to reach the threshold, and the capsule and the star to fit
+    /// side by side in the trailing column. An accessibility text size always uses one column, and
+    /// so does the hero until the page and the capsule are measured.
+    private var layout: HeroLayout {
+        guard let page, !dynamicTypeSize.isAccessibilitySize else { return .oneColumn }
+        let fitsWidth = page.contentWidth(margin: margin) >= twoColumnThreshold
+        let fitsActions = HeroActions.fitsBeside(
+            in: trailingColumnWidth,
+            moment: moment,
+            capsuleWidth: capsuleWidth,
+            actionHeight: actionHeight,
+        )
+        return fitsWidth && fitsActions ? .twoColumns : .oneColumn
+    }
+
+    /// The width of the trailing column of a two-column hero, in points.
+    private var trailingColumnWidth: CGFloat {
+        guard let page else { return Self.trailingColumnMinimum }
+        let share = page.contentWidth(margin: margin) * Self.trailingColumnShare
+        return max(Self.trailingColumnMinimum, share)
+    }
+
+    /// The width of the leading column of a two-column hero, in points, or 0 until the page is
+    /// measured.
+    private var leadingColumnWidth: CGFloat {
+        guard let page else { return 0 }
+        return page.contentWidth(margin: margin) - Self.columnGap - trailingColumnWidth
     }
 }
 
@@ -240,9 +329,13 @@ extension SessionHero {
         HeroBlock(
             session: session,
             moment: moment,
+            columns: layout,
             availableWidth: page.map { $0.contentWidth(margin: margin) },
+            leadingColumnWidth: leadingColumnWidth,
+            trailingColumnWidth: trailingColumnWidth,
             showSpeaker: showSpeaker,
             isFavorite: $isFavorite,
+            capsuleWidth: $capsuleWidth,
             marks: $marks,
             height: $blockHeight,
         )

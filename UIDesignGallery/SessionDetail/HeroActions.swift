@@ -10,11 +10,17 @@ struct HeroActions: View {
     /// Where a person is in the session's day.
     private let moment: SessionMoment
 
+    /// How the hero arranges its text. The capsule fills its share of the row in two columns.
+    private let columns: SessionHero.HeroLayout
+
     /// Whether this person favorited the session.
     @Binding private var isFavorite: Bool
 
     /// The width the action and the star share, or `nil` until it is measured.
     private let availableWidth: CGFloat?
+
+    /// The capsule's width on one line, padding included, in points, or `nil` until measured.
+    @Binding private var capsuleWidth: CGFloat?
 
     /// The text size this person chose.
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
@@ -25,20 +31,29 @@ struct HeroActions: View {
     /// The height of the capsule and the size of the star, which grow with the text.
     @ScaledMetric(relativeTo: .headline) private var actionHeight: CGFloat = actionHeightAtDefaultSize
 
-    /// The capsule's width on one line, padding included, in points, or `nil` until measured.
-    @State private var capsuleWidth: CGFloat?
-
     /// Creates the actions for one session.
     ///
     /// - Parameters:
     ///   - moment: Where a person is in the session's day.
+    ///   - columns: How the hero arranges its text. The capsule fills its share of the row in two
+    ///     columns.
     ///   - isFavorite: Whether this person favorited the session. The star changes it.
     ///   - availableWidth: The width the action and the star share, in points, or `nil` until it
     ///     is measured. The star then stands under the action.
-    init(moment: SessionMoment, isFavorite: Binding<Bool>, availableWidth: CGFloat?) {
+    ///   - capsuleWidth: The capsule's width on one line, in points, or `nil` until measured. The
+    ///     actions write it.
+    init(
+        moment: SessionMoment,
+        columns: SessionHero.HeroLayout,
+        isFavorite: Binding<Bool>,
+        availableWidth: CGFloat?,
+        capsuleWidth: Binding<CGFloat?>,
+    ) {
         self.moment = moment
+        self.columns = columns
         _isFavorite = isFavorite
         self.availableWidth = availableWidth
+        _capsuleWidth = capsuleWidth
     }
 
     /// The capsule and the star, side by side or one under the other.
@@ -55,7 +70,7 @@ struct HeroActions: View {
 
 extension HeroActions {
     /// The height of the capsule and the size of the star at the default text size, in points.
-    private static let actionHeightAtDefaultSize: CGFloat = 48
+    static let actionHeightAtDefaultSize: CGFloat = 48
 
     /// The least a tap target measures on either side, in points.
     private static let tapTarget: CGFloat = 44
@@ -84,9 +99,36 @@ extension HeroActions {
     /// It is `true` before the session, when there is no capsule. Otherwise it is `false` until the
     /// width and the capsule are measured.
     private var fitsBeside: Bool {
+        guard let availableWidth else { return moment == .before }
+        return Self.fitsBeside(
+            in: availableWidth,
+            moment: moment,
+            capsuleWidth: capsuleWidth,
+            actionHeight: actionHeight,
+        )
+    }
+
+    /// Returns whether the capsule and the star fit side by side in a width.
+    ///
+    /// Before the session there is no capsule, so it returns `true`. It returns `false` until the
+    /// capsule is measured.
+    ///
+    /// - Parameters:
+    ///   - width: The width available to both, in points.
+    ///   - moment: Where a person is in the session's day.
+    ///   - capsuleWidth: The capsule's width on one line, in points, or `nil` until measured.
+    ///   - actionHeight: The size of the star at the current text size, in points.
+    /// - Returns: `true` before the session, or when both fit on one line in the width. `false`
+    ///   until the capsule is measured, or when they do not fit.
+    static func fitsBeside(
+        in width: CGFloat,
+        moment: SessionMoment,
+        capsuleWidth: CGFloat?,
+        actionHeight: CGFloat,
+    ) -> Bool {
         guard moment != .before else { return true }
-        guard let availableWidth, let capsuleWidth else { return false }
-        return capsuleWidth + Self.actionSpacing + actionHeight <= availableWidth
+        guard let capsuleWidth else { return false }
+        return capsuleWidth + actionSpacing + actionHeight <= width
     }
 }
 
@@ -116,6 +158,7 @@ extension HeroActions {
         } label: {
             capsuleLabel(title, symbol: symbol)
                 .frame(minHeight: actionHeight)
+                .frame(maxWidth: columns == .twoColumns ? .infinity : nil)
                 .background(.white, in: .capsule)
                 .contentShape(.capsule)
                 .background {
