@@ -45,6 +45,9 @@ struct SessionDetailScreen: View {
     /// Whether the venue page is pushed, to find the session's room.
     @State private var showsVenue = false
 
+    /// Whether this person has asked to reduce motion.
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
     /// How far the bars cover the list, or `nil` until it first reports.
     @State private var bars: SessionHero.BarInsets?
 
@@ -108,15 +111,9 @@ struct SessionDetailScreen: View {
         .toolbar(removing: .title)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                FavoriteButton(isFavorite: $isFavorite)
-            }
-
-            ToolbarItem(placement: .topBarTrailing) {
                 shareButton
             }
 
-            // Favourite and Share act on this session. More holds what
-            // leaves it, so it sits apart in its own capsule.
             ToolbarSpacer(.fixed, placement: .topBarTrailing)
 
             ToolbarItem(placement: .topBarTrailing) {
@@ -199,6 +196,49 @@ extension SessionDetailScreen {
 // MARK: - Toolbar
 
 extension SessionDetailScreen {
+    /// The label of the favorite item, which names what it does now.
+    private var favoriteLabel: LocalizedStringKey {
+        isFavorite ? "Remove from Favourites" : "Add to Favourites"
+    }
+
+    /// The menu item that favorites the session, or takes the mark away.
+    private var favoriteItem: some View {
+        Button {
+            toggleFavorite()
+        } label: {
+            Label {
+                Text(favoriteLabel)
+            } icon: {
+                Image(icon: isFavorite ? .favoriteFilled : .favorite)
+            }
+        }
+        .tint(.textPrimary)
+        .sensoryFeedback(.success, trigger: isFavorite)
+        .accessibilityAddTraits(isFavorite ? .isSelected : [])
+    }
+
+    /// Marks the session as a favorite, or takes the mark away.
+    private func toggleFavorite() {
+        if reduceMotion {
+            isFavorite.toggle()
+        } else {
+            withAnimation { isFavorite.toggle() }
+        }
+    }
+
+    /// The menu item that adds the session to a calendar.
+    private var calendarItem: some View {
+        Button {
+        } label: {
+            Label {
+                Text("Add to Calendar")
+            } icon: {
+                Image(icon: .calendar)
+            }
+        }
+        .tint(.textPrimary)
+    }
+
     /// The button that shares this session.
     private var shareButton: some View {
         Button {
@@ -212,32 +252,37 @@ extension SessionDetailScreen {
         .tint(.textPrimary)
     }
 
-    /// The menu of actions that lead away from this session.
+    /// The menu that holds every action except sharing.
+    ///
+    /// Each item has a title and a symbol, and the favorite item names what it does now.
     private var moreMenu: some View {
         Menu {
-            Button {
-            } label: {
-                Label {
-                    Text("Add to Calendar")
-                } icon: {
-                    Image(icon: .calendar)
-                }
-            }
+            favoriteItem
 
-            Button {
-                showsVenue = true
-            } label: {
-                Label {
-                    Text("Find the room")
-                } icon: {
-                    Image(icon: .location)
-                }
+            calendarItem
+
+            if !session.isInMainRoom {
+                findRoomItem
             }
         } label: {
             Label {
                 Text("More")
             } icon: {
                 Image(icon: .more)
+            }
+        }
+        .tint(.textPrimary)
+    }
+
+    /// The menu item that pushes the venue page.
+    private var findRoomItem: some View {
+        Button {
+            showsVenue = true
+        } label: {
+            Label {
+                Text("Find the Room")
+            } icon: {
+                Image(icon: .location)
             }
         }
         .tint(.textPrimary)
