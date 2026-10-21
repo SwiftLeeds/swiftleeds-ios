@@ -15,9 +15,12 @@ struct SponsorLogoTile: View {
     /// How wide and tall the square is.
     let side: CGFloat
 
+    /// How round the square's corners are.
+    var cornerRadius: CornerRadius = .small
+
     /// The shape of the square.
     private var shape: RoundedRectangle {
-        RoundedRectangle(cornerRadius: CGFloat(CornerRadius.small), style: .continuous)
+        RoundedRectangle(cornerRadius: CGFloat(cornerRadius), style: .continuous)
     }
 
     var body: some View {

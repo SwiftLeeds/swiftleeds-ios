@@ -124,8 +124,7 @@ struct ScheduleScreen: View {
                     )
                 }
                 .navigationDestination(for: SampleSponsor.self) { sponsor in
-                    NotYetDesigned(destination: .sponsors)
-                        .navigationTitle(sponsor.name)
+                    SponsorScreen(sponsor: sponsor)
                 }
                 .sheet(item: $sheet) { item in
                     switch item {

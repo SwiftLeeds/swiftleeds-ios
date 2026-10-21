@@ -42,8 +42,7 @@ struct SearchScreen: View {
                     )
                 }
                 .navigationDestination(for: SampleSponsor.self) { sponsor in
-                    NotYetDesigned(destination: .sponsors)
-                        .navigationTitle(sponsor.name)
+                    SponsorScreen(sponsor: sponsor)
                 }
         }
         .searchable(text: $query, prompt: "Talks, people and sponsors")
@@ -165,6 +164,8 @@ struct SearchScreen: View {
             )
         } else if let person = result.person {
             PersonScreen(person: person)
+        } else if let sponsor = result.sponsor {
+            SponsorScreen(sponsor: sponsor)
         } else {
             NotYetDesigned(destination: .search)
                 .navigationTitle(result.title)

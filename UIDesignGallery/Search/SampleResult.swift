@@ -51,12 +51,17 @@ struct SampleResult: Identifiable, Equatable, Hashable, Sendable {
     /// What the row says under the title.
     let detail: String
 
-    /// The session this result opens, or `nil` when its screen is still to come.
+    /// The session this result opens, or `nil` for a result that is not a
+    /// session.
     let session: SampleSession?
 
     /// The person this result opens, or `nil` for a result that is not a
     /// person.
     let person: SamplePerson?
+
+    /// The sponsor this result opens, or `nil` for a result that is not a
+    /// sponsor.
+    let sponsor: SampleSponsor?
 
     /// Returns whether this result answers what a person typed.
     ///
@@ -83,6 +88,7 @@ extension SampleResult {
             detail: "\(session.time) • \(session.room)",
             session: session,
             person: nil,
+            sponsor: nil,
         )
     }
 
@@ -98,6 +104,7 @@ extension SampleResult {
             detail: "\(roles) • \(person.detail)",
             session: nil,
             person: person,
+            sponsor: nil,
         )
     }
 
@@ -114,6 +121,7 @@ extension SampleResult {
             detail: sponsor.standing,
             session: nil,
             person: nil,
+            sponsor: sponsor,
         )
     }
 }

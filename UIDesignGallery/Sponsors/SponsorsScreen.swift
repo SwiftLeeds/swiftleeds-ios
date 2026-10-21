@@ -8,8 +8,7 @@ struct SponsorsScreen: View {
             SponsorOneSizeList()
                 .navigationTitle("Sponsors")
                 .navigationDestination(for: SampleSponsor.self) { sponsor in
-                    NotYetDesigned(destination: .sponsors)
-                        .navigationTitle(sponsor.name)
+                    SponsorScreen(sponsor: sponsor)
                 }
         }
     }
