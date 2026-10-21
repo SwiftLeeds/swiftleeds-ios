@@ -186,11 +186,13 @@ package struct SponsorTileView: View {
                         Image(systemName: showingJobs ? "chevron.up" : "chevron.down")
                             .font(.caption.weight(.semibold))
                             .foregroundColor(.secondary)
+                            .accessibilityHidden(true)
                     }
                     .padding()
                     .background(Color.accent.opacity(0.05))
                 },
             )
+            .accessibilityValue(showingJobs ? "Expanded" : "Collapsed")
 
             if showingJobs {
                 VStack(spacing: 0) {
