@@ -1,7 +1,7 @@
 import SwiftUI
 import UIDesign
 
-/// A view that shows a ticket and the headline sponsor.
+/// A view that shows a ticket and the first platinum sponsor.
 ///
 /// With room, the pass sits beside the sponsor. Without it, the sponsor falls
 /// below the pass. The layout asks which fits rather than which device it is on.
@@ -59,15 +59,15 @@ struct TicketScreen: View {
         .frame(maxWidth: .infinity)
     }
 
-    /// The heading and the headline sponsor.
+    /// The heading and the first platinum sponsor.
     private var sponsor: some View {
         VStack(alignment: .leading, spacing: .small) {
-            Text("Headline sponsor")
-                .font(.subheadline)
-                .foregroundStyle(.textSecondary)
+            if let platinum = SampleSponsor.sponsors(in: .platinum).first {
+                Text(platinum.standing)
+                    .font(.subheadline)
+                    .foregroundStyle(.textSecondary)
 
-            if let headline = SampleSponsor.headline.first {
-                SponsorRow(sponsor: headline)
+                SponsorRow(sponsor: platinum)
             }
         }
     }

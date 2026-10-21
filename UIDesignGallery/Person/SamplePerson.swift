@@ -109,7 +109,7 @@ extension SamplePerson {
         roles: Roles(.sponsor, .speaker),
         bio: "Fay helps developers get the most from Pennine Labs' tools.",
         links: [.linkedIn("in/fayfisher"), .x("@fayfisher")],
-        represents: SampleSponsor.gold[0],
+        represents: SampleSponsor.sponsors(in: .gold).first,
     )
 
     /// A volunteer, who helps run the conference.

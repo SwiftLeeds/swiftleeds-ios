@@ -106,25 +106,14 @@ extension SampleResult {
     /// A result carries the tier rather than the company's own line, because
     /// the sponsors screen puts the tier in a heading and a search result has
     /// no heading to carry it.
-    static let sponsors: [SampleResult] =
-        tier("Headline sponsor", SampleSponsor.headline)
-        + tier("Gold sponsor", SampleSponsor.gold)
-
-    /// Returns one tier's companies as results.
-    ///
-    /// - Parameters:
-    ///   - name: What the conference calls this tier, as a result prints it.
-    ///   - sponsors: The companies at this tier.
-    private static func tier(_ name: String, _ sponsors: [SampleSponsor]) -> [SampleResult] {
-        sponsors.map { sponsor in
-            SampleResult(
-                id: "sponsor-\(sponsor.id)",
-                kind: .sponsor,
-                title: sponsor.name,
-                detail: name,
-                session: nil,
-                person: nil,
-            )
-        }
+    static let sponsors: [SampleResult] = SampleSponsor.all.map { sponsor in
+        SampleResult(
+            id: "sponsor-\(sponsor.id)",
+            kind: .sponsor,
+            title: sponsor.name,
+            detail: sponsor.standing,
+            session: nil,
+            person: nil,
+        )
     }
 }
