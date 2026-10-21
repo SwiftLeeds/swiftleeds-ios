@@ -1,7 +1,9 @@
 import SwiftUI
 import UIDesign
 
-/// A view that shows who a sponsor is and how much it gives the conference.
+/// A view that shows who a sponsor is and what it is hiring for.
+///
+/// The roles section appears only when the sponsor has a job to advertise.
 struct SponsorScreen: View {
     /// How wide and tall the header's logo is before the text size scales it.
     private static let baseLogoSide: CGFloat = 96
@@ -24,6 +26,8 @@ struct SponsorScreen: View {
                     // the list's own row insets, so it lines up with the rows.
                     .listRowBackground(Color.clear)
             }
+
+            roles
         }
         .listStyle(.insetGrouped)
         .navigationTitle(sponsor.name)
@@ -67,5 +71,17 @@ struct SponsorScreen: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .multilineTextAlignment(.leading)
         .padding(.vertical, .large)
+    }
+
+    /// The jobs the sponsor is hiring for, if any.
+    @ViewBuilder
+    private var roles: some View {
+        if !sponsor.jobs.isEmpty {
+            Section("Open roles") {
+                ForEach(sponsor.jobs) { job in
+                    SponsorJobRow(job: job)
+                }
+            }
+        }
     }
 }
