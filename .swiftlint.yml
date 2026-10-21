@@ -187,6 +187,10 @@ opt_in_rules:
   # comparing two values built the same way.
   - identical_operands
 
+  # A long closure, in practice always a view builder here, hides its
+  # structure. Split it into named views. The limit is set below.
+  - closure_body_length
+
 # Analyzer rules read the compiler log, so they run only through
 # `swiftlint analyze`, never `swiftlint lint`.
 analyzer_rules:
@@ -290,6 +294,12 @@ line_length: 120
 # `compactMap { $0 }` stays a closure; `\.self` would be the clever form.
 prefer_key_path:
   ignore_identity_closures: true
+
+# The default of 30 lines flagged 19 closures in 11 files, all view builders.
+# At 60, the three over the limit were split into named view properties.
+# `--strict` makes the warning a gate, so no error level is set.
+closure_body_length:
+  warning: 60
 
 # A view model nests under its view, and its own `Phase` and `Alert` enums nest
 # under that. The default of one level rejects the house pattern.

@@ -81,37 +81,42 @@ package struct SpeakerView: View {
                     )
                 }
 
-                ForEach(presentation.speakers) { speaker in
-                    if !speaker.biography.isEmpty {
-                        StackedTileView(
-                            primaryText: "About\(presentation.speakers.count == 1 ? "" : ": \(speaker.name)")",
-                            secondaryText: speaker.biography,
-                            secondaryColor: Color.primary,
-                        )
-                    }
-
-                    if let twitter = speaker.twitter,
-                        !twitter.isEmpty,
-                        let twitterURL = URL(string: "https://twitter.com/\(twitter)")
-                    {
-                        CommonTileView(
-                            primaryText: "Twitter",
-                            secondaryText: "@\(twitter)",
-                            secondaryColor: Color.primary,
-                        )
-                        .accessibilityHint("Opens twitter for this speaker")
-                        .accessibilityAddTraits(.isButton)
-                        .onTapGesture {
-                            openURL(twitterURL)
-                        }
-                    }
-                }
+                speakerTiles
             }
             .padding(Padding.screen)
         }
         .sheet(isPresented: $showWebSheet) {
             WebView(url: presentation.slidoURL ?? "")
                 .edgesIgnoringSafeArea(.bottom)
+        }
+    }
+
+    /// A tile for each speaker's biography and Twitter handle, when the speaker has one.
+    private var speakerTiles: some View {
+        ForEach(presentation.speakers) { speaker in
+            if !speaker.biography.isEmpty {
+                StackedTileView(
+                    primaryText: "About\(presentation.speakers.count == 1 ? "" : ": \(speaker.name)")",
+                    secondaryText: speaker.biography,
+                    secondaryColor: Color.primary,
+                )
+            }
+
+            if let twitter = speaker.twitter,
+                !twitter.isEmpty,
+                let twitterURL = URL(string: "https://twitter.com/\(twitter)")
+            {
+                CommonTileView(
+                    primaryText: "Twitter",
+                    secondaryText: "@\(twitter)",
+                    secondaryColor: Color.primary,
+                )
+                .accessibilityHint("Opens twitter for this speaker")
+                .accessibilityAddTraits(.isButton)
+                .onTapGesture {
+                    openURL(twitterURL)
+                }
+            }
         }
     }
 }

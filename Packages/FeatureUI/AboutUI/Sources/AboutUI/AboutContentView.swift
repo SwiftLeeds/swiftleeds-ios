@@ -50,73 +50,9 @@ package struct AboutContentView: View {
             )
 
             VStack(spacing: Padding.cellGap) {
-                VStack(alignment: .leading, spacing: Padding.stackGap) {
-                    Text("About")
-                        .font(.headline.weight(.semibold))
-                        .foregroundColor(.primary)
+                aboutCard
 
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text(.init(viewModel.truncatedAboutText))
-                            .font(.subheadline.weight(.regular))
-                            .foregroundColor(.secondary)
-
-                        HStack {
-                            Spacer()
-                            Button("More") {
-                                isFullAboutShown = true
-                            }
-                            .font(.subheadline.weight(.medium))
-                            .foregroundColor(.accentColor)
-                        }
-                    }
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .multilineTextAlignment(.leading)
-                .padding(Padding.cell)
-                .background(
-                    Color.cellBackground,
-                    in: RoundedRectangle(cornerRadius: Constants.cellRadius),
-                )
-                .accessibilityElement(children: .ignore)
-                .accessibilityLabel("About SwiftLeeds. \(viewModel.truncatedAboutText). Tap More for full details.")
-
-                LazyVGrid(columns: gridColumns, spacing: Padding.cellGap) {
-                    CompactActionItem(
-                        icon: "exclamationmark.triangle.fill",
-                        title: "Report a\nProblem",
-                        accessibilityHint: "Opens a web view to allow a problem to be reported",
-                        action: { isReportAProblemShown = true },
-                    )
-
-                    CompactActionItem(
-                        icon: "doc.text.fill",
-                        title: "Code of\nConduct",
-                        accessibilityHint: "Opens a web page showing our code of conduct",
-                        action: { openURL(url: viewModel.codeOfConductURL) },
-                    )
-
-                    CompactActionItem(
-                        icon: "location.fill",
-                        title: "Venue\nInfo",
-                        accessibilityHint: "Opens a web page showing our venue information",
-                        action: { openURL(url: viewModel.venueURL) },
-                    )
-
-                    CompactActionItem(
-                        icon: "message.fill",
-                        title: "Join our\nSlack",
-                        accessibilityHint: "Opens an invite link to join the SwiftLeeds Slack workspace",
-                        action: { openURL(url: viewModel.slackURL) },
-                    )
-
-                    CompactActionItem(
-                        icon: "play.rectangle.fill",
-                        title: "YouTube\nChannel",
-                        accessibilityHint: "Opens the SwiftLeeds YouTube channel",
-                        action: { openURL(url: viewModel.youtubeURL) },
-                    )
-                }
-                .padding(.vertical, 8)
+                actionGrid
 
                 if !viewModel.teamMembers.isEmpty {
                     teamSection
@@ -158,6 +94,80 @@ package struct AboutContentView: View {
             }
         }
         .navigationBarHidden(true)
+    }
+
+    /// A card that shows the start of the conference's about text, with a button for the full text.
+    private var aboutCard: some View {
+        VStack(alignment: .leading, spacing: Padding.stackGap) {
+            Text("About")
+                .font(.headline.weight(.semibold))
+                .foregroundColor(.primary)
+
+            VStack(alignment: .leading, spacing: 8) {
+                Text(.init(viewModel.truncatedAboutText))
+                    .font(.subheadline.weight(.regular))
+                    .foregroundColor(.secondary)
+
+                HStack {
+                    Spacer()
+                    Button("More") {
+                        isFullAboutShown = true
+                    }
+                    .font(.subheadline.weight(.medium))
+                    .foregroundColor(.accentColor)
+                }
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .multilineTextAlignment(.leading)
+        .padding(Padding.cell)
+        .background(
+            Color.cellBackground,
+            in: RoundedRectangle(cornerRadius: Constants.cellRadius),
+        )
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("About SwiftLeeds. \(viewModel.truncatedAboutText). Tap More for full details.")
+    }
+
+    /// A grid of compact actions for reporting problems and opening conference links.
+    private var actionGrid: some View {
+        LazyVGrid(columns: gridColumns, spacing: Padding.cellGap) {
+            CompactActionItem(
+                icon: "exclamationmark.triangle.fill",
+                title: "Report a\nProblem",
+                accessibilityHint: "Opens a web view to allow a problem to be reported",
+                action: { isReportAProblemShown = true },
+            )
+
+            CompactActionItem(
+                icon: "doc.text.fill",
+                title: "Code of\nConduct",
+                accessibilityHint: "Opens a web page showing our code of conduct",
+                action: { openURL(url: viewModel.codeOfConductURL) },
+            )
+
+            CompactActionItem(
+                icon: "location.fill",
+                title: "Venue\nInfo",
+                accessibilityHint: "Opens a web page showing our venue information",
+                action: { openURL(url: viewModel.venueURL) },
+            )
+
+            CompactActionItem(
+                icon: "message.fill",
+                title: "Join our\nSlack",
+                accessibilityHint: "Opens an invite link to join the SwiftLeeds Slack workspace",
+                action: { openURL(url: viewModel.slackURL) },
+            )
+
+            CompactActionItem(
+                icon: "play.rectangle.fill",
+                title: "YouTube\nChannel",
+                accessibilityHint: "Opens the SwiftLeeds YouTube channel",
+                action: { openURL(url: viewModel.youtubeURL) },
+            )
+        }
+        .padding(.vertical, 8)
     }
 
     private var teamSection: some View {
