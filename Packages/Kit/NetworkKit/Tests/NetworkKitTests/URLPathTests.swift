@@ -3,7 +3,10 @@ import Testing
 
 @Suite struct URLPathTests {
     @Test func whenValuesMatch_shouldBeEqual() {
-        #expect(URLPath("api/v1/login/ticket") == URLPath("api/v1/login/ticket"))
+        let first = URLPath("api/v1/login/ticket")
+        let second = URLPath("api/v1/login/ticket")
+
+        #expect(first == second)
     }
 
     @Test func whenValuesDiffer_shouldNotBeEqual() {

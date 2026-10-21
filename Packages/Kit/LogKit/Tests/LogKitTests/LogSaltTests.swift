@@ -4,7 +4,10 @@ import Testing
 
 @Suite struct LogSaltTests {
     @Test func whenGeneratedRandomly_shouldDifferBetweenSalts() {
-        #expect(LogSalt.random() != LogSalt.random())
+        let first = LogSalt.random()
+        let second = LogSalt.random()
+
+        #expect(first != second)
     }
 
     @Test func whenGeneratedRandomly_shouldProduceSixteenBytes() {

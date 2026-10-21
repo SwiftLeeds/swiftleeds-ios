@@ -3,7 +3,10 @@ import Testing
 
 @Suite struct HTTPStatusTests {
     @Test func whenCodesMatch_shouldBeEqual() {
-        #expect(HTTPStatus(code: 503) == HTTPStatus(code: 503))
+        let first = HTTPStatus(code: 503)
+        let second = HTTPStatus(code: 503)
+
+        #expect(first == second)
     }
 
     @Test func whenCodesDiffer_shouldNotBeEqual() {
