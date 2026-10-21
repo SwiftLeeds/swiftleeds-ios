@@ -3,9 +3,12 @@ import UIDesign
 
 /// A view that summarizes one sponsor in a row.
 ///
-/// The row shows the name and the tagline. The number of open roles shows
-/// only where the caller asks for it.
+/// The row shows the logo, the name and the tagline. The number of open roles
+/// shows only where the caller asks for it.
 struct SponsorRow: View {
+    /// How wide and tall the logo's square is before the text size scales it.
+    private static let baseLogoSide: CGFloat = 56
+
     /// The sponsor this row describes.
     let sponsor: SampleSponsor
 
@@ -16,11 +19,11 @@ struct SponsorRow: View {
     ///
     /// A logo identifies the company, so it is content rather than decoration
     /// and grows with the text beside it.
-    @ScaledMetric(relativeTo: .headline) private var logoSide: CGFloat = 56
+    @ScaledMetric(relativeTo: .headline) private var logoSide = SponsorRow.baseLogoSide
 
     var body: some View {
         ReflowingStack {
-            logo
+            SponsorLogoTile(logo: sponsor.logo, side: logoSide)
 
             VStack(alignment: .leading, spacing: .xxSmall) {
                 Text(sponsor.name)
@@ -42,26 +45,5 @@ struct SponsorRow: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             .alignmentGuide(.listRowSeparatorLeading) { $0[.leading] }
         }
-    }
-
-    /// The shape of the logo's square.
-    private var logoShape: RoundedRectangle {
-        RoundedRectangle(cornerRadius: CGFloat(CornerRadius.small), style: .continuous)
-    }
-
-    /// The square that stands in for the company's logo.
-    ///
-    /// The edge keeps the square visible on a surface of the same color.
-    private var logo: some View {
-        logoShape
-            .fill(.tertiarySurface)
-            .strokeBorder(.borderPrimary, lineWidth: CGFloat(BorderWidth.thin))
-            .frame(width: logoSide, height: logoSide)
-            .overlay {
-                Text(String(sponsor.name.prefix(1)))
-                    .font(.title2.weight(.semibold))
-                    .foregroundStyle(.textSecondary)
-            }
-            .accessibilityHidden(true)
     }
 }

@@ -17,6 +17,9 @@ struct SampleSponsor: Identifiable, Equatable, Hashable, Sendable {
     /// What the company wants to say, or `nil` when it says nothing.
     let tagline: String?
 
+    /// The placeholder that stands in for the company's logo.
+    let logo: SampleLogo
+
     /// The jobs the company is hiring for, which is empty when it has none.
     let jobs: [SampleJob]
 
@@ -42,6 +45,7 @@ extension SampleSponsor {
             name: "Northern Software",
             tier: .platinum,
             tagline: "Software for the north, built in the north",
+            logo: SampleLogo(symbol: "network"),
             jobs: [
                 job("Senior iOS Engineer", in: "Leeds"),
                 job("Mobile Platform Engineer", in: "Manchester"),
@@ -52,24 +56,28 @@ extension SampleSponsor {
             name: "Calder Digital",
             tier: .platinum,
             tagline: nil,
+            logo: SampleLogo(symbol: "waveform"),
             jobs: [],
         ),
         SampleSponsor(
             name: "Pennine Labs",
             tier: .gold,
             tagline: "Tools that make developers faster",
+            logo: SampleLogo(symbol: "flask"),
             jobs: [job("Developer Advocate", in: "Leeds")],
         ),
         SampleSponsor(
             name: "Aire Systems",
             tier: .gold,
             tagline: nil,
+            logo: SampleLogo(symbol: "drop"),
             jobs: [],
         ),
         SampleSponsor(
             name: "Dales Mobile",
             tier: .gold,
             tagline: "Apps for people who work outdoors",
+            logo: SampleLogo(symbol: "mountain.2"),
             jobs: [
                 job("iOS Engineer", in: "York"),
                 job("QA Engineer", in: "Remote"),
@@ -79,24 +87,28 @@ extension SampleSponsor {
             name: "Ouse Apps",
             tier: .silver,
             tagline: nil,
+            logo: SampleLogo(symbol: "square.stack.3d.up"),
             jobs: [],
         ),
         SampleSponsor(
             name: "Roundhay Mobile Engineering Collective",
             tier: .silver,
             tagline: "A co-operative of mobile engineers",
+            logo: SampleLogo(symbol: "leaf"),
             jobs: [job("Swift Engineer", in: "Leeds")],
         ),
         SampleSponsor(
             name: "Skipton Soft",
             tier: .silver,
             tagline: nil,
+            logo: SampleLogo(symbol: "hammer"),
             jobs: [],
         ),
         SampleSponsor(
             name: "Tyke Tools",
             tier: .silver,
             tagline: nil,
+            logo: SampleLogo(symbol: "wrench.and.screwdriver"),
             jobs: [],
         ),
     ]

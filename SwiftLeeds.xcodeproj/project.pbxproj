@@ -61,7 +61,9 @@
 		7CA11E00000000000000020A /* SponsorRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E00000000000000010A /* SponsorRow.swift */; };
 		7CA11E00000000000000020B /* SponsorsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E00000000000000010B /* SponsorsScreen.swift */; };
 		7CA11E00000000000000F601 /* SampleSponsorTier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E00000000000000F501 /* SampleSponsorTier.swift */; };
+		7CA11E00000000000000F602 /* SampleLogo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E00000000000000F502 /* SampleLogo.swift */; };
 		7CA11E00000000000000F603 /* SampleJob.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E00000000000000F503 /* SampleJob.swift */; };
+		7CA11E00000000000000F606 /* SponsorLogoTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E00000000000000F506 /* SponsorLogoTile.swift */; };
 		7CA11E00000000000000F608 /* SponsorOneSizeList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E00000000000000F508 /* SponsorOneSizeList.swift */; };
 		7CA11E00000000000000020C /* MockBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E00000000000000010C /* MockBadge.swift */; };
 		7CA11E00000000000000020D /* MockNeutralBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E00000000000000010D /* MockNeutralBadge.swift */; };
@@ -311,7 +313,9 @@
 		7CA11E00000000000000010A /* SponsorRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsorRow.swift; sourceTree = "<group>"; };
 		7CA11E00000000000000010B /* SponsorsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsorsScreen.swift; sourceTree = "<group>"; };
 		7CA11E00000000000000F501 /* SampleSponsorTier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleSponsorTier.swift; sourceTree = "<group>"; };
+		7CA11E00000000000000F502 /* SampleLogo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleLogo.swift; sourceTree = "<group>"; };
 		7CA11E00000000000000F503 /* SampleJob.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleJob.swift; sourceTree = "<group>"; };
+		7CA11E00000000000000F506 /* SponsorLogoTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsorLogoTile.swift; sourceTree = "<group>"; };
 		7CA11E00000000000000F508 /* SponsorOneSizeList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsorOneSizeList.swift; sourceTree = "<group>"; };
 		7CA11E00000000000000010C /* MockBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockBadge.swift; sourceTree = "<group>"; };
 		7CA11E00000000000000010D /* MockNeutralBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNeutralBadge.swift; sourceTree = "<group>"; };
@@ -750,8 +754,10 @@
 			isa = PBXGroup;
 			children = (
 				7CA11E00000000000000F503 /* SampleJob.swift */,
+				7CA11E00000000000000F502 /* SampleLogo.swift */,
 				7CA11E000000000000000109 /* SampleSponsor.swift */,
 				7CA11E00000000000000F501 /* SampleSponsorTier.swift */,
+				7CA11E00000000000000F506 /* SponsorLogoTile.swift */,
 				7CA11E00000000000000F508 /* SponsorOneSizeList.swift */,
 				7CA11E00000000000000010A /* SponsorRow.swift */,
 				7CA11E00000000000000010B /* SponsorsScreen.swift */,
@@ -1183,7 +1189,9 @@
 				7CA11E00000000000000020A /* SponsorRow.swift in Sources */,
 				7CA11E00000000000000020B /* SponsorsScreen.swift in Sources */,
 				7CA11E00000000000000F601 /* SampleSponsorTier.swift in Sources */,
+				7CA11E00000000000000F602 /* SampleLogo.swift in Sources */,
 				7CA11E00000000000000F603 /* SampleJob.swift in Sources */,
+				7CA11E00000000000000F606 /* SponsorLogoTile.swift in Sources */,
 				7CA11E00000000000000F608 /* SponsorOneSizeList.swift in Sources */,
 				7CA11E00000000000000020C /* MockBadge.swift in Sources */,
 				7CA11E00000000000000020D /* MockNeutralBadge.swift in Sources */,
