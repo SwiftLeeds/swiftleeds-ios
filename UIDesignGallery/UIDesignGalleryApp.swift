@@ -21,8 +21,8 @@ import UIDesign
 /// a person page or a session detail already a favourite, `-moment before`,
 /// `-moment during` or `-moment after` sets where in its day a session detail
 /// pretends to be, `-bio expanded` opens it with the
-/// bio in full, `-summary expanded` opens a session detail with its summary
-/// in full, `-detail accessibility` pushes the two-speaker workshop's
+/// bio in full, `-summary expanded` opens a session detail with the sheet
+/// of its full summary showing, `-detail accessibility` pushes the two-speaker workshop's
 /// detail, `-detail dropin` pushes the drop-in session's detail, `-sidebar 1`
 /// shows the tabs as a sidebar on a regular width, and `-halos role`,
 /// `-halos pink` or `-halos gold` shows every halo treatment at once, in those
@@ -50,7 +50,7 @@ struct UIDesignGalleryApp: App {
     /// Whether the person page opens with the bio in full.
     private let opensBioExpanded: Bool
 
-    /// Whether a session detail opens with its summary in full.
+    /// Whether a session detail opens with the sheet of its full summary showing.
     private let opensSummaryExpanded: Bool
 
     /// Whether the tab bar adapts into a sidebar on a regular width.

@@ -26,7 +26,7 @@ struct SessionDetailScreen: View {
     /// The action that shows a speaker's page.
     let showSpeaker: (SamplePerson) -> Void
 
-    /// Whether the summary shows in full when the screen appears.
+    /// Whether the sheet with the full summary shows when the screen appears.
     private let opensSummaryExpanded: Bool
 
     /// Whether clear space follows the content, so the title can scroll fully
@@ -58,7 +58,7 @@ struct SessionDetailScreen: View {
     ///
     /// - Parameters:
     ///   - session: The session this screen describes.
-    ///   - opensSummaryExpanded: Whether the summary shows in full when the
+    ///   - opensSummaryExpanded: Whether the sheet with the full summary shows when the
     ///     screen appears.
     ///   - opensFavorite: Whether the session is a favorite when the screen appears, even if the
     ///     sample says it is not.
@@ -174,10 +174,10 @@ extension SessionDetailScreen {
                 .accessibilityAddTraits(.isHeader)
 
             VStack(alignment: .leading, spacing: .medium) {
-                ExpandableText(
+                CutAboutText(
                     session.summary,
                     lines: Self.collapsedSummaryLines,
-                    opensExpanded: opensSummaryExpanded,
+                    opensFull: opensSummaryExpanded,
                 )
             }
             .padding(.large)
