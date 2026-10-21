@@ -182,6 +182,11 @@ opt_in_rules:
   # a reader it can fail. Every hit when it was turned on was in a test.
   - unneeded_throws_rethrows
 
+  # Two sides of a comparison written the same way usually means one side was
+  # copied and not changed. Every hit when it was turned on was a test
+  # comparing two values built the same way.
+  - identical_operands
+
 # Analyzer rules read the compiler log, so they run only through
 # `swiftlint analyze`, never `swiftlint lint`.
 analyzer_rules:

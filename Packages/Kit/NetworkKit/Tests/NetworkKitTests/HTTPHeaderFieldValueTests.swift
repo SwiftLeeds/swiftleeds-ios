@@ -9,7 +9,10 @@ import Testing
     }
 
     @Test func whenValuesMatchExactly_shouldBeEqual() {
-        #expect(HTTPHeaderField.Value("no-cache") == HTTPHeaderField.Value("no-cache"))
+        let first = HTTPHeaderField.Value("no-cache")
+        let second = HTTPHeaderField.Value("no-cache")
+
+        #expect(first == second)
     }
 
     @Test func whenValuesDifferOnlyByCase_shouldNotBeEqual() {

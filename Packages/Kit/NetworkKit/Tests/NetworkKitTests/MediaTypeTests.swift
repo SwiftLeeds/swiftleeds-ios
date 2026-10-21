@@ -3,7 +3,10 @@ import Testing
 
 @Suite struct MediaTypeTests {
     @Test func whenValuesMatch_shouldBeEqual() {
-        #expect(MediaType("application/json") == MediaType("application/json"))
+        let first = MediaType("application/json")
+        let second = MediaType("application/json")
+
+        #expect(first == second)
     }
 
     @Test func whenValuesDiffer_shouldNotBeEqual() {
