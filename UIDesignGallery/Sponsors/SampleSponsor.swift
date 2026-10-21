@@ -14,31 +14,79 @@ struct SampleSponsor: Identifiable, Equatable, Hashable, Sendable {
     /// How much the company gives the conference.
     let tier: SampleSponsorTier
 
-    /// How many jobs the company is hiring for, or `nil` when it has none.
-    let detail: String?
+    /// The jobs the company is hiring for, which is empty when it has none.
+    let jobs: [SampleJob]
 
     /// What the sponsor's tier makes the company, as a line of text prints it.
     var standing: String {
         "\(tier.title) sponsor"
+    }
+
+    /// How many jobs the company is hiring for, or `nil` when it has none.
+    var openRoles: String? {
+        switch jobs.count {
+        case 0: nil
+        case 1: "1 open role"
+        case let count: "\(count) open roles"
+        }
     }
 }
 
 extension SampleSponsor {
     /// Every company paying for the conference, from the highest tier down.
     static let all: [SampleSponsor] = [
-        SampleSponsor(name: "Northern Software", tier: .platinum, detail: "3 open roles"),
-        SampleSponsor(name: "Calder Digital", tier: .platinum, detail: nil),
-        SampleSponsor(name: "Pennine Labs", tier: .gold, detail: "1 open role"),
-        SampleSponsor(name: "Aire Systems", tier: .gold, detail: nil),
-        SampleSponsor(name: "Dales Mobile", tier: .gold, detail: "2 open roles"),
-        SampleSponsor(name: "Ouse Apps", tier: .silver, detail: nil),
+        SampleSponsor(
+            name: "Northern Software",
+            tier: .platinum,
+            jobs: [
+                job("Senior iOS Engineer", in: "Leeds"),
+                job("Mobile Platform Engineer", in: "Manchester"),
+                job("Design Systems Designer", in: "Remote"),
+            ],
+        ),
+        SampleSponsor(
+            name: "Calder Digital",
+            tier: .platinum,
+            jobs: [],
+        ),
+        SampleSponsor(
+            name: "Pennine Labs",
+            tier: .gold,
+            jobs: [job("Developer Advocate", in: "Leeds")],
+        ),
+        SampleSponsor(
+            name: "Aire Systems",
+            tier: .gold,
+            jobs: [],
+        ),
+        SampleSponsor(
+            name: "Dales Mobile",
+            tier: .gold,
+            jobs: [
+                job("iOS Engineer", in: "York"),
+                job("QA Engineer", in: "Remote"),
+            ],
+        ),
+        SampleSponsor(
+            name: "Ouse Apps",
+            tier: .silver,
+            jobs: [],
+        ),
         SampleSponsor(
             name: "Roundhay Mobile Engineering Collective",
             tier: .silver,
-            detail: "1 open role",
+            jobs: [job("Swift Engineer", in: "Leeds")],
         ),
-        SampleSponsor(name: "Skipton Soft", tier: .silver, detail: nil),
-        SampleSponsor(name: "Tyke Tools", tier: .silver, detail: nil),
+        SampleSponsor(
+            name: "Skipton Soft",
+            tier: .silver,
+            jobs: [],
+        ),
+        SampleSponsor(
+            name: "Tyke Tools",
+            tier: .silver,
+            jobs: [],
+        ),
     ]
 
     /// Returns the companies at one tier, in the order the conference lists them.
@@ -47,5 +95,20 @@ extension SampleSponsor {
     /// - Returns: The companies at `tier`.
     static func sponsors(in tier: SampleSponsorTier) -> [SampleSponsor] {
         all.filter { $0.tier == tier }
+    }
+
+    /// Returns a job a sample sponsor advertises.
+    ///
+    /// - Parameters:
+    ///   - title: What the job is called.
+    ///   - location: The place the job is based.
+    /// - Returns: A job whose page is on the example domain.
+    private static func job(_ title: String, in location: String) -> SampleJob {
+        let page = title.lowercased().replacingOccurrences(of: " ", with: "-")
+        return SampleJob(
+            title: title,
+            location: location,
+            link: .website("example.com/jobs/\(page)"),
+        )
     }
 }

@@ -11,7 +11,7 @@ struct SponsorOneSizeList: View {
                 Section(tier.title) {
                     ForEach(SampleSponsor.sponsors(in: tier)) { sponsor in
                         NavigationLink(value: sponsor) {
-                            SponsorRow(sponsor: sponsor)
+                            SponsorRow(sponsor: sponsor, showsOpenRoles: true)
                         }
                     }
                 }

@@ -1,10 +1,16 @@
 import SwiftUI
 import UIDesign
 
-/// A view that summarizes one sponsor in the sponsors list.
+/// A view that summarizes one sponsor in a row.
+///
+/// The row shows the name. The number of open roles shows only where the
+/// caller asks for it.
 struct SponsorRow: View {
     /// The sponsor this row describes.
     let sponsor: SampleSponsor
+
+    /// Whether the row says how many jobs the sponsor is hiring for.
+    var showsOpenRoles = false
 
     /// How wide and tall the logo's square is.
     ///
@@ -21,9 +27,9 @@ struct SponsorRow: View {
                     .font(.headline)
                     .foregroundStyle(.textPrimary)
 
-                if let detail = sponsor.detail {
-                    Text(detail)
-                        .font(.body)
+                if showsOpenRoles, let openRoles = sponsor.openRoles {
+                    Text(openRoles)
+                        .font(.subheadline)
                         .foregroundStyle(.textSecondary)
                 }
             }

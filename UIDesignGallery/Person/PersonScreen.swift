@@ -191,7 +191,7 @@ extension PersonScreen {
         if let sponsor = person.represents {
             Section("Company") {
                 NavigationLink(value: sponsor) {
-                    SponsorRow(sponsor: sponsor)
+                    SponsorRow(sponsor: sponsor, showsOpenRoles: true)
                 }
             }
         }
