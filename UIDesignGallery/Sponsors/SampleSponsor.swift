@@ -133,6 +133,14 @@ extension SampleSponsor {
         all.filter { $0.tier == tier }
     }
 
+    /// Returns the sponsor a launch argument names, or `nil` for any other text.
+    ///
+    /// - Parameter argument: The first word of a company's name, in lower case.
+    /// - Returns: The sponsor whose name starts with `argument`, or `nil`.
+    static func named(_ argument: String) -> SampleSponsor? {
+        all.first { $0.name.lowercased().hasPrefix(argument.lowercased() + " ") }
+    }
+
     /// Returns a job a sample sponsor advertises.
     ///
     /// - Parameters:

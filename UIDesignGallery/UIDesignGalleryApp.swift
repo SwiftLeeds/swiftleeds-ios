@@ -24,7 +24,8 @@ import UIDesign
 /// bio in full, `-summary expanded` opens a session detail with the sheet
 /// of its full summary showing, `-detail accessibility` pushes the two-speaker workshop's
 /// detail, `-detail dropin` pushes the drop-in session's detail, `-sidebar 1`
-/// shows the tabs as a sidebar on a regular width, and `-halos role`,
+/// shows the tabs as a sidebar on a regular width, `-sponsorPage northern` opens
+/// the Sponsors tab with that company's page pushed, and `-halos role`,
 /// `-halos pink` or `-halos gold` shows every halo treatment at once, in those
 /// colors, instead of the app.
 @main
@@ -60,11 +61,16 @@ struct UIDesignGalleryApp: App {
     /// gallery shows the app instead of the treatments.
     private let comparedHalo: ConferenceRole?
 
+    /// The sponsor whose page the Sponsors tab opens with already pushed, if any.
+    private let sponsorPage: SampleSponsor?
+
     /// Creates the app, reading where to open from the launch arguments.
     init() {
         let defaults = UserDefaults.standard
         let name = defaults.string(forKey: "tab") ?? ""
-        _tab = State(initialValue: GalleryTab(rawValue: name) ?? .schedule)
+        let page = SampleSponsor.named(defaults.string(forKey: "sponsorPage") ?? "")
+        sponsorPage = page
+        _tab = State(initialValue: page == nil ? GalleryTab(rawValue: name) ?? .schedule : .sponsors)
         opensWith = Self.destination(from: defaults)
         let halo = defaults.string(forKey: "halo") ?? ""
         haloEdge = HaloEdge(rawValue: halo) ?? .feathered
@@ -170,7 +176,7 @@ struct UIDesignGalleryApp: App {
                 systemImage: GalleryTab.sponsors.symbol,
                 value: GalleryTab.sponsors,
             ) {
-                SponsorsScreen()
+                SponsorsScreen(opensWith: sponsorPage)
             }
 
             Tab(value: GalleryTab.search, role: .search) {
