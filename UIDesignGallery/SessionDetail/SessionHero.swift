@@ -33,7 +33,7 @@ struct SessionHero: View {
     ///
     /// The darkening places its band from these, so none of it crosses an
     /// element.
-    private struct HeroMarks: Equatable {
+    struct HeroMarks: Equatable {
         /// Where the chip's top edge is, or `nil` without a chip.
         var chipTop: CGFloat?
 
@@ -115,7 +115,7 @@ struct SessionHero: View {
                 backdrop
                     .padding(.top, -artExtension)
             }
-            .overlay(alignment: .bottomLeading) { heroBlock }
+            .overlay(alignment: .bottomLeading) { text }
             .coordinateSpace(Self.heroSpace)
     }
 }
@@ -125,7 +125,7 @@ struct SessionHero: View {
 extension SessionHero {
     /// The space the hero's own coordinates are measured in, which moves with the hero as it
     /// scrolls.
-    private static let heroSpace = NamedCoordinateSpace.named("sessionHero")
+    static let heroSpace = NamedCoordinateSpace.named("sessionHero")
 
     /// The space above and below the hero's text block.
     private static let heroVerticalMargin: CGFloat = 24
@@ -148,15 +148,6 @@ extension SessionHero {
 
     /// The height of the hero in a wide page, as a share of the page's height.
     private static let wideHeroShare: CGFloat = 0.5
-
-    /// How opaque the black behind the chip is.
-    private static let chipOpacity: Double = 0.5
-
-    /// How opaque the kind line is, against white.
-    private static let kindLineOpacity: Double = 0.85
-
-    /// How opaque the facts are, against white.
-    private static let supportingTextOpacity: Double = 0.7
 
     /// The color of text on the hero, in both color schemes.
     static let onHero = Color.white
@@ -239,141 +230,16 @@ extension SessionHero {
 
 extension SessionHero {
     /// The hero's text, at the margin, on the art's lower part.
-    private var heroBlock: some View {
-        VStack(alignment: .leading, spacing: .medium) {
-            chipAndHeading
-
-            HeroActions(
-                moment: moment,
-                isFavorite: $isFavorite,
-                availableWidth: page.map { $0.contentWidth(margin: margin) },
-            )
-
-            facts
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .foregroundStyle(Self.onHero)
-        .onGeometryChange(for: CGFloat.self) { proxy in
-            proxy.size.height
-        } action: { height in
-            blockHeight = height
-        }
+    private var text: some View {
+        HeroBlock(
+            session: session,
+            moment: moment,
+            availableWidth: page.map { $0.contentWidth(margin: margin) },
+            isFavorite: $isFavorite,
+            marks: $marks,
+            height: $blockHeight,
+        )
         .padding(.horizontal, margin)
         .padding(.bottom, Self.heroVerticalMargin)
-    }
-
-    /// The chip over the title and kind line, close together.
-    private var chipAndHeading: some View {
-        VStack(alignment: .leading, spacing: .small) {
-            chip
-
-            heading
-        }
-    }
-
-    /// The chip that says where the session is in its day, or nothing once it is over.
-    ///
-    /// Its top edge is where the first line of text starts.
-    @ViewBuilder
-    private var chip: some View {
-        if let text = moment.chipText(for: session) {
-            Text(text)
-                .font(.caption.weight(.semibold))
-                .foregroundStyle(Self.onHero)
-                .padding(.horizontal, .small)
-                .padding(.vertical, .xSmall)
-                .background(Color.black.opacity(Self.chipOpacity), in: .capsule)
-                .onGeometryChange(for: CGFloat.self) { proxy in
-                    proxy.frame(in: Self.heroSpace).minY
-                } action: { top in
-                    marks.chipTop = top
-                }
-        }
-    }
-
-    /// The title, with the session's kind and length under it.
-    private var heading: some View {
-        VStack(alignment: .leading, spacing: .xSmall) {
-            titleText
-
-            kindLine
-        }
-        .multilineTextAlignment(.leading)
-    }
-
-    /// What the session is called.
-    ///
-    /// With no chip, its top edge is where the first line of text starts.
-    private var titleText: some View {
-        Text(session.title)
-            .font(.title.weight(.bold))
-            .fixedSize(horizontal: false, vertical: true)
-            .accessibilityAddTraits(.isHeader)
-            .onGeometryChange(for: CGFloat.self) { proxy in
-                proxy.frame(in: Self.heroSpace).minY
-            } action: { top in
-                marks.titleTop = top
-            }
-    }
-
-    /// The session's kind and how long it runs.
-    private var kindLine: some View {
-        let length = session.duration.formatted(
-            .units(allowed: [.minutes], width: .abbreviated)
-        )
-        return Text("\(session.kind.displayName) \u{00B7} \(length)")
-            .font(.subheadline.weight(.medium))
-            .monospacedDigit()
-            .foregroundStyle(kindLineText)
-    }
-
-    /// Returns white at an opacity, or fully white for more contrast.
-    ///
-    /// - Parameter opacity: How opaque the white is without more contrast.
-    /// - Returns: The white, at the opacity or fully opaque.
-    private func onHero(_ opacity: Double) -> Color {
-        Self.onHero.opacity(contrast == .increased ? 1 : opacity)
-    }
-
-    /// The color of the kind line, a light grey.
-    private var kindLineText: Color {
-        onHero(Self.kindLineOpacity)
-    }
-
-    /// The color of the facts, grey.
-    private var supportingText: Color {
-        onHero(Self.supportingTextOpacity)
-    }
-
-    /// When and where the session runs, side by side while they fit.
-    ///
-    /// Each fact is its own text, so a large text size stacks the facts
-    /// rather than breaking one across lines, and the row mirrors
-    /// right-to-left.
-    private var facts: some View {
-        ViewThatFits(in: .horizontal) {
-            HStack(spacing: .medium) {
-                factTexts
-            }
-
-            VStack(alignment: .leading, spacing: .xSmall) {
-                factTexts
-            }
-        }
-        .font(.subheadline)
-        .monospacedDigit()
-        .foregroundStyle(supportingText)
-    }
-
-    /// The day, the time range and the room, each led by its symbol.
-    ///
-    /// A no-break space keeps each symbol with its words.
-    private var factTexts: some View {
-        Group {
-            Text("\(Image(icon: .calendar))\u{00A0}\(session.dayLabel(now: moment.now(for: session)))")
-            Text("\(Image(icon: .clock))\u{00A0}\(session.time)")
-            Text("\(Image(icon: .location))\u{00A0}\(session.room)")
-        }
-        .fixedSize()
     }
 }
