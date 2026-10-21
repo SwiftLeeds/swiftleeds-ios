@@ -45,6 +45,12 @@ struct SampleSession: Identifiable, Equatable, Hashable, Sendable {
     /// A line or two that sells the session, for the top of its detail screen.
     let teaser: String
 
+    /// The room most sessions run in.
+    static let mainRoom = "Main Hall"
+
+    /// Whether the session runs in the main room.
+    var isInMainRoom: Bool { room == Self.mainRoom }
+
     /// How long the session runs.
     var duration: Duration {
         .seconds(end.timeIntervalSince(start))
@@ -111,7 +117,7 @@ extension SampleSession {
         day: "Day 1",
         start: daysFromToday(0, at: 9, 30),
         end: daysFromToday(0, at: 10, 15),
-        room: "Main Hall",
+        room: mainRoom,
         title: "Building a design system that survives its second year",
         speakers: [.dana],
         kind: .talk,
@@ -131,7 +137,7 @@ extension SampleSession {
         day: "Day 1",
         start: daysFromToday(0, at: 10, 30),
         end: daysFromToday(0, at: 11, 0),
-        room: "Main Hall",
+        room: mainRoom,
         title: "Swift concurrency, one year on",
         speakers: [.blake],
         kind: .lightningTalk,
@@ -189,7 +195,7 @@ extension SampleSession {
         day: "Day 2",
         start: daysFromToday(-365, at: 14, 0),
         end: daysFromToday(-365, at: 14, 40),
-        room: "Main Hall",
+        room: mainRoom,
         title: "Testing the untestable",
         speakers: [.dana],
         kind: .talk,
