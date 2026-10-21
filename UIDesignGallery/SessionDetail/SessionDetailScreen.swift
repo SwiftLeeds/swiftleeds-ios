@@ -33,6 +33,9 @@ struct SessionDetailScreen: View {
     /// under the bar. The launch argument `-tall 1` turns it on.
     private let addsTail: Bool
 
+    /// Where in the session's day the screen pretends to be. The launch argument `-moment` picks it.
+    private let moment: SessionMoment
+
     /// How big the page is, or `nil` until it is measured.
     @State private var page: SessionHero.PageSize?
 
@@ -47,23 +50,29 @@ struct SessionDetailScreen: View {
 
     /// Creates a screen for one session.
     ///
-    /// The launch argument `-tall` adds clear space after the content.
+    /// The launch argument `-moment` picks the moment the screen pretends it is, and `-tall` adds
+    /// clear space after the content.
     ///
     /// - Parameters:
     ///   - session: The session this screen describes.
     ///   - opensSummaryExpanded: Whether the summary shows in full when the
     ///     screen appears.
+    ///   - opensFavorite: Whether the session is a favorite when the screen appears, even if the
+    ///     sample says it is not.
     ///   - showSpeaker: The action that shows a speaker's page.
     init(
         session: SampleSession,
         opensSummaryExpanded: Bool = false,
+        opensFavorite: Bool = false,
         showSpeaker: @escaping (SamplePerson) -> Void,
     ) {
+        let defaults = UserDefaults.standard
         self.session = session
         self.opensSummaryExpanded = opensSummaryExpanded
         self.showSpeaker = showSpeaker
-        addsTail = UserDefaults.standard.bool(forKey: "tall")
-        _isFavorite = State(initialValue: session.isFavorite)
+        moment = SessionMoment(rawValue: defaults.string(forKey: "moment") ?? "") ?? .before
+        addsTail = defaults.bool(forKey: "tall")
+        _isFavorite = State(initialValue: opensFavorite || session.isFavorite)
     }
 
     var body: some View {
@@ -123,7 +132,14 @@ extension SessionDetailScreen {
     /// The page's content, from the top of the page to its foot.
     private var content: some View {
         VStack(alignment: .leading, spacing: 0) {
-            SessionHero(session: session, page: page, bars: bars, margin: margin)
+            SessionHero(
+                session: session,
+                page: page,
+                bars: bars,
+                margin: margin,
+                moment: moment,
+                isFavorite: $isFavorite,
+            )
 
             below
         }

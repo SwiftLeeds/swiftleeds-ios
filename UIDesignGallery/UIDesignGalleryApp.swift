@@ -18,7 +18,9 @@ import UIDesign
 /// ticket, `-band patterned` draws each role's texture on the ticket's band,
 /// `-person dana`, `-person blake`, `-person casey`, `-person eli`,
 /// `-person fay` or `-person gus` pushes that person's page, `-favorite 1` opens
-/// it with the person already a favourite, `-bio expanded` opens it with the
+/// a person page or a session detail already a favourite, `-moment before`,
+/// `-moment during` or `-moment after` sets where in its day a session detail
+/// pretends to be, `-bio expanded` opens it with the
 /// bio in full, `-summary expanded` opens a session detail with its summary
 /// in full, `-detail accessibility` pushes the two-speaker workshop's
 /// detail, `-detail dropin` pushes the drop-in session's detail, `-sidebar 1`
@@ -42,7 +44,7 @@ struct UIDesignGalleryApp: App {
     /// Whether the role band on a ticket draws the role's texture.
     private let bandVariant: BandVariant
 
-    /// Whether the person page opens with the person already a favourite.
+    /// Whether a person page or a session detail opens already a favourite.
     private let opensFavorite: Bool
 
     /// Whether the person page opens with the bio in full.

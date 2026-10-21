@@ -19,6 +19,14 @@ struct SessionHero: View {
 
         /// The height of the screen the scroll view fills, bars included.
         let height: CGFloat
+
+        /// Returns the width inside a margin on each side.
+        ///
+        /// - Parameter margin: The margin on each side, in points.
+        /// - Returns: The width left inside the margins.
+        func contentWidth(margin: CGFloat) -> CGFloat {
+            width - 2 * margin
+        }
     }
 
     /// Where the hero's elements sit, in the hero's own coordinates.
@@ -26,6 +34,9 @@ struct SessionHero: View {
     /// The darkening places its band from these, so none of it crosses an
     /// element.
     private struct HeroMarks: Equatable {
+        /// Where the chip's top edge is, or `nil` without a chip.
+        var chipTop: CGFloat?
+
         /// Where the title's top edge is.
         var titleTop: CGFloat?
     }
@@ -41,6 +52,12 @@ struct SessionHero: View {
 
     /// The space from the safe area to the content, shared with the content below the hero.
     private let margin: CGFloat
+
+    /// Where a person is in the session's day.
+    private let moment: SessionMoment
+
+    /// Whether this person favorited the session.
+    @Binding private var isFavorite: Bool
 
     /// Whether the screen has a compact or a regular height.
     @Environment(\.verticalSizeClass) private var verticalSizeClass
@@ -67,10 +84,22 @@ struct SessionHero: View {
     ///     uses a bar height of 0.
     ///   - margin: The space from the safe area to the content, shared with the content below the
     ///     hero.
-    init(session: SampleSession, page: PageSize?, bars: BarInsets?, margin: CGFloat) {
+    ///   - moment: Where a person is in the session's day. It decides the chip above the title
+    ///     and the capsule beside the star.
+    ///   - isFavorite: Whether this person favorited the session. The star changes it.
+    init(
+        session: SampleSession,
+        page: PageSize?,
+        bars: BarInsets?,
+        margin: CGFloat,
+        moment: SessionMoment,
+        isFavorite: Binding<Bool>,
+    ) {
         self.session = session
         self.page = page
         self.bars = bars
+        self.moment = moment
+        _isFavorite = isFavorite
         // A bare CGFloat, not a Spacing token: UIDesign's Spacing has no 20-point value, and the
         // gallery cannot make one, because Spacing's initializer is internal to UIDesign.
         self.margin = margin
@@ -120,19 +149,8 @@ extension SessionHero {
     /// The height of the hero in a wide page, as a share of the page's height.
     private static let wideHeroShare: CGFloat = 0.5
 
-    /// How opaque the tint grows below the band. The art does not show through
-    /// it.
-    private static let fullDarkening: Double = 1
-
-    /// The length of the band over which the art darkens to the tint, in
-    /// points.
-    private static let bandLength: CGFloat = 84
-
-    /// How far the band ends above the first line of text, in points.
-    private static let bandClearance: CGFloat = 4
-
-    /// How many stops draw the band.
-    private static let bandSteps = 16
+    /// How opaque the black behind the chip is.
+    private static let chipOpacity: Double = 0.5
 
     /// How opaque the kind line is, against white.
     private static let kindLineOpacity: Double = 0.85
@@ -141,7 +159,7 @@ extension SessionHero {
     private static let supportingTextOpacity: Double = 0.7
 
     /// The color of text on the hero, in both color schemes.
-    private static let onHero = Color.white
+    static let onHero = Color.white
 }
 
 // MARK: - Art
@@ -166,71 +184,19 @@ extension SessionHero {
             bottomInset: blockHeight + Self.heroVerticalMargin,
         )
         .overlay {
-            darkening
+            HeroDarkening(
+                tint: tint,
+                chipTop: marks.chipTop,
+                titleTop: marks.titleTop,
+                heroHeight: heroHeight,
+                artExtension: artExtension,
+            )
         }
     }
 
     /// The tint of the session's kind, darker for the contrast setting.
     private var tint: Color {
         session.kind.tint(in: colorScheme, contrast: contrast)
-    }
-}
-
-// MARK: - Darkening
-
-extension SessionHero {
-    /// The tint over the art, clear above a band and full below it.
-    ///
-    /// The band sits in the empty space above the title.
-    private var darkening: some View {
-        Rectangle()
-            .fill(
-                LinearGradient(
-                    stops: darkeningStops,
-                    startPoint: .top,
-                    endPoint: .bottom,
-                )
-            )
-            .ignoresSafeArea(.container, edges: .horizontal)
-    }
-
-    /// Where the band ends, just above the title.
-    private var bandEnd: CGFloat {
-        (marks.titleTop ?? heroHeight / 2) - Self.bandClearance
-    }
-
-    /// Where the band starts, which is as far up as the art allows, up to its
-    /// full length.
-    private var bandStart: CGFloat {
-        max(bandEnd - Self.bandLength, -artExtension)
-    }
-
-    /// How dark the tint makes the art at a height.
-    ///
-    /// The tint eases in along the band, with no darkening above it.
-    ///
-    /// - Parameter height: A height in the hero's coordinates.
-    /// - Returns: The opacity of the tint, from 0 to 1.
-    private func darkness(at height: CGFloat) -> Double {
-        guard bandEnd > bandStart else { return height >= bandEnd ? Self.fullDarkening : 0 }
-        let progress = Double(min(max((height - bandStart) / (bandEnd - bandStart), 0), 1))
-        let eased = progress * progress * progress * (progress * (progress * 6 - 15) + 10)
-        return eased * Self.fullDarkening
-    }
-
-    /// The stops of the tint, from the top of the art to the hero's foot.
-    private var darkeningStops: [Gradient.Stop] {
-        let top = -artExtension
-        let span = max(heroHeight - top, 1)
-        let band = (0...Self.bandSteps).map {
-            bandStart + (bandEnd - bandStart) * CGFloat($0) / CGFloat(Self.bandSteps)
-        }
-        return ([top, heroHeight] + band).sorted().map { height in
-            Gradient.Stop(
-                color: tint.opacity(darkness(at: height)),
-                location: min(max((height - top) / span, 0), 1),
-            )
-        }
     }
 }
 
@@ -275,7 +241,13 @@ extension SessionHero {
     /// The hero's text, at the margin, on the art's lower part.
     private var heroBlock: some View {
         VStack(alignment: .leading, spacing: .medium) {
-            heading
+            chipAndHeading
+
+            HeroActions(
+                moment: moment,
+                isFavorite: $isFavorite,
+                availableWidth: page.map { $0.contentWidth(margin: margin) },
+            )
 
             facts
         }
@@ -290,6 +262,35 @@ extension SessionHero {
         .padding(.bottom, Self.heroVerticalMargin)
     }
 
+    /// The chip over the title and kind line, close together.
+    private var chipAndHeading: some View {
+        VStack(alignment: .leading, spacing: .small) {
+            chip
+
+            heading
+        }
+    }
+
+    /// The chip that says where the session is in its day, or nothing once it is over.
+    ///
+    /// Its top edge is where the first line of text starts.
+    @ViewBuilder
+    private var chip: some View {
+        if let text = moment.chipText(for: session) {
+            Text(text)
+                .font(.caption.weight(.semibold))
+                .foregroundStyle(Self.onHero)
+                .padding(.horizontal, .small)
+                .padding(.vertical, .xSmall)
+                .background(Color.black.opacity(Self.chipOpacity), in: .capsule)
+                .onGeometryChange(for: CGFloat.self) { proxy in
+                    proxy.frame(in: Self.heroSpace).minY
+                } action: { top in
+                    marks.chipTop = top
+                }
+        }
+    }
+
     /// The title, with the session's kind and length under it.
     private var heading: some View {
         VStack(alignment: .leading, spacing: .xSmall) {
@@ -302,7 +303,7 @@ extension SessionHero {
 
     /// What the session is called.
     ///
-    /// Its top edge is where the first line of text starts.
+    /// With no chip, its top edge is where the first line of text starts.
     private var titleText: some View {
         Text(session.title)
             .font(.title.weight(.bold))
@@ -369,7 +370,7 @@ extension SessionHero {
     /// A no-break space keeps each symbol with its words.
     private var factTexts: some View {
         Group {
-            Text("\(Image(icon: .calendar))\u{00A0}\(session.dayLabel)")
+            Text("\(Image(icon: .calendar))\u{00A0}\(session.dayLabel(now: moment.now(for: session)))")
             Text("\(Image(icon: .clock))\u{00A0}\(session.time)")
             Text("\(Image(icon: .location))\u{00A0}\(session.room)")
         }

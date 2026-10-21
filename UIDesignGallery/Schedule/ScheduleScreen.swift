@@ -66,7 +66,7 @@ struct ScheduleScreen: View {
     /// Whether the role band on a ticket draws the role's texture.
     var bandVariant: BandVariant = .plain
 
-    /// Whether a person page opens with the person already a favourite.
+    /// Whether a person page or a session detail opens already a favourite.
     var opensFavorite = false
 
     /// Whether a person page opens with the bio in full.
@@ -112,6 +112,7 @@ struct ScheduleScreen: View {
                     SessionDetailScreen(
                         session: session,
                         opensSummaryExpanded: opensSummaryExpanded,
+                        opensFavorite: opensFavorite,
                         showSpeaker: { path.append($0) },
                     )
                 }

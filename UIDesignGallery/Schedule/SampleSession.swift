@@ -58,9 +58,18 @@ extension SampleSession {
     ///
     /// "Today" or "Tomorrow" when either applies, else the weekday and date.
     var dayLabel: String {
+        dayLabel(now: .now)
+    }
+
+    /// Returns the day the session runs, as seen from a given moment.
+    ///
+    /// - Parameter now: The moment the day is seen from.
+    /// - Returns: "Today" or "Tomorrow" when either applies, else the weekday and date.
+    func dayLabel(now: Date) -> String {
         let calendar = Calendar.current
-        if calendar.isDateInToday(start) || calendar.isDateInTomorrow(start) {
-            let relative = start.formatted(
+        let seen = start.addingTimeInterval(Date.now.timeIntervalSince(now))
+        if calendar.isDateInToday(seen) || calendar.isDateInTomorrow(seen) {
+            let relative = seen.formatted(
                 Date.RelativeFormatStyle(
                     allowedFields: [.day],
                     presentation: .named,
