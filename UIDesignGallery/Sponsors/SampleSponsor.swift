@@ -14,6 +14,9 @@ struct SampleSponsor: Identifiable, Equatable, Hashable, Sendable {
     /// How much the company gives the conference.
     let tier: SampleSponsorTier
 
+    /// What the company wants to say, or `nil` when it says nothing.
+    let tagline: String?
+
     /// The jobs the company is hiring for, which is empty when it has none.
     let jobs: [SampleJob]
 
@@ -38,6 +41,7 @@ extension SampleSponsor {
         SampleSponsor(
             name: "Northern Software",
             tier: .platinum,
+            tagline: "Software for the north, built in the north",
             jobs: [
                 job("Senior iOS Engineer", in: "Leeds"),
                 job("Mobile Platform Engineer", in: "Manchester"),
@@ -47,21 +51,25 @@ extension SampleSponsor {
         SampleSponsor(
             name: "Calder Digital",
             tier: .platinum,
+            tagline: nil,
             jobs: [],
         ),
         SampleSponsor(
             name: "Pennine Labs",
             tier: .gold,
+            tagline: "Tools that make developers faster",
             jobs: [job("Developer Advocate", in: "Leeds")],
         ),
         SampleSponsor(
             name: "Aire Systems",
             tier: .gold,
+            tagline: nil,
             jobs: [],
         ),
         SampleSponsor(
             name: "Dales Mobile",
             tier: .gold,
+            tagline: "Apps for people who work outdoors",
             jobs: [
                 job("iOS Engineer", in: "York"),
                 job("QA Engineer", in: "Remote"),
@@ -70,21 +78,25 @@ extension SampleSponsor {
         SampleSponsor(
             name: "Ouse Apps",
             tier: .silver,
+            tagline: nil,
             jobs: [],
         ),
         SampleSponsor(
             name: "Roundhay Mobile Engineering Collective",
             tier: .silver,
+            tagline: "A co-operative of mobile engineers",
             jobs: [job("Swift Engineer", in: "Leeds")],
         ),
         SampleSponsor(
             name: "Skipton Soft",
             tier: .silver,
+            tagline: nil,
             jobs: [],
         ),
         SampleSponsor(
             name: "Tyke Tools",
             tier: .silver,
+            tagline: nil,
             jobs: [],
         ),
     ]

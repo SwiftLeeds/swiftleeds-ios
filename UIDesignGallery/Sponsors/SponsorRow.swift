@@ -3,8 +3,8 @@ import UIDesign
 
 /// A view that summarizes one sponsor in a row.
 ///
-/// The row shows the name. The number of open roles shows only where the
-/// caller asks for it.
+/// The row shows the name and the tagline. The number of open roles shows
+/// only where the caller asks for it.
 struct SponsorRow: View {
     /// The sponsor this row describes.
     let sponsor: SampleSponsor
@@ -26,6 +26,12 @@ struct SponsorRow: View {
                 Text(sponsor.name)
                     .font(.headline)
                     .foregroundStyle(.textPrimary)
+
+                if let tagline = sponsor.tagline {
+                    Text(tagline)
+                        .font(.body)
+                        .foregroundStyle(.textSecondary)
+                }
 
                 if showsOpenRoles, let openRoles = sponsor.openRoles {
                     Text(openRoles)
