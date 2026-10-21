@@ -11,7 +11,7 @@ import Testing
         let team = [try TeamMember.one, try TeamMember.two]
 
         let viewModel = await loadedViewModel {
-            FetchTeam { () async throws(TeamFetchError) -> [TeamMember] in team }
+            FetchTeam { () async -> [TeamMember] in team }
         }
 
         assertScreenSnapshots(of: AboutContentView(viewModel: viewModel))

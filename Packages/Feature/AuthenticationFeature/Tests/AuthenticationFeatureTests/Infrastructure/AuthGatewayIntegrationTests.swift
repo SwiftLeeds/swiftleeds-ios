@@ -90,7 +90,7 @@ import Testing
         #expect(request.value(forHTTPHeaderField: "Content-Type") == "application/json")
     }
 
-    @Test func whenTransportFails_shouldLogOnlyOnceAcrossChain() async throws {
+    @Test func whenTransportFails_shouldLogOnlyOnceAcrossChain() async {
         let recorder = LogRecorder()
 
         try? await withDependencies {
@@ -104,7 +104,7 @@ import Testing
         #expect(recorder.events.count == 1)
     }
 
-    @Test func whenResponseIsRejected_shouldLogOnlyOnce() async throws {
+    @Test func whenResponseIsRejected_shouldLogOnlyOnce() async {
         let recorder = LogRecorder()
 
         try? await withDependencies {

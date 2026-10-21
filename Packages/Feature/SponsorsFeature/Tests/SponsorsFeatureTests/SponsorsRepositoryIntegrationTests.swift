@@ -36,7 +36,7 @@ import Testing
         #expect(sponsors.sponsors(at: .gold).map(\.id) == [SponsorID("a")])
     }
 
-    @Test func whenRequestFails_shouldThrowCouldNotReachServer() async throws {
+    @Test func whenRequestFails_shouldThrowCouldNotReachServer() async {
         await withDependencies {
             $0.httpClient = .failing(with: URLError(.notConnectedToInternet))
         } operation: {
@@ -46,7 +46,7 @@ import Testing
         }
     }
 
-    @Test func whenBodyIsUnreadable_shouldThrowInvalidResponse() async throws {
+    @Test func whenBodyIsUnreadable_shouldThrowInvalidResponse() async {
         await withDependencies {
             $0.httpClient = .responding(with: Data("nonsense".utf8), statusCode: 200)
         } operation: {
@@ -56,7 +56,7 @@ import Testing
         }
     }
 
-    @Test func whenMapperRefuses_shouldThrowInvalidResponse() async throws {
+    @Test func whenMapperRefuses_shouldThrowInvalidResponse() async {
         let data = SponsorsJSON.list(SponsorsJSON.sponsor(level: "bronze"))
 
         await withDependencies {
@@ -69,7 +69,7 @@ import Testing
     }
 
     @Test(arguments: [404, 500])
-    func whenServerRefuses_shouldThrowUnknown(statusCode: HTTPStatusCode) async throws {
+    func whenServerRefuses_shouldThrowUnknown(statusCode: HTTPStatusCode) async {
         let data = SponsorsJSON.list(SponsorsJSON.sponsor())
 
         await withDependencies {

@@ -35,7 +35,7 @@ import Testing
         #expect(reason.value == .string("couldNotBuildResponse"))
     }
 
-    @Test func whenStoreRefuses_shouldRethrowRefusal() async throws {
+    @Test func whenStoreRefuses_shouldRethrowRefusal() async {
         await withDependencies {
             $0.log = LogRecorder().log
             $0.secureStorage = .failing(with: StubError.couldNotBuildResponse)

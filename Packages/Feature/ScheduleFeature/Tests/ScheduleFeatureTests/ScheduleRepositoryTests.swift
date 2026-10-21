@@ -169,7 +169,7 @@ private final class RemoteScheduleStoreSpy: @unchecked Sendable {
 
     var store: RemoteScheduleStore {
         RemoteScheduleStore(
-            fetch: { [self] request async throws(ScheduleFetchError) -> Schedule in
+            fetch: { [self] request async -> Schedule in
                 lock.withLock { recorded.append(request) }
                 return answer
             }

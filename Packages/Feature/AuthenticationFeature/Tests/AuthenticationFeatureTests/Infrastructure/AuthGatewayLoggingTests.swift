@@ -17,7 +17,7 @@ import Testing
     }
 
     /// Transport failures are logged once, by the decorator on `HTTPClient`.
-    @Test func whenTransportFails_shouldLogNothing() async throws {
+    @Test func whenTransportFails_shouldLogNothing() async {
         let failure = LoginRequestError.transportFailed(StubError.couldNotBuildResponse)
 
         let event = await logEvent(forFailure: failure)

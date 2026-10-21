@@ -41,11 +41,11 @@ private actor EventSpy {
 extension ScheduleRepository {
     fileprivate static func recording(into spy: EventSpy, answering answer: Schedule) -> ScheduleRepository {
         ScheduleRepository(
-            fetchCurrentSchedule: { () async throws(ScheduleFetchError) -> Schedule in
+            fetchCurrentSchedule: { () async -> Schedule in
                 await spy.record(nil)
                 return answer
             },
-            fetchSchedule: { event async throws(ScheduleFetchError) -> Schedule in
+            fetchSchedule: { event async -> Schedule in
                 await spy.record(event)
                 return answer
             },

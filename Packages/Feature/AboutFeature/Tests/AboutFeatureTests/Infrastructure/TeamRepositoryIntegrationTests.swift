@@ -34,7 +34,7 @@ import Testing
         #expect(member.links.isEmpty)
     }
 
-    @Test func whenRequestThrows_shouldThrowCouldNotReachServer() async throws {
+    @Test func whenRequestThrows_shouldThrowCouldNotReachServer() async {
         await withDependencies {
             $0.httpClient = .failing(with: URLError(.notConnectedToInternet))
         } operation: {
@@ -44,7 +44,7 @@ import Testing
         }
     }
 
-    @Test func whenBodyCannotBeDecoded_shouldThrowInvalidResponse() async throws {
+    @Test func whenBodyCannotBeDecoded_shouldThrowInvalidResponse() async {
         await withDependencies {
             $0.httpClient = .responding(with: Data("nonsense".utf8), statusCode: 200)
         } operation: {
@@ -55,7 +55,7 @@ import Testing
     }
 
     @Test(arguments: [404, 500])
-    func whenStatusIsNotOK_shouldThrowUnknown(statusCode: HTTPStatusCode) async throws {
+    func whenStatusIsNotOK_shouldThrowUnknown(statusCode: HTTPStatusCode) async {
         let data = TeamJSON.team(TeamJSON.member())
 
         await withDependencies {
@@ -67,7 +67,7 @@ import Testing
         }
     }
 
-    @Test func whenMapperThrows_shouldThrowInvalidResponse() async throws {
+    @Test func whenMapperThrows_shouldThrowInvalidResponse() async {
         let data = TeamJSON.team(TeamJSON.member(slack: ""))
 
         await withDependencies {
