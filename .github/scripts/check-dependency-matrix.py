@@ -73,35 +73,62 @@ errors = []
 
 
 def report(message):
+    """Print an error whose first line is the annotation, and keep it for the log."""
     global failed
     failed = True
-    print(f"::error::{message}")
-    errors.append(f"{datetime.now().isoformat()} {message}")
+    first, *rest = message.strip().splitlines() or [""]
+    print(f"::error::{first}")
+    for line in rest:
+        print(line)
+    errors.append(f"{datetime.now().isoformat()} {message.strip()}")
+
+
+def finish(packages_read, edges, known_count):
+    """Write the log if anything failed, print the summary and exit."""
+    if errors:
+        with log_path.open("a") as handle:
+            handle.write("\n".join(errors) + "\n")
+        print(f"Errors are also in {log_path}")
+    print(f"Read {packages_read} packages, judged {edges} edges, {known_count} known violations")
+    sys.exit(1 if failed else 0)
+
+
+def dump_package(directory):
+    """Return the manifest of the package in a folder as JSON, or None after reporting why not."""
+    command = [
+        "swift", "package", "dump-package",
+        "--package-path", str(directory),
+        "--scratch-path", str(SCRATCH_PATH),
+    ]
+    try:
+        completed = subprocess.run(command, capture_output=True, text=True)
+    except OSError as error:
+        report(f"{directory.name}: could not run swift: {error}")
+        return None
+    if completed.returncode != 0:
+        report(f"{directory.name}: swift package dump-package failed\n{completed.stderr}")
+        return None
+    try:
+        return json.loads(completed.stdout)
+    except json.JSONDecodeError as error:
+        report(f"{directory.name}: dump-package printed unreadable JSON: {error}")
+        return None
 
 
 manifests = sorted(path for pattern in PACKAGE_GLOBS for path in ROOT.glob(pattern))
 if not manifests:
-    print("::error::Found no packages, so this check is broken")
-    sys.exit(1)
+    report("Found no packages, so this check is broken")
+    finish(0, 0, 0)
 
 dumps = {}
 directories = {}
 for manifest in manifests:
     directory = manifest.parent
-    completed = subprocess.run(
-        [
-            "swift", "package", "dump-package",
-            "--package-path", str(directory),
-            "--scratch-path", str(SCRATCH_PATH),
-        ],
-        capture_output=True,
-        text=True,
-    )
-    if completed.returncode != 0:
-        report(f"{directory.name}: swift package dump-package failed: {completed.stderr.strip()}")
-        continue
-    dumps[directory.name] = json.loads(completed.stdout)
-    directories[directory.name] = directory
+    print(f"reading {directory.name}")
+    dump = dump_package(directory)
+    if dump is not None:
+        dumps[directory.name] = dump
+        directories[directory.name] = directory
 
 
 def role_of(name, directory):
@@ -292,10 +319,4 @@ if len(dumps) == len(manifests):
 if edges_judged < MIN_EDGES:
     report(f"Judged {edges_judged} edges, under the floor of {MIN_EDGES}, so this check is broken")
 
-if errors:
-    with log_path.open("a") as handle:
-        handle.write("\n".join(errors) + "\n")
-    print(f"Errors are also in {log_path}")
-
-print(f"Read {len(dumps)} packages, judged {edges_judged} edges, {len(known)} known violations")
-sys.exit(1 if failed else 0)
+finish(len(dumps), edges_judged, len(known))
