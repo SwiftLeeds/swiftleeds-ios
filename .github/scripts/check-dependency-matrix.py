@@ -18,6 +18,9 @@ import tempfile
 from datetime import datetime
 from pathlib import Path
 
+# CI reads stdout through a pipe, where Python holds every line until exit.
+sys.stdout.reconfigure(line_buffering=True)
+
 PACKAGE_GLOBS = ["Packages/*/*/Package.swift", "SwiftLeedsPackage/Package.swift"]
 ROOT = Path.cwd()
 SCRATCH_PATH = ROOT / ".build-shared"
