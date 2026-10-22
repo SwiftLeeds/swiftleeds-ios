@@ -30,7 +30,7 @@ extension TicketRole {
         pattern: .blank,
     )
 
-    /// Someone giving a session.
+    /// Someone giving a talk or a workshop.
     static let speaker = TicketRole(
         name: "Speaker",
         symbol: "mic.fill",
