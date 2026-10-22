@@ -41,9 +41,9 @@ struct PersonScreen: View {
         List {
             Section {
                 header
-                    .listRowInsets(EdgeInsets())
                     // The header is the screen's subject, not one of its rows,
-                    // so it sits on the page rather than on a card.
+                    // so it sits on the page rather than on a card. It keeps
+                    // the list's own row insets, so it lines up with the rows.
                     .listRowBackground(Color.clear)
             }
 
@@ -82,14 +82,14 @@ extension PersonScreen {
     /// the name sits directly below it. The rest reads as one element: the
     /// name, the detail, then each role once.
     private var header: some View {
-        VStack(spacing: .medium) {
+        VStack(alignment: .leading, spacing: .medium) {
             Avatar(url: nil, size: .xLarge, fallback: .initials(person.nameComponents))
                 .overlay {
                     Circle().strokeBorder(.borderPrimary, lineWidth: CGFloat(BorderWidth.thin))
                 }
                 .accessibilityHidden(true)
 
-            VStack(spacing: .xxSmall) {
+            VStack(alignment: .leading, spacing: .xxSmall) {
                 Text(person.name)
                     .font(.title2.weight(.bold))
                     .foregroundStyle(.textPrimary)
@@ -101,9 +101,8 @@ extension PersonScreen {
 
             badges
         }
-        .frame(maxWidth: .infinity)
-        .multilineTextAlignment(.center)
-        .padding(.horizontal, .large)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .multilineTextAlignment(.leading)
         .padding(.vertical, .large)
         .accessibilityElement(children: .combine)
     }
@@ -115,7 +114,7 @@ extension PersonScreen {
                 roleBadges
             }
 
-            VStack(spacing: .small) {
+            VStack(alignment: .leading, spacing: .small) {
                 roleBadges
             }
         }
