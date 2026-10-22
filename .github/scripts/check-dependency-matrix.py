@@ -18,7 +18,7 @@ import tempfile
 from datetime import datetime
 from pathlib import Path
 
-# CI reads stdout through a pipe, where Python holds every line until exit.
+# Through a pipe, as on CI, Python would hold these lines until exit.
 sys.stdout.reconfigure(line_buffering=True)
 
 PACKAGE_GLOBS = ["Packages/*/*/Package.swift", "SwiftLeedsPackage/Package.swift"]
