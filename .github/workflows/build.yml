@@ -316,6 +316,17 @@ jobs:
         if: ${{ !cancelled() && matrix.configuration == 'debug' }}
         run: .github/scripts/format.sh --check
 
+      # Each local package's role comes from its folder under Packages/, and a
+      # matrix says which role may link which. The script reads every manifest
+      # with `swift package dump-package`. It needs the Xcode toolchain the steps
+      # above selected. It rides this job because the workflow already declares
+      # more macOS jobs than the 5-runner limit.
+      #
+      # A failure here shows under "Test Swift Packages", so read this step's log.
+      - name: Check package dependencies against the matrix
+        if: ${{ !cancelled() && matrix.configuration == 'debug' }}
+        run: python3 .github/scripts/check-dependency-matrix.py
+
       # The analyzer rules read the compile commands the Debug lane saved above,
       # so they ride in this job and need no build of their own. Release is
       # left out: it did not print the commands, and the Debug build compiled

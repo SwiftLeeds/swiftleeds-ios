@@ -32,6 +32,8 @@
       "Bash(python3 .github/scripts/check-snapshot-scheme.py)",
       "Bash(python3 .github/scripts/list-snapshot-targets.py *)",
       "Bash(python3 .github/scripts/list-snapshot-targets.py)",
+      "Bash(python3 .github/scripts/check-dependency-matrix.py *)",
+      "Bash(python3 .github/scripts/check-dependency-matrix.py)",
       "Bash(swift format lint *)",
       "Bash(swift package resolve --package-path *)"
     ],
