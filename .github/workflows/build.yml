@@ -234,8 +234,8 @@ jobs:
           # queue instead of overlapping. Each lane gets its own, which repeats
           # 14% of the dependency compilation (241s in one path against 168s
           # plus 107s split across two, measured cold and sequentially).
-          # The SwiftPM cache is per lane too, because two lanes that download
-          # the same swift-syntax prebuilt into one cache collide.
+          # The SwiftPM cache is per lane too: two lanes that fetch the same
+          # swift-syntax prebuilt into one cache can fail with "already exists".
           run_lane () {
             local lane=$1
             local scratch="$RUNNER_TEMP/build-lane-$lane"
