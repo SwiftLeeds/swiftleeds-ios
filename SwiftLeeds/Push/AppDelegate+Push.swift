@@ -64,7 +64,10 @@ extension AppDelegate {
         }
     }
 
-    func handleFailedRegistration(application: UIApplication, error: Error) {
+    /// Logs why the system refused to register this device for push notifications.
+    ///
+    /// - Parameter error: The error the system gave when registration failed.
+    func handleFailedRegistration(error: Error) {
         @Dependency(\.log) var log
         log.error("The system refused push registration: \(error, privacy: .open)", in: .push)
     }
