@@ -37,14 +37,18 @@ MAY_LINK = {
 # Every role may link this one third-party package.
 UNIVERSAL_THIRD_PARTY = {"swift-dependencies"}
 
+UI_ROLES = {FEATURE_UI, UI_FOUNDATION}
+
 # UI libraries Paul allowed on 2026-10-21, for the roles that draw screens.
-UI_THIRD_PARTY = {
+UI_LIBRARIES = {
     "swift-sharing",
     "swiftui-cached-async-image",
     "readabilitymodifier",
     "sfsafesymbols",
-    "swiftgenplugin",
 }
+
+# Build plugins, for the same roles.
+UI_PLUGINS = {"swiftgenplugin"}
 
 INFRASTRUCTURE_SUFFIX = "Infrastructure"
 TEST_SUPPORT_SUFFIX = "TestSupport"
@@ -56,10 +60,10 @@ BASELINE = {
     ("AboutUI", "NetworkKit"): "builds website links from the API base URL",
 }
 
-# Set 5% below the count of local and third-party edges on a clean run
+# Set 5% below the count of local, third-party and plugin edges on a clean run
 # (rounded down). A parse that quietly finds nothing reads as clean, so a low
 # count must fail.
-MIN_EDGES = 46
+MIN_EDGES = 47
 
 log_folder = Path(os.environ.get("RUNNER_TEMP") or tempfile.gettempdir())
 log_path = log_folder / "dependency-matrix.log"
@@ -144,7 +148,13 @@ def remote_identities(dump):
 def third_party_allowed(role, identity):
     if identity in UNIVERSAL_THIRD_PARTY or role == KIT:
         return True
-    return role in (FEATURE_UI, UI_FOUNDATION) and identity in UI_THIRD_PARTY
+    return role in UI_ROLES and identity in UI_LIBRARIES
+
+
+def plugin_allowed(role, identity):
+    if role == KIT:
+        return True
+    return role in UI_ROLES and identity in UI_PLUGINS
 
 
 def judge(package, role, target, product, linked):
@@ -168,6 +178,18 @@ def judge(package, role, target, product, linked):
 edges_judged = 0
 known = []
 matched_baseline = set()
+
+
+def report_violations(package, role, target, product, linked):
+    """Report each rule a local edge breaks, or note it as a known violation."""
+    for reason in judge(package, role, target, product, linked):
+        key = (target, product)
+        if key in BASELINE:
+            matched_baseline.add(key)
+            known.append(f"{target} -> {product}: {reason} (known: {BASELINE[key]})")
+        else:
+            report(f"{target} links {product} from {linked}: {reason}")
+
 
 for package in sorted(dumps):
     dump = dumps[package]
@@ -234,13 +256,27 @@ for package in sorted(dumps):
 
             package_edges += 1
             edges_judged += 1
-            for reason in judge(package, role, target["name"], product, linked):
-                key = (target["name"], product)
-                if key in BASELINE:
-                    matched_baseline.add(key)
-                    known.append(f"{target['name']} -> {product}: {reason} (known: {BASELINE[key]})")
-                else:
-                    report(f"{target['name']} links {product} from {linked}: {reason}")
+            report_violations(package, role, target["name"], product, linked)
+
+        for usage in target.get("pluginUsages", []):
+            plugin, plugin_package = usage["plugin"][0], usage["plugin"][1]
+            if plugin_package is None:
+                continue
+            identity = plugin_package.lower()
+            if identity in local:
+                if local[identity] is None:
+                    report(f"{package}/{target['name']}: plugin {plugin} comes from a local package outside the checked set")
+                    continue
+                package_edges += 1
+                edges_judged += 1
+                report_violations(package, role, target["name"], plugin, local[identity])
+            elif identity in remote:
+                third_party_edges += 1
+                edges_judged += 1
+                if not plugin_allowed(role, identity):
+                    report(f"{target['name']} uses plugin {plugin} from third-party {identity}: a {role} may not")
+            else:
+                report(f"{package}/{target['name']}: plugin {plugin} names package {plugin_package}, which is not a dependency")
 
     print(f"{package}: {package_edges} local, {third_party_edges} third-party edges")
 
