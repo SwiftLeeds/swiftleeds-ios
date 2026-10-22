@@ -14,8 +14,8 @@ import UIDesign
 /// `-signin blank` or `-signin filled` presents Sign in with its fields
 /// empty or filled in, `-halo hard` or `-halo soft` swaps the halo's outer
 /// edge for the one it feathers between, `-ticket attendee`, `-ticket speaker`,
-/// `-ticket sponsor`, `-ticket staff` or `-ticket unavailable` presents that
-/// ticket, `-band patterned` draws each role's texture on the ticket's band,
+/// `-ticket sponsor`, `-ticket staff`, `-ticket host` or
+/// `-ticket unavailable` presents that ticket, `-band patterned` draws each role's texture on the ticket's band,
 /// `-person dana`, `-person blake`, `-person casey`, `-person eli`,
 /// `-person fay` or `-person gus` pushes that person's page, `-favorite 1` opens
 /// a person page or a session detail already a favourite, `-moment before`,

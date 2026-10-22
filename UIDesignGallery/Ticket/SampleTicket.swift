@@ -70,6 +70,16 @@ extension SampleTicket {
         code: "swiftleeds-2026/SWL-4F7K-2Q",
     )
 
+    /// The ticket of someone who runs a drop-in session.
+    static let host = SampleTicket(
+        holderName: "Hana Hart",
+        company: nil,
+        admits: "Conference and drop-in room",
+        reference: "SWL-6J4D-8H",
+        role: .host,
+        code: "swiftleeds-2026/SWL-6J4D-8H",
+    )
+
     /// A ticket whose code will not draw.
     static let unavailable = SampleTicket(
         holderName: "Evan Ellis",
@@ -94,6 +104,7 @@ extension SampleTicket {
         case "speaker": speaker
         case "sponsor": sponsor
         case "staff": staff
+        case "host": host
         case "unavailable": unavailable
         default: nil
         }

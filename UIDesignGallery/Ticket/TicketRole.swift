@@ -53,4 +53,12 @@ extension TicketRole {
         color: Color(red: 0.52, green: 0.32, blue: 0.72),
         pattern: .horizontalStripes,
     )
+
+    /// Someone who runs a drop-in session.
+    static let host = TicketRole(
+        name: "Host",
+        symbol: "person.2.fill",
+        color: Color(hue: 0.92, saturation: 0.74, brightness: 0.70),
+        pattern: .wavyLines,
+    )
 }
