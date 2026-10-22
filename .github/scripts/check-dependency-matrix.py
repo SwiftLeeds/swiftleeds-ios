@@ -148,6 +148,7 @@ def judge(package, role, target, product, linked):
 
 edges_judged = 0
 known = []
+matched_baseline = set()
 
 for package in sorted(dumps):
     dump = dumps[package]
@@ -206,6 +207,7 @@ for package in sorted(dumps):
             for reason in judge(package, role, target["name"], product, linked):
                 key = (target["name"], product)
                 if key in BASELINE:
+                    matched_baseline.add(key)
                     known.append(f"{target['name']} -> {product}: {reason} (known: {BASELINE[key]})")
                 else:
                     report(f"{target['name']} links {product} from {linked}: {reason}")
@@ -214,6 +216,12 @@ for package in sorted(dumps):
 
 for line in known:
     print(f"known violation: {line}")
+
+# A package that failed to dump would leave its rows unmatched, so stale rows
+# are only judged when every package was read.
+if len(dumps) == len(manifests):
+    for target, product in sorted(set(BASELINE) - matched_baseline):
+        report(f"Baseline row {target} -> {product} no longer applies; delete it from BASELINE")
 
 if edges_judged < MIN_EDGES:
     report(f"Judged {edges_judged} edges, under the floor of {MIN_EDGES}, so this check is broken")
