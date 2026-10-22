@@ -31,9 +31,9 @@ extension ConferenceRole {
         colors: [.init(red: 0.52, green: 0.32, blue: 0.72), .init(red: 0.22, green: 0.46, blue: 0.80)],
     )
 
-    /// A company paying at the top tier.
-    static let headlineSponsor = ConferenceRole(
-        name: "Headline sponsor",
+    /// Someone from a company that pays for the conference.
+    static let sponsor = ConferenceRole(
+        name: "Sponsor",
         colors: [.init(red: 0.93, green: 0.78, blue: 0.36), .init(red: 0.85, green: 0.52, blue: 0.16)],
     )
 }
