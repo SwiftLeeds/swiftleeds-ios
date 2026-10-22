@@ -205,6 +205,7 @@ jobs:
             swift test \
               --package-path "$path" \
               --scratch-path "$2" \
+              --cache-path "$3" \
               --configuration "$CONFIGURATION" \
               $verbose \
               --force-resolved-versions 2>&1
@@ -220,12 +221,12 @@ jobs:
           # it through pipefail.
           run_package () {
             if [ -n "$verbose" ]; then
-              swift_test "$1" "$2" \
+              swift_test "$1" "$2" "$3" \
                 | tee "$build_logs/$1.log" \
                 | { grep --line-buffered -Ev "$command_line" || true; } \
                 | sed -l "s/^/[$1] /"
             else
-              swift_test "$1" "$2" | sed -l "s/^/[$1] /"
+              swift_test "$1" "$2" "$3" | sed -l "s/^/[$1] /"
             fi
           }
 
@@ -233,9 +234,12 @@ jobs:
           # queue instead of overlapping. Each lane gets its own, which repeats
           # 14% of the dependency compilation (241s in one path against 168s
           # plus 107s split across two, measured cold and sequentially).
+          # The SwiftPM cache is per lane too, because two lanes that download
+          # the same swift-syntax prebuilt into one cache collide.
           run_lane () {
             local lane=$1
             local scratch="$RUNNER_TEMP/build-lane-$lane"
+            local cache="$RUNNER_TEMP/swiftpm-cache-lane-$lane"
             local package
             for package in "${packages[@]}"; do
               # mkdir is atomic and fails when the directory exists, so two
@@ -247,7 +251,7 @@ jobs:
               # phase boundaries. `sed -l` flushes per line. A line over 512
               # bytes is not written atomically, so a long diagnostic can land
               # under the other lane's prefix.
-              if run_package "$package" "$scratch"; then
+              if run_package "$package" "$scratch" "$cache"; then
                 touch "$claims/$package/passed"
               else
                 echo "$package" >> "$failures"
