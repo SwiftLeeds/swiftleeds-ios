@@ -180,6 +180,7 @@ private struct Glyph: View {
         Image(icon: icon)
             .imageScale(.large)
             .frame(width: CGFloat(IconSize.xxLarge), alignment: .leading)
+            .accessibilityHidden(true)
     }
 }
 

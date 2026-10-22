@@ -195,6 +195,11 @@ opt_in_rules:
   # `Type+Topic.swift`, as `Log+Transform.swift` is. The exceptions are below.
   - file_name
 
+  # An image that carries meaning gets a label; a decorative one, or one that
+  # repeats the text beside it, is hidden from VoiceOver. The rule cannot see
+  # a parent in another view or a custom builder, so those images are hidden.
+  - accessibility_label_for_image
+
 # Analyzer rules read the compiler log, so they run only through
 # `swiftlint analyze`, never `swiftlint lint`.
 analyzer_rules:

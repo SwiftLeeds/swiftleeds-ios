@@ -35,6 +35,7 @@ package struct LocalCell: View {
                 Image(uiImage: UIImage(systemName: imageName) ?? UIImage(imageLiteralResourceName: imageName))
                     .renderingMode(.template)
                     .frame(width: 30)
+                    .accessibilityHidden(true)
             }
             .padding(Padding.cell)
             .frame(minHeight: Constants.cellMinimumHeight)

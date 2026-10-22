@@ -11,8 +11,6 @@ extension Image {
     ///     .foregroundStyle(.error, .secondarySurface)
     ///     .symbolEffect(.pulse)
     /// ```
-    ///
-    /// The image has no accessibility label. Add one, or use ``SwiftUI/Label/init(_:icon:)``.
     public init(icon: Icon) {
         self.init(systemName: String(icon))
     }

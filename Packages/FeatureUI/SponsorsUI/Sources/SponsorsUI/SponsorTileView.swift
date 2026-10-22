@@ -186,11 +186,13 @@ package struct SponsorTileView: View {
                         Image(systemName: showingJobs ? "chevron.up" : "chevron.down")
                             .font(.caption.weight(.semibold))
                             .foregroundColor(.secondary)
+                            .accessibilityHidden(true)
                     }
                     .padding()
                     .background(Color.accent.opacity(0.05))
                 },
             )
+            .accessibilityValue(showingJobs ? "Expanded" : "Collapsed")
 
             if showingJobs {
                 VStack(spacing: 0) {
@@ -238,6 +240,7 @@ struct JobRowView: View {
                             HStack(spacing: 4) {
                                 Image(systemName: "location.fill")
                                     .font(.caption2)
+                                    .accessibilityHidden(true)
                                 Text(job.location)
                                     .font(.caption)
                             }
@@ -249,6 +252,7 @@ struct JobRowView: View {
                         Image(systemName: "arrow.right.circle")
                             .font(.title3)
                             .foregroundColor(.accent.opacity(0.5))
+                            .accessibilityHidden(true)
                     }
                     .padding()
                     .background(isPressed ? Color.accent.opacity(0.05) : Color.clear)
