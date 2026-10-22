@@ -34,6 +34,18 @@ MAY_LINK = {
     UI_FOUNDATION: {UI_FOUNDATION},
 }
 
+# Every role may link this one third-party package.
+UNIVERSAL_THIRD_PARTY = {"swift-dependencies"}
+
+# UI libraries Paul allowed on 2026-10-21, for the roles that draw screens.
+UI_THIRD_PARTY = {
+    "swift-sharing",
+    "swiftui-cached-async-image",
+    "readabilitymodifier",
+    "sfsafesymbols",
+    "swiftgenplugin",
+}
+
 INFRASTRUCTURE_SUFFIX = "Infrastructure"
 TEST_SUPPORT_SUFFIX = "TestSupport"
 
@@ -44,9 +56,10 @@ BASELINE = {
     ("AboutUI", "NetworkKit"): "builds website links from the API base URL",
 }
 
-# Set 5% below the edge count of the first clean run (rounded down). A parse
-# that quietly finds nothing reads as clean, so a low count must fail.
-MIN_EDGES = 25
+# Set 5% below the count of local and third-party edges on a clean run
+# (rounded down). A parse that quietly finds nothing reads as clean, so a low
+# count must fail.
+MIN_EDGES = 46
 
 log_folder = Path(os.environ.get("RUNNER_TEMP") or tempfile.gettempdir())
 log_path = log_folder / "dependency-matrix.log"
@@ -128,6 +141,12 @@ def remote_identities(dump):
     }
 
 
+def third_party_allowed(role, identity):
+    if identity in UNIVERSAL_THIRD_PARTY or role == KIT:
+        return True
+    return role in (FEATURE_UI, UI_FOUNDATION) and identity in UI_THIRD_PARTY
+
+
 def judge(package, role, target, product, linked):
     """Reasons the edge is forbidden, or an empty list."""
     reasons = []
@@ -159,6 +178,7 @@ for package in sorted(dumps):
     remote = remote_identities(dump)
     own_targets = {target["name"] for target in dump["targets"]}
     package_edges = 0
+    third_party_edges = 0
 
     for target in dump["targets"]:
         if target["type"] == "test":
@@ -182,6 +202,12 @@ for package in sorted(dumps):
                     if name and any(p["name"] == product for p in dumps[name]["products"]):
                         linked = name
                         break
+                if linked is None and product.lower() in remote:
+                    third_party_edges += 1
+                    edges_judged += 1
+                    if not third_party_allowed(role, product.lower()):
+                        report(f"{target['name']} links {product} from third-party {product.lower()}: a {role} may not")
+                    continue
                 if linked is None:
                     report(f"{package}/{target['name']}: {product} is not a target here or a product of a local package")
                     continue
@@ -194,6 +220,10 @@ for package in sorted(dumps):
                         report(f"{package}/{target['name']}: {product} comes from a local package outside the checked set")
                         continue
                 elif identity in remote:
+                    third_party_edges += 1
+                    edges_judged += 1
+                    if not third_party_allowed(role, identity):
+                        report(f"{target['name']} links {product} from third-party {identity}: a {role} may not")
                     continue
                 else:
                     report(f"{package}/{target['name']}: {product} names package {package_name}, which is not a dependency")
@@ -212,7 +242,7 @@ for package in sorted(dumps):
                 else:
                     report(f"{target['name']} links {product} from {linked}: {reason}")
 
-    print(f"{package}: {package_edges} local edges")
+    print(f"{package}: {package_edges} local, {third_party_edges} third-party edges")
 
 for line in known:
     print(f"known violation: {line}")
