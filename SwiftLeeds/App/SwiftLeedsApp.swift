@@ -89,6 +89,6 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
     }
 
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
-        handleFailedRegistration(application: application, error: error)
+        handleFailedRegistration(error: error)
     }
 }
