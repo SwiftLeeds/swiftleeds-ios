@@ -30,7 +30,7 @@ extension TicketRole {
         pattern: .blank,
     )
 
-    /// Someone giving a talk or a workshop.
+    /// Someone giving a talk.
     static let speaker = TicketRole(
         name: "Speaker",
         symbol: "mic.fill",
@@ -54,7 +54,7 @@ extension TicketRole {
         pattern: .horizontalStripes,
     )
 
-    /// Someone who runs a drop-in session.
+    /// Someone who runs a drop-in session or a workshop.
     static let host = TicketRole(
         name: "Host",
         symbol: "person.2.fill",

@@ -40,7 +40,7 @@ extension SampleTicket {
         code: "swiftleeds-2026/SWL-9C3M-7D",
     )
 
-    /// The ticket of someone giving a talk or a workshop.
+    /// The ticket of someone giving a talk.
     static let speaker = SampleTicket(
         holderName: "Casey Cole",
         company: nil,
@@ -70,7 +70,7 @@ extension SampleTicket {
         code: "swiftleeds-2026/SWL-4F7K-2Q",
     )
 
-    /// The ticket of someone who runs a drop-in session.
+    /// The ticket of someone who runs a drop-in session or a workshop.
     static let host = SampleTicket(
         holderName: "Hana Hart",
         company: nil,
