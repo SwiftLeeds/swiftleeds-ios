@@ -30,6 +30,15 @@ struct BandPatternView: View {
     /// The distance between the centers of two dots.
     private static let dotGap: CGFloat = 10
 
+    /// How far a wavy line rises above, and falls below, its level.
+    private static let waveAmplitude: CGFloat = 4
+
+    /// The distance along a wavy line from one crest to the next.
+    private static let wavelength: CGFloat = 36
+
+    /// The distance along a wavy line between two sampled points.
+    private static let waveStep: CGFloat = 2
+
     /// The strength of the white, stronger when the person differentiates
     /// without color.
     ///
@@ -62,7 +71,32 @@ struct BandPatternView: View {
             context.fill(dots(in: size), with: .color(ink))
         case .horizontalStripes:
             context.stroke(stripes(in: size), with: .color(ink), lineWidth: Self.lineWidth)
+        case .wavyLines:
+            context.stroke(wavyLines(in: size), with: .color(ink), lineWidth: Self.lineWidth)
         }
+    }
+
+    /// Returns level wavy lines that cover a region, centered in it.
+    ///
+    /// Each wave runs one line width past the leading and trailing edges, so the
+    /// square ends of the strokes fall outside the region and leave no notches.
+    ///
+    /// - Parameter size: The size of the region to cover.
+    private func wavyLines(in size: CGSize) -> Path {
+        var path = Path()
+        let across = Array(stride(from: -Self.lineWidth, through: size.width + Self.lineWidth, by: Self.waveStep))
+        for height in centeredPositions(along: size.height, spacing: Self.gap) {
+            let points = across.map { CGPoint(x: $0, y: height + Self.waveOffset(at: $0)) }
+            path.addLines(points)
+        }
+        return path
+    }
+
+    /// Returns how far a wave sits above or below its level at a position.
+    ///
+    /// - Parameter x: The distance from the leading edge.
+    private static func waveOffset(at x: CGFloat) -> CGFloat {
+        waveAmplitude * sin(2 * .pi * x / wavelength)
     }
 
     /// Returns slanted lines that cover a region.

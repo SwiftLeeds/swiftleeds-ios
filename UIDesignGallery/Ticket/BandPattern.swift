@@ -13,4 +13,7 @@ enum BandPattern: Equatable, Hashable, Sendable {
 
     /// Level stripes that run across the band.
     case horizontalStripes
+
+    /// Level wavy lines that run across the band.
+    case wavyLines
 }
