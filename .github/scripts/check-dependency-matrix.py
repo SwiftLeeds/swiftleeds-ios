@@ -1,3 +1,15 @@
+#!/usr/bin/env python3
+"""Checks that each local package links only what its role allows.
+
+A package's role comes from its folder under Packages/: Kit, Feature, FeatureUI
+or DesignSystem. The matrix says which role may link which, and which third-party
+packages and plugins each role may use. Test targets are not judged.
+
+BASELINE lists the violations that exist today. A row that no longer matches
+anything is an error, so the list can only shrink.
+
+Run locally: python3 .github/scripts/check-dependency-matrix.py
+"""
 import json
 import os
 import subprocess
@@ -34,12 +46,11 @@ MAY_LINK = {
     UI_FOUNDATION: {UI_FOUNDATION},
 }
 
-# Every role may link this one third-party package.
 UNIVERSAL_THIRD_PARTY = {"swift-dependencies"}
 
 UI_ROLES = {FEATURE_UI, UI_FOUNDATION}
 
-# UI libraries Paul allowed on 2026-10-21, for the roles that draw screens.
+# Third-party libraries the roles that draw screens may link.
 UI_LIBRARIES = {
     "swift-sharing",
     "swiftui-cached-async-image",
@@ -132,6 +143,7 @@ for manifest in manifests:
 
 
 def role_of(name, directory):
+    """Return the package's role from its folder, or None after reporting a mismatch."""
     if name in EXPLICIT_ROLES:
         return EXPLICIT_ROLES[name]
     role = ROLE_OF_FOLDER.get(directory.parent.name)
@@ -155,7 +167,7 @@ by_identity = {name.lower(): name for name in dumps}
 
 
 def local_dependencies(dump):
-    """Package names of the local (file system) dependencies, by identity."""
+    """Map each local dependency's identity to its package name, or None when it lies outside the checked set."""
     found = {}
     for entry in dump["dependencies"]:
         for local in entry.get("fileSystem", []):
@@ -165,6 +177,7 @@ def local_dependencies(dump):
 
 
 def remote_identities(dump):
+    """Identities of the remote (source control) dependencies."""
     return {
         remote["identity"]
         for entry in dump["dependencies"]
@@ -173,12 +186,14 @@ def remote_identities(dump):
 
 
 def third_party_allowed(role, identity):
+    """Whether a package of this role may link this third-party library."""
     if identity in UNIVERSAL_THIRD_PARTY or role == KIT:
         return True
     return role in UI_ROLES and identity in UI_LIBRARIES
 
 
 def plugin_allowed(role, identity):
+    """Whether a package of this role may use this third-party build plugin."""
     if role == KIT:
         return True
     return role in UI_ROLES and identity in UI_PLUGINS
@@ -215,7 +230,7 @@ def report_violations(package, role, target, product, linked):
             matched_baseline.add(key)
             known.append(f"{target} -> {product}: {reason} (known: {BASELINE[key]})")
         else:
-            report(f"{target} links {product} from {linked}: {reason}")
+            report(f"{package}/{target} links {product} from {linked}: {reason}")
 
 
 for package in sorted(dumps):
@@ -247,7 +262,7 @@ for package in sorted(dumps):
                 product = details[0]
                 if product in own_targets:
                     continue
-                for identity, name in local.items():
+                for name in local.values():
                     if name and any(p["name"] == product for p in dumps[name]["products"]):
                         linked = name
                         break
@@ -255,7 +270,7 @@ for package in sorted(dumps):
                     third_party_edges += 1
                     edges_judged += 1
                     if not third_party_allowed(role, product.lower()):
-                        report(f"{target['name']} links {product} from third-party {product.lower()}: a {role} may not")
+                        report(f"{package}/{target['name']} links {product} from third-party {product.lower()}: a {role} may not")
                     continue
                 if linked is None:
                     report(f"{package}/{target['name']}: {product} is not a target here or a product of a local package")
@@ -272,7 +287,7 @@ for package in sorted(dumps):
                     third_party_edges += 1
                     edges_judged += 1
                     if not third_party_allowed(role, identity):
-                        report(f"{target['name']} links {product} from third-party {identity}: a {role} may not")
+                        report(f"{package}/{target['name']} links {product} from third-party {identity}: a {role} may not")
                     continue
                 else:
                     report(f"{package}/{target['name']}: {product} names package {package_name}, which is not a dependency")
@@ -301,7 +316,7 @@ for package in sorted(dumps):
                 third_party_edges += 1
                 edges_judged += 1
                 if not plugin_allowed(role, identity):
-                    report(f"{target['name']} uses plugin {plugin} from third-party {identity}: a {role} may not")
+                    report(f"{package}/{target['name']} uses plugin {plugin} from third-party {identity}: a {role} may not")
             else:
                 report(f"{package}/{target['name']}: plugin {plugin} names package {plugin_package}, which is not a dependency")
 
