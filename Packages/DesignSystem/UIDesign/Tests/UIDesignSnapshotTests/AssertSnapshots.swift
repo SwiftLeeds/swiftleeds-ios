@@ -92,6 +92,36 @@ func assertSpecimenSnapshots(
     )
 }
 
+/// Compares a color specimen with its reference images at the default text size.
+///
+/// Four images: light and dark, each with and without Increase Contrast.
+///
+/// Only color has a contrast variant. Increase Contrast can change a color, but not a length
+/// or an icon.
+@MainActor
+func assertColorSpecimenSnapshots(
+    of view: some View,
+    fileID: StaticString = #fileID,
+    file filePath: StaticString = #filePath,
+    testName: String = #function,
+    line: UInt = #line,
+    column: UInt = #column,
+) {
+    assertSnapshots(
+        of: view,
+        as: variants(
+            width: nil,
+            appearances: defaultContrastAppearances + increasedContrastAppearances,
+            textSizes: [defaultTextSize],
+        ),
+        fileID: fileID,
+        file: filePath,
+        testName: testName,
+        line: line,
+        column: column,
+    )
+}
+
 // A 40mm Apple Watch, the narrowest screen Apple ships.
 private let compactWidth: CGFloat = 162
 
@@ -120,6 +150,24 @@ private struct Appearance {
 @MainActor private let defaultContrastAppearances: [Appearance] = [
     Appearance(name: "light", traits: UITraitCollection { $0.userInterfaceStyle = .light }),
     Appearance(name: "dark", traits: UITraitCollection { $0.userInterfaceStyle = .dark }),
+]
+
+/// The light and dark appearances, with Increase Contrast turned on.
+@MainActor private let increasedContrastAppearances: [Appearance] = [
+    Appearance(
+        name: "light-increased-contrast",
+        traits: UITraitCollection {
+            $0.userInterfaceStyle = .light
+            $0.accessibilityContrast = .high
+        },
+    ),
+    Appearance(
+        name: "dark-increased-contrast",
+        traits: UITraitCollection {
+            $0.userInterfaceStyle = .dark
+            $0.accessibilityContrast = .high
+        },
+    ),
 ]
 
 private let everyTextSize: [(name: String, size: DynamicTypeSize)] = [

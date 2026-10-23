@@ -8,7 +8,7 @@ import UIDesign
 struct ColorSpecimenSnapshotTests {
     @Test
     func colors() {
-        assertSpecimenSnapshots(of: ColorSpecimen())
+        assertColorSpecimenSnapshots(of: ColorSpecimen())
     }
 }
 #endif
