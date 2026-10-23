@@ -226,14 +226,20 @@ exemption: every suppression carries a reason and is tracked as work to remove.
   `swiftlint:disable` silences the rule for the rest of the file, so a later violation slips in
   unnoticed. `:this` names one line and keeps the suppression where the reader can see what it
   covers. Decided 2026-09-24. Fall back to `:next` only where the line has no room, and
-  say why.
+  say why. The one region allowed is below, under `no_magic_numbers`.
 - **State the reason in plain English**, in the line above. A reader must not have to guess.
 - **Prefer the baseline for a sweep**, where dozens of sites fail one rule at once and the config
   header already explains them. Prefer an inline disable for a handful, because the reason then
   sits where the next reader is.
-- **A signature we do not own is the one permanent case.** `UIApplicationDelegate`'s
+- **A signature we do not own is a permanent case.** `UIApplicationDelegate`'s
   `didFinishLaunchingWithOptions` takes an optional dictionary and nothing can change it, so its
   suppression will never be removed. Say so in the reason, so nobody spends time trying.
+- **`no_magic_numbers` has two more permanent cases**, ruled by Paul 2026-10-23:
+  - **A block that defines named values** takes a `disable` and `enable` pair inside it, the one
+    region allowed. A token (`Spacing(8)`) or a spec value (`HTTPStatus(code: 404)`) is where a
+    number gets its name, and the rule flags a literal inside a call even there.
+  - **Test fixture data** takes `disable:this` with the reason "fixture data", because a fixture
+    is data, not magic. Name the number instead when a name adds meaning, such as a phone width.
 
 ## Previews
 
