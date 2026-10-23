@@ -3,8 +3,8 @@ import Foundation
 /// A person made up for the gallery.
 ///
 /// Every field is display text rather than a domain value, for the reason
-/// `SampleSession` gives. A person holds no talks. Sessions hold their
-/// speakers, and a person's talks are found by looking through the sessions.
+/// `SampleSession` gives. A person holds no talks. Sessions hold the
+/// people they credit, and a person's talks are found by looking through the sessions.
 struct SamplePerson: Identifiable, Equatable, Hashable, Sendable {
     /// Tells one sample person from another.
     var id: String { name }
@@ -38,12 +38,12 @@ struct SamplePerson: Identifiable, Equatable, Hashable, Sendable {
 
     /// The sessions at this year's conference that the person gives.
     var talksThisYear: [SampleSession] {
-        SampleSession.dayOne.filter { $0.speakers.contains(self) }
+        SampleSession.dayOne.filter { $0.lineup.credited.contains(self) }
     }
 
     /// The sessions at earlier conferences that the person gave.
     var previousTalks: [SampleSession] {
-        SampleSession.earlier.filter { $0.speakers.contains(self) }
+        SampleSession.earlier.filter { $0.lineup.credited.contains(self) }
     }
 }
 

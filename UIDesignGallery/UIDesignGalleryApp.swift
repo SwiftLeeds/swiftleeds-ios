@@ -22,7 +22,7 @@ import UIDesign
 /// `-moment during` or `-moment after` sets where in its day a session detail
 /// pretends to be, `-bio expanded` opens it with the
 /// bio in full, `-summary expanded` opens a session detail with the sheet
-/// of its full summary showing, `-detail accessibility` pushes the two-speaker workshop's
+/// of its full summary showing, `-detail accessibility` pushes the two-host workshop's
 /// detail, `-detail dropin` pushes the drop-in session's detail, `-sidebar 1`
 /// shows the tabs as a sidebar on a regular width, `-sponsorPage northern` opens
 /// the Sponsors tab with that company's page pushed, and `-halos role`,

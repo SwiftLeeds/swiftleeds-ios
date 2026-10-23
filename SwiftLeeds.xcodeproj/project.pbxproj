@@ -44,6 +44,7 @@
 		7CA11E000000000000000205 /* SessionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000105 /* SessionRow.swift */; };
 		7CA11E000000000000000912 /* SessionBadges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000911 /* SessionBadges.swift */; };
 		7CA11E000000000000000914 /* SessionKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000913 /* SessionKind.swift */; };
+		7CA11E000000000000000F01 /* SessionLineup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000F02 /* SessionLineup.swift */; };
 		7CA11E000000000000000916 /* KindArtwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000915 /* KindArtwork.swift */; };
 		7CA11E000000000000000918 /* SessionHero.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000917 /* SessionHero.swift */; };
 		7CA11E00000000000000091A /* SpeakerRows.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000919 /* SpeakerRows.swift */; };
@@ -298,6 +299,7 @@
 		7CA11E000000000000000105 /* SessionRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionRow.swift; sourceTree = "<group>"; };
 		7CA11E000000000000000911 /* SessionBadges.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionBadges.swift; sourceTree = "<group>"; };
 		7CA11E000000000000000913 /* SessionKind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionKind.swift; sourceTree = "<group>"; };
+		7CA11E000000000000000F02 /* SessionLineup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionLineup.swift; sourceTree = "<group>"; };
 		7CA11E000000000000000915 /* KindArtwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KindArtwork.swift; sourceTree = "<group>"; };
 		7CA11E000000000000000917 /* SessionHero.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionHero.swift; sourceTree = "<group>"; };
 		7CA11E000000000000000919 /* SpeakerRows.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakerRows.swift; sourceTree = "<group>"; };
@@ -701,6 +703,7 @@
 				7CA11E000000000000000105 /* SessionRow.swift */,
 				7CA11E000000000000000911 /* SessionBadges.swift */,
 				7CA11E000000000000000913 /* SessionKind.swift */,
+				7CA11E000000000000000F02 /* SessionLineup.swift */,
 				7CA11E000000000000000106 /* ScheduleScreen.swift */,
 				7CA11E000000000000000116 /* ScheduleDestination.swift */,
 			);
@@ -1178,6 +1181,7 @@
 				7CA11E000000000000000205 /* SessionRow.swift in Sources */,
 				7CA11E000000000000000912 /* SessionBadges.swift in Sources */,
 				7CA11E000000000000000914 /* SessionKind.swift in Sources */,
+				7CA11E000000000000000F01 /* SessionLineup.swift in Sources */,
 				7CA11E000000000000000916 /* KindArtwork.swift in Sources */,
 				7CA11E000000000000000918 /* SessionHero.swift in Sources */,
 				7CA11E00000000000000091A /* SpeakerRows.swift in Sources */,

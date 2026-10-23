@@ -148,13 +148,13 @@ extension SessionDetailScreen {
         UIDevice.current.userInterfaceIdiom == .pad ? Self.padMargin : Self.phoneMargin
     }
 
-    /// The About text, then the speakers, at the page margin.
+    /// The About text, then the people it credits, at the page margin.
     private var below: some View {
         VStack(alignment: .leading, spacing: .xLarge) {
             aboutCard
                 .frame(maxWidth: Self.readableWidth, alignment: .leading)
 
-            SpeakerRows(speakers: session.speakers, showSpeaker: showSpeaker)
+            SpeakerRows(speakers: session.lineup.credited, showSpeaker: showSpeaker)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.horizontal, margin)

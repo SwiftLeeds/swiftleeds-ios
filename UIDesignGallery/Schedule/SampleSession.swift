@@ -27,11 +27,8 @@ struct SampleSession: Identifiable, Equatable, Hashable, Sendable {
     /// What the session is called.
     let title: String
 
-    /// Who gives the session, in the order the screen lists them.
-    let speakers: [SamplePerson]
-
-    /// What kind of session it is.
-    let kind: SessionKind
+    /// Who gives or runs the session, held in the case for its kind.
+    let lineup: SessionLineup
 
     /// How long until the session starts, or `nil` once it is not imminent.
     let startsIn: String?
@@ -47,6 +44,9 @@ struct SampleSession: Identifiable, Equatable, Hashable, Sendable {
 
     /// The room most sessions run in.
     static let mainRoom = "Main Hall"
+
+    /// What kind of session it is, as its lineup says.
+    var kind: SessionKind { lineup.kind }
 
     /// Whether the session runs in the main room.
     var isInMainRoom: Bool { room == Self.mainRoom }
@@ -119,8 +119,7 @@ extension SampleSession {
         end: daysFromToday(0, at: 10, 15),
         room: mainRoom,
         title: "Building a design system that survives its second year",
-        speakers: [.dana],
-        kind: .talk,
+        lineup: .talk(speakers: [.dana]),
         startsIn: "in 12 min",
         isFavorite: true,
         summary: """
@@ -139,15 +138,14 @@ extension SampleSession {
         end: daysFromToday(0, at: 11, 0),
         room: mainRoom,
         title: "Swift concurrency, one year on",
-        speakers: [.blake],
-        kind: .lightningTalk,
+        lineup: .lightningTalk(speakers: [.blake]),
         startsIn: nil,
         isFavorite: false,
         summary: "What changed once the compiler started checking the hard part.",
         teaser: "Twelve months of strict checking, and what it caught in real apps.",
     )
 
-    /// A workshop with two speakers.
+    /// A workshop with two hosts.
     static let accessibility = SampleSession(
         id: "accessibility",
         conference: "SwiftLeeds 2026",
@@ -156,8 +154,7 @@ extension SampleSession {
         end: daysFromToday(1, at: 12, 30),
         room: "Studio",
         title: "Accessibility beyond VoiceOver",
-        speakers: [.casey, .fay],
-        kind: .workshop,
+        lineup: .workshop(hosts: [.casey, .fay]),
         startsIn: nil,
         isFavorite: false,
         summary: """
@@ -179,8 +176,7 @@ extension SampleSession {
         end: daysFromToday(0, at: 14, 0),
         room: "Studio",
         title: "Ask the accessibility team",
-        speakers: [.casey],
-        kind: .dropIn,
+        lineup: .dropIn(hosts: [.casey]),
         startsIn: nil,
         isFavorite: false,
         summary: "Bring a screen from your app and get a second pair of eyes on it.",
@@ -197,8 +193,7 @@ extension SampleSession {
         end: daysFromToday(-365, at: 14, 40),
         room: mainRoom,
         title: "Testing the untestable",
-        speakers: [.dana],
-        kind: .talk,
+        lineup: .talk(speakers: [.dana]),
         startsIn: nil,
         isFavorite: false,
         summary: "Putting a test around the code everyone is afraid to touch.",

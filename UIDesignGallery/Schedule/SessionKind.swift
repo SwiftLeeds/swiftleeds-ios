@@ -56,7 +56,7 @@ enum SessionKind: Equatable, Hashable, Sendable {
         }
     }
 
-    /// The words that lead the speakers' names, such as "Led by".
+    /// The words that lead the credited names, such as "Led by".
     var creditVerb: String {
         switch self {
         case .talk: "Presented by"
