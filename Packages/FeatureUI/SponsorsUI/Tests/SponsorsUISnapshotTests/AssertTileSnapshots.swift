@@ -15,11 +15,20 @@ private let textSizes: [(name: String, size: DynamicTypeSize)] = [
     ("accessibility", .accessibility5),
 ]
 
+/// The screen width of an iPhone, in points.
+private let phoneWidth: CGFloat = 390
+
+/// The number of sides the screen padding appears on, leading and trailing.
+private let bothSides: CGFloat = 2
+
+/// The number of columns in the grid the gold and silver sections use.
+private let gridColumns: CGFloat = 2
+
 /// The width a tile gets on an iPhone: the screen less its horizontal padding.
-let fullTileWidth: CGFloat = 390 - Padding.screen * 2
+let fullTileWidth: CGFloat = phoneWidth - Padding.screen * bothSides
 
 /// The width a tile gets in the two-column grid the gold and silver sections use.
-let gridTileWidth: CGFloat = (fullTileWidth - Padding.cellGap) / 2
+let gridTileWidth: CGFloat = (fullTileWidth - Padding.cellGap) / gridColumns
 
 @MainActor
 func assertTileSnapshots(
