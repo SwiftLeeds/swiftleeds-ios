@@ -2,6 +2,7 @@ import Dependencies
 import Foundation
 import ScheduleDomain
 import ScheduleFeature
+import ScheduleInfrastructure
 import Testing
 
 /// Checks that the live `FetchSchedule` reaches the live `ScheduleRepository`.
