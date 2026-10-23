@@ -1,5 +1,11 @@
 import SwiftUI
 
+package protocol NameplateStyle {
+    associatedtype Body: View
+
+    @ViewBuilder func makeBody(configuration: NameplateStyleConfiguration) -> Body
+}
+
 package enum NameplateRole: Equatable, Sendable {
     case standard
     case unresolved
@@ -28,12 +34,6 @@ package struct NameplateStyleConfiguration {
     package let detail: Detail
     package let icon: Icon
     package let role: NameplateRole
-}
-
-package protocol NameplateStyle {
-    associatedtype Body: View
-
-    @ViewBuilder func makeBody(configuration: NameplateStyleConfiguration) -> Body
 }
 
 package struct ProminentNameplateStyle: NameplateStyle {

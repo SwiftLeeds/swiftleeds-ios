@@ -2,6 +2,32 @@ import LogKit
 import os
 
 extension Log {
+    /// Holds one `Logger` per category, so each one is built only once.
+    private final class LoggerCache: @unchecked Sendable {
+        /// The subsystem every cached logger is built with.
+        private let subsystem: String
+
+        /// The loggers built so far, guarded so any thread may log.
+        private let lock = OSAllocatedUnfairLock(initialState: [LogCategory: Logger]())
+
+        /// Creates an empty cache.
+        init(subsystem: String) {
+            self.subsystem = subsystem
+        }
+
+        /// Returns the logger for a category, building it on first use.
+        ///
+        /// - Parameter category: The area of the app the event came from.
+        func logger(for category: LogCategory) -> Logger {
+            lock.withLock { cache in
+                if let existing = cache[category] { return existing }
+                let logger = Logger(subsystem: subsystem, category: String(category))
+                cache[category] = logger
+                return logger
+            }
+        }
+    }
+
     /// Writes to Apple's unified logging system.
     ///
     /// Non-secret fields render in one pass and keep their written order;
@@ -37,32 +63,6 @@ extension Log {
                 \(secrets, privacy: .sensitive)
                 """,
             )
-        }
-    }
-}
-
-/// Holds one `Logger` per category, so each one is built only once.
-private final class LoggerCache: @unchecked Sendable {
-    /// The subsystem every cached logger is built with.
-    private let subsystem: String
-
-    /// The loggers built so far, guarded so any thread may log.
-    private let lock = OSAllocatedUnfairLock(initialState: [LogCategory: Logger]())
-
-    /// Creates an empty cache.
-    init(subsystem: String) {
-        self.subsystem = subsystem
-    }
-
-    /// Returns the logger for a category, building it on first use.
-    ///
-    /// - Parameter category: The area of the app the event came from.
-    func logger(for category: LogCategory) -> Logger {
-        lock.withLock { cache in
-            if let existing = cache[category] { return existing }
-            let logger = Logger(subsystem: subsystem, category: String(category))
-            cache[category] = logger
-            return logger
         }
     }
 }

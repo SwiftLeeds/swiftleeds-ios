@@ -1,17 +1,3 @@
-/// Which gap in an interpolated message a value came from.
-///
-/// Constructible only inside this package, so a caller cannot mint one and
-/// shadow a gap.
-public struct GapIndex: Hashable, Sendable {
-    /// The gap's position in the message, counted from zero.
-    package let value: Int
-
-    /// Creates an index.
-    package init(_ value: Int) {
-        self.value = value
-    }
-}
-
 /// The name of a single logged field, and where that name came from.
 ///
 /// The two cases are kept apart deliberately. A gap's identity is assigned by
@@ -56,6 +42,20 @@ public enum FieldName: Hashable, Sendable, ExpressibleByStringLiteral {
         case let .positional(index, _):
             hasher.combine(index)
         }
+    }
+}
+
+/// Which gap in an interpolated message a value came from.
+///
+/// Constructible only inside this package, so a caller cannot mint one and
+/// shadow a gap.
+public struct GapIndex: Hashable, Sendable {
+    /// The gap's position in the message, counted from zero.
+    package let value: Int
+
+    /// Creates an index.
+    package init(_ value: Int) {
+        self.value = value
     }
 }
 

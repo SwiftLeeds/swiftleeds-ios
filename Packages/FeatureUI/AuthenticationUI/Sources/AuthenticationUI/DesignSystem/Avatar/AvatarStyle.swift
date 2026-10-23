@@ -1,5 +1,11 @@
 import SwiftUI
 
+package protocol AvatarStyle {
+    associatedtype Body: View
+
+    @ViewBuilder func makeBody(configuration: AvatarStyleConfiguration) -> Body
+}
+
 package enum AvatarContentKind: Equatable, Sendable {
     case image
     case placeholder
@@ -15,12 +21,6 @@ package struct AvatarStyleConfiguration {
 
     package let content: Content
     package let kind: AvatarContentKind
-}
-
-package protocol AvatarStyle {
-    associatedtype Body: View
-
-    @ViewBuilder func makeBody(configuration: AvatarStyleConfiguration) -> Body
 }
 
 package struct CircularAvatarStyle: AvatarStyle {

@@ -1,5 +1,9 @@
 import Foundation
 
+final class AppState: ObservableObject {
+    var selectedTab: TabItems = .conference
+}
+
 /// A tab in the app's main navigation.
 enum TabItems {
     /// The conference schedule.
@@ -12,8 +16,4 @@ enum TabItems {
     case sponsors
     /// The app settings and account.
     case settings
-}
-
-final class AppState: ObservableObject {
-    var selectedTab: TabItems = .conference
 }

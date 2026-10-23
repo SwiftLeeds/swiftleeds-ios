@@ -229,6 +229,9 @@ opt_in_rules:
   # written out was a JSON key, a saved setting or a value the backend sends.
   - explicit_enum_raw_value
 
+  # A reader meets the file's subject first.
+  - file_types_order
+
 # Analyzer rules read the compiler log, so they run only through
 # `swiftlint analyze`, never `swiftlint lint`.
 analyzer_rules:
@@ -374,6 +377,15 @@ file_name:
 # under that. The default of one level rejects the house pattern.
 nesting:
   type_level: 2
+
+# The default puts helpers first. The rule does not see `#Preview`, only the
+# older `PreviewProvider` structs.
+file_types_order:
+  order:
+    - [main_type]
+    - [supporting_type, extension]
+    - [preview_provider]
+    - [library_content_provider]
 
 type_name:
   max_length:
