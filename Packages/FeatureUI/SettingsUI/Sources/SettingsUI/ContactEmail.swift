@@ -7,12 +7,15 @@ public struct ContactEmail: Equatable, Hashable, Sendable {
         case notAnAddress(String)
     }
 
+    /// The parts of an address: one local part and one domain, split at the `@`.
+    private static let addressPartCount = 2
+
     package let mailtoURL: URL
 
     /// Creates a contact address from text such as `hello@conference.example`.
     public init(_ text: String) throws(ParsingError) {
         let parts = text.split(separator: "@", omittingEmptySubsequences: false)
-        guard parts.count == 2,
+        guard parts.count == Self.addressPartCount,
             let localPart = parts.first, !localPart.isEmpty,
             let domain = parts.last, Self.isDomain(domain),
             let url = URL(string: "mailto:\(text)")
