@@ -8,8 +8,12 @@ route is .claude/scripts/package-test.sh, which passes
 --scratch-path <repo>/.build-shared.
 
 Resolution writes the bulk of it, so `swift package resolve` counts as much as
-`swift build`. The trigger is the word `swift` in command position, not a
-substring: a commit message or an rg pattern naming `swift test` must pass.
+`swift build`. The trigger is a swift command word (`swift` or a
+`swift-build`-style tool, by any path) in command position of any line or
+pipeline, subshell or backtick segment, after `xcrun`, `env`, `command` or `time`.
+Heredoc bodies are skipped, and a quoted string may span lines.
+It is not a substring: a commit message or an rg pattern naming `swift test`
+must pass.
 
 The check reads only the command text, so it needs no repository root and works
 the same in the main checkout and in a worktree.
@@ -17,13 +21,36 @@ the same in the main checkout and in a worktree.
 It fails open. Bad input, unbalanced quotes or an unrecognised shape let the
 command through, and it never exits 2, which would block every Bash call.
 """
+import itertools
 import json
+import os
 import re
 import shlex
 import sys
 
 ASSIGNMENT = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*=")
+# A here-string (<<<) is not a heredoc, and a terminator may hold a dash.
+HEREDOC = re.compile(
+    r"(?<!<)<<(?!<)(?P<dash>-?)\s*(?P<quote>['\"]?)"
+    r"(?P<word>[^\s'\"<>|&;()]+)(?P=quote)"
+)
+# Arithmetic such as $((1 << 2)) shifts with <<, so it is removed before the
+# heredoc search.
+ARITHMETIC = re.compile(r"\$\(\(.*?\)\)")
+# Lookups that print a path and run nothing.
+LOOKUPS = {"command": {"-v", "-V"}, "xcrun": {"-f", "--find"}}
+# Each wrapper maps to the options that take a separate value.
+WRAPPERS = {
+    "xcrun": {"-sdk", "--sdk", "-toolchain", "--toolchain"},
+    "env": {"-u", "-C", "-S"},
+    "command": set(),
+    "time": set(),
+}
+SWIFT_TOOLS = {"swift-build", "swift-test", "swift-package", "swift-run"}
 HARMLESS = {"--version", "-version", "format", "demangle"}
+HARMLESS_FLAGS = {"--help", "-h", "--version", "-version"}
+# swift options that take a separate value, so the value is not a product name.
+VALUE_OPTIONS = {"-c", "--configuration", "--package-path", "--scratch-path", "--product"}
 SANCTIONED = ".claude/scripts/package-test.sh <PackageName>"
 
 
@@ -48,45 +75,138 @@ command = payload.get("tool_input", {}).get("command", "")
 if not command:
     sys.exit(0)
 
-lexer = shlex.shlex(command, posix=True, punctuation_chars=True)
-lexer.whitespace_split = True
-try:
-    tokens = list(lexer)
-except ValueError:
-    # Unbalanced quotes. The shell reports the syntax error itself.
-    sys.exit(0)
 
-while tokens and ASSIGNMENT.match(tokens[0]):
-    tokens.pop(0)
+def code_lines(text):
+    """Yields each line of the command, skipping heredoc bodies."""
+    terminator = None
+    strip_tabs = False
+    for line in text.splitlines():
+        if terminator is not None:
+            body = line.lstrip("\t") if strip_tabs else line
+            if body == terminator:
+                terminator = None
+            continue
+        opener = HEREDOC.search(ARITHMETIC.sub("", line))
+        if opener:
+            terminator = opener.group("word")
+            strip_tabs = opener.group("dash") == "-"
+        yield line
 
-if not tokens or tokens[0] != "swift":
-    sys.exit(0)
 
-args = tokens[1:]
-if not args or args[0] in HARMLESS or "--help" in args or "-h" in args:
-    sys.exit(0)
+def segments(text):
+    """Yields the token list of each simple command in the text."""
+    lexer = shlex.shlex(text, posix=True, punctuation_chars="();<>|&\n`")
+    lexer.whitespace_split = True
+    # A newline outside quotes ends a command, so it is not whitespace.
+    lexer.whitespace = " \t\r"
+    # shlex would eat the newline that ends a comment, and treats a # inside
+    # a word as one. Comments are dropped below instead.
+    lexer.commenters = ""
+    try:
+        tokens = list(lexer)
+    except ValueError:
+        # Unbalanced quotes. The shell reports the syntax error itself.
+        return
+    segment = []
+    in_comment = False
+    for token in tokens:
+        punctuation = all(char in lexer.punctuation_chars for char in token)
+        if in_comment:
+            if punctuation and "\n" in token:
+                in_comment = False
+                yield segment
+                segment = []
+        elif token.startswith("#"):
+            in_comment = True
+        elif punctuation:
+            yield segment
+            segment = []
+        else:
+            segment.append(token)
+    yield segment
 
-scratch = None
-for index, arg in enumerate(args):
-    if arg == "--scratch-path" and index + 1 < len(args):
-        scratch = args[index + 1]
-    elif arg.startswith("--scratch-path="):
-        scratch = arg.split("=", 1)[1]
 
-if scratch is None:
-    refuse(
-        "This swift command has no --scratch-path, so it writes "
-        "Packages/<Folder>/<Name>/.build, a full copy of every dependency. Run "
-        f"{SANCTIONED} instead, or pass "
-        '--package-path Packages/<Folder>/<Name> --scratch-path "$(git rev-parse '
-        '--show-toplevel)/.build-shared" from the repository root.'
-    )
+def swift_args(segment):
+    """Returns the swift arguments of a segment, or None if it is not swift."""
+    segment = list(segment)
+    while segment and ASSIGNMENT.match(segment[0]):
+        segment.pop(0)
+    while segment and os.path.basename(segment[0]) in WRAPPERS:
+        wrapper = os.path.basename(segment.pop(0))
+        while segment:
+            token = segment[0]
+            if token.startswith("-"):
+                if token in LOOKUPS.get(wrapper, ()):
+                    return None
+                segment.pop(0)
+                if token in WRAPPERS[wrapper] and segment:
+                    segment.pop(0)
+            elif wrapper == "env" and ASSIGNMENT.match(token):
+                segment.pop(0)
+            else:
+                break
+    if not segment:
+        return None
+    name = os.path.basename(segment[0])
+    if name == "swift":
+        return segment[1:]
+    if name in SWIFT_TOOLS:
+        return [name[len("swift-"):]] + segment[1:]
+    return None
 
-if scratch == ".build" or scratch.endswith("/.build") or "Packages/" in scratch:
-    refuse(
-        f"The --scratch-path '{scratch}' is the per-package build directory this "
-        "rule exists to prevent. Point it at <repo>/.build-shared, or run "
-        f"{SANCTIONED}."
-    )
+
+def own_options(args):
+    """Returns the arguments that swift itself reads, not a product or -- tail."""
+    own = args[:1]
+    rest = iter(args[1:])
+    for arg in rest:
+        if arg == "--":
+            break
+        # swift run builds first, and the product reads what follows its name.
+        if args[0] == "run" and not arg.startswith("-"):
+            break
+        own.append(arg)
+        if arg in VALUE_OPTIONS:
+            own.extend(itertools.islice(rest, 1))
+    return own
+
+
+def check(args):
+    """Refuses a swift invocation that would write a per-package .build."""
+    own = own_options(args)
+    if not args or args[0] in HARMLESS or HARMLESS_FLAGS.intersection(own):
+        return
+
+    scratch = None
+    for index, arg in enumerate(own):
+        if arg == "--scratch-path" and index + 1 < len(own):
+            scratch = own[index + 1]
+        elif arg.startswith("--scratch-path="):
+            scratch = arg.split("=", 1)[1]
+
+    if scratch is None:
+        refuse(
+            "This swift command has no --scratch-path, so it writes "
+            "Packages/<Folder>/<Name>/.build, a full copy of every dependency. Run "
+            f"{SANCTIONED} instead, or pass "
+            '--package-path Packages/<Folder>/<Name> --scratch-path "$(git rev-parse '
+            '--show-toplevel)/.build-shared" from the repository root.'
+        )
+
+    if scratch == ".build" or scratch.endswith("/.build") or "Packages/" in scratch:
+        refuse(
+            f"The --scratch-path '{scratch}' is the per-package build directory this "
+            "rule exists to prevent. Point it at <repo>/.build-shared, or run "
+            f"{SANCTIONED}."
+        )
+
+
+# Join continuations after the heredoc bodies are gone, so a body line ending
+# in a backslash cannot swallow its terminator.
+code = "\n".join(code_lines(command)).replace("\\\n", " ")
+for segment in segments(code):
+    args = swift_args(segment)
+    if args is not None:
+        check(args)
 
 sys.exit(0)
