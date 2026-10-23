@@ -1,5 +1,5 @@
 /// The severity of a logged event, ordered from least to most severe.
-public enum LogLevel: Int, Comparable, Sendable, CaseIterable {
+public enum LogLevel: Comparable, Sendable, CaseIterable {
     /// Detail useful only while working on the code.
     case debug
     /// Detail that helps explain a run after the fact.
@@ -12,10 +12,6 @@ public enum LogLevel: Int, Comparable, Sendable, CaseIterable {
     case error
     /// A failure that leaves the app unable to carry on correctly.
     case critical
-
-    public static func < (lhs: Self, rhs: Self) -> Bool {
-        lhs.rawValue < rhs.rawValue
-    }
 
     /// The level's name, for destinations that record it as text.
     public var name: String {
