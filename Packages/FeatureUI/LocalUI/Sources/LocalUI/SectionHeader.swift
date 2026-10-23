@@ -34,9 +34,7 @@ package struct SectionHeader: View {
     }
 }
 
-struct SectionHeader_Previews: PreviewProvider {
-    static var previews: some View {
-        SectionHeader(title: "SwiftLeeds")
-    }
+#Preview {
+    SectionHeader(title: "SwiftLeeds")
 }
 #endif
