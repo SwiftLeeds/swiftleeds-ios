@@ -3,6 +3,27 @@ import SwiftUI
 
 /// Draws every icon in the vocabulary beside its name.
 package struct IconSpecimen: View {
+    /// A view that draws an icon in a fixed frame, so a wide symbol keeps the column.
+    private struct Glyph: View {
+        /// The icon the glyph shows.
+        private let icon: Icon
+
+        /// Creates a glyph that shows an icon.
+        ///
+        /// - Parameter icon: The icon to show.
+        init(_ icon: Icon) {
+            self.icon = icon
+        }
+
+        /// The icon, scaled up and hidden from VoiceOver.
+        var body: some View {
+            Image(icon: icon)
+                .imageScale(.large)
+                .frame(width: CGFloat(IconSize.xxLarge), alignment: .leading)
+                .accessibilityHidden(true)
+        }
+    }
+
     package init() {}
 
     package var body: some View {
@@ -163,24 +184,6 @@ extension IconSpecimen {
                 Glyph(.ticket)
             }
         }
-    }
-}
-
-// MARK: - Parts
-
-// Fixed frame, so a wide symbol doesn't shift the column.
-private struct Glyph: View {
-    private let icon: Icon
-
-    init(_ icon: Icon) {
-        self.icon = icon
-    }
-
-    var body: some View {
-        Image(icon: icon)
-            .imageScale(.large)
-            .frame(width: CGFloat(IconSize.xxLarge), alignment: .leading)
-            .accessibilityHidden(true)
     }
 }
 

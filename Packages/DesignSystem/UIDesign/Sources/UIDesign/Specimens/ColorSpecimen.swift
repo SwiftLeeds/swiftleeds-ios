@@ -3,6 +3,30 @@ import SwiftUI
 
 /// A view that shows every color token, labeled by its name within its group.
 package struct ColorSpecimen: View {
+    /// A view that draws a color in a stroked swatch, visible on its own surface.
+    private struct Swatch: View {
+        /// The color the swatch shows.
+        private let color: Color
+
+        /// Creates a swatch that shows a color.
+        ///
+        /// - Parameter color: The color to show.
+        init(_ color: Color) {
+            self.color = color
+        }
+
+        /// A rounded rectangle filled with the color and outlined.
+        var body: some View {
+            RoundedRectangle(cornerRadius: CGFloat(CornerRadius.small))
+                .fill(color)
+                .frame(width: Sample.width, height: Sample.height)
+                .overlay {
+                    RoundedRectangle(cornerRadius: CGFloat(CornerRadius.small))
+                        .strokeBorder(.opaqueBorder, lineWidth: CGFloat(BorderWidth.thin))
+                }
+        }
+    }
+
     package init() {}
 
     package var body: some View {
@@ -103,27 +127,6 @@ extension ColorSpecimen {
                 Swatch(.info)
             }
         }
-    }
-}
-
-// MARK: - Parts
-
-// Stroked, or a surface swatch on that same surface is invisible.
-private struct Swatch: View {
-    private let color: Color
-
-    init(_ color: Color) {
-        self.color = color
-    }
-
-    var body: some View {
-        RoundedRectangle(cornerRadius: CGFloat(CornerRadius.small))
-            .fill(color)
-            .frame(width: Sample.width, height: Sample.height)
-            .overlay {
-                RoundedRectangle(cornerRadius: CGFloat(CornerRadius.small))
-                    .strokeBorder(.opaqueBorder, lineWidth: CGFloat(BorderWidth.thin))
-            }
     }
 }
 

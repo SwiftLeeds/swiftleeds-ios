@@ -26,10 +26,4 @@ struct SpecimenGroup<Content: View>: View {
         }
     }
 }
-
-/// The size a specimen draws a token that is neither a width nor a height.
-enum Sample {
-    static let width: CGFloat = 64
-    static let height: CGFloat = 32
-}
 #endif
