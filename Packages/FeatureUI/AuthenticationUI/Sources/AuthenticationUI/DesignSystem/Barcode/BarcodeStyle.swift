@@ -10,7 +10,7 @@ package protocol BarcodeStyle {
 }
 
 /// The code a ``BarcodeStyle`` arranges.
-package struct BarcodeStyleConfiguration {
+package struct BarcodeStyleConfiguration {  // swiftlint:disable:this one_declaration_per_file - frozen copy
     package struct Code: View {
         let base: AnyView
 
@@ -21,7 +21,7 @@ package struct BarcodeStyleConfiguration {
 }
 
 /// A code on a white plate with rounded corners.
-package struct InsetBarcodeStyle: BarcodeStyle {
+package struct InsetBarcodeStyle: BarcodeStyle {  // swiftlint:disable:this one_declaration_per_file - frozen copy
     private let cornerRadius: CGFloat
 
     package init(cornerRadius: CGFloat = 16) {
@@ -39,7 +39,7 @@ package struct InsetBarcodeStyle: BarcodeStyle {
 /// A code with nothing around it.
 ///
 /// Still scannable: every generated code carries its own light margin.
-package struct PlainBarcodeStyle: BarcodeStyle {
+package struct PlainBarcodeStyle: BarcodeStyle {  // swiftlint:disable:this one_declaration_per_file - frozen copy
     package init() {}
 
     package func makeBody(configuration: BarcodeStyleConfiguration) -> some View {
@@ -59,7 +59,7 @@ extension BarcodeStyle where Self == PlainBarcodeStyle {
     package static var plain: PlainBarcodeStyle { PlainBarcodeStyle() }
 }
 
-struct AnyBarcodeStyle {
+struct AnyBarcodeStyle {  // swiftlint:disable:this one_declaration_per_file - frozen copy
     let makeBody: (BarcodeStyleConfiguration) -> AnyView
 
     init<S: BarcodeStyle>(_ style: S) {
@@ -67,7 +67,7 @@ struct AnyBarcodeStyle {
     }
 }
 
-private struct BarcodeStyleKey: EnvironmentKey {
+private struct BarcodeStyleKey: EnvironmentKey {  // swiftlint:disable:this one_declaration_per_file - frozen copy
     static var defaultValue: AnyBarcodeStyle { AnyBarcodeStyle(InsetBarcodeStyle()) }
 }
 

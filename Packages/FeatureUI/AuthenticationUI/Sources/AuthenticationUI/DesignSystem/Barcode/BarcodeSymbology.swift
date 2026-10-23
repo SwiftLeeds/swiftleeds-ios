@@ -14,7 +14,7 @@ package protocol BarcodeSymbology: Sendable {
 
 /// Turns a generator's output into a bitmap, adding a quiet zone where the generator omits one.
 @MainActor
-enum BarcodeImage {
+enum BarcodeImage {  // swiftlint:disable:this one_declaration_per_file - frozen copy
     // Software rendering: barcodes are a few thousand pixels at most, and standing up a
     // GPU-backed context costs far more than drawing one.
     private static let context = CIContext(options: [.useSoftwareRenderer: true])
