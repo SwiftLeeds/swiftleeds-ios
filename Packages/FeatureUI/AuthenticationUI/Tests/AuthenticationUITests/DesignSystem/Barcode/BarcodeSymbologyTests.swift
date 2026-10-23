@@ -9,7 +9,7 @@ private let lightThreshold: UInt8 = 127
 /// The width of the top edge of a QR code's finder pattern, in modules.
 private let finderPatternModules = 7
 
-/// The bits in one gray pixel of the bitmap the test draws into.
+/// The bits in one gray component of the bitmap the test draws into.
 private let bitsPerGrayComponent = 8
 
 @MainActor
