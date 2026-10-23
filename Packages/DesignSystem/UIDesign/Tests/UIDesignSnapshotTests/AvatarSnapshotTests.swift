@@ -114,7 +114,7 @@ import UIDesign
 
             Avatar(url: nil, size: AvatarSize.large) {
                 Image(icon: .locked)
-                    .foregroundStyle(.textSecondary)
+                    .foregroundStyle(.secondaryText)
             }
         }
         .redacted(reason: .placeholder)

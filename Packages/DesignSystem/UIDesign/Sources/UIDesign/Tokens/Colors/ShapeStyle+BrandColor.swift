@@ -8,7 +8,7 @@ extension ShapeStyle where Self == Color {
     /// The color that marks something as ours.
     ///
     /// It has no dark variant yet, so it looks the same in both appearances.
-    public static var brandPrimary: Color { Color.accent }
+    public static var brand: Color { Color.accent }
 }
 
-// No brandSecondary: the repo holds one brand color. Adding one is a color decision.
+// No secondaryBrand: the repo holds one brand color. Adding one is a color decision.

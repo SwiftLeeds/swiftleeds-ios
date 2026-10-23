@@ -1,7 +1,7 @@
 #if DEBUG
 import SwiftUI
 
-/// Draws every color token beside its name.
+/// A view that shows every color token, labeled by its name within its group.
 package struct ColorSpecimen: View {
     package init() {}
 
@@ -45,24 +45,24 @@ extension ColorSpecimen {
     fileprivate var textGroup: some View {
         SpecimenGroup("Text") {
             GridRow {
-                Text("primary")
-                Swatch(.textPrimary)
+                Text("text")
+                Swatch(.text)
             }
             GridRow {
                 Text("secondary")
-                Swatch(.textSecondary)
+                Swatch(.secondaryText)
             }
             GridRow {
                 Text("tertiary")
-                Swatch(.textTertiary)
+                Swatch(.tertiaryText)
             }
             GridRow {
                 Text("disabled")
-                Swatch(.textDisabled)
+                Swatch(.disabledText)
             }
             GridRow {
                 Text("onBrand")
-                Swatch(.textOnBrand)
+                Swatch(.onBrand)
             }
         }
     }
@@ -70,12 +70,12 @@ extension ColorSpecimen {
     fileprivate var borderGroup: some View {
         SpecimenGroup("Border") {
             GridRow {
-                Text("primary")
-                Swatch(.borderPrimary)
+                Text("border")
+                Swatch(.border)
             }
             GridRow {
-                Text("secondary")
-                Swatch(.borderSecondary)
+                Text("opaque")
+                Swatch(.opaqueBorder)
             }
         }
     }
@@ -84,7 +84,7 @@ extension ColorSpecimen {
         SpecimenGroup("Brand and status") {
             GridRow {
                 Text("brand")
-                Swatch(.brandPrimary)
+                Swatch(.brand)
             }
             GridRow {
                 Text("success")
@@ -122,7 +122,7 @@ private struct Swatch: View {
             .frame(width: Sample.width, height: Sample.height)
             .overlay {
                 RoundedRectangle(cornerRadius: CGFloat(CornerRadius.small))
-                    .strokeBorder(.borderSecondary, lineWidth: CGFloat(BorderWidth.thin))
+                    .strokeBorder(.opaqueBorder, lineWidth: CGFloat(BorderWidth.thin))
             }
     }
 }
