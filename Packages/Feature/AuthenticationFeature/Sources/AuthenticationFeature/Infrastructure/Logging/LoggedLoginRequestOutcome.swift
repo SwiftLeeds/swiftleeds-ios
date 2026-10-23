@@ -7,10 +7,10 @@ struct LoggedLoginRequestOutcome {
     let message: LogMessage
 
     // Returns `nil` for a transport failure, which the decorator on `HTTPClient` already recorded.
-    static func failure(_ error: LoginRequestError) -> LoggedLoginRequestOutcome? {
+    static func failure(_ error: LoginRequestError) -> Self? {
         switch error {
         case let .couldNotEncodeRequest(cause):
-            LoggedLoginRequestOutcome(
+            Self(
                 level: .error,
                 message: "The sign-in request could not be encoded: \(cause, name: "reason", privacy: .open)",
             )

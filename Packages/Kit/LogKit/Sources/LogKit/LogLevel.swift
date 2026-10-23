@@ -13,7 +13,7 @@ public enum LogLevel: Int, Comparable, Sendable, CaseIterable {
     /// A failure that leaves the app unable to carry on correctly.
     case critical
 
-    public static func < (lhs: LogLevel, rhs: LogLevel) -> Bool {
+    public static func < (lhs: Self, rhs: Self) -> Bool {
         lhs.rawValue < rhs.rawValue
     }
 

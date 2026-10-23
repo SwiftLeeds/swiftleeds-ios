@@ -12,7 +12,7 @@ struct ShimmerView: View {
         Color.gray.opacity(0.2),
     ]
 
-    init(colors: [Color] = ShimmerView.defaultColors, duration: Double = 1.5) {
+    init(colors: [Color] = Self.defaultColors, duration: Double = 1.5) {
         self.colors = colors
         self.duration = duration
     }

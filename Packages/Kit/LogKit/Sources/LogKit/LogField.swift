@@ -35,8 +35,8 @@ public struct LogField: Hashable, Sendable {
     /// - Parameters:
     ///   - name: The name the field is logged under.
     ///   - value: The value to log.
-    public static func open(_ name: FieldName, _ value: some LogValueRepresentable) -> LogField {
-        LogField(name: name, value: value.logValue, sensitivity: .open)
+    public static func open(_ name: FieldName, _ value: some LogValueRepresentable) -> Self {
+        Self(name: name, value: value.logValue, sensitivity: .open)
     }
 
     /// Builds a field whose value may be correlated but never read.
@@ -44,8 +44,8 @@ public struct LogField: Hashable, Sendable {
     /// - Parameters:
     ///   - name: The name the field is logged under.
     ///   - value: The value to log.
-    public static func hashed(_ name: FieldName, _ value: some LogValueRepresentable) -> LogField {
-        LogField(name: name, value: value.logValue, sensitivity: .hashed)
+    public static func hashed(_ name: FieldName, _ value: some LogValueRepresentable) -> Self {
+        Self(name: name, value: value.logValue, sensitivity: .hashed)
     }
 
     /// Builds a field whose value must never leave the device.
@@ -53,7 +53,7 @@ public struct LogField: Hashable, Sendable {
     /// - Parameters:
     ///   - name: The name the field is logged under.
     ///   - value: The value to log.
-    public static func secret(_ name: FieldName, _ value: some LogValueRepresentable) -> LogField {
-        LogField(name: name, value: value.logValue, sensitivity: .secret)
+    public static func secret(_ name: FieldName, _ value: some LogValueRepresentable) -> Self {
+        Self(name: name, value: value.logValue, sensitivity: .secret)
     }
 }

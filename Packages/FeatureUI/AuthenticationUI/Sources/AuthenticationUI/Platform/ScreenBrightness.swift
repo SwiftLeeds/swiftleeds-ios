@@ -20,7 +20,7 @@ package struct ScreenBrightness: Sendable {
         }
 
         /// The brightest the display goes.
-        package static let brightest = Level(1)
+        package static let brightest = Self(1)
     }
 
     /// Reads the current level.

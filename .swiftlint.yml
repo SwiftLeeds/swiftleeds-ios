@@ -133,8 +133,8 @@ opt_in_rules:
   - static_operator
 
   # Rules that needed a sweep. Each had 1 to 26 violations when it was turned
-  # on, 2026-10-15 to 2026-10-21, except `no_magic_numbers`, which had 327 on
-  # 2026-10-23.
+  # on, 2026-10-15 to 2026-10-21. The exceptions, all on 2026-10-23:
+  # `no_magic_numbers` had 327 and `prefer_self_in_static_references` had 106.
 
   # "Code reads like clean English." Each of these takes the shorter form Swift
   # offers: a comma for `&&`, `if let x` for `if let x = x`, a return after the
@@ -212,6 +212,10 @@ opt_in_rules:
   # enable. The layout numbers in views, 206 when the
   # rule was turned on, are in the baseline until design tokens replace them.
   - no_magic_numbers
+
+  # Inside a type, `Self` says the value is this type without repeating its
+  # name: `Self(...)`, `-> Self`, `Self.default`.
+  - prefer_self_in_static_references
 
 # Analyzer rules read the compiler log, so they run only through
 # `swiftlint analyze`, never `swiftlint lint`.

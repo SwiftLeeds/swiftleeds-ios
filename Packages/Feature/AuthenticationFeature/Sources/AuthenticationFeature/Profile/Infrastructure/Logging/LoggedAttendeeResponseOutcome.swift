@@ -6,20 +6,20 @@ struct LoggedAttendeeResponseOutcome {
     let message: LogMessage
 
     // Carries no field. The accepted value holds a name, an email address and a ticket reference.
-    static let success = LoggedAttendeeResponseOutcome(
+    static let success = Self(
         level: .debug,
         message: "The attendee response was accepted",
     )
 
-    static func failure(_ error: AttendeeMapper.ResponseError) -> LoggedAttendeeResponseOutcome {
+    static func failure(_ error: AttendeeMapper.ResponseError) -> Self {
         switch error {
         case let .couldNotDecode(cause):
-            LoggedAttendeeResponseOutcome(
+            Self(
                 level: .error,
                 message: "The attendee response could not be decoded: \(cause, name: "reason", privacy: .open)",
             )
         case let .invalidField(invalid):
-            LoggedAttendeeResponseOutcome(
+            Self(
                 level: .error,
                 message: """
                     The attendee response had an invalid \(invalid.field.rawValue, name: "field", privacy: .open): \
@@ -28,12 +28,12 @@ struct LoggedAttendeeResponseOutcome {
             )
         case .unauthorized:
             // Expected: the session expired or was revoked. Not a fault in the app.
-            LoggedAttendeeResponseOutcome(
+            Self(
                 level: .notice,
                 message: "The attendee request was not authorized",
             )
         case let .unexpectedStatus(status):
-            LoggedAttendeeResponseOutcome(
+            Self(
                 level: .error,
                 message: """
                     The attendee request got an unexpected status \

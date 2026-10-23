@@ -5,12 +5,12 @@ struct LoggedSignOutOutcome {
     let level: LogLevel
     let message: LogMessage
 
-    static let success = LoggedSignOutOutcome(
+    static let success = Self(
         level: .notice,
         message: "Signing out finished",
     )
 
-    static let failure = LoggedSignOutOutcome(
+    static let failure = Self(
         level: .error,
         message: "Signing out did not finish, so the session is still on this device",
     )

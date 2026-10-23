@@ -29,7 +29,7 @@ extension HTTPClient {
         urlSession: URLSession,
         onSessionExpiry: @escaping @Sendable () async -> Void,
     ) -> HTTPClient {
-        HTTPClient.urlSession(urlSession)
+        Self.urlSession(urlSession)
             .logging()
             .interceptingSessionExpiry(onExpiry: onSessionExpiry)
             .authenticated()
