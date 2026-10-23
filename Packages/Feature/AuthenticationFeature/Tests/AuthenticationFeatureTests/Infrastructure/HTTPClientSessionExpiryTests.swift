@@ -5,6 +5,21 @@ import NetworkKitTestSupport
 import Testing
 
 @Suite struct HTTPClientSessionExpiryTests {
+    /// A spy that records each run of the session expiry reaction.
+    private actor ReactionSpy {
+        /// A call the spy recorded.
+        enum Action: Equatable {
+            /// A run of the session expiry reaction.
+            case expiryReported
+        }
+
+        /// The calls recorded so far, in order.
+        private(set) var actions: [Action] = []
+
+        /// Records that the session expiry reaction ran.
+        func record() { actions.append(.expiryReported) }
+    }
+
     private let url: URL
 
     init() throws {
@@ -45,19 +60,4 @@ import Testing
 
         #expect(await reaction.actions.isEmpty)
     }
-}
-
-/// A spy that records each run of the session expiry reaction.
-private actor ReactionSpy {
-    /// A call the spy recorded.
-    enum Action: Equatable {
-        /// A run of the session expiry reaction.
-        case expiryReported
-    }
-
-    /// The calls recorded so far, in order.
-    private(set) var actions: [Action] = []
-
-    /// Records that the session expiry reaction ran.
-    func record() { actions.append(.expiryReported) }
 }
