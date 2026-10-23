@@ -9,11 +9,17 @@ public struct Coordinate: Equatable, Hashable, Sendable {
         case longitudeOutOfRange
     }
 
+    /// The largest latitude in degrees, at the north pole.
+    private static let maxLatitude: Double = 90
+
+    /// The largest longitude in degrees, at the antimeridian.
+    private static let maxLongitude: Double = 180
+
     /// The latitudes a coordinate accepts.
-    private static let latitudes = -90.0...90.0
+    private static let latitudes = -maxLatitude...maxLatitude
 
     /// The longitudes a coordinate accepts.
-    private static let longitudes = -180.0...180.0
+    private static let longitudes = -maxLongitude...maxLongitude
 
     /// The latitude in degrees, positive north of the equator.
     public let latitude: Double
