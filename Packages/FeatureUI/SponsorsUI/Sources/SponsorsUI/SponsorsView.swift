@@ -39,8 +39,6 @@ extension SponsorsView {
     }
 }
 
-struct SponsorsView_Previews: PreviewProvider {
-    static var previews: some View {
-        SponsorsView()
-    }
+#Preview {
+    SponsorsView()
 }

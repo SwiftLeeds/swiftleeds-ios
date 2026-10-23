@@ -214,95 +214,38 @@ package struct SponsorTileView: View {
     }
 }
 
-struct JobRowView: View {
-    let job: Job
-    @Environment(\.openURL) private var openURL
-    @State private var isPressed = false
+#if DEBUG
+#Preview {
+    ZStack {
+        Color.background.edgesIgnoringSafeArea(.all)
 
-    var body: some View {
-        Button(
-            action: {
-                if let url = job.url {
-                    openURL(url)
-                }
-            },
-            label: {
-                VStack(spacing: 0) {
-                    Divider()
-
-                    HStack {
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text(job.title)
-                                .font(.subheadline.weight(.medium))
-                                .foregroundColor(.primary)
-                                .lineLimit(1)
-
-                            HStack(spacing: 4) {
-                                Image(systemName: "location.fill")
-                                    .font(.caption2)
-                                    .accessibilityHidden(true)
-                                Text(job.location)
-                                    .font(.caption)
-                            }
-                            .foregroundColor(.secondary)
-                        }
-
-                        Spacer()
-
-                        Image(systemName: "arrow.right.circle")
-                            .font(.title3)
-                            .foregroundColor(.accent.opacity(0.5))
-                            .accessibilityHidden(true)
-                    }
-                    .padding()
-                    .background(isPressed ? Color.accent.opacity(0.05) : Color.clear)
-                }
-            },
-        )
-        .scaleEffect(isPressed ? 0.97 : 1.0)
-        .onLongPressGesture(
-            minimumDuration: 0.1, maximumDistance: .infinity,
-            pressing: { pressing in
-                withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
-                    isPressed = pressing
-                }
-            }, perform: {},
-        )
-    }
-}
-
-struct SponsorTileView_Previews: PreviewProvider {
-    static var previews: some View {
-        ZStack {
-            Color.background.edgesIgnoringSafeArea(.all)
-
-            VStack {
-                SponsorTileView(sponsor: sample)
-                    .padding()
-            }
+        VStack {
+            SponsorTileView(sponsor: sample)
+                .padding()
         }
     }
-
-    private static let sample = Sponsor(
-        id: SponsorID("sponsor-1"),
-        name: "SwiftLeeds",
-        subtitle: "Best Conference",
-        level: .platinum,
-        logoURL: sampleLogoURL,
-        websiteURL: nil,
-        jobs: [sampleJob],
-    )
-
-    private static let sampleLogoURL = URL(
-        string: "https://swiftleeds-speakers.s3.eu-west-2.amazonaws.com/"
-            + "961E45E2-8667-42F6-895E-4CE5E8B954E2-skybrand.png"
-    )
-
-    private static let sampleJob = Job(
-        id: JobID(UUID()),
-        title: "Senior iOS Engineer",
-        details: "Bringing all your Swift skills to the fore",
-        location: "Leeds",
-        url: URL(string: "https://example.com"),
-    )
 }
+
+/// A platinum sponsor with one job, for the preview.
+private let sample = Sponsor(
+    id: SponsorID("sponsor-1"),
+    name: "SwiftLeeds",
+    subtitle: "Best Conference",
+    level: .platinum,
+    logoURL: sampleLogoURL,
+    websiteURL: nil,
+    jobs: [sampleJob],
+)
+
+/// The address of the sample sponsor's logo.
+private let sampleLogoURL = URL(string: "https://images.example.com/sponsor-logo.png")
+
+/// The job the sample sponsor lists.
+private let sampleJob = Job(
+    id: JobID(UUID()),
+    title: "Senior iOS Engineer",
+    details: "Bringing all your Swift skills to the fore",
+    location: "Leeds",
+    url: URL(string: "https://example.com"),
+)
+#endif
