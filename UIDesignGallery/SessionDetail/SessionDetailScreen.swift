@@ -154,7 +154,7 @@ extension SessionDetailScreen {
             aboutCard
                 .frame(maxWidth: Self.readableWidth, alignment: .leading)
 
-            SpeakerRows(speakers: session.lineup.credited, showPerson: showPerson)
+            CreditedRows(speakers: session.lineup.credited, showPerson: showPerson)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.horizontal, margin)

@@ -3,10 +3,10 @@ import UIDesign
 
 /// A view that lists a session's speakers under a "Speakers" heading.
 ///
-/// Each speaker is a row: a large avatar, then the name above the description.
+/// Each person is a row: a large avatar, then the name above the description.
 /// The rows sit side by side in equal columns while they fit, and stack at an
 /// accessibility text size.
-struct SpeakerRows: View {
+struct CreditedRows: View {
     /// The speakers to list, in order.
     private let speakers: [SamplePerson]
 
@@ -40,8 +40,8 @@ struct SpeakerRows: View {
 
 // MARK: - Rows
 
-extension SpeakerRows {
-    /// The speakers' rows, in two equal columns while each fits in one, and
+extension CreditedRows {
+    /// The rows, in two equal columns while each fits in one, and
     /// stacked when they do not, or at an accessibility text size.
     @ViewBuilder
     private var rows: some View {
@@ -54,33 +54,33 @@ extension SpeakerRows {
         }
     }
 
-    /// The speakers' rows, one above the next.
+    /// The rows, one above the next.
     private var stackedRows: some View {
         VStack(alignment: .leading, spacing: .large) {
             ForEach(speakers) { row(for: $0) }
         }
     }
 
-    /// Returns a button that shows a speaker's page, with a large avatar beside the text.
+    /// Returns a button that shows a person's page, with a large avatar beside the text.
     ///
     /// At an accessibility text size the avatar moves above the text.
     ///
-    /// - Parameter speaker: The speaker the row names.
-    /// - Returns: A button that shows the speaker's page.
-    private func row(for speaker: SamplePerson) -> some View {
+    /// - Parameter person: The person the row names.
+    /// - Returns: A button that shows the person's page.
+    private func row(for person: SamplePerson) -> some View {
         Button {
-            showPerson(speaker)
+            showPerson(person)
         } label: {
             arrangement {
-                avatar(for: speaker)
+                avatar(for: person)
                     .accessibilityHidden(true)
 
                 VStack(alignment: .leading, spacing: .xxSmall) {
-                    Text(speaker.name)
+                    Text(person.name)
                         .font(.headline)
                         .foregroundStyle(.textPrimary)
 
-                    Text(speaker.detail)
+                    Text(person.detail)
                         .font(.subheadline)
                         .foregroundStyle(.textSecondary)
                 }
@@ -90,7 +90,7 @@ extension SpeakerRows {
             .contentShape(.rect)
         }
         .buttonStyle(.plain)
-        .accessibilityLabel("\(speaker.name), \(speaker.detail)")
+        .accessibilityLabel("\(person.name), \(person.detail)")
     }
 
     /// The avatar beside the text, or above it at an accessibility text size.
@@ -102,15 +102,15 @@ extension SpeakerRows {
         }
     }
 
-    /// Returns a speaker's initials on a disc with an edge, in quiet type.
+    /// Returns a person's initials on a disc with an edge, in quiet type.
     ///
-    /// - Parameter speaker: The speaker the avatar names.
-    /// - Returns: An extra large avatar showing the speaker's initials.
-    private func avatar(for speaker: SamplePerson) -> some View {
+    /// - Parameter person: The person the avatar names.
+    /// - Returns: An extra large avatar showing the person's initials.
+    private func avatar(for person: SamplePerson) -> some View {
         // The initials disc is the row's own color, so it takes an edge to be
         // seen, as the person page's avatar does.
         Avatar(url: nil, size: .xLarge) {
-            QuietInitials(speaker.nameComponents)
+            QuietInitials(person.nameComponents)
         }
         .overlay {
             Circle().strokeBorder(Color.borderPrimary, lineWidth: CGFloat(BorderWidth.thin))
