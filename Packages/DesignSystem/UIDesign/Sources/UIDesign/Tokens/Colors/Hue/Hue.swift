@@ -1,5 +1,3 @@
-import SwiftUI
-
 /// A named hue with a tonal ramp of raw colors, from darkest to lightest.
 package enum Hue: CaseIterable, Equatable, Hashable, Sendable {
     /// A step of OKLCH lightness, from 5 (near black) to 95 (near white).
