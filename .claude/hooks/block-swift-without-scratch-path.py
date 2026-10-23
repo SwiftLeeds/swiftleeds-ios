@@ -28,10 +28,11 @@ import shlex
 import sys
 
 ASSIGNMENT = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*=")
-# A here-string (<<<) is not a heredoc, and a terminator may hold a dash.
+# A here-string (<<<) is not a heredoc, and a terminator may hold a dash. A
+# word before ) is an arithmetic shift, as in $((1<<2)).
 HEREDOC = re.compile(
     r"(?<!<)<<(?!<)(?P<dash>-?)\s*(?P<quote>['\"]?)"
-    r"(?P<word>[^\s'\"<>|&;()]+)(?P=quote)"
+    r"(?P<word>[^\s'\"<>|&;()]+)(?P=quote)(?!\))"
 )
 # Lookups that print a path and run nothing.
 LOOKUPS = {"command": {"-v", "-V"}, "xcrun": {"-f", "--find"}}
@@ -191,8 +192,10 @@ def check(args):
         )
 
 
-joined = command.replace("\\\n", " ")
-for segment in segments("\n".join(code_lines(joined))):
+# Join continuations after the heredoc bodies are gone, so a body line ending
+# in a backslash cannot swallow its terminator.
+code = "\n".join(code_lines(command)).replace("\\\n", " ")
+for segment in segments(code):
     args = swift_args(segment)
     if args is not None:
         check(args)
