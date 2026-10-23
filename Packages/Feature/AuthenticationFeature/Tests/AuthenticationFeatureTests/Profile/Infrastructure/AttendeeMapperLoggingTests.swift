@@ -1,4 +1,3 @@
-import AuthenticationDomain
 import AuthenticationInfrastructure
 import Dependencies
 import Foundation

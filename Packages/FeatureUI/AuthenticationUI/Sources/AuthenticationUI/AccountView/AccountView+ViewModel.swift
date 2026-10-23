@@ -1,4 +1,5 @@
 import AuthenticationApplication
+import AuthenticationDomain
 import Dependencies
 import Observation
 
