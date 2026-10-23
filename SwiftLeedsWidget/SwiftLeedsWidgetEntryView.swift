@@ -1,6 +1,5 @@
 import Foundation
 import ScheduleDomain
-import ScheduleFeature
 import SwiftUI
 import WidgetKit
 

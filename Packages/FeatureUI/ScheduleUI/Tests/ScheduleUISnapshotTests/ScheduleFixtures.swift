@@ -1,7 +1,6 @@
 #if os(iOS)
 import Foundation
 import ScheduleDomain
-import ScheduleFeature
 
 // Every profile image is empty, so a cell draws its placeholder rather than waiting
 // on the network, which would make each snapshot a race.

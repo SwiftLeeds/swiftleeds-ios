@@ -1,8 +1,8 @@
 #if canImport(UIKit)
 import Dependencies
 import Observation
+import ScheduleApplication
 import ScheduleDomain
-import ScheduleFeature
 
 extension ScheduleView {
     @Observable

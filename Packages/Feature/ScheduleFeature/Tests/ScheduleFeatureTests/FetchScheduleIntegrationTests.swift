@@ -1,7 +1,7 @@
 import Dependencies
 import Foundation
+import ScheduleApplication
 import ScheduleDomain
-import ScheduleFeature
 import ScheduleInfrastructure
 import Testing
 

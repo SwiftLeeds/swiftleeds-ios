@@ -50,7 +50,7 @@
 		A11CE57000000000000000DA /* UIComponents in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000CA /* UIComponents */; };
 		A11CE57000000000000000DC /* SponsorsUI in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000CC /* SponsorsUI */; };
 		A11CE57000000000000000DD /* ScheduleInfrastructure in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000CD /* ScheduleInfrastructure */; };
-		A11CE57000000000000000DF /* ScheduleFeature in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000CF /* ScheduleFeature */; };
+		A11CE57000000000000000DF /* ScheduleApplication in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000CF /* ScheduleApplication */; };
 		A11CE570000000000000F5D1 /* ScheduleDomain in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE570000000000000F5C1 /* ScheduleDomain */; };
 		A11CE570000000000000F5D2 /* ScheduleInfrastructure in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE570000000000000F5C2 /* ScheduleInfrastructure */; };
 		A11CE570000000000000F5D3 /* ScheduleInfrastructure in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE570000000000000F5C3 /* ScheduleInfrastructure */; };
@@ -212,7 +212,7 @@
 				7BE081542EE5BF13004BCD1F /* UIAssets in Frameworks */,
 				74A09FE128C6778C00E03F39 /* SwiftUI.framework in Frameworks */,
 				74A09FDF28C6778C00E03F39 /* WidgetKit.framework in Frameworks */,
-				A11CE57000000000000000DF /* ScheduleFeature in Frameworks */,
+				A11CE57000000000000000DF /* ScheduleApplication in Frameworks */,
 				A11CE570000000000000F5D1 /* ScheduleDomain in Frameworks */,
 				A11CE570000000000000F5D2 /* ScheduleInfrastructure in Frameworks */,
 				A11CE57000000000000000E6 /* Dependencies in Frameworks */,
@@ -517,7 +517,7 @@
 			name = SwiftLeedsWidgetExtension;
 			packageProductDependencies = (
 				7BE081532EE5BF13004BCD1F /* UIAssets */,
-				A11CE57000000000000000CF /* ScheduleFeature */,
+				A11CE57000000000000000CF /* ScheduleApplication */,
 				A11CE570000000000000F5C1 /* ScheduleDomain */,
 				A11CE570000000000000F5C2 /* ScheduleInfrastructure */,
 				A11CE57000000000000000E5 /* Dependencies */,
@@ -1526,9 +1526,9 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = ScheduleInfrastructure;
 		};
-		A11CE57000000000000000CF /* ScheduleFeature */ = {
+		A11CE57000000000000000CF /* ScheduleApplication */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = ScheduleFeature;
+			productName = ScheduleApplication;
 		};
 		A11CE570000000000000F5C1 /* ScheduleDomain */ = {
 			isa = XCSwiftPackageProductDependency;

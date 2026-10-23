@@ -1,6 +1,5 @@
 #if canImport(UIKit)
 import ScheduleDomain
-import ScheduleFeature
 import SwiftUI
 import UIComponents
 
