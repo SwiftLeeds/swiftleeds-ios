@@ -229,7 +229,7 @@ opt_in_rules:
   # written out was a JSON key, a saved setting or a value the backend sends.
   - explicit_enum_raw_value
 
-  # A reader meets the file's subject first. The order is set below.
+  # A reader meets the file's subject first.
   - file_types_order
 
 # Analyzer rules read the compiler log, so they run only through
@@ -378,9 +378,8 @@ file_name:
 nesting:
   type_level: 2
 
-# The main type comes first, then its extensions and helpers in any order. The
-# default puts helpers first. The rule does not see `#Preview`, only the older
-# `PreviewProvider` structs.
+# The default puts helpers first. The rule does not see `#Preview`, only the
+# older `PreviewProvider` structs.
 file_types_order:
   order:
     - [main_type]
