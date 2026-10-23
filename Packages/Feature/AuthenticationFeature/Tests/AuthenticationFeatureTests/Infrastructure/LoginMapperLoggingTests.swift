@@ -19,6 +19,13 @@ import Testing
         #expect(event.message == "The sign-in credentials were rejected")
     }
 
+    /// A filter on the network category must find every line the mapper writes.
+    @Test func whenCredentialsAreRejected_shouldLogUnderAuthNetworkCategory() throws {
+        let event = try #require(try logEvent(statusCode: 401))
+
+        #expect(event.category == "authNetwork")
+    }
+
     @Test func whenCredentialsAreRejected_shouldLogAtNoticeRatherThanError() throws {
         let event = try #require(try logEvent(statusCode: 401))
 

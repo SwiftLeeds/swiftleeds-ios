@@ -15,11 +15,11 @@ extension AttendeeMapper {
             do throws(ResponseError) {
                 let attendee = try map(data, response)
                 let entry = LoggedAttendeeResponseOutcome.success
-                log(entry.level, .profile, entry.message)
+                log(entry.level, .profileNetwork, entry.message)
                 return attendee
             } catch {
                 let entry = LoggedAttendeeResponseOutcome.failure(error)
-                log(entry.level, .profile, entry.message)
+                log(entry.level, .profileNetwork, entry.message)
                 throw error
             }
         }

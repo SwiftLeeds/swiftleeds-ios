@@ -28,6 +28,13 @@ import Testing
         #expect(reason.value == .string("keyNotFound ticket.last_name"))
     }
 
+    /// A filter on the network category must find every line the mapper writes.
+    @Test func whenSessionIsNotAuthorized_shouldLogUnderProfileNetworkCategory() throws {
+        let event = try #require(try logEvent(statusCode: 401))
+
+        #expect(event.category == "profileNetwork")
+    }
+
     @Test func whenSessionIsNotAuthorised_shouldLogAtNoticeRatherThanError() throws {
         let event = try #require(try logEvent(statusCode: 401))
 

@@ -70,6 +70,13 @@ import Testing
         #expect(event.level == .notice)
     }
 
+    /// A filter on the use-case category must find every line the sign-in decorator writes.
+    @Test func whenSignInSucceeds_shouldLogUnderAuthCategory() async throws {
+        let event = try #require(try await successEvent())
+
+        #expect(event.category == "auth")
+    }
+
     @Test func whenSignInSucceeds_shouldLogNoCredential() async throws {
         let event = try #require(try await successEvent())
 

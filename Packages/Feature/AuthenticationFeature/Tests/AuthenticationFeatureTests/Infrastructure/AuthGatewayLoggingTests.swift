@@ -17,6 +17,15 @@ import Testing
         #expect(reason.value == .string("couldNotBuildResponse"))
     }
 
+    /// A filter on the network category must find every line the gateway writes.
+    @Test func whenRequestCannotBeEncoded_shouldLogUnderAuthNetworkCategory() async throws {
+        let failure = LoginRequestError.couldNotEncodeRequest(StubError.couldNotBuildResponse)
+
+        let event = try #require(await logEvent(forFailure: failure))
+
+        #expect(event.category == "authNetwork")
+    }
+
     /// Transport failures are logged once, by the decorator on `HTTPClient`.
     @Test func whenTransportFails_shouldLogNothing() async {
         let failure = LoginRequestError.transportFailed(StubError.couldNotBuildResponse)

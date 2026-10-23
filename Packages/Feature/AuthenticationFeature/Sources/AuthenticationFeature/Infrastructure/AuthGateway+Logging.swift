@@ -13,7 +13,7 @@ extension AuthGateway {
                 // building liveValue would capture whichever log existed first.
                 @Dependency(\.log) var log
                 if let entry = LoggedLoginRequestOutcome.failure(error) {
-                    log(entry.level, .auth, entry.message)
+                    log(entry.level, .authNetwork, entry.message)
                 }
                 throw error
             }

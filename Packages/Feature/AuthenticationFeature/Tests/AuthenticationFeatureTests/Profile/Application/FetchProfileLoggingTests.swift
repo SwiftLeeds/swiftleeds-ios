@@ -86,6 +86,13 @@ import Testing
         #expect(event.level == .info)
     }
 
+    /// A filter on the use-case category must find every line the profile decorator writes.
+    @Test func whenFetchSucceeds_shouldLogUnderProfileCategory() async throws {
+        let event = try #require(try await successEvent())
+
+        #expect(event.category == "profile")
+    }
+
     @Test func whenFetchSucceeds_shouldLogNoAttendeeDetail() async throws {
         let event = try #require(try await successEvent())
 

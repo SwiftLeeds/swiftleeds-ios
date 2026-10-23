@@ -16,10 +16,10 @@ extension SessionStore {
                 do {
                     try await establish(session)
                     let entry = LoggedSessionStoreOutcome.stored
-                    log(entry.level, .auth, entry.message)
+                    log(entry.level, .authStorage, entry.message)
                 } catch {
                     let entry = LoggedSessionStoreOutcome.notStored(error)
-                    log(entry.level, .auth, entry.message)
+                    log(entry.level, .authStorage, entry.message)
                     throw error
                 }
             },
@@ -28,10 +28,10 @@ extension SessionStore {
                 do {
                     try await clear()
                     let entry = LoggedSessionStoreOutcome.cleared
-                    log(entry.level, .auth, entry.message)
+                    log(entry.level, .authStorage, entry.message)
                 } catch {
                     let entry = LoggedSessionStoreOutcome.notCleared(error)
-                    log(entry.level, .auth, entry.message)
+                    log(entry.level, .authStorage, entry.message)
                     throw error
                 }
             },
@@ -40,11 +40,11 @@ extension SessionStore {
                 do {
                     let session = try await current()
                     let entry = LoggedSessionStoreOutcome.read(foundSession: session != nil)
-                    log(entry.level, .auth, entry.message)
+                    log(entry.level, .authStorage, entry.message)
                     return session
                 } catch {
                     let entry = LoggedSessionStoreOutcome.notRead(error)
-                    log(entry.level, .auth, entry.message)
+                    log(entry.level, .authStorage, entry.message)
                     throw error
                 }
             },

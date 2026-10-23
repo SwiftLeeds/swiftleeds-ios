@@ -15,11 +15,11 @@ extension LoginMapper {
             do throws(ResponseError) {
                 let token = try map(data, response)
                 let entry = LoggedLoginResponseOutcome.success
-                log(entry.level, .auth, entry.message)
+                log(entry.level, .authNetwork, entry.message)
                 return token
             } catch {
                 let entry = LoggedLoginResponseOutcome.failure(error)
-                log(entry.level, .auth, entry.message)
+                log(entry.level, .authNetwork, entry.message)
                 throw error
             }
         }
