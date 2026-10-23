@@ -5,7 +5,9 @@ struct LoginRequestDTO: Encodable {
     let ticket: String
 
     enum CodingKeys: String, CodingKey {
-        case email, ticket, event
+        case email = "email"
+        case ticket = "ticket"
+        case event = "event"
     }
 
     init(_ credential: Credential) {

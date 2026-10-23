@@ -4,9 +4,12 @@ import UIKit
 
 /// Available theme options for the application
 public enum ThemeOption: String, CaseIterable, Equatable, Hashable, Sendable {
-    case system
-    case light
-    case dark
+    /// The appearance the system setting chooses.
+    case system = "system"
+    /// The light appearance.
+    case light = "light"
+    /// The dark appearance.
+    case dark = "dark"
 
     /// User-friendly display name for the theme option
     public var displayName: String {

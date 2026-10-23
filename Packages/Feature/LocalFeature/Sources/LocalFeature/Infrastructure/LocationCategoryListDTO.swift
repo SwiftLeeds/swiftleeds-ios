@@ -24,11 +24,11 @@ package struct LocationCategoryListDTO: Decodable {
 
     package struct LocationDTO: Decodable {
         package enum CodingKeys: String, CodingKey {
-            case id
-            case name
-            case lat
-            case lon
-            case url
+            case id = "id"
+            case name = "name"
+            case lat = "lat"
+            case lon = "lon"
+            case url = "url"
         }
 
         package let id: UUID

@@ -22,9 +22,9 @@ package struct AttendeeDTO: Decodable {
         enum CodingKeys: String, CodingKey {
             case firstName = "first_name"
             case lastName = "last_name"
-            case email
-            case reference
-            case slug
+            case email = "email"
+            case reference = "reference"
+            case slug = "slug"
             case avatarURL = "avatar_url"
         }
     }

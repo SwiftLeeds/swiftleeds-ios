@@ -213,8 +213,7 @@ The general rule is to comment rationale, never the code. These tests decide the
 ## Layout residue
 
 - **Do not rewrite existing code for one-case-per-line.** Apply it to new code; tidy surrounding
-  cases only when already refactoring that type. `AttendeeDTO.Ticket.CodingKeys` is a known
-  instance, deliberately left.
+  cases only when already refactoring that type.
 
 ## Silencing a lint rule
 

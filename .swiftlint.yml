@@ -14,7 +14,9 @@
 # site left as it is. One rule, `no_magic_numbers`, also left sites in the
 # baseline; its comment says which. For most rules the config line and the
 # fixes land in one commit, so `git log -S<rule>` shows what each rule changed.
-# The fixes for `no_magic_numbers` came in the commits just before it.
+# The fixes for `no_magic_numbers` came in the commits just before it. So did
+# two for `explicit_enum_raw_value`, which removed the raw types of `LogLevel`
+# and `TabItems`.
 #
 # Tuned against the SwiftLint version in .swiftlint-version, which CI installs
 # and the pre-commit hook checks against. Rule defaults change between versions,
@@ -134,8 +136,9 @@ opt_in_rules:
 
   # Rules that needed a sweep. Each had 1 to 26 violations when it was turned
   # on, 2026-10-15 to 2026-10-21. The exceptions, all on 2026-10-23:
-  # `no_magic_numbers` had 327, `prefer_self_in_static_references` had 106 and
-  # `vertical_whitespace_between_cases` had 141.
+  # `no_magic_numbers` had 327, `prefer_self_in_static_references` had 106,
+  # `vertical_whitespace_between_cases` had 141 and `explicit_enum_raw_value`
+  # had 41.
 
   # "Code reads like clean English." Each of these takes the shorter form Swift
   # offers: a comma for `&&`, `if let x` for `if let x = x`, a return after the
@@ -221,6 +224,10 @@ opt_in_rules:
   # A blank line before each switch case makes each case read as its own block.
   # The formatter neither adds nor removes these lines, so the two tools agree.
   - vertical_whitespace_between_cases
+
+  # A raw value written out stays the same when a case is renamed. Every value
+  # written out was a JSON key, a saved setting or a value the backend sends.
+  - explicit_enum_raw_value
 
 # Analyzer rules read the compiler log, so they run only through
 # `swiftlint analyze`, never `swiftlint lint`.
@@ -324,6 +331,10 @@ disabled_rules:
   # flags every protocol witness, such as `body`. The house rule exempts a
   # witness that adds nothing, which the rule would flag.
   - missing_docs
+  #
+  # Contradicts another SwiftLint rule. `redundant_string_enum_value` flags
+  # `case name = "name"`, which `explicit_enum_raw_value` asks for.
+  - redundant_string_enum_value
 
 # `.swift-format` sets `lineLength` to this number. Pin it here rather than
 # inheriting SwiftLint's default, so a version bump cannot move one tool's limit
