@@ -12,7 +12,7 @@ public struct LocalScheduleStore: Sendable {
         self.save = save
     }
 
-    package static let notPersisted = LocalScheduleStore(load: { _ in nil }, save: { _, _ in })
+    package static let notPersisted = Self(load: { _ in nil }, save: { _, _ in })
 }
 
 extension LocalScheduleStore: DependencyKey {

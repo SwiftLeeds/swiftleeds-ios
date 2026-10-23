@@ -10,14 +10,19 @@ extension LogLevel {
         switch self {
         case .debug:
             .debug
+
         case .info:
             .info
+
         case .notice:
             .default
+
         case .warning:
             .default
+
         case .error:
             .error
+
         case .critical:
             .fault
         }

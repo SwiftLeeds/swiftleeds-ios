@@ -25,8 +25,10 @@ extension AttendeeMapper {
             } catch {
                 throw .invalidField(error)
             }
+
         case .unauthorized:
             throw .unauthorized
+
         default:
             throw .unexpectedStatus(response.status)
         }

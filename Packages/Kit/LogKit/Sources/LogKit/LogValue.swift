@@ -10,9 +10,9 @@ public enum LogValue: Hashable, Sendable {
     /// A true or false value.
     case boolean(Bool)
     /// An ordered list of values, which may themselves be lists.
-    case array([LogValue])
+    case array([Self])
     /// Values kept under field names, nested inside one field.
-    case dictionary([FieldName: LogValue])
+    case dictionary([FieldName: Self])
 }
 
 extension LogValue: ExpressibleByStringLiteral {

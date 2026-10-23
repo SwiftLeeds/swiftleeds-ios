@@ -24,48 +24,48 @@ public struct HTTPRequest: Equatable, Hashable, Sendable {
         self.headerFields = headerFields
     }
 
-    public static func get(_ path: URLPath) -> HTTPRequest {
-        HTTPRequest(method: .get, path: path, content: nil)
+    public static func get(_ path: URLPath) -> Self {
+        Self(method: .get, path: path, content: nil)
     }
 
-    public static func head(_ path: URLPath) -> HTTPRequest {
-        HTTPRequest(method: .head, path: path, content: nil)
+    public static func head(_ path: URLPath) -> Self {
+        Self(method: .head, path: path, content: nil)
     }
 
-    public static func post(_ path: URLPath, content: HTTPContent) -> HTTPRequest {
-        HTTPRequest(method: .post, path: path, content: content)
+    public static func post(_ path: URLPath, content: HTTPContent) -> Self {
+        Self(method: .post, path: path, content: content)
     }
 
-    public static func put(_ path: URLPath, content: HTTPContent) -> HTTPRequest {
-        HTTPRequest(method: .put, path: path, content: content)
+    public static func put(_ path: URLPath, content: HTTPContent) -> Self {
+        Self(method: .put, path: path, content: content)
     }
 
-    public static func delete(_ path: URLPath) -> HTTPRequest {
-        HTTPRequest(method: .delete, path: path, content: nil)
+    public static func delete(_ path: URLPath) -> Self {
+        Self(method: .delete, path: path, content: nil)
     }
 
-    public static func connect(_ path: URLPath) -> HTTPRequest {
-        HTTPRequest(method: .connect, path: path, content: nil)
+    public static func connect(_ path: URLPath) -> Self {
+        Self(method: .connect, path: path, content: nil)
     }
 
-    public static func options(_ path: URLPath) -> HTTPRequest {
-        HTTPRequest(method: .options, path: path, content: nil)
+    public static func options(_ path: URLPath) -> Self {
+        Self(method: .options, path: path, content: nil)
     }
 
-    public static func trace(_ path: URLPath) -> HTTPRequest {
-        HTTPRequest(method: .trace, path: path, content: nil)
+    public static func trace(_ path: URLPath) -> Self {
+        Self(method: .trace, path: path, content: nil)
     }
 
-    public static func patch(_ path: URLPath, content: HTTPContent) -> HTTPRequest {
-        HTTPRequest(method: .patch, path: path, content: content)
+    public static func patch(_ path: URLPath, content: HTTPContent) -> Self {
+        Self(method: .patch, path: path, content: content)
     }
 
     /// Adds query items to the end of the query string.
     ///
     /// - Parameter queryItems: Items to append. An empty array is a no-op.
     /// - Returns: A copy. This request is unchanged.
-    public func appending(queryItems: [URLQueryItem]) -> HTTPRequest {
-        HTTPRequest(
+    public func appending(queryItems: [URLQueryItem]) -> Self {
+        Self(
             method: method,
             path: path,
             content: content,
@@ -80,8 +80,8 @@ public struct HTTPRequest: Equatable, Hashable, Sendable {
     ///   - name: Field name. Appending the same name twice keeps the last value.
     ///   - value: Field value, sent exactly as written.
     /// - Returns: A copy. This request is unchanged.
-    public func appending(headerField name: HTTPHeaderField.Name, _ value: HTTPHeaderField.Value) -> HTTPRequest {
-        HTTPRequest(
+    public func appending(headerField name: HTTPHeaderField.Name, _ value: HTTPHeaderField.Value) -> Self {
+        Self(
             method: method,
             path: path,
             content: content,
@@ -96,7 +96,7 @@ public struct HTTPRequest: Equatable, Hashable, Sendable {
     ///   - name: Field name. Appending the same name twice keeps the last value.
     ///   - mediaType: Media type to send, such as `.application.json`.
     /// - Returns: A copy. This request is unchanged.
-    public func appending(headerField name: HTTPHeaderField.Name, _ mediaType: MediaType) -> HTTPRequest {
+    public func appending(headerField name: HTTPHeaderField.Name, _ mediaType: MediaType) -> Self {
         appending(headerField: name, HTTPHeaderField.Value(String(mediaType)))
     }
 

@@ -21,6 +21,7 @@ extension LocalScheduleStore {
         switch request {
         case .current:
             "Schedule"
+
         case let .event(event):
             "Schedule-\(event.uuidString)"
         }

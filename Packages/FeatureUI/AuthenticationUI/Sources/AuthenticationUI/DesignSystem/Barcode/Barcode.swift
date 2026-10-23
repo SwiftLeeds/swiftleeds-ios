@@ -47,17 +47,22 @@ package struct Barcode<Placeholder: View, Failure: View>: View {
             } else {
                 styled(AnyView(failure()))
             }
+
         case .supplied(let image):
             styled(scannable(image))
+
         case .remote(let url):
             AsyncImage(url: url) { phase in
                 switch phase {
                 case .success(let image):
                     styled(scannable(image))
+
                 case .failure:
                     styled(AnyView(failure()))
+
                 case .empty:
                     styled(AnyView(placeholder()))
+
                 @unknown default:
                     styled(AnyView(placeholder()))
                 }

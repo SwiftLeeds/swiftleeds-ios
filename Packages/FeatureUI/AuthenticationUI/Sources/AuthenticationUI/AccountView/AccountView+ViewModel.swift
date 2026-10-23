@@ -18,6 +18,7 @@ extension AccountView {
             switch await authStatus.current() {
             case .signedIn(let proof):
                 state = .signedIn(proof)
+
             case .signedOut:
                 state = .signedOut(signInRequired: signInRequired)
             }

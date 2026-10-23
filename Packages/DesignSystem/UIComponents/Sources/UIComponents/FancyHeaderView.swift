@@ -68,11 +68,14 @@ public struct FancyHeaderView: View {
                         switch phase {
                         case .empty:
                             loadingView()
+
                         case .success(let image):
                             createRectangleImage(for: image)
                                 .accessibilityHidden(true)
+
                         case .failure:
                             createRectangleImage(for: Image.swiftLeedsIcon)
+
                         @unknown default:
                             loadingView()
                         }

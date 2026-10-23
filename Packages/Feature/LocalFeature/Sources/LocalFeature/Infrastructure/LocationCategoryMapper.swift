@@ -49,6 +49,7 @@ extension LocationCategoryMapper {
             switch error {
             case .latitudeOutOfRange:
                 throw MappingError(location: dto.name, field: .lat, value: String(dto.lat))
+
             case .longitudeOutOfRange:
                 throw MappingError(location: dto.name, field: .lon, value: String(dto.lon))
             }

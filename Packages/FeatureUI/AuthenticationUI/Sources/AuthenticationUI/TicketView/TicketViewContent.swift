@@ -36,6 +36,7 @@ struct TicketViewContent: View {
                 .accessibilityElement()
                 .accessibilityLabel("Ticket QR code")
                 .accessibilityHint("Hold this up to be scanned")
+
         case .unavailable:
             unavailable
         }

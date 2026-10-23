@@ -24,15 +24,15 @@ public struct LogFields: Hashable, Sendable, ExpressibleByArrayLiteral {
     /// Returns these fields with one more added at the end.
     ///
     /// - Parameter field: The field to put after the ones already held.
-    public func appending(_ field: LogField) -> LogFields {
-        LogFields(storage + [field])
+    public func appending(_ field: LogField) -> Self {
+        Self(storage + [field])
     }
 
     /// Returns these fields with another collection added at the end.
     ///
     /// - Parameter other: The fields to put after the ones already held.
-    public func appending(contentsOf other: LogFields) -> LogFields {
-        LogFields(storage + other.storage)
+    public func appending(contentsOf other: Self) -> Self {
+        Self(storage + other.storage)
     }
 }
 

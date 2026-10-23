@@ -28,8 +28,8 @@ extension HTTPClient {
     public static func live(
         urlSession: URLSession,
         onSessionExpiry: @escaping @Sendable () async -> Void,
-    ) -> HTTPClient {
-        HTTPClient.urlSession(urlSession)
+    ) -> Self {
+        Self.urlSession(urlSession)
             .logging()
             .interceptingSessionExpiry(onExpiry: onSessionExpiry)
             .authenticated()
