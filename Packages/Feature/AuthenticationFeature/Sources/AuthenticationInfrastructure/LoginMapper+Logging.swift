@@ -5,7 +5,7 @@ import LogKit
 extension LoginMapper {
     /// Records whether the response parsed, then returns or rethrows.
     ///
-    /// The public ``SignInError`` is deliberately bare, so this is the only place a rejection's
+    /// The public `SignInError` is deliberately bare, so this is the only place a rejection's
     /// reason survives.
     package func logging() -> LoginMapper {
         LoginMapper { data, response throws(ResponseError) in

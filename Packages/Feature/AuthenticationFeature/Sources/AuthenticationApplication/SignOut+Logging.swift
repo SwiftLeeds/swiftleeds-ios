@@ -4,7 +4,7 @@ import LogKit
 extension SignOut {
     /// Records the outcome the user got, then rethrows.
     ///
-    /// The line says either that the session is gone, or that the user believes they signed out
+    /// The logged line says either that the session is gone, or that the user believes they signed out
     /// while it is still on the device.
     public func logging() -> SignOut {
         SignOut {

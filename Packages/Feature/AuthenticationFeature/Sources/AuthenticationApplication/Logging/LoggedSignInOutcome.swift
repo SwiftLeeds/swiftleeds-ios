@@ -12,7 +12,7 @@ struct LoggedSignInOutcome {
         message: "Signing in finished",
     )
 
-    /// A failure that is not a ``SignInError``.
+    /// A failure that is not a `SignInError`.
     static let unexplainedFailure = LoggedSignInOutcome(
         level: .error,
         message: "Signing in did not finish, and no sign-in outcome explains it",

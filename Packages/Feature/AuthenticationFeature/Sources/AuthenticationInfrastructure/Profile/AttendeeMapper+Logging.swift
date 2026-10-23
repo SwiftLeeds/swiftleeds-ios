@@ -5,7 +5,7 @@ import LogKit
 extension AttendeeMapper {
     /// Records whether the response parsed, then returns or rethrows.
     ///
-    /// The public ``AttendeeFetchError`` is deliberately bare, so this is the only place a
+    /// The public `AttendeeFetchError` is deliberately bare, so this is the only place a
     /// rejection's reason survives.
     package func logging() -> AttendeeMapper {
         AttendeeMapper { data, response throws(ResponseError) in

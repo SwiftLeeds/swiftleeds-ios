@@ -12,7 +12,7 @@ import Testing
 
 /// Checks that the live `SignIn` reaches the live gateway and the live session store.
 @Suite struct SignInIntegrationTests {
-    /// The stored session proves the live store ran, because the unstubbed store reports an issue.
+    /// Only the live store returns this session. The test store throws on every call.
     @Test func whenResolvedInLiveContext_shouldStoreSessionFromServer() async throws {
         let spy = SecureStorageSpy()
         let configuration = APIConfiguration(baseURL: try #require(URL(string: "https://example.com")))

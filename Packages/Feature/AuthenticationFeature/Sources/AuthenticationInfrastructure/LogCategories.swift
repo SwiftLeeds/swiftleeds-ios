@@ -1,9 +1,8 @@
 import LogKit
 
-/// This feature's log categories. Naming them once means a typo cannot silently create a second
-/// category and split a filter in two.
+/// The infrastructure seams' log categories.
 extension LogCategory {
-    /// Lines from the session store, which writes to the Keychain.
+    /// Lines from the session store.
     static let authStorage: Self = "authStorage"
     /// Lines from the sign-in gateway and its response mapper.
     static let authNetwork: Self = "authNetwork"

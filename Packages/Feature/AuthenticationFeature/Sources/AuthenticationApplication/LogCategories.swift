@@ -1,6 +1,6 @@
 import LogKit
 
-/// This feature's log categories. Naming them once means a typo cannot silently create a second
+/// The use cases' log categories. Naming them once means a typo cannot silently create a second
 /// category and split a filter in two.
 extension LogCategory {
     /// Lines from the sign-in and sign-out use cases.
