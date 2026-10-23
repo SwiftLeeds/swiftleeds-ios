@@ -122,8 +122,10 @@ import Testing
     }
 }
 
-private let now = Date(timeIntervalSince1970: 1_000_000)
-private let twoDays: TimeInterval = 60 * 60 * 24 * 2
+private let now = Date(timeIntervalSince1970: 1_000_000)  // swiftlint:disable:this no_magic_numbers - fixture data
+
+/// Two days, in seconds.
+private let twoDays: TimeInterval = 172_800
 
 extension RemoteScheduleStore {
     fileprivate static func failing(with error: ScheduleFetchError) -> RemoteScheduleStore {
