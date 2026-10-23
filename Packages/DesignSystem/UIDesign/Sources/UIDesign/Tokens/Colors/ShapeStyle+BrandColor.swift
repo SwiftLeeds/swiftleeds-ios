@@ -10,5 +10,3 @@ extension ShapeStyle where Self == Color {
     /// It has no dark variant yet, so it looks the same in both appearances.
     public static var brand: Color { Color.accent }
 }
-
-// No secondaryBrand: the repo holds one brand color. Adding one is a color decision.
