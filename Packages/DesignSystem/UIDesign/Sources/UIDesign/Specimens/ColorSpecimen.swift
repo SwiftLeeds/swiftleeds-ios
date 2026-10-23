@@ -1,7 +1,7 @@
 #if DEBUG
 import SwiftUI
 
-/// Draws every color token beside its name.
+/// A view that shows every color token, labeled by its name within its group.
 package struct ColorSpecimen: View {
     package init() {}
 
@@ -45,7 +45,7 @@ extension ColorSpecimen {
     fileprivate var textGroup: some View {
         SpecimenGroup("Text") {
             GridRow {
-                Text("primary")
+                Text("text")
                 Swatch(.text)
             }
             GridRow {
@@ -70,11 +70,11 @@ extension ColorSpecimen {
     fileprivate var borderGroup: some View {
         SpecimenGroup("Border") {
             GridRow {
-                Text("primary")
+                Text("border")
                 Swatch(.border)
             }
             GridRow {
-                Text("secondary")
+                Text("opaque")
                 Swatch(.opaqueBorder)
             }
         }
