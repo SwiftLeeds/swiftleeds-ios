@@ -1,5 +1,5 @@
 import AuthenticationDomain
-import AuthenticationFeature
+import AuthenticationInfrastructure
 import Dependencies
 import Foundation
 import NetworkKit

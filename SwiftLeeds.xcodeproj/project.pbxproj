@@ -40,6 +40,7 @@
 		920187EBD71395160F1059C1 /* KotlinLeedsColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B3FFD994DBE3F62216150F8 /* KotlinLeedsColors.xcassets */; };
 		A11CE57000000000000000D1 /* AuthenticationUI in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C1 /* AuthenticationUI */; };
 		A11CE57000000000000000D2 /* AuthenticationFeature in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C2 /* AuthenticationFeature */; };
+		A11CE570000000000000F6D1 /* AuthenticationInfrastructure in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE570000000000000F6C1 /* AuthenticationInfrastructure */; };
 		A11CE57000000000000000D3 /* SecureStorageKit in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C3 /* SecureStorageKit */; };
 		A11CE57000000000000000D4 /* SecureStorageKitKeychain in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C4 /* SecureStorageKitKeychain */; };
 		A11CE57000000000000000D5 /* LogKit in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C5 /* LogKit */; };
@@ -230,6 +231,7 @@
 				AE5EFD73289DC1D000464FE1 /* CachedAsyncImage in Frameworks */,
 				A11CE57000000000000000D1 /* AuthenticationUI in Frameworks */,
 				A11CE57000000000000000D2 /* AuthenticationFeature in Frameworks */,
+				A11CE570000000000000F6D1 /* AuthenticationInfrastructure in Frameworks */,
 				A11CE57000000000000000D5 /* LogKit in Frameworks */,
 				A11CE57000000000000000D6 /* LogKitUnified in Frameworks */,
 				A11CE57000000000000000D7 /* NetworkKit in Frameworks */,
@@ -551,6 +553,7 @@
 				7B8C3ECE2EE4A9F70089C6CF /* UIAssets */,
 				A11CE57000000000000000C1 /* AuthenticationUI */,
 				A11CE57000000000000000C2 /* AuthenticationFeature */,
+				A11CE570000000000000F6C1 /* AuthenticationInfrastructure */,
 				A11CE57000000000000000C5 /* LogKit */,
 				A11CE57000000000000000C6 /* LogKitUnified */,
 				A11CE57000000000000000C7 /* NetworkKit */,
@@ -1484,6 +1487,10 @@
 		A11CE57000000000000000C2 /* AuthenticationFeature */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = AuthenticationFeature;
+		};
+		A11CE570000000000000F6C1 /* AuthenticationInfrastructure */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AuthenticationInfrastructure;
 		};
 		A11CE57000000000000000C3 /* SecureStorageKit */ = {
 			isa = XCSwiftPackageProductDependency;

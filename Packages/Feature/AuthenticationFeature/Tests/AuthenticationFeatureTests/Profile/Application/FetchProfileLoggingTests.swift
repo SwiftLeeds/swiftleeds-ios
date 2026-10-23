@@ -1,5 +1,6 @@
 import AuthenticationDomain
 import AuthenticationFeature
+import AuthenticationInfrastructure
 import Dependencies
 import LogKit
 import LogKitTestSupport

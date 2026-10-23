@@ -12,6 +12,7 @@ let package = Package(
         .library(name: "AuthenticationDomain", targets: ["AuthenticationDomain"]),
         .library(name: "AuthenticationFeature", targets: ["AuthenticationFeature"]),
         .library(name: "AuthenticationFeatureTestSupport", targets: ["AuthenticationFeatureTestSupport"]),
+        .library(name: "AuthenticationInfrastructure", targets: ["AuthenticationInfrastructure"]),
     ],
     dependencies: [
         .package(path: "../../Kit/LogKit"),
@@ -32,6 +33,14 @@ let package = Package(
                 "AuthenticationDomain",
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "LogKit", package: "LogKit"),
+            ],
+        ),
+        .target(
+            name: "AuthenticationInfrastructure",
+            dependencies: [
+                "AuthenticationDomain",
+                .product(name: "Dependencies", package: "swift-dependencies"),
+                .product(name: "LogKit", package: "LogKit"),
                 .product(name: "NetworkKit", package: "NetworkKit"),
                 .product(name: "SecureStorageKit", package: "SecureStorageKit"),
             ],
@@ -45,6 +54,7 @@ let package = Package(
             dependencies: [
                 "AuthenticationDomain",
                 "AuthenticationFeature",
+                "AuthenticationInfrastructure",
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "LogKit", package: "LogKit"),
                 .product(name: "LogKitTestSupport", package: "LogKit"),
