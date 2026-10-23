@@ -45,7 +45,7 @@ struct Provider: TimelineProvider {
     }
 
     private var nextUpdateTime: Date {
-        let anHour: TimeInterval = 60 * 60
+        let anHour: TimeInterval = 3_600
         return Calendar.autoupdatingCurrent.startOfDay(for: Date()).addingTimeInterval(anHour)
     }
 
