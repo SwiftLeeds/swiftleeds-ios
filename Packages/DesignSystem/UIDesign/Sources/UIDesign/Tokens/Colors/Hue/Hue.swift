@@ -2,10 +2,10 @@ import SwiftUI
 
 /// A named hue with a tonal ramp of raw colors, from darkest to lightest.
 package enum Hue: CaseIterable, Equatable, Hashable, Sendable {
-    /// A step of perceived lightness, from 5 (near black) to 95 (near white).
+    /// A step of OKLCH lightness, from 5 (near black) to 95 (near white).
     package enum Tone: CaseIterable, Equatable, Hashable, Sendable {
         /// Lightness 5 of 100.
-        case t5  // swiftlint:disable:this identifier_name - named by its tone number, like t10 to t95
+        case t5  // swiftlint:disable:this identifier_name - named by its tone number, like t10 to t95; permanent
         /// Lightness 10 of 100.
         case t10
         /// Lightness 15 of 100.
@@ -44,22 +44,22 @@ package enum Hue: CaseIterable, Equatable, Hashable, Sendable {
         case t95
     }
 
-    /// The hue for errors.
+    /// A red ramp.
     case red
-    /// The hue for success.
+    /// A green ramp.
     case green
-    /// The hue for warnings.
+    /// An amber ramp.
     case amber
-    /// The hue for information, talks and speakers.
+    /// A blue ramp.
     case blue
-    /// The hue for workshops.
+    /// A teal ramp.
     case teal
-    /// The hue for lightning talks and staff.
+    /// A violet ramp.
     case violet
-    /// The hue for drop-in sessions and hosts.
+    /// A raspberry ramp.
     case raspberry
-    /// Grays with no hue.
+    /// A gray ramp with no hue.
     case neutral
-    /// The hue for sponsors.
+    /// A muted bronze ramp.
     case bronze
 }

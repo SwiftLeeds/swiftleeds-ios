@@ -3,8 +3,10 @@ import SwiftUI
 
 /// A view that shows every hue's tonal ramp, labeled by hue and tone.
 package struct HueSpecimen: View {
+    /// Creates a specimen of every hue's tonal ramp.
     package init() {}
 
+    /// The grid of ramps, one row for each hue.
     package var body: some View {
         Grid(
             alignment: .center,
@@ -75,6 +77,7 @@ private struct Swatch: View {
         self.color = color
     }
 
+    /// The square, filled with the color and outlined.
     var body: some View {
         RoundedRectangle(cornerRadius: CGFloat(CornerRadius.small))
             .fill(color)
