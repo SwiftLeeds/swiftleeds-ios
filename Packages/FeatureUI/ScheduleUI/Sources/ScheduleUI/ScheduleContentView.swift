@@ -54,8 +54,10 @@ package struct ScheduleContentView: View {
         switch state {
         case .loading:
             loadingView
+
         case let .loaded(days, showSlido):
             schedule(days: days, showSlido: showSlido)
+
         case let .failed(conference, reason):
             failureView(for: conference, reason: reason)
         }
@@ -103,8 +105,10 @@ package struct ScheduleContentView: View {
         switch reason {
         case .couldNotReachServer:
             "Check your connection and try again"
+
         case .invalidResponse:
             "Something went wrong on our side. Try again later"
+
         case .unknown:
             "Something went wrong on our side. Try again later"
         }

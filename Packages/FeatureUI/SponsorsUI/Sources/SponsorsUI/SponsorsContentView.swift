@@ -50,9 +50,11 @@ package struct SponsorsContentView: View {
         case .loading:
             loadingView
                 .padding(.top, Padding.screen)
+
         case .empty:
             emptyStateView
                 .padding(.top, Padding.screen)
+
         case .loaded(let sponsors):
             sponsorsList(for: sponsors)
         }
@@ -184,6 +186,7 @@ package struct SponsorsContentView: View {
                 VStack(spacing: Padding.cellGap) {
                     tiles(for: level, in: sponsors)
                 }
+
             case .gold, .silver:
                 LazyVGrid(
                     columns: gridColumns,

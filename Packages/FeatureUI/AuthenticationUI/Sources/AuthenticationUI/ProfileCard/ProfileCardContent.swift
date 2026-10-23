@@ -23,8 +23,10 @@ package struct ProfileCardContent: View {
         switch state {
         case .loading:
             NameplatePlaceholder()
+
         case .loaded(let profile):
             loaded(profile)
+
         case .failed:
             failed
         }

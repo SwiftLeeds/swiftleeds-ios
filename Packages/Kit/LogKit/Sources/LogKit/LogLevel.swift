@@ -22,14 +22,19 @@ public enum LogLevel: Int, Comparable, Sendable, CaseIterable {
         switch self {
         case .debug:
             "debug"
+
         case .info:
             "info"
+
         case .notice:
             "notice"
+
         case .warning:
             "warning"
+
         case .error:
             "error"
+
         case .critical:
             "critical"
         }

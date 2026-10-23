@@ -40,10 +40,13 @@ package struct Avatar<Content: View, Placeholder: View, Failure: View>: View {
             switch phase {
             case .success(let image):
                 styled(AnyView(content(image)), kind: .image)
+
             case .failure:
                 styled(fitted(failure()), kind: .failure)
+
             case .empty:
                 styled(fitted(placeholder()), kind: .placeholder)
+
             @unknown default:
                 styled(fitted(placeholder()), kind: .placeholder)
             }

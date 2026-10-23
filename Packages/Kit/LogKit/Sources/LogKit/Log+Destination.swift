@@ -60,8 +60,10 @@ extension LogFields {
                 switch field.sensitivity {
                 case .open:
                     field
+
                 case .hashed:
                     .hashed(field.name, String(CorrelationToken(field.value.rendered, salt: salt)))
+
                 case .secret:
                     secrets == .remove ? nil : field
                 }

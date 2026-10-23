@@ -19,8 +19,10 @@ extension LogField {
         switch value.sensitivity {
         case .open:
             self = .open(name, value.logValue)
+
         case .hashed:
             self = .hashed(name, value.logValue)
+
         case .secret:
             self = .secret(name, value.logValue)
         }

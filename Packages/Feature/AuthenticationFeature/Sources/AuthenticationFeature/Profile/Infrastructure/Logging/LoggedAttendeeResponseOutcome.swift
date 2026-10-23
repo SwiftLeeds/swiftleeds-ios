@@ -18,6 +18,7 @@ struct LoggedAttendeeResponseOutcome {
                 level: .error,
                 message: "The attendee response could not be decoded: \(cause, name: "reason", privacy: .open)",
             )
+
         case let .invalidField(invalid):
             Self(
                 level: .error,
@@ -26,12 +27,14 @@ struct LoggedAttendeeResponseOutcome {
                     \(invalid.reason, name: "reason", privacy: .open)
                     """,
             )
+
         case .unauthorized:
             // Expected: the session expired or was revoked. Not a fault in the app.
             Self(
                 level: .notice,
                 message: "The attendee request was not authorized",
             )
+
         case let .unexpectedStatus(status):
             Self(
                 level: .error,

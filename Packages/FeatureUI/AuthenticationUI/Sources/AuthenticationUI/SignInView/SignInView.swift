@@ -52,8 +52,10 @@ public struct SignInView: View {
                     switch viewModel.phase {
                     case .editing:
                         Text("Sign In")
+
                     case .failed:
                         Text("Sign In")
+
                     case .submitting:
                         ProgressView()
                     }

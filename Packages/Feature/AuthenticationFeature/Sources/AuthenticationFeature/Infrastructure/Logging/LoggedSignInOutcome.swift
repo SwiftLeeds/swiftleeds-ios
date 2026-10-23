@@ -27,12 +27,14 @@ struct LoggedSignInOutcome {
                 level: .notice,
                 message: "Signing in did not finish: the credentials were rejected",
             )
+
         case .couldNotReachServer:
             // Expected: the device is offline. The user can retry.
             Self(
                 level: .notice,
                 message: "Signing in did not finish: the server could not be reached",
             )
+
         case .unknown:
             Self(
                 level: .error,

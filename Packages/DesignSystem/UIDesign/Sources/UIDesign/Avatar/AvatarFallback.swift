@@ -37,6 +37,7 @@ public struct AvatarFallback: View {
         switch mark {
         case .symbol:
             symbol
+
         case .initials(let name):
             initials(of: name)
         }

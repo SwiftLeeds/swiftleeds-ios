@@ -20,6 +20,7 @@ struct LoggedLoginResponseOutcome {
                 level: .notice,
                 message: "The sign-in credentials were rejected",
             )
+
         case let .unexpectedStatus(status):
             Self(
                 level: .error,
@@ -29,6 +30,7 @@ struct LoggedLoginResponseOutcome {
                     (\(String(status.category), name: "statusCategory", privacy: .open))
                     """,
             )
+
         case let .invalidToken(reason):
             Self(
                 level: .error,

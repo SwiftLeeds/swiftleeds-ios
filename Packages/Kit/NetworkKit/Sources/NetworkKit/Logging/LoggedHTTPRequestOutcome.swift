@@ -56,16 +56,22 @@ extension LoggedHTTPRequestOutcome {
             switch code {
             case .cancelled:
                 .debug
+
             case .notConnectedToInternet:
                 .notice
+
             case .networkConnectionLost:
                 .notice
+
             case .timedOut:
                 .notice
+
             case .dataNotAllowed:
                 .notice
+
             case .internationalRoamingOff:
                 .notice
+
             default:
                 .error
             }
@@ -78,28 +84,40 @@ extension LoggedHTTPRequestOutcome {
             switch code {
             case .cancelled:
                 "cancelled"
+
             case .notConnectedToInternet:
                 "notConnectedToInternet"
+
             case .networkConnectionLost:
                 "networkConnectionLost"
+
             case .timedOut:
                 "timedOut"
+
             case .dataNotAllowed:
                 "dataNotAllowed"
+
             case .internationalRoamingOff:
                 "internationalRoamingOff"
+
             case .cannotFindHost:
                 "cannotFindHost"
+
             case .cannotConnectToHost:
                 "cannotConnectToHost"
+
             case .dnsLookupFailed:
                 "dnsLookupFailed"
+
             case .badServerResponse:
                 "badServerResponse"
+
             case .secureConnectionFailed:
                 "secureConnectionFailed"
+
             case .serverCertificateUntrusted:
                 "serverCertificateUntrusted"
+
             default:
                 "URLError \(code.rawValue)"
             }

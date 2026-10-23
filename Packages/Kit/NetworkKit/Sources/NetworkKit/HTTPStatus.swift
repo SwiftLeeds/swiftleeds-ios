@@ -39,14 +39,19 @@ public struct HTTPStatus: Equatable, Hashable, Sendable {
         // swiftlint:disable no_magic_numbers - RFC 9110 section 15 fixes each class's range
         case 100...199:
             .informational
+
         case 200...299:
             .successful
+
         case 300...399:
             .redirection
+
         case 400...499:
             .clientError
+
         case 500...599:
             .serverError
+
         // swiftlint:enable no_magic_numbers
         default:
             .invalid
@@ -176,14 +181,19 @@ extension String {
             switch category {
             case .informational:
                 "informational"
+
             case .successful:
                 "successful"
+
             case .redirection:
                 "redirection"
+
             case .clientError:
                 "clientError"
+
             case .serverError:
                 "serverError"
+
             case .invalid:
                 "invalid"
             }

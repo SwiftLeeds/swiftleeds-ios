@@ -20,17 +20,20 @@ struct LoggedProfileFetchOutcome {
                 level: .notice,
                 message: "Loading the profile did not finish: the session was not accepted",
             )
+
         case .couldNotReachServer:
             // Expected: the device is offline. The user can retry.
             Self(
                 level: .notice,
                 message: "Loading the profile did not finish: the server could not be reached",
             )
+
         case .invalidResponse:
             Self(
                 level: .error,
                 message: "Loading the profile did not finish: the server's answer was rejected",
             )
+
         case .unknown:
             Self(
                 level: .error,

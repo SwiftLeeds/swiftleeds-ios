@@ -16,11 +16,13 @@ struct LoggedSponsorsFetchOutcome {
                 level: .notice,
                 message: "Loading the sponsors did not finish: the server could not be reached",
             )
+
         case .invalidResponse:
             Self(
                 level: .error,
                 message: "Loading the sponsors did not finish: the server's answer was rejected",
             )
+
         case .unknown:
             Self(
                 level: .error,

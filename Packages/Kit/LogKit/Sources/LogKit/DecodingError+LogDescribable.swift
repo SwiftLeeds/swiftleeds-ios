@@ -7,12 +7,16 @@ extension DecodingError: LogDescribable {
         switch self {
         case let .keyNotFound(key, context):
             "keyNotFound \(Self.path(context, appending: key.stringValue))"
+
         case let .typeMismatch(type, context):
             "typeMismatch \(Self.path(context)) expected \(type)"
+
         case let .valueNotFound(type, context):
             "valueNotFound \(Self.path(context)) expected \(type)"
+
         case .dataCorrupted:
             "dataCorrupted"
+
         @unknown default:
             "\(self)"
         }

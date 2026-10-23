@@ -14,6 +14,7 @@ struct LoggedLoginRequestOutcome {
                 level: .error,
                 message: "The sign-in request could not be encoded: \(cause, name: "reason", privacy: .open)",
             )
+
         case .transportFailed:
             nil
         }
