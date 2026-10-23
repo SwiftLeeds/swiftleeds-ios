@@ -46,19 +46,19 @@ extension ColorSpecimen {
         SpecimenGroup("Text") {
             GridRow {
                 Text("primary")
-                Swatch(.textPrimary)
+                Swatch(.text)
             }
             GridRow {
                 Text("secondary")
-                Swatch(.textSecondary)
+                Swatch(.secondaryText)
             }
             GridRow {
                 Text("tertiary")
-                Swatch(.textTertiary)
+                Swatch(.tertiaryText)
             }
             GridRow {
                 Text("disabled")
-                Swatch(.textDisabled)
+                Swatch(.disabledText)
             }
             GridRow {
                 Text("onBrand")

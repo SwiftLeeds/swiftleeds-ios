@@ -59,7 +59,7 @@ public struct AvatarFallback: View {
                 .overlay {
                     Text(letters)
                         .font(.system(size: CGFloat(diameter) * Self.initialsProportion, weight: .semibold))
-                        .foregroundStyle(.textPrimary)
+                        .foregroundStyle(.text)
                         .lineLimit(1)
                         .minimumScaleFactor(0.5)
                 }
@@ -72,7 +72,7 @@ public struct AvatarFallback: View {
             .overlay {
                 Image(icon: .person)
                     .font(.system(size: CGFloat(diameter) * Self.symbolProportion))
-                    .foregroundStyle(.textSecondary)
+                    .foregroundStyle(.secondaryText)
                     .accessibilityHidden(true)
             }
     }
