@@ -93,14 +93,26 @@ def segments(text):
     lexer.whitespace_split = True
     # A newline outside quotes ends a command, so it is not whitespace.
     lexer.whitespace = " \t\r"
+    # shlex would eat the newline that ends a comment, and treats a # inside
+    # a word as one. Comments are dropped below instead.
+    lexer.commenters = ""
     try:
         tokens = list(lexer)
     except ValueError:
         # Unbalanced quotes. The shell reports the syntax error itself.
         return
     segment = []
+    in_comment = False
     for token in tokens:
-        if all(char in lexer.punctuation_chars for char in token):
+        punctuation = all(char in lexer.punctuation_chars for char in token)
+        if in_comment:
+            if punctuation and "\n" in token:
+                in_comment = False
+                yield segment
+                segment = []
+        elif token.startswith("#"):
+            in_comment = True
+        elif punctuation:
             yield segment
             segment = []
         else:
