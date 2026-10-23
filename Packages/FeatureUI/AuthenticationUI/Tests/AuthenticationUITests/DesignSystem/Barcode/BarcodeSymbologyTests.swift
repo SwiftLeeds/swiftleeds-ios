@@ -3,6 +3,15 @@ import Testing
 
 @testable import AuthenticationUI
 
+/// The gray value, out of 255, above which a pixel counts as light.
+private let lightThreshold: UInt8 = 127
+
+/// The width of the top edge of a QR code's finder pattern, in modules.
+private let finderPatternModules = 7
+
+/// The bits in one gray component of the bitmap the test draws into.
+private let bitsPerGrayComponent = 8
+
 @MainActor
 @Suite struct BarcodeSymbologyTests {
     private let slug = "ti_pxqFKr9pPWd6VeYKvMBKpjQ"
@@ -56,7 +65,7 @@ extension BarcodeSymbologyTests {
     fileprivate func quietZoneModules(of image: CGImage) -> Int {
         guard let pixels = grayscalePixels(of: image) else { return 0 }
         let width = image.width
-        let isLight = { (x: Int, y: Int) in pixels[y * width + x] > 127 }
+        let isLight = { (x: Int, y: Int) in pixels[y * width + x] > lightThreshold }
 
         var border = 0
         while border < image.height, (0..<width).allSatisfy({ isLight($0, border) }) {
@@ -69,7 +78,7 @@ extension BarcodeSymbologyTests {
         var finder = 0
         while start + finder < width, !isLight(start + finder, border) { finder += 1 }
 
-        let module = finder / 7
+        let module = finder / finderPatternModules
         return module > 0 ? border / module : 0
     }
 
@@ -83,7 +92,7 @@ extension BarcodeSymbologyTests {
                 data: &pixels,
                 width: image.width,
                 height: image.height,
-                bitsPerComponent: 8,
+                bitsPerComponent: bitsPerGrayComponent,
                 bytesPerRow: image.width,
                 space: CGColorSpaceCreateDeviceGray(),
                 bitmapInfo: CGImageAlphaInfo.none.rawValue,

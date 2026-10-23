@@ -28,4 +28,4 @@ import Testing
 }
 
 /// The time the test treats as the current time.
-private let now = Date(timeIntervalSince1970: 1_000_000)
+private let now = Date(timeIntervalSince1970: 1_000_000)  // swiftlint:disable:this no_magic_numbers - fixture data

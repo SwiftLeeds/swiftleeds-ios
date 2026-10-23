@@ -4,8 +4,14 @@ import SwiftUI
 import UIAssets
 import UIComponents
 
-// The About screen's content width on an iPhone: the screen less its horizontal padding.
-private let contentWidth: CGFloat = 390 - Padding.screen * 2
+/// The screen width of an iPhone, in points.
+private let phoneWidth: CGFloat = 390
+
+/// The number of sides the screen padding appears on, leading and trailing.
+private let bothSides: CGFloat = 2
+
+/// The About screen's content width on an iPhone: the screen less its horizontal padding.
+private let contentWidth: CGFloat = phoneWidth - Padding.screen * bothSides
 
 @MainActor
 func assertGridCellSnapshots(

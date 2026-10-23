@@ -12,7 +12,7 @@ extension HTTPClient {
             guard let url = request.url,
                 let response = HTTPURLResponse(
                     url: url,
-                    statusCode: 200,
+                    statusCode: 200,  // swiftlint:disable:this no_magic_numbers - fixture data
                     httpVersion: nil,
                     headerFields: nil,
                 )

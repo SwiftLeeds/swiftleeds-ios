@@ -36,6 +36,7 @@ public struct HTTPStatus: Equatable, Hashable, Sendable {
     /// The class of the status.
     public var category: Category {
         switch code {
+        // swiftlint:disable no_magic_numbers - RFC 9110 section 15 fixes each class's range
         case 100...199:
             .informational
         case 200...299:
@@ -46,6 +47,7 @@ public struct HTTPStatus: Equatable, Hashable, Sendable {
             .clientError
         case 500...599:
             .serverError
+        // swiftlint:enable no_magic_numbers
         default:
             .invalid
         }
@@ -53,6 +55,7 @@ public struct HTTPStatus: Equatable, Hashable, Sendable {
 }
 
 extension HTTPStatus {
+    // swiftlint:disable no_magic_numbers - each code is the one its RFC registers
     /// 100 Continue: the client should send the body.
     public static let `continue` = HTTPStatus(code: 100)
     /// 101 Switching Protocols: the server switches to the requested protocol.
@@ -155,6 +158,7 @@ extension HTTPStatus {
     public static let httpVersionNotSupported = HTTPStatus(code: 505)
     /// 511 Network Authentication Required: the network needs a sign-in.
     public static let networkAuthenticationRequired = HTTPStatus(code: 511)
+    // swiftlint:enable no_magic_numbers
 }
 
 extension HTTPURLResponse {

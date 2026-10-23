@@ -19,7 +19,7 @@ extension Schedule {
                                 id: UUID(),
                                 date: Date(timeIntervalSince1970: 0),
                                 startTime: "09:45",
-                                duration: 30,
+                                duration: 30,  // swiftlint:disable:this no_magic_numbers - fixture data
                                 activity: .lunch,
                                 presentation: nil,
                             )

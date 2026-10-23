@@ -110,7 +110,7 @@ extension Schedule.Slot {
             id: UUID(),
             date: Date(timeIntervalSince1970: 0),
             startTime: startTime,
-            duration: 45,
+            duration: 45,  // swiftlint:disable:this no_magic_numbers - fixture data
             activity: activity,
             presentation: presentation,
         )

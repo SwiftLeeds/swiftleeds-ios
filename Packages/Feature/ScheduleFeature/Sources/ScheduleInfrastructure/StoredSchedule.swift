@@ -2,8 +2,10 @@ import Foundation
 import ScheduleDomain
 
 package struct StoredSchedule: Codable, Sendable {
-    // The backend sends no cache headers, so the app picks the number.
-    private static let lifetime: TimeInterval = 60 * 60 * 24
+    /// How long a stored schedule stays fresh: one day, in seconds.
+    ///
+    /// The backend sends no cache headers, so this value is the only limit.
+    private static let lifetime: TimeInterval = 86_400
 
     package let schedule: Schedule
     package let storedAt: Date
