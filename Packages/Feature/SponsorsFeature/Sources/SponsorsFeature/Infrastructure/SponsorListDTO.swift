@@ -10,13 +10,13 @@ package struct SponsorListDTO: Decodable {
 
     package struct SponsorDTO: Decodable {
         package enum CodingKeys: String, CodingKey {
-            case id
-            case name
-            case subtitle
-            case image
-            case sponsorLevel
-            case url
-            case jobs
+            case id = "id"
+            case name = "name"
+            case subtitle = "subtitle"
+            case image = "image"
+            case sponsorLevel = "sponsorLevel"
+            case url = "url"
+            case jobs = "jobs"
         }
 
         package let id: String

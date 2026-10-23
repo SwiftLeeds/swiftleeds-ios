@@ -1,11 +1,11 @@
 /// What a sponsor bought.
 public enum SponsorLevel: String, CaseIterable, Equatable, Hashable, Sendable {
     /// The highest level.
-    case platinum
+    case platinum = "platinum"
 
     /// The middle level.
-    case gold
+    case gold = "gold"
 
     /// The lowest level.
-    case silver
+    case silver = "silver"
 }

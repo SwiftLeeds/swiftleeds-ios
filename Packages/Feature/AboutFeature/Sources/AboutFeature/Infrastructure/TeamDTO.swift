@@ -8,12 +8,12 @@ package struct TeamDTO: Decodable {
 
     package struct MemberDTO: Decodable {
         package enum CodingKeys: String, CodingKey {
-            case name
-            case role
-            case linkedin
-            case twitter
-            case slack
-            case imageURL
+            case name = "name"
+            case role = "role"
+            case linkedin = "linkedin"
+            case twitter = "twitter"
+            case slack = "slack"
+            case imageURL = "imageURL"
         }
 
         package let name: String
