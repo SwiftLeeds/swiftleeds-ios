@@ -84,7 +84,7 @@ extension ColorSpecimen {
         SpecimenGroup("Brand and status") {
             GridRow {
                 Text("brand")
-                Swatch(.brandPrimary)
+                Swatch(.brand)
             }
             GridRow {
                 Text("success")
