@@ -4,6 +4,37 @@ import Testing
 
 @MainActor
 @Suite struct TicketViewModelTests {
+    /// A spy that stands in for the screen's brightness and auto-lock.
+    @MainActor
+    private final class DisplaySpy {
+        /// The screen's current brightness.
+        var brightness: ScreenBrightness.Level
+
+        /// Whether the screen may lock itself.
+        var autoLockEnabled = true
+
+        /// Creates a spy with the screen at a given brightness.
+        ///
+        /// - Parameter brightness: The brightness the screen starts at.
+        init(brightness: ScreenBrightness.Level) {
+            self.brightness = brightness
+        }
+
+        /// Replaces the screen brightness and auto-lock dependencies with this spy.
+        ///
+        /// - Parameter values: The dependency values to change.
+        func install(_ values: inout DependencyValues) {
+            values.screenBrightness = ScreenBrightness(
+                current: { self.brightness },
+                set: { self.brightness = $0 },
+            )
+            values.screenAutoLock = ScreenAutoLock(
+                enable: { self.autoLockEnabled = true },
+                disable: { self.autoLockEnabled = false },
+            )
+        }
+    }
+
     @Test func whenDisplayingBegins_shouldBrightenScreenAndKeepItAwake() {
         let display = DisplaySpy(brightness: 0.4)
 
@@ -71,26 +102,5 @@ import Testing
             #expect(display.brightness == 0.4)
             #expect(display.autoLockEnabled)
         }
-    }
-}
-
-@MainActor
-private final class DisplaySpy {
-    var brightness: ScreenBrightness.Level
-    var autoLockEnabled = true
-
-    init(brightness: ScreenBrightness.Level) {
-        self.brightness = brightness
-    }
-
-    func install(_ values: inout DependencyValues) {
-        values.screenBrightness = ScreenBrightness(
-            current: { self.brightness },
-            set: { self.brightness = $0 },
-        )
-        values.screenAutoLock = ScreenAutoLock(
-            enable: { self.autoLockEnabled = true },
-            disable: { self.autoLockEnabled = false },
-        )
     }
 }
