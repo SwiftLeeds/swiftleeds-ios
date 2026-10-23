@@ -28,12 +28,14 @@ import shlex
 import sys
 
 ASSIGNMENT = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*=")
-# A here-string (<<<) is not a heredoc, and a terminator may hold a dash. A
-# word before ) is an arithmetic shift, as in $((1<<2)).
+# A here-string (<<<) is not a heredoc, and a terminator may hold a dash.
 HEREDOC = re.compile(
     r"(?<!<)<<(?!<)(?P<dash>-?)\s*(?P<quote>['\"]?)"
-    r"(?P<word>[^\s'\"<>|&;()]+)(?P=quote)(?!\))"
+    r"(?P<word>[^\s'\"<>|&;()]+)(?P=quote)"
 )
+# Arithmetic such as $((1 << 2)) shifts with <<, so it is removed before the
+# heredoc search.
+ARITHMETIC = re.compile(r"\$\(\(.*?\)\)")
 # Lookups that print a path and run nothing.
 LOOKUPS = {"command": {"-v", "-V"}, "xcrun": {"-f", "--find"}}
 # Each wrapper maps to the options that take a separate value.
@@ -81,7 +83,7 @@ def code_lines(text):
             if body == terminator:
                 terminator = None
             continue
-        opener = HEREDOC.search(line)
+        opener = HEREDOC.search(ARITHMETIC.sub("", line))
         if opener:
             terminator = opener.group("word")
             strip_tabs = opener.group("dash") == "-"
