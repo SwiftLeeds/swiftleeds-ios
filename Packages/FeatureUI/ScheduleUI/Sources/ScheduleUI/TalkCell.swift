@@ -122,11 +122,11 @@ package struct TalkCell: View {
 struct TalkCell_Previews: PreviewProvider {
     static var previews: some View {
         VStack(spacing: Padding.cellGap) {
-            TalkCell(time: "11:00", details: Presentation.donnyWalls.title, speakers: Presentation.donnyWalls.speakers)
+            TalkCell(time: "11:00", details: Presentation.soloTalk.title, speakers: Presentation.soloTalk.speakers)
 
             TalkCell(time: "12:00", details: "Lunch")
 
-            TalkCell(time: "1:00", details: Presentation.skyBet.title, speakers: Presentation.skyBet.speakers)
+            TalkCell(time: "1:00", details: Presentation.duoTalk.title, speakers: Presentation.duoTalk.speakers)
         }
         .padding(Padding.screen)
         .background(Color.listBackground)

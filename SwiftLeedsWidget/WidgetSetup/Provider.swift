@@ -10,7 +10,7 @@ struct Provider: TimelineProvider {
             date: Date(),
             slot: Schedule.Slot(
                 id: UUID(), date: Date(), startTime: "11:00 AM", duration: 1, activity: nil,
-                presentation: Presentation.donnyWalls,
+                presentation: Presentation.soloTalk,
             ),
         )
     }
@@ -20,7 +20,7 @@ struct Provider: TimelineProvider {
             date: Date(),
             slot: Schedule.Slot(
                 id: UUID(), date: Date(), startTime: "11:00 AM", duration: 1, activity: nil,
-                presentation: Presentation.donnyWalls,
+                presentation: Presentation.soloTalk,
             ),
         )
         completion(entry)

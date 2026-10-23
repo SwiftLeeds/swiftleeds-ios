@@ -23,7 +23,7 @@ struct SwiftLeedsWidget_Previews: PreviewProvider {
                 date: Date(),
                 slot: Schedule.Slot(
                     id: UUID(), date: Date(), startTime: "11:00 AM", duration: 1, activity: Activity.lunch,
-                    presentation: Presentation.donnyWalls,
+                    presentation: Presentation.soloTalk,
                 ),
             )
         )
@@ -34,7 +34,7 @@ struct SwiftLeedsWidget_Previews: PreviewProvider {
                 date: Date(),
                 slot: Schedule.Slot(
                     id: UUID(), date: Date(), startTime: "11:00 AM", duration: 1, activity: Activity.lunch,
-                    presentation: Presentation.donnyWalls,
+                    presentation: Presentation.soloTalk,
                 ),
             )
         )

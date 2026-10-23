@@ -80,7 +80,7 @@ struct SwiftLeedsSmallWidgetView_Previews: PreviewProvider {
         SwiftLeedsSmallWidgetView(
             slot: Schedule.Slot(
                 id: UUID(), date: Date(), startTime: "11:00 AM", duration: 1, activity: nil,
-                presentation: Presentation.skyBet,
+                presentation: Presentation.duoTalk,
             )
         )
         .previewContext(WidgetPreviewContext(family: .systemSmall))
@@ -88,7 +88,7 @@ struct SwiftLeedsSmallWidgetView_Previews: PreviewProvider {
         SwiftLeedsSmallWidgetView(
             slot: Schedule.Slot(
                 id: UUID(), date: Date(), startTime: "11:00 AM", duration: 1, activity: nil,
-                presentation: Presentation.skyBet,
+                presentation: Presentation.duoTalk,
             )
         )
         .environment(\.colorScheme, .dark)
