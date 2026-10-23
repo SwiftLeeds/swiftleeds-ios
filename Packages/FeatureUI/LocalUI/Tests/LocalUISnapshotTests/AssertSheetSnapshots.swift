@@ -22,7 +22,7 @@ private let phoneWidth: CGFloat = 390
 /// The number of sides the screen padding appears on, leading and trailing.
 private let bothSides: CGFloat = 2
 
-// The width the sheet's content gets on an iPhone: the screen less its horizontal padding.
+/// The width the sheet's content gets on an iPhone: the screen less its horizontal padding.
 private let sheetContentWidth: CGFloat = phoneWidth - Padding.screen * bothSides
 
 @MainActor
