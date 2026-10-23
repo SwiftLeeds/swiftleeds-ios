@@ -206,9 +206,10 @@ opt_in_rules:
 
   # "No magic numbers or magic values. Name a literal for its meaning wherever
   # the meaning is not obvious at the call site. Test fixtures and benchmark
-  # operands are data, not magic." Fixture data is suppressed inline. A block
-  # that defines named values, such as `Spacing` or `HTTPStatus`, is suppressed
-  # between a disable and an enable. The layout numbers in views, 206 when the
+  # operands are data, not magic." Fixture data is suppressed inline. A block of
+  # numbers a token set or a spec defines, such as the `Spacing` values or the
+  # HTTP status codes and classes, is suppressed between a disable and an
+  # enable. The layout numbers in views, 206 when the
   # rule was turned on, are in the baseline until design tokens replace them.
   - no_magic_numbers
 
