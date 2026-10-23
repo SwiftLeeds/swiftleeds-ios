@@ -62,7 +62,7 @@ extension ColorSpecimen {
             }
             GridRow {
                 Text("onBrand")
-                Swatch(.textOnBrand)
+                Swatch(.onBrand)
             }
         }
     }

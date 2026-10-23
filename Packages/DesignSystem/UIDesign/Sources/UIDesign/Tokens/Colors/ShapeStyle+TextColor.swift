@@ -33,5 +33,5 @@ extension ShapeStyle where Self == Color {
     /// Text on a brand colored fill.
     ///
     /// It doesn't change with the appearance, because the fill beneath it doesn't either.
-    public static var textOnBrand: Color { .white }
+    public static var onBrand: Color { .white }
 }
