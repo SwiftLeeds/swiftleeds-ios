@@ -129,95 +129,111 @@ extension SocialLink {
     }
 }
 
-struct TeamMemberView_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            preview(
-                member(
-                    "Member One",
-                    role: "Organizer",
-                    photo: "/img/team/member-one.jpg",
-                    linkedIn: "https://linkedin.example.com/member-one",
-                    twitter: "https://twitter.example.com/member-one",
-                    slack: "https://slack.example.com/member-one",
-                ),
-                named: "With Role & All Links",
-            )
-
-            preview(
-                member(
-                    "Member Two",
-                    role: nil,
-                    photo: "/img/team/member-two.jpg",
-                    linkedIn: "https://linkedin.example.com/member-two",
-                    slack: "https://slack.example.com/member-two",
-                ),
-                named: "No Role & Partial Links",
-            )
-
-            LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 16) {
-                ForEach(gridMembers) { member in
-                    TeamMemberView(member: member)
-                }
-            }
-            .padding()
-            .previewDisplayName("Grid Layout")
-        }
-        .previewLayout(.sizeThatFits)
-        .padding()
-    }
-
-    private static var gridMembers: [TeamMember] {
-        [
-            member(
-                "Member Three",
-                role: "Production",
-                photo: "/img/team/member-three.jpg",
-                linkedIn: "https://linkedin.example.com/member-three",
-                twitter: "https://twitter.example.com/member-three",
-            ),
-            member(
-                "Member Four",
-                role: "Camera",
-                photo: "/img/team/member-four.jpg",
-                twitter: "https://twitter.example.com/member-four",
-                slack: "https://slack.example.com/member-four",
-            ),
-        ]
-        .compactMap(\.self)
-    }
-
-    @ViewBuilder
-    private static func preview(_ member: TeamMember?, named displayName: String) -> some View {
-        if let member {
-            TeamMemberView(member: member)
-                .previewDisplayName(displayName)
-        } else {
-            Text(verbatim: "The preview's team member could not be built.")
-        }
-    }
-
-    private static func member(
-        _ name: String,
-        role: String?,
-        photo: String,
-        linkedIn: String? = nil,
-        twitter: String? = nil,
-        slack: String? = nil,
-    ) -> TeamMember? {
-        guard let photoURL = URL(string: "https://example.com\(photo)") else { return nil }
-        let links = [
-            linkedIn.flatMap { URL(string: $0) }.map { SocialLink.linkedIn($0) },
-            twitter.flatMap { URL(string: $0) }.map { SocialLink.twitter($0) },
-            slack.flatMap { URL(string: $0) }.map { SocialLink.slack($0) },
-        ]
-        return TeamMember(
-            id: TeamMemberID(name),
-            name: name,
-            role: role,
-            photoURL: photoURL,
-            links: links.compactMap(\.self),
+#if DEBUG
+#Preview("With Role & All Links", traits: .sizeThatFitsLayout) {
+    card(
+        member(
+            "Member One",
+            role: "Organizer",
+            photo: "/img/team/member-one.jpg",
+            linkedIn: "https://linkedin.example.com/member-one",
+            twitter: "https://twitter.example.com/member-one",
+            slack: "https://slack.example.com/member-one",
         )
+    )
+    .padding()
+}
+
+#Preview("No Role & Partial Links", traits: .sizeThatFitsLayout) {
+    card(
+        member(
+            "Member Two",
+            role: nil,
+            photo: "/img/team/member-two.jpg",
+            linkedIn: "https://linkedin.example.com/member-two",
+            slack: "https://slack.example.com/member-two",
+        )
+    )
+    .padding()
+}
+
+#Preview("Grid Layout", traits: .sizeThatFitsLayout) {
+    LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 16) {
+        ForEach(gridMembers) { member in
+            TeamMemberView(member: member)
+        }
+    }
+    .padding()
+}
+
+/// The team members the grid preview lays out.
+private var gridMembers: [TeamMember] {
+    [
+        member(
+            "Member Three",
+            role: "Production",
+            photo: "/img/team/member-three.jpg",
+            linkedIn: "https://linkedin.example.com/member-three",
+            twitter: "https://twitter.example.com/member-three",
+        ),
+        member(
+            "Member Four",
+            role: "Camera",
+            photo: "/img/team/member-four.jpg",
+            twitter: "https://twitter.example.com/member-four",
+            slack: "https://slack.example.com/member-four",
+        ),
+    ]
+    .compactMap(\.self)
+}
+
+/// Returns a card for the member, or a message if there is none.
+///
+/// - Parameter member: The member to show, or `nil` if it could not be built.
+/// - Returns: A card for the member, or a message when `member` is `nil`.
+@MainActor @ViewBuilder
+private func card(_ member: TeamMember?) -> some View {
+    if let member {
+        TeamMemberView(member: member)
+    } else {
+        Text(verbatim: "The preview's team member could not be built.")
     }
 }
+
+/// Returns a team member with links built from the given addresses.
+///
+/// Returns `nil` when the photo address is not a valid URL.
+/// A link whose address is `nil` or not a valid URL is left out.
+///
+/// - Parameters:
+///   - name: The member's name.
+///   - role: The member's role, or `nil` for none.
+///   - photo: The photo's path on the example host.
+///   - linkedIn: The address of the member's LinkedIn profile, or `nil` for none.
+///   - twitter: The address of the member's Twitter profile, or `nil` for none.
+///   - slack: The address of the member's Slack profile, or `nil` for none.
+/// - Returns: The team member, or `nil` when the photo address is invalid.
+private func member(
+    _ name: String,
+    role: String?,
+    photo: String,
+    linkedIn: String? = nil,
+    twitter: String? = nil,
+    slack: String? = nil,
+) -> TeamMember? {
+    guard let photoURL = URL(string: "https://example.com\(photo)") else { return nil }
+    let links = [
+        linkedIn.flatMap { URL(string: $0) }.map { SocialLink.linkedIn($0) },
+        twitter.flatMap { URL(string: $0) }.map { SocialLink.twitter($0) },
+        slack.flatMap { URL(string: $0) }.map { SocialLink.slack($0) },
+    ]
+    return TeamMember(
+        id: TeamMemberID(name),
+        name: name,
+        role: role,
+        photoURL: photoURL,
+        links: links.compactMap(\.self),
+    )
+}
+#endif
 #endif
