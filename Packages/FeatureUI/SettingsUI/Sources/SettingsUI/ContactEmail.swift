@@ -7,7 +7,7 @@ public struct ContactEmail: Equatable, Hashable, Sendable {
         case notAnAddress(String)
     }
 
-    /// The parts of an address: one local part and one domain, split at the `@`.
+    /// The number of parts in an address: one local part and one domain, split at the `@`.
     private static let addressPartCount = 2
 
     package let mailtoURL: URL
