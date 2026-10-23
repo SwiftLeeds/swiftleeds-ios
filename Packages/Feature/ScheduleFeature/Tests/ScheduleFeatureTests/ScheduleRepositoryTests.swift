@@ -1,6 +1,7 @@
 import Dependencies
 import Foundation
-import ScheduleFeature
+import ScheduleDomain
+import ScheduleInfrastructure
 import Testing
 
 @Suite struct ScheduleRepositoryTests {

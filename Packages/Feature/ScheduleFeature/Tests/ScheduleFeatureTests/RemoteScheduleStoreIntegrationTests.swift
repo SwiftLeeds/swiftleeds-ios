@@ -2,7 +2,8 @@ import Dependencies
 import Foundation
 import NetworkKit
 import NetworkKitTestSupport
-import ScheduleFeature
+import ScheduleDomain
+import ScheduleInfrastructure
 import Testing
 
 // Drives the live store with only the transport stubbed.

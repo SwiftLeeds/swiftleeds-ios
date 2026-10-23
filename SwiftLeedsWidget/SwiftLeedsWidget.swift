@@ -1,7 +1,7 @@
 import Dependencies
 import Foundation
 import NetworkKit
-import ScheduleFeature
+import ScheduleInfrastructure
 import SwiftUI
 import WidgetKit
 

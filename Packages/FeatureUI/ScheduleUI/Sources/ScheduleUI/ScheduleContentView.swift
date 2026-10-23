@@ -1,5 +1,5 @@
 #if canImport(UIKit)
-import ScheduleFeature
+import ScheduleDomain
 import SwiftUI
 import UIAssets
 

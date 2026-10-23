@@ -1,5 +1,6 @@
 import Foundation
-import ScheduleFeature
+import ScheduleDomain
+import ScheduleInfrastructure
 import Testing
 
 // Drives the live store against a real UserDefaults suite.

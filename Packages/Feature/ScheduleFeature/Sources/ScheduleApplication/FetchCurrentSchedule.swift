@@ -1,4 +1,5 @@
 import Dependencies
+import ScheduleDomain
 
 /// Returns the schedule of the conference that is currently running.
 public struct FetchCurrentSchedule: Sendable {
