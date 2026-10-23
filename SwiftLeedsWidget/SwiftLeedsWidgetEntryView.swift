@@ -1,3 +1,4 @@
+import Foundation
 import ScheduleFeature
 import SwiftUI
 import WidgetKit

@@ -42,6 +42,22 @@ git config core.hooksPath .githooks
 
 The hook checks only the files you stage. It stays quiet about the violations already recorded in `.swiftlint.baseline`, so older code will not block you. Pass `--no-verify` to skip it.
 
+### Claude Code
+
+If you use [Claude Code](https://claude.com/claude-code), the repo ships its settings, rules, hooks and a few skills in `.claude/`. The other skills it uses are listed in `skills-lock.json`. Install them once per clone. This needs Node 22.20 or later, and the command is experimental, so it may be renamed:
+
+```
+npx skills experimental_install
+.claude/scripts/link-skills.sh
+```
+
+The first command restores the skills into `.agents/skills/`. The second links each one into `.claude/skills/`, where Claude Code looks. It never replaces anything that is already there.
+
+- The `simulator` agent needs the RocketSim app. Its skill ships inside the app, so it is not in `skills-lock.json`. Link it once per clone: `ln -s /Applications/RocketSim.app/Contents/Resources/Agent-Skill/rocketsim .claude/skills/rocketsim`
+- A session hook uses `jq`. Install it with `brew install jq`. Without it the hook stays quiet.
+- Do not run `swift build` or `swift test` inside a package. Each run writes its own `.build` folder with a full copy of every dependency. Use `.claude/scripts/package-test.sh <PackageName>` for tests, and pass `--scratch-path` for any other `swift` command. A hook denies a `swift` command at the start of a line that has no `--scratch-path`.
+- A new skill of your own needs its own `!` line in `.gitignore`. Everything else in `.claude/skills/` is ignored.
+
 ## Contributing 🏗
 
 We welcome all contributions to this repository. Please raise a PR so our Lead Maintainer (Matthew Gallagher) can help get this pushed through, alternatively please raise an Issue or Discussion topic.

@@ -48,8 +48,48 @@ jobs:
       # cannot. Debug is not built here: the test jobs compile the packages in
       # Debug and Release, the launch jobs compile the App Clip in Debug, and a
       # second build would double this job's time.
+      # buildlog_path makes gym keep its raw xcodebuild log in a folder this job
+      # knows, because the analyzer step below reads every compile command from
+      # it. Both brands pass it so the two lanes run the same command.
       - name: Build ${{ matrix.brand }} (${{ matrix.configuration }})
-        run: fastlane build scheme:${{ matrix.brand }} configuration:${{ matrix.configuration }}
+        run: fastlane build scheme:${{ matrix.brand }} configuration:${{ matrix.configuration }} buildlog_path:"$RUNNER_TEMP/build-log"
+
+      # SwiftLint's analyzer rules (an unused import, a captured variable that
+      # changes) need the compiler's own view of each file, so they run on a
+      # build log and not on source. The script installs the same version as the
+      # Linux lint job, from the macOS asset: the Linux binary cannot run here.
+      #
+      # SwiftLeeds only: both brands compile the same sources, so analysing the
+      # second would repeat the first at the cost of a runner's minutes.
+      - name: Install SwiftLint
+        if: ${{ matrix.brand == 'SwiftLeeds' }}
+        run: .github/scripts/install-swiftlint.sh
+
+      # This build is the one log that judges the app and package sources: a
+      # file judged by two logs could pass one and fail the other, because an
+      # `#if` branch changes which imports a file uses. The script's header
+      # explains the split.
+      #
+      # 282 is 5% below the 297 files this scope analysed on one local run. The
+      # floor exists to catch a log that lost its files, which analyses 0 and
+      # still exits 0. A few files may drop out when a branch is removed, so the
+      # floor leaves room for that without letting a lost log pass.
+      #
+      # Only a build that succeeded has a log worth reading, so this step keeps
+      # the default condition. The failure shows in the pull request under this
+      # job's name, "Build SwiftLeeds", so a reviewer seeing it red should read
+      # the step log before looking for a broken build.
+      - name: Analyse the app and package sources
+        if: ${{ matrix.brand == 'SwiftLeeds' }}
+        run: |
+          set -euo pipefail
+          logs=("$RUNNER_TEMP"/build-log/*.log)
+          # gym names the file itself, so the folder must hold exactly one.
+          if [ "${#logs[@]}" -ne 1 ] || [ ! -f "${logs[0]}" ]; then
+            echo "::error::Expected one gym build log in $RUNNER_TEMP/build-log, found ${#logs[@]}: ${logs[*]}"
+            exit 1
+          fi
+          .github/scripts/analyze.sh app 282 "${logs[0]}"
 
   # Release catches what Debug cannot: a test that uses a DEBUG-only symbol, or
   # that relies on DEBUG-only test isolation. Both lanes run the same script.
@@ -92,8 +132,19 @@ jobs:
           # The runner the figures above were measured on.
           echo "cores: $(sysctl -n hw.ncpu), memory: $(sysctl -n hw.memsize) bytes"
 
+          # A package sits at Packages/<Folder>/<Name>. One at Packages/<Name>
+          # would drop out of lint and tests without a word, so it fails here.
+          misplaced=0
+          for manifest in Packages/*/Package.swift; do
+            [ -f "$manifest" ] || continue
+            echo "::error file=$manifest::Packages belong in Packages/<Folder>/<Name>, not directly under Packages/"
+            misplaced=1
+          done
+          [ "$misplaced" -eq 0 ] || exit 1
+
+          # The list holds base names, which name the claim and log files below.
           packages=()
-          for dir in Packages/*/; do
+          for dir in Packages/*/*/; do
             [ -f "${dir}Package.swift" ] || continue
             packages+=("$(basename "$dir")")
           done
@@ -102,43 +153,105 @@ jobs:
             exit 1
           fi
 
+          # Prints the one folder that holds the package with this base name.
+          # Two matches would be ambiguous, so that fails like no match does.
+          package_path () {
+            local matches=() candidate
+            for candidate in Packages/*/"$1"; do
+              [ -f "$candidate/Package.swift" ] && matches+=("$candidate")
+            done
+            if [ ${#matches[@]} -ne 1 ]; then
+              echo "Expected one package named $1 under Packages/, found ${#matches[@]}" >&2
+              return 1
+            fi
+            echo "${matches[0]}"
+          }
+
           claims="$RUNNER_TEMP/package-test-claims"
           failures="$RUNNER_TEMP/package-test-failures"
           rm -rf "$claims" "$failures"
           mkdir -p "$claims"
 
+          # Only Debug asks SwiftPM for the compile commands the analyzer reads,
+          # and keeps each package's raw output in a file for it. Release runs
+          # as it always did.
+          build_logs="$RUNNER_TEMP/package-build-logs"
+          verbose=""
+          if [ "$CONFIGURATION" = debug ]; then
+            verbose="-v"
+            rm -rf "$build_logs"
+            mkdir -p "$build_logs"
+          fi
+
+          # What -v adds to the output: a tool's path then a space (a
+          # diagnostic has a colon after its path), `cd` and indented `builtin-`
+          # or `name -- /path` steps, and the manifest compile that SwiftPM
+          # prefixes with `warning: 'package':`. Matching these shapes drops the
+          # commands and nothing else, however long a test failure runs.
+          command_line='^( */[^ :]+ | +cd /|warning: [^ ]+ /[^ :]+ | +[A-Za-z0-9_.-]+ -- /| +builtin-)'
+
+          # Runs one package's tests. $verbose is empty in Release, so it is
+          # left unquoted on purpose.
+          #
+          # --force-resolved-versions uses each package's committed
+          # Package.resolved instead of resolving again, which was 91s. A
+          # file that cannot satisfy the manifest now fails the job instead
+          # of quietly resolving something newer. It does not touch the
+          # app's own Package.resolved; CLAUDE.md covers keeping those two
+          # in step.
+          swift_test () {
+            local path
+            path=$(package_path "$1") || return 1
+            swift test \
+              --package-path "$path" \
+              --scratch-path "$2" \
+              --cache-path "$3" \
+              --configuration "$CONFIGURATION" \
+              $verbose \
+              --force-resolved-versions 2>&1
+          }
+
+          # Runs one package and prefixes each output line with its name. The
+          # Debug lane writes the raw output to a file per package first,
+          # because the shared stdout cannot be the log: the lanes interleave on
+          # it, and a command line over 512 bytes is not written atomically, so
+          # it would arrive cut by the other lane's text. Only then does it drop
+          # the command lines from the job log, where they would bury the test
+          # output. The status is the pipeline's, so a failing swift test fails
+          # it through pipefail.
+          run_package () {
+            if [ -n "$verbose" ]; then
+              swift_test "$1" "$2" "$3" \
+                | tee "$build_logs/$1.log" \
+                | { grep --line-buffered -Ev "$command_line" || true; } \
+                | sed -l "s/^/[$1] /"
+            else
+              swift_test "$1" "$2" "$3" | sed -l "s/^/[$1] /"
+            fi
+          }
+
           # SwiftPM file-locks its scratch path, so lanes sharing one would
           # queue instead of overlapping. Each lane gets its own, which repeats
           # 14% of the dependency compilation (241s in one path against 168s
           # plus 107s split across two, measured cold and sequentially).
+          # The SwiftPM cache is per lane too: two lanes that fetch the same
+          # swift-syntax prebuilt into one cache can fail with "already exists".
           run_lane () {
             local lane=$1
             local scratch="$RUNNER_TEMP/build-lane-$lane"
+            local cache="$RUNNER_TEMP/swiftpm-cache-lane-$lane"
             local package
             for package in "${packages[@]}"; do
               # mkdir is atomic and fails when the directory exists, so two
               # lanes never take the same package. A queue keeps them balanced:
               # a fixed 8/8 split ran 168s against 107s, the queue 182s and 190s.
               mkdir "$claims/$package" 2>/dev/null || continue
-              # --force-resolved-versions uses each package's committed
-              # Package.resolved instead of resolving again, which was 91s. A
-              # file that cannot satisfy the manifest now fails the job instead
-              # of quietly resolving something newer. It does not touch the
-              # app's own Package.resolved; CLAUDE.md covers keeping those two
-              # in step.
-              #
               # Not folded into a ::group::, because GitHub timestamps each line
               # as it arrives and those timestamps are the only record of the
               # phase boundaries. `sed -l` flushes per line. A line over 512
               # bytes is not written atomically, so a long diagnostic can land
               # under the other lane's prefix.
-              if swift test \
-                --package-path "Packages/$package" \
-                --scratch-path "$scratch" \
-                --configuration "$CONFIGURATION" \
-                --force-resolved-versions 2>&1 \
-                | sed -l "s/^/[$package] /"
-              then
+              if run_package "$package" "$scratch" "$cache"; then
                 touch "$claims/$package/passed"
               else
                 echo "$package" >> "$failures"
@@ -203,6 +316,43 @@ jobs:
         if: ${{ !cancelled() && matrix.configuration == 'debug' }}
         run: .github/scripts/format.sh --check
 
+      # Each local package's role comes from its folder under Packages/, and a
+      # matrix says which role may link which. The script reads every manifest
+      # with `swift package dump-package`. It needs the Xcode toolchain the steps
+      # above selected. It rides this job because the workflow already declares
+      # more macOS jobs than the 5-runner limit.
+      #
+      # A failure here shows under "Test Swift Packages", so read this step's log.
+      - name: Check package dependencies against the matrix
+        if: ${{ !cancelled() && matrix.configuration == 'debug' }}
+        run: python3 .github/scripts/check-dependency-matrix.py
+
+      # The analyzer rules read the compile commands the Debug lane saved above,
+      # so they ride in this job and need no build of their own. Release is
+      # left out: it did not print the commands, and the Debug build compiled
+      # the same test files.
+      #
+      # The macOS build is the one log that judges the package tests. The
+      # snapshot targets are judged by the iOS job instead, because they compile
+      # only there. The script's header explains the split.
+      - name: Install SwiftLint
+        if: ${{ !cancelled() && matrix.configuration == 'debug' }}
+        run: .github/scripts/install-swiftlint.sh
+
+      # An analyzer failure must not hide the test results above, so this runs
+      # even when that step failed, for the reason the formatting check gives.
+      #
+      # 136 is 5% below the 143 files this scope analysed on one local run. The
+      # floor exists to catch a log that lost its files, which analyses 0 and
+      # still exits 0.
+      #
+      # The failure shows in the pull request under this job's name. A reviewer
+      # seeing it red should read the step log before looking for a broken test.
+      # Renaming the job is covered by the warning on the matrix above.
+      - name: Analyse the package tests
+        if: ${{ !cancelled() && matrix.configuration == 'debug' }}
+        run: .github/scripts/analyze.sh tests 136 "$RUNNER_TEMP"/package-build-logs/*.log
+
   # Snapshot tests are the only tests that must run on iOS: they are the only
   # ones behind `#if os(iOS)`, so the macOS job above cannot see them. Every
   # other test compiles and runs there, and the app build jobs compile the
@@ -256,6 +406,7 @@ jobs:
           fi
 
       - name: Run the snapshot tests on the simulator
+        id: snapshots
         run: |
           set -uo pipefail
           # A pull request runs only the snapshot targets its diff can change:
@@ -356,10 +507,14 @@ jobs:
           status=0
           # This call compiles and then tests, so the figure covers both.
           .github/scripts/memory-pressure.sh start
+          # tee keeps the raw output in a file as well as the log. It holds every
+          # compile command, which the analyzer step below reads. One process
+          # writes it, so no line is cut.
           xcodebuild test -project SwiftLeeds.xcodeproj "${args[@]}" \
             -destination "$DESTINATION" \
             -derivedDataPath "$RUNNER_TEMP/snapshot-derived-data" \
-            -skipPackagePluginValidation \
+            -skipPackagePluginValidation 2>&1 \
+            | tee "$RUNNER_TEMP/snapshot-build.log" \
             || status=$?
           echo "::endgroup::"
           .github/scripts/memory-pressure.sh report
@@ -371,6 +526,34 @@ jobs:
             exit "$status"
           fi
           echo "Tested $count snapshot target(s) on the simulator:$selected"
+
+          # The analyzer needs a floor on the files it sees, and the floor
+          # depends on how much was built. A run of everything compiled all 42
+          # snapshot files, so fewer means the log lost some. A pull request
+          # builds only the affected targets, and one target may hold a single
+          # file, so the floor there is 1: it still catches a log that lost
+          # everything.
+          if $run_all; then
+            min_files=42
+          else
+            min_files=1
+          fi
+          echo "min_files=$min_files" >> "$GITHUB_OUTPUT"
+          echo "analyze=true" >> "$GITHUB_OUTPUT"
+
+      # The iOS build is the one log that judges the snapshot targets, because
+      # they compile only on iOS. The script's header explains the split. A step
+      # that selected no target sets no output, so nothing was built and this is
+      # skipped; a failed test step skips it too, as there is no verdict to add.
+      - name: Install SwiftLint
+        if: ${{ steps.snapshots.outputs.analyze == 'true' }}
+        run: .github/scripts/install-swiftlint.sh
+
+      - name: Analyse the snapshot tests
+        if: ${{ steps.snapshots.outputs.analyze == 'true' }}
+        env:
+          MIN_FILES: ${{ steps.snapshots.outputs.min_files }}
+        run: .github/scripts/analyze.sh snapshots "$MIN_FILES" "$RUNNER_TEMP/snapshot-build.log"
 
   # The app build jobs compile the App Clip for both brands, but a trap at
   # launch compiles cleanly. This installs and launches it, and fails if the
@@ -428,7 +611,16 @@ jobs:
           if [ -n "$BASE_REF" ] && changed=$(git diff --name-only --no-renames "origin/$BASE_REF...HEAD"); then
             if ! grep -qv '^Packages/' <<< "$changed"; then
               affected=false
-              for root in Packages/ScheduleUI Packages/NetworkKit; do
+              for name in ScheduleUI NetworkKit; do
+                # The package sits at Packages/<Folder>/<name>. A name that
+                # resolves to nothing counts as affected, like the failures below.
+                root=""
+                for candidate in Packages/*/"$name"; do
+                  [ -f "$candidate/Package.swift" ] || continue
+                  root=$candidate
+                  break
+                done
+                [ -n "$root" ] || { affected=true; break; }
                 # When the dependencies cannot be listed, or the list does not
                 # name the root itself, count the App Clip as affected. A
                 # failure here must run the launch, never skip it.
@@ -513,8 +705,21 @@ jobs:
       - name: Check snapshot tests live in a snapshot target
         run: |
           set -uo pipefail
-          stray=$(grep -rl "assertSnapshots(" Packages/*/Tests \
-            | grep -v "/Tests/[^/]*SnapshotTests/" || true)
+          # An unmatched glob stays literal, so test for a real folder. No
+          # Tests folder at all means the layout moved, never a clean tree.
+          test_dirs=()
+          for dir in Packages/*/*/Tests; do
+            [ -d "$dir" ] && test_dirs+=("$dir")
+          done
+          if [ ${#test_dirs[@]} -eq 0 ]; then
+            echo "::error::Found no Packages/*/*/Tests folder, so this check is broken"
+            exit 1
+          fi
+          # grep exits 1 for no match, which is fine, and 2 for a real error.
+          found=$(grep -rl "assertSnapshots(" "${test_dirs[@]}") || {
+            [ $? -eq 1 ] || { echo "::error::grep failed while searching the Tests folders"; exit 1; }
+          }
+          stray=$(grep -v "/Tests/[^/]*SnapshotTests/" <<< "$found" || true)
           if [ -n "$stray" ]; then
             echo "::error::These call assertSnapshots but sit outside a *SnapshotTests target:"
             echo "$stray"
@@ -553,7 +758,7 @@ jobs:
           definition = re.compile(r"^\t\t([0-9A-F]{24})[ =]")
 
           files = sorted(Path().glob("*.xcodeproj/project.pbxproj"))
-          files += sorted(Path().glob("Packages/*/*.xcodeproj/project.pbxproj"))
+          files += sorted(Path().glob("Packages/*/*/*.xcodeproj/project.pbxproj"))
           if not files:
               print("::error::Found no project.pbxproj to check")
               sys.exit(1)
@@ -603,4 +808,55 @@ jobs:
       # this closes.
       - name: Check the snapshot scheme lists every snapshot target
         run: python3 .github/scripts/check-snapshot-scheme.py
+
+  # Uploads the committed reference images to Screenshotbot for review. The
+  # script's header says what that covers. It runs on Linux because it needs
+  # no simulator, only the PNG files, and the macOS runners are an account
+  # limit of 5 that this workflow already fills.
+  #
+  # The name of this job and the `ios-snapshot-tests` status it posts are meant
+  # to be required checks on `main`, added to the branch rule once the first
+  # run has posted the status. From then on, renaming either blocks every pull
+  # request until that rule is edited too.
+  upload-screenshots:
+    name: Upload Screenshots (Screenshotbot)
+    runs-on: ubuntu-24.04
+    steps:
+      # The default checkout of a pull request is a temporary merge commit. Its
+      # SHA never appears on the pull request, so a status posted to it would not
+      # satisfy a branch rule. The head SHA is the commit the branch rule sees.
+      # A push to `main` has no pull request, so it falls back to its own SHA.
+      # Full history lets the recorder find the merge base.
+      - name: Checkout iOS Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+
+      # The version and checksum are pinned in the script. Screenshotbot's own
+      # install command downloads whatever is current and runs it unchecked.
+      - name: Install the Screenshotbot recorder
+        run: .github/scripts/install-recorder.sh
+
+      # A fork pull request gets no secrets, so the script skips it. A maintainer
+      # pushes the fork's commits to a branch in this repository and merges that
+      # pull request instead.
+      #
+      # A missing secret fails the job on purpose. A silent skip on `main` would
+      # leave that commit with no baseline for later pull requests to compare to.
+      #
+      # The recorder works out the branch, the commit and the pull request on
+      # some CI services, and GitHub Actions is not one of them, so they are
+      # passed in. The checkout above is a bare SHA, so git cannot name the
+      # branch either. The pull request URL is empty on a push.
+      - name: Upload the snapshot references
+        env:
+          SCREENSHOTBOT_API_KEY: ${{ secrets.SCREENSHOTBOT_API_KEY }}
+          SCREENSHOTBOT_API_SECRET: ${{ secrets.SCREENSHOTBOT_API_SECRET }}
+          IS_FORK: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository }}
+          WORK_BRANCH: ${{ github.head_ref || github.ref_name }}
+          COMMIT_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+          PULL_REQUEST_URL: ${{ github.event.pull_request.html_url }}
+          BUILD_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: .github/scripts/upload-screenshots.sh
 

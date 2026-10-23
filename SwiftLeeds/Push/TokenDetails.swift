@@ -13,7 +13,7 @@ struct TokenDetails: Encodable {
 
 extension TokenDetails {
     init(token: Data) {
-        self.token = token.reduce("") { $0 + String(format: "%02x", $1) }
+        self.token = token.map { String(format: "%02x", $0) }.joined()
     }
 }
 

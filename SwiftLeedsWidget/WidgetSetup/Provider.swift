@@ -1,6 +1,6 @@
 import Dependencies
+import Foundation
 import ScheduleFeature
-import SwiftUI
 import WidgetKit
 
 struct Provider: TimelineProvider {
@@ -14,7 +14,7 @@ struct Provider: TimelineProvider {
         )
     }
 
-    func getSnapshot(in context: Context, completion: @escaping (SwiftLeedsWidgetEntry) -> Void) {
+    func getSnapshot(in context: Context, completion: (SwiftLeedsWidgetEntry) -> Void) {
         let entry = SwiftLeedsWidgetEntry(
             date: Date(),
             slot: Schedule.Slot(

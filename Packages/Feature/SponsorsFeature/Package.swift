@@ -1,0 +1,40 @@
+// swift-tools-version: 6.2
+
+import PackageDescription
+
+let package = Package(
+    name: "SponsorsFeature",
+    platforms: [
+        .iOS(.v26),
+        .macOS(.v26),
+    ],
+    products: [
+        .library(name: "SponsorsFeature", targets: ["SponsorsFeature"])
+    ],
+    dependencies: [
+        .package(path: "../../Kit/LogKit"),
+        .package(path: "../../Kit/NetworkKit"),
+        .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.0.0"),
+    ],
+    targets: [
+        .target(
+            name: "SponsorsFeature",
+            dependencies: [
+                .product(name: "Dependencies", package: "swift-dependencies"),
+                .product(name: "LogKit", package: "LogKit"),
+                .product(name: "NetworkKit", package: "NetworkKit"),
+            ],
+        ),
+        .testTarget(
+            name: "SponsorsFeatureTests",
+            dependencies: [
+                "SponsorsFeature",
+                .product(name: "Dependencies", package: "swift-dependencies"),
+                .product(name: "LogKit", package: "LogKit"),
+                .product(name: "LogKitTestSupport", package: "LogKit"),
+                .product(name: "NetworkKit", package: "NetworkKit"),
+                .product(name: "NetworkKitTestSupport", package: "NetworkKit"),
+            ],
+        ),
+    ],
+)

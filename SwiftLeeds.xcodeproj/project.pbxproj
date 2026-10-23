@@ -32,10 +32,9 @@
 		74F5EF8C2A4B4352008D9413 /* ReadabilityModifier in Frameworks */ = {isa = PBXBuildFile; productRef = 74F5EF8B2A4B4352008D9413 /* ReadabilityModifier */; };
 		7640E1784CFF7D166DA3E292 /* SwiftLeedsAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EEFB1E37D5A542A1798C92D5 /* SwiftLeedsAssets.xcassets */; };
 		79E3CB724EF853948BC7D906 /* ConferenceConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67624B7470D6BA62D4912236 /* ConferenceConfig.swift */; };
-		7B31C8EB2ED0959000FEEDF7 /* DesignKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7B31C8EA2ED0959000FEEDF7 /* DesignKit */; };
 		7B31C8F12ED0A7BF00FEEDF7 /* SettingsUI in Frameworks */ = {isa = PBXBuildFile; productRef = 7B31C8F02ED0A7BF00FEEDF7 /* SettingsUI */; };
-		7B8C3ECF2EE4A9F70089C6CF /* SharedAssets in Frameworks */ = {isa = PBXBuildFile; productRef = 7B8C3ECE2EE4A9F70089C6CF /* SharedAssets */; };
-		7BE081542EE5BF13004BCD1F /* SharedAssets in Frameworks */ = {isa = PBXBuildFile; productRef = 7BE081532EE5BF13004BCD1F /* SharedAssets */; };
+		7B8C3ECF2EE4A9F70089C6CF /* UIAssets in Frameworks */ = {isa = PBXBuildFile; productRef = 7B8C3ECE2EE4A9F70089C6CF /* UIAssets */; };
+		7BE081542EE5BF13004BCD1F /* UIAssets in Frameworks */ = {isa = PBXBuildFile; productRef = 7BE081532EE5BF13004BCD1F /* UIAssets */; };
 		7CA11E00000000000000000C /* UIDesign in Frameworks */ = {isa = PBXBuildFile; productRef = 7CA11E00000000000000000B /* UIDesign */; };
 		7CA11E000000000000000201 /* UIDesignGalleryApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000101 /* UIDesignGalleryApp.swift */; };
 		7CA11E000000000000000202 /* GalleryTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA11E000000000000000102 /* GalleryTab.swift */; };
@@ -141,7 +140,7 @@
 		A11CE570000000000000F0D2 /* LocalUI in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE570000000000000F0C2 /* LocalUI */; };
 		A11CE570000000000000F1D1 /* AboutFeature in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE570000000000000F1C1 /* AboutFeature */; };
 		A11CE570000000000000F1D2 /* AboutUI in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE570000000000000F1C2 /* AboutUI */; };
-		A11CE570000000000000F2D1 /* ColorTheme in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE570000000000000F2C1 /* ColorTheme */; };
+		A11CE570000000000000F2D1 /* UITheme in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE570000000000000F2C1 /* UITheme */; };
 		A11CE570000000000000F3B1 /* ContactEmail+Conference.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11CE570000000000000F3A1 /* ContactEmail+Conference.swift */; };
 		A11CE570000000000000F3B2 /* AppVersion+Current.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11CE570000000000000F3A2 /* AppVersion+Current.swift */; };
 		A11CE570000000000000F4A3 /* UIDesign in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE570000000000000F4A2 /* UIDesign */; };
@@ -150,9 +149,6 @@
 		AE8C1B2828C4B36B00AF7318 /* AppDelegate+Push.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8C1B2728C4B36B00AF7318 /* AppDelegate+Push.swift */; };
 		AE8C1B2B28C4B39A00AF7318 /* TokenDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8C1B2A28C4B39A00AF7318 /* TokenDetails.swift */; };
 		AECB295727417F9D00CDC983 /* SwiftLeedsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECB295627417F9D00CDC983 /* SwiftLeedsApp.swift */; };
-		AECB296827417F9E00CDC983 /* SwiftLeedsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECB296727417F9E00CDC983 /* SwiftLeedsTests.swift */; };
-		AECB297227417F9E00CDC983 /* SwiftLeedsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECB297127417F9E00CDC983 /* SwiftLeedsUITests.swift */; };
-		AECB297427417F9E00CDC983 /* SwiftLeedsUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECB297327417F9E00CDC983 /* SwiftLeedsUITestsLaunchTests.swift */; };
 		AECB2A0127417F9D00CDC902 /* LogCategories.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECB2A0027417F9D00CDC901 /* LogCategories.swift */; };
 		AEDC0DAE286759630078A153 /* Tabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEDC0DAD286759630078A153 /* Tabs.swift */; };
 		B2A3D0194187CEC82CCD3F5D /* ConferenceConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67624B7470D6BA62D4912236 /* ConferenceConfig.swift */; };
@@ -178,20 +174,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 74A09FDC28C6778C00E03F39;
 			remoteInfo = SwiftLeedsWidgetExtension;
-		};
-		AECB296427417F9E00CDC983 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AECB294B27417F9D00CDC983 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = AECB295227417F9D00CDC983;
-			remoteInfo = SwiftLeeds;
-		};
-		AECB296E27417F9E00CDC983 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AECB294B27417F9D00CDC983 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = AECB295227417F9D00CDC983;
-			remoteInfo = SwiftLeeds;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -269,7 +251,7 @@
 		A11CE570000000000000F0A2 /* LocalUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = LocalUI; sourceTree = "<group>"; };
 		A11CE570000000000000F1A1 /* AboutFeature */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = AboutFeature; sourceTree = "<group>"; };
 		A11CE570000000000000F1A2 /* AboutUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = AboutUI; sourceTree = "<group>"; };
-		A11CE570000000000000F2A1 /* ColorTheme */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ColorTheme; sourceTree = "<group>"; };
+		A11CE570000000000000F2A1 /* UITheme */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = UITheme; sourceTree = "<group>"; };
 		A11CE570000000000000F2A2 /* SettingsUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SettingsUI; sourceTree = "<group>"; };
 		A11CE570000000000000F3A1 /* ContactEmail+Conference.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "ContactEmail+Conference.swift"; sourceTree = "<group>"; };
 		A11CE570000000000000F3A2 /* AppVersion+Current.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "AppVersion+Current.swift"; sourceTree = "<group>"; };
@@ -280,11 +262,6 @@
 		AE8C1B2C28C4B8D800AF7318 /* SwiftLeeds.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SwiftLeeds.entitlements; sourceTree = "<group>"; };
 		AECB295327417F9D00CDC983 /* SwiftLeeds.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftLeeds.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AECB295627417F9D00CDC983 /* SwiftLeedsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftLeedsApp.swift; sourceTree = "<group>"; };
-		AECB296327417F9E00CDC983 /* SwiftLeedsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftLeedsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		AECB296727417F9E00CDC983 /* SwiftLeedsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftLeedsTests.swift; sourceTree = "<group>"; };
-		AECB296D27417F9E00CDC983 /* SwiftLeedsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftLeedsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		AECB297127417F9E00CDC983 /* SwiftLeedsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftLeedsUITests.swift; sourceTree = "<group>"; };
-		AECB297327417F9E00CDC983 /* SwiftLeedsUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftLeedsUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		AECB29832741ABFD00CDC983 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AECB2A0027417F9D00CDC901 /* LogCategories.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LogCategories.swift; sourceTree = "<group>"; };
 		AEDC0DAD286759630078A153 /* Tabs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tabs.swift; sourceTree = "<group>"; };
@@ -388,7 +365,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7BE081542EE5BF13004BCD1F /* SharedAssets in Frameworks */,
+				7BE081542EE5BF13004BCD1F /* UIAssets in Frameworks */,
 				74A09FE128C6778C00E03F39 /* SwiftUI.framework in Frameworks */,
 				74A09FDF28C6778C00E03F39 /* WidgetKit.framework in Frameworks */,
 				A11CE57000000000000000DF /* ScheduleFeature in Frameworks */,
@@ -401,11 +378,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7B8C3ECF2EE4A9F70089C6CF /* SharedAssets in Frameworks */,
+				7B8C3ECF2EE4A9F70089C6CF /* UIAssets in Frameworks */,
 				7B31C8F12ED0A7BF00FEEDF7 /* SettingsUI in Frameworks */,
 				74F5EF8C2A4B4352008D9413 /* ReadabilityModifier in Frameworks */,
 				AE5EFD73289DC1D000464FE1 /* CachedAsyncImage in Frameworks */,
-				7B31C8EB2ED0959000FEEDF7 /* DesignKit in Frameworks */,
 				A11CE57000000000000000D1 /* AuthenticationUI in Frameworks */,
 				A11CE57000000000000000D2 /* AuthenticationFeature in Frameworks */,
 				A11CE57000000000000000D5 /* LogKit in Frameworks */,
@@ -420,25 +396,11 @@
 				A11CE570000000000000F0D1 /* LocalFeature in Frameworks */,
 				A11CE570000000000000F1D1 /* AboutFeature in Frameworks */,
 				A11CE570000000000000F1D2 /* AboutUI in Frameworks */,
-				A11CE570000000000000F2D1 /* ColorTheme in Frameworks */,
+				A11CE570000000000000F2D1 /* UITheme in Frameworks */,
 				A11CE570000000000000F0D2 /* LocalUI in Frameworks */,
 				A11CE57000000000000000D3 /* SecureStorageKit in Frameworks */,
 				A11CE57000000000000000D4 /* SecureStorageKitKeychain in Frameworks */,
 				A11CE57000000000000000D8 /* Dependencies in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		AECB296027417F9E00CDC983 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		AECB296A27417F9E00CDC983 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -456,13 +418,13 @@
 		0B4CB3C628EAF19100246E62 /* SwiftLeedsAppClip */ = {
 			isa = PBXGroup;
 			children = (
-				0B4CB3C728EAF19100246E62 /* SwiftLeedsAppClipApp.swift */,
-				0B4CB3D028EAF19100246E62 /* Info.plist */,
-				0B4CB3D128EAF19100246E62 /* SwiftLeedsAppClip.entitlements */,
 				0BB52A782A5FDC2614FF7243 /* KotlinLeedsAppClip.entitlements */,
-				0B4CB3CD28EAF19100246E62 /* Preview Content */,
-				4301D0D3F1C8979276E77084 /* SwiftLeedsAssets.xcassets */,
+				0B4CB3D128EAF19100246E62 /* SwiftLeedsAppClip.entitlements */,
+				0B4CB3D028EAF19100246E62 /* Info.plist */,
+				0B4CB3C728EAF19100246E62 /* SwiftLeedsAppClipApp.swift */,
 				75075F01455C8AD72C71783C /* KotlinLeedsAssets.xcassets */,
+				4301D0D3F1C8979276E77084 /* SwiftLeedsAssets.xcassets */,
+				0B4CB3CD28EAF19100246E62 /* Preview Content */,
 			);
 			path = SwiftLeedsAppClip;
 			sourceTree = "<group>";
@@ -478,14 +440,14 @@
 		74A09FE228C6778C00E03F39 /* SwiftLeedsWidget */ = {
 			isa = PBXGroup;
 			children = (
-				74B14FAE28CE13E4004C0A40 /* WidgetSetup */,
+				74A09FE728C6779300E03F39 /* Info.plist */,
 				74E62F7328CAAB30004422F9 /* SwiftLeedsMediumWidgetView.swift */,
 				74E62F7128CA98EA004422F9 /* SwiftLeedsSmallWidgetView.swift */,
-				74B14FB328CE2245004C0A40 /* SwiftLeedsWidgetEntryView.swift */,
 				74A09FE328C6778C00E03F39 /* SwiftLeedsWidget.swift */,
-				74A09FE728C6779300E03F39 /* Info.plist */,
-				3275AD6541323F056786E508 /* SwiftLeedsAssets.xcassets */,
+				74B14FB328CE2245004C0A40 /* SwiftLeedsWidgetEntryView.swift */,
 				ED1AFB8A37EDA9676DB1C998 /* KotlinLeedsAssets.xcassets */,
+				3275AD6541323F056786E508 /* SwiftLeedsAssets.xcassets */,
+				74B14FAE28CE13E4004C0A40 /* WidgetSetup */,
 			);
 			path = SwiftLeedsWidget;
 			sourceTree = "<group>";
@@ -503,8 +465,8 @@
 		7D158F62E4F9CC9BE188EB59 /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
-				5F9FC40FEADC49E608696F7A /* SwiftLeeds.xcconfig */,
 				1AA9B4909D551477D0C04106 /* KotlinLeeds.xcconfig */,
+				5F9FC40FEADC49E608696F7A /* SwiftLeeds.xcconfig */,
 			);
 			path = Configuration;
 			sourceTree = "<group>";
@@ -512,25 +474,57 @@
 		A11CE57000000000000000B2 /* Packages */ = {
 			isa = PBXGroup;
 			children = (
-				A11CE57000000000000000A1 /* SecureStorageKit */,
-				A11CE57000000000000000A2 /* AuthenticationFeature */,
-				A11CE57000000000000000A5 /* LogKit */,
-				A11CE57000000000000000A6 /* SponsorsFeature */,
-				A11CE57000000000000000A7 /* UIComponents */,
-				A11CE57000000000000000A8 /* SponsorsUI */,
-				A11CE57000000000000000A9 /* ScheduleFeature */,
-				A11CE57000000000000000AA /* ScheduleUI */,
-				A11CE570000000000000F0A1 /* LocalFeature */,
-				A11CE570000000000000F1A1 /* AboutFeature */,
-				A11CE570000000000000F1A2 /* AboutUI */,
-				A11CE570000000000000F2A1 /* ColorTheme */,
-				A11CE570000000000000F2A2 /* SettingsUI */,
-				A11CE570000000000000F0A2 /* LocalUI */,
-				A11CE57000000000000000A4 /* NetworkKit */,
-				A11CE57000000000000000A3 /* AuthenticationUI */,
-				A11CE570000000000000F4A1 /* UIDesign */,
+				A11CE57000000000000000B3 /* DesignSystem */,
+				A11CE57000000000000000B4 /* Feature */,
+				A11CE57000000000000000B5 /* FeatureUI */,
+				A11CE57000000000000000B6 /* Kit */,
 			);
 			path = Packages;
+			sourceTree = "<group>";
+		};
+		A11CE57000000000000000B3 /* DesignSystem */ = {
+			isa = PBXGroup;
+			children = (
+				A11CE57000000000000000A7 /* UIComponents */,
+				A11CE570000000000000F4A1 /* UIDesign */,
+				A11CE570000000000000F2A1 /* UITheme */,
+			);
+			path = DesignSystem;
+			sourceTree = "<group>";
+		};
+		A11CE57000000000000000B4 /* Feature */ = {
+			isa = PBXGroup;
+			children = (
+				A11CE570000000000000F1A1 /* AboutFeature */,
+				A11CE57000000000000000A2 /* AuthenticationFeature */,
+				A11CE570000000000000F0A1 /* LocalFeature */,
+				A11CE57000000000000000A9 /* ScheduleFeature */,
+				A11CE57000000000000000A6 /* SponsorsFeature */,
+			);
+			path = Feature;
+			sourceTree = "<group>";
+		};
+		A11CE57000000000000000B5 /* FeatureUI */ = {
+			isa = PBXGroup;
+			children = (
+				A11CE570000000000000F1A2 /* AboutUI */,
+				A11CE57000000000000000A3 /* AuthenticationUI */,
+				A11CE570000000000000F0A2 /* LocalUI */,
+				A11CE57000000000000000AA /* ScheduleUI */,
+				A11CE570000000000000F2A2 /* SettingsUI */,
+				A11CE57000000000000000A8 /* SponsorsUI */,
+			);
+			path = FeatureUI;
+			sourceTree = "<group>";
+		};
+		A11CE57000000000000000B6 /* Kit */ = {
+			isa = PBXGroup;
+			children = (
+				A11CE57000000000000000A5 /* LogKit */,
+				A11CE57000000000000000A4 /* NetworkKit */,
+				A11CE57000000000000000A1 /* SecureStorageKit */,
+			);
+			path = Kit;
 			sourceTree = "<group>";
 		};
 		AE8C1B2928C4B38400AF7318 /* Push */ = {
@@ -546,19 +540,17 @@
 			isa = PBXGroup;
 			children = (
 				7B8108412E5CA00E00CCB2F5 /* SwiftLeedsPackage */,
-				A11CE57000000000000000B2 /* Packages */,
-				74B14FAD28CB22B4004C0A40 /* SwiftLeedsWidgetExtension.entitlements */,
-				C1725A0182E1989D761551B2 /* KotlinLeedsWidgetExtension.entitlements */,
-				AECB295527417F9D00CDC983 /* SwiftLeeds */,
 				AE1C801328A7BCD000996659 /* Settings.bundle */,
-				AECB296627417F9E00CDC983 /* SwiftLeedsTests */,
-				AECB297027417F9E00CDC983 /* SwiftLeedsUITests */,
-				74A09FE228C6778C00E03F39 /* SwiftLeedsWidget */,
-				0B4CB3C628EAF19100246E62 /* SwiftLeedsAppClip */,
-				7CA11E00000000000000000D /* UIDesignGallery */,
-				AECB295427417F9D00CDC983 /* Products */,
-				FAF74EDA288B44BE00A0926C /* Frameworks */,
+				C1725A0182E1989D761551B2 /* KotlinLeedsWidgetExtension.entitlements */,
+				74B14FAD28CB22B4004C0A40 /* SwiftLeedsWidgetExtension.entitlements */,
 				7D158F62E4F9CC9BE188EB59 /* Configuration */,
+				FAF74EDA288B44BE00A0926C /* Frameworks */,
+				A11CE57000000000000000B2 /* Packages */,
+				AECB295427417F9D00CDC983 /* Products */,
+				AECB295527417F9D00CDC983 /* SwiftLeeds */,
+				0B4CB3C628EAF19100246E62 /* SwiftLeedsAppClip */,
+				74A09FE228C6778C00E03F39 /* SwiftLeedsWidget */,
+				7CA11E00000000000000000D /* UIDesignGallery */,
 			);
 			sourceTree = "<group>";
 		};
@@ -566,10 +558,8 @@
 			isa = PBXGroup;
 			children = (
 				AECB295327417F9D00CDC983 /* SwiftLeeds.app */,
-				AECB296327417F9E00CDC983 /* SwiftLeedsTests.xctest */,
-				AECB296D27417F9E00CDC983 /* SwiftLeedsUITests.xctest */,
-				74A09FDD28C6778C00E03F39 /* SwiftLeedsWidgetExtension.appex */,
 				0B4CB3C528EAF19000246E62 /* SwiftLeedsAppClip.app */,
+				74A09FDD28C6778C00E03F39 /* SwiftLeedsWidgetExtension.appex */,
 				7CA11E000000000000000002 /* UIDesignGallery.app */,
 			);
 			name = Products;
@@ -578,32 +568,15 @@
 		AECB295527417F9D00CDC983 /* SwiftLeeds */ = {
 			isa = PBXGroup;
 			children = (
+				7804F8767E529D8F3A0D8BE4 /* KotlinLeeds.entitlements */,
+				AE8C1B2C28C4B8D800AF7318 /* SwiftLeeds.entitlements */,
 				AECB29862741AC5800CDC983 /* App */,
 				AECB298027418D9800CDC983 /* Extension */,
 				AE8C1B2928C4B38400AF7318 /* Push */,
 				AECB29842741AC2500CDC983 /* Resources */,
-				AE8C1B2C28C4B8D800AF7318 /* SwiftLeeds.entitlements */,
 				AECB29852741AC4B00CDC983 /* Views */,
-				7804F8767E529D8F3A0D8BE4 /* KotlinLeeds.entitlements */,
 			);
 			path = SwiftLeeds;
-			sourceTree = "<group>";
-		};
-		AECB296627417F9E00CDC983 /* SwiftLeedsTests */ = {
-			isa = PBXGroup;
-			children = (
-				AECB296727417F9E00CDC983 /* SwiftLeedsTests.swift */,
-			);
-			path = SwiftLeedsTests;
-			sourceTree = "<group>";
-		};
-		AECB297027417F9E00CDC983 /* SwiftLeedsUITests */ = {
-			isa = PBXGroup;
-			children = (
-				AECB297127417F9E00CDC983 /* SwiftLeedsUITests.swift */,
-				AECB297327417F9E00CDC983 /* SwiftLeedsUITestsLaunchTests.swift */,
-			);
-			path = SwiftLeedsUITests;
 			sourceTree = "<group>";
 		};
 		AECB298027418D9800CDC983 /* Extension */ = {
@@ -617,10 +590,10 @@
 		AECB29842741AC2500CDC983 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				EEFB1E37D5A542A1798C92D5 /* SwiftLeedsAssets.xcassets */,
-				893A122D593379F84605F70C /* SwiftLeedsColors.xcassets */,
 				40AEBC0F9109732F54C608A9 /* KotlinLeedsAssets.xcassets */,
 				0B3FFD994DBE3F62216150F8 /* KotlinLeedsColors.xcassets */,
+				EEFB1E37D5A542A1798C92D5 /* SwiftLeedsAssets.xcassets */,
+				893A122D593379F84605F70C /* SwiftLeedsColors.xcassets */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -637,12 +610,12 @@
 			isa = PBXGroup;
 			children = (
 				AECB29832741ABFD00CDC983 /* Info.plist */,
-				AECB295627417F9D00CDC983 /* SwiftLeedsApp.swift */,
-				AECB2A0027417F9D00CDC901 /* LogCategories.swift */,
-				A11CE570000000000000F3A1 /* ContactEmail+Conference.swift */,
-				A11CE570000000000000F3A2 /* AppVersion+Current.swift */,
 				740162D92A7053A000C2D1B3 /* AppState.swift */,
+				A11CE570000000000000F3A2 /* AppVersion+Current.swift */,
 				67624B7470D6BA62D4912236 /* ConferenceConfig.swift */,
+				A11CE570000000000000F3A1 /* ContactEmail+Conference.swift */,
+				AECB2A0027417F9D00CDC901 /* LogCategories.swift */,
+				AECB295627417F9D00CDC983 /* SwiftLeedsApp.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -661,8 +634,8 @@
 		FAF74EDA288B44BE00A0926C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				74A09FDE28C6778C00E03F39 /* WidgetKit.framework */,
 				74A09FE028C6778C00E03F39 /* SwiftUI.framework */,
+				74A09FDE28C6778C00E03F39 /* WidgetKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -880,7 +853,7 @@
 			);
 			name = SwiftLeedsWidgetExtension;
 			packageProductDependencies = (
-				7BE081532EE5BF13004BCD1F /* SharedAssets */,
+				7BE081532EE5BF13004BCD1F /* UIAssets */,
 				A11CE57000000000000000CF /* ScheduleFeature */,
 				A11CE57000000000000000E5 /* Dependencies */,
 				A11CE57000000000000000EB /* NetworkKit */,
@@ -909,9 +882,8 @@
 			packageProductDependencies = (
 				AE5EFD72289DC1D000464FE1 /* CachedAsyncImage */,
 				74F5EF8B2A4B4352008D9413 /* ReadabilityModifier */,
-				7B31C8EA2ED0959000FEEDF7 /* DesignKit */,
 				7B31C8F02ED0A7BF00FEEDF7 /* SettingsUI */,
-				7B8C3ECE2EE4A9F70089C6CF /* SharedAssets */,
+				7B8C3ECE2EE4A9F70089C6CF /* UIAssets */,
 				A11CE57000000000000000C1 /* AuthenticationUI */,
 				A11CE57000000000000000C2 /* AuthenticationFeature */,
 				A11CE57000000000000000C5 /* LogKit */,
@@ -926,7 +898,7 @@
 				A11CE570000000000000F0C1 /* LocalFeature */,
 				A11CE570000000000000F1C1 /* AboutFeature */,
 				A11CE570000000000000F1C2 /* AboutUI */,
-				A11CE570000000000000F2C1 /* ColorTheme */,
+				A11CE570000000000000F2C1 /* UITheme */,
 				A11CE570000000000000F0C2 /* LocalUI */,
 				A11CE57000000000000000C3 /* SecureStorageKit */,
 				A11CE57000000000000000C4 /* SecureStorageKitKeychain */,
@@ -935,42 +907,6 @@
 			productName = SwiftLeeds;
 			productReference = AECB295327417F9D00CDC983 /* SwiftLeeds.app */;
 			productType = "com.apple.product-type.application";
-		};
-		AECB296227417F9E00CDC983 /* SwiftLeedsTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = AECB297A27417F9E00CDC983 /* Build configuration list for PBXNativeTarget "SwiftLeedsTests" */;
-			buildPhases = (
-				AECB295F27417F9E00CDC983 /* Sources */,
-				AECB296027417F9E00CDC983 /* Frameworks */,
-				AECB296127417F9E00CDC983 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				AECB296527417F9E00CDC983 /* PBXTargetDependency */,
-			);
-			name = SwiftLeedsTests;
-			productName = SwiftLeedsTests;
-			productReference = AECB296327417F9E00CDC983 /* SwiftLeedsTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		AECB296C27417F9E00CDC983 /* SwiftLeedsUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = AECB297D27417F9E00CDC983 /* Build configuration list for PBXNativeTarget "SwiftLeedsUITests" */;
-			buildPhases = (
-				AECB296927417F9E00CDC983 /* Sources */,
-				AECB296A27417F9E00CDC983 /* Frameworks */,
-				AECB296B27417F9E00CDC983 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				AECB296F27417F9E00CDC983 /* PBXTargetDependency */,
-			);
-			name = SwiftLeedsUITests;
-			productName = SwiftLeedsUITests;
-			productReference = AECB296D27417F9E00CDC983 /* SwiftLeedsUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 		7CA11E000000000000000001 /* UIDesignGallery */ = {
 			isa = PBXNativeTarget;
@@ -1011,14 +947,6 @@
 					AECB295227417F9D00CDC983 = {
 						CreatedOnToolsVersion = 13.1;
 					};
-					AECB296227417F9E00CDC983 = {
-						CreatedOnToolsVersion = 13.1;
-						TestTargetID = AECB295227417F9D00CDC983;
-					};
-					AECB296C27417F9E00CDC983 = {
-						CreatedOnToolsVersion = 13.1;
-						TestTargetID = AECB295227417F9D00CDC983;
-					};
 				};
 			};
 			buildConfigurationList = AECB294E27417F9D00CDC983 /* Build configuration list for PBXProject "SwiftLeeds" */;
@@ -1042,8 +970,6 @@
 				AECB295227417F9D00CDC983 /* SwiftLeeds */,
 				74A09FDC28C6778C00E03F39 /* SwiftLeedsWidgetExtension */,
 				0B4CB3C428EAF19000246E62 /* SwiftLeedsAppClip */,
-				AECB296227417F9E00CDC983 /* SwiftLeedsTests */,
-				AECB296C27417F9E00CDC983 /* SwiftLeedsUITests */,
 				7CA11E000000000000000001 /* UIDesignGallery */,
 			);
 		};
@@ -1082,20 +1008,6 @@
 				6E14A8EC04159C7E092C87D4 /* SwiftLeedsColors.xcassets in Resources */,
 				C88307224ADAA4C64A455D74 /* KotlinLeedsAssets.xcassets in Resources */,
 				1ED8FD9CBE313B23E73E8132 /* KotlinLeedsColors.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		AECB296127417F9E00CDC983 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		AECB296B27417F9E00CDC983 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1150,23 +1062,6 @@
 				740162DA2A7053A000C2D1B3 /* AppState.swift in Sources */,
 				74F5EF872A49CE9D008D9413 /* SidebarMainView.swift in Sources */,
 				B2A3D0194187CEC82CCD3F5D /* ConferenceConfig.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		AECB295F27417F9E00CDC983 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				AECB296827417F9E00CDC983 /* SwiftLeedsTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		AECB296927417F9E00CDC983 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				AECB297427417F9E00CDC983 /* SwiftLeedsUITestsLaunchTests.swift in Sources */,
-				AECB297227417F9E00CDC983 /* SwiftLeedsUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1268,16 +1163,6 @@
 			isa = PBXTargetDependency;
 			target = 74A09FDC28C6778C00E03F39 /* SwiftLeedsWidgetExtension */;
 			targetProxy = 74A09FE828C6779300E03F39 /* PBXContainerItemProxy */;
-		};
-		AECB296527417F9E00CDC983 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = AECB295227417F9D00CDC983 /* SwiftLeeds */;
-			targetProxy = AECB296427417F9E00CDC983 /* PBXContainerItemProxy */;
-		};
-		AECB296F27417F9E00CDC983 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = AECB295227417F9D00CDC983 /* SwiftLeeds */;
-			targetProxy = AECB296E27417F9E00CDC983 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1425,7 +1310,7 @@
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1463,7 +1348,7 @@
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1492,7 +1377,7 @@
 				INFOPLIST_FILE = SwiftLeedsWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "$(APP_DISPLAY_NAME)";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1509,29 +1394,6 @@
 			};
 			name = "Debug-KotlinLeeds";
 		};
-		655E3983F369B83929052804 /* Release-KotlinLeeds */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = uk.co.kotlinleeds.KotlinLeedsTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SwiftLeeds.app/SwiftLeeds";
-			};
-			name = "Release-KotlinLeeds";
-		};
 		74A09FEC28C6779300E03F39 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5F9FC40FEADC49E608696F7A /* SwiftLeeds.xcconfig */;
@@ -1546,7 +1408,7 @@
 				INFOPLIST_FILE = SwiftLeedsWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "$(APP_DISPLAY_NAME)";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1577,7 +1439,7 @@
 				INFOPLIST_FILE = SwiftLeedsWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "$(APP_DISPLAY_NAME)";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1613,7 +1475,7 @@
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1650,7 +1512,7 @@
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1664,27 +1526,6 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = "Debug-KotlinLeeds";
-		};
-		9E7FC0DEE0511AE09933E16D /* Release-KotlinLeeds */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = uk.co.kotlinleeds.KotlinLeedsUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = SwiftLeeds;
-			};
-			name = "Release-KotlinLeeds";
 		};
 		A38060880D523A66B65603E3 /* Release-KotlinLeeds */ = {
 			isa = XCBuildConfiguration;
@@ -1734,7 +1575,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -1799,7 +1640,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1858,7 +1699,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -1888,7 +1729,7 @@
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1921,7 +1762,7 @@
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1932,94 +1773,6 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		AECB297B27417F9E00CDC983 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = uk.co.swiftleeds.SwiftLeedsTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SwiftLeeds.app/SwiftLeeds";
-			};
-			name = Debug;
-		};
-		AECB297C27417F9E00CDC983 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = uk.co.swiftleeds.SwiftLeedsTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SwiftLeeds.app/SwiftLeeds";
-			};
-			name = Release;
-		};
-		AECB297E27417F9E00CDC983 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = uk.co.swiftleeds.SwiftLeedsUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = SwiftLeeds;
-			};
-			name = Debug;
-		};
-		AECB297F27417F9E00CDC983 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = uk.co.swiftleeds.SwiftLeedsUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = SwiftLeeds;
 			};
 			name = Release;
 		};
@@ -2046,7 +1799,7 @@
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2060,50 +1813,6 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = "Release-KotlinLeeds";
-		};
-		CA02A67F16FAEB1F469D90E7 /* Debug-KotlinLeeds */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = uk.co.kotlinleeds.KotlinLeedsTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SwiftLeeds.app/SwiftLeeds";
-			};
-			name = "Debug-KotlinLeeds";
-		};
-		CD001671DE923FBC5EEFDBF7 /* Debug-KotlinLeeds */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = uk.co.kotlinleeds.KotlinLeedsUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = SwiftLeeds;
-			};
-			name = "Debug-KotlinLeeds";
 		};
 		D5C3DEA64235AB9468B871B4 /* Release-KotlinLeeds */ = {
 			isa = XCBuildConfiguration;
@@ -2119,7 +1828,7 @@
 				INFOPLIST_FILE = SwiftLeedsWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "$(APP_DISPLAY_NAME)";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2190,7 +1899,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -2220,7 +1929,7 @@
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2281,28 +1990,6 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		AECB297A27417F9E00CDC983 /* Build configuration list for PBXNativeTarget "SwiftLeedsTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				AECB297B27417F9E00CDC983 /* Debug */,
-				AECB297C27417F9E00CDC983 /* Release */,
-				CA02A67F16FAEB1F469D90E7 /* Debug-KotlinLeeds */,
-				655E3983F369B83929052804 /* Release-KotlinLeeds */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		AECB297D27417F9E00CDC983 /* Build configuration list for PBXNativeTarget "SwiftLeedsUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				AECB297E27417F9E00CDC983 /* Debug */,
-				AECB297F27417F9E00CDC983 /* Release */,
-				CD001671DE923FBC5EEFDBF7 /* Debug-KotlinLeeds */,
-				9E7FC0DEE0511AE09933E16D /* Release-KotlinLeeds */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		7CA11E000000000000000003 /* Build configuration list for PBXNativeTarget "UIDesignGallery" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -2358,21 +2045,17 @@
 			package = 74F5EF8A2A4B4352008D9413 /* XCRemoteSwiftPackageReference "ReadabilityModifier" */;
 			productName = ReadabilityModifier;
 		};
-		7B31C8EA2ED0959000FEEDF7 /* DesignKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = DesignKit;
-		};
 		7B31C8F02ED0A7BF00FEEDF7 /* SettingsUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SettingsUI;
 		};
-		7B8C3ECE2EE4A9F70089C6CF /* SharedAssets */ = {
+		7B8C3ECE2EE4A9F70089C6CF /* UIAssets */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = SharedAssets;
+			productName = UIAssets;
 		};
-		7BE081532EE5BF13004BCD1F /* SharedAssets */ = {
+		7BE081532EE5BF13004BCD1F /* UIAssets */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = SharedAssets;
+			productName = UIAssets;
 		};
 		A11CE57000000000000000C1 /* AuthenticationUI */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -2460,9 +2143,9 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = AboutUI;
 		};
-		A11CE570000000000000F2C1 /* ColorTheme */ = {
+		A11CE570000000000000F2C1 /* UITheme */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = ColorTheme;
+			productName = UITheme;
 		};
 		A11CE570000000000000F4A2 /* UIDesign */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -1,10 +1,10 @@
+import Foundation
 import ScheduleFeature
-import SharedAssets
 import SwiftUI
+import UIAssets
 import WidgetKit
 
 struct SwiftLeedsSmallWidgetView: View {
-
     // MARK: - Private Properties
 
     private let slot: Schedule.Slot

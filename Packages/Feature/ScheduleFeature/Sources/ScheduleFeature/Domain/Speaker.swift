@@ -1,0 +1,39 @@
+import Foundation
+
+public struct Speaker: Codable, Identifiable, Sendable {
+    public let id: UUID
+    public let name: String
+    public let biography: String
+    public let profileImage: String
+    public let organisation: String
+    public let twitter: String?
+
+    public init(
+        id: UUID,
+        name: String,
+        biography: String,
+        profileImage: String,
+        organisation: String,
+        twitter: String?,
+    ) {
+        self.id = id
+        self.name = name
+        self.biography = biography
+        self.profileImage = profileImage
+        self.organisation = organisation
+        self.twitter = twitter
+    }
+}
+
+// MARK: - Formatting helpers
+extension Array where Element == Speaker {
+    public var joinedNames: String {
+        ListFormatter.localizedString(byJoining: map(\.name))
+    }
+
+    public var joinedOrganisations: String {
+        var seen: Set<String> = []
+        let organisations = map(\.organisation).filter { seen.insert($0).inserted }
+        return ListFormatter.localizedString(byJoining: organisations)
+    }
+}

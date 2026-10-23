@@ -49,7 +49,7 @@
     "NoAssignmentInExpressions" : true,
     "NoBlockComments" : true,
     "NoCasesWithOnlyFallthrough" : true,
-    "NoEmptyLinesOpeningClosingBraces" : false,
+    "NoEmptyLinesOpeningClosingBraces" : true,
     "NoEmptyTrailingClosureParentheses" : true,
     "NoLabelsInCasePatterns" : true,
     "NoLeadingUnderscores" : false,

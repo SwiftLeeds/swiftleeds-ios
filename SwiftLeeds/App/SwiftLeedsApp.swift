@@ -1,5 +1,4 @@
 import AuthenticationFeature
-import ColorTheme
 import Dependencies
 import Foundation
 import LogKit
@@ -9,6 +8,8 @@ import ScheduleFeature
 import SecureStorageKit
 import SecureStorageKitKeychain
 import SwiftUI
+import UIKit
+import UITheme
 
 @main
 struct SwiftLeedsApp: App {
@@ -16,7 +17,11 @@ struct SwiftLeedsApp: App {
 
     @StateObject private var appState = AppState()
 
+    /// The disk limit for the shared cache, which holds mostly remote images.
+    private static let sharedURLCacheDiskCapacityInBytes = 100_000_000
+
     init() {
+        Self.sizeSharedURLCache()
         prepareDependencies {
             // A fresh salt each launch, so hashed values correlate within a session but never
             // between them. Without a subsystem there is no honest place to write (this ships
@@ -25,7 +30,7 @@ struct SwiftLeedsApp: App {
                 Bundle.main.bundleIdentifier
                 .flatMap { try? LogSubsystem($0) }
                 .map { Log.unified(subsystem: $0, salt: .random()) }
-                ?? .none
+                ?? .silent
             $0.secureStorage = .keychain(service: KeychainService("uk.co.swiftleeds.authentication"))
             $0.apiConfiguration = APIConfiguration(baseURL: URL(string: "https://\(ConferenceConfig.apiHost)")!)
             $0.httpClient = HTTPClient.urlSession(.unauthenticated).logging()
@@ -41,6 +46,11 @@ struct SwiftLeedsApp: App {
             $0.signOut = SignOut.liveValue.logging()
             $0.fetchProfile = FetchProfile.liveValue.logging()
         }
+    }
+
+    /// Gives the shared URL cache room on disk for remote images.
+    private static func sizeSharedURLCache() {
+        URLCache.shared.diskCapacity = sharedURLCacheDiskCapacityInBytes
     }
 
     var body: some Scene {
@@ -61,10 +71,6 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
         // swiftlint:disable:next discouraged_optional_collection
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil,
     ) -> Bool {
-        URLCache.shared.diskCapacity = 100_000_000
-
-        UITabBar.appearance().backgroundColor = UIColor(named: "TabBarBackground")
-
         requestPushAuthorization(application: application)
 
         return true
@@ -83,6 +89,6 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
     }
 
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
-        handleFailedRegistration(application: application, error: error)
+        handleFailedRegistration(error: error)
     }
 }

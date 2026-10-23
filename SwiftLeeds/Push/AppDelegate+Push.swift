@@ -1,4 +1,6 @@
 import Dependencies
+import Dispatch
+import Foundation
 import LogKit
 import UIKit
 import UserNotifications
@@ -62,7 +64,10 @@ extension AppDelegate {
         }
     }
 
-    func handleFailedRegistration(application: UIApplication, error: Error) {
+    /// Logs why the system refused to register this device for push notifications.
+    ///
+    /// - Parameter error: The error the system gave when registration failed.
+    func handleFailedRegistration(error: Error) {
         @Dependency(\.log) var log
         log.error("The system refused push registration: \(error, privacy: .open)", in: .push)
     }
@@ -72,7 +77,8 @@ extension AppDelegate {
 extension AppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(
         _ center: UNUserNotificationCenter, willPresent notification: UNNotification,
-    ) async -> UNNotificationPresentationOptions {
+        // The body has nothing to await. The completion-handler form would lift this.
+    ) async -> UNNotificationPresentationOptions {  // swiftlint:disable:this async_without_await
         [.banner, .sound, .badge]
     }
 }

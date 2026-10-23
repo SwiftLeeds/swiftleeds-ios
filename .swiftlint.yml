@@ -1,4 +1,4 @@
-# Two kinds of entry, and the difference matters when one is questioned.
+# Three kinds of entry, and the difference matters when one is questioned.
 #
 # The first group traces to a convention recorded in the project's Swift rules,
 # quoted above each entry. Where a SwiftLint default contradicts one of those
@@ -9,11 +9,16 @@
 # when it was added, so it costs no fixes and only holds new code. A rule that
 # would need a sweep does not belong there: it needs a decision first.
 #
+# The third group, "rules that needed a sweep", holds rules that were decided
+# on and then fixed at every site, or suppressed inline, with the reason, at a
+# site left as it is. The config line and the fixes land in one commit per
+# rule, so `git log -S<rule>` shows what each rule changed.
+#
 # Tuned against the SwiftLint version in .swiftlint-version, which CI installs
 # and the pre-commit hook checks against. Rule defaults change between versions,
 # so re-run the suite after a bump.
 
-# The violations left after the mechanical fixes, 37 as of 2026-10-08, down from
+# The violations left after the mechanical fixes, 36 as of 2026-10-15, down from
 # 78. They stay recorded rather than fixed, so linting starts green and new code
 # is held to the full rule set. Read the current list with
 # `swiftlint baseline report .swiftlint.baseline --reporter summary`.
@@ -22,14 +27,12 @@
 baseline: .swiftlint.baseline
 
 included:
-  - Packages/*/Package.swift
-  - Packages/*/Sources
-  - Packages/*/Tests
+  - Packages/*/*/Package.swift
+  - Packages/*/*/Sources
+  - Packages/*/*/Tests
   - SwiftLeeds
   - SwiftLeedsAppClip
   - SwiftLeedsPackage
-  - SwiftLeedsTests
-  - SwiftLeedsUITests
   - SwiftLeedsWidget
 
 # Each package resolves its dependencies into its own .build directory, so the
@@ -59,8 +62,8 @@ opt_in_rules:
   # "A `Task` handles what it throws."
   - unhandled_throwing_task
 
-  # Rules nothing here breaks. Each found zero violations when it was added on
-  # 2026-09-24, so none of them changed a line of source.
+  # Rules nothing here breaks. Each found zero violations when it was added, so
+  # none of them changed a line of source.
 
   # "Favour functional style. Treat `Optional` and `Result` as functors: `map`,
   # `flatMap`, `compactMap`." These name the call that says what you mean.
@@ -80,6 +83,7 @@ opt_in_rules:
   # no meaning.
   - direct_return
   - empty_collection_literal
+  - empty_string
   - explicit_init
   - prefer_self_type_over_type_of_self
   - prefer_zero_over_explicit_init
@@ -125,11 +129,126 @@ opt_in_rules:
   - raw_value_for_camel_cased_codable_enum
   - static_operator
 
+  # Rules that needed a sweep. Each had 1 to 26 violations when it was turned
+  # on, 2026-10-15 to 2026-10-21.
+
+  # "Code reads like clean English." Each of these takes the shorter form Swift
+  # offers: a comma for `&&`, `if let x` for `if let x = x`, a return after the
+  # `if` for an `else`, `self` for a second name bound to it, and no `self.` in
+  # a closure where Swift lets you leave it out.
+  - prefer_condition_list
+  - shorthand_optional_binding
+  - superfluous_else
+  - self_binding
+  - redundant_self
+
+  # A number of four or more digits takes `_` between groups, so `3_200` is
+  # read at a glance and `1000` is never mistaken for `10000`.
+  - number_separator
+
+  # `reduce(into:)` mutates one accumulator in place, where `reduce` builds a
+  # new String or Array on every step and throws the previous one away.
+  - reduce_into
+
+  # `isEmpty` names the question, and on a collection that is not random access
+  # `count` walks every element to answer it.
+  - empty_count
+
+  # An `async` function with no `await` never suspends, yet every caller must
+  # still `await` it. Its one hit is suppressed inline, with the reason.
+  - async_without_await
+
+  # A closure the body only calls directly needs no `@escaping`. Leaving it off
+  # tells the caller the closure cannot run after the function returns.
+  - unneeded_escaping
+
+  # `onTapGesture` alone does not mark a view as a button, so VoiceOver, Switch
+  # Control and Voice Control do not offer it as one. Use a `Button`.
+  - accessibility_trait_for_button
+
+  # An enum case or static member named `none` reads as `Optional.none`, so a
+  # reader of `x ?? .none` cannot tell which is meant. Name it for what it is.
+  - discouraged_none_name
+
+  # The formatter neither adds nor removes a blank line around a `let` or
+  # `var`, so this rule can own it without the two tools disagreeing.
+  - let_var_whitespace
+
+  # "Favour functional style." A closure that only reads a property is
+  # written as the key path to it: `map(\.name)`, not `map { $0.name }`.
+  - prefer_key_path
+
+  # A function or closure marked `throws` or `rethrows` that cannot throw tells
+  # a reader it can fail. Every hit when it was turned on was in a test.
+  - unneeded_throws_rethrows
+
+  # Two sides of a comparison written the same way usually means one side was
+  # copied and not changed. Every hit when it was turned on was a test
+  # comparing two values built the same way.
+  - identical_operands
+
+  # A long closure, in practice always a view builder here, hides its
+  # structure. Split it into named views. The limit is set below.
+  - closure_body_length
+
+  # "One type per file, named after the type." A file of extensions is named
+  # `Type+Topic.swift`, as `Log+Transform.swift` is. The exceptions are below.
+  - file_name
+
+  # An image that carries meaning gets a label; a decorative one, or one that
+  # repeats the text beside it, is hidden from VoiceOver. The rule cannot see
+  # a parent in another view or a custom builder, so those images are hidden.
+  - accessibility_label_for_image
+
+# Analyzer rules read the compiler log, so they run only through
+# `swiftlint analyze`, never `swiftlint lint`.
+analyzer_rules:
+  # An import the file does not use, or one it uses only through another module.
+  - unused_import
+  # A captured variable that changes after the closure is made.
+  - capture_variable
+
+unused_import:
+  # Every module a file uses is imported by name, so a file never relies on
+  # another import to bring one in.
+  require_explicit_imports: true
+  # Each entry names a module and the modules it brings in on its own. A file may
+  # use those without importing them, because nobody writes `import Darwin` to
+  # call a Foundation API.
+  allowed_transitive_imports:
+    - module: Foundation
+      allowed_transitive_imports:
+        - CoreFoundation
+        - ObjectiveC
+        - Darwin
+    - module: SwiftUI
+      allowed_transitive_imports:
+        - CoreFoundation
+        - CoreGraphics
+        - DeveloperToolsSupport
+    - module: CoreGraphics
+      allowed_transitive_imports:
+        - CoreFoundation
+    - module: CoreImage
+      allowed_transitive_imports:
+        - CoreFoundation
+        - CoreGraphics
+    # CoreLocation re-exports the private module that holds `CLLocationCoordinate2D`.
+    - module: CoreLocation
+      allowed_transitive_imports:
+        - _LocationEssentials
+    # `swift-dependencies` re-exports these two with `@_exported`.
+    - module: Dependencies
+      allowed_transitive_imports:
+        - IssueReporting
+        - ConcurrencyExtras
+
 disabled_rules:
-  # `swift format` owns layout, so a SwiftLint rule about where a character goes
-  # is either a contradiction or a duplicate. Both are off. Several below are
-  # opt-in rules that were never enabled; they are listed so nobody turns them on
-  # and re-derives why they do not work here.
+  # `swift format` owns layout. A SwiftLint rule about where a character goes is
+  # off when the formatter contradicts it or duplicates it. A rule the formatter
+  # has no opinion on, such as `let_var_whitespace`, can be on. Several below
+  # are opt-in rules that were never enabled; they are listed so nobody turns
+  # them on and re-derives why they do not work here.
   #
   # Contradictions. The formatter writes what the rule forbids, so fixing the
   # violations by hand would be undone by the next format run.
@@ -144,8 +263,11 @@ disabled_rules:
   # multi-line condition.
   # `extension_access_modifier`: it wants the access level hoisted onto the
   # extension declaration, and the formatter moves it onto each member instead.
-  # The three `multiline_*` rules: each wants one argument per line, and
+  # `multiline_arguments`, `multiline_arguments_brackets` and
+  # `multiline_call_arguments`: each wants one argument per line, and
   # `.swift-format` keeps the formatter's fill wrapping.
+  # `multiline_function_chains`: when a chain is too long, the formatter wraps
+  # one call's arguments, so the chain carries on after the closing bracket.
   - trailing_comma
   - sorted_imports
   - opening_brace
@@ -153,21 +275,67 @@ disabled_rules:
   - multiline_arguments
   - multiline_arguments_brackets
   - multiline_call_arguments
+  - multiline_function_chains
   #
-  # Duplicates. The formatter already enforces these and its own check gates
-  # every pull request, so a second gate could only ever disagree with the first.
+  # Duplicates. The formatter already enforces these, and its own check gates
+  # every pull request, so a second gate on the same lines adds nothing.
   #
   # `indentation_width`: the pretty-printer owns indentation. This rule also
   # reads indentation inside `"""` literals, which here is JSON fixture data.
   # `no_extension_access_modifier`: the formatter's
   # `NoAccessLevelOnExtensionDeclaration` is on and does the same thing.
+  # `vertical_whitespace_opening_braces` and
+  # `vertical_whitespace_closing_braces`: the formatter's
+  # `NoEmptyLinesOpeningClosingBraces` removes a blank line after `{` and before
+  # `}`. These rules also check `(` and `[`, which nothing else checks. That is
+  # a choice: no kind of line has two owners.
   - indentation_width
   - no_extension_access_modifier
+  - vertical_whitespace_opening_braces
+  - vertical_whitespace_closing_braces
+  #
+  # Not layout. Documentation is a house rule that review checks, at every
+  # access level. `missing_docs` cannot check it. By default it checks only
+  # `open` and `public` declarations, and it skips any type whose declaration
+  # names a protocol, superclass or raw type, with all of that type's members.
+  # With every access level listed and `excludes_inherited_types: false`, it
+  # flags every protocol witness, such as `body`. The house rule exempts a
+  # witness that adds nothing, which the rule would flag.
+  - missing_docs
 
 # `.swift-format` sets `lineLength` to this number. Pin it here rather than
 # inheriting SwiftLint's default, so a version bump cannot move one tool's limit
 # without the other. `--strict` is what makes the warning threshold a gate.
 line_length: 120
+
+# "Stop short of point-free cleverness." An identity closure such as
+# `compactMap { $0 }` stays a closure; `\.self` would be the clever form.
+prefer_key_path:
+  ignore_identity_closures: true
+
+# The default of 30 lines flagged 19 closures in 11 files, all view builders.
+# At 60, the three over the limit were split into named view properties.
+# `--strict` makes the warning a gate, so no error level is set.
+closure_body_length:
+  warning: 60
+
+# Setting `excluded` replaces the default list, `LinuxMain.swift` and
+# `main.swift`; neither exists here.
+# - `LogCategories.swift` holds each module's `extension LogCategory`, and
+#   the name is the one every module uses.
+# - `RequiredSwiftFileForSPM.swift` gives a resource-only target a Swift
+#   source. Its name says that role, not the placeholder view inside it.
+# - Each `Assert...Snapshots.swift` test helper is named for the assertion it
+#   adds, not for a type.
+# - ScheduleUI's `ScheduleFixtures.swift` holds fixtures for six types, from
+#   `Speaker` to `Schedule.Slot`, so no one type names it.
+file_name:
+  excluded:
+    - LogCategories.swift
+    - RequiredSwiftFileForSPM.swift
+  excluded_paths:
+    - "/Tests/.*/Assert[A-Za-z]*Snapshots[.]swift$"
+    - "/ScheduleUISnapshotTests/ScheduleFixtures[.]swift$"
 
 # A view model nests under its view, and its own `Phase` and `Alert` enums nest
 # under that. The default of one level rejects the house pattern.
@@ -190,3 +358,20 @@ identifier_name:
     # HTTP spells these, and we do not get to rename them.
     - ok
     - te
+
+# "Never compare a `Bool` with `== true` or `== false`. Write `x` or `!x`."
+# SwiftLint has no built-in rule for this, so a regex holds it. Its fixes landed
+# before it, one commit per package: `git log --grep "test a Bool directly"`.
+custom_rules:
+  bool_literal_comparison:
+    name: "Bool Literal Comparison"
+    regex: '(==|!=)\s*(true|false)\b|\b(true|false)\s*(==|!=)'
+    excluded_match_kinds:
+      - comment
+      - comment.mark
+      - comment.url
+      - doccomment
+      - doccomment.field
+      - string
+    message: "Test a Bool directly: write `x` or `!x`. On an optional chain, unwrap first: `if let text, !text.isEmpty`."
+    severity: warning

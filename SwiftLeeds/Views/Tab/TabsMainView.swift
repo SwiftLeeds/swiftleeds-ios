@@ -1,7 +1,6 @@
 import AboutUI
 import AuthenticationUI
 import LocalUI
-import ReadabilityModifier
 import ScheduleUI
 import SettingsUI
 import SponsorsUI

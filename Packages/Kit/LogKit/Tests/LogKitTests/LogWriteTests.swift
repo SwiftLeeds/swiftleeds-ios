@@ -1,0 +1,75 @@
+import LogKit
+import LogKitTestSupport
+import Testing
+
+@Suite struct LogWriteTests {
+    @Test func whenLevelIsBelowMinimum_shouldNotWrite() {
+        let recorder = LogRecorder()
+        let sut = recorder.log.atLeast(.error)
+
+        sut(.debug, "push", "ignored")
+
+        #expect(recorder.events.isEmpty)
+    }
+
+    @Test func whenCategoryIsNotListed_shouldNotWrite() {
+        let recorder = LogRecorder()
+        let sut = recorder.log.only(["push"])
+
+        sut(.error, "theme", "ignored")
+
+        #expect(recorder.events.isEmpty)
+    }
+
+    @Test func whenConsentIsWithheld_shouldNotWrite() {
+        let recorder = LogRecorder()
+        let sut = recorder.log.consented { false }
+
+        sut(.error, "push", "ignored")
+
+        #expect(recorder.events.isEmpty)
+    }
+
+    @Test func whenCombined_shouldWriteToEveryDestinationOnce() {
+        let first = LogRecorder()
+        let second = LogRecorder()
+        let sut = Log.combine([first.log, second.log])
+
+        sut(.error, "push", "kept")
+
+        #expect(first.events.count == 1)
+        #expect(second.events.count == 1)
+    }
+
+    @Test func whenOneOfManyDestinationsAccepts_shouldStillWrite() {
+        let quiet = LogRecorder()
+        let loud = LogRecorder()
+        let sut = Log.combine([quiet.log.atLeast(.critical), loud.log.atLeast(.debug)])
+
+        sut(.info, "push", "partial")
+
+        #expect(quiet.events.isEmpty)
+        #expect(loud.events.map(\.message) == ["partial"])
+    }
+
+    @Test func whenGivenSeveralFields_shouldKeepThemInWrittenOrder() {
+        let recorder = LogRecorder()
+
+        recorder.log(
+            .error,
+            "push",
+            "\(1, name: "first", privacy: .open) \("x", name: "second", privacy: .hashed) \(true, name: "third", privacy: .secret)",
+        )
+
+        #expect(recorder.events.first?.fields.map { String($0.name) } == ["first", "second", "third"])
+    }
+
+    @Test func whenRecordingEvent_shouldCaptureCallSite() throws {
+        let recorder = LogRecorder()
+
+        recorder.log(.info, "push", "located")
+
+        let event = try #require(recorder.events.first)
+        #expect(event.source.file.hasSuffix("LogWriteTests.swift"))
+    }
+}

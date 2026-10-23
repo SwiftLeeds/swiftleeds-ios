@@ -1,0 +1,73 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git --no-pager log *)",
+      "Bash(git --no-pager diff *)",
+      "Bash(git --no-pager show *)",
+      "Bash(git --no-pager status *)",
+      "Bash(git --no-pager rev-parse *)",
+      "Bash(git --no-pager ls-files *)",
+      "Bash(.claude/scripts/package-test.sh *)",
+      "Bash(shasum *)",
+      "Bash(rocketsim *)",
+      "Bash(python3 .claude/scripts/xcode-device.py *)",
+      "Bash(.claude/scripts/link-skills.sh)",
+      "Bash(.claude/scripts/link-skills.sh *)",
+      "Bash(.github/scripts/analyze.sh *)",
+      "Bash(.github/scripts/format.sh *)",
+      "Bash(.github/scripts/install-swiftlint.sh *)",
+      "Bash(.github/scripts/install-swiftlint.sh)",
+      "Bash(.github/scripts/format.sh)",
+      "Bash(.github/scripts/install-recorder.sh *)",
+      "Bash(.github/scripts/install-recorder.sh)",
+      "Bash(.github/scripts/upload-screenshots.sh *)",
+      "Bash(.github/scripts/upload-screenshots.sh)",
+      "Bash(.github/scripts/launch-app-clip.sh *)",
+      "Bash(.github/scripts/memory-pressure.sh *)",
+      "Bash(python3 .github/scripts/check-app-groups.py *)",
+      "Bash(python3 .github/scripts/check-app-groups.py)",
+      "Bash(python3 .github/scripts/check-display-name.py *)",
+      "Bash(python3 .github/scripts/check-display-name.py)",
+      "Bash(python3 .github/scripts/check-snapshot-scheme.py *)",
+      "Bash(python3 .github/scripts/check-snapshot-scheme.py)",
+      "Bash(python3 .github/scripts/list-snapshot-targets.py *)",
+      "Bash(python3 .github/scripts/list-snapshot-targets.py)",
+      "Bash(python3 .github/scripts/check-dependency-matrix.py *)",
+      "Bash(python3 .github/scripts/check-dependency-matrix.py)",
+      "Bash(swift format lint *)",
+      "Bash(swift package resolve --package-path *)"
+    ],
+    "ask": [
+      "Edit(/.claude/scripts/**)",
+      "Edit(/.claude/hooks/**)",
+      "Edit(/.github/scripts/**)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PROJECT_DIR}/.claude/hooks/block-swift-without-scratch-path.py",
+            "args": [],
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PROJECT_DIR}/.claude/hooks/report-stray-build-output.sh",
+            "args": [],
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}

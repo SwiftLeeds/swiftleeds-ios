@@ -1,10 +1,10 @@
+import Foundation
 import ScheduleFeature
-import SharedAssets
 import SwiftUI
+import UIAssets
 import WidgetKit
 
 struct SwiftLeedsMediumWidgetView: View {
-
     // MARK: - Pivate Properties
 
     private let slot: Schedule.Slot

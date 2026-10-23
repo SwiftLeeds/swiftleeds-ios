@@ -5,32 +5,23 @@ import PackageDescription
 let package = Package(
     name: "SwiftLeedsPackage",
     platforms: [
-        .iOS(.v18),
-        .macOS(.v15),
+        .iOS(.v26),
+        .macOS(.v26),
     ],
     products: [
         .library(
-            name: "DesignKit",
+            name: "UIAssets",
             targets: [
-                "DesignKit"
+                "UIAssets"
             ],
-        ),
-        .library(
-            name: "SharedAssets",
-            targets: [
-                "SharedAssets"
-            ],
-        ),
+        )
     ],
     dependencies: [
         .package(url: "https://github.com/shadone/SwiftGenPlugin", branch: "6.6.2+deriveddatafix")
     ],
     targets: [
         .target(
-            name: "DesignKit"
-        ),
-        .target(
-            name: "SharedAssets",
+            name: "UIAssets",
             // SwiftGen's generated code reads Bundle.module, which SwiftPM
             // synthesises only for a target that declares resources.
             resources: [
@@ -39,7 +30,7 @@ let package = Package(
             plugins: [
                 .plugin(name: "SwiftGenPlugin", package: "SwiftGenPlugin")
             ],
-        ),
+        )
     ],
     // Set to v5 to avoid strict concurrency checking in pre swift 6 code
     swiftLanguageModes: [
