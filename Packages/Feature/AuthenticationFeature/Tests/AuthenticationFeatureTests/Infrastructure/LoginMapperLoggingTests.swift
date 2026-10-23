@@ -20,10 +20,16 @@ import Testing
     }
 
     /// A filter on the network category must find every line the mapper writes.
-    @Test func whenCredentialsAreRejected_shouldLogUnderAuthNetworkCategory() throws {
-        let event = try #require(try logEvent(statusCode: 401))
+    @Test func whenAnyOutcomeIsLogged_shouldLogUnderAuthNetworkCategory() throws {
+        let events = try [
+            acceptedEvent(),
+            logEvent(statusCode: 401),
+            logEvent(statusCode: 503),
+            logEvent(forBody: Data("   ".utf8)),
+        ].compactMap(\.self)
 
-        #expect(event.category == "authNetwork")
+        #expect(events.count == 4)
+        #expect(events.allSatisfy { $0.category == "authNetwork" })
     }
 
     @Test func whenCredentialsAreRejected_shouldLogAtNoticeRatherThanError() throws {

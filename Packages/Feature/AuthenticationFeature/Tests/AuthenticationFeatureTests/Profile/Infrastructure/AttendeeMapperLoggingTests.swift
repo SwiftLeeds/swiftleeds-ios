@@ -29,10 +29,17 @@ import Testing
     }
 
     /// A filter on the network category must find every line the mapper writes.
-    @Test func whenSessionIsNotAuthorized_shouldLogUnderProfileNetworkCategory() throws {
-        let event = try #require(try logEvent(statusCode: 401))
+    @Test func whenAnyOutcomeIsLogged_shouldLogUnderProfileNetworkCategory() throws {
+        let events = try [
+            acceptedEvent(),
+            logEvent(forBody: attendeeJSON(reference: "!!!")),
+            logEvent(forBody: Data("not json".utf8)),
+            logEvent(statusCode: 401),
+            logEvent(statusCode: 503),
+        ].compactMap(\.self)
 
-        #expect(event.category == "profileNetwork")
+        #expect(events.count == 5)
+        #expect(events.allSatisfy { $0.category == "profileNetwork" })
     }
 
     @Test func whenSessionIsNotAuthorised_shouldLogAtNoticeRatherThanError() throws {

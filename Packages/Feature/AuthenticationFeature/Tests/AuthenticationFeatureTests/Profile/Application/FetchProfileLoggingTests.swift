@@ -88,10 +88,14 @@ import Testing
     }
 
     /// A filter on the use-case category must find every line the profile decorator writes.
-    @Test func whenFetchSucceeds_shouldLogUnderProfileCategory() async throws {
-        let event = try #require(try await successEvent())
+    @Test func whenAnyOutcomeIsLogged_shouldLogUnderProfileCategory() async throws {
+        let events = try await [
+            successEvent(),
+            logEvent(whenRepositoryThrows: .unauthorized),
+        ].compactMap(\.self)
 
-        #expect(event.category == "profile")
+        #expect(events.count == 2)
+        #expect(events.allSatisfy { $0.category == "profile" })
     }
 
     @Test func whenFetchSucceeds_shouldLogNoAttendeeDetail() async throws {

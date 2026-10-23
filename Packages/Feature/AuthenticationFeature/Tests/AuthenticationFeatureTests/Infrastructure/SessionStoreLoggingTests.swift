@@ -85,12 +85,23 @@ import Testing
     }
 
     /// A filter on the storage category must find every line the session store writes.
-    @Test func whenSessionIsStored_shouldLogUnderAuthStorageCategory() async throws {
+    @Test func whenAnyOutcomeIsLogged_shouldLogUnderAuthStorageCategory() async throws {
         let session = Session(token: try SessionToken("jwt-abc-123"))
+        let accepted = try await acceptedEvents {
+            try await $0.establish(session)
+            _ = try await $0.current()
+            try await $0.clear()
+        }
+        let refused = [
+            await logEvent { try await $0.establish(session) },
+            await logEvent { try await $0.clear() },
+            await logEvent { _ = try await $0.current() },
+        ].compactMap(\.self)
 
-        let event = try #require(try await acceptedEvents { try await $0.establish(session) }.first)
+        let events = accepted + refused
 
-        #expect(event.category == "authStorage")
+        #expect(events.count == 6)
+        #expect(events.allSatisfy { $0.category == "authStorage" })
     }
 
     @Test func whenSessionIsCleared_shouldLogAtInfoLevel() async throws {

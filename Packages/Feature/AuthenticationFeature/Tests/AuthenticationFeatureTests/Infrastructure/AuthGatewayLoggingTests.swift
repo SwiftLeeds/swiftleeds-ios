@@ -18,12 +18,18 @@ import Testing
     }
 
     /// A filter on the network category must find every line the gateway writes.
-    @Test func whenRequestCannotBeEncoded_shouldLogUnderAuthNetworkCategory() async throws {
-        let failure = LoginRequestError.couldNotEncodeRequest(StubError.couldNotBuildResponse)
+    @Test func whenAnyOutcomeIsLogged_shouldLogUnderAuthNetworkCategory() async {
+        let events = [
+            await logEvent(
+                forFailure: LoginRequestError.couldNotEncodeRequest(StubError.couldNotBuildResponse)
+            ),
+            await logEvent(
+                forFailure: LoginRequestError.transportFailed(StubError.couldNotBuildResponse)
+            ),
+        ].compactMap(\.self)
 
-        let event = try #require(await logEvent(forFailure: failure))
-
-        #expect(event.category == "authNetwork")
+        #expect(events.count == 1)
+        #expect(events.allSatisfy { $0.category == "authNetwork" })
     }
 
     /// Transport failures are logged once, by the decorator on `HTTPClient`.

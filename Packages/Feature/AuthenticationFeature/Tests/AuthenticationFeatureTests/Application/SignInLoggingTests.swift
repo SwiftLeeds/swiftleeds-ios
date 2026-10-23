@@ -71,10 +71,15 @@ import Testing
     }
 
     /// A filter on the use-case category must find every line the sign-in decorator writes.
-    @Test func whenSignInSucceeds_shouldLogUnderAuthCategory() async throws {
-        let event = try #require(try await successEvent())
+    @Test func whenAnyOutcomeIsLogged_shouldLogUnderAuthCategory() async throws {
+        let events = try await [
+            successEvent(),
+            logEvent(whenGatewayThrows: .invalidCredentials),
+            storeFailureEvent(),
+        ].compactMap(\.self)
 
-        #expect(event.category == "auth")
+        #expect(events.count == 3)
+        #expect(events.allSatisfy { $0.category == "auth" })
     }
 
     @Test func whenSignInSucceeds_shouldLogNoCredential() async throws {

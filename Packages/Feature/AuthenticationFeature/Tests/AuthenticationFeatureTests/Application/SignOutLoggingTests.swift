@@ -47,10 +47,14 @@ import Testing
     }
 
     /// A filter on the use-case category must find every line the sign-out decorator writes.
-    @Test func whenSignOutSucceeds_shouldLogUnderAuthCategory() async throws {
-        let event = try #require(await successEvent())
+    @Test func whenAnyOutcomeIsLogged_shouldLogUnderAuthCategory() async {
+        let events = [
+            await successEvent(),
+            await failureEvent(),
+        ].compactMap(\.self)
 
-        #expect(event.category == "auth")
+        #expect(events.count == 2)
+        #expect(events.allSatisfy { $0.category == "auth" })
     }
 
     @Test func whenOutcomesDiffer_shouldLogDifferentMessages() async throws {
