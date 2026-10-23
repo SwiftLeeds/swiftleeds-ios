@@ -61,12 +61,14 @@ extension ScheduleMapper {
     }()
 }
 
-private enum ScheduleMapperKey: DependencyKey {
-    static var liveValue: ScheduleMapper { .live }
-    static var testValue: ScheduleMapper { liveValue }
-}
-
 extension DependencyValues {
+    /// The key that stores the schedule mapper among the dependency values.
+    private enum ScheduleMapperKey: DependencyKey {
+        static var liveValue: ScheduleMapper { .live }
+        /// The live mapper, which tests use as it is.
+        static var testValue: ScheduleMapper { liveValue }
+    }
+
     var scheduleMapper: ScheduleMapper {
         get { self[ScheduleMapperKey.self] }
         set { self[ScheduleMapperKey.self] = newValue }
