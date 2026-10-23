@@ -21,9 +21,7 @@ public struct LocalView: View {
     }
 }
 
-struct LocalView_Previews: PreviewProvider {
-    static var previews: some View {
-        LocalView()
-    }
+#Preview {
+    LocalView()
 }
 #endif

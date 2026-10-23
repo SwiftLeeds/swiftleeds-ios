@@ -121,13 +121,11 @@ package struct SpeakerView: View {
     }
 }
 
-struct SpeakerView_Previews: PreviewProvider {
-    static var previews: some View {
-        SpeakerView(presentation: .donnyWalls, showSlido: true)
-            .previewDisplayName("Donny Wals")
+#Preview("Solo talk") {
+    SpeakerView(presentation: .soloTalk, showSlido: true)
+}
 
-        SpeakerView(presentation: .skyBet, showSlido: true)
-            .previewDisplayName("Sky Bet")
-    }
+#Preview("Duo talk") {
+    SpeakerView(presentation: .duoTalk, showSlido: true)
 }
 #endif

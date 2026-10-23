@@ -88,12 +88,14 @@ extension URL {
     }
 }
 
-private enum TeamMapperKey: DependencyKey {
-    static var liveValue: TeamMapper { .live }
-    static var testValue: TeamMapper { liveValue }
-}
-
 extension DependencyValues {
+    /// The key that stores the team mapper among the dependency values.
+    private enum TeamMapperKey: DependencyKey {
+        static var liveValue: TeamMapper { .live }
+        /// The live mapper, which tests use as it is.
+        static var testValue: TeamMapper { liveValue }
+    }
+
     package var teamMapper: TeamMapper {
         get { self[TeamMapperKey.self] }
         set { self[TeamMapperKey.self] = newValue }

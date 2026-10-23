@@ -15,10 +15,8 @@ public struct AboutView: View {
     }
 }
 
-struct AboutView_Previews: PreviewProvider {
-    static var previews: some View {
-        AboutView()
-            .preferredColorScheme(.dark)
-    }
+#Preview {
+    AboutView()
+        .preferredColorScheme(.dark)
 }
 #endif

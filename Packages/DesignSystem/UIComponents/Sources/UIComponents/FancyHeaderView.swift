@@ -121,41 +121,41 @@ public struct FancyHeaderView: View {
     }
 }
 
-struct FancyHeaderView_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            VStack {
-                Text(verbatim: "Local Asset")
-                FancyHeaderView(
-                    title: "Some Long Text here",
-                    foregroundImage: Image.swiftLeedsIcon,
-                )
-                Text(verbatim: "Remote Data")
-                FancyHeaderView(
-                    title: "Swift Taylor",
-                    foregroundImageURLs: remoteImageURLs,
-                )
-            }
-            ScrollView {
-                Text(verbatim: "Local Asset")
-                VStack {
-                    FancyHeaderView(
-                        title: "Kannan Prasad",
-                        foregroundImage: Image.swiftLeedsIcon,
-                    )
-                }
-                Text(verbatim: "Remote Data")
-                FancyHeaderView(
-                    title: "Swift Taylor",
-                    foregroundImageURLs: remoteImageURLs,
-                )
-            }
-        }
+#if DEBUG
+#Preview("Stacked") {
+    VStack {
+        Text(verbatim: "Local Asset")
+        FancyHeaderView(
+            title: "Some Long Text here",
+            foregroundImage: Image.swiftLeedsIcon,
+        )
+        Text(verbatim: "Remote Data")
+        FancyHeaderView(
+            title: "Speaker Two",
+            foregroundImageURLs: remoteImageURLs,
+        )
     }
-
-    private static let remoteImageURLs = [
-        URL(
-            string: "https://cdn-az.allevents.in/events5/banners/458482c4fc7489448aa3d77f6e2cd5d0553"
-                + "fa5edd7178dbf18cf986d2172eaf2-rimg-w1200-h675-gmir.jpg?v=1655230338")
-    ].compactMap { $0 }
 }
+
+#Preview("Scrolling") {
+    ScrollView {
+        Text(verbatim: "Local Asset")
+        VStack {
+            FancyHeaderView(
+                title: "Speaker One",
+                foregroundImage: Image.swiftLeedsIcon,
+            )
+        }
+        Text(verbatim: "Remote Data")
+        FancyHeaderView(
+            title: "Speaker Two",
+            foregroundImageURLs: remoteImageURLs,
+        )
+    }
+}
+
+/// The remote photo addresses the previews load.
+private let remoteImageURLs = [
+    URL(string: "https://images.example.com/venue-banner.jpg")
+].compactMap { $0 }
+#endif

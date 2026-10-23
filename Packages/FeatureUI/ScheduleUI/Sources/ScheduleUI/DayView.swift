@@ -48,9 +48,7 @@ package struct DayView: View {
     }
 }
 
-struct DayView_Previews: PreviewProvider {
-    static var previews: some View {
-        DayView(slots: [], showSlido: true)
-    }
+#Preview {
+    DayView(slots: [], showSlido: true)
 }
 #endif

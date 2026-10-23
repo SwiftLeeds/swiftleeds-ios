@@ -56,8 +56,6 @@ package struct ActivityView: View {
     }
 }
 
-struct ActivityView_Previews: PreviewProvider {
-    static var previews: some View {
-        ActivityView(activity: .lunch)
-    }
+#Preview {
+    ActivityView(activity: .lunch)
 }
