@@ -44,10 +44,14 @@ log=$(mktemp -t package-test)
 trap 'rm -f "$log"' EXIT
 
 # --package-path rather than cd, so the caller's working directory is untouched.
+#
+# The import check judges only files that recompile, so an up-to-date build
+# passes unchecked.
 status=0
 swift test \
     --package-path "$package_path" \
     --scratch-path "$repo/.build-shared" \
+    --explicit-target-dependency-import-check error \
     "$@" >"$log" 2>&1 || status=$?
 
 if [ "$status" -eq 0 ]; then
