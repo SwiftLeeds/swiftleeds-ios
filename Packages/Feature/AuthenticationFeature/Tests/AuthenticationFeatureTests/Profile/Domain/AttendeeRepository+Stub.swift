@@ -1,4 +1,4 @@
-import AuthenticationFeature
+import AuthenticationDomain
 
 extension AttendeeRepository {
     static func returning(_ attendee: Attendee) -> AttendeeRepository {

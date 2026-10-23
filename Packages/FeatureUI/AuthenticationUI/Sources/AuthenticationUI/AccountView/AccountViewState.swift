@@ -1,4 +1,4 @@
-import AuthenticationFeature
+import AuthenticationDomain
 
 package enum AccountViewState: Equatable {
     case loading

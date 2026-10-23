@@ -1,4 +1,5 @@
-import AuthenticationFeature
+import AuthenticationApplication
+import AuthenticationDomain
 import Dependencies
 import Foundation
 import Testing

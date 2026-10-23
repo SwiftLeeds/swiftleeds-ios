@@ -20,7 +20,8 @@ let package = Package(
         .target(
             name: "AuthenticationUI",
             dependencies: [
-                "AuthenticationFeature",
+                .product(name: "AuthenticationApplication", package: "AuthenticationFeature"),
+                .product(name: "AuthenticationDomain", package: "AuthenticationFeature"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
             ],
         ),
@@ -28,6 +29,8 @@ let package = Package(
             name: "AuthenticationUITests",
             dependencies: [
                 "AuthenticationUI",
+                .product(name: "AuthenticationApplication", package: "AuthenticationFeature"),
+                .product(name: "AuthenticationDomain", package: "AuthenticationFeature"),
                 .product(name: "AuthenticationFeatureTestSupport", package: "AuthenticationFeature"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
             ],
@@ -39,6 +42,7 @@ let package = Package(
             name: "AuthenticationUISnapshotTests",
             dependencies: [
                 "AuthenticationUI",
+                .product(name: "AuthenticationDomain", package: "AuthenticationFeature"),
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
             ],
         ),

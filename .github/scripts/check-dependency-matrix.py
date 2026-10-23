@@ -77,7 +77,7 @@ BASELINE = {
 # Set 5% below the count of local, third-party and plugin edges on a clean run
 # (rounded down). A parse that quietly finds nothing reads as clean, so a low
 # count must fail.
-MIN_EDGES = 50
+MIN_EDGES = 54
 
 log_folder = Path(os.environ.get("RUNNER_TEMP") or tempfile.gettempdir())
 log_path = log_folder / "dependency-matrix.log"

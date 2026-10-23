@@ -1,4 +1,4 @@
-import AuthenticationFeature
+import AuthenticationDomain
 
 extension SignedInProof {
     /// A proof that its holder is signed in, for use in a test.

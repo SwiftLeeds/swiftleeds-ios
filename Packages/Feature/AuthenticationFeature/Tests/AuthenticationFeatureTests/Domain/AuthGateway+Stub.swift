@@ -1,4 +1,4 @@
-import AuthenticationFeature
+import AuthenticationDomain
 
 extension AuthGateway {
     static func returning(_ token: SessionToken) -> AuthGateway {

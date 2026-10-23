@@ -39,7 +39,8 @@
 		802D63D966D0A9337F66041C /* KotlinLeedsAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 75075F01455C8AD72C71783C /* KotlinLeedsAssets.xcassets */; };
 		920187EBD71395160F1059C1 /* KotlinLeedsColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B3FFD994DBE3F62216150F8 /* KotlinLeedsColors.xcassets */; };
 		A11CE57000000000000000D1 /* AuthenticationUI in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C1 /* AuthenticationUI */; };
-		A11CE57000000000000000D2 /* AuthenticationFeature in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C2 /* AuthenticationFeature */; };
+		A11CE57000000000000000D2 /* AuthenticationApplication in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C2 /* AuthenticationApplication */; };
+		A11CE570000000000000F6D1 /* AuthenticationInfrastructure in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE570000000000000F6C1 /* AuthenticationInfrastructure */; };
 		A11CE57000000000000000D3 /* SecureStorageKit in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C3 /* SecureStorageKit */; };
 		A11CE57000000000000000D4 /* SecureStorageKitKeychain in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C4 /* SecureStorageKitKeychain */; };
 		A11CE57000000000000000D5 /* LogKit in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C5 /* LogKit */; };
@@ -229,7 +230,8 @@
 				74F5EF8C2A4B4352008D9413 /* ReadabilityModifier in Frameworks */,
 				AE5EFD73289DC1D000464FE1 /* CachedAsyncImage in Frameworks */,
 				A11CE57000000000000000D1 /* AuthenticationUI in Frameworks */,
-				A11CE57000000000000000D2 /* AuthenticationFeature in Frameworks */,
+				A11CE57000000000000000D2 /* AuthenticationApplication in Frameworks */,
+				A11CE570000000000000F6D1 /* AuthenticationInfrastructure in Frameworks */,
 				A11CE57000000000000000D5 /* LogKit in Frameworks */,
 				A11CE57000000000000000D6 /* LogKitUnified in Frameworks */,
 				A11CE57000000000000000D7 /* NetworkKit in Frameworks */,
@@ -550,7 +552,8 @@
 				7B31C8F02ED0A7BF00FEEDF7 /* SettingsUI */,
 				7B8C3ECE2EE4A9F70089C6CF /* UIAssets */,
 				A11CE57000000000000000C1 /* AuthenticationUI */,
-				A11CE57000000000000000C2 /* AuthenticationFeature */,
+				A11CE57000000000000000C2 /* AuthenticationApplication */,
+				A11CE570000000000000F6C1 /* AuthenticationInfrastructure */,
 				A11CE57000000000000000C5 /* LogKit */,
 				A11CE57000000000000000C6 /* LogKitUnified */,
 				A11CE57000000000000000C7 /* NetworkKit */,
@@ -1481,9 +1484,13 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = AuthenticationUI;
 		};
-		A11CE57000000000000000C2 /* AuthenticationFeature */ = {
+		A11CE57000000000000000C2 /* AuthenticationApplication */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = AuthenticationFeature;
+			productName = AuthenticationApplication;
+		};
+		A11CE570000000000000F6C1 /* AuthenticationInfrastructure */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AuthenticationInfrastructure;
 		};
 		A11CE57000000000000000C3 /* SecureStorageKit */ = {
 			isa = XCSwiftPackageProductDependency;

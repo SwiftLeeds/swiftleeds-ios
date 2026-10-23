@@ -1,4 +1,4 @@
-import AuthenticationFeature
+import AuthenticationDomain
 import SwiftUI
 
 #if os(iOS)
