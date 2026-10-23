@@ -4,9 +4,6 @@ import LogKit
 
 extension SignIn {
     /// Records the outcome the user got, then rethrows.
-    ///
-    /// A failure's cause already reached the log at the seam that knew it: the transport, the
-    /// mapper, or the session store. This line says what that meant for the person signing in.
     public func logging() -> SignIn {
         SignIn { credential in
             // Resolved per call, so a test overriding \.log is honoured. Resolving it while

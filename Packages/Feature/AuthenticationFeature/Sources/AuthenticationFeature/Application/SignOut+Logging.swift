@@ -4,8 +4,8 @@ import LogKit
 extension SignOut {
     /// Records the outcome the user got, then rethrows.
     ///
-    /// The store names the mechanism. This names what it meant: either the session is gone, or the
-    /// user believes they signed out while it is still on the device.
+    /// The line says either that the session is gone, or that the user believes they signed out
+    /// while it is still on the device.
     public func logging() -> SignOut {
         SignOut {
             // Resolved per call, so a test overriding \.log is honoured. Resolving it while

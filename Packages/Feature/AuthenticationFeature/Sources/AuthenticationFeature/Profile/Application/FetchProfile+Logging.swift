@@ -4,9 +4,6 @@ import LogKit
 
 extension FetchProfile {
     /// Records the outcome the user got, then rethrows.
-    ///
-    /// A failure's cause already reached the log at the seam that knew it: the transport or the
-    /// mapper. This line says what that meant for the person waiting for their profile.
     public func logging() -> FetchProfile {
         FetchProfile { () async throws(AttendeeFetchError) -> Profile in
             // Resolved per call, so a test overriding \.log is honoured. Resolving it while
