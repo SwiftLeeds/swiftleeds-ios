@@ -214,8 +214,8 @@ opt_in_rules:
   # rule was turned on, are in the baseline until design tokens replace them.
   - no_magic_numbers
 
-  # Inside a type, `Self` says the value is this type without repeating its
-  # name: `Self(...)`, `-> Self`, `Self.default`.
+  # In a type or its extension, `Self` names the type without repeating it:
+  # `Self(...)`, `-> Self`.
   - prefer_self_in_static_references
 
   # A blank line before each switch case makes each case read as its own block.
