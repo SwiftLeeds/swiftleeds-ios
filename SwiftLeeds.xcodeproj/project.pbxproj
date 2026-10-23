@@ -49,8 +49,11 @@
 		A11CE57000000000000000D9 /* SponsorsFeature in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000C9 /* SponsorsFeature */; };
 		A11CE57000000000000000DA /* UIComponents in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000CA /* UIComponents */; };
 		A11CE57000000000000000DC /* SponsorsUI in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000CC /* SponsorsUI */; };
-		A11CE57000000000000000DD /* ScheduleFeature in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000CD /* ScheduleFeature */; };
-		A11CE57000000000000000DF /* ScheduleFeature in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000CF /* ScheduleFeature */; };
+		A11CE57000000000000000DD /* ScheduleInfrastructure in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000CD /* ScheduleInfrastructure */; };
+		A11CE57000000000000000DF /* ScheduleApplication in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000CF /* ScheduleApplication */; };
+		A11CE570000000000000F5D1 /* ScheduleDomain in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE570000000000000F5C1 /* ScheduleDomain */; };
+		A11CE570000000000000F5D2 /* ScheduleInfrastructure in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE570000000000000F5C2 /* ScheduleInfrastructure */; };
+		A11CE570000000000000F5D3 /* ScheduleInfrastructure in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE570000000000000F5C3 /* ScheduleInfrastructure */; };
 		A11CE57000000000000000E6 /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000E5 /* Dependencies */; };
 		A11CE57000000000000000E8 /* ScheduleUI in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000E7 /* ScheduleUI */; };
 		A11CE57000000000000000EA /* ScheduleUI in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000E9 /* ScheduleUI */; };
@@ -197,6 +200,7 @@
 			files = (
 				F8AC9B695FEAFDBD19A01A10 /* NetworkKit in Frameworks */,
 				A11CE57000000000000000EA /* ScheduleUI in Frameworks */,
+				A11CE570000000000000F5D3 /* ScheduleInfrastructure in Frameworks */,
 				E44377685B94DC7F6465ED4A /* Dependencies in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -208,7 +212,9 @@
 				7BE081542EE5BF13004BCD1F /* UIAssets in Frameworks */,
 				74A09FE128C6778C00E03F39 /* SwiftUI.framework in Frameworks */,
 				74A09FDF28C6778C00E03F39 /* WidgetKit.framework in Frameworks */,
-				A11CE57000000000000000DF /* ScheduleFeature in Frameworks */,
+				A11CE57000000000000000DF /* ScheduleApplication in Frameworks */,
+				A11CE570000000000000F5D1 /* ScheduleDomain in Frameworks */,
+				A11CE570000000000000F5D2 /* ScheduleInfrastructure in Frameworks */,
 				A11CE57000000000000000E6 /* Dependencies in Frameworks */,
 				A11CE57000000000000000EC /* NetworkKit in Frameworks */,
 			);
@@ -232,7 +238,7 @@
 				A11CE570000000000000F4A3 /* UIDesign in Frameworks */,
 				A11CE57000000000000000DC /* SponsorsUI in Frameworks */,
 				A11CE57000000000000000E8 /* ScheduleUI in Frameworks */,
-				A11CE57000000000000000DD /* ScheduleFeature in Frameworks */,
+				A11CE57000000000000000DD /* ScheduleInfrastructure in Frameworks */,
 				A11CE570000000000000F0D1 /* LocalFeature in Frameworks */,
 				A11CE570000000000000F1D1 /* AboutFeature in Frameworks */,
 				A11CE570000000000000F1D2 /* AboutUI in Frameworks */,
@@ -489,6 +495,7 @@
 			packageProductDependencies = (
 				631E9D02432C1E1A187A3E03 /* NetworkKit */,
 				A11CE57000000000000000E9 /* ScheduleUI */,
+				A11CE570000000000000F5C3 /* ScheduleInfrastructure */,
 				39093D62C747210F6BA83C1E /* Dependencies */,
 			);
 			productName = SwiftLeedsAppClip;
@@ -510,7 +517,9 @@
 			name = SwiftLeedsWidgetExtension;
 			packageProductDependencies = (
 				7BE081532EE5BF13004BCD1F /* UIAssets */,
-				A11CE57000000000000000CF /* ScheduleFeature */,
+				A11CE57000000000000000CF /* ScheduleApplication */,
+				A11CE570000000000000F5C1 /* ScheduleDomain */,
+				A11CE570000000000000F5C2 /* ScheduleInfrastructure */,
 				A11CE57000000000000000E5 /* Dependencies */,
 				A11CE57000000000000000EB /* NetworkKit */,
 			);
@@ -550,7 +559,7 @@
 				A11CE570000000000000F4A2 /* UIDesign */,
 				A11CE57000000000000000CC /* SponsorsUI */,
 				A11CE57000000000000000E7 /* ScheduleUI */,
-				A11CE57000000000000000CD /* ScheduleFeature */,
+				A11CE57000000000000000CD /* ScheduleInfrastructure */,
 				A11CE570000000000000F0C1 /* LocalFeature */,
 				A11CE570000000000000F1C1 /* AboutFeature */,
 				A11CE570000000000000F1C2 /* AboutUI */,
@@ -1513,13 +1522,25 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = SponsorsUI;
 		};
-		A11CE57000000000000000CD /* ScheduleFeature */ = {
+		A11CE57000000000000000CD /* ScheduleInfrastructure */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = ScheduleFeature;
+			productName = ScheduleInfrastructure;
 		};
-		A11CE57000000000000000CF /* ScheduleFeature */ = {
+		A11CE57000000000000000CF /* ScheduleApplication */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = ScheduleFeature;
+			productName = ScheduleApplication;
+		};
+		A11CE570000000000000F5C1 /* ScheduleDomain */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ScheduleDomain;
+		};
+		A11CE570000000000000F5C2 /* ScheduleInfrastructure */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ScheduleInfrastructure;
+		};
+		A11CE570000000000000F5C3 /* ScheduleInfrastructure */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ScheduleInfrastructure;
 		};
 		A11CE57000000000000000E5 /* Dependencies */ = {
 			isa = XCSwiftPackageProductDependency;

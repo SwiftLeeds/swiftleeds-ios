@@ -1,6 +1,7 @@
 import Dependencies
 import Foundation
 import NetworkKit
+import ScheduleDomain
 
 struct ScheduleMapper: Sendable {
     enum ResponseError: Error {

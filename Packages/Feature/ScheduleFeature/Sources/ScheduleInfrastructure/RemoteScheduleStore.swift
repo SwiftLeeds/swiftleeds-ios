@@ -1,6 +1,7 @@
 import Dependencies
 import Foundation
 import NetworkKit
+import ScheduleDomain
 
 package struct RemoteScheduleStore: Sendable {
     package var fetch: @Sendable (ScheduleRequest) async throws(ScheduleFetchError) -> Schedule

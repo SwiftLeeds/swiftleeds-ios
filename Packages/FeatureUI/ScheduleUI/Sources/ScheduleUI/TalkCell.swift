@@ -1,6 +1,6 @@
 import CachedAsyncImage
 import Foundation
-import ScheduleFeature
+import ScheduleDomain
 import SwiftUI
 import UIAssets
 import UIComponents

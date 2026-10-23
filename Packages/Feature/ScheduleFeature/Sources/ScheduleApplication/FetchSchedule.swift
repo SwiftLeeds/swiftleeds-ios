@@ -1,5 +1,6 @@
 import Dependencies
 import Foundation
+import ScheduleDomain
 
 /// Returns one conference's schedule.
 public struct FetchSchedule: Sendable {

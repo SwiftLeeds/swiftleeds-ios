@@ -27,7 +27,8 @@ let package = Package(
             dependencies: [
                 .product(name: "CachedAsyncImage", package: "swiftui-cached-async-image"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
-                .product(name: "ScheduleFeature", package: "ScheduleFeature"),
+                .product(name: "ScheduleApplication", package: "ScheduleFeature"),
+                .product(name: "ScheduleDomain", package: "ScheduleFeature"),
                 .product(name: "UIAssets", package: "SwiftLeedsPackage"),
                 .product(name: "UIComponents", package: "UIComponents"),
             ],
@@ -36,7 +37,7 @@ let package = Package(
             name: "ScheduleUISnapshotTests",
             dependencies: [
                 "ScheduleUI",
-                .product(name: "ScheduleFeature", package: "ScheduleFeature"),
+                .product(name: "ScheduleDomain", package: "ScheduleFeature"),
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
                 .product(name: "UIComponents", package: "UIComponents"),
             ],

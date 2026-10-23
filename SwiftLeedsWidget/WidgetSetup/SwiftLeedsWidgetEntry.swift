@@ -1,5 +1,5 @@
 import Foundation
-import ScheduleFeature
+import ScheduleDomain
 import WidgetKit
 
 struct SwiftLeedsWidgetEntry: TimelineEntry {

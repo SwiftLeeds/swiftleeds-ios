@@ -1,4 +1,5 @@
 import Foundation
+import ScheduleDomain
 
 package struct StoredSchedule: Codable, Sendable {
     /// How long a stored schedule stays fresh: one day, in seconds.

@@ -4,7 +4,7 @@ import Foundation
 import LogKit
 import LogKitUnified
 import NetworkKit
-import ScheduleFeature
+import ScheduleInfrastructure
 import SecureStorageKit
 import SecureStorageKitKeychain
 import SwiftUI

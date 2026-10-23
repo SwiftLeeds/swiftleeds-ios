@@ -9,7 +9,9 @@ let package = Package(
         .macOS(.v26),
     ],
     products: [
-        .library(name: "ScheduleFeature", targets: ["ScheduleFeature"])
+        .library(name: "ScheduleApplication", targets: ["ScheduleApplication"]),
+        .library(name: "ScheduleDomain", targets: ["ScheduleDomain"]),
+        .library(name: "ScheduleInfrastructure", targets: ["ScheduleInfrastructure"]),
     ],
     dependencies: [
         .package(path: "../../Kit/NetworkKit"),
@@ -17,8 +19,22 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "ScheduleFeature",
+            name: "ScheduleApplication",
             dependencies: [
+                "ScheduleDomain",
+                .product(name: "Dependencies", package: "swift-dependencies"),
+            ],
+        ),
+        .target(
+            name: "ScheduleDomain",
+            dependencies: [
+                .product(name: "Dependencies", package: "swift-dependencies")
+            ],
+        ),
+        .target(
+            name: "ScheduleInfrastructure",
+            dependencies: [
+                "ScheduleDomain",
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "NetworkKit", package: "NetworkKit"),
             ],
@@ -26,7 +42,9 @@ let package = Package(
         .testTarget(
             name: "ScheduleFeatureTests",
             dependencies: [
-                "ScheduleFeature",
+                "ScheduleApplication",
+                "ScheduleDomain",
+                "ScheduleInfrastructure",
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "NetworkKit", package: "NetworkKit"),
                 .product(name: "NetworkKitTestSupport", package: "NetworkKit"),
