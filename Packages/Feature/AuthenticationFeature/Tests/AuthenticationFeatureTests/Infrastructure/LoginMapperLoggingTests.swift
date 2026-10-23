@@ -1,4 +1,4 @@
-import AuthenticationFeature
+import AuthenticationInfrastructure
 import Dependencies
 import Foundation
 import LogKit
@@ -16,6 +16,19 @@ import Testing
         let event = try #require(try logEvent(statusCode: 401))
 
         #expect(event.message == "The sign-in credentials were rejected")
+    }
+
+    /// A filter on the network category must find every line the mapper writes.
+    @Test func whenAnyOutcomeIsLogged_shouldLogUnderAuthNetworkCategory() throws {
+        let events = try [
+            acceptedEvent(),
+            logEvent(statusCode: 401),
+            logEvent(statusCode: 503),
+            logEvent(forBody: Data("   ".utf8)),
+        ].compactMap(\.self)
+
+        #expect(events.count == 4)
+        #expect(events.allSatisfy { $0.category == "authNetwork" })
     }
 
     @Test func whenCredentialsAreRejected_shouldLogAtNoticeRatherThanError() throws {

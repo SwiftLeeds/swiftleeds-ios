@@ -7,13 +7,13 @@ import UIKit
 /// The colors text draws in, from most to least prominent.
 extension ShapeStyle where Self == Color {
     /// The main text on a surface.
-    public static var textPrimary: Color { .primary }
+    public static var text: Color { .primary }
 
     /// Text that supports the main text.
-    public static var textSecondary: Color { .secondary }
+    public static var secondaryText: Color { .secondary }
 
     /// Text that is present but not meant to be read yet.
-    public static var textTertiary: Color {
+    public static var tertiaryText: Color {
         #if os(iOS)
         Color(.tertiaryLabel)
         #else
@@ -22,7 +22,7 @@ extension ShapeStyle where Self == Color {
     }
 
     /// Text in a control the person can't use right now.
-    public static var textDisabled: Color {
+    public static var disabledText: Color {
         #if os(iOS)
         Color(.quaternaryLabel)
         #else
@@ -33,5 +33,5 @@ extension ShapeStyle where Self == Color {
     /// Text on a brand colored fill.
     ///
     /// It doesn't change with the appearance, because the fill beneath it doesn't either.
-    public static var textOnBrand: Color { .white }
+    public static var onBrand: Color { .white }
 }

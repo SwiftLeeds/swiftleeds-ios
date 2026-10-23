@@ -162,7 +162,7 @@ private let previewName = PersonNameComponents(givenName: "Member", familyName: 
         // A fallback of the caller's own. Neutral, because a color here would read as a status.
         Avatar(url: nil, size: .xLarge) {
             Image(icon: .locked)
-                .foregroundStyle(.textSecondary)
+                .foregroundStyle(.secondaryText)
         }
     }
     .padding(.large)

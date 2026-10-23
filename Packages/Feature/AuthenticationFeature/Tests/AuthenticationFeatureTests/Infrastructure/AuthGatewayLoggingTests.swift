@@ -1,4 +1,5 @@
-import AuthenticationFeature
+import AuthenticationDomain
+import AuthenticationInfrastructure
 import Dependencies
 import LogKit
 import LogKitTestSupport
@@ -14,6 +15,21 @@ import Testing
         #expect(event.level == .error)
         let reason = try #require(event.fields.first { String($0.name) == "reason" })
         #expect(reason.value == .string("couldNotBuildResponse"))
+    }
+
+    /// A filter on the network category must find every line the gateway writes.
+    @Test func whenAnyOutcomeIsLogged_shouldLogUnderAuthNetworkCategory() async {
+        let events = [
+            await logEvent(
+                forFailure: LoginRequestError.couldNotEncodeRequest(StubError.couldNotBuildResponse)
+            ),
+            await logEvent(
+                forFailure: LoginRequestError.transportFailed(StubError.couldNotBuildResponse)
+            ),
+        ].compactMap(\.self)
+
+        #expect(events.count == 1)
+        #expect(events.allSatisfy { $0.category == "authNetwork" })
     }
 
     /// Transport failures are logged once, by the decorator on `HTTPClient`.

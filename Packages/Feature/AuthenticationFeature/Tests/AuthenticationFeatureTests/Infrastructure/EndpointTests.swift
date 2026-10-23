@@ -1,4 +1,4 @@
-import AuthenticationFeature
+import AuthenticationInfrastructure
 import Foundation
 import NetworkKit
 import Testing

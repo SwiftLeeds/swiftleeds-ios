@@ -9,8 +9,10 @@ let package = Package(
         .macOS(.v26),
     ],
     products: [
-        .library(name: "AuthenticationFeature", targets: ["AuthenticationFeature"]),
+        .library(name: "AuthenticationApplication", targets: ["AuthenticationApplication"]),
+        .library(name: "AuthenticationDomain", targets: ["AuthenticationDomain"]),
         .library(name: "AuthenticationFeatureTestSupport", targets: ["AuthenticationFeatureTestSupport"]),
+        .library(name: "AuthenticationInfrastructure", targets: ["AuthenticationInfrastructure"]),
     ],
     dependencies: [
         .package(path: "../../Kit/LogKit"),
@@ -20,8 +22,23 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "AuthenticationFeature",
+            name: "AuthenticationDomain",
             dependencies: [
+                .product(name: "Dependencies", package: "swift-dependencies")
+            ],
+        ),
+        .target(
+            name: "AuthenticationApplication",
+            dependencies: [
+                "AuthenticationDomain",
+                .product(name: "Dependencies", package: "swift-dependencies"),
+                .product(name: "LogKit", package: "LogKit"),
+            ],
+        ),
+        .target(
+            name: "AuthenticationInfrastructure",
+            dependencies: [
+                "AuthenticationDomain",
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "LogKit", package: "LogKit"),
                 .product(name: "NetworkKit", package: "NetworkKit"),
@@ -30,12 +47,14 @@ let package = Package(
         ),
         .target(
             name: "AuthenticationFeatureTestSupport",
-            dependencies: ["AuthenticationFeature"],
+            dependencies: ["AuthenticationDomain"],
         ),
         .testTarget(
             name: "AuthenticationFeatureTests",
             dependencies: [
-                "AuthenticationFeature",
+                "AuthenticationApplication",
+                "AuthenticationDomain",
+                "AuthenticationInfrastructure",
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "LogKit", package: "LogKit"),
                 .product(name: "LogKitTestSupport", package: "LogKit"),

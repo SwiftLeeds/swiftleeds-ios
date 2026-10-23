@@ -1,4 +1,4 @@
-import AuthenticationFeature
+import AuthenticationDomain
 
 package enum ProfileCardState: Equatable {
     case loading

@@ -1,4 +1,5 @@
-import AuthenticationFeature
+import AuthenticationDomain
+import AuthenticationInfrastructure
 import Dependencies
 import Foundation
 import LogKit

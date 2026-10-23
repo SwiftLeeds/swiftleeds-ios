@@ -23,11 +23,11 @@ struct AdaptiveNameplate: View {
             VStack(alignment: .leading, spacing: .xxSmall) {
                 configuration.title
                     .font(titleFont)
-                    .foregroundStyle(.textPrimary)
+                    .foregroundStyle(.text)
 
                 configuration.detail
                     .font(.body)
-                    .foregroundStyle(.textSecondary)
+                    .foregroundStyle(.secondaryText)
             }
             // The nameplate reads as one element, and VoiceOver combines its
             // children in order. This reads the name before any status mark

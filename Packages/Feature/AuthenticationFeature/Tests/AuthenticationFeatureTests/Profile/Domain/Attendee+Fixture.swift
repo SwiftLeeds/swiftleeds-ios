@@ -1,4 +1,4 @@
-import AuthenticationFeature
+import AuthenticationDomain
 import Foundation
 import Testing
 

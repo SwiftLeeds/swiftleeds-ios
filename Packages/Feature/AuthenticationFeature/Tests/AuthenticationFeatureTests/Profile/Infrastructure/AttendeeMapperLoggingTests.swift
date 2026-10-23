@@ -1,4 +1,4 @@
-import AuthenticationFeature
+import AuthenticationInfrastructure
 import Dependencies
 import Foundation
 import LogKit
@@ -25,6 +25,20 @@ import Testing
 
         let reason = try #require(event.fields.first { String($0.name) == "reason" })
         #expect(reason.value == .string("keyNotFound ticket.last_name"))
+    }
+
+    /// A filter on the network category must find every line the mapper writes.
+    @Test func whenAnyOutcomeIsLogged_shouldLogUnderProfileNetworkCategory() throws {
+        let events = try [
+            acceptedEvent(),
+            logEvent(forBody: attendeeJSON(reference: "!!!")),
+            logEvent(forBody: Data("not json".utf8)),
+            logEvent(statusCode: 401),
+            logEvent(statusCode: 503),
+        ].compactMap(\.self)
+
+        #expect(events.count == 5)
+        #expect(events.allSatisfy { $0.category == "profileNetwork" })
     }
 
     @Test func whenSessionIsNotAuthorised_shouldLogAtNoticeRatherThanError() throws {
