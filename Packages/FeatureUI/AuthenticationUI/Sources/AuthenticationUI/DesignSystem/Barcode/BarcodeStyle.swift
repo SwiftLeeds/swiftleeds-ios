@@ -1,5 +1,14 @@
 import SwiftUI
 
+/// The look of a ``Barcode``: its padding, backing and shape.
+///
+/// A style must not change what the code encodes, only how it sits on screen.
+package protocol BarcodeStyle {
+    associatedtype Body: View
+
+    @ViewBuilder func makeBody(configuration: BarcodeStyleConfiguration) -> Body
+}
+
 /// The code a ``BarcodeStyle`` arranges.
 package struct BarcodeStyleConfiguration {
     package struct Code: View {
@@ -9,15 +18,6 @@ package struct BarcodeStyleConfiguration {
     }
 
     package let code: Code
-}
-
-/// The look of a ``Barcode``: its padding, backing and shape.
-///
-/// A style must not change what the code encodes, only how it sits on screen.
-package protocol BarcodeStyle {
-    associatedtype Body: View
-
-    @ViewBuilder func makeBody(configuration: BarcodeStyleConfiguration) -> Body
 }
 
 /// A code on a white plate with rounded corners.

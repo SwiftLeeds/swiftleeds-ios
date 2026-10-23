@@ -1,20 +1,6 @@
 import Foundation
 import SwiftUI
 
-package struct AvatarImage: View {
-    private let image: Image
-
-    init(_ image: Image) {
-        self.image = image
-    }
-
-    package var body: some View {
-        image
-            .resizable()
-            .scaledToFill()
-    }
-}
-
 package struct Avatar<Content: View, Placeholder: View, Failure: View>: View {
     @Environment(\.avatarStyle) private var style
 
@@ -91,6 +77,20 @@ extension Avatar where Content == AvatarImage {
 extension Avatar where Content == AvatarImage, Placeholder == Failure {
     package init(url: URL?, @ViewBuilder fallback: @escaping () -> Failure) {
         self.init(url: url, content: { AvatarImage($0) }, placeholder: fallback, failure: fallback)
+    }
+}
+
+package struct AvatarImage: View {
+    private let image: Image
+
+    init(_ image: Image) {
+        self.image = image
+    }
+
+    package var body: some View {
+        image
+            .resizable()
+            .scaledToFill()
     }
 }
 
