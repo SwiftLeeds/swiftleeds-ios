@@ -21,6 +21,7 @@ the same in the main checkout and in a worktree.
 It fails open. Bad input, unbalanced quotes or an unrecognised shape let the
 command through, and it never exits 2, which would block every Bash call.
 """
+import itertools
 import json
 import os
 import re
@@ -48,6 +49,8 @@ WRAPPERS = {
 SWIFT_TOOLS = {"swift-build", "swift-test", "swift-package", "swift-run"}
 HARMLESS = {"--version", "-version", "format", "demangle"}
 HARMLESS_FLAGS = {"--help", "-h", "--version", "-version"}
+# swift options that take a separate value, so the value is not a product name.
+VALUE_OPTIONS = {"-c", "--configuration", "--package-path", "--scratch-path", "--product"}
 SANCTIONED = ".claude/scripts/package-test.sh <PackageName>"
 
 
@@ -155,25 +158,29 @@ def swift_args(segment):
 def own_options(args):
     """Returns the arguments that swift itself reads, not a product or -- tail."""
     own = args[:1]
-    for arg in args[1:]:
+    rest = iter(args[1:])
+    for arg in rest:
         if arg == "--":
             break
         # swift run builds first, and the product reads what follows its name.
         if args[0] == "run" and not arg.startswith("-"):
             break
         own.append(arg)
+        if arg in VALUE_OPTIONS:
+            own.extend(itertools.islice(rest, 1))
     return own
 
 
 def check(args):
     """Refuses a swift invocation that would write a per-package .build."""
-    if not args or args[0] in HARMLESS or HARMLESS_FLAGS.intersection(own_options(args)):
+    own = own_options(args)
+    if not args or args[0] in HARMLESS or HARMLESS_FLAGS.intersection(own):
         return
 
     scratch = None
-    for index, arg in enumerate(args):
-        if arg == "--scratch-path" and index + 1 < len(args):
-            scratch = args[index + 1]
+    for index, arg in enumerate(own):
+        if arg == "--scratch-path" and index + 1 < len(own):
+            scratch = own[index + 1]
         elif arg.startswith("--scratch-path="):
             scratch = arg.split("=", 1)[1]
 
