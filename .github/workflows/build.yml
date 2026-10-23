@@ -199,6 +199,13 @@ jobs:
           # of quietly resolving something newer. It does not touch the
           # app's own Package.resolved; CLAUDE.md covers keeping those two
           # in step.
+          #
+          # --explicit-target-dependency-import-check error fails a file that
+          # imports a module its target does not declare. Without it, such an
+          # import compiles with only a warning whenever another target has
+          # already built that module. The check runs wherever a file compiles,
+          # and each lane starts empty, so every file is checked once: as a
+          # dependency of an earlier package, or as the package under test.
           swift_test () {
             local path
             path=$(package_path "$1") || return 1
@@ -208,6 +215,7 @@ jobs:
               --cache-path "$3" \
               --configuration "$CONFIGURATION" \
               $verbose \
+              --explicit-target-dependency-import-check error \
               --force-resolved-versions 2>&1
           }
 
