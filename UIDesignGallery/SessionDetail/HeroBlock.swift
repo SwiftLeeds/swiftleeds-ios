@@ -23,8 +23,8 @@ struct HeroBlock: View {
     /// The width of the trailing column in two columns, in points.
     private let trailingColumnWidth: CGFloat
 
-    /// The action that shows a speaker's page.
-    private let showSpeaker: (SamplePerson) -> Void
+    /// The action that shows a person's page.
+    private let showPerson: (SamplePerson) -> Void
 
     /// Whether this person favorited the session.
     @Binding private var isFavorite: Bool
@@ -55,7 +55,7 @@ struct HeroBlock: View {
     ///   - availableWidth: The width the block's content has, or `nil` until the page is measured.
     ///   - leadingColumnWidth: The width of the leading column in two columns, in points.
     ///   - trailingColumnWidth: The width of the trailing column in two columns, in points.
-    ///   - showSpeaker: The action that shows a speaker's page. A tap on a credited name runs it.
+    ///   - showPerson: The action that shows a person's page. A tap on a credited name runs it.
     ///   - isFavorite: Whether this person favorited the session. The star changes it.
     ///   - capsuleWidth: The capsule's width on one line, in points, or `nil` until measured. The
     ///     block writes it.
@@ -68,7 +68,7 @@ struct HeroBlock: View {
         availableWidth: CGFloat?,
         leadingColumnWidth: CGFloat,
         trailingColumnWidth: CGFloat,
-        showSpeaker: @escaping (SamplePerson) -> Void,
+        showPerson: @escaping (SamplePerson) -> Void,
         isFavorite: Binding<Bool>,
         capsuleWidth: Binding<CGFloat?>,
         marks: Binding<SessionHero.HeroMarks>,
@@ -80,7 +80,7 @@ struct HeroBlock: View {
         self.availableWidth = availableWidth
         self.leadingColumnWidth = leadingColumnWidth
         self.trailingColumnWidth = trailingColumnWidth
-        self.showSpeaker = showSpeaker
+        self.showPerson = showPerson
         _isFavorite = isFavorite
         _capsuleWidth = capsuleWidth
         _marks = marks
@@ -217,7 +217,7 @@ extension HeroBlock {
             kind: session.kind,
             speakers: session.lineup.credited,
             leadColor: supportingText,
-            showSpeaker: showSpeaker,
+            showPerson: showPerson,
         )
     }
 }

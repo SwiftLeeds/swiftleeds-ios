@@ -113,7 +113,7 @@ struct ScheduleScreen: View {
                         session: session,
                         opensSummaryExpanded: opensSummaryExpanded,
                         opensFavorite: opensFavorite,
-                        showSpeaker: { path.append($0) },
+                        showPerson: { path.append($0) },
                     )
                 }
                 .navigationDestination(for: SamplePerson.self) { person in

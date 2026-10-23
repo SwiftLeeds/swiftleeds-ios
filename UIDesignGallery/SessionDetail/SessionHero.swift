@@ -73,8 +73,8 @@ struct SessionHero: View {
     /// Where a person is in the session's day.
     private let moment: SessionMoment
 
-    /// The action that shows a speaker's page.
-    private let showSpeaker: (SamplePerson) -> Void
+    /// The action that shows a person's page.
+    private let showPerson: (SamplePerson) -> Void
 
     /// Whether this person favorited the session.
     @Binding private var isFavorite: Bool
@@ -119,7 +119,7 @@ struct SessionHero: View {
     ///     hero.
     ///   - moment: Where a person is in the session's day. It decides the chip above the title
     ///     and the capsule beside the star.
-    ///   - showSpeaker: The action that shows a speaker's page. A tap on a credited name runs it.
+    ///   - showPerson: The action that shows a person's page. A tap on a credited name runs it.
     ///   - isFavorite: Whether this person favorited the session. The star changes it.
     init(
         session: SampleSession,
@@ -127,14 +127,14 @@ struct SessionHero: View {
         bars: BarInsets?,
         margin: CGFloat,
         moment: SessionMoment,
-        showSpeaker: @escaping (SamplePerson) -> Void,
+        showPerson: @escaping (SamplePerson) -> Void,
         isFavorite: Binding<Bool>,
     ) {
         self.session = session
         self.page = page
         self.bars = bars
         self.moment = moment
-        self.showSpeaker = showSpeaker
+        self.showPerson = showPerson
         _isFavorite = isFavorite
         // A bare CGFloat, not a Spacing token: UIDesign's Spacing has no 20-point value, and the
         // gallery cannot make one, because Spacing's initializer is internal to UIDesign.
@@ -333,7 +333,7 @@ extension SessionHero {
             availableWidth: page.map { $0.contentWidth(margin: margin) },
             leadingColumnWidth: leadingColumnWidth,
             trailingColumnWidth: trailingColumnWidth,
-            showSpeaker: showSpeaker,
+            showPerson: showPerson,
             isFavorite: $isFavorite,
             capsuleWidth: $capsuleWidth,
             marks: $marks,

@@ -38,7 +38,7 @@ struct SearchScreen: View {
                 .navigationDestination(for: SampleSession.self) { session in
                     SessionDetailScreen(
                         session: session,
-                        showSpeaker: { path.append($0) },
+                        showPerson: { path.append($0) },
                     )
                 }
                 .navigationDestination(for: SampleSponsor.self) { sponsor in
@@ -160,7 +160,7 @@ struct SearchScreen: View {
         if let session = result.session {
             SessionDetailScreen(
                 session: session,
-                showSpeaker: { path.append($0) },
+                showPerson: { path.append($0) },
             )
         } else if let person = result.person {
             PersonScreen(person: person)

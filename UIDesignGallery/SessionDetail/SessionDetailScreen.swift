@@ -23,8 +23,8 @@ struct SessionDetailScreen: View {
     /// The session this screen describes.
     let session: SampleSession
 
-    /// The action that shows a speaker's page.
-    let showSpeaker: (SamplePerson) -> Void
+    /// The action that shows a person's page.
+    let showPerson: (SamplePerson) -> Void
 
     /// Whether the sheet with the full summary shows when the screen appears.
     private let opensSummaryExpanded: Bool
@@ -62,17 +62,17 @@ struct SessionDetailScreen: View {
     ///     screen appears.
     ///   - opensFavorite: Whether the session is a favorite when the screen appears, even if the
     ///     sample says it is not.
-    ///   - showSpeaker: The action that shows a speaker's page.
+    ///   - showPerson: The action that shows a person's page.
     init(
         session: SampleSession,
         opensSummaryExpanded: Bool = false,
         opensFavorite: Bool = false,
-        showSpeaker: @escaping (SamplePerson) -> Void,
+        showPerson: @escaping (SamplePerson) -> Void,
     ) {
         let defaults = UserDefaults.standard
         self.session = session
         self.opensSummaryExpanded = opensSummaryExpanded
-        self.showSpeaker = showSpeaker
+        self.showPerson = showPerson
         moment = SessionMoment(rawValue: defaults.string(forKey: "moment") ?? "") ?? .before
         addsTail = defaults.bool(forKey: "tall")
         _isFavorite = State(initialValue: opensFavorite || session.isFavorite)
@@ -135,7 +135,7 @@ extension SessionDetailScreen {
                 bars: bars,
                 margin: margin,
                 moment: moment,
-                showSpeaker: showSpeaker,
+                showPerson: showPerson,
                 isFavorite: $isFavorite,
             )
 
@@ -154,7 +154,7 @@ extension SessionDetailScreen {
             aboutCard
                 .frame(maxWidth: Self.readableWidth, alignment: .leading)
 
-            SpeakerRows(speakers: session.lineup.credited, showSpeaker: showSpeaker)
+            SpeakerRows(speakers: session.lineup.credited, showPerson: showPerson)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.horizontal, margin)

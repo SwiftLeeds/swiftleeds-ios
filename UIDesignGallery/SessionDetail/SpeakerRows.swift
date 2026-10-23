@@ -10,8 +10,8 @@ struct SpeakerRows: View {
     /// The speakers to list, in order.
     private let speakers: [SamplePerson]
 
-    /// The action that shows a speaker's page.
-    private let showSpeaker: (SamplePerson) -> Void
+    /// The action that shows a person's page.
+    private let showPerson: (SamplePerson) -> Void
 
     /// The current Dynamic Type size.
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
@@ -20,10 +20,10 @@ struct SpeakerRows: View {
     ///
     /// - Parameters:
     ///   - speakers: The speakers to list, in order.
-    ///   - showSpeaker: The action that shows a speaker's page.
-    init(speakers: [SamplePerson], showSpeaker: @escaping (SamplePerson) -> Void) {
+    ///   - showPerson: The action that shows a person's page.
+    init(speakers: [SamplePerson], showPerson: @escaping (SamplePerson) -> Void) {
         self.speakers = speakers
-        self.showSpeaker = showSpeaker
+        self.showPerson = showPerson
     }
 
     /// The heading, then the rows.
@@ -69,7 +69,7 @@ extension SpeakerRows {
     /// - Returns: A button that shows the speaker's page.
     private func row(for speaker: SamplePerson) -> some View {
         Button {
-            showSpeaker(speaker)
+            showPerson(speaker)
         } label: {
             arrangement {
                 avatar(for: speaker)

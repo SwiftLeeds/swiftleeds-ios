@@ -14,8 +14,8 @@ struct HeroCredits: View {
     /// The color of the lead word.
     private let leadColor: Color
 
-    /// The action that shows a speaker's page.
-    private let showSpeaker: (SamplePerson) -> Void
+    /// The action that shows a person's page.
+    private let showPerson: (SamplePerson) -> Void
 
     /// Whether this person asked for more contrast.
     @Environment(\.colorSchemeContrast) private var contrast
@@ -26,17 +26,17 @@ struct HeroCredits: View {
     ///   - kind: The kind of session, which sets the lead word.
     ///   - speakers: The speakers to credit, in the order their names read.
     ///   - leadColor: The color of the lead word, a grey that still reads on the hero.
-    ///   - showSpeaker: The action that shows a speaker's page. A tap on a name runs it.
+    ///   - showPerson: The action that shows a person's page. A tap on a name runs it.
     init(
         kind: SessionKind,
         speakers: [SamplePerson],
         leadColor: Color,
-        showSpeaker: @escaping (SamplePerson) -> Void,
+        showPerson: @escaping (SamplePerson) -> Void,
     ) {
         self.kind = kind
         self.speakers = speakers
         self.leadColor = leadColor
-        self.showSpeaker = showSpeaker
+        self.showPerson = showPerson
     }
 
     /// The credits in the summary's text style, so their lines match.
@@ -86,7 +86,7 @@ extension HeroCredits {
             let index = url.host().flatMap(Int.init),
             speakers.indices.contains(index)
         else { return .discarded }
-        showSpeaker(speakers[index])
+        showPerson(speakers[index])
         return .handled
     }
 
