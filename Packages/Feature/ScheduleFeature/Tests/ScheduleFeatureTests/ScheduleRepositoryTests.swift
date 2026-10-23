@@ -5,6 +5,75 @@ import ScheduleInfrastructure
 import Testing
 
 @Suite struct ScheduleRepositoryTests {
+    /// A spy that holds schedules in memory and serves them through the local store's ports.
+    private final class LocalScheduleStoreSpy: @unchecked Sendable {
+        /// The lock that guards `entries`.
+        private let lock = NSLock()
+
+        /// The stored schedules, by the request each answers.
+        private var entries: [ScheduleRequest: StoredSchedule] = [:]
+
+        /// Holds a schedule as if it were already stored.
+        ///
+        /// - Parameters:
+        ///   - schedule: The schedule to hold.
+        ///   - request: The request the schedule answers.
+        ///   - storedAt: When the schedule counts as stored.
+        func hold(_ schedule: Schedule, for request: ScheduleRequest, at storedAt: Date) {
+            lock.withLock { entries[request] = StoredSchedule(schedule: schedule, storedAt: storedAt) }
+        }
+
+        /// Returns the schedule held for a request.
+        ///
+        /// - Parameter request: The request to look up.
+        /// - Returns: The held schedule, or `nil` if none answers the request.
+        func saved(for request: ScheduleRequest) -> Schedule? {
+            lock.withLock { entries[request]?.schedule }
+        }
+
+        /// The local store that reads and writes the held schedules.
+        var store: LocalScheduleStore {
+            LocalScheduleStore(
+                load: { [self] request in lock.withLock { entries[request] } },
+                save: { [self] stored, request in lock.withLock { entries[request] = stored } },
+            )
+        }
+    }
+
+    /// A spy that records each request and answers every one with the same schedule.
+    private final class RemoteScheduleStoreSpy: @unchecked Sendable {
+        /// The lock that guards `recorded`.
+        private let lock = NSLock()
+
+        /// The requests received so far, in order.
+        private var recorded: [ScheduleRequest] = []
+
+        /// The schedule returned for every request.
+        private let answer: Schedule
+
+        /// Creates a spy that answers every request with one schedule.
+        ///
+        /// - Parameter answer: The schedule to return for every request.
+        init(answering answer: Schedule) {
+            self.answer = answer
+        }
+
+        /// The requests received so far, in order.
+        var requests: [ScheduleRequest] {
+            lock.withLock { recorded }
+        }
+
+        /// The remote store that records each request and returns the answer.
+        var store: RemoteScheduleStore {
+            RemoteScheduleStore(
+                fetch: { [self] request async -> Schedule in
+                    lock.withLock { recorded.append(request) }
+                    return answer
+                }
+            )
+        }
+    }
+
     // The reported bug: offline, picking a conference the device already holds showed
     // the previous conference's schedule.
     @Test func whenTheRemoteFailsAndTheConferenceIsStored_shouldReturnTheStoredSchedule() async throws {
@@ -132,50 +201,6 @@ extension RemoteScheduleStore {
     fileprivate static func failing(with error: ScheduleFetchError) -> RemoteScheduleStore {
         RemoteScheduleStore(
             fetch: { _ async throws(ScheduleFetchError) -> Schedule in throw error }
-        )
-    }
-}
-
-// Both ports are synchronous at the call site, so a lock records the calls rather than an actor.
-private final class LocalScheduleStoreSpy: @unchecked Sendable {
-    private let lock = NSLock()
-    private var entries: [ScheduleRequest: StoredSchedule] = [:]
-
-    func hold(_ schedule: Schedule, for request: ScheduleRequest, at storedAt: Date) {
-        lock.withLock { entries[request] = StoredSchedule(schedule: schedule, storedAt: storedAt) }
-    }
-
-    func saved(for request: ScheduleRequest) -> Schedule? {
-        lock.withLock { entries[request]?.schedule }
-    }
-
-    var store: LocalScheduleStore {
-        LocalScheduleStore(
-            load: { [self] request in lock.withLock { entries[request] } },
-            save: { [self] stored, request in lock.withLock { entries[request] = stored } },
-        )
-    }
-}
-
-private final class RemoteScheduleStoreSpy: @unchecked Sendable {
-    private let lock = NSLock()
-    private var recorded: [ScheduleRequest] = []
-    private let answer: Schedule
-
-    init(answering answer: Schedule) {
-        self.answer = answer
-    }
-
-    var requests: [ScheduleRequest] {
-        lock.withLock { recorded }
-    }
-
-    var store: RemoteScheduleStore {
-        RemoteScheduleStore(
-            fetch: { [self] request async -> Schedule in
-                lock.withLock { recorded.append(request) }
-                return answer
-            }
         )
     }
 }
