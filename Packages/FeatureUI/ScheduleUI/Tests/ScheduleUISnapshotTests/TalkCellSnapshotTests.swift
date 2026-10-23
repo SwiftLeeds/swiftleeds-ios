@@ -1,4 +1,5 @@
 #if os(iOS)
+import ScheduleDomain
 import ScheduleFeature
 import ScheduleUI
 import Testing

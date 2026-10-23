@@ -1,4 +1,5 @@
 import Foundation
+import ScheduleDomain
 import ScheduleFeature
 
 extension Schedule {

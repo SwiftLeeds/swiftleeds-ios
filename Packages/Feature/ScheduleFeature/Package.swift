@@ -9,7 +9,8 @@ let package = Package(
         .macOS(.v26),
     ],
     products: [
-        .library(name: "ScheduleFeature", targets: ["ScheduleFeature"])
+        .library(name: "ScheduleDomain", targets: ["ScheduleDomain"]),
+        .library(name: "ScheduleFeature", targets: ["ScheduleFeature"]),
     ],
     dependencies: [
         .package(path: "../../Kit/NetworkKit"),
@@ -17,8 +18,15 @@ let package = Package(
     ],
     targets: [
         .target(
+            name: "ScheduleDomain",
+            dependencies: [
+                .product(name: "Dependencies", package: "swift-dependencies")
+            ],
+        ),
+        .target(
             name: "ScheduleFeature",
             dependencies: [
+                "ScheduleDomain",
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "NetworkKit", package: "NetworkKit"),
             ],
@@ -26,6 +34,7 @@ let package = Package(
         .testTarget(
             name: "ScheduleFeatureTests",
             dependencies: [
+                "ScheduleDomain",
                 "ScheduleFeature",
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "NetworkKit", package: "NetworkKit"),

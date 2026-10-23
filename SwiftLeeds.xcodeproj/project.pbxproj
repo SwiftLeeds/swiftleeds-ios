@@ -51,6 +51,7 @@
 		A11CE57000000000000000DC /* SponsorsUI in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000CC /* SponsorsUI */; };
 		A11CE57000000000000000DD /* ScheduleFeature in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000CD /* ScheduleFeature */; };
 		A11CE57000000000000000DF /* ScheduleFeature in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000CF /* ScheduleFeature */; };
+		A11CE570000000000000F5D1 /* ScheduleDomain in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE570000000000000F5C1 /* ScheduleDomain */; };
 		A11CE57000000000000000E6 /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000E5 /* Dependencies */; };
 		A11CE57000000000000000E8 /* ScheduleUI in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000E7 /* ScheduleUI */; };
 		A11CE57000000000000000EA /* ScheduleUI in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE57000000000000000E9 /* ScheduleUI */; };
@@ -209,6 +210,7 @@
 				74A09FE128C6778C00E03F39 /* SwiftUI.framework in Frameworks */,
 				74A09FDF28C6778C00E03F39 /* WidgetKit.framework in Frameworks */,
 				A11CE57000000000000000DF /* ScheduleFeature in Frameworks */,
+				A11CE570000000000000F5D1 /* ScheduleDomain in Frameworks */,
 				A11CE57000000000000000E6 /* Dependencies in Frameworks */,
 				A11CE57000000000000000EC /* NetworkKit in Frameworks */,
 			);
@@ -511,6 +513,7 @@
 			packageProductDependencies = (
 				7BE081532EE5BF13004BCD1F /* UIAssets */,
 				A11CE57000000000000000CF /* ScheduleFeature */,
+				A11CE570000000000000F5C1 /* ScheduleDomain */,
 				A11CE57000000000000000E5 /* Dependencies */,
 				A11CE57000000000000000EB /* NetworkKit */,
 			);
@@ -1520,6 +1523,10 @@
 		A11CE57000000000000000CF /* ScheduleFeature */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ScheduleFeature;
+		};
+		A11CE570000000000000F5C1 /* ScheduleDomain */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ScheduleDomain;
 		};
 		A11CE57000000000000000E5 /* Dependencies */ = {
 			isa = XCSwiftPackageProductDependency;

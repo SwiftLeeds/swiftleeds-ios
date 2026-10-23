@@ -1,4 +1,5 @@
 import Foundation
+import ScheduleDomain
 
 package struct StoredSchedule: Codable, Sendable {
     // The backend sends no cache headers, so the app picks the number.

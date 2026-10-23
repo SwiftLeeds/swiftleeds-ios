@@ -1,5 +1,6 @@
 import Dependencies
 import Foundation
+import ScheduleDomain
 import ScheduleFeature
 import WidgetKit
 

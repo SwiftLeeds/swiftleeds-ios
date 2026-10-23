@@ -1,3 +1,4 @@
+import ScheduleDomain
 import ScheduleFeature
 import Testing
 
