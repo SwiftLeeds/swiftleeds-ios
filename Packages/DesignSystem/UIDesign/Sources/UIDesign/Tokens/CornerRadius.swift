@@ -10,6 +10,7 @@ public struct CornerRadius: Equatable, Hashable, Sendable {
 }
 
 extension CornerRadius {
+    // swiftlint:disable no_magic_numbers - each number here is the value its name defines
     /// A square corner, with no rounding.
     public static let zero = CornerRadius(0)
     public static let small = CornerRadius(8)
@@ -19,6 +20,7 @@ extension CornerRadius {
 
     /// A fully rounded end. `RoundedRectangle` clamps this to half the shorter side.
     public static let full = CornerRadius(.infinity)
+    // swiftlint:enable no_magic_numbers
 }
 
 extension CGFloat {

@@ -51,6 +51,7 @@ extension AppDelegate {
 
                 let statusCode = (response as? HTTPURLResponse)?.statusCode
 
+                // swiftlint:disable:next no_magic_numbers - the upper bound is unconfirmed, so it has no name yet
                 guard let statusCode, 200..<399 ~= statusCode else {
                     log.error(
                         "Push registration was rejected with status \(statusCode.map(String.init) ?? "none", name: "statusCode", privacy: .open)",

@@ -16,6 +16,7 @@ public struct AvatarSize: Equatable, Hashable, Sendable {
 }
 
 extension AvatarSize {
+    // swiftlint:disable no_magic_numbers - each number here is the value its name defines
     /// An avatar in a dense row, or in a group of them.
     public static let small = AvatarSize(28)
 
@@ -27,6 +28,7 @@ extension AvatarSize {
 
     /// An avatar that is the screen's subject, such as on a profile.
     public static let xLarge = AvatarSize(80)
+    // swiftlint:enable no_magic_numbers
 }
 
 extension CGFloat {
