@@ -1,4 +1,4 @@
-import AuthenticationFeature
+import AuthenticationDomain
 
 actor InMemorySessionStore {
     private(set) var stored: Session?

@@ -1,3 +1,5 @@
+import AuthenticationDomain
+
 /// Why a login request never got a response.
 package enum LoginRequestError: Error {
     case couldNotEncodeRequest(any Error)

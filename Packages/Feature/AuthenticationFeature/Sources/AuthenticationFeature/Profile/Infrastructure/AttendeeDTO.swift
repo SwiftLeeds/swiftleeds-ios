@@ -1,3 +1,4 @@
+import AuthenticationDomain
 import Foundation
 
 package struct AttendeeDTO: Decodable {

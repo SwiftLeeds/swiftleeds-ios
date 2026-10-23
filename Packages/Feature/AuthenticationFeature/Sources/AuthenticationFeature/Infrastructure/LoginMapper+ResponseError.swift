@@ -1,3 +1,4 @@
+import AuthenticationDomain
 import NetworkKit
 
 extension LoginMapper {

@@ -1,4 +1,4 @@
-import AuthenticationFeature
+import AuthenticationDomain
 import Testing
 
 @Suite struct TicketSlugTests {

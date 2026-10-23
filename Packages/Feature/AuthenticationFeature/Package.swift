@@ -9,6 +9,7 @@ let package = Package(
         .macOS(.v26),
     ],
     products: [
+        .library(name: "AuthenticationDomain", targets: ["AuthenticationDomain"]),
         .library(name: "AuthenticationFeature", targets: ["AuthenticationFeature"]),
         .library(name: "AuthenticationFeatureTestSupport", targets: ["AuthenticationFeatureTestSupport"]),
     ],
@@ -20,8 +21,15 @@ let package = Package(
     ],
     targets: [
         .target(
+            name: "AuthenticationDomain",
+            dependencies: [
+                .product(name: "Dependencies", package: "swift-dependencies")
+            ],
+        ),
+        .target(
             name: "AuthenticationFeature",
             dependencies: [
+                "AuthenticationDomain",
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "LogKit", package: "LogKit"),
                 .product(name: "NetworkKit", package: "NetworkKit"),
@@ -30,11 +38,12 @@ let package = Package(
         ),
         .target(
             name: "AuthenticationFeatureTestSupport",
-            dependencies: ["AuthenticationFeature"],
+            dependencies: ["AuthenticationDomain"],
         ),
         .testTarget(
             name: "AuthenticationFeatureTests",
             dependencies: [
+                "AuthenticationDomain",
                 "AuthenticationFeature",
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "LogKit", package: "LogKit"),

@@ -1,5 +1,5 @@
 #if os(iOS)
-import AuthenticationFeature
+import AuthenticationDomain
 import AuthenticationUI
 import Foundation
 import Testing

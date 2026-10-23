@@ -1,3 +1,4 @@
+import AuthenticationDomain
 import AuthenticationFeature
 import Dependencies
 import Testing

@@ -1,3 +1,5 @@
+import AuthenticationDomain
+
 struct CachedSession: Codable {
     let token: String
 }

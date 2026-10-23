@@ -1,4 +1,4 @@
-import AuthenticationFeature
+import AuthenticationDomain
 
 extension SessionStore {
     static func failing(with error: some Error & Sendable) -> SessionStore {

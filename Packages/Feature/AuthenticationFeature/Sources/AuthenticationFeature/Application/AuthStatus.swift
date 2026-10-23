@@ -1,3 +1,4 @@
+import AuthenticationDomain
 import Dependencies
 
 public struct AuthStatus: Sendable {

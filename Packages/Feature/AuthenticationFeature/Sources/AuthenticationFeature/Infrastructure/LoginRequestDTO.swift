@@ -1,3 +1,5 @@
+import AuthenticationDomain
+
 struct LoginRequestDTO: Encodable {
     let email: String
     let ticket: String

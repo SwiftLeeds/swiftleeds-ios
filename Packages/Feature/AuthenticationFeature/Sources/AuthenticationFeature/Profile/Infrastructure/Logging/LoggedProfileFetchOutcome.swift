@@ -1,3 +1,4 @@
+import AuthenticationDomain
 import LogKit
 
 /// How the outcome of a profile fetch reads in a log.
