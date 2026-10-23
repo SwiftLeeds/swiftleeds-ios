@@ -149,9 +149,22 @@ def swift_args(segment):
     return None
 
 
+def own_options(args):
+    """Returns the arguments that swift itself reads, not a product or -- tail."""
+    own = args[:1]
+    for arg in args[1:]:
+        if arg == "--":
+            break
+        # swift run builds first, and the product reads what follows its name.
+        if args[0] == "run" and not arg.startswith("-"):
+            break
+        own.append(arg)
+    return own
+
+
 def check(args):
     """Refuses a swift invocation that would write a per-package .build."""
-    if not args or args[0] in HARMLESS or HARMLESS_FLAGS.intersection(args):
+    if not args or args[0] in HARMLESS or HARMLESS_FLAGS.intersection(own_options(args)):
         return
 
     scratch = None
