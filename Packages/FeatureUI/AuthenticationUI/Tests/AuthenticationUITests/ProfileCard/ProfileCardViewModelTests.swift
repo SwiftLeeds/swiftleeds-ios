@@ -1,5 +1,5 @@
+import AuthenticationApplication
 import AuthenticationDomain
-import AuthenticationFeature
 import AuthenticationUI
 import Dependencies
 import Foundation

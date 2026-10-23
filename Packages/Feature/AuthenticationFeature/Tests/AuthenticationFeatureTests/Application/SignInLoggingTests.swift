@@ -1,5 +1,5 @@
+import AuthenticationApplication
 import AuthenticationDomain
-import AuthenticationFeature
 import Dependencies
 import LogKit
 import LogKitTestSupport
