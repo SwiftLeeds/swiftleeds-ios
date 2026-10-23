@@ -66,6 +66,16 @@ enum SessionKind: Equatable, Hashable, Sendable {
         }
     }
 
+    /// The heading over the credited people, such as "Hosts".
+    var creditHeading: LocalizedStringResource {
+        switch self {
+        case .talk: "Speakers"
+        case .lightningTalk: "Speakers"
+        case .workshop: "Hosts"
+        case .dropIn: "Hosts"
+        }
+    }
+
     /// The name of the kind's SF Symbol.
     var symbol: String {
         // A bare name, because `Icon` names no symbol for a kind and `UIDesign` is not edited on

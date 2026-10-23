@@ -1,14 +1,14 @@
 import SwiftUI
 import UIDesign
 
-/// A view that lists a session's speakers under a "Speakers" heading.
+/// A view that lists a session's credited people under a heading its kind sets.
 ///
 /// Each person is a row: a large avatar, then the name above the description.
 /// The rows sit side by side in equal columns while they fit, and stack at an
 /// accessibility text size.
 struct CreditedRows: View {
-    /// The speakers to list, in order.
-    private let speakers: [SamplePerson]
+    /// Who gives or runs the session. Its kind sets the heading.
+    private let lineup: SessionLineup
 
     /// The action that shows a person's page.
     private let showPerson: (SamplePerson) -> Void
@@ -16,20 +16,20 @@ struct CreditedRows: View {
     /// The current Dynamic Type size.
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
-    /// Creates a list of speakers.
+    /// Creates a list of the people a session credits.
     ///
     /// - Parameters:
-    ///   - speakers: The speakers to list, in order.
+    ///   - lineup: Who gives or runs the session. Its kind sets the heading.
     ///   - showPerson: The action that shows a person's page.
-    init(speakers: [SamplePerson], showPerson: @escaping (SamplePerson) -> Void) {
-        self.speakers = speakers
+    init(lineup: SessionLineup, showPerson: @escaping (SamplePerson) -> Void) {
+        self.lineup = lineup
         self.showPerson = showPerson
     }
 
     /// The heading, then the rows.
     var body: some View {
         VStack(alignment: .leading, spacing: .small) {
-            Text("Speakers")
+            Text(lineup.kind.creditHeading)
                 .font(.headline)
                 .accessibilityAddTraits(.isHeader)
 
@@ -49,7 +49,7 @@ extension CreditedRows {
             stackedRows
         } else {
             EqualColumns(columnGap: CGFloat(Spacing.xLarge), rowGap: CGFloat(Spacing.large)) {
-                ForEach(speakers) { row(for: $0) }
+                ForEach(lineup.credited) { row(for: $0) }
             }
         }
     }
@@ -57,7 +57,7 @@ extension CreditedRows {
     /// The rows, one above the next.
     private var stackedRows: some View {
         VStack(alignment: .leading, spacing: .large) {
-            ForEach(speakers) { row(for: $0) }
+            ForEach(lineup.credited) { row(for: $0) }
         }
     }
 
