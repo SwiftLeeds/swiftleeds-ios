@@ -214,8 +214,7 @@ extension HeroBlock {
     /// The credited names, in the teaser's text style.
     private var credits: some View {
         HeroCredits(
-            kind: session.kind,
-            speakers: session.lineup.credited,
+            lineup: session.lineup,
             leadColor: supportingText,
             showPerson: showPerson,
         )

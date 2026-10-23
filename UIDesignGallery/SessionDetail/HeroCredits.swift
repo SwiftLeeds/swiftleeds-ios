@@ -1,15 +1,12 @@
 import SwiftUI
 
-/// A view that credits a session's speakers in one line of text.
+/// A view that credits the people who give or run a session in one line of text.
 ///
-/// A lead word such as "Led by" comes first, then each speaker's name. A tap on a name shows that
-/// speaker.
+/// A lead word such as "Led by" comes first, then each credited name. A tap on a name shows that
+/// person.
 struct HeroCredits: View {
-    /// The kind of session, which sets the lead word.
-    private let kind: SessionKind
-
-    /// The speakers to credit, in the order their names read.
-    private let speakers: [SamplePerson]
+    /// Who gives or runs the session. Its kind sets the lead word.
+    private let lineup: SessionLineup
 
     /// The color of the lead word.
     private let leadColor: Color
@@ -20,21 +17,18 @@ struct HeroCredits: View {
     /// Whether this person asked for more contrast.
     @Environment(\.colorSchemeContrast) private var contrast
 
-    /// Creates a line that credits a session's speakers.
+    /// Creates a line that credits the people who give or run a session.
     ///
     /// - Parameters:
-    ///   - kind: The kind of session, which sets the lead word.
-    ///   - speakers: The speakers to credit, in the order their names read.
+    ///   - lineup: Who gives or runs the session. Its kind sets the lead word.
     ///   - leadColor: The color of the lead word, a grey that still reads on the hero.
     ///   - showPerson: The action that shows a person's page. A tap on a name runs it.
     init(
-        kind: SessionKind,
-        speakers: [SamplePerson],
+        lineup: SessionLineup,
         leadColor: Color,
         showPerson: @escaping (SamplePerson) -> Void,
     ) {
-        self.kind = kind
-        self.speakers = speakers
+        self.lineup = lineup
         self.leadColor = leadColor
         self.showPerson = showPerson
     }
@@ -56,37 +50,39 @@ extension HeroCredits {
     /// How opaque the names are, against white.
     private static let nameOpacity: Double = 0.92
 
-    /// The URL scheme that stands for a tap on a speaker's name.
-    private static let speakerScheme = "speaker"
+    /// The URL scheme that stands for a tap on a credited name.
+    private static let personScheme = "person"
 }
 
 // MARK: - Credits
 
 extension HeroCredits {
-    /// The credits as one line of text, a lead word and then each speaker's name as a link.
+    /// The credits as one line of text, a lead word and then each credited name as a link.
     private var creditString: AttributedString {
-        var credits = AttributedString("\(kind.creditVerb) ")
+        var credits = AttributedString("\(lineup.kind.creditVerb) ")
         credits.foregroundColor = leadColor
-        let last = speakers.count - 1
-        for (index, speaker) in speakers.enumerated() {
-            var name = AttributedString(index < last ? "\(speaker.name), " : speaker.name)
+        let people = lineup.credited
+        let last = people.count - 1
+        for (index, person) in people.enumerated() {
+            var name = AttributedString(index < last ? "\(person.name), " : person.name)
             name.foregroundColor = nameColor
-            name.link = URL(string: "\(Self.speakerScheme)://\(index)")
+            name.link = URL(string: "\(Self.personScheme)://\(index)")
             credits += name
         }
         return credits
     }
 
-    /// Shows the speaker whose name a tap opened.
+    /// Shows the person whose name a tap opened.
     ///
     /// - Parameter url: The link of the name that was tapped.
-    /// - Returns: `.handled` for a speaker's link, else `.discarded`.
+    /// - Returns: `.handled` for a credited name's link, else `.discarded`.
     private func open(_ url: URL) -> OpenURLAction.Result {
-        guard url.scheme == Self.speakerScheme,
+        let people = lineup.credited
+        guard url.scheme == Self.personScheme,
             let index = url.host().flatMap(Int.init),
-            speakers.indices.contains(index)
+            people.indices.contains(index)
         else { return .discarded }
-        showPerson(speakers[index])
+        showPerson(people[index])
         return .handled
     }
 
