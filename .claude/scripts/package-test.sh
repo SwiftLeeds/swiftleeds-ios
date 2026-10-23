@@ -26,8 +26,7 @@ repo=$(git rev-parse --show-toplevel)
 package="$1"
 shift
 
-# A package sits at Packages/<Folder>/<Name>. Exactly one must match, so a name
-# used in two folders fails instead of picking one.
+# A name used in two folders fails rather than picking one.
 matches=()
 for manifest in "$repo"/Packages/*/"$package"/Package.swift; do
     [ -f "$manifest" ] && matches+=("$(dirname "$manifest")")
