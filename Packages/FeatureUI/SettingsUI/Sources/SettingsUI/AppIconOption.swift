@@ -26,8 +26,10 @@ extension AppIconOption {
         switch self {
         case .generic:
             return UIImage(named: "AppIconPreview-2024")
+
         case .space:
             return UIImage(named: "AppIconPreview-Space")
+
         case .olympics:
             return UIImage(named: "AppIconPreview-Olympics")
         }

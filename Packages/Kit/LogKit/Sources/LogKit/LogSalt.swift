@@ -20,10 +20,10 @@ public struct LogSalt: Hashable, Sendable {
     }
 
     /// Creates a salt from random bytes.
-    public static func random() -> LogSalt {
+    public static func random() -> Self {
         var generator = SystemRandomNumberGenerator()
         let bytes = (0..<byteCount).map { _ in UInt8.random(in: .min ... .max, using: &generator) }
-        return LogSalt(Data(bytes))
+        return Self(Data(bytes))
     }
 }
 

@@ -8,8 +8,8 @@ struct LoggedHTTPRequestOutcome {
     // A response runs on every request in the app, so it records at the level the platform drops
     // unless someone is watching. The status is data, not severity: whoever reads the response
     // decides whether a 500 is a failure.
-    static func success(request: URLRequest, status: HTTPStatus) -> LoggedHTTPRequestOutcome {
-        LoggedHTTPRequestOutcome(
+    static func success(request: URLRequest, status: HTTPStatus) -> Self {
+        Self(
             level: .debug,
             message: """
                 A response arrived: \
@@ -19,9 +19,9 @@ struct LoggedHTTPRequestOutcome {
         )
     }
 
-    static func failure(request: URLRequest, error: any Error) -> LoggedHTTPRequestOutcome {
+    static func failure(request: URLRequest, error: any Error) -> Self {
         let reason = Reason(error)
-        return LoggedHTTPRequestOutcome(
+        return Self(
             level: reason.level,
             message: """
                 A request did not reach the server: \
@@ -56,16 +56,22 @@ extension LoggedHTTPRequestOutcome {
             switch code {
             case .cancelled:
                 .debug
+
             case .notConnectedToInternet:
                 .notice
+
             case .networkConnectionLost:
                 .notice
+
             case .timedOut:
                 .notice
+
             case .dataNotAllowed:
                 .notice
+
             case .internationalRoamingOff:
                 .notice
+
             default:
                 .error
             }
@@ -78,28 +84,40 @@ extension LoggedHTTPRequestOutcome {
             switch code {
             case .cancelled:
                 "cancelled"
+
             case .notConnectedToInternet:
                 "notConnectedToInternet"
+
             case .networkConnectionLost:
                 "networkConnectionLost"
+
             case .timedOut:
                 "timedOut"
+
             case .dataNotAllowed:
                 "dataNotAllowed"
+
             case .internationalRoamingOff:
                 "internationalRoamingOff"
+
             case .cannotFindHost:
                 "cannotFindHost"
+
             case .cannotConnectToHost:
                 "cannotConnectToHost"
+
             case .dnsLookupFailed:
                 "dnsLookupFailed"
+
             case .badServerResponse:
                 "badServerResponse"
+
             case .secureConnectionFailed:
                 "secureConnectionFailed"
+
             case .serverCertificateUntrusted:
                 "serverCertificateUntrusted"
+
             default:
                 "URLError \(code.rawValue)"
             }

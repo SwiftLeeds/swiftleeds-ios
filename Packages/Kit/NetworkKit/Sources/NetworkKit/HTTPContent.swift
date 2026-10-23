@@ -5,8 +5,8 @@ public struct HTTPContent: Equatable, Hashable, Sendable {
     private let data: Data
     private let mediaType: MediaType
 
-    public static func json(_ data: Data) -> HTTPContent {
-        HTTPContent(data: data, mediaType: .application.json)
+    public static func json(_ data: Data) -> Self {
+        Self(data: data, mediaType: .application.json)
     }
 
     /// Writes the content and its Content-Type header onto the request.

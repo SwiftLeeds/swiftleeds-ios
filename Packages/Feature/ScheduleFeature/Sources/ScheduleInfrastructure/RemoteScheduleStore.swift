@@ -33,6 +33,7 @@ extension RemoteScheduleStore: DependencyKey {
                 switch error {
                 case .unexpectedStatus:
                     throw ScheduleFetchError.unknown
+
                 case .couldNotDecode:
                     throw ScheduleFetchError.invalidResponse
                 }

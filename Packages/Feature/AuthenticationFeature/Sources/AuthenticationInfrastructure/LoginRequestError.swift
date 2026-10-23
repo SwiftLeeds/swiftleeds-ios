@@ -11,6 +11,7 @@ extension SignInError {
         switch error {
         case .couldNotEncodeRequest:
             self = .unknown
+
         case .transportFailed:
             self = .couldNotReachServer
         }

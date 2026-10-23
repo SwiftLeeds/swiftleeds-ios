@@ -27,8 +27,10 @@ actor KeychainStore {
                 throw KeychainError.unreadableValue
             }
             return data
+
         case errSecItemNotFound:
             return nil
+
         default:
             throw KeychainError(status: status)
         }
@@ -38,8 +40,10 @@ actor KeychainStore {
         switch update(data, for: key) {
         case errSecSuccess:
             return
+
         case errSecItemNotFound:
             try add(data, for: key)
+
         case let status:
             throw KeychainError(status: status)
         }
@@ -53,6 +57,7 @@ actor KeychainStore {
         switch status {
         case errSecSuccess, errSecItemNotFound:
             return
+
         default:
             throw KeychainError(status: status)
         }
@@ -67,12 +72,14 @@ actor KeychainStore {
         switch status {
         case errSecSuccess:
             return
+
         case errSecDuplicateItem:
             // Something wrote between the update and the add. The actor rules
             // that out within this process, leaving other processes.
             guard update(data, for: key) == errSecSuccess else {
                 throw KeychainError(status: status)
             }
+
         default:
             throw KeychainError(status: status)
         }

@@ -15,8 +15,10 @@ extension SignInError {
         switch error {
         case .invalidCredentials:
             self = .invalidCredentials
+
         case .unexpectedStatus:
             self = .unknown
+
         case .invalidToken:
             self = .unknown
         }

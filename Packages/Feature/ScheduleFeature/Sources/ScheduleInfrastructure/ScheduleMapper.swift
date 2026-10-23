@@ -25,6 +25,7 @@ extension ScheduleMapper {
             } catch {
                 throw .couldNotDecode(error)
             }
+
         default:
             throw .unexpectedStatus(response.status)
         }

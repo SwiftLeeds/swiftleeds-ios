@@ -31,7 +31,7 @@ public struct SourceLocation: Hashable, Sendable {
         file: String = #fileID,
         function: String = #function,
         line: Int = #line,
-    ) -> SourceLocation {
-        SourceLocation(file: file, function: function, line: line)
+    ) -> Self {
+        Self(file: file, function: function, line: line)
     }
 }

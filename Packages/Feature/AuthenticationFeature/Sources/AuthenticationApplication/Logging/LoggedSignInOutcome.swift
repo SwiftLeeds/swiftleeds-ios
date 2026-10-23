@@ -7,33 +7,35 @@ struct LoggedSignInOutcome {
     let message: LogMessage
 
     /// Carries no field. The credential identifies a person, and nothing here needs it.
-    static let success = LoggedSignInOutcome(
+    static let success = Self(
         level: .notice,
         message: "Signing in finished",
     )
 
     /// A failure that is not a `SignInError`.
-    static let unexplainedFailure = LoggedSignInOutcome(
+    static let unexplainedFailure = Self(
         level: .error,
         message: "Signing in did not finish, and no sign-in outcome explains it",
     )
 
-    static func failure(_ error: SignInError) -> LoggedSignInOutcome {
+    static func failure(_ error: SignInError) -> Self {
         switch error {
         case .invalidCredentials:
             // Expected: someone mistyped a ticket reference. Not a fault in the app.
-            LoggedSignInOutcome(
+            Self(
                 level: .notice,
                 message: "Signing in did not finish: the credentials were rejected",
             )
+
         case .couldNotReachServer:
             // Expected: the device is offline. The user can retry.
-            LoggedSignInOutcome(
+            Self(
                 level: .notice,
                 message: "Signing in did not finish: the server could not be reached",
             )
+
         case .unknown:
-            LoggedSignInOutcome(
+            Self(
                 level: .error,
                 message: "Signing in did not finish: the reason is not known",
             )

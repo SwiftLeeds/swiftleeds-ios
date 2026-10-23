@@ -37,12 +37,16 @@ extension SignInView {
             switch phase {
             case .failed(.couldNotReachServer):
                 .cannotConnect
+
             case .failed(.unknown):
                 .unexpected
+
             case .failed(.invalidCredentials):
                 nil
+
             case .editing:
                 nil
+
             case .submitting:
                 nil
             }

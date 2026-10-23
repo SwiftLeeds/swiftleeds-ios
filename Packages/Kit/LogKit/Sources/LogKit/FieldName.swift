@@ -32,14 +32,17 @@ public enum FieldName: Hashable, Sendable, ExpressibleByStringLiteral {
     }
 
     /// Compares two gaps by position alone, never by the label a caller gave.
-    public static func == (lhs: FieldName, rhs: FieldName) -> Bool {
+    public static func == (lhs: Self, rhs: Self) -> Bool {
         switch (lhs, rhs) {
         case let (.authored(left), .authored(right)):
             left == right
+
         case let (.positional(left, _), .positional(right, _)):
             left == right
+
         case (.authored, .positional):
             false
+
         case (.positional, .authored):
             false
         }
@@ -49,6 +52,7 @@ public enum FieldName: Hashable, Sendable, ExpressibleByStringLiteral {
         switch self {
         case let .authored(value):
             hasher.combine(value)
+
         case let .positional(index, _):
             hasher.combine(index)
         }
@@ -66,6 +70,7 @@ extension String {
         switch name {
         case let .authored(value):
             self = value
+
         case let .positional(index, label):
             self = label ?? String(index.value)
         }

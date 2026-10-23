@@ -16,12 +16,16 @@ struct SidebarMainView: View {
             switch appState.selectedTab {
             case .conference:
                 ScheduleView()
+
             case .about:
                 AboutView()
+
             case .location:
                 LocalView()
+
             case .sponsors:
                 SponsorsView()
+
             case .settings:
                 SettingsView(contactEmail: .conference, appVersion: .current) {
                     Section("Account") { AccountView() }

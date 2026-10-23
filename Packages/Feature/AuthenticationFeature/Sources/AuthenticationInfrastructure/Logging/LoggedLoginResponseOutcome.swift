@@ -7,21 +7,22 @@ struct LoggedLoginResponseOutcome {
 
     // Carries no field. The accepted value is a session token, and nothing about it belongs in a
     // log line saying the response parsed.
-    static let success = LoggedLoginResponseOutcome(
+    static let success = Self(
         level: .debug,
         message: "The sign-in response was accepted",
     )
 
-    static func failure(_ error: LoginMapper.ResponseError) -> LoggedLoginResponseOutcome {
+    static func failure(_ error: LoginMapper.ResponseError) -> Self {
         switch error {
         case .invalidCredentials:
             // Expected: someone mistyped a ticket reference. Not a fault in the app.
-            LoggedLoginResponseOutcome(
+            Self(
                 level: .notice,
                 message: "The sign-in credentials were rejected",
             )
+
         case let .unexpectedStatus(status):
-            LoggedLoginResponseOutcome(
+            Self(
                 level: .error,
                 message: """
                     Sign-in got an unexpected status \
@@ -29,8 +30,9 @@ struct LoggedLoginResponseOutcome {
                     (\(String(status.category), name: "statusCategory", privacy: .open))
                     """,
             )
+
         case let .invalidToken(reason):
-            LoggedLoginResponseOutcome(
+            Self(
                 level: .error,
                 message: "The server's sign-in token was rejected: \(reason, name: "reason", privacy: .open)",
             )

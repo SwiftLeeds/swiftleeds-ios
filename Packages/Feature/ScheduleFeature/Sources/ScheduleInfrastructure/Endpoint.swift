@@ -18,6 +18,7 @@ enum Endpoint: HTTPRequestConvertible, Equatable, Hashable, Sendable {
         switch request {
         case .current:
             []
+
         case let .event(event):
             [URLQueryItem(name: "event", value: event.uuidString)]
         }

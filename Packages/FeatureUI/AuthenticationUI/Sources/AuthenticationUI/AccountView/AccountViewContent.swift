@@ -32,8 +32,10 @@ package struct AccountViewContent: View {
         switch state {
         case .loading:
             NameplatePlaceholder()
+
         case .signedOut:
             signedOut
+
         case .signedIn:
             ProfileCard(onSignOut: onSignOut)
         }

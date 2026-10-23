@@ -20,8 +20,10 @@ extension LoginMapper {
             } catch {
                 throw .invalidToken(error)
             }
+
         case .unauthorized:
             throw .invalidCredentials
+
         default:
             throw .unexpectedStatus(response.status)
         }

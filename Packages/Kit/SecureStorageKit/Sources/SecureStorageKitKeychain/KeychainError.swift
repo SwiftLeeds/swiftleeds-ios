@@ -26,10 +26,13 @@ public enum KeychainError: Error, Equatable {
         switch status {
         case errSecInteractionNotAllowed:
             self = .deviceLocked
+
         case errSecAuthFailed:
             self = .authenticationFailed
+
         case errSecMissingEntitlement:
             self = .missingEntitlement
+
         default:
             self = .unexpected(status)
         }

@@ -11,8 +11,7 @@
 #
 # Usage: .claude/scripts/package-test.sh <PackageName> [extra swift test args]
 #
-# <PackageName> is the folder name only, found at Packages/<PackageName> or
-# Packages/<Folder>/<PackageName>.
+# <PackageName> is the folder name only, found at Packages/<Folder>/<PackageName>.
 
 set -euo pipefail
 
@@ -27,15 +26,14 @@ repo=$(git rev-parse --show-toplevel)
 package="$1"
 shift
 
-# A package sits at Packages/<Name> or Packages/<Folder>/<Name>. Exactly one
-# must match, so a name used at both depths fails instead of picking one.
+# A name used in two folders fails rather than picking one.
 matches=()
-for manifest in "$repo/Packages/$package/Package.swift" "$repo"/Packages/*/"$package"/Package.swift; do
+for manifest in "$repo"/Packages/*/"$package"/Package.swift; do
     [ -f "$manifest" ] && matches+=("$(dirname "$manifest")")
 done
 
 if [ ${#matches[@]} -ne 1 ]; then
-    echo "Expected exactly one package named $package under Packages/ (at Packages/$package or Packages/*/$package), found ${#matches[@]}" >&2
+    echo "Expected exactly one package named $package at Packages/*/$package, found ${#matches[@]}" >&2
     exit 1
 fi
 package_path=${matches[0]}

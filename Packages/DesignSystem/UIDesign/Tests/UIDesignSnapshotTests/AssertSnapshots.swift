@@ -18,7 +18,7 @@ func assertSnapshots(
 ) {
     assertSnapshots(
         of: view,
-        as: variants(width: nil, textSizes: everyTextSize),
+        as: variants(width: nil, appearances: defaultContrastAppearances, textSizes: everyTextSize),
         fileID: fileID,
         file: filePath,
         testName: testName,
@@ -51,7 +51,11 @@ func assertCompactSnapshots(
 ) {
     assertSnapshots(
         of: view,
-        as: variants(width: compactWidth, textSizes: [defaultTextSize, largestTextSize]),
+        as: variants(
+            width: compactWidth,
+            appearances: defaultContrastAppearances,
+            textSizes: [defaultTextSize, largestTextSize],
+        ),
         fileID: fileID,
         file: filePath,
         testName: testName,
@@ -79,7 +83,41 @@ func assertSpecimenSnapshots(
 ) {
     assertSnapshots(
         of: view,
-        as: variants(width: nil, textSizes: [defaultTextSize]),
+        as: variants(
+            width: nil,
+            appearances: defaultContrastAppearances,
+            textSizes: [defaultTextSize],
+        ),
+        fileID: fileID,
+        file: filePath,
+        testName: testName,
+        line: line,
+        column: column,
+    )
+}
+
+/// Compares a color specimen with its reference images at the default text size.
+///
+/// Four images: light and dark, each with and without Increase Contrast.
+///
+/// Only color has a contrast variant. Increase Contrast can change a color, but not a length
+/// or an icon.
+@MainActor
+func assertColorSpecimenSnapshots(
+    of view: some View,
+    fileID: StaticString = #fileID,
+    file filePath: StaticString = #filePath,
+    testName: String = #function,
+    line: UInt = #line,
+    column: UInt = #column,
+) {
+    assertSnapshots(
+        of: view,
+        as: variants(
+            width: nil,
+            appearances: defaultContrastAppearances + increasedContrastAppearances,
+            textSizes: [defaultTextSize],
+        ),
         fileID: fileID,
         file: filePath,
         testName: testName,
@@ -106,9 +144,37 @@ private let listMargin: CGFloat = 16
 /// The number of sides a list margin appears on, leading and trailing.
 private let bothSides: CGFloat = 2
 
-private let colorSchemes: [(name: String, style: UIUserInterfaceStyle)] = [
-    ("light", .light),
-    ("dark", .dark),
+/// One way the system can draw a view, with the name of its reference image.
+private struct Appearance {
+    /// The part of the reference image name that tells this appearance from the others.
+    let name: String
+
+    /// The traits the view renders with.
+    let traits: UITraitCollection
+}
+
+/// The light and dark appearances, with the system's default contrast.
+@MainActor private let defaultContrastAppearances: [Appearance] = [
+    Appearance(name: "light", traits: UITraitCollection { $0.userInterfaceStyle = .light }),
+    Appearance(name: "dark", traits: UITraitCollection { $0.userInterfaceStyle = .dark }),
+]
+
+/// The light and dark appearances, with Increase Contrast turned on.
+@MainActor private let increasedContrastAppearances: [Appearance] = [
+    Appearance(
+        name: "light-increased-contrast",
+        traits: UITraitCollection {
+            $0.userInterfaceStyle = .light
+            $0.accessibilityContrast = .high
+        },
+    ),
+    Appearance(
+        name: "dark-increased-contrast",
+        traits: UITraitCollection {
+            $0.userInterfaceStyle = .dark
+            $0.accessibilityContrast = .high
+        },
+    ),
 ]
 
 private let everyTextSize: [(name: String, size: DynamicTypeSize)] = [
@@ -123,19 +189,29 @@ private let largestTextSize: (name: String, size: DynamicTypeSize) = ("accessibi
 // The size most people read at, and the only one a specimen needs.
 private let defaultTextSize: (name: String, size: DynamicTypeSize) = ("default", .large)
 
-// Both of these clip the image if dropped.
-// Text size goes on the view: as a trait it renders large but measures small.
-// fixedSize is needed: the strategy measures with a zero proposal, which gives the minimum size.
+/// Returns one image strategy for each appearance and text size, keyed by reference name.
+///
+/// - Parameters:
+///   - width: The width to render at, or `nil` for the view's natural size.
+///   - appearances: The appearances to record, one image set each.
+///   - textSizes: The text sizes to record in each appearance.
+/// - Returns: The strategies, keyed by the name of each reference image.
 @MainActor
 private func variants<V: View>(
     width: CGFloat?,
+    appearances: [Appearance],
     textSizes: [(name: String, size: DynamicTypeSize)],
 ) -> [String: Snapshotting<V, UIImage>] {
     let prefix = width == nil ? "" : "compact-"
-    return colorSchemes.reduce(into: [:]) { strategies, scheme in
+    return appearances.reduce(into: [:]) { strategies, appearance in
         for textSize in textSizes {
-            strategies["\(prefix)\(scheme.name)-\(textSize.name)"] = Snapshotting<AnyView, UIImage>
-                .image(traits: UITraitCollection { $0.userInterfaceStyle = scheme.style })
+            // Both of these clip the image if dropped.
+            // Text size goes on the view: as a trait it renders large but measures small.
+            // fixedSize is needed: the strategy measures with a zero proposal, which gives the
+            // minimum size.
+            let name = "\(prefix)\(appearance.name)-\(textSize.name)"
+            strategies[name] = Snapshotting<AnyView, UIImage>
+                .image(traits: appearance.traits)
                 .pullback { AnyView(sized($0.dynamicTypeSize(textSize.size), width: width)) }
         }
     }

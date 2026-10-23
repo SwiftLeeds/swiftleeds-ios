@@ -93,8 +93,10 @@ extension SocialLink {
         switch self {
         case .linkedIn(let url):
             url
+
         case .twitter(let url):
             url
+
         case .slack(let url):
             url
         }
@@ -104,8 +106,10 @@ extension SocialLink {
         switch self {
         case .linkedIn:
             "person.crop.rectangle"
+
         case .twitter:
             "at"
+
         case .slack:
             "bubble.left.and.bubble.right"
         }
@@ -115,8 +119,10 @@ extension SocialLink {
         switch self {
         case .linkedIn:
             "LinkedIn profile for \(name)"
+
         case .twitter:
             "Twitter profile for \(name)"
+
         case .slack:
             "Message \(name) on Slack"
         }

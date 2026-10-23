@@ -21,7 +21,7 @@ public struct HTTPHeaderField: Equatable, Hashable, Sendable {
         }
 
         /// Compares two names ignoring case.
-        public static func == (lhs: Name, rhs: Name) -> Bool {
+        public static func == (lhs: Self, rhs: Self) -> Bool {
             lhs.value.lowercased() == rhs.value.lowercased()
         }
 

@@ -15,10 +15,13 @@ extension AttendeeFetchError {
         switch error {
         case .couldNotDecode:
             self = .invalidResponse
+
         case .invalidField:
             self = .invalidResponse
+
         case .unauthorized:
             self = .unauthorized
+
         case .unexpectedStatus:
             self = .unknown
         }

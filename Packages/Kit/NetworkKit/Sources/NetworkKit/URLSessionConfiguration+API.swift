@@ -12,7 +12,7 @@ extension URLSessionConfiguration {
         timeout: TimeInterval = 30,
         cache: URLCache? = nil,
     ) -> URLSessionConfiguration {
-        let configuration = URLSessionConfiguration.default
+        let configuration = Self.default
         configuration.timeoutIntervalForRequest = timeout
         configuration.timeoutIntervalForResource = timeout
         configuration.urlCache = cache
