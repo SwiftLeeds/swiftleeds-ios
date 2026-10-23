@@ -20,10 +20,22 @@ import Testing
         #expect(try token == SessionToken("jwt-abc-123"))
     }
 
-    @Test func whenServerReturnsUnauthorized_shouldThrowInvalidCredentials() async throws {
-        await #expect(throws: SignInError.invalidCredentials) {
+    /// The backend answers 401 on sign-in only when it has no ticket-provider token: a server
+    /// fault, not wrong details.
+    @Test func whenServerReturnsUnauthorized_shouldThrowUnknown() async throws {
+        await #expect(throws: SignInError.unknown) {
             try await withDependencies {
                 $0.authHTTPClient = .responding(with: Data(), statusCode: 401)
+            } operation: {
+                try await AuthGateway.liveValue.authenticate(Credential.fixture)
+            }
+        }
+    }
+
+    @Test func whenServerReturnsForbidden_shouldThrowInvalidCredentials() async throws {
+        await #expect(throws: SignInError.invalidCredentials) {
+            try await withDependencies {
+                $0.authHTTPClient = .responding(with: Data(), statusCode: 403)
             } operation: {
                 try await AuthGateway.liveValue.authenticate(Credential.fixture)
             }

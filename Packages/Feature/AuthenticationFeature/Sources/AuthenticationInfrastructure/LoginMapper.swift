@@ -12,6 +12,11 @@ package struct LoginMapper: Sendable {
 }
 
 extension LoginMapper {
+    /// The mapper for the backend's answer to a sign-in request.
+    ///
+    /// A 200 body becomes the session token. A 403 means no ticket matched, and throws
+    /// ``ResponseError/invalidCredentials``. Any other status throws
+    /// ``ResponseError/unexpectedStatus(_:)``.
     package static let live = LoginMapper { data, response throws(ResponseError) in
         switch response.status {
         case .ok:
@@ -21,7 +26,7 @@ extension LoginMapper {
                 throw .invalidToken(error)
             }
 
-        case .unauthorized:
+        case .forbidden:
             throw .invalidCredentials
 
         default:
