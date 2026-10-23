@@ -71,11 +71,11 @@ extension ColorSpecimen {
         SpecimenGroup("Border") {
             GridRow {
                 Text("primary")
-                Swatch(.borderPrimary)
+                Swatch(.border)
             }
             GridRow {
                 Text("secondary")
-                Swatch(.borderSecondary)
+                Swatch(.opaqueBorder)
             }
         }
     }
@@ -122,7 +122,7 @@ private struct Swatch: View {
             .frame(width: Sample.width, height: Sample.height)
             .overlay {
                 RoundedRectangle(cornerRadius: CGFloat(CornerRadius.small))
-                    .strokeBorder(.borderSecondary, lineWidth: CGFloat(BorderWidth.thin))
+                    .strokeBorder(.opaqueBorder, lineWidth: CGFloat(BorderWidth.thin))
             }
     }
 }
