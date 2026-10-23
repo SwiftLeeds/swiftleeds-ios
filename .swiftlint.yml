@@ -11,16 +11,19 @@
 #
 # The third group, "rules that needed a sweep", holds rules that were decided
 # on and then fixed at every site, or suppressed inline, with the reason, at a
-# site left as it is. The config line and the fixes land in one commit per
-# rule, so `git log -S<rule>` shows what each rule changed.
+# site left as it is. One rule, `no_magic_numbers`, also left sites in the
+# baseline; its comment says which. For most rules the config line and the
+# fixes land in one commit, so `git log -S<rule>` shows what each rule changed.
+# The fixes for `no_magic_numbers` came in the commits just before it.
 #
 # Tuned against the SwiftLint version in .swiftlint-version, which CI installs
 # and the pre-commit hook checks against. Rule defaults change between versions,
 # so re-run the suite after a bump.
 
-# The violations left after the mechanical fixes, 36 as of 2026-10-15, down from
-# 78. They stay recorded rather than fixed, so linting starts green and new code
-# is held to the full rule set. Read the current list with
+# The violations left after the mechanical fixes, 14 as of 2026-10-23, down from
+# 78, plus the 206 view layout numbers `no_magic_numbers` found. They stay
+# recorded rather than fixed, so linting starts green and new code is held to
+# the full rule set. Read the current list with
 # `swiftlint baseline report .swiftlint.baseline --reporter summary`.
 # SwiftLint matches a baselined violation by its content, not its line number,
 # so unrelated edits above it do not resurface it. Burn this down over time.
@@ -130,7 +133,8 @@ opt_in_rules:
   - static_operator
 
   # Rules that needed a sweep. Each had 1 to 26 violations when it was turned
-  # on, 2026-10-15 to 2026-10-21.
+  # on, 2026-10-15 to 2026-10-21, except `no_magic_numbers`, which had 327 on
+  # 2026-10-23.
 
   # "Code reads like clean English." Each of these takes the shorter form Swift
   # offers: a comma for `&&`, `if let x` for `if let x = x`, a return after the
@@ -199,6 +203,15 @@ opt_in_rules:
   # repeats the text beside it, is hidden from VoiceOver. The rule cannot see
   # a parent in another view or a custom builder, so those images are hidden.
   - accessibility_label_for_image
+
+  # "No magic numbers or magic values. Name a literal for its meaning wherever
+  # the meaning is not obvious at the call site. Test fixtures and benchmark
+  # operands are data, not magic." Fixture data is suppressed inline. A block of
+  # numbers a token set or a spec defines, such as the `Spacing` values or the
+  # HTTP status codes and classes, is suppressed between a disable and an
+  # enable. The layout numbers in views, 206 when the
+  # rule was turned on, are in the baseline until design tokens replace them.
+  - no_magic_numbers
 
 # Analyzer rules read the compiler log, so they run only through
 # `swiftlint analyze`, never `swiftlint lint`.

@@ -34,6 +34,7 @@ extension [LocationCategory] {
                         .location(
                             named: "Trinity Kitchen",
                             websiteURL: "https://trinityleeds.com/shops/trinity-kitchen",
+                            // swiftlint:disable:next no_magic_numbers - fixture data, and the line has no room
                             coordinate: try Coordinate(latitude: 53.797378, longitude: -1.545209),
                         )
                     ],
@@ -45,6 +46,7 @@ extension [LocationCategory] {
                         .location(
                             named: "Brew Society",
                             websiteURL: "https://www.brewsociety.co.uk/",
+                            // swiftlint:disable:next no_magic_numbers - fixture data, and the line has no room
                             coordinate: try Coordinate(latitude: 53.795840, longitude: -1.550339),
                         )
                     ],

@@ -10,6 +10,7 @@ public struct IconSize: Equatable, Hashable, Sendable {
 }
 
 extension IconSize {
+    // swiftlint:disable no_magic_numbers - each number here is the value its name defines
     public static let xSmall = IconSize(12)
     public static let small = IconSize(16)
     public static let medium = IconSize(20)
@@ -18,6 +19,7 @@ extension IconSize {
 
     /// Also the smallest comfortable touch target.
     public static let xxLarge = IconSize(44)
+    // swiftlint:enable no_magic_numbers
 }
 
 extension CGFloat {

@@ -54,7 +54,7 @@ func assertCompactSnapshots(
         as: variants(
             width: compactWidth,
             appearances: defaultContrastAppearances,
-            textSizes: [defaultTextSize, everyTextSize[2]],
+            textSizes: [defaultTextSize, largestTextSize],
         ),
         fileID: fileID,
         file: filePath,
@@ -83,7 +83,11 @@ func assertSpecimenSnapshots(
 ) {
     assertSnapshots(
         of: view,
-        as: variants(width: nil, appearances: defaultContrastAppearances, textSizes: [defaultTextSize]),
+        as: variants(
+            width: nil,
+            appearances: defaultContrastAppearances,
+            textSizes: [defaultTextSize],
+        ),
         fileID: fileID,
         file: filePath,
         testName: testName,
@@ -129,13 +133,16 @@ private let compactWidth: CGFloat = 162
 ///
 /// A view that fills the width it is given needs one, or the helper renders it
 /// at its natural width and no line ever wraps.
-let rowWidth = narrowestPhoneWidth - listMargin * 2
+let rowWidth = narrowestPhoneWidth - listMargin * bothSides
 
 // The screen width of an iPhone SE.
 private let narrowestPhoneWidth: CGFloat = 375
 
 // The space a list leaves on each side of a row.
 private let listMargin: CGFloat = 16
+
+/// The number of sides a list margin appears on, leading and trailing.
+private let bothSides: CGFloat = 2
 
 /// One way the system can draw a view, with the name of its reference image.
 private struct Appearance {
@@ -173,8 +180,11 @@ private struct Appearance {
 private let everyTextSize: [(name: String, size: DynamicTypeSize)] = [
     defaultTextSize,
     ("large", .xxxLarge),
-    ("accessibility", .accessibility5),
+    largestTextSize,
 ]
+
+/// The largest accessibility text size, the one that stresses a layout most.
+private let largestTextSize: (name: String, size: DynamicTypeSize) = ("accessibility", .accessibility5)
 
 // The size most people read at, and the only one a specimen needs.
 private let defaultTextSize: (name: String, size: DynamicTypeSize) = ("default", .large)

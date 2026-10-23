@@ -12,8 +12,13 @@ extension ScheduleView {
         private(set) var events: [Schedule.Event] = []
         private(set) var currentEvent: Schedule.Event?
 
-        // An offline request fails within a frame, so without a floor a retry shows no spinner.
-        private static let retrySpinnerMinimum = Duration.milliseconds(500)
+        /// The least time, in milliseconds, a retry shows the spinner.
+        private static let retrySpinnerMilliseconds = 500
+
+        /// The least time a retry shows the spinner.
+        ///
+        /// It applies even when an offline request fails within a frame.
+        private static let retrySpinnerMinimum = Duration.milliseconds(retrySpinnerMilliseconds)
 
         func load() async {
             await showCurrentSchedule(keepingSpinnerForAtLeast: .zero)

@@ -10,6 +10,7 @@ public struct Spacing: Equatable, Hashable, Sendable {
 }
 
 extension Spacing {
+    // swiftlint:disable no_magic_numbers - each number here is the value its name defines
     public static let xxSmall = Spacing(2)
     public static let xSmall = Spacing(4)
     public static let small = Spacing(8)
@@ -17,6 +18,7 @@ extension Spacing {
     public static let large = Spacing(16)
     public static let xLarge = Spacing(24)
     public static let xxLarge = Spacing(32)
+    // swiftlint:enable no_magic_numbers
 }
 
 extension CGFloat {

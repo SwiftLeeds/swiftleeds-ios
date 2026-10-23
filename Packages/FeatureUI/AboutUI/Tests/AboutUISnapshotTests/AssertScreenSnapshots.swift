@@ -2,10 +2,16 @@
 import SnapshotTesting
 import SwiftUI
 
-// An iPhone 13 Pro made tall enough to show the whole About screen, team included.
+/// The screen width of an iPhone, in points.
+private let phoneWidth: CGFloat = 390
+
+/// A screen height that shows the whole About screen, team included, in points.
+private let tallScreenHeight: CGFloat = 3_200
+
+/// An iPhone 13 Pro made tall enough to show the whole About screen, team included.
 private let tallIPhone = ViewImageConfig(
     safeArea: ViewImageConfig.iPhone13Pro.safeArea,
-    size: CGSize(width: 390, height: 3_200),
+    size: CGSize(width: phoneWidth, height: tallScreenHeight),
     traits: ViewImageConfig.iPhone13Pro.traits,
 )
 

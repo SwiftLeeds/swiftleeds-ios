@@ -33,7 +33,7 @@ human() {
 }
 
 # A per-package build or derived data directory is never right here. Packages
-# sit at Packages/<Name> or Packages/<Folder>/<Name>.
+# sit at Packages/<Folder>/<Name>, so build output at either level is stray.
 stray=$(du -sk "$repo"/Packages/*/.build "$repo"/Packages/*/dd* "$repo"/Packages/*/*/.build "$repo"/Packages/*/*/dd* 2>/dev/null | sort -rn)
 # Derived data at the root is right, but only one of them.
 roots=$(du -sk "$repo"/dd* 2>/dev/null | sort -rn)

@@ -15,10 +15,14 @@ private let textSizes: [(name: String, size: DynamicTypeSize)] = [
     ("accessibility", .accessibility5),
 ]
 
-private let iPhoneScreenWidth: CGFloat = 390
+/// The screen width of an iPhone, in points.
+private let phoneWidth: CGFloat = 390
 
-// The width a tile gets on an iPhone: the screen less its horizontal padding.
-let fullTileWidth: CGFloat = iPhoneScreenWidth - Padding.screen * 2
+/// The number of sides the screen padding appears on, leading and trailing.
+private let bothSides: CGFloat = 2
+
+/// The width a tile gets on an iPhone: the screen less its horizontal padding.
+let fullTileWidth: CGFloat = phoneWidth - Padding.screen * bothSides
 
 @MainActor
 func assertTileSnapshots(
