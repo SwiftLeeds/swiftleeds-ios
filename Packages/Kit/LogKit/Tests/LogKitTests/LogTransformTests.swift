@@ -3,6 +3,12 @@ import LogKitTestSupport
 import Testing
 
 @Suite struct LogTransformTests {
+    /// A switch a test flips to grant or withdraw consent to log.
+    private final class Consent: @unchecked Sendable {
+        /// Whether consent to log is granted.
+        var isGranted = true
+    }
+
     @Test func whenPullingBack_shouldRewriteEventBeforeWriting() {
         let recorder = LogRecorder()
         let sut = recorder.log.pullback { event in
@@ -119,8 +125,4 @@ import Testing
 
         #expect(recorder.events.map(\.message) == ["before"])
     }
-}
-
-private final class Consent: @unchecked Sendable {
-    var isGranted = true
 }
