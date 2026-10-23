@@ -7,7 +7,7 @@ import Testing
 
 /// Checks that the live `FetchSchedule` reaches the live `ScheduleRepository`.
 @Suite struct FetchScheduleIntegrationTests {
-    /// Resolves `FetchSchedule` in a live context and checks it returns the stored schedule.
+    /// The remote fails, so only the live repository can return the fresh stored copy.
     @Test func whenResolvedInLiveContext_shouldReturnStoredSchedule() async throws {
         let stored = StoredSchedule(schedule: try .fixture(eventNamed: "SwiftLeeds 2022"), storedAt: now)
 
