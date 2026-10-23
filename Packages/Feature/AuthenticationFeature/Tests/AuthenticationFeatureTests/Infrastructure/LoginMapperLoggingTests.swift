@@ -13,7 +13,7 @@ import Testing
     private let url = "https://example.com/api/v1/login/ticket"
 
     @Test func whenCredentialsAreRejected_shouldSayCredentialsWereRejected() throws {
-        let event = try #require(try logEvent(statusCode: 401))
+        let event = try #require(try logEvent(statusCode: 403))
 
         #expect(event.message == "The sign-in credentials were rejected")
     }
@@ -22,7 +22,7 @@ import Testing
     @Test func whenAnyOutcomeIsLogged_shouldLogUnderAuthNetworkCategory() throws {
         let events = try [
             acceptedEvent(),
-            logEvent(statusCode: 401),
+            logEvent(statusCode: 403),
             logEvent(statusCode: 503),
             logEvent(forBody: Data("   ".utf8)),
         ].compactMap(\.self)
@@ -32,7 +32,7 @@ import Testing
     }
 
     @Test func whenCredentialsAreRejected_shouldLogAtNoticeRatherThanError() throws {
-        let event = try #require(try logEvent(statusCode: 401))
+        let event = try #require(try logEvent(statusCode: 403))
 
         #expect(event.level == .notice)
     }
@@ -91,7 +91,7 @@ import Testing
     @Test func whenOutcomesDiffer_shouldLogDifferentMessages() throws {
         let messages = try [
             #require(try acceptedEvent()),
-            #require(try logEvent(statusCode: 401)),
+            #require(try logEvent(statusCode: 403)),
             #require(try logEvent(statusCode: 503)),
             #require(try logEvent(forBody: Data("   ".utf8))),
         ].map(\.message)

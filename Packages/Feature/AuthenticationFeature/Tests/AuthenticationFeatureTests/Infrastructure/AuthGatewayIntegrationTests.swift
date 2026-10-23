@@ -30,6 +30,16 @@ import Testing
         }
     }
 
+    @Test func whenServerReturnsForbidden_shouldThrowInvalidCredentials() async throws {
+        await #expect(throws: SignInError.invalidCredentials) {
+            try await withDependencies {
+                $0.authHTTPClient = .responding(with: Data(), statusCode: 403)
+            } operation: {
+                try await AuthGateway.liveValue.authenticate(Credential.fixture)
+            }
+        }
+    }
+
     /// A 200 carrying nothing is a server contract violation, not a session.
     @Test func whenServerReturnsEmptyBody_shouldThrowUnknown() async throws {
         await #expect(throws: SignInError.unknown) {

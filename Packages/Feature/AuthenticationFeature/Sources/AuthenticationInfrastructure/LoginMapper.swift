@@ -24,6 +24,9 @@ extension LoginMapper {
         case .unauthorized:
             throw .invalidCredentials
 
+        case .forbidden:
+            throw .invalidCredentials
+
         default:
             throw .unexpectedStatus(response.status)
         }
