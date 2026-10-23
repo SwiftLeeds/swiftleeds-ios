@@ -10,7 +10,8 @@ route is .claude/scripts/package-test.sh, which passes
 Resolution writes the bulk of it, so `swift package resolve` counts as much as
 `swift build`. The trigger is a swift command word (`swift` or a
 `swift-build`-style tool, by any path) in command position of any line or
-pipeline segment, after `xcrun`, `env` or `command`. Heredoc bodies are skipped.
+pipeline, subshell or backtick segment, after `xcrun`, `env`, `command` or `time`.
+Heredoc bodies are skipped, and a quoted string may span lines.
 It is not a substring: a commit message or an rg pattern naming `swift test`
 must pass.
 
@@ -27,15 +28,23 @@ import shlex
 import sys
 
 ASSIGNMENT = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*=")
-HEREDOC = re.compile(r"<<(?P<dash>-?)\s*(?P<quote>['\"]?)(?P<word>\w+)(?P=quote)")
+# A here-string (<<<) is not a heredoc, and a terminator may hold a dash.
+HEREDOC = re.compile(
+    r"(?<!<)<<(?!<)(?P<dash>-?)\s*(?P<quote>['\"]?)"
+    r"(?P<word>[^\s'\"<>|&;()]+)(?P=quote)"
+)
+# Lookups that print a path and run nothing.
+LOOKUPS = {"command": {"-v", "-V"}, "xcrun": {"-f", "--find"}}
 # Each wrapper maps to the options that take a separate value.
 WRAPPERS = {
     "xcrun": {"-sdk", "--sdk", "-toolchain", "--toolchain"},
     "env": {"-u", "-C", "-S"},
     "command": set(),
+    "time": set(),
 }
 SWIFT_TOOLS = {"swift-build", "swift-test", "swift-package", "swift-run"}
 HARMLESS = {"--version", "-version", "format", "demangle"}
+HARMLESS_FLAGS = {"--help", "-h", "--version", "-version"}
 SANCTIONED = ".claude/scripts/package-test.sh <PackageName>"
 
 
@@ -60,6 +69,7 @@ command = payload.get("tool_input", {}).get("command", "")
 if not command:
     sys.exit(0)
 
+
 def code_lines(text):
     """Yields each line of the command, skipping heredoc bodies."""
     terminator = None
@@ -77,10 +87,12 @@ def code_lines(text):
         yield line
 
 
-def segments(line):
-    """Yields the token list of each simple command on the line."""
-    lexer = shlex.shlex(line, posix=True, punctuation_chars=True)
+def segments(text):
+    """Yields the token list of each simple command in the text."""
+    lexer = shlex.shlex(text, posix=True, punctuation_chars="();<>|&\n`")
     lexer.whitespace_split = True
+    # A newline outside quotes ends a command, so it is not whitespace.
+    lexer.whitespace = " \t\r"
     try:
         tokens = list(lexer)
     except ValueError:
@@ -106,6 +118,8 @@ def swift_args(segment):
         while segment:
             token = segment[0]
             if token.startswith("-"):
+                if token in LOOKUPS.get(wrapper, ()):
+                    return None
                 segment.pop(0)
                 if token in WRAPPERS[wrapper] and segment:
                     segment.pop(0)
@@ -125,7 +139,7 @@ def swift_args(segment):
 
 def check(args):
     """Refuses a swift invocation that would write a per-package .build."""
-    if not args or args[0] in HARMLESS or "--help" in args or "-h" in args:
+    if not args or args[0] in HARMLESS or HARMLESS_FLAGS.intersection(args):
         return
 
     scratch = None
@@ -152,10 +166,10 @@ def check(args):
         )
 
 
-for line in code_lines(command):
-    for segment in segments(line):
-        args = swift_args(segment)
-        if args is not None:
-            check(args)
+joined = command.replace("\\\n", " ")
+for segment in segments("\n".join(code_lines(joined))):
+    args = swift_args(segment)
+    if args is not None:
+        check(args)
 
 sys.exit(0)
