@@ -51,8 +51,8 @@ public struct HTTPStatus: Equatable, Hashable, Sendable {
 
         case 500...599:
             .serverError
-
         // swiftlint:enable no_magic_numbers
+
         default:
             .invalid
         }
