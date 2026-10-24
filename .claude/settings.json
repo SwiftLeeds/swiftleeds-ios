@@ -11,6 +11,8 @@
       "Bash(shasum *)",
       "Bash(rocketsim *)",
       "Bash(python3 .claude/scripts/xcode-device.py *)",
+      "Bash(python3 .claude/scripts/generate-palette.py *)",
+      "Bash(python3 .claude/scripts/generate-palette.py)",
       "Bash(.claude/scripts/link-skills.sh)",
       "Bash(.claude/scripts/link-skills.sh *)",
       "Bash(.github/scripts/analyze.sh *)",
