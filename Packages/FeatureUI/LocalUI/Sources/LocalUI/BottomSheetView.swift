@@ -129,18 +129,18 @@ private var items: [LocationCategory] {
                 "Food",
                 symbolName: "takeoutbag.and.cup.and.straw.fill",
                 location: location(
-                    "Trinity Kitchen",
-                    link: "https://trinityleeds.com/shops/trinity-kitchen",
-                    coordinate: try Coordinate(latitude: 53.797378, longitude: -1.545209),
+                    "Sample Food Hall",
+                    link: "https://food-hall.example.com",
+                    coordinate: try Coordinate(latitude: 53.797, longitude: -1.545),
                 ),
             ),
             category(
                 "Drinks",
                 symbolName: "wineglass.fill",
                 location: location(
-                    "Brew Society",
-                    link: "https://www.brewsociety.co.uk/",
-                    coordinate: try Coordinate(latitude: 53.79584058588689, longitude: -1.550339186509128),
+                    "Sample Coffee House",
+                    link: "https://coffee-house.example.com",
+                    coordinate: try Coordinate(latitude: 53.796, longitude: -1.550),
                 ),
             ),
         ]
