@@ -1,18 +1,23 @@
 #!/usr/bin/env python3
-"""Generate the tonal colour ramps of every Hue as Swift Color.Resolved literals.
+"""Generate the tonal colour ramps of every Hue, and the color families built from them.
 
-Each hue is a ramp from t5 to t95 in OKLCH, converted to Display P3. The output is
-Packages/DesignSystem/UIDesign/Sources/UIDesign/Tokens/Colors/Hue/Hue+Tones.swift.
+Each hue is a ramp from t5 to t95 in OKLCH, converted to Display P3. Two outputs, both under
+Packages/DesignSystem/UIDesign/Sources/UIDesign:
+- Tokens/Colors/Hue/Hue+Tones.swift, the ramps as Swift Color.Resolved literals.
+- Resources/Colors.xcassets, one color set per family and role (light, dark and increased contrast).
+  The whole catalog is deleted and rewritten on each run.
 
 Run it from the repo root: python3 .claude/scripts/generate-palette.py
-Pass --output-root <directory> to write Hue+Tones.swift somewhere else.
+Pass --output-root <directory> to write both outputs into that directory instead.
 Failures are appended to generate-palette.log beside the script. Standard library only.
 """
 
 import argparse
 import colorsys
+import json
 import math
 import re
+import shutil
 import sys
 from dataclasses import dataclass
 from datetime import datetime
@@ -320,33 +325,187 @@ def progress(name, angle, tones):
     print(f"{name}: {len(tones)} tones, peak chroma {peak_chroma:.3f} at t{peak_tone} (hue {angle:.1f})")
 
 
-def run(output_root):
-    """Build every ramp, check the Swift text, then write it."""
-    output_root.mkdir(parents=True, exist_ok=True)
+# Each family is a name and the Hue it draws from.
+FAMILIES = [
+    ("success", "green"),
+    ("warning", "amber"),
+    ("error", "red"),
+    ("info", "blue"),
+    ("neutral", "neutral"),
+    ("blue", "blue"),
+    ("teal", "teal"),
+    ("violet", "violet"),
+    ("raspberry", "raspberry"),
+    ("sponsor", "bronze"),
+]
+
+# The appearances of one color set, in the order Xcode writes them, each with its JSON appearance entries.
+APPEARANCES = [
+    ("light", []),
+    ("dark", [{"appearance": "luminosity", "value": "dark"}]),
+    ("light high contrast", [{"appearance": "contrast", "value": "high"}]),
+    (
+        "dark high contrast",
+        [{"appearance": "luminosity", "value": "dark"}, {"appearance": "contrast", "value": "high"}],
+    ),
+]
+
+# One tone per appearance, in APPEARANCES order: light, dark, light high contrast, dark high contrast.
+ROLE_TONES = {
+    "text": (40, 75, 30, 85),
+    "solid": (50, 60, 40, 65),
+    "onSolid": (95, 5, 95, 5),
+    "subtle": (95, 20, 95, 15),
+}
+
+CATALOG_NAME = "Colors.xcassets"
+CATALOG_INFO = {"author": "xcode", "version": 1}
+
+
+def component_text(value):
+    """Returns a color component as Xcode writes it: a decimal string with four places."""
+    return f"{value:.{DECIMALS}f}"
+
+
+def colorset_entry(rgb, appearances):
+    """Returns one entry of a color set: Display P3 components under the given appearances."""
+    entry = {
+        "color": {
+            "color-space": "display-p3",
+            "components": {
+                "alpha": "1.000",
+                "blue": component_text(rgb[2]),
+                "green": component_text(rgb[1]),
+                "red": component_text(rgb[0]),
+            },
+        },
+        "idiom": "universal",
+    }
+    if appearances:
+        entry["appearances"] = appearances
+    return entry
+
+
+def json_text(value):
+    """Returns JSON as Xcode writes it: two-space indent, a space before each colon, a final newline."""
+    return json.dumps(value, indent=2, separators=(",", " : "), sort_keys=True) + "\n"
+
+
+def colorset_text(family, role, ramps, hue_name):
+    """Returns the Contents.json text of one color set."""
+    by_tone = {tone: rgb for tone, _, rgb in ramps[hue_name]}
+    entries = [
+        colorset_entry(by_tone[tone], appearances)
+        for tone, (_, appearances) in zip(ROLE_TONES[role], APPEARANCES)
+    ]
+    return json_text({"colors": entries, "info": CATALOG_INFO})
+
+
+def build_catalog(ramps):
+    """Returns the catalog as a dict of relative path -> text, and prints one line per family."""
+    files = {"Contents.json": json_text({"info": CATALOG_INFO})}
+    hue_names = {row.name for row in HUES}
+    for family, hue_name in FAMILIES:
+        if hue_name not in hue_names:
+            fail(f"family {family} names an unknown hue: {hue_name}")
+        for role in ROLE_TONES:
+            for tone in ROLE_TONES[role]:
+                if tone not in TONES:
+                    fail(f"family {family} role {role} names a tone that is not in the ramp: {tone}")
+            files[f"{family}-{role}.colorset/Contents.json"] = colorset_text(family, role, ramps, hue_name)
+        count = len(ROLE_TONES) * len(APPEARANCES)
+        print(f"{family} ({hue_name}): {len(ROLE_TONES)} roles, {count} values")
+    return files
+
+
+def check_catalog(files, ramps):
+    """Parse every written component back and compare it with the tone literal it came from."""
+    hue_of = dict(FAMILIES)
+    count = 0
+    for relative, text in files.items():
+        if relative == "Contents.json":
+            continue
+        family, role = relative.split(".colorset/")[0].split("-")
+        by_tone = {tone: rgb for tone, _, rgb in ramps[hue_of[family]]}
+        entries = json.loads(text)["colors"]
+        if len(entries) != len(APPEARANCES):
+            fail(f"self-check: {relative} held {len(entries)} entries, expected {len(APPEARANCES)}")
+        for entry, tone, (label, appearances) in zip(entries, ROLE_TONES[role], APPEARANCES):
+            if entry.get("appearances", []) != appearances:
+                fail(f"self-check: {relative} {label} has the wrong appearances")
+            color = entry["color"]
+            if color["color-space"] != "display-p3" or color["components"]["alpha"] != "1.000":
+                fail(f"self-check: {relative} {label} is not opaque Display P3")
+            parsed = [float(color["components"][key]) for key in ("red", "green", "blue")]
+            expected = [float(component_text(c)) for c in by_tone[tone]]
+            if parsed != expected:
+                fail(f"self-check: {relative} {label} read {parsed}, expected t{tone} {expected}")
+            count += 1
+    expected_count = len(FAMILIES) * len(ROLE_TONES) * len(APPEARANCES)
+    if count != expected_count:
+        fail(f"self-check: catalog held {count} values, expected {expected_count}")
+    print(f"self-check: {count} catalog values ok")
+
+
+def check_stray_files(catalog):
+    """Fail when the catalog folder holds anything the tables do not produce, before it is deleted."""
+    if not catalog.exists():
+        return
+    allowed = {"Contents.json"} | {
+        f"{family}-{role}.colorset" for family, _ in FAMILIES for role in ROLE_TONES
+    }
+    for child in sorted(catalog.iterdir()):
+        if child.name not in allowed:
+            fail(f"{catalog} holds a file the generator did not write: {child.name}. Remove it or move it.")
+        if child.is_dir() and [item.name for item in child.iterdir()] != ["Contents.json"]:
+            fail(f"{child} holds more than Contents.json")
+
+
+def write_catalog(catalog, files):
+    """Delete the catalog folder and write every file again. run() has checked it for stray files."""
+    if catalog.exists():
+        shutil.rmtree(catalog)
+    for relative, text in files.items():
+        path = catalog / relative
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(text, encoding="utf-8")
+    print(f"wrote {catalog} ({len(files) - 1} color sets)")
+
+
+def run(swift_directory, resources_directory):
+    """Build every ramp and the catalog, check both, then write them."""
+    swift_directory.mkdir(parents=True, exist_ok=True)
     ramps = {}
     for row in HUES:
         ramps[row.name] = ramp(row.angle, row.cap)
         progress(row.name, row.angle, ramps[row.name])
-    path = output_root / "Hue+Tones.swift"
+    path = swift_directory / "Hue+Tones.swift"
     lines = hue_file(ramps)
     check_formatting(path.name, lines)
     text = "\n".join(lines) + "\n"
     self_check(path.name, text, len(HUES) * len(TONES))
+    files = build_catalog(ramps)
+    check_catalog(files, ramps)
+    check_stray_files(resources_directory / CATALOG_NAME)
     path.write_text(text, encoding="utf-8")
     print("hue cases: " + ", ".join(row.name for row in HUES))
     print(f"wrote {path}")
+    write_catalog(resources_directory / CATALOG_NAME, files)
 
 
 def main():
     """Read the arguments and run, logging any unexpected error."""
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("--output-root", type=Path, help="write Hue+Tones.swift straight into this directory")
-    arguments = parser.parse_args()
-    root = arguments.output_root if arguments.output_root else (
-        DEFAULT_ROOT / "Packages/DesignSystem/UIDesign/Sources/UIDesign/Tokens/Colors/Hue"
+    parser.add_argument(
+        "--output-root", type=Path, help="write Hue+Tones.swift and Colors.xcassets straight into this directory"
     )
+    arguments = parser.parse_args()
+    sources = DEFAULT_ROOT / "Packages/DesignSystem/UIDesign/Sources/UIDesign"
+    swift_directory, resources_directory = sources / "Tokens/Colors/Hue", sources / "Resources"
+    if arguments.output_root:
+        swift_directory = resources_directory = arguments.output_root
     try:
-        run(root)
+        run(swift_directory, resources_directory)
     except SystemExit:
         raise
     except Exception as error:  # noqa: BLE001

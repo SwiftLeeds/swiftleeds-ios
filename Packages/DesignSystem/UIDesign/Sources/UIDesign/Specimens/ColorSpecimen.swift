@@ -27,6 +27,34 @@ package struct ColorSpecimen: View {
         }
     }
 
+    /// A swatch with the letters "Aa" drawn on it.
+    private struct GlyphSwatch: View {
+        /// The color of the letters.
+        private let glyph: Color
+
+        /// The color of the swatch.
+        private let fill: Color
+
+        /// Creates a swatch of a color with letters on it.
+        ///
+        /// - Parameters:
+        ///   - glyph: The color of the letters.
+        ///   - fill: The color of the swatch.
+        init(_ glyph: Color, on fill: Color) {
+            self.glyph = glyph
+            self.fill = fill
+        }
+
+        /// The swatch with the letters over it.
+        var body: some View {
+            Swatch(fill)
+                .overlay {
+                    Text("Aa")
+                        .foregroundStyle(glyph)
+                }
+        }
+    }
+
     package init() {}
 
     package var body: some View {
@@ -43,6 +71,7 @@ package struct ColorSpecimen: View {
         textGroup
         borderGroup
         brandAndStatusGroup
+        familiesGroup
     }
 }
 
@@ -126,6 +155,51 @@ extension ColorSpecimen {
                 Text("info")
                 Swatch(.info)
             }
+        }
+    }
+}
+
+// MARK: - Families
+
+extension ColorSpecimen {
+    /// The table of color families, one row for each family.
+    fileprivate var familiesGroup: some View {
+        SpecimenGroup("Families") {
+            familiesHeader
+            ForEach(ColorFamily.allCases, id: \.self) { family in
+                row(for: family)
+            }
+        }
+    }
+
+    /// The row of column names above the family samples.
+    fileprivate var familiesHeader: some View {
+        GridRow {
+            Color.clear
+                .gridCellUnsizedAxes([.horizontal, .vertical])
+            Text("text")
+            Text("solid")
+            Text("subtle")
+            Text("on grey")
+        }
+    }
+
+    /// Returns a row with the family's name and its four samples.
+    ///
+    /// - Parameter family: The family to show.
+    /// - Returns: The row.
+    fileprivate func row(for family: ColorFamily) -> some View {
+        GridRow {
+            Text(String(describing: family))
+            GlyphSwatch(family.text, on: .surface)
+            GlyphSwatch(family.onSolid, on: family.solid)
+            GlyphSwatch(family.text, on: family.subtle)
+            Swatch(.secondarySurface)
+                .overlay {
+                    RoundedRectangle(cornerRadius: CGFloat(CornerRadius.small))
+                        .fill(family.subtle)
+                        .padding(.small)
+                }
         }
     }
 }

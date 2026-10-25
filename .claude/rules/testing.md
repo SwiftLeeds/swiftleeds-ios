@@ -101,9 +101,12 @@ snapshot instead.
 
 ## Snapshot tests live in their own target
 
-Decided 2026-08-28. Snapshot tests are the only tests behind `#if os(iOS)`, so they are the only
-ones the macOS CI job cannot see. They get a separate iOS Simulator job, and that job must stay
-cheap.
+Decided 2026-08-28. Snapshot tests are behind `#if os(iOS)`, so the macOS CI job cannot see them.
+They get a separate iOS Simulator job, and that job must stay cheap.
+
+Since 2026-10-25 one other iOS-only test shares the snapshot target: UIDesign's
+`ColorFamilyContrastTests`, which needs iOS traits to resolve Increase Contrast. A test like it goes
+in the package's snapshot target too, because that is the only target CI runs on iOS.
 
 **Three things make a package's snapshot tests run.** All three, or they silently never run:
 
