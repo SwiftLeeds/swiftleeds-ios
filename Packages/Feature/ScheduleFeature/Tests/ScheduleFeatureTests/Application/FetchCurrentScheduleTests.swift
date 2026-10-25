@@ -1,20 +1,24 @@
 import Dependencies
+import Foundation
 import ScheduleApplication
 import ScheduleDomain
 import Testing
 
-/// Unit tests of the repository call `FetchCurrentSchedule` makes.
+/// Unit tests of `FetchCurrentSchedule`.
 @Suite struct FetchCurrentScheduleTests {
-    /// The current schedule has no event id, so the spy sees `nil`.
-    @Test func whenFetchingTheCurrentSchedule_shouldAskTheRepositoryForNoEvent() async throws {
-        let spy = ScheduleRepositorySpy()
+    /// The result is the current schedule the repository fetches.
+    @Test func whenFetchingCurrentSchedule_shouldReturnCurrentSchedule() async throws {
+        let eventID = UUID()
+        let expected = try Schedule.fixture(eventID: eventID)
+        var repository = ScheduleRepository.testValue
+        repository.fetchCurrentSchedule = { expected }
 
-        _ = try await withDependencies {
-            $0.scheduleRepository = .recording(into: spy, answering: try .fixture())
+        let schedule = try await withDependencies {
+            $0.scheduleRepository = repository
         } operation: {
             try await FetchCurrentSchedule.liveValue()
         }
 
-        #expect(await spy.events == [nil])
+        #expect(schedule.data.event.id == eventID)
     }
 }
