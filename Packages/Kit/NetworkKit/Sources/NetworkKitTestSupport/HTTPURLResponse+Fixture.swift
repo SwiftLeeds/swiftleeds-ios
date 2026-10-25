@@ -4,10 +4,16 @@ import NetworkKit
 extension HTTPURLResponse {
     /// Returns a response that carries the given URL and status code.
     ///
+    /// ```swift
+    /// let response = try HTTPURLResponse.fixture(statusCode: 200)
+    /// ```
+    ///
     /// - Parameters:
-    ///   - url: The URL the response came from. Text that is not a URL throws
-    ///     ``StubError/couldNotParseURL``.
+    ///   - url: The URL the response came from. Defaults to `"https://example.com"`.
     ///   - statusCode: The status code the response carries.
+    /// - Returns: A response with the given URL and status code, and no headers.
+    /// - Throws: ``StubError/couldNotParseURL`` when `url` is not a URL, and
+    ///   ``StubError/couldNotBuildResponse`` when `HTTPURLResponse` refuses the URL and status code.
     public static func fixture(
         url: String = "https://example.com",
         statusCode: HTTPStatusCode,
