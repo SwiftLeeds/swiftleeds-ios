@@ -51,6 +51,9 @@ package struct HueSpecimen: View {
 // MARK: - Rows
 
 extension HueSpecimen {
+    /// The width and height of one swatch.
+    fileprivate static let swatchSize: CGFloat = 24
+
     /// The row of tone numbers above the swatches.
     fileprivate var toneHeader: some View {
         GridRow {
@@ -76,9 +79,6 @@ extension HueSpecimen {
             }
         }
     }
-
-    /// The width and height of one swatch.
-    fileprivate static let swatchSize: CGFloat = 24
 }
 
 // MARK: - Parts

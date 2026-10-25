@@ -43,6 +43,25 @@ public struct AvatarFallback: View {
         }
     }
 
+    /// The person symbol on a plain fill.
+    private var symbol: some View {
+        Color.secondarySurface
+            .overlay {
+                Image(icon: .person)
+                    // A font size keeps the symbol's own proportions, which resizing it would not.
+                    // Any larger and the symbol meets the edge.
+                    .font(.system(size: CGFloat(diameter) * Self.symbolProportion))
+                    .foregroundStyle(.secondaryText)
+                    .accessibilityHidden(true)
+            }
+    }
+
+    /// The symbol's font size, as a fraction of the avatar's diameter.
+    private static var symbolProportion: CGFloat { 0.62 }
+
+    /// The initials' font size, as a fraction of the avatar's diameter.
+    private static var initialsProportion: CGFloat { 0.46 }
+
     /// Returns the person's initials, or the symbol when there is nothing to
     /// abbreviate.
     ///
@@ -66,21 +85,6 @@ public struct AvatarFallback: View {
                 }
         }
     }
-
-    // A font size keeps the symbol's own proportions, which resizing it would not.
-    private var symbol: some View {
-        Color.secondarySurface
-            .overlay {
-                Image(icon: .person)
-                    .font(.system(size: CGFloat(diameter) * Self.symbolProportion))
-                    .foregroundStyle(.secondaryText)
-                    .accessibilityHidden(true)
-            }
-    }
-
-    // How much of the avatar each mark covers. Any more and it meets the edge.
-    private static var symbolProportion: CGFloat { 0.62 }
-    private static var initialsProportion: CGFloat { 0.46 }
 }
 
 extension AvatarFallback {

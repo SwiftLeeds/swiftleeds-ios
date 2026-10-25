@@ -8,19 +8,6 @@ import UIKit
 /// Tests that every ``ColorFamily`` meets its contrast floors on the system surfaces.
 @MainActor
 struct ColorFamilyContrastTests {
-    /// The weight of linear red in relative luminance, from Rec. 709.
-    private static let redWeight: Float = 0.2126
-    /// The weight of linear green in relative luminance, from Rec. 709.
-    private static let greenWeight: Float = 0.7152
-    /// The weight of linear blue in relative luminance, from Rec. 709.
-    private static let blueWeight: Float = 0.0722
-    /// The light WCAG adds to both colors of a contrast ratio, for glare on the screen.
-    private static let glare: Float = 0.05
-    /// The lowest ratio WCAG accepts for text.
-    nonisolated private static let textFloor: Float = 4.5
-    /// The lowest ratio WCAG accepts for a graphic.
-    nonisolated private static let graphicFloor: Float = 3
-
     /// A pair of colors from one family, or from a family and a surface, drawn together.
     private enum Pair: CaseIterable {
         /// Family text on the screen background.
@@ -134,6 +121,19 @@ struct ColorFamilyContrastTests {
             }
         }
     }
+
+    /// The weight of linear red in relative luminance, from Rec. 709.
+    private static let redWeight: Float = 0.2126
+    /// The weight of linear green in relative luminance, from Rec. 709.
+    private static let greenWeight: Float = 0.7152
+    /// The weight of linear blue in relative luminance, from Rec. 709.
+    private static let blueWeight: Float = 0.0722
+    /// The light WCAG adds to both colors of a contrast ratio, for glare on the screen.
+    private static let glare: Float = 0.05
+    /// The lowest ratio WCAG accepts for text.
+    nonisolated private static let textFloor: Float = 4.5
+    /// The lowest ratio WCAG accepts for a graphic.
+    nonisolated private static let graphicFloor: Float = 3
 
     /// Returns the components a color has under an appearance.
     ///

@@ -7,6 +7,23 @@ import UIDesign
 
 @MainActor
 @Suite(.snapshots(record: .never)) struct NameplateSnapshotTests {
+    /// A made-up name, held in a variable so it binds to the initializer that
+    /// does not localize.
+    private static let name = "Ada Archer"
+
+    /// A made-up company, shown as the detail line.
+    private static let company = "Northern Software"
+
+    /// The name in parts, so the avatar can abbreviate it.
+    private static let nameComponents = PersonNameComponents(
+        givenName: "Ada",
+        familyName: "Archer",
+    )
+
+    /// Three made-up names, so a skeleton's bars vary in width the way real
+    /// rows do.
+    private static let sample = ["Ada Archer", "Blake Brooks", "Casey Cole"]
+
     @Test func nameplate() {
         let view = Nameplate(Self.name, detail: Self.company) {
             Avatar(url: nil, size: AvatarSize.medium, fallback: .initials(Self.nameComponents))
@@ -100,22 +117,5 @@ import UIDesign
     private func row(_ view: some View) -> some View {
         view.frame(width: rowWidth)
     }
-
-    /// A made-up name, held in a variable so it binds to the initializer that
-    /// does not localize.
-    private static let name = "Ada Archer"
-
-    /// A made-up company, shown as the detail line.
-    private static let company = "Northern Software"
-
-    /// The name in parts, so the avatar can abbreviate it.
-    private static let nameComponents = PersonNameComponents(
-        givenName: "Ada",
-        familyName: "Archer",
-    )
-
-    /// Three made-up names, so a skeleton's bars vary in width the way real
-    /// rows do.
-    private static let sample = ["Ada Archer", "Blake Brooks", "Casey Cole"]
 }
 #endif
