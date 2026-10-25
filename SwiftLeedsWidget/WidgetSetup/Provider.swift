@@ -5,6 +5,12 @@ import ScheduleDomain
 import WidgetKit
 
 struct Provider: TimelineProvider {
+    /// When the timeline asks for new entries: one hour after the start of today.
+    private var nextUpdateTime: Date {
+        let anHour: TimeInterval = 3_600
+        return Calendar.autoupdatingCurrent.startOfDay(for: Date()).addingTimeInterval(anHour)
+    }
+
     func placeholder(in context: Context) -> SwiftLeedsWidgetEntry {
         SwiftLeedsWidgetEntry(
             date: Date(),
@@ -43,11 +49,6 @@ struct Provider: TimelineProvider {
             .sorted { $0.startTime < $1.startTime }
             .map { SwiftLeedsWidgetEntry(date: buildDate(for: $0), slot: $0) }
             .filter { $0.date > Date() }
-    }
-
-    private var nextUpdateTime: Date {
-        let anHour: TimeInterval = 3_600
-        return Calendar.autoupdatingCurrent.startOfDay(for: Date()).addingTimeInterval(anHour)
     }
 
     private func buildDate(for slot: Schedule.Slot) -> Date {

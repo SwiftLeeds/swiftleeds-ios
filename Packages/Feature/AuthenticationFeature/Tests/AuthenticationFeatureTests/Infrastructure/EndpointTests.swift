@@ -4,6 +4,11 @@ import NetworkKit
 import Testing
 
 @Suite struct EndpointTests {
+    /// The base URL every request in this suite is built on.
+    private var baseURL: URL {
+        get throws { try #require(URL(string: "https://example.com")) }
+    }
+
     @Test func whenLoginRequestIsBuilt_shouldPOST() throws {
         let request = try Endpoint.login(content: Data()).urlRequest(baseURL: baseURL)
 
@@ -54,9 +59,5 @@ import Testing
         let request = try Endpoint.ticket.urlRequest(baseURL: baseURL)
 
         #expect(request.value(forHTTPHeaderField: "Content-Type") == nil)
-    }
-
-    private var baseURL: URL {
-        get throws { try #require(URL(string: "https://example.com")) }
     }
 }

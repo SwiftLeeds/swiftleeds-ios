@@ -39,12 +39,7 @@ package struct NameplateStyleConfiguration {  // swiftlint:disable:this one_decl
 // This declaration's line has no room for a trailing disable.
 // swiftlint:disable:next one_declaration_per_file - frozen copy
 package struct ProminentNameplateStyle: NameplateStyle {
-    package init() {}
-
-    package func makeBody(configuration: NameplateStyleConfiguration) -> some View {
-        ProminentBody(configuration: configuration)
-    }
-
+    /// A view that represents the body of a prominent nameplate.
     private struct ProminentBody: View {
         @ScaledMetric(relativeTo: .title3) private var iconSize: CGFloat = 56
 
@@ -61,15 +56,16 @@ package struct ProminentNameplateStyle: NameplateStyle {
             .padding(.vertical, 8)
         }
     }
-}
 
-package struct CompactNameplateStyle: NameplateStyle {  // swiftlint:disable:this one_declaration_per_file - frozen copy
     package init() {}
 
     package func makeBody(configuration: NameplateStyleConfiguration) -> some View {
-        CompactBody(configuration: configuration)
+        ProminentBody(configuration: configuration)
     }
+}
 
+package struct CompactNameplateStyle: NameplateStyle {  // swiftlint:disable:this one_declaration_per_file - frozen copy
+    /// A view that represents the body of a compact nameplate.
     private struct CompactBody: View {
         @ScaledMetric(relativeTo: .subheadline) private var iconSize: CGFloat = 40
 
@@ -84,6 +80,12 @@ package struct CompactNameplateStyle: NameplateStyle {  // swiftlint:disable:thi
                 detailFont: .footnote,
             )
         }
+    }
+
+    package init() {}
+
+    package func makeBody(configuration: NameplateStyleConfiguration) -> some View {
+        CompactBody(configuration: configuration)
     }
 }
 

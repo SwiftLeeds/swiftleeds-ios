@@ -2,21 +2,7 @@ import NetworkKit
 import Testing
 
 @Suite struct HTTPStatusTests {
-    @Test func whenCodesMatch_shouldBeEqual() {
-        let first = HTTPStatus(code: 503)
-        let second = HTTPStatus(code: 503)
-
-        #expect(first == second)
-    }
-
-    @Test func whenCodesDiffer_shouldNotBeEqual() {
-        #expect(HTTPStatus(code: 200) != HTTPStatus(code: 401))
-    }
-
-    @Test func whenCodeIsExtracted_shouldReturnCodeGiven() {
-        #expect(Int(HTTPStatus(code: 418).code) == 418)
-    }
-
+    /// Every registered status, with the numeric code it registers.
     private static let registeredStatuses: [(HTTPStatus, Int)] = [
         (.continue, 100),
         (.switchingProtocols, 101),
@@ -68,6 +54,21 @@ import Testing
         (.httpVersionNotSupported, 505),
         (.networkAuthenticationRequired, 511),
     ]
+
+    @Test func whenCodesMatch_shouldBeEqual() {
+        let first = HTTPStatus(code: 503)
+        let second = HTTPStatus(code: 503)
+
+        #expect(first == second)
+    }
+
+    @Test func whenCodesDiffer_shouldNotBeEqual() {
+        #expect(HTTPStatus(code: 200) != HTTPStatus(code: 401))
+    }
+
+    @Test func whenCodeIsExtracted_shouldReturnCodeGiven() {
+        #expect(Int(HTTPStatus(code: 418).code) == 418)
+    }
 
     @Test(arguments: registeredStatuses)
     func whenStatusIsNamed_shouldHaveRegisteredCode(status: HTTPStatus, code: Int) {

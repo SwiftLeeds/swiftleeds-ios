@@ -111,22 +111,6 @@ package struct SponsorsContentView: View {
         .padding()
     }
 
-    private func sponsorsList(for sponsors: Sponsors) -> some View {
-        VStack(spacing: Padding.cellGap) {
-            filterChips
-
-            if displayedLevels(in: sponsors).isEmpty, selectedLevel != nil {
-                tierEmptyStateView
-            } else {
-                ForEach(displayedLevels(in: sponsors), id: \.self) { level in
-                    sectionView(for: level, in: sponsors)
-                }
-            }
-        }
-        .padding(.horizontal, horizontalPadding)
-        .padding(.bottom, Padding.cellGap)
-    }
-
     private var filterChips: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 8) {
@@ -152,11 +136,6 @@ package struct SponsorsContentView: View {
         .padding(.vertical, 8)
     }
 
-    private func displayedLevels(in sponsors: Sponsors) -> [SponsorLevel] {
-        guard let selectedLevel else { return sponsors.rankedLevels }
-        return sponsors.rankedLevels.filter { $0 == selectedLevel }
-    }
-
     private var gridColumns: [GridItem] {
         Array(repeating: GridItem(.flexible(), spacing: Padding.cellGap), count: columnCount)
     }
@@ -175,6 +154,35 @@ package struct SponsorsContentView: View {
         #else
         return Padding.screen
         #endif
+    }
+
+    /// Returns the filter chips above the sponsor sections of each displayed level.
+    ///
+    /// - Parameter sponsors: The sponsors to list.
+    /// - Returns: The chips, then the sections, or a message when the chosen tier is empty.
+    private func sponsorsList(for sponsors: Sponsors) -> some View {
+        VStack(spacing: Padding.cellGap) {
+            filterChips
+
+            if displayedLevels(in: sponsors).isEmpty, selectedLevel != nil {
+                tierEmptyStateView
+            } else {
+                ForEach(displayedLevels(in: sponsors), id: \.self) { level in
+                    sectionView(for: level, in: sponsors)
+                }
+            }
+        }
+        .padding(.horizontal, horizontalPadding)
+        .padding(.bottom, Padding.cellGap)
+    }
+
+    /// Returns the sponsor levels to show, in rank order.
+    ///
+    /// - Parameter sponsors: The sponsors to take the levels from.
+    /// - Returns: Only the selected level when one is chosen, otherwise every ranked level.
+    private func displayedLevels(in sponsors: Sponsors) -> [SponsorLevel] {
+        guard let selectedLevel else { return sponsors.rankedLevels }
+        return sponsors.rankedLevels.filter { $0 == selectedLevel }
     }
 
     private func sectionView(for level: SponsorLevel, in sponsors: Sponsors) -> some View {

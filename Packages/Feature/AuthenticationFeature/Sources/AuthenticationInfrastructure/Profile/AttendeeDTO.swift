@@ -9,16 +9,9 @@ package struct AttendeeDTO: Decodable {
         let reason: any Error
     }
 
-    let ticket: Ticket
-
+    /// The ticket object inside the attendee response.
     struct Ticket: Decodable {
-        let firstName: String
-        let lastName: String
-        let email: String
-        let avatarURL: URL
-        let reference: String
-        let slug: String
-
+        /// The JSON keys of the ticket.
         enum CodingKeys: String, CodingKey {
             case firstName = "first_name"
             case lastName = "last_name"
@@ -27,7 +20,16 @@ package struct AttendeeDTO: Decodable {
             case slug = "slug"
             case avatarURL = "avatar_url"
         }
+
+        let firstName: String
+        let lastName: String
+        let email: String
+        let avatarURL: URL
+        let reference: String
+        let slug: String
     }
+
+    let ticket: Ticket
 }
 
 extension AttendeeDTO {

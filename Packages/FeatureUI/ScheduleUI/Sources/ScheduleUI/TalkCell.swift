@@ -100,6 +100,13 @@ package struct TalkCell: View {
         .accessibilityLabel(accessibilityLabel)
     }
 
+    /// The text VoiceOver reads for the cell.
+    private var accessibilityLabel: String {
+        [time, speakers.joinedNames, speakers.joinedOrganisations, details.noEmojis]
+            .filter { !$0.isEmpty }
+            .joined(separator: ", ")
+    }
+
     private func timeLabel(_ value: String) -> some View {
         HStack(spacing: 7) {
             Image.clock
@@ -110,12 +117,6 @@ package struct TalkCell: View {
             Spacer()
         }
         .padding(.leading, 4)
-    }
-
-    private var accessibilityLabel: String {
-        [time, speakers.joinedNames, speakers.joinedOrganisations, details.noEmojis]
-            .filter { !$0.isEmpty }
-            .joined(separator: ", ")
     }
 }
 

@@ -4,6 +4,11 @@ import SponsorsFeature
 import Testing
 
 @Suite struct EndpointTests {
+    /// The base URL every request in this suite is built on.
+    private var baseURL: URL {
+        get throws { try #require(URL(string: "https://example.com")) }
+    }
+
     @Test func whenSponsorsRequestIsBuilt_shouldGET() throws {
         let request = try Endpoint.sponsors.urlRequest(baseURL: baseURL)
 
@@ -27,9 +32,5 @@ import Testing
         let request = try Endpoint.sponsors.urlRequest(baseURL: baseURL)
 
         #expect(request.httpBody == nil)
-    }
-
-    private var baseURL: URL {
-        get throws { try #require(URL(string: "https://example.com")) }
     }
 }

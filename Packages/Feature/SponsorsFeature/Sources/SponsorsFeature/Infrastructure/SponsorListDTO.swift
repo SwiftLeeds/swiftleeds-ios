@@ -2,12 +2,7 @@ import Foundation
 
 /// The sponsor list as the backend sends it. Data only.
 package struct SponsorListDTO: Decodable {
-    package let data: [SponsorDTO]
-
-    package init(data: [SponsorDTO]) {
-        self.data = data
-    }
-
+    /// One sponsor as the backend sends it.
     package struct SponsorDTO: Decodable {
         package enum CodingKeys: String, CodingKey {
             case id = "id"
@@ -46,6 +41,7 @@ package struct SponsorListDTO: Decodable {
         }
     }
 
+    /// One job a sponsor advertises, as the backend sends it.
     package struct JobDTO: Decodable {
         package let id: UUID
         package let title: String
@@ -60,5 +56,11 @@ package struct SponsorListDTO: Decodable {
             self.location = location
             self.url = url
         }
+    }
+
+    package let data: [SponsorDTO]
+
+    package init(data: [SponsorDTO]) {
+        self.data = data
     }
 }

@@ -2,14 +2,6 @@ import Foundation
 
 /// A published schedule for one conference event.
 public struct Schedule: Codable, Sendable {
-    /// The schedule's contents.
-    public let data: Data
-
-    /// Creates a schedule from an already validated payload.
-    public init(data: Data) {
-        self.data = data
-    }
-
     /// Everything one schedule carries.
     ///
     /// Named after the JSON key, which shadows `Foundation.Data`.
@@ -127,6 +119,11 @@ public struct Schedule: Codable, Sendable {
 
     /// One entry in a day's running order: a presentation or an activity.
     public struct Slot: Identifiable, Sendable {
+        /// The JSON keys of a slot.
+        private enum CodingKeys: CodingKey {
+            case id, activity, presentation, date, startTime, duration
+        }
+
         /// The slot's identity, assigned by the backend.
         public let id: UUID
 
@@ -151,10 +148,6 @@ public struct Schedule: Codable, Sendable {
         /// The presentation filling this slot, absent when an activity does.
         public let presentation: Presentation?
 
-        private enum CodingKeys: CodingKey {
-            case id, activity, presentation, date, startTime, duration
-        }
-
         /// Creates a slot.
         public init(
             id: UUID,
@@ -172,10 +165,24 @@ public struct Schedule: Codable, Sendable {
             self.presentation = presentation
         }
     }
+
+    /// The schedule's contents.
+    public let data: Data
+
+    /// Creates a schedule from an already validated payload.
+    public init(data: Data) {
+        self.data = data
+    }
 }
 
 // MARK: - Slot Decodable
 extension Schedule.Slot: Codable {
+    /// Why a slot could not be decoded.
+    public enum SlotError: Error {
+        /// The slot held neither an activity nor a presentation.
+        case invalidSlot
+    }
+
     /// Creates a slot, refusing one that holds neither an activity nor a
     /// presentation.
     ///
@@ -198,12 +205,6 @@ extension Schedule.Slot: Codable {
         } else {
             throw (SlotError.invalidSlot)
         }
-    }
-
-    /// Why a slot could not be decoded.
-    public enum SlotError: Error {
-        /// The slot held neither an activity nor a presentation.
-        case invalidSlot
     }
 }
 
