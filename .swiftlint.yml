@@ -10,13 +10,14 @@
 # would need a sweep does not belong there: it needs a decision first.
 #
 # The third group, "rules that needed a sweep", holds rules that were decided
-# on and then fixed at every site, or suppressed inline, with the reason, at a
-# site left as it is. One rule, `no_magic_numbers`, also left sites in the
-# baseline; its comment says which. For most rules the config line and the
-# fixes land in one commit, so `git log -S<rule>` shows what each rule changed.
-# The fixes for `no_magic_numbers` came in the commits just before it. So did
-# two for `explicit_enum_raw_value`, which removed the raw types of `LogLevel`
-# and `TabItems`. So did the moves for `one_declaration_per_file`.
+# on and then fixed at every site, suppressed inline, with the reason, at a
+# site left as it is, or narrowed by an option in its section below. One rule,
+# `no_magic_numbers`, also left sites in the baseline; its comment says which.
+# For most rules the config line and the fixes land in one commit, so
+# `git log -S<rule>` shows what each rule changed. The fixes for
+# `no_magic_numbers` came in the commits just before it. So did two for
+# `explicit_enum_raw_value`, which removed the raw types of `LogLevel` and
+# `TabItems`. So did the moves for `one_declaration_per_file`.
 #
 # Tuned against the SwiftLint version in .swiftlint-version, which CI installs
 # and the pre-commit hook checks against. Rule defaults change between versions,
@@ -136,7 +137,7 @@ opt_in_rules:
   - static_operator
 
   # Rules that needed a sweep. Each had 1 to 26 violations when it was turned
-  # on, 2026-10-15 to 2026-10-21. The exceptions, all on 2026-10-23:
+  # on, from 2026-10-15. The exceptions, all on 2026-10-23:
   # `no_magic_numbers` had 327, `prefer_self_in_static_references` had 106,
   # `vertical_whitespace_between_cases` had 141 and `explicit_enum_raw_value`
   # had 41.
@@ -238,6 +239,10 @@ opt_in_rules:
   # type it serves, and a test double inside its suite. AuthenticationUI's design
   # system is a frozen copy, suppressed inline until UIDesign replaces it.
   - one_declaration_per_file
+
+  # An empty statement, function or accessor body says nothing about whether
+  # it is meant. Where one is meant, a comment inside the braces says why.
+  - no_empty_block
 
 # Analyzer rules read the compiler log, so they run only through
 # `swiftlint analyze`, never `swiftlint lint`.
@@ -361,6 +366,14 @@ prefer_key_path:
 # `--strict` makes the warning a gate, so no error level is set.
 closure_body_length:
   warning: 60
+
+# A no-op closure (`retry: {}`, `Log { _ in }`) and an empty `init()` that
+# only widens a type's access are idioms: 90 of the 92 blocks the rule found.
+# The other two are required `stopLoading()` overrides in test stubs.
+no_empty_block:
+  disabled_block_types:
+    - closure_blocks
+    - initializer_bodies
 
 # Setting `excluded` replaces the default list, `LinuxMain.swift` and
 # `main.swift`; neither exists here.
