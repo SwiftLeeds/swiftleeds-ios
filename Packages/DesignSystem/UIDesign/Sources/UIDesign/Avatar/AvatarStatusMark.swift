@@ -16,7 +16,7 @@ struct AvatarStatusMark: View {
             .scaledToFit()
             // The glyph takes the first color, the symbol's own enclosure the second.
             .symbolRenderingMode(.palette)
-            .foregroundStyle(.surface, status.tint)
+            .foregroundStyle(status.family.onSolid, status.family.solid)
             .frame(width: discDiameter, height: discDiameter)
             // The ring grows inward, so the whole mark still measures diameter.
             .padding(ringWidth)
