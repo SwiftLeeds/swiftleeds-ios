@@ -351,22 +351,15 @@ APPEARANCES = [
 ]
 
 # One tone per appearance, in APPEARANCES order: light, dark, light high contrast, dark high contrast.
-DEFAULT_ROLE_TONES = {
+ROLE_TONES = {
     "text": (40, 75, 30, 85),
     "solid": (50, 60, 40, 65),
     "onSolid": (95, 5, 95, 5),
     "subtle": (95, 20, 95, 15),
 }
-# A (family, role) entry here replaces the default row for that one color set.
-ROLE_TONE_OVERRIDES = {}
 
 CATALOG_NAME = "Colors.xcassets"
 CATALOG_INFO = {"author": "xcode", "version": 1}
-
-
-def role_tones(family, role):
-    """Returns the four tones of a role, using the family's override when it has one."""
-    return ROLE_TONE_OVERRIDES.get((family, role), DEFAULT_ROLE_TONES[role])
 
 
 def component_text(value):
@@ -403,7 +396,7 @@ def colorset_text(family, role, ramps, hue_name):
     by_tone = {tone: rgb for tone, _, rgb in ramps[hue_name]}
     entries = [
         colorset_entry(by_tone[tone], appearances)
-        for tone, (_, appearances) in zip(role_tones(family, role), APPEARANCES)
+        for tone, (_, appearances) in zip(ROLE_TONES[role], APPEARANCES)
     ]
     return json_text({"colors": entries, "info": CATALOG_INFO})
 
@@ -415,13 +408,13 @@ def build_catalog(ramps):
     for family, hue_name in FAMILIES:
         if hue_name not in hue_names:
             fail(f"family {family} names an unknown hue: {hue_name}")
-        for role in DEFAULT_ROLE_TONES:
-            for tone in role_tones(family, role):
+        for role in ROLE_TONES:
+            for tone in ROLE_TONES[role]:
                 if tone not in TONES:
                     fail(f"family {family} role {role} names a tone that is not in the ramp: {tone}")
             files[f"{family}-{role}.colorset/Contents.json"] = colorset_text(family, role, ramps, hue_name)
-        count = len(DEFAULT_ROLE_TONES) * len(APPEARANCES)
-        print(f"{family} ({hue_name}): {len(DEFAULT_ROLE_TONES)} roles, {count} values")
+        count = len(ROLE_TONES) * len(APPEARANCES)
+        print(f"{family} ({hue_name}): {len(ROLE_TONES)} roles, {count} values")
     return files
 
 
@@ -437,7 +430,7 @@ def check_catalog(files, ramps):
         entries = json.loads(text)["colors"]
         if len(entries) != len(APPEARANCES):
             fail(f"self-check: {relative} held {len(entries)} entries, expected {len(APPEARANCES)}")
-        for entry, tone, (label, appearances) in zip(entries, role_tones(family, role), APPEARANCES):
+        for entry, tone, (label, appearances) in zip(entries, ROLE_TONES[role], APPEARANCES):
             if entry.get("appearances", []) != appearances:
                 fail(f"self-check: {relative} {label} has the wrong appearances")
             color = entry["color"]
@@ -448,7 +441,7 @@ def check_catalog(files, ramps):
             if parsed != expected:
                 fail(f"self-check: {relative} {label} read {parsed}, expected t{tone} {expected}")
             count += 1
-    expected_count = len(FAMILIES) * len(DEFAULT_ROLE_TONES) * len(APPEARANCES)
+    expected_count = len(FAMILIES) * len(ROLE_TONES) * len(APPEARANCES)
     if count != expected_count:
         fail(f"self-check: catalog held {count} values, expected {expected_count}")
     print(f"self-check: {count} catalog values ok")
@@ -459,7 +452,7 @@ def check_stray_files(catalog):
     if not catalog.exists():
         return
     allowed = {"Contents.json"} | {
-        f"{family}-{role}.colorset" for family, _ in FAMILIES for role in DEFAULT_ROLE_TONES
+        f"{family}-{role}.colorset" for family, _ in FAMILIES for role in ROLE_TONES
     }
     for child in sorted(catalog.iterdir()):
         if child.name not in allowed:
@@ -469,8 +462,7 @@ def check_stray_files(catalog):
 
 
 def write_catalog(catalog, files):
-    """Delete the catalog folder and write every file again."""
-    check_stray_files(catalog)
+    """Delete the catalog folder and write every file again. run() has checked it for stray files."""
     if catalog.exists():
         shutil.rmtree(catalog)
     for relative, text in files.items():
