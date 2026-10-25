@@ -361,10 +361,12 @@ jobs:
         if: ${{ !cancelled() && matrix.configuration == 'debug' }}
         run: .github/scripts/analyze.sh tests 136 "$RUNNER_TEMP"/package-build-logs/*.log
 
-  # Snapshot tests are the only tests that must run on iOS: they are the only
-  # ones behind `#if os(iOS)`, so the macOS job above cannot see them. Every
-  # other test compiles and runs there, and the app build jobs compile the
-  # iOS-only sources, so nothing is covered twice and nothing is left out.
+  # The snapshot targets hold the only tests that must run on iOS: snapshot
+  # tests, and UIDesign's color contrast test, which resolves colors with iOS
+  # traits. They sit behind `#if os(iOS)`, so the macOS job above cannot see
+  # them. Every other test compiles and runs there, and the app build jobs
+  # compile the iOS-only sources, so nothing is covered twice and nothing is
+  # left out.
   #
   # A package opts in by declaring a test target whose name ends in
   # SnapshotTests, plus a shared scheme of the same name holding only that
