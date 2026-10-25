@@ -180,6 +180,10 @@ CAP = 0.20  # Default chroma cap. Change a row below to retune one hue.
 TURN_START = 75  # A turning hue keeps its angle from this tone up.
 TURN_END = 45  # A turning hue reaches turn_to at this tone and keeps it below.
 
+TAPER_START = 75  # Chroma is full up to this tone.
+TAPER_END = 95
+TAPER_FLOOR = 0.35  # Fraction of the cap left at TAPER_END.
+
 
 @dataclass(frozen=True)
 class HueRow:
@@ -188,6 +192,8 @@ class HueRow:
     cap: float
     # The angle at TURN_END and below, for a hue that turns as it darkens. None keeps one angle.
     turn_to: float | None = None
+    # The tone from which chroma tapers toward TAPER_FLOOR at TAPER_END.
+    taper_start: int = TAPER_START
 
     def angle_at(self, tone):
         """Returns the hue angle at a tone: the row's angle, or a straight turn between TURN_START and TURN_END."""
@@ -229,16 +235,11 @@ def build_hue_table():
 HUES = build_hue_table()
 
 
-TAPER_START = 75  # Chroma is full up to this tone.
-TAPER_END = 95
-TAPER_FLOOR = 0.35  # Fraction of the cap left at TAPER_END.
-
-
-def chroma_factor(tone):
-    """1.0 up to TAPER_START, then a straight line down to TAPER_FLOOR at TAPER_END."""
-    if tone <= TAPER_START:
+def chroma_factor(tone, taper_start):
+    """1.0 up to taper_start, then a straight line down to TAPER_FLOOR at TAPER_END."""
+    if tone <= taper_start:
         return 1.0
-    return 1.0 - (1.0 - TAPER_FLOOR) * (tone - TAPER_START) / (TAPER_END - TAPER_START)
+    return 1.0 - (1.0 - TAPER_FLOOR) * (tone - taper_start) / (TAPER_END - taper_start)
 
 
 def ramp(row):
@@ -247,7 +248,7 @@ def ramp(row):
     for tone in TONES:
         lightness = tone / 100
         angle = row.angle_at(tone)
-        ceiling = row.cap * chroma_factor(tone)
+        ceiling = row.cap * chroma_factor(tone, row.taper_start)
         chroma = max_p3_chroma(lightness, angle, ceiling) if ceiling > 0 else 0.0
         rgb = oklch_to_p3(lightness, chroma, angle)
         rounded = [min(max(round(c, DECIMALS), 0.0), 1.0) + 0.0 for c in rgb]
