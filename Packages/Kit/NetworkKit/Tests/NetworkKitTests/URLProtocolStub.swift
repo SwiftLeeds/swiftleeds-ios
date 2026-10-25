@@ -9,13 +9,17 @@ final class URLProtocolStub: URLProtocol {
 
     nonisolated(unsafe) static var stub: Stub?
 
+    /// The request the stub most recently served.
+    nonisolated(unsafe) static var lastRequest: URLRequest?
+
     static func stub(data: Data?, response: URLResponse?, error: Error?) {
         stub = Stub(data: data, response: response, error: error)
     }
 
-    /// Forgets the current stub, so it cannot serve a test that did not set one.
+    /// Forgets the current stub and the last request, so neither can reach a later test.
     static func removeStub() {
         stub = nil
+        lastRequest = nil
     }
 
     static func session() -> URLSession {
@@ -28,6 +32,7 @@ final class URLProtocolStub: URLProtocol {
     override class func canonicalRequest(for request: URLRequest) -> URLRequest { request }
 
     override func startLoading() {
+        Self.lastRequest = request
         if let error = Self.stub?.error {
             client?.urlProtocol(self, didFailWithError: error)
         } else {
