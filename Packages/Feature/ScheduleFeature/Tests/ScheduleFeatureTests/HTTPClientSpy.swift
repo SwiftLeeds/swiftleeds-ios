@@ -1,6 +1,6 @@
 import Foundation
 
-actor RequestRecorder {
+actor HTTPClientSpy {
     private(set) var requests: [URLRequest] = []
 
     func record(_ request: URLRequest) {

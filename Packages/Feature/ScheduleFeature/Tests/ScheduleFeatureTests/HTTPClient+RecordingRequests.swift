@@ -4,11 +4,11 @@ import NetworkKitTestSupport
 
 extension HTTPClient {
     static func recordingRequests(
-        into recorder: RequestRecorder,
+        into spy: HTTPClientSpy,
         responding data: Data,
     ) -> HTTPClient {
         HTTPClient { request in
-            await recorder.record(request)
+            await spy.record(request)
             guard let url = request.url,
                 let response = HTTPURLResponse(
                     url: url,
