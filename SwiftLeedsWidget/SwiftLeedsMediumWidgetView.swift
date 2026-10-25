@@ -25,6 +25,15 @@ struct SwiftLeedsMediumWidgetView: View {
 // MARK: - View Builders
 
 extension SwiftLeedsMediumWidgetView {
+    /// The SwiftLeeds icon, scaled to fill the logo frame.
+    private var logoView: some View {
+        Image.swiftLeedsIcon
+            .resizable()
+            .scaledToFill()
+            .transition(.opacity)
+            .frame(width: WidgetConstants.logoImageWidth, height: WidgetConstants.logoImageHeight, alignment: .center)
+    }
+
     @ViewBuilder
     private func buildSlotView(for slot: Schedule.Slot) -> some View {
         if let activity = slot.activity {
@@ -74,14 +83,6 @@ extension SwiftLeedsMediumWidgetView {
         }
         .padding(16)
         .frame(maxWidth: .infinity, alignment: .leading)
-    }
-
-    private var logoView: some View {
-        Image.swiftLeedsIcon
-            .resizable()
-            .scaledToFill()
-            .transition(.opacity)
-            .frame(width: WidgetConstants.logoImageWidth, height: WidgetConstants.logoImageHeight, alignment: .center)
     }
 }
 

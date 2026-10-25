@@ -1,13 +1,6 @@
 import Foundation
 
 enum ConferenceConfig {
-    private static func value(for key: String) -> String {
-        guard let value = Bundle.main.object(forInfoDictionaryKey: key) as? String, !value.isEmpty else {
-            fatalError("Missing Info.plist key: \(key)")
-        }
-        return value
-    }
-
     static let apiHost: String = value(for: "APIHost")
 
     static let apiURL: URL = {
@@ -22,4 +15,16 @@ enum ConferenceConfig {
     static let appVersion: String = value(for: "CFBundleShortVersionString")
     static let appGroupIdentifier: String = value(for: "AppGroupIdentifier")
     static let conferenceName: String = value(for: "CFBundleDisplayName")
+
+    /// Returns the string stored under a key in the app's Info.plist.
+    ///
+    /// - Parameter key: The Info.plist key to read.
+    /// - Returns: The non-empty string for `key`.
+    /// - Precondition: The key must exist and hold a non-empty string.
+    private static func value(for key: String) -> String {
+        guard let value = Bundle.main.object(forInfoDictionaryKey: key) as? String, !value.isEmpty else {
+            fatalError("Missing Info.plist key: \(key)")
+        }
+        return value
+    }
 }

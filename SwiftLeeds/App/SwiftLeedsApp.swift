@@ -48,16 +48,16 @@ struct SwiftLeedsApp: App {
         }
     }
 
-    /// Gives the shared URL cache room on disk for remote images.
-    private static func sizeSharedURLCache() {
-        URLCache.shared.diskCapacity = sharedURLCacheDiskCapacityInBytes
-    }
-
     var body: some Scene {
         WindowGroup {
             Tabs()
                 .environmentObject(appState)
                 .applyingSelectedTheme()
         }
+    }
+
+    /// Gives the shared URL cache room on disk for remote images.
+    private static func sizeSharedURLCache() {
+        URLCache.shared.diskCapacity = sharedURLCacheDiskCapacityInBytes
     }
 }

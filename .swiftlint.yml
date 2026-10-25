@@ -244,6 +244,10 @@ opt_in_rules:
   # it is meant. Where one is meant, a comment inside the braces says why.
   - no_empty_block
 
+  # A reader meets what a type is before what it does: cases and nested types,
+  # then properties and initializers, then deinit, then methods.
+  - type_contents_order
+
 # Analyzer rules read the compiler log, so they run only through
 # `swiftlint analyze`, never `swiftlint lint`.
 analyzer_rules:
@@ -374,6 +378,17 @@ no_empty_block:
   disabled_block_types:
     - closure_blocks
     - initializer_bodies
+
+# The house order: nested types and cases first, then properties and
+# initializers, then deinit, then methods. SwiftLint's default order wants
+# every property above `init`, which puts a view's `body` above its
+# initializer, and enum cases above nested types.
+type_contents_order:
+  order:
+    - [case, type_alias, associated_type, subtype]
+    - [type_property, instance_property, initializer, ib_inspectable, ib_outlet]
+    - [deinitializer]
+    - [type_method, view_life_cycle_method, ib_action, ib_segue_action, other_method, subscript]
 
 # Setting `excluded` replaces the default list, `LinuxMain.swift` and
 # `main.swift`; neither exists here.
