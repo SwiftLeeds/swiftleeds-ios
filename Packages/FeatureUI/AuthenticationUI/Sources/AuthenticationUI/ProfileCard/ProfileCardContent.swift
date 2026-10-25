@@ -32,6 +32,32 @@ package struct ProfileCardContent: View {
         }
     }
 
+    private var failed: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("We can't load your account just now.")
+                .foregroundStyle(.secondary)
+                .fixedSize(horizontal: false, vertical: true)
+
+            ViewThatFits(in: .horizontal) {
+                HStack(spacing: 24) { actions }
+                VStack(alignment: .leading, spacing: 12) { actions }
+            }
+        }
+        .padding(.vertical, 8)
+    }
+
+    @ViewBuilder private var actions: some View {
+        Button("Try Again") {
+            Task { await retry() }
+        }
+
+        SignOutButton(signOut: signOut)
+    }
+
+    /// Returns the card for a loaded profile, with a button that shows the ticket.
+    ///
+    /// - Parameter profile: The profile to show.
+    /// - Returns: A link to the account details.
     private func loaded(_ profile: Profile) -> some View {
         NavigationLink {
             AccountDetailView(profile: profile, signOut: signOut)
@@ -63,28 +89,6 @@ package struct ProfileCardContent: View {
                 name: profile.name,
             )
         }
-    }
-
-    private var failed: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text("We can't load your account just now.")
-                .foregroundStyle(.secondary)
-                .fixedSize(horizontal: false, vertical: true)
-
-            ViewThatFits(in: .horizontal) {
-                HStack(spacing: 24) { actions }
-                VStack(alignment: .leading, spacing: 12) { actions }
-            }
-        }
-        .padding(.vertical, 8)
-    }
-
-    @ViewBuilder private var actions: some View {
-        Button("Try Again") {
-            Task { await retry() }
-        }
-
-        SignOutButton(signOut: signOut)
     }
 }
 
