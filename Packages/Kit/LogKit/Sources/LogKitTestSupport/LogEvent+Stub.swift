@@ -1,13 +1,18 @@
 import LogKit
 
 extension LogEvent {
-    /// Returns an event for a test, defaulting the parts the caller omits.
+    /// Returns an event for a test.
+    ///
+    /// ```swift
+    /// let event = LogEvent.stub("signed in", level: .notice)
+    /// ```
     ///
     /// - Parameters:
-    ///   - message: The message the event carries.
-    ///   - level: The severity the event is recorded at.
-    ///   - category: The area of the app the event came from.
-    /// - Returns: An event whose source is this helper, not the calling test.
+    ///   - message: The message the event carries. Defaults to `"event"`.
+    ///   - level: The severity the event is recorded at. Defaults to `.info`.
+    ///   - category: The area of the app the event came from. Defaults to `"test"`.
+    /// - Returns: An event whose source is this stub's line. A test that asserts `source` sees the stub's
+    ///   location.
     package static func stub(
         _ message: MessageTemplate = "event",
         level: LogLevel = .info,

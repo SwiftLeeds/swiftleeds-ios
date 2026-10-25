@@ -26,5 +26,15 @@ public final class LogRecorder: @unchecked Sendable {
     }
 
     /// Creates a recorder that has captured nothing.
+    ///
+    /// ```swift
+    /// let recorder = LogRecorder()
+    /// withDependencies {
+    ///     $0.log = recorder.log
+    /// } operation: {
+    ///     sut.run()
+    /// }
+    /// #expect(recorder.events.count == 1)
+    /// ```
     public init() {}
 }
