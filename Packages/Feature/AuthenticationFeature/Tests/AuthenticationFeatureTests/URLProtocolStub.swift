@@ -46,5 +46,7 @@ final class URLProtocolStub: URLProtocol {
         }
     }
 
-    override func stopLoading() {}
+    override func stopLoading() {
+        // Nothing is in flight to cancel: the stub answers each request as soon as loading starts.
+    }
 }
