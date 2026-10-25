@@ -9,10 +9,10 @@ import Testing
 // Drives the live store with only the transport stubbed.
 @Suite struct RemoteScheduleStoreIntegrationTests {
     @Test func whenNoEventIsGiven_shouldSendNoEventQueryItem() async throws {
-        let spy = HTTPClientSpy()
+        let spy = HTTPClientSpy(respondingWith: ScheduleJSON.valid, statusCode: 200)
 
         _ = try await withDependencies {
-            $0.httpClient = .recordingRequests(into: spy, responding: ScheduleJSON.valid)
+            $0.httpClient = spy.httpClient
         } operation: {
             try await RemoteScheduleStore.liveValue.fetch(.current)
         }
@@ -22,11 +22,11 @@ import Testing
     }
 
     @Test func whenAnEventIsGiven_shouldSendItsIdAsAQueryItem() async throws {
-        let spy = HTTPClientSpy()
+        let spy = HTTPClientSpy(respondingWith: ScheduleJSON.valid, statusCode: 200)
         let event = UUID()
 
         _ = try await withDependencies {
-            $0.httpClient = .recordingRequests(into: spy, responding: ScheduleJSON.valid)
+            $0.httpClient = spy.httpClient
         } operation: {
             try await RemoteScheduleStore.liveValue.fetch(.event(event))
         }
