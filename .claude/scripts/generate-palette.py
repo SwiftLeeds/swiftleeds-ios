@@ -352,7 +352,7 @@ APPEARANCES = [
 
 # One tone per appearance, in APPEARANCES order: light, dark, light high contrast, dark high contrast.
 ROLE_TONES = {
-    "text": (40, 75, 30, 85),
+    "text": (45, 75, 30, 85),
     "solid": (50, 60, 40, 65),
     "onSolid": (95, 5, 95, 5),
     "subtle": (95, 20, 95, 15),
