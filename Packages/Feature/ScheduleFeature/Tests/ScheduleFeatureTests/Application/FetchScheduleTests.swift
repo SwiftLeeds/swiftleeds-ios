@@ -8,15 +8,15 @@ import Testing
 @Suite struct FetchScheduleTests {
     /// The event id passes through to the repository unchanged.
     @Test func whenFetchingOneEvent_shouldAskTheRepositoryForThatEvent() async throws {
-        let recorder = EventRecorder()
+        let spy = ScheduleRepositorySpy()
         let event = UUID()
 
         _ = try await withDependencies {
-            $0.scheduleRepository = .recording(into: recorder, answering: try .fixture())
+            $0.scheduleRepository = .recording(into: spy, answering: try .fixture())
         } operation: {
             try await FetchSchedule.liveValue(for: event)
         }
 
-        #expect(await recorder.events == [event])
+        #expect(await spy.events == [event])
     }
 }

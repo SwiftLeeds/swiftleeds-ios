@@ -1,7 +1,7 @@
 import Foundation
 
-/// A record of each event a `ScheduleRepository` is asked for.
-actor EventRecorder {
+/// A spy that records each event a `ScheduleRepository` is asked for.
+actor ScheduleRepositorySpy {
     /// The events asked for, in order, with `nil` standing for the current schedule.
     private(set) var events: [UUID?] = []
 

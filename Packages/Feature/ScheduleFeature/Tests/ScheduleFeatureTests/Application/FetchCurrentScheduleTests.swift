@@ -5,16 +5,16 @@ import Testing
 
 /// Unit tests of the repository call `FetchCurrentSchedule` makes.
 @Suite struct FetchCurrentScheduleTests {
-    /// The current schedule has no event id, so the recorder sees `nil`.
+    /// The current schedule has no event id, so the spy sees `nil`.
     @Test func whenFetchingTheCurrentSchedule_shouldAskTheRepositoryForNoEvent() async throws {
-        let recorder = EventRecorder()
+        let spy = ScheduleRepositorySpy()
 
         _ = try await withDependencies {
-            $0.scheduleRepository = .recording(into: recorder, answering: try .fixture())
+            $0.scheduleRepository = .recording(into: spy, answering: try .fixture())
         } operation: {
             try await FetchCurrentSchedule.liveValue()
         }
 
-        #expect(await recorder.events == [nil])
+        #expect(await spy.events == [nil])
     }
 }
