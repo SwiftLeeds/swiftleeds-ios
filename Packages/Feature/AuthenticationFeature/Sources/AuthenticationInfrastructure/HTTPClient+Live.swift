@@ -1,5 +1,4 @@
 import Dependencies
-import Foundation
 import NetworkKit
 
 private enum AuthHTTPClientKey: TestDependencyKey {
@@ -18,18 +17,19 @@ extension DependencyValues {
 }
 
 extension HTTPClient {
-    /// The composed client the app uses: transport, transport logging,
-    /// session-expiry interception and bearer attachment.
+    /// Returns the client for requests that carry the session bearer.
     ///
     /// - Parameters:
-    ///   - urlSession: The transport session. It must not cache, because these
-    ///     responses carry the session bearer.
+    ///   - transport: The client that sends each request. It must not cache
+    ///     responses.
     ///   - onSessionExpiry: Called when a bearer-carrying request gets a 401.
+    /// - Returns: The transport wrapped in logging, session-expiry interception
+    ///   and bearer attachment.
     public static func live(
-        urlSession: URLSession,
+        transport: HTTPClient,
         onSessionExpiry: @escaping @Sendable () async -> Void,
-    ) -> Self {
-        Self.urlSession(urlSession)
+    ) -> HTTPClient {
+        transport
             .logging()
             .interceptingSessionExpiry(onExpiry: onSessionExpiry)
             .authenticated()

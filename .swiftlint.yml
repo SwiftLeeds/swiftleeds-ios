@@ -23,7 +23,7 @@
 # and the pre-commit hook checks against. Rule defaults change between versions,
 # so re-run the suite after a bump.
 
-# The violations left after the mechanical fixes, 14 as of 2026-10-23, down from
+# The violations left after the mechanical fixes, 12 as of 2026-10-25, down from
 # 78, plus 197 view layout numbers `no_magic_numbers` found. It found 206, and
 # nine left the baseline when their previews became `#Preview`. They stay
 # recorded rather than fixed, so linting starts green and new code is held to

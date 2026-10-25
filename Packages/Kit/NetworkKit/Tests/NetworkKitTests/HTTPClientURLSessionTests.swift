@@ -56,4 +56,23 @@ struct HTTPClientURLSessionTests {
             _ = try await sut.send(URLRequest(url: url))
         }
     }
+
+    /// The adapter sends the request it is given, headers included.
+    @Test func whenRequestCarriesHeader_shouldSendHeaderToSession() async throws {
+        URLProtocolStub.stub(
+            data: Data(),
+            response: try #require(
+                HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)
+            ),
+            error: nil,
+        )
+        let sut = HTTPClient.urlSession(URLProtocolStub.session())
+        var request = URLRequest(url: url)
+        request.setValue("value", forHTTPHeaderField: "X-Test")
+
+        _ = try await sut.send(request)
+
+        let sent = try #require(URLProtocolStub.lastRequest)
+        #expect(sent.value(forHTTPHeaderField: "X-Test") == "value")
+    }
 }
