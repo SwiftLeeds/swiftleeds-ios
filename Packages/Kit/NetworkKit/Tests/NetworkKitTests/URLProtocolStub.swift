@@ -31,11 +31,11 @@ final class URLProtocolStub: URLProtocol {
         if let error = Self.stub?.error {
             client?.urlProtocol(self, didFailWithError: error)
         } else {
-            if let data = Self.stub?.data {
-                client?.urlProtocol(self, didLoad: data)
-            }
             if let response = Self.stub?.response {
                 client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
+            }
+            if let data = Self.stub?.data {
+                client?.urlProtocol(self, didLoad: data)
             }
             client?.urlProtocolDidFinishLoading(self)
         }
