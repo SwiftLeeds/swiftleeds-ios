@@ -3,6 +3,7 @@ import AuthenticationInfrastructure
 import Dependencies
 import Foundation
 import NetworkKit
+import NetworkKitTestSupport
 import Testing
 
 @Suite struct HTTPClientAuthenticatedTests {
