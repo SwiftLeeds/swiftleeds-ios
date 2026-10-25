@@ -177,18 +177,35 @@ def hsb_to_oklch(hue, saturation, brightness):
 CAP = 0.20  # Default chroma cap. Change a row below to retune one hue.
 
 
+TURN_START = 75  # A turning hue keeps its angle from this tone up.
+TURN_END = 45  # A turning hue reaches turn_to at this tone and keeps it below.
+
+
 @dataclass(frozen=True)
 class HueRow:
     name: str
     angle: float
     cap: float
+    # The angle at TURN_END and below, for a hue that turns as it darkens. None keeps one angle.
+    turn_to: float | None = None
+
+    def angle_at(self, tone):
+        """Returns the hue angle at a tone: the row's angle, or a straight turn between TURN_START and TURN_END."""
+        if self.turn_to is None or tone >= TURN_START:
+            return self.angle
+        if tone <= TURN_END:
+            return self.turn_to
+        return self.turn_to + (self.angle - self.turn_to) * (tone - TURN_END) / (TURN_START - TURN_END)
 
 
 def build_hue_table():
     """One row per hue. The source colour of each angle is written out here."""
     red = hex_to_oklch("FF3B30")[2]  # Apple system red, light mode
     green = hex_to_oklch("34C759")[2]  # Apple system green
-    amber = hex_to_oklch("FF9500")[2]  # Apple system orange
+    orange = hex_to_oklch("FF9500")[2]  # Apple system orange
+    # Apple's orange angle goes brown below t55, so amber turns toward red there (Apple's own Increase
+    # Contrast orange sits at 35 degrees) and keeps Apple's angle where it is bright and apart from red.
+    amber_dark = 40.0
     # The hue of blue, teal, violet and raspberry (0.60, 0.47, 0.76, 0.92) is the session-kind hue
     # from the design gallery. Saturation and brightness were chosen here, and only the resulting
     # OKLCH hue angle is used.
@@ -199,13 +216,13 @@ def build_hue_table():
     return [
         HueRow("red", red, CAP),
         HueRow("green", green, CAP),
-        HueRow("amber", amber, CAP),
+        HueRow("amber", orange, CAP, turn_to=amber_dark),
         HueRow("blue", blue, CAP),
         HueRow("teal", teal, CAP),
         HueRow("violet", violet, CAP),
         HueRow("raspberry", raspberry, CAP),
         HueRow("neutral", 0.0, 0.0),
-        HueRow("bronze", amber, 0.07),  # amber's angle, muted
+        HueRow("bronze", orange, 0.07),  # Apple's orange angle, muted
     ]
 
 
@@ -224,12 +241,13 @@ def chroma_factor(tone):
     return 1.0 - (1.0 - TAPER_FLOOR) * (tone - TAPER_START) / (TAPER_END - TAPER_START)
 
 
-def ramp(angle, cap):
-    """List of (tone, chroma, [p3 r, g, b rounded to 4 decimals]) from t5 to t95."""
+def ramp(row):
+    """List of (tone, chroma, [p3 r, g, b rounded to 4 decimals]) from t5 to t95 for a HueRow."""
     result = []
     for tone in TONES:
         lightness = tone / 100
-        ceiling = cap * chroma_factor(tone)
+        angle = row.angle_at(tone)
+        ceiling = row.cap * chroma_factor(tone)
         chroma = max_p3_chroma(lightness, angle, ceiling) if ceiling > 0 else 0.0
         rgb = oklch_to_p3(lightness, chroma, angle)
         rounded = [min(max(round(c, DECIMALS), 0.0), 1.0) + 0.0 for c in rgb]
@@ -298,31 +316,42 @@ LITERAL_PATTERN = re.compile(
 )
 
 
-def p3_lightness(rgb):
-    """Returns the OKLab lightness of gamma-encoded Display P3 components."""
+def p3_oklch(rgb):
+    """Returns (L, C, hue in degrees) of gamma-encoded Display P3 components."""
     linear_p3 = [decode(c) for c in rgb]
-    return linear_srgb_to_oklab(mat_vec(P3_TO_SRGB, linear_p3))[0]
+    lab = linear_srgb_to_oklab(mat_vec(P3_TO_SRGB, linear_p3))
+    return lab[0], math.hypot(lab[1], lab[2]), math.degrees(math.atan2(lab[2], lab[1])) % 360
+
+
+HUE_CHECK_CHROMA = 0.05  # Below this chroma a hue angle is too unstable to check.
+HUE_TOLERANCE = 1.0  # Degrees of hue a rounded literal may drift from its row's angle.
 
 
 def self_check(name, text, expected_count):
-    """Parse every literal in the Swift text back and compare L x 100 with its tone number."""
+    """Parse every literal in the Swift text back; compare L x 100 with its tone and its hue with its row."""
     count = 0
     for index, match in enumerate(LITERAL_PATTERN.finditer(text)):
         rgb = [float(match.group(g)) for g in (2, 3, 4)]
         tone = int(match.group(1))
-        measured = p3_lightness(rgb) * 100
+        lightness, chroma, hue = p3_oklch(rgb)
+        measured = lightness * 100
         if abs(measured - tone) > 0.5:
             fail(f"self-check: {name} literal {index} at t{tone} has L x 100 = {measured:.3f}")
+        row = HUES[index // len(TONES)]
+        drift = abs((hue - row.angle_at(tone) + 180) % 360 - 180)
+        if chroma >= HUE_CHECK_CHROMA and drift > HUE_TOLERANCE:
+            fail(f"self-check: {name} {row.name} t{tone} has hue {hue:.1f}, expected {row.angle_at(tone):.1f}")
         count += 1
     if count != expected_count:
         fail(f"self-check: {name} held {count} values, expected {expected_count}")
     print(f"self-check: {count} values ok")
 
 
-def progress(name, angle, tones):
+def progress(row, tones):
     """Print one progress line for a finished hue."""
     peak_tone, peak_chroma, _ = max(tones, key=lambda item: item[1])
-    print(f"{name}: {len(tones)} tones, peak chroma {peak_chroma:.3f} at t{peak_tone} (hue {angle:.1f})")
+    hue = f"hue {row.angle:.1f}" if row.turn_to is None else f"hue {row.angle:.1f} turning to {row.turn_to:.1f}"
+    print(f"{row.name}: {len(tones)} tones, peak chroma {peak_chroma:.3f} at t{peak_tone} ({hue})")
 
 
 # Each family is a name and the Hue it draws from.
@@ -357,6 +386,19 @@ ROLE_TONES = {
     "onSolid": (95, 5, 95, 5),
     "subtle": (95, 20, 95, 15),
 }
+
+# A family and role whose tones differ from ROLE_TONES. Warning text is lighter in light mode: the
+# turned amber is still too dark to read as orange at t45, and t50 is the lightest tone that meets
+# 4.5:1 on its subtle tint. build_catalog fails on a key that names no family or role.
+FAMILY_ROLE_TONES = {
+    ("warning", "text"): (50, 75, 30, 85),
+}
+
+
+def tones_for(family, role):
+    """Returns the four tones of a family's role, one per appearance."""
+    return FAMILY_ROLE_TONES.get((family, role), ROLE_TONES[role])
+
 
 CATALOG_NAME = "Colors.xcassets"
 CATALOG_INFO = {"author": "xcode", "version": 1}
@@ -396,7 +438,7 @@ def colorset_text(family, role, ramps, hue_name):
     by_tone = {tone: rgb for tone, _, rgb in ramps[hue_name]}
     entries = [
         colorset_entry(by_tone[tone], appearances)
-        for tone, (_, appearances) in zip(ROLE_TONES[role], APPEARANCES)
+        for tone, (_, appearances) in zip(tones_for(family, role), APPEARANCES)
     ]
     return json_text({"colors": entries, "info": CATALOG_INFO})
 
@@ -405,11 +447,15 @@ def build_catalog(ramps):
     """Returns the catalog as a dict of relative path -> text, and prints one line per family."""
     files = {"Contents.json": json_text({"info": CATALOG_INFO})}
     hue_names = {row.name for row in HUES}
+    family_names = {family for family, _ in FAMILIES}
+    for family, role in FAMILY_ROLE_TONES:
+        if family not in family_names or role not in ROLE_TONES:
+            fail(f"FAMILY_ROLE_TONES names an unknown family or role: {family}, {role}")
     for family, hue_name in FAMILIES:
         if hue_name not in hue_names:
             fail(f"family {family} names an unknown hue: {hue_name}")
         for role in ROLE_TONES:
-            for tone in ROLE_TONES[role]:
+            for tone in tones_for(family, role):
                 if tone not in TONES:
                     fail(f"family {family} role {role} names a tone that is not in the ramp: {tone}")
             files[f"{family}-{role}.colorset/Contents.json"] = colorset_text(family, role, ramps, hue_name)
@@ -430,7 +476,7 @@ def check_catalog(files, ramps):
         entries = json.loads(text)["colors"]
         if len(entries) != len(APPEARANCES):
             fail(f"self-check: {relative} held {len(entries)} entries, expected {len(APPEARANCES)}")
-        for entry, tone, (label, appearances) in zip(entries, ROLE_TONES[role], APPEARANCES):
+        for entry, tone, (label, appearances) in zip(entries, tones_for(family, role), APPEARANCES):
             if entry.get("appearances", []) != appearances:
                 fail(f"self-check: {relative} {label} has the wrong appearances")
             color = entry["color"]
@@ -477,8 +523,8 @@ def run(swift_directory, resources_directory):
     swift_directory.mkdir(parents=True, exist_ok=True)
     ramps = {}
     for row in HUES:
-        ramps[row.name] = ramp(row.angle, row.cap)
-        progress(row.name, row.angle, ramps[row.name])
+        ramps[row.name] = ramp(row)
+        progress(row, ramps[row.name])
     path = swift_directory / "Hue+Tones.swift"
     lines = hue_file(ramps)
     check_formatting(path.name, lines)
