@@ -3,6 +3,7 @@ import AuthenticationInfrastructure
 import Dependencies
 import Foundation
 import NetworkKit
+import NetworkKitTestSupport
 import Testing
 
 @Suite struct HTTPClientAuthenticatedTests {
@@ -15,6 +16,8 @@ import Testing
     @Test func whenSessionExists_shouldAttachBearer() async throws {
         let spy = HTTPClientSpy(respondingWith: Data(), statusCode: 200)
         let store = InMemorySessionStore(stored: Session(token: try SessionToken("jwt-abc-123")))
+        var expected = URLRequest(url: url)
+        expected.setValue("Bearer jwt-abc-123", forHTTPHeaderField: "Authorization")
 
         _ = try await withDependencies {
             $0.sessionStore = store.sessionStore
@@ -22,11 +25,10 @@ import Testing
             try await spy.httpClient.authenticated().send(URLRequest(url: url))
         }
 
-        let request = try #require(await spy.requests.first)
-        #expect(request.value(forHTTPHeaderField: "Authorization") == "Bearer jwt-abc-123")
+        #expect(await spy.actions == [.send(expected)])
     }
 
-    @Test func whenNoSession_shouldNotAttachBearer() async throws {
+    @Test func whenNoSession_shouldSendRequestUnchanged() async throws {
         let spy = HTTPClientSpy(respondingWith: Data(), statusCode: 200)
         let store = InMemorySessionStore()
 
@@ -36,7 +38,6 @@ import Testing
             try await spy.httpClient.authenticated().send(URLRequest(url: url))
         }
 
-        let request = try #require(await spy.requests.first)
-        #expect(request.value(forHTTPHeaderField: "Authorization") == nil)
+        #expect(await spy.actions == [.send(URLRequest(url: url))])
     }
 }
