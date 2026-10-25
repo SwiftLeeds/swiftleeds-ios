@@ -7,6 +7,11 @@ import Testing
 @Suite struct TeamMapperTests {
     private let sut = TeamMapper.live
 
+    /// The API host every photo path in this suite resolves against.
+    private var baseURL: URL {
+        get throws { try #require(URL(string: "https://example.com")) }
+    }
+
     @Test func whenTeamHasMembers_shouldReturnMembersInTeamOrder() throws {
         let team = TeamDTO(teamMembers: [
             .fixture(name: "Member One", role: "Organizer"),
@@ -124,9 +129,5 @@ import Testing
         } operation: {
             try sut.map(team)
         }
-    }
-
-    private var baseURL: URL {
-        get throws { try #require(URL(string: "https://example.com")) }
     }
 }

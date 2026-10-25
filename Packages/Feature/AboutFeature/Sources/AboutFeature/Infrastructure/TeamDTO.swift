@@ -1,11 +1,6 @@
 /// The team as the backend sends it. Data only.
 package struct TeamDTO: Decodable {
-    package let teamMembers: [MemberDTO]
-
-    package init(teamMembers: [MemberDTO]) {
-        self.teamMembers = teamMembers
-    }
-
+    /// One team member as the backend sends it.
     package struct MemberDTO: Decodable {
         package enum CodingKeys: String, CodingKey {
             case name = "name"
@@ -38,5 +33,11 @@ package struct TeamDTO: Decodable {
             self.slack = slack
             self.imageURL = imageURL
         }
+    }
+
+    package let teamMembers: [MemberDTO]
+
+    package init(teamMembers: [MemberDTO]) {
+        self.teamMembers = teamMembers
     }
 }
