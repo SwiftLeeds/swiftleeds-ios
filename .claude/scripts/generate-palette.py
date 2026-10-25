@@ -381,7 +381,7 @@ APPEARANCES = [
 
 # One tone per appearance, in APPEARANCES order: light, dark, light high contrast, dark high contrast.
 ROLE_TONES = {
-    "text": (45, 75, 30, 85),
+    "text": (45, 75, 40, 80),
     "solid": (50, 60, 40, 65),
     "onSolid": (95, 5, 95, 5),
     "subtle": (95, 20, 95, 15),
@@ -391,7 +391,7 @@ ROLE_TONES = {
 # turned amber is still too dark to read as orange at t45, and t50 is the lightest tone that meets
 # 4.5:1 on its subtle tint. build_catalog fails on a key that names no family or role.
 FAMILY_ROLE_TONES = {
-    ("warning", "text"): (50, 75, 30, 85),
+    ("warning", "text"): (50, 75, 45, 80),
 }
 
 
