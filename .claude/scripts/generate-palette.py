@@ -353,8 +353,8 @@ APPEARANCES = [
 # One tone per appearance, in APPEARANCES order: light, dark, light high contrast, dark high contrast.
 DEFAULT_ROLE_TONES = {
     "text": (40, 75, 30, 85),
-    "solid": (50, 50, 40, 65),
-    "onSolid": (95, 95, 95, 5),
+    "solid": (50, 60, 40, 65),
+    "onSolid": (95, 5, 95, 5),
     "subtle": (95, 20, 95, 15),
 }
 # A (family, role) entry here replaces the default row for that one color set.

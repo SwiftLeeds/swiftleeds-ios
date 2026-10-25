@@ -101,9 +101,10 @@ snapshot instead.
 
 ## Snapshot tests live in their own target
 
-Decided 2026-08-28. Snapshot tests are the only tests behind `#if os(iOS)`, so they are the only
-ones the macOS CI job cannot see. They get a separate iOS Simulator job, and that job must stay
-cheap.
+Decided 2026-08-28. Snapshot tests are the only tests behind `#if os(iOS)`, apart from the few
+iOS-only tests that need trait resolution, such as the color contrast test, which live in the same
+target. The macOS CI job cannot see either kind. They get a separate iOS Simulator job, and that job
+must stay cheap.
 
 **Three things make a package's snapshot tests run.** All three, or they silently never run:
 
