@@ -3,6 +3,31 @@ import NetworkKit
 import Testing
 
 @Suite struct HTTPRequestTests {
+    /// The path the method-table requests are built on.
+    private static let path: URLPath = "api/v1/resource"
+
+    /// Requests whose method defines no content, each with the method token it sends.
+    private static let requestsWithoutContent: [(HTTPRequest, String)] = [
+        (.get(path), "GET"),
+        (.head(path), "HEAD"),
+        (.delete(path), "DELETE"),
+        (.connect(path), "CONNECT"),
+        (.options(path), "OPTIONS"),
+        (.trace(path), "TRACE"),
+    ]
+
+    /// Requests whose method defines content, each with the method token it sends.
+    private static let requestsWithContent: [(HTTPRequest, String)] = [
+        (.post(path, content: .json(Data())), "POST"),
+        (.put(path, content: .json(Data())), "PUT"),
+        (.patch(path, content: .json(Data())), "PATCH"),
+    ]
+
+    /// The base URL every request in this suite is built on.
+    private var baseURL: URL {
+        get throws { try #require(URL(string: "https://example.com")) }
+    }
+
     @Test func whenGETIsBuilt_shouldUseGETMethod() throws {
         let request = try HTTPRequest.get("api/v1/login/ticket").urlRequest(baseURL: baseURL)
 
@@ -185,23 +210,6 @@ import Testing
         #expect(request.value(forHTTPHeaderField: "Content-Type") == "application/json")
     }
 
-    private static let path: URLPath = "api/v1/resource"
-
-    private static let requestsWithoutContent: [(HTTPRequest, String)] = [
-        (.get(path), "GET"),
-        (.head(path), "HEAD"),
-        (.delete(path), "DELETE"),
-        (.connect(path), "CONNECT"),
-        (.options(path), "OPTIONS"),
-        (.trace(path), "TRACE"),
-    ]
-
-    private static let requestsWithContent: [(HTTPRequest, String)] = [
-        (.post(path, content: .json(Data())), "POST"),
-        (.put(path, content: .json(Data())), "PUT"),
-        (.patch(path, content: .json(Data())), "PATCH"),
-    ]
-
     @Test(arguments: requestsWithoutContent)
     func whenMethodHasNoDefinedContent_shouldBuildWithoutContent(
         request: HTTPRequest,
@@ -222,9 +230,5 @@ import Testing
 
         #expect(built.httpMethod == token)
         #expect(built.httpBody != nil)
-    }
-
-    private var baseURL: URL {
-        get throws { try #require(URL(string: "https://example.com")) }
     }
 }

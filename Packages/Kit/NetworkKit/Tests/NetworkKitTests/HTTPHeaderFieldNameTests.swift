@@ -2,24 +2,7 @@ import NetworkKit
 import Testing
 
 @Suite struct HTTPHeaderFieldNameTests {
-    @Test func whenNamesDifferOnlyByCase_shouldBeEqual() {
-        #expect(HTTPHeaderField.Name("Accept") == HTTPHeaderField.Name("accept"))
-    }
-
-    @Test func whenNamesDifferOnlyByCase_shouldHashAlike() {
-        let names: Set<HTTPHeaderField.Name> = [HTTPHeaderField.Name("Accept"), HTTPHeaderField.Name("ACCEPT")]
-
-        #expect(names.count == 1)
-    }
-
-    @Test func whenNamesDiffer_shouldNotBeEqual() {
-        #expect(HTTPHeaderField.Name("Accept") != HTTPHeaderField.Name("Accept-Encoding"))
-    }
-
-    @Test func whenNameIsExtracted_shouldKeepCasingGiven() {
-        #expect(String(HTTPHeaderField.Name("If-None-Match")) == "If-None-Match")
-    }
-
+    /// Every registered header field name, with the spelling it extracts to.
     private static let registeredNames: [(HTTPHeaderField.Name, String)] = [
         (.accept, "Accept"),
         (.acceptEncoding, "Accept-Encoding"),
@@ -66,6 +49,24 @@ import Testing
         (.via, "Via"),
         (.wwwAuthenticate, "WWW-Authenticate"),
     ]
+
+    @Test func whenNamesDifferOnlyByCase_shouldBeEqual() {
+        #expect(HTTPHeaderField.Name("Accept") == HTTPHeaderField.Name("accept"))
+    }
+
+    @Test func whenNamesDifferOnlyByCase_shouldHashAlike() {
+        let names: Set<HTTPHeaderField.Name> = [HTTPHeaderField.Name("Accept"), HTTPHeaderField.Name("ACCEPT")]
+
+        #expect(names.count == 1)
+    }
+
+    @Test func whenNamesDiffer_shouldNotBeEqual() {
+        #expect(HTTPHeaderField.Name("Accept") != HTTPHeaderField.Name("Accept-Encoding"))
+    }
+
+    @Test func whenNameIsExtracted_shouldKeepCasingGiven() {
+        #expect(String(HTTPHeaderField.Name("If-None-Match")) == "If-None-Match")
+    }
 
     @Test(arguments: registeredNames)
     func whenRegisteredNameIsExtracted_shouldSpellHeaderFieldItRegisters(
