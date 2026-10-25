@@ -9,6 +9,12 @@ import Testing
 
 /// Drives the live composition, stubbing only the transport.
 @Suite struct AttendeeRepositoryIntegrationTests {
+    /// An error the stubbed transport throws.
+    private enum TransportStubError: Error {
+        /// The transport failed.
+        case transport
+    }
+
     @Test func whenServerReturnsAttendeeJSON_shouldReturnAttendee() async throws {
         let expected = try expectedAttendee()
 
@@ -119,8 +125,6 @@ import Testing
         }
     }
 }
-
-private enum TransportStubError: Error { case transport }
 
 private func expectedAttendee() throws -> Attendee {
     Attendee(

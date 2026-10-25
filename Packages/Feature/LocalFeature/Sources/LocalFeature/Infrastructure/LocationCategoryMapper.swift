@@ -69,12 +69,14 @@ extension URL {
     }
 }
 
-private enum LocationCategoryMapperKey: DependencyKey {
-    static var liveValue: LocationCategoryMapper { .live }
-    static var testValue: LocationCategoryMapper { liveValue }
-}
-
 extension DependencyValues {
+    /// The key that stores the location category mapper among the dependency values.
+    private enum LocationCategoryMapperKey: DependencyKey {
+        static var liveValue: LocationCategoryMapper { .live }
+        /// The live mapper, which tests use as it is.
+        static var testValue: LocationCategoryMapper { liveValue }
+    }
+
     package var locationCategoryMapper: LocationCategoryMapper {
         get { self[LocationCategoryMapperKey.self] }
         set { self[LocationCategoryMapperKey.self] = newValue }

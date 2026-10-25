@@ -3,8 +3,22 @@ import ScheduleDomain
 import ScheduleInfrastructure
 import Testing
 
-// Drives the live store against a real UserDefaults suite.
+/// Tests that drive the live store against a real `UserDefaults` suite.
 @Suite struct LocalScheduleStoreIntegrationTests {
+    /// A suite of its own per test, removed when the test ends, so no test reads another's write.
+    private final class TemporarySuite {
+        /// The suite's unique name.
+        let name = "uk.co.swiftleeds.tests.\(UUID().uuidString)"
+
+        /// The app group identifier that selects the suite.
+        var identifier: AppGroupIdentifier { AppGroupIdentifier(name) }
+
+        /// Removes everything the suite stored.
+        deinit {
+            UserDefaults.standard.removePersistentDomain(forName: name)
+        }
+    }
+
     @Test func whenTheCurrentScheduleIsSaved_shouldLoadItBack() throws {
         let suite = TemporarySuite()
         let sut = LocalScheduleStore.appGroup(suite.identifier)
@@ -94,16 +108,5 @@ import Testing
 extension LocalScheduleStore {
     fileprivate func save(_ schedule: Schedule, for request: ScheduleRequest, at storedAt: Date = .now) {
         save(StoredSchedule(schedule: schedule, storedAt: storedAt), request)
-    }
-}
-
-// A suite of its own per test, removed when the test ends, so no test reads another's write.
-private final class TemporarySuite {
-    let name = "uk.co.swiftleeds.tests.\(UUID().uuidString)"
-
-    var identifier: AppGroupIdentifier { AppGroupIdentifier(name) }
-
-    deinit {
-        UserDefaults.standard.removePersistentDomain(forName: name)
     }
 }

@@ -3,6 +3,21 @@ import LogKit
 import Testing
 
 @Suite struct LogDescribableTests {
+    /// An error that supplies its own log description.
+    private enum Conforming: Error, LogDescribable {
+        /// The only error.
+        case boom
+
+        /// The fixed text `CUSTOM`.
+        var logDescription: String { "CUSTOM" }
+    }
+
+    /// An error that leaves its log description to the default.
+    private enum Plain: Error {
+        /// The only error.
+        case boom
+    }
+
     @Test func whenErrorDescribesItself_shouldUseThatDescription() {
         #expect(String(logDescribing: Conforming.boom) == "CUSTOM")
     }
@@ -44,16 +59,6 @@ import Testing
 
         #expect(String(logDescribing: error) == "dataCorrupted")
     }
-}
-
-private enum Conforming: Error, LogDescribable {
-    case boom
-
-    var logDescription: String { "CUSTOM" }
-}
-
-private enum Plain: Error {
-    case boom
 }
 
 private func caught<T: Decodable>(decoding json: String, as type: T.Type) -> (any Error)? {

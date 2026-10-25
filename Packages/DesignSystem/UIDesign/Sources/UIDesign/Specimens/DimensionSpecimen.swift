@@ -3,6 +3,71 @@ import SwiftUI
 
 /// Draws every dimension token beside its name.
 package struct DimensionSpecimen: View {
+    /// A view that draws a bar as wide as a spacing token.
+    private struct Bar: View {
+        /// The spacing token the bar's width shows.
+        let width: Spacing
+
+        /// A bar filled with the primary color.
+        var body: some View {
+            Rectangle()
+                .fill(.primary)
+                .frame(width: CGFloat(width), height: CGFloat(Spacing.medium))
+        }
+    }
+
+    /// A view that draws a filled rectangle with a corner radius token.
+    private struct Corner: View {
+        /// The corner radius token the rectangle shows.
+        let radius: CornerRadius
+
+        /// A sample rectangle with the radius applied to its corners.
+        var body: some View {
+            RoundedRectangle(cornerRadius: CGFloat(radius))
+                .fill(.primary)
+                .frame(width: Sample.width, height: Sample.height)
+        }
+    }
+
+    /// A view that draws an outlined rectangle with a border width token.
+    private struct Border: View {
+        /// The border width token the outline shows.
+        let width: BorderWidth
+
+        /// A sample rectangle outlined at the border width.
+        var body: some View {
+            RoundedRectangle(cornerRadius: CGFloat(CornerRadius.small))
+                .strokeBorder(.primary, lineWidth: CGFloat(width))
+                .frame(width: Sample.width, height: Sample.height)
+        }
+    }
+
+    /// A view that draws a square as large as an icon size token.
+    private struct Square: View {
+        /// The icon size token the square shows.
+        let side: IconSize
+
+        /// A square whose sides are the icon size.
+        var body: some View {
+            RoundedRectangle(cornerRadius: CGFloat(CornerRadius.small))
+                .fill(.primary)
+                .frame(side)
+        }
+    }
+
+    /// A view that draws a circle as large as an avatar size token.
+    private struct Dot: View {
+        /// The avatar size token the circle shows.
+        let diameter: AvatarSize
+
+        /// A circle as wide as the avatar size.
+        var body: some View {
+            Circle()
+                .fill(.primary)
+                .frame(diameter)
+        }
+    }
+
     package init() {}
 
     package var body: some View {
@@ -153,58 +218,6 @@ extension DimensionSpecimen {
                 Dot(diameter: .xLarge)
             }
         }
-    }
-}
-
-// MARK: - Parts
-
-private struct Bar: View {
-    let width: Spacing
-
-    var body: some View {
-        Rectangle()
-            .fill(.primary)
-            .frame(width: CGFloat(width), height: CGFloat(Spacing.medium))
-    }
-}
-
-private struct Corner: View {
-    let radius: CornerRadius
-
-    var body: some View {
-        RoundedRectangle(cornerRadius: CGFloat(radius))
-            .fill(.primary)
-            .frame(width: Sample.width, height: Sample.height)
-    }
-}
-
-private struct Border: View {
-    let width: BorderWidth
-
-    var body: some View {
-        RoundedRectangle(cornerRadius: CGFloat(CornerRadius.small))
-            .strokeBorder(.primary, lineWidth: CGFloat(width))
-            .frame(width: Sample.width, height: Sample.height)
-    }
-}
-
-private struct Square: View {
-    let side: IconSize
-
-    var body: some View {
-        RoundedRectangle(cornerRadius: CGFloat(CornerRadius.small))
-            .fill(.primary)
-            .frame(side)
-    }
-}
-
-private struct Dot: View {
-    let diameter: AvatarSize
-
-    var body: some View {
-        Circle()
-            .fill(.primary)
-            .frame(diameter)
     }
 }
 

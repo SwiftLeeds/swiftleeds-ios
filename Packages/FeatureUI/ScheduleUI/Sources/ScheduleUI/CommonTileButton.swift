@@ -82,29 +82,27 @@ package struct CommonTileButton<BackgroundType: ShapeStyle>: View {
     }
 }
 
-struct CommonTileButtton_Previews: PreviewProvider {
-    static var previews: some View {
-        ZStack {
-            Color.listBackground.edgesIgnoringSafeArea(.all)
-            VStack(spacing: Padding.cellGap) {
-                CommonTileButton(
-                    primaryText: "Primary",
-                    secondaryText: "Secondary",
-                    onTap: {},
-                )
-                CommonTileButton(
-                    primaryText: "Primary",
-                    showChevron: true,
-                    onTap: {},
-                )
-                CommonTileButton(
-                    primaryText: "Primary",
-                    secondaryText: "Secondary",
-                    backgroundStyle: .red,
-                    onTap: {},
-                )
-            }
-            .padding()
+#Preview {
+    ZStack {
+        Color.listBackground.edgesIgnoringSafeArea(.all)
+        VStack(spacing: Padding.cellGap) {
+            CommonTileButton(
+                primaryText: "Primary",
+                secondaryText: "Secondary",
+                onTap: {},
+            )
+            CommonTileButton(
+                primaryText: "Primary",
+                showChevron: true,
+                onTap: {},
+            )
+            CommonTileButton(
+                primaryText: "Primary",
+                secondaryText: "Secondary",
+                backgroundStyle: .red,
+                onTap: {},
+            )
         }
+        .padding()
     }
 }

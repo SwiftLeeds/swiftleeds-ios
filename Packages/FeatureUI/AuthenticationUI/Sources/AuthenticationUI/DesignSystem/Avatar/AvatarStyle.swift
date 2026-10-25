@@ -6,13 +6,13 @@ package protocol AvatarStyle {
     @ViewBuilder func makeBody(configuration: AvatarStyleConfiguration) -> Body
 }
 
-package enum AvatarContentKind: Equatable, Sendable {
+package enum AvatarContentKind: Equatable, Sendable {  // swiftlint:disable:this one_declaration_per_file - frozen copy
     case image
     case placeholder
     case failure
 }
 
-package struct AvatarStyleConfiguration {
+package struct AvatarStyleConfiguration {  // swiftlint:disable:this one_declaration_per_file - frozen copy
     package struct Content: View {
         let base: AnyView
 
@@ -23,7 +23,7 @@ package struct AvatarStyleConfiguration {
     package let kind: AvatarContentKind
 }
 
-package struct CircularAvatarStyle: AvatarStyle {
+package struct CircularAvatarStyle: AvatarStyle {  // swiftlint:disable:this one_declaration_per_file - frozen copy
     package init() {}
 
     package func makeBody(configuration: AvatarStyleConfiguration) -> some View {
@@ -34,7 +34,7 @@ package struct CircularAvatarStyle: AvatarStyle {
     }
 }
 
-package struct RoundedAvatarStyle: AvatarStyle {
+package struct RoundedAvatarStyle: AvatarStyle {  // swiftlint:disable:this one_declaration_per_file - frozen copy
     private let cornerRadius: CGFloat
 
     package init(cornerRadius: CGFloat = 12) {
@@ -70,7 +70,7 @@ extension AvatarStyle where Self == RoundedAvatarStyle {
     }
 }
 
-struct AnyAvatarStyle {
+struct AnyAvatarStyle {  // swiftlint:disable:this one_declaration_per_file - frozen copy
     let makeBody: (AvatarStyleConfiguration) -> AnyView
 
     init<S: AvatarStyle>(_ style: S) {
@@ -78,7 +78,7 @@ struct AnyAvatarStyle {
     }
 }
 
-private struct AvatarStyleKey: EnvironmentKey {
+private struct AvatarStyleKey: EnvironmentKey {  // swiftlint:disable:this one_declaration_per_file - frozen copy
     static var defaultValue: AnyAvatarStyle { AnyAvatarStyle(CircularAvatarStyle()) }
 }
 

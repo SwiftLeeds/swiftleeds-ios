@@ -36,12 +36,14 @@ extension AttendeeMapper {
     }
 }
 
-private enum AttendeeMapperKey: DependencyKey {
-    static var liveValue: AttendeeMapper { .live.logging() }
-    static var testValue: AttendeeMapper { liveValue }
-}
-
 extension DependencyValues {
+    /// The key that stores the attendee mapper among the dependency values.
+    private enum AttendeeMapperKey: DependencyKey {
+        static var liveValue: AttendeeMapper { .live.logging() }
+        /// The live mapper, which tests use as it is.
+        static var testValue: AttendeeMapper { liveValue }
+    }
+
     var attendeeMapper: AttendeeMapper {
         get { self[AttendeeMapperKey.self] }
         set { self[AttendeeMapperKey.self] = newValue }

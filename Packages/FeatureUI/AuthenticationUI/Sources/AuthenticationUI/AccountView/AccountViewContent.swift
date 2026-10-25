@@ -1,6 +1,24 @@
 import SwiftUI
 
 package struct AccountViewContent: View {
+    /// A view that presents the sign-in flow and dismisses itself once someone is signed in.
+    private struct SignInDestination: View {
+        /// An action that dismisses the presented destination.
+        @Environment(\.dismiss) private var dismiss
+
+        /// The action to run when sign-in succeeds.
+        let onSignedIn: @MainActor () -> Void
+
+        /// The sign-in flow, titled "Sign In".
+        var body: some View {
+            SignInView(onSignedIn: {
+                onSignedIn()
+                dismiss()
+            })
+            .navigationTitle("Sign In")
+        }
+    }
+
     private let state: AccountViewState
     private let onSignOut: @MainActor (SignOutReason) -> Void
     private let onSignedIn: @MainActor () -> Void
@@ -51,20 +69,6 @@ package struct AccountViewContent: View {
                 }
             }
         }
-    }
-}
-
-private struct SignInDestination: View {
-    @Environment(\.dismiss) private var dismiss
-
-    let onSignedIn: @MainActor () -> Void
-
-    var body: some View {
-        SignInView(onSignedIn: {
-            onSignedIn()
-            dismiss()
-        })
-        .navigationTitle("Sign In")
     }
 }
 

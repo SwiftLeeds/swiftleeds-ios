@@ -80,7 +80,7 @@ extension Avatar where Content == AvatarImage, Placeholder == Failure {
     }
 }
 
-package struct AvatarImage: View {
+package struct AvatarImage: View {  // swiftlint:disable:this one_declaration_per_file - frozen copy
     private let image: Image
 
     init(_ image: Image) {

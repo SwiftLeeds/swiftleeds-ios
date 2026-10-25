@@ -35,12 +35,14 @@ extension LoginMapper {
     }
 }
 
-private enum LoginMapperKey: DependencyKey {
-    static var liveValue: LoginMapper { .live.logging() }
-    static var testValue: LoginMapper { liveValue }
-}
-
 extension DependencyValues {
+    /// The key that stores the login mapper among the dependency values.
+    private enum LoginMapperKey: DependencyKey {
+        static var liveValue: LoginMapper { .live.logging() }
+        /// The live mapper, which tests use as it is.
+        static var testValue: LoginMapper { liveValue }
+    }
+
     var loginMapper: LoginMapper {
         get { self[LoginMapperKey.self] }
         set { self[LoginMapperKey.self] = newValue }

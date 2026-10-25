@@ -118,24 +118,22 @@ package struct CommonTileView<BackgroundType: ShapeStyle>: View {
     }
 }
 
-struct CommonTileView_Previews: PreviewProvider {
-    static var previews: some View {
-        ZStack {
-            Color.listBackground.edgesIgnoringSafeArea(.all)
-            VStack(spacing: Padding.cellGap) {
-                CommonTileView(
-                    primaryText: "Primary", secondaryText: "Secondary", subtitleText: "More details", showChevron: true,
-                )
-                CommonTileView(
-                    primaryText: "Primary"
-                )
-                CommonTileView(
-                    primaryText: "Primary",
-                    secondaryText: "Secondary",
-                    backgroundStyle: .red,
-                )
-            }
-            .padding()
+#Preview {
+    ZStack {
+        Color.listBackground.edgesIgnoringSafeArea(.all)
+        VStack(spacing: Padding.cellGap) {
+            CommonTileView(
+                primaryText: "Primary", secondaryText: "Secondary", subtitleText: "More details", showChevron: true,
+            )
+            CommonTileView(
+                primaryText: "Primary"
+            )
+            CommonTileView(
+                primaryText: "Primary",
+                secondaryText: "Secondary",
+                backgroundStyle: .red,
+            )
         }
+        .padding()
     }
 }

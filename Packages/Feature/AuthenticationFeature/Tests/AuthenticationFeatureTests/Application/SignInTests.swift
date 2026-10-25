@@ -4,6 +4,12 @@ import Dependencies
 import Testing
 
 @Suite struct SignInTests {
+    /// An error the stubbed gateway throws.
+    private enum StubError: Error, Equatable {
+        /// The gateway refused the credential.
+        case authenticationFailed
+    }
+
     @Test func whenAuthenticationSucceeds_shouldStoreSession() async throws {
         let store = InMemorySessionStore()
 
@@ -42,10 +48,6 @@ import Testing
 
         #expect(await store.stored == nil)
     }
-}
-
-private enum StubError: Error, Equatable {
-    case authenticationFailed
 }
 
 private func credential() throws -> Credential {

@@ -3,6 +3,58 @@ import SwiftUI
 
 /// A view that shows every color token, labeled by its name within its group.
 package struct ColorSpecimen: View {
+    /// A view that draws a color in a stroked swatch, visible on its own surface.
+    private struct Swatch: View {
+        /// The color the swatch shows.
+        private let color: Color
+
+        /// Creates a swatch that shows a color.
+        ///
+        /// - Parameter color: The color to show.
+        init(_ color: Color) {
+            self.color = color
+        }
+
+        /// A rounded rectangle filled with the color and outlined.
+        var body: some View {
+            RoundedRectangle(cornerRadius: CGFloat(CornerRadius.small))
+                .fill(color)
+                .frame(width: Sample.width, height: Sample.height)
+                .overlay {
+                    RoundedRectangle(cornerRadius: CGFloat(CornerRadius.small))
+                        .strokeBorder(.opaqueBorder, lineWidth: CGFloat(BorderWidth.thin))
+                }
+        }
+    }
+
+    /// A swatch with the letters "Aa" drawn on it.
+    private struct GlyphSwatch: View {
+        /// The color of the letters.
+        private let glyph: Color
+
+        /// The color of the swatch.
+        private let fill: Color
+
+        /// Creates a swatch of a color with letters on it.
+        ///
+        /// - Parameters:
+        ///   - glyph: The color of the letters.
+        ///   - fill: The color of the swatch.
+        init(_ glyph: Color, on fill: Color) {
+            self.glyph = glyph
+            self.fill = fill
+        }
+
+        /// The swatch with the letters over it.
+        var body: some View {
+            Swatch(fill)
+                .overlay {
+                    Text("Aa")
+                        .foregroundStyle(glyph)
+                }
+        }
+    }
+
     package init() {}
 
     package var body: some View {
@@ -149,55 +201,6 @@ extension ColorSpecimen {
                         .padding(.small)
                 }
         }
-    }
-}
-
-// MARK: - Parts
-
-/// A swatch with the letters "Aa" drawn on it.
-private struct GlyphSwatch: View {
-    /// The color of the letters.
-    private let glyph: Color
-
-    /// The color of the swatch.
-    private let fill: Color
-
-    /// Creates a swatch of a color with letters on it.
-    ///
-    /// - Parameters:
-    ///   - glyph: The color of the letters.
-    ///   - fill: The color of the swatch.
-    init(_ glyph: Color, on fill: Color) {
-        self.glyph = glyph
-        self.fill = fill
-    }
-
-    /// The swatch with the letters over it.
-    var body: some View {
-        Swatch(fill)
-            .overlay {
-                Text("Aa")
-                    .foregroundStyle(glyph)
-            }
-    }
-}
-
-// Stroked, or a surface swatch on that same surface is invisible.
-private struct Swatch: View {
-    private let color: Color
-
-    init(_ color: Color) {
-        self.color = color
-    }
-
-    var body: some View {
-        RoundedRectangle(cornerRadius: CGFloat(CornerRadius.small))
-            .fill(color)
-            .frame(width: Sample.width, height: Sample.height)
-            .overlay {
-                RoundedRectangle(cornerRadius: CGFloat(CornerRadius.small))
-                    .strokeBorder(.opaqueBorder, lineWidth: CGFloat(BorderWidth.thin))
-            }
     }
 }
 

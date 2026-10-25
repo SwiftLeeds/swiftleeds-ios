@@ -94,60 +94,79 @@ package struct BottomSheetView: View {
     }
 }
 
-struct BottomSheet_Previews: PreviewProvider {
-    static var previews: some View {
-        if let items = try? items {
-            preview(items)
-        } else {
-            Text(verbatim: "The preview's locations could not be built.")
-        }
-    }
-
-    private static func preview(_ items: [LocationCategory]) -> some View {
-        GeometryReader { proxy in
-            BottomSheetView(
-                isOpen: .constant(true),
-                selectedCategory: .constant(items.first),
-                categories: items,
-                maxHeight: proxy.size.height * Constants.maxHeightRatio,
-            )
-            .background(.blue)
-            .previewDevice(PreviewDevice(rawValue: "iPhone 13"))
-        }
-        .edgesIgnoringSafeArea(.all)
-    }
-
-    private static var items: [LocationCategory] {
-        get throws {
-            [
-                category(
-                    "Food",
-                    symbolName: "takeoutbag.and.cup.and.straw.fill",
-                    location: location(
-                        "Trinity Kitchen",
-                        link: "https://trinityleeds.com/shops/trinity-kitchen",
-                        coordinate: try Coordinate(latitude: 53.797378, longitude: -1.545209),
-                    ),
-                ),
-                category(
-                    "Drinks",
-                    symbolName: "wineglass.fill",
-                    location: location(
-                        "Brew Society",
-                        link: "https://www.brewsociety.co.uk/",
-                        coordinate: try Coordinate(latitude: 53.79584058588689, longitude: -1.550339186509128),
-                    ),
-                ),
-            ]
-        }
-    }
-
-    private static func category(_ name: String, symbolName: String, location: Location) -> LocationCategory {
-        LocationCategory(id: LocationCategoryID(UUID()), name: name, symbolName: symbolName, locations: [location])
-    }
-
-    private static func location(_ name: String, link: String, coordinate: Coordinate) -> Location {
-        Location(id: LocationID(UUID()), name: name, websiteURL: URL(string: link), coordinate: coordinate)
+#if DEBUG
+#Preview {
+    if let items = try? items {
+        sheet(items)
+    } else {
+        Text(verbatim: "The preview's locations could not be built.")
     }
 }
+
+/// Returns the sheet, open and sized to the screen, over a blue background.
+///
+/// - Parameter items: The categories the sheet lists. The first one is selected.
+/// - Returns: A view that shows the sheet.
+@MainActor
+private func sheet(_ items: [LocationCategory]) -> some View {
+    GeometryReader { proxy in
+        BottomSheetView(
+            isOpen: .constant(true),
+            selectedCategory: .constant(items.first),
+            categories: items,
+            maxHeight: proxy.size.height * Constants.maxHeightRatio,
+        )
+        .background(.blue)
+    }
+    .edgesIgnoringSafeArea(.all)
+}
+
+/// The categories the preview lists.
+private var items: [LocationCategory] {
+    get throws {
+        [
+            category(
+                "Food",
+                symbolName: "takeoutbag.and.cup.and.straw.fill",
+                location: location(
+                    "Sample Food Hall",
+                    link: "https://food-hall.example.com",
+                    coordinate: try Coordinate(latitude: 53.797, longitude: -1.545),
+                ),
+            ),
+            category(
+                "Drinks",
+                symbolName: "wineglass.fill",
+                location: location(
+                    "Sample Coffee House",
+                    link: "https://coffee-house.example.com",
+                    coordinate: try Coordinate(latitude: 53.796, longitude: -1.550),
+                ),
+            ),
+        ]
+    }
+}
+
+/// Returns a category that holds one location.
+///
+/// - Parameters:
+///   - name: The category's name.
+///   - symbolName: The name of the SF Symbol that marks the category.
+///   - location: The category's only location.
+/// - Returns: The category.
+private func category(_ name: String, symbolName: String, location: Location) -> LocationCategory {
+    LocationCategory(id: LocationCategoryID(UUID()), name: name, symbolName: symbolName, locations: [location])
+}
+
+/// Returns a location with a website and a coordinate.
+///
+/// - Parameters:
+///   - name: The location's name.
+///   - link: The address of the location's website.
+///   - coordinate: Where the location is.
+/// - Returns: The location.
+private func location(_ name: String, link: String, coordinate: Coordinate) -> Location {
+    Location(id: LocationID(UUID()), name: name, websiteURL: URL(string: link), coordinate: coordinate)
+}
+#endif
 #endif

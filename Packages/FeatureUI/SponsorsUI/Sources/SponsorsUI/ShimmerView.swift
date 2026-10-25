@@ -40,25 +40,23 @@ struct ShimmerView: View {
     }
 }
 
-struct ShimmerView_Previews: PreviewProvider {
-    static var previews: some View {
-        VStack(spacing: 16) {
-            Rectangle()
-                .frame(height: 100)
-                .overlay(ShimmerView())
-                .clipShape(RoundedRectangle(cornerRadius: 12))
+#Preview {
+    VStack(spacing: 16) {
+        Rectangle()
+            .frame(height: 100)
+            .overlay(ShimmerView())
+            .clipShape(RoundedRectangle(cornerRadius: 12))
 
-            Rectangle()
-                .frame(height: 50)
-                .overlay(
-                    ShimmerView(colors: [
-                        Color.blue.opacity(0.2),
-                        Color.blue.opacity(0.4),
-                        Color.blue.opacity(0.2),
-                    ])
-                )
-                .clipShape(RoundedRectangle(cornerRadius: 8))
-        }
-        .padding()
+        Rectangle()
+            .frame(height: 50)
+            .overlay(
+                ShimmerView(colors: [
+                    Color.blue.opacity(0.2),
+                    Color.blue.opacity(0.4),
+                    Color.blue.opacity(0.2),
+                ])
+            )
+            .clipShape(RoundedRectangle(cornerRadius: 8))
     }
+    .padding()
 }

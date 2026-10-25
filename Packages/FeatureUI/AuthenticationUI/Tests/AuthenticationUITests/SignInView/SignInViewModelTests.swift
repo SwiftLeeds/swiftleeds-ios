@@ -6,6 +6,12 @@ import Testing
 
 @MainActor
 @Suite struct SignInViewModelTests {
+    /// An error the sign-in use case does not declare.
+    private enum UnexpectedError: Error {
+        /// The only error.
+        case boom
+    }
+
     @Test func whenCredentialsAreValid_shouldAllowSubmit() {
         let sut = SignInView.ViewModel()
         sut.email = "attendee@example.com"
@@ -160,8 +166,4 @@ import Testing
         }
         #expect(weakSUT == nil)
     }
-}
-
-private enum UnexpectedError: Error {
-    case boom
 }

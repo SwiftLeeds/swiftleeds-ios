@@ -6,12 +6,12 @@ package protocol NameplateStyle {
     @ViewBuilder func makeBody(configuration: NameplateStyleConfiguration) -> Body
 }
 
-package enum NameplateRole: Equatable, Sendable {
+package enum NameplateRole: Equatable, Sendable {  // swiftlint:disable:this one_declaration_per_file - frozen copy
     case standard
     case unresolved
 }
 
-package struct NameplateStyleConfiguration {
+package struct NameplateStyleConfiguration {  // swiftlint:disable:this one_declaration_per_file - frozen copy
     package struct Title: View {
         let base: AnyView
 
@@ -36,6 +36,8 @@ package struct NameplateStyleConfiguration {
     package let role: NameplateRole
 }
 
+// This declaration's line has no room for a trailing disable.
+// swiftlint:disable:next one_declaration_per_file - frozen copy
 package struct ProminentNameplateStyle: NameplateStyle {
     package init() {}
 
@@ -61,7 +63,7 @@ package struct ProminentNameplateStyle: NameplateStyle {
     }
 }
 
-package struct CompactNameplateStyle: NameplateStyle {
+package struct CompactNameplateStyle: NameplateStyle {  // swiftlint:disable:this one_declaration_per_file - frozen copy
     package init() {}
 
     package func makeBody(configuration: NameplateStyleConfiguration) -> some View {
@@ -85,7 +87,7 @@ package struct CompactNameplateStyle: NameplateStyle {
     }
 }
 
-private struct NameplateLayout: View {
+private struct NameplateLayout: View {  // swiftlint:disable:this one_declaration_per_file - frozen copy
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     let configuration: NameplateStyleConfiguration
@@ -132,7 +134,7 @@ extension NameplateStyle where Self == CompactNameplateStyle {
     package static var compact: CompactNameplateStyle { CompactNameplateStyle() }
 }
 
-struct AnyNameplateStyle {
+struct AnyNameplateStyle {  // swiftlint:disable:this one_declaration_per_file - frozen copy
     let makeBody: (NameplateStyleConfiguration) -> AnyView
 
     init<S: NameplateStyle>(_ style: S) {

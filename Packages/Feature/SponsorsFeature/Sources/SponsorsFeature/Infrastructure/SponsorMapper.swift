@@ -58,12 +58,14 @@ extension SponsorMapper {
     }
 }
 
-private enum SponsorMapperKey: DependencyKey {
-    static var liveValue: SponsorMapper { .live.logging() }
-    static var testValue: SponsorMapper { liveValue }
-}
-
 extension DependencyValues {
+    /// The key that stores the sponsor mapper among the dependency values.
+    private enum SponsorMapperKey: DependencyKey {
+        static var liveValue: SponsorMapper { .live.logging() }
+        /// The live mapper, which tests use as it is.
+        static var testValue: SponsorMapper { liveValue }
+    }
+
     package var sponsorMapper: SponsorMapper {
         get { self[SponsorMapperKey.self] }
         set { self[SponsorMapperKey.self] = newValue }
