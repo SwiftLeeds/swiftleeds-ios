@@ -9,29 +9,29 @@ import Testing
 // Drives the live store with only the transport stubbed.
 @Suite struct RemoteScheduleStoreIntegrationTests {
     @Test func whenNoEventIsGiven_shouldSendNoEventQueryItem() async throws {
-        let recorder = RequestRecorder()
+        let spy = HTTPClientSpy()
 
         _ = try await withDependencies {
-            $0.httpClient = .recordingRequests(into: recorder, responding: ScheduleJSON.valid)
+            $0.httpClient = .recordingRequests(into: spy, responding: ScheduleJSON.valid)
         } operation: {
             try await RemoteScheduleStore.liveValue.fetch(.current)
         }
 
-        let url = try #require(await recorder.requests.first?.url?.absoluteString)
+        let url = try #require(await spy.requests.first?.url?.absoluteString)
         #expect(!url.contains("event="))
     }
 
     @Test func whenAnEventIsGiven_shouldSendItsIdAsAQueryItem() async throws {
-        let recorder = RequestRecorder()
+        let spy = HTTPClientSpy()
         let event = UUID()
 
         _ = try await withDependencies {
-            $0.httpClient = .recordingRequests(into: recorder, responding: ScheduleJSON.valid)
+            $0.httpClient = .recordingRequests(into: spy, responding: ScheduleJSON.valid)
         } operation: {
             try await RemoteScheduleStore.liveValue.fetch(.event(event))
         }
 
-        let url = try #require(await recorder.requests.first?.url?.absoluteString)
+        let url = try #require(await spy.requests.first?.url?.absoluteString)
         #expect(url.contains("event=\(event.uuidString)"))
     }
 
