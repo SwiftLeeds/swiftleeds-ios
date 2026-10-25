@@ -2,12 +2,7 @@ import Foundation
 
 /// The location categories as the backend sends them. Data only.
 package struct LocationCategoryListDTO: Decodable {
-    package let data: [LocationCategoryDTO]
-
-    package init(data: [LocationCategoryDTO]) {
-        self.data = data
-    }
-
+    /// One category of locations as the backend sends it.
     package struct LocationCategoryDTO: Decodable {
         package let id: UUID
         package let name: String
@@ -22,6 +17,7 @@ package struct LocationCategoryListDTO: Decodable {
         }
     }
 
+    /// One location as the backend sends it.
     package struct LocationDTO: Decodable {
         package enum CodingKeys: String, CodingKey {
             case id = "id"
@@ -44,5 +40,11 @@ package struct LocationCategoryListDTO: Decodable {
             self.lon = lon
             self.url = url
         }
+    }
+
+    package let data: [LocationCategoryDTO]
+
+    package init(data: [LocationCategoryDTO]) {
+        self.data = data
     }
 }
