@@ -5,6 +5,19 @@ import ScheduleDomain
 import Testing
 
 @Suite struct FetchScheduleTests {
+    /// A spy that records each event the repository is asked for.
+    fileprivate actor EventSpy {
+        /// The events asked for, in order, with `nil` standing for the current schedule.
+        private(set) var events: [UUID?] = []
+
+        /// Records an event the repository was asked for.
+        ///
+        /// - Parameter event: The event asked for, or `nil` for the current schedule.
+        func record(_ event: UUID?) {
+            events.append(event)
+        }
+    }
+
     @Test func whenFetchingTheCurrentSchedule_shouldAskTheRepositoryForNoEvent() async throws {
         let spy = EventSpy()
 
@@ -31,16 +44,11 @@ import Testing
     }
 }
 
-private actor EventSpy {
-    private(set) var events: [UUID?] = []
-
-    func record(_ event: UUID?) {
-        events.append(event)
-    }
-}
-
 extension ScheduleRepository {
-    fileprivate static func recording(into spy: EventSpy, answering answer: Schedule) -> ScheduleRepository {
+    fileprivate static func recording(
+        into spy: FetchScheduleTests.EventSpy,
+        answering answer: Schedule,
+    ) -> ScheduleRepository {
         ScheduleRepository(
             fetchCurrentSchedule: { () async -> Schedule in
                 await spy.record(nil)

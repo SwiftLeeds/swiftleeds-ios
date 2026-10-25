@@ -78,13 +78,11 @@ public struct SettingsView<Header: View>: View {
     }
 }
 
-struct SettingsView_Previews: PreviewProvider {
-    static var previews: some View {
-        if let contactEmail = try? ContactEmail("hello@conference.example"),
-            let appVersion = try? AppVersion("2.1.0")
-        {
-            SettingsView(contactEmail: contactEmail, appVersion: appVersion)
-        }
+#Preview {
+    if let contactEmail = try? ContactEmail("hello@conference.example"),
+        let appVersion = try? AppVersion("2.1.0")
+    {
+        SettingsView(contactEmail: contactEmail, appVersion: appVersion)
     }
 }
 #endif

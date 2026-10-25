@@ -47,14 +47,12 @@ package struct LocalCell: View {
     }
 }
 
-struct LocalCell_Previews: PreviewProvider {
-    static var previews: some View {
-        VStack {
-            LocalCell(label: "Food", imageName: "takeoutbag.and.cup.and.straw.fill")
-            LocalCell(label: "Coffee", imageName: "cup.and.saucer.fill")
-            LocalCell(label: "Drink", imageName: "wineglass.fill")
-            LocalCell(label: "Best of Leeds", imageName: "mappin")
-        }
+#Preview {
+    VStack {
+        LocalCell(label: "Food", imageName: "takeoutbag.and.cup.and.straw.fill")
+        LocalCell(label: "Coffee", imageName: "cup.and.saucer.fill")
+        LocalCell(label: "Drink", imageName: "wineglass.fill")
+        LocalCell(label: "Best of Leeds", imageName: "mappin")
     }
 }
 #endif

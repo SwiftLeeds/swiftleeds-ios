@@ -9,7 +9,6 @@ import ScheduleInfrastructure
 import SecureStorageKit
 import SecureStorageKitKeychain
 import SwiftUI
-import UIKit
 import UITheme
 
 @main
@@ -60,36 +59,5 @@ struct SwiftLeedsApp: App {
                 .environmentObject(appState)
                 .applyingSelectedTheme()
         }
-    }
-}
-
-// MARK: - AppDelegate
-final class AppDelegate: NSObject, UIApplicationDelegate {
-    func application(
-        _ application: UIApplication,
-        // UIApplicationDelegate declares the launch options dictionary, so it stays optional here.
-        // The disable sits above the parameter rather than on it because the line has no room.
-        // swiftlint:disable:next discouraged_optional_collection
-        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil,
-    ) -> Bool {
-        requestPushAuthorization(application: application)
-
-        return true
-    }
-
-    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        @Dependency(\.log) var log
-        guard let url = URL(string: ConferenceConfig.pushURL) else {
-            log.error(
-                "The push URL is not a valid URL: \(ConferenceConfig.pushURL, name: "pushURL", privacy: .open)",
-                in: .push,
-            )
-            return
-        }
-        sendPushRegistrationDatails(to: url, deviceToken: deviceToken)
-    }
-
-    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
-        handleFailedRegistration(error: error)
     }
 }

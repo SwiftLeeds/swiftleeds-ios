@@ -16,28 +16,26 @@ struct SwiftLeedsWidgetEntryView: View {
     }
 }
 
-struct SwiftLeedsWidget_Previews: PreviewProvider {
-    static var previews: some View {
-        SwiftLeedsWidgetEntryView(
-            entry: SwiftLeedsWidgetEntry(
-                date: Date(),
-                slot: Schedule.Slot(
-                    id: UUID(), date: Date(), startTime: "11:00 AM", duration: 1, activity: Activity.lunch,
-                    presentation: Presentation.donnyWalls,
-                ),
-            )
-        )
-        .previewContext(WidgetPreviewContext(family: .systemSmall))
+#Preview("Small", as: .systemSmall) {
+    SwiftLeedsWidget()
+} timeline: {
+    SwiftLeedsWidgetEntry(
+        date: .now,
+        slot: Schedule.Slot(
+            id: UUID(), date: Date(), startTime: "11:00 AM", duration: 1, activity: Activity.lunch,
+            presentation: Presentation.soloTalk,
+        ),
+    )
+}
 
-        SwiftLeedsWidgetEntryView(
-            entry: SwiftLeedsWidgetEntry(
-                date: Date(),
-                slot: Schedule.Slot(
-                    id: UUID(), date: Date(), startTime: "11:00 AM", duration: 1, activity: Activity.lunch,
-                    presentation: Presentation.donnyWalls,
-                ),
-            )
-        )
-        .previewContext(WidgetPreviewContext(family: .systemMedium))
-    }
+#Preview("Medium", as: .systemMedium) {
+    SwiftLeedsWidget()
+} timeline: {
+    SwiftLeedsWidgetEntry(
+        date: .now,
+        slot: Schedule.Slot(
+            id: UUID(), date: Date(), startTime: "11:00 AM", duration: 1, activity: Activity.lunch,
+            presentation: Presentation.soloTalk,
+        ),
+    )
 }

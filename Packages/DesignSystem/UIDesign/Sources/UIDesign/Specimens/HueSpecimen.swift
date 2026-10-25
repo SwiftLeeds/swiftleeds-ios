@@ -3,6 +3,31 @@ import SwiftUI
 
 /// A view that shows every hue's tonal ramp, labeled by hue and tone.
 package struct HueSpecimen: View {
+    /// One tone of a hue, drawn as a stroked square.
+    private struct Swatch: View {
+        /// The color the square is filled with.
+        private let color: Color
+
+        /// Creates a swatch of a color.
+        ///
+        /// - Parameter color: The color to fill the square with.
+        init(_ color: Color) {
+            self.color = color
+        }
+
+        /// The square, filled with the color and outlined.
+        var body: some View {
+            RoundedRectangle(cornerRadius: CGFloat(CornerRadius.small))
+                .fill(color)
+                .frame(width: HueSpecimen.swatchSize, height: HueSpecimen.swatchSize)
+                // Without the stroke, a swatch close to the page color is invisible.
+                .overlay {
+                    RoundedRectangle(cornerRadius: CGFloat(CornerRadius.small))
+                        .strokeBorder(.opaqueBorder, lineWidth: CGFloat(BorderWidth.thin))
+                }
+        }
+    }
+
     /// Creates a specimen of every hue's tonal ramp.
     package init() {}
 
@@ -62,31 +87,6 @@ extension Hue.Tone {
     /// The tone's number, such as "50".
     fileprivate var label: String {
         String(describing: self).dropFirst().description
-    }
-}
-
-/// One tone of a hue, drawn as a stroked square.
-private struct Swatch: View {
-    /// The color the square is filled with.
-    private let color: Color
-
-    /// Creates a swatch of a color.
-    ///
-    /// - Parameter color: The color to fill the square with.
-    init(_ color: Color) {
-        self.color = color
-    }
-
-    /// The square, filled with the color and outlined.
-    var body: some View {
-        RoundedRectangle(cornerRadius: CGFloat(CornerRadius.small))
-            .fill(color)
-            .frame(width: HueSpecimen.swatchSize, height: HueSpecimen.swatchSize)
-            // Without the stroke, a swatch close to the page color is invisible.
-            .overlay {
-                RoundedRectangle(cornerRadius: CGFloat(CornerRadius.small))
-                    .strokeBorder(.opaqueBorder, lineWidth: CGFloat(BorderWidth.thin))
-            }
     }
 }
 

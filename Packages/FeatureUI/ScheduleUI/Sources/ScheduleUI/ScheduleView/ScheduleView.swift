@@ -25,9 +25,7 @@ public struct ScheduleView: View {
     }
 }
 
-struct ScheduleView_Previews: PreviewProvider {
-    static var previews: some View {
-        ScheduleView()
-    }
+#Preview {
+    ScheduleView()
 }
 #endif
