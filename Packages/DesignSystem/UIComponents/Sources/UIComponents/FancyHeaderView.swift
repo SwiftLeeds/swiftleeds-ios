@@ -89,6 +89,17 @@ public struct FancyHeaderView: View {
         }
     }
 
+    /// The number of foreground images, counting the placeholder as one when there are none.
+    private var foregroundImageCount: Int {
+        let count = foregroundImageURLs.count + (foregroundImage == nil ? 0 : 1)
+        return count == 0 ? 1 : count
+    }
+
+    /// The color of the shadow behind the foreground images.
+    private var shadowColor: Color {
+        Color.black.opacity(1 / 3)
+    }
+
     private func createRectangleImage(for image: Image, aspectRatio: Double = 1.0) -> some View {
         Rectangle()
             .foregroundColor(.clear)
@@ -109,15 +120,6 @@ public struct FancyHeaderView: View {
                 ProgressView()
             )
             .progressViewStyle(CircularProgressViewStyle())
-    }
-
-    private var foregroundImageCount: Int {
-        let count = foregroundImageURLs.count + (foregroundImage == nil ? 0 : 1)
-        return count == 0 ? 1 : count
-    }
-
-    private var shadowColor: Color {
-        Color.black.opacity(1 / 3)
     }
 }
 
