@@ -5,6 +5,7 @@ import Testing
 
 /// Unit tests of the repository call `FetchCurrentSchedule` makes.
 @Suite struct FetchCurrentScheduleTests {
+    /// The current schedule has no event id, so the recorder sees `nil`.
     @Test func whenFetchingTheCurrentSchedule_shouldAskTheRepositoryForNoEvent() async throws {
         let recorder = EventRecorder()
 

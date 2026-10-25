@@ -1,6 +1,6 @@
 import Foundation
 
-/// Records each event a `ScheduleRepository` is asked for.
+/// A record of each event a `ScheduleRepository` is asked for.
 actor EventRecorder {
     /// The events asked for, in order, with `nil` standing for the current schedule.
     private(set) var events: [UUID?] = []

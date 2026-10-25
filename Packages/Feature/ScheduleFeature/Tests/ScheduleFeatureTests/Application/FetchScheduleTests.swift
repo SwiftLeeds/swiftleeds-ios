@@ -6,6 +6,7 @@ import Testing
 
 /// Unit tests of the repository call `FetchSchedule` makes.
 @Suite struct FetchScheduleTests {
+    /// The event id passes through to the repository unchanged.
     @Test func whenFetchingOneEvent_shouldAskTheRepositoryForThatEvent() async throws {
         let recorder = EventRecorder()
         let event = UUID()
