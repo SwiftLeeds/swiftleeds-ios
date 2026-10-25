@@ -23,6 +23,7 @@ let package = Package(
                 .product(name: "SFSafeSymbols", package: "SFSafeSymbols"),
                 .product(name: "UIAssets", package: "SwiftLeedsPackage"),
             ],
+            resources: [.process("Resources")],
         ),
         .testTarget(
             name: "UIDesignTests",
