@@ -38,6 +38,7 @@ let package = Package(
             dependencies: [
                 "ScheduleUI",
                 .product(name: "ScheduleDomain", package: "ScheduleFeature"),
+                .product(name: "ScheduleDomainTestSupport", package: "ScheduleFeature"),
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
                 .product(name: "UIComponents", package: "UIComponents"),
             ],

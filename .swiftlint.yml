@@ -398,7 +398,7 @@ type_contents_order:
 #   source. Its name says that role, not the placeholder view inside it.
 # - Each `Assert...Snapshots.swift` test helper is named for the assertion it
 #   adds, not for a type.
-# - ScheduleUI's `ScheduleFixtures.swift` holds fixtures for six types, from
+# - ScheduleUI's `ScheduleFixtures.swift` holds fixtures for five types, from
 #   `Speaker` to `Schedule.Slot`, so no one type names it.
 file_name:
   excluded:

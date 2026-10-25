@@ -75,17 +75,6 @@ extension Activity {
     )
 }
 
-extension Schedule.Event {
-    static func fixture(named name: String = "SwiftLeeds 2026") -> Schedule.Event {
-        Schedule.Event(
-            id: UUID(),
-            name: name,
-            location: "The Playhouse, Leeds",
-            date: Date(timeIntervalSince1970: 0),
-        )
-    }
-}
-
 extension Schedule.Day {
     static func fixture(named name: String) -> Schedule.Day {
         Schedule.Day(
