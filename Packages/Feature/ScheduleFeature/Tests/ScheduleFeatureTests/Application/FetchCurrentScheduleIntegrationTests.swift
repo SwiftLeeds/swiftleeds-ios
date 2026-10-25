@@ -5,7 +5,7 @@ import ScheduleDomain
 import ScheduleInfrastructure
 import Testing
 
-/// Integration tests that the live `FetchCurrentSchedule` reaches the live `ScheduleRepository`.
+/// Integration tests of the live `FetchCurrentSchedule` reaching the live `ScheduleRepository`.
 @Suite struct FetchCurrentScheduleIntegrationTests {
     /// The remote fails, so only the live repository can return the fresh stored copy.
     @Test func whenResolvedInLiveContext_shouldReturnStoredSchedule() async throws {
