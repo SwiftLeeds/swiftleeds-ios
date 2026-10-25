@@ -36,7 +36,7 @@ struct SwiftLeedsApp: App {
             $0.httpClient = HTTPClient.urlSession(.unauthenticated).logging()
             $0.localScheduleStore = .appGroup(AppGroupIdentifier(ConferenceConfig.appGroupIdentifier))
             $0.authHTTPClient = .live(
-                urlSession: .authenticated,
+                transport: .urlSession(.authenticated),
                 onSessionExpiry: {
                     @Dependency(\.signOut) var signOut
                     try? await signOut()
