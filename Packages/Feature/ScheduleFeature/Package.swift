@@ -11,6 +11,7 @@ let package = Package(
     products: [
         .library(name: "ScheduleApplication", targets: ["ScheduleApplication"]),
         .library(name: "ScheduleDomain", targets: ["ScheduleDomain"]),
+        .library(name: "ScheduleDomainTestSupport", targets: ["ScheduleDomainTestSupport"]),
         .library(name: "ScheduleInfrastructure", targets: ["ScheduleInfrastructure"]),
     ],
     dependencies: [
@@ -39,11 +40,16 @@ let package = Package(
                 .product(name: "NetworkKit", package: "NetworkKit"),
             ],
         ),
+        .target(
+            name: "ScheduleDomainTestSupport",
+            dependencies: ["ScheduleDomain"],
+        ),
         .testTarget(
             name: "ScheduleFeatureTests",
             dependencies: [
                 "ScheduleApplication",
                 "ScheduleDomain",
+                "ScheduleDomainTestSupport",
                 "ScheduleInfrastructure",
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "NetworkKit", package: "NetworkKit"),

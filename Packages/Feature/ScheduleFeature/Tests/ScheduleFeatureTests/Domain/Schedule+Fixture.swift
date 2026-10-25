@@ -1,5 +1,6 @@
 import Foundation
 import ScheduleDomain
+import ScheduleDomainTestSupport
 
 extension Schedule {
     static func fixture(
@@ -27,20 +28,6 @@ extension Schedule {
                     )
                 ],
             )
-        )
-    }
-}
-
-extension Schedule.Event {
-    static func fixture(
-        named name: String = "SwiftLeeds 2026",
-        id: UUID = UUID(),
-    ) -> Self {
-        Self(
-            id: id,
-            name: name,
-            location: "The Playhouse, Leeds",
-            date: Date(timeIntervalSince1970: 0),
         )
     }
 }

@@ -1,4 +1,5 @@
 import ScheduleDomain
+import ScheduleDomainTestSupport
 import Testing
 
 @Suite struct ScheduleDataTests {
