@@ -3,28 +3,33 @@ import AuthenticationInfrastructure
 import Dependencies
 import LogKit
 import LogKitTestSupport
-import NetworkKitTestSupport
 import Testing
 
 @Suite struct AuthGatewayLoggingTests {
+    /// An error the stubbed gateway's failure wraps.
+    private enum CauseStubError: Error {
+        /// The wrapped operation failed.
+        case failed
+    }
+
     @Test func whenRequestCannotBeEncoded_shouldLogReason() async throws {
-        let failure = LoginRequestError.couldNotEncodeRequest(StubError.couldNotBuildResponse)
+        let failure = LoginRequestError.couldNotEncodeRequest(CauseStubError.failed)
 
         let event = try #require(await logEvent(forFailure: failure))
 
         #expect(event.level == .error)
         let reason = try #require(event.fields.first { String($0.name) == "reason" })
-        #expect(reason.value == .string("couldNotBuildResponse"))
+        #expect(reason.value == .string("failed"))
     }
 
     /// A filter on the network category must find every line the gateway writes.
     @Test func whenAnyOutcomeIsLogged_shouldLogUnderAuthNetworkCategory() async {
         let events = [
             await logEvent(
-                forFailure: LoginRequestError.couldNotEncodeRequest(StubError.couldNotBuildResponse)
+                forFailure: LoginRequestError.couldNotEncodeRequest(CauseStubError.failed)
             ),
             await logEvent(
-                forFailure: LoginRequestError.transportFailed(StubError.couldNotBuildResponse)
+                forFailure: LoginRequestError.transportFailed(CauseStubError.failed)
             ),
         ].compactMap(\.self)
 
@@ -34,7 +39,7 @@ import Testing
 
     /// Transport failures are logged once, by the decorator on `HTTPClient`.
     @Test func whenTransportFails_shouldLogNothing() async {
-        let failure = LoginRequestError.transportFailed(StubError.couldNotBuildResponse)
+        let failure = LoginRequestError.transportFailed(CauseStubError.failed)
 
         let event = await logEvent(forFailure: failure)
 
