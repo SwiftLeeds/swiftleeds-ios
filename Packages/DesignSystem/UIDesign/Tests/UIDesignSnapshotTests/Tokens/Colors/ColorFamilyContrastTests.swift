@@ -14,11 +14,11 @@ struct ColorFamilyContrastTests {
         case textOnSurface
         /// Family text on grouped content.
         case textOnSecondarySurface
-        /// Family symbol on the family's strong fill.
+        /// Family symbol on the family's fill.
         case onSolidOnSolid
-        /// Family strong fill on the screen background.
+        /// Family fill on the screen background.
         case solidOnSurface
-        /// Family strong fill on grouped content.
+        /// Family fill on grouped content.
         case solidOnSecondarySurface
         /// Family text on the family's pale fill.
         case textOnSubtle
@@ -32,6 +32,18 @@ struct ColorFamilyContrastTests {
             case .solidOnSurface: ColorFamilyContrastTests.graphicFloor
             case .solidOnSecondarySurface: ColorFamilyContrastTests.graphicFloor
             case .textOnSubtle: ColorFamilyContrastTests.textFloor
+            }
+        }
+
+        /// Whether this pair compares the fill with a surface.
+        var comparesFillWithSurface: Bool {
+            switch self {
+            case .textOnSurface: false
+            case .textOnSecondarySurface: false
+            case .onSolidOnSolid: false
+            case .solidOnSurface: true
+            case .solidOnSecondarySurface: true
+            case .textOnSubtle: false
             }
         }
 
@@ -106,7 +118,7 @@ struct ColorFamilyContrastTests {
         }
 
         /// Whether this appearance is light mode.
-        private var isLight: Bool { self == .light || self == .lightIncreasedContrast }
+        var isLight: Bool { self == .light || self == .lightIncreasedContrast }
 
         /// Whether this appearance is in an elevated container.
         private var isElevated: Bool { self == .darkElevated || self == .darkIncreasedContrastElevated }
@@ -134,6 +146,12 @@ struct ColorFamilyContrastTests {
     nonisolated private static let textFloor: Float = 4.5
     /// The lowest ratio WCAG accepts for a graphic.
     nonisolated private static let graphicFloor: Float = 3
+    /// Families whose fill is pale in light appearances, so its edge is not checked against a light
+    /// surface, and its ratio there has no ordering to keep under Increase Contrast.
+    ///
+    /// The text and symbol on such a fill carry the state. In dark appearances the fill is checked
+    /// like any other.
+    nonisolated private static let paleFillFamilies: Set<ColorFamily> = [.warning]
 
     /// Returns the components a color has under an appearance.
     ///
@@ -176,6 +194,17 @@ struct ColorFamilyContrastTests {
         ratio.formatted(.number.precision(.fractionLength(2)))
     }
 
+    /// Returns whether a pair is left out of the floor and ordering checks.
+    ///
+    /// - Parameters:
+    ///   - pair: The two colors to compare.
+    ///   - family: The family that supplies them.
+    ///   - appearance: The appearance to draw them under.
+    /// - Returns: `true` for a pale family's fill against a light surface.
+    private static func isExempt(_ pair: Pair, for family: ColorFamily, in appearance: Appearance) -> Bool {
+        pair.comparesFillWithSurface && appearance.isLight && paleFillFamilies.contains(family)
+    }
+
     /// Checks that each pair reaches its floor in every appearance.
     ///
     /// - Parameter family: The family to check.
@@ -183,6 +212,7 @@ struct ColorFamilyContrastTests {
     func whenDrawnOnItsBackground_shouldMeetContrastFloor(family: ColorFamily) {
         for pair in Pair.allCases {
             for appearance in Appearance.allCases {
+                if Self.isExempt(pair, for: family, in: appearance) { continue }
                 let ratio = Self.ratio(of: pair, for: family, in: appearance)
                 #expect(
                     ratio >= pair.floor,
@@ -199,12 +229,28 @@ struct ColorFamilyContrastTests {
     func whenContrastIsIncreased_shouldNotLowerContrast(family: ColorFamily) {
         for pair in Pair.allCases {
             for appearance in Appearance.allCases {
+                if Self.isExempt(pair, for: family, in: appearance) { continue }
                 guard let standard = appearance.withoutIncreasedContrast else { continue }
                 let increased = Self.ratio(of: pair, for: family, in: appearance)
                 let normal = Self.ratio(of: pair, for: family, in: standard)
                 let shown = "\(Self.text(of: increased)) is below \(Self.text(of: normal))"
                 #expect(increased >= normal, "\(family) \(pair) \(appearance.name): \(shown)")
             }
+        }
+    }
+
+    /// Checks that each exempt family's fill really is pale in light appearances, so the exemption
+    /// cannot go stale.
+    ///
+    /// - Parameter family: The family to check.
+    @Test(arguments: Self.paleFillFamilies)
+    func whenFillIsPale_shouldSitBelowGraphicFloorOnLightSurfaces(family: ColorFamily) {
+        for appearance in Appearance.allCases where appearance.isLight {
+            let ratio = Self.ratio(of: .solidOnSurface, for: family, in: appearance)
+            #expect(
+                ratio < Self.graphicFloor,
+                "\(family) \(appearance.name): \(Self.text(of: ratio)) reaches the graphic floor",
+            )
         }
     }
 

@@ -179,7 +179,7 @@ private let previewName = PersonNameComponents(givenName: "Member", familyName: 
                 status: AvatarStatus(
                     "Waitlisted",
                     icon: Icon(.exclamationmarkCircleFill),
-                    tint: .warning,
+                    family: .warning,
                 ),
             )
         }

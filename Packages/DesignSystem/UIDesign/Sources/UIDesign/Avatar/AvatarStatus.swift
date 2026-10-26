@@ -21,24 +21,39 @@ public struct AvatarStatus: Equatable {
     /// The symbol that encloses its own glyph.
     let icon: Icon
 
-    /// The color of the enclosure.
-    let tint: Color
+    /// The colors of the enclosure and of the glyph inside it.
+    let family: ColorFamily
 
-    /// Creates a status.
+    /// Creates a status that uses the success colors.
     ///
     /// - Parameters:
     ///   - label: What the status means. VoiceOver reads it, and nothing shows it, so write the
     ///     words the person would use: "Checked in", not "green tick".
-    ///   - icon: A filled symbol that encloses its own glyph.
-    ///   - tint: The color of the enclosure. Use a status color, so the color means the same here
-    ///     as everywhere else.
+    ///   - icon: A filled symbol that encloses its own glyph and means success.
     public init(
         _ label: LocalizedStringKey,
         icon: Icon = Icon(.checkmarkCircleFill),
-        tint: Color = .success,
+    ) {
+        self.init(label, icon: icon, family: .success)
+    }
+
+    /// Creates a status that uses the colors of a family.
+    ///
+    /// - Parameters:
+    ///   - label: What the status means. VoiceOver reads it, and nothing shows it, so write the
+    ///     words the person would use: "Checked in", not "green tick".
+    ///   - icon: A filled symbol that encloses its own glyph and means the same as the family.
+    ///   - family: The colors of the mark. Its fill goes behind the glyph, and the glyph
+    ///     takes the color made for that fill. Use a status family (``ColorFamily/success``,
+    ///     ``ColorFamily/warning``, ``ColorFamily/error`` or ``ColorFamily/info``), so the color
+    ///     means the same here as everywhere else.
+    package init(
+        _ label: LocalizedStringKey,
+        icon: Icon,
+        family: ColorFamily,
     ) {
         self.label = label
         self.icon = icon
-        self.tint = tint
+        self.family = family
     }
 }
