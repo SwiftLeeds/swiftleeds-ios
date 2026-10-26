@@ -10,12 +10,6 @@ import Testing
 
 /// Drives the live composition, stubbing only the transport.
 @Suite struct AuthGatewayIntegrationTests {
-    /// An error the stubbed transport throws.
-    private enum TransportStubError: Error {
-        /// The transport failed.
-        case transport
-    }
-
     @Test func whenServerReturnsJWT_shouldReturnSessionToken() async throws {
         let token = try await withDependencies {
             $0.authHTTPClient = .responding(with: Data("jwt-abc-123".utf8), statusCode: 200)
@@ -62,7 +56,7 @@ import Testing
     @Test func whenRequestCannotReachServer_shouldThrowCouldNotReachServer() async throws {
         await #expect(throws: SignInError.couldNotReachServer) {
             try await withDependencies {
-                $0.authHTTPClient = .failing(with: TransportStubError.transport)
+                $0.authHTTPClient = .failing(with: UnexpectedError())
             } operation: {
                 try await AuthGateway.liveValue.authenticate(Credential.fixture)
             }
@@ -113,7 +107,7 @@ import Testing
         let recorder = LogRecorder()
 
         try? await withDependencies {
-            $0.authHTTPClient = .failing(with: TransportStubError.transport).logging()
+            $0.authHTTPClient = .failing(with: UnexpectedError()).logging()
             $0.log = recorder.log
         } operation: {
             let sut = AuthGateway.liveValue

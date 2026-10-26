@@ -6,30 +6,24 @@ import LogKitTestSupport
 import Testing
 
 @Suite struct AuthGatewayLoggingTests {
-    /// An error the stubbed gateway's failure wraps.
-    private enum CauseStubError: Error {
-        /// The wrapped operation failed.
-        case failed
-    }
-
     @Test func whenRequestCannotBeEncoded_shouldLogReason() async throws {
-        let failure = LoginRequestError.couldNotEncodeRequest(CauseStubError.failed)
+        let failure = LoginRequestError.couldNotEncodeRequest(UnexpectedError())
 
         let event = try #require(await logEvent(forFailure: failure))
 
         #expect(event.level == .error)
         let reason = try #require(event.fields.first { String($0.name) == "reason" })
-        #expect(reason.value == .string("failed"))
+        #expect(reason.value == .string("UnexpectedError()"))
     }
 
     /// A filter on the network category must find every line the gateway writes.
     @Test func whenAnyOutcomeIsLogged_shouldLogUnderAuthNetworkCategory() async {
         let events = [
             await logEvent(
-                forFailure: LoginRequestError.couldNotEncodeRequest(CauseStubError.failed)
+                forFailure: LoginRequestError.couldNotEncodeRequest(UnexpectedError())
             ),
             await logEvent(
-                forFailure: LoginRequestError.transportFailed(CauseStubError.failed)
+                forFailure: LoginRequestError.transportFailed(UnexpectedError())
             ),
         ].compactMap(\.self)
 
@@ -39,7 +33,7 @@ import Testing
 
     /// Transport failures are logged once, by the decorator on `HTTPClient`.
     @Test func whenTransportFails_shouldLogNothing() async {
-        let failure = LoginRequestError.transportFailed(CauseStubError.failed)
+        let failure = LoginRequestError.transportFailed(UnexpectedError())
 
         let event = await logEvent(forFailure: failure)
 

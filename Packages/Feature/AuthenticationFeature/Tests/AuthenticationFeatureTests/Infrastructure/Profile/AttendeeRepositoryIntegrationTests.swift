@@ -9,12 +9,6 @@ import Testing
 
 /// Drives the live composition, stubbing only the transport.
 @Suite struct AttendeeRepositoryIntegrationTests {
-    /// An error the stubbed transport throws.
-    private enum TransportStubError: Error {
-        /// The transport failed.
-        case transport
-    }
-
     @Test func whenServerReturnsAttendeeJSON_shouldReturnAttendee() async throws {
         let expected = try expectedAttendee()
 
@@ -117,7 +111,7 @@ import Testing
     @Test func whenTransportFails_shouldThrowCouldNotReachServer() async throws {
         await #expect(throws: AttendeeFetchError.couldNotReachServer) {
             try await withDependencies {
-                $0.authHTTPClient = .failing(with: TransportStubError.transport)
+                $0.authHTTPClient = .failing(with: UnexpectedError())
             } operation: {
                 let sut = AttendeeRepository.liveValue
                 return try await sut.fetch()
