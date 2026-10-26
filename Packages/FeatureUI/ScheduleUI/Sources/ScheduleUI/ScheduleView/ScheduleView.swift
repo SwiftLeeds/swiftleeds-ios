@@ -1,7 +1,9 @@
 #if canImport(UIKit)
 import SwiftUI
 
-/// The schedule screen. It fetches the schedule when it appears.
+/// The schedule screen.
+///
+/// It fetches the schedule when it appears.
 public struct ScheduleView: View {
     @State private var viewModel = ViewModel()
 

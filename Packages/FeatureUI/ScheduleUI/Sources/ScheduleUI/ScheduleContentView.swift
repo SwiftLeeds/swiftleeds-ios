@@ -3,7 +3,9 @@ import ScheduleDomain
 import SwiftUI
 import UIAssets
 
-/// The schedule screen, drawn from a state it is given. It fetches nothing.
+/// The schedule screen, drawn from a state it is given.
+///
+/// It fetches nothing.
 package struct ScheduleContentView: View {
     package enum ScreenState {
         case loading
