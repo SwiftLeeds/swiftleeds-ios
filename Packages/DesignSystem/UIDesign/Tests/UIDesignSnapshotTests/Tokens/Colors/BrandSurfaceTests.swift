@@ -61,7 +61,13 @@ struct BrandSurfaceTests {
 
     /// The appearances at the base level, in the generator's order: light, dark, then each with
     /// Increase Contrast.
-    private static let appearances = SystemAppearance.allCases.filter { !$0.isElevated }
+    private static let baseAppearances = SystemAppearance.allCases.filter { !$0.isElevated }
+
+    /// The appearances in an elevated container, in the same order as ``baseAppearances``.
+    private static let elevatedAppearances = SystemAppearance.allCases.filter(\.isElevated)
+
+    /// Every appearance a surface is checked under: the base level, then the elevated level.
+    private static let appearances = baseAppearances + elevatedAppearances
 
     /// Returns the components a color has under an appearance.
     ///
@@ -86,14 +92,17 @@ struct BrandSurfaceTests {
 
     /// Returns Apple's live surfaces in the syntax of the generator's `APPLE_SURFACES` table.
     ///
-    /// - Returns: One line per surface, ready to paste as its `universal` entry.
+    /// - Returns: One line per surface and level, ready to paste as its `universal` or `elevated` entry.
     private static func appleSurfaceReport() -> String {
-        let lines = Surface.allCases.map { surface in
-            let codes = appearances.map { "\"\(hex(of: resolve(surface.apple, in: $0)))\"" }
-            return "        \"universal\": (\(codes.joined(separator: ", "))),  # \(surface.key)"
+        let keys = [("universal", baseAppearances), ("elevated", elevatedAppearances)]
+        let lines = Surface.allCases.flatMap { surface in
+            keys.map { key, levelAppearances in
+                let codes = levelAppearances.map { "\"\(hex(of: resolve(surface.apple, in: $0)))\"" }
+                return "        \"\(key)\": (\(codes.joined(separator: ", "))),  # \(surface.key)"
+            }
         }
-        let order = appearances.map(\.name).joined(separator: ", ")
-        return "Apple's iOS surfaces (\(order)):\n" + lines.joined(separator: "\n")
+        let order = baseAppearances.map(\.name).joined(separator: ", ")
+        return "Apple's iOS surfaces (\(order), then the same four elevated):\n" + lines.joined(separator: "\n")
     }
 
     /// Checks that each surface keeps the lightness Apple's matching color has, and is opaque.
@@ -136,6 +145,19 @@ struct BrandSurfaceTests {
                 )
             }
         }
+    }
+
+    /// Checks that a dark surface in an elevated container is lighter than at the base level.
+    ///
+    /// - Parameter brand: The brand to check.
+    @Test(arguments: Brand.allCases)
+    func whenLevelIsElevated_shouldLiftDarkSurface(brand: Brand) {
+        let base = OKLCH(Self.resolve(UIColor(brand.surface), in: .dark))
+        let elevated = OKLCH(Self.resolve(UIColor(brand.surface), in: .darkElevated))
+        #expect(
+            elevated.lightness > base.lightness,
+            "\(brand) surface: elevated lightness \(elevated.lightness), base \(base.lightness)",
+        )
     }
 }
 

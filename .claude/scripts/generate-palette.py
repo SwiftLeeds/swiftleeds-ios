@@ -5,8 +5,9 @@ Each hue is a ramp from t5 to t95 in OKLCH, converted to Display P3. Two outputs
 Packages/DesignSystem/UIDesign/Sources/UIDesign:
 - Tokens/Colors/Hue/Hue+Tones.swift, the ramps as Swift Color.Resolved literals.
 - Resources/Colors.xcassets, one color set per family and role (light, dark and increased contrast),
-  and three surface sets per brand. A surface set keeps Apple's lightness, sampled on iOS and macOS,
-  and takes the brand's hue. The whole catalog is deleted and rewritten on each run.
+  and six surface sets per brand (three, and three elevated for iOS sheets). A surface set keeps
+  Apple's lightness, sampled on iOS and macOS, and takes the brand's hue. The whole catalog is
+  deleted and rewritten on each run.
 
 Run it from the repo root: python3 .claude/scripts/generate-palette.py
 Pass --output-root <directory> to write both outputs into that directory instead.
@@ -457,6 +458,10 @@ SURFACES = ("surface", "secondarySurface", "tertiarySurface")
 # secondarySystemBackground and tertiarySystemBackground. The iPad Pro 11-inch (M5) simulator,
 # iOS 27.0, printed the same values for every surface and appearance, so there is no iPad entry.
 #
+# elevated: printed by the same test on the same simulator, OS build and date, under traits that set
+# userInterfaceLevel to elevated, in the same four appearances. Light matches universal. Only dark
+# lifts. macOS has no elevated level, so there is no mac entry.
+#
 # mac: printed by BrandTests.whenSurfaceResolves_shouldKeepAppleLightness under swift test on
 # macOS 26.6.1 (25G76), on 2026-10-26. Sources: windowBackgroundColor, controlBackgroundColor and
 # underPageBackgroundColor, each fixed with performAsCurrentDrawingAppearance. The two Increase
@@ -465,18 +470,34 @@ SURFACES = ("surface", "secondarySurface", "tertiarySurface")
 APPLE_SURFACES = {
     "surface": {
         "universal": ("FFFFFF", "000000", "FFFFFF", "000000"),
+        "elevated": ("FFFFFF", "1C1C1E", "FFFFFF", "242426"),
         "mac": ("FFFFFF", "1E1E1E", "FFFFFF", "1E1E1E"),
     },
     "secondarySurface": {
         "universal": ("F2F2F7", "1C1C1E", "EBEBF0", "242426"),
+        "elevated": ("F2F2F7", "2C2C2E", "EBEBF0", "363638"),
         "mac": ("FFFFFF", "1E1E1E", "FFFFFF", "1E1E1E"),
     },
     "tertiarySurface": {
         "universal": ("FFFFFF", "2C2C2E", "FFFFFF", "363638"),
+        "elevated": ("FFFFFF", "3A3A3C", "FFFFFF", "444446"),
         "mac": ("969696", "282828", "969696", "282828"),
     },
 }
-IDIOMS = ("universal", "mac")  # The platforms of APPLE_SURFACES; each color set holds one entry per appearance of each.
+
+# Where each color set of a surface takes its values. A set is a name suffix and its entries, each a key
+# of APPLE_SURFACES and the idiom it is written under. The elevated set has no "mac" entry: macOS has no
+# elevated level, and on iOS the surface picks the base or the elevated set from userInterfaceLevel.
+BASE_LAYOUT = (("universal", "universal"), ("mac", "mac"))
+ELEVATED_LAYOUT = (("elevated", "universal"),)
+
+
+def surface_sets():
+    """Returns every surface color set as (name suffix, surface, layout), in catalog order."""
+    sets = [(surface, surface, BASE_LAYOUT) for surface in SURFACES]
+    sets += [("elevated" + surface[0].upper() + surface[1:], surface, ELEVATED_LAYOUT) for surface in SURFACES]
+    return sets
+
 
 SURFACE_LIGHTNESS_TOLERANCE = 0.003  # How far a surface's OKLCH lightness may sit from Apple's.
 SURFACE_CHROMA_TOLERANCE = 0.0005  # How far its chroma may sit from the brand's tint.
@@ -536,12 +557,12 @@ def retint(hex_string, hue_degrees, chroma):
     return [min(max(round(c, DECIMALS), 0.0), 1.0) + 0.0 for c in rgb]
 
 
-def surface_text(brand, angle, surface):
-    """Returns the Contents.json text of one brand surface: every idiom, in every appearance."""
+def surface_text(brand, angle, surface, layout):
+    """Returns the Contents.json text of one brand surface set: each entry of its layout, in every appearance."""
     entries = [
         colorset_entry(retint(hex_code, angle, brand.tint), appearances, idiom)
-        for idiom in IDIOMS
-        for hex_code, (_, appearances) in zip(APPLE_SURFACES[surface][idiom], APPEARANCES)
+        for sample, idiom in layout
+        for hex_code, (_, appearances) in zip(APPLE_SURFACES[surface][sample], APPEARANCES)
     ]
     return json_text({"colors": entries, "info": CATALOG_INFO})
 
@@ -552,10 +573,13 @@ def build_brand_catalog(files):
     for brand in BRANDS:
         if brand.hue not in angles:
             fail(f"brand {brand.name} names an unknown hue: {brand.hue}")
-        for surface in SURFACES:
-            files[f"{brand.name}-{surface}.colorset/Contents.json"] = surface_text(brand, angles[brand.hue], surface)
-        count = len(SURFACES) * len(IDIOMS) * len(APPEARANCES)
-        print(f"{brand.name} ({brand.hue}, tint {brand.tint}): {len(SURFACES)} surfaces, {count} values")
+        count = 0
+        for suffix, surface, layout in surface_sets():
+            files[f"{brand.name}-{suffix}.colorset/Contents.json"] = surface_text(
+                brand, angles[brand.hue], surface, layout
+            )
+            count += len(layout) * len(APPEARANCES)
+        print(f"{brand.name} ({brand.hue}, tint {brand.tint}): {len(surface_sets())} surface sets, {count} values")
 
 
 def build_catalog(ramps):
@@ -580,18 +604,19 @@ def build_catalog(ramps):
     return files
 
 
-def check_surface_set(relative, text, brand, surface):
+def check_surface_set(relative, text, brand, surface, layout):
     """Parse one brand surface set back. Returns its value count.
 
-    Fails unless it holds four entries for each idiom, each opaque Display P3 with Apple's lightness and,
-    where Apple's surface can hold a tint, the brand's chroma.
+    Fails unless it holds four entries for each entry of its layout, and no other, each opaque Display P3
+    with Apple's lightness and, where Apple's surface can hold a tint, the brand's chroma.
     """
     entries = json.loads(text)["colors"]
-    if len(entries) != len(IDIOMS) * len(APPEARANCES):
-        fail(f"self-check: {relative} held {len(entries)} entries, expected {len(IDIOMS) * len(APPEARANCES)}")
+    expected_count = len(layout) * len(APPEARANCES)
+    if len(entries) != expected_count:
+        fail(f"self-check: {relative} held {len(entries)} entries, expected {expected_count}")
     low, high = TINTABLE_LIGHTNESS
     for index, entry in enumerate(entries):
-        idiom = IDIOMS[index // len(APPEARANCES)]
+        sample, idiom = layout[index // len(APPEARANCES)]
         label, appearances = APPEARANCES[index % len(APPEARANCES)]
         if entry["idiom"] != idiom or entry.get("appearances", []) != appearances:
             fail(f"self-check: {relative} entry {index} is not {idiom} {label}")
@@ -600,10 +625,10 @@ def check_surface_set(relative, text, brand, surface):
             fail(f"self-check: {relative} {idiom} {label} is not opaque Display P3")
         parsed = [float(color["components"][key]) for key in ("red", "green", "blue")]
         lightness, chroma, _ = p3_oklch(parsed)
-        sample = hex_to_oklch(APPLE_SURFACES[surface][idiom][index % len(APPEARANCES)])[0]
-        if abs(lightness - sample) > SURFACE_LIGHTNESS_TOLERANCE:
-            fail(f"self-check: {relative} {idiom} {label} has L {lightness:.4f}, Apple's is {sample:.4f}")
-        if low <= sample <= high and abs(chroma - brand.tint) > SURFACE_CHROMA_TOLERANCE:
+        apple = hex_to_oklch(APPLE_SURFACES[surface][sample][index % len(APPEARANCES)])[0]
+        if abs(lightness - apple) > SURFACE_LIGHTNESS_TOLERANCE:
+            fail(f"self-check: {relative} {idiom} {label} has L {lightness:.4f}, Apple's is {apple:.4f}")
+        if low <= apple <= high and abs(chroma - brand.tint) > SURFACE_CHROMA_TOLERANCE:
             fail(f"self-check: {relative} {idiom} {label} has chroma {chroma:.4f}, expected {brand.tint}")
     return len(entries)
 
@@ -612,13 +637,15 @@ def check_catalog(files, ramps):
     """Parse every written component back and compare it with the tone literal it came from."""
     hue_of = dict(FAMILIES)
     brand_of = {brand.name: brand for brand in BRANDS}
+    layout_of = {suffix: (surface, layout) for suffix, surface, layout in surface_sets()}
     count = 0
     for relative, text in files.items():
         if relative == "Contents.json":
             continue
         family, role = relative.split(".colorset/")[0].split("-")
         if family in brand_of:
-            count += check_surface_set(relative, text, brand_of[family], role)
+            surface, layout = layout_of[role]
+            count += check_surface_set(relative, text, brand_of[family], surface, layout)
             continue
         by_tone = {tone: rgb for tone, _, rgb in ramps[hue_of[family]]}
         entries = json.loads(text)["colors"]
@@ -636,7 +663,7 @@ def check_catalog(files, ramps):
                 fail(f"self-check: {relative} {label} read {parsed}, expected t{tone} {expected}")
             count += 1
     expected_count = len(FAMILIES) * len(ROLE_TONES) * len(APPEARANCES)
-    expected_count += len(BRANDS) * len(SURFACES) * len(IDIOMS) * len(APPEARANCES)
+    expected_count += len(BRANDS) * sum(len(layout) for _, _, layout in surface_sets()) * len(APPEARANCES)
     if count != expected_count:
         fail(f"self-check: catalog held {count} values, expected {expected_count}")
     print(f"self-check: {count} catalog values ok")
@@ -673,7 +700,7 @@ def check_stray_files(catalog):
         return
     allowed = {"Contents.json"} | {
         f"{family}-{role}.colorset" for family, _ in FAMILIES for role in ROLE_TONES
-    } | {f"{brand.name}-{surface}.colorset" for brand in BRANDS for surface in SURFACES}
+    } | {f"{brand.name}-{suffix}.colorset" for brand in BRANDS for suffix, _, _ in surface_sets()}
     for child in sorted(catalog.iterdir()):
         if child.name not in allowed:
             fail(f"{catalog} holds a file the generator did not write: {child.name}. Remove it or move it.")
