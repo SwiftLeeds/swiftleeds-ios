@@ -2,9 +2,10 @@ import Foundation
 import SecureStorageKit
 import Testing
 
-/// Covers the write path under concurrent callers, which the actor and the
-/// duplicate retry protect together. Removing both makes these fail; removing
-/// either alone does not.
+/// Tests for the write path under concurrent callers.
+///
+/// The actor and the duplicate retry protect it together. Removing both makes these fail;
+/// removing either alone does not.
 ///
 /// They cannot use `storing(_:at:during:)`, because the collision only happens
 /// when no item exists yet.

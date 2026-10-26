@@ -11,7 +11,9 @@ public struct SecureStorage: Sendable {
     public var data: @Sendable (SecureStorageKey) async throws -> Data?
     /// Stores `data` for `key`, replacing any existing value.
     public var set: @Sendable (Data, SecureStorageKey) async throws -> Void
-    /// Removes any value stored for `key`. Removing a missing key is not an error.
+    /// Removes any value stored for `key`.
+    ///
+    /// Removing a missing key is not an error.
     public var remove: @Sendable (SecureStorageKey) async throws -> Void
 
     public init(
