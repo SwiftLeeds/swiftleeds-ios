@@ -3,11 +3,16 @@ import AuthenticationDomain
 import Dependencies
 import LogKit
 import LogKitTestSupport
-import NetworkKitTestSupport
 import Testing
 
 /// The cause reaches the log at the seam that knew it. These assert the outcome the user got.
 @Suite struct SignInLoggingTests {
+    /// An error the stubbed session store throws.
+    private enum StorageStubError: Error {
+        /// The stub refused the operation.
+        case refused
+    }
+
     @Test func whenCredentialsAreRejected_shouldLogAtNoticeRatherThanError() async throws {
         let event = try #require(await logEvent(whenGatewayThrows: .invalidCredentials))
 
@@ -109,7 +114,7 @@ import Testing
         try await withDependencies {
             $0.log = recorder.log
             $0.authGateway = .returning(try SessionToken("jwt-abc-123"))
-            $0.sessionStore = .failing(with: StubError.couldNotBuildResponse)
+            $0.sessionStore = .failing(with: StorageStubError.refused)
         } operation: {
             let sut = SignIn.liveValue.logging()
             _ = try? await sut(Credential.fixture)
