@@ -34,4 +34,20 @@ struct HueTests {
             )
         }
     }
+
+    /// Checks that the orange ramp is orange: more red than green, and more green than blue.
+    @Test
+    func whenHueIsOrange_shouldHaveMostRedAndLeastBlueAtMidTone() {
+        let color = Hue.orange.tone(.t60)
+        #expect(color.linearRed > color.linearGreen)
+        #expect(color.linearGreen > color.linearBlue)
+    }
+
+    /// Checks that the purple ramp is blue-violet: more blue than red, and more red than green.
+    @Test
+    func whenHueIsPurple_shouldHaveMostBlueAndLeastGreenAtMidTone() {
+        let color = Hue.purple.tone(.t60)
+        #expect(color.linearBlue > color.linearRed)
+        #expect(color.linearRed > color.linearGreen)
+    }
 }

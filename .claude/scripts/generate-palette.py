@@ -227,6 +227,10 @@ def build_hue_table():
         HueRow("teal", teal, CAP),
         HueRow("violet", violet, CAP),
         HueRow("raspberry", raspberry, CAP),
+        # The SwiftLeeds brand: near the Swift logo orange, but apart from error red and warning yellow.
+        HueRow("orange", 45.0, CAP),
+        # The KotlinLeeds brand: the Kotlin logo purple, #7F52FF.
+        HueRow("purple", 289.0, CAP),
         HueRow("neutral", 0.0, 0.0),
         # Between raspberry (355) and violet (307) at a third of their chroma, so it reads as neither.
         HueRow("mauve", 340.0, 0.07),
@@ -268,7 +272,7 @@ def hue_file(ramps):
     """ramps: dict hue name -> ramp()."""
     lines = [
         HEADER,
-        "// Each hue's function has one case per tone, so it disables cyclomatic_complexity on its line.",
+        "// Each function has one case per hue or per tone, so it disables cyclomatic_complexity on its line.",
         "// Permanent while this file is generated.",
         "",
         "import SwiftUI",
@@ -285,7 +289,7 @@ def hue_file(ramps):
         "    ///",
         "    /// - Parameter tone: The tone to read, from darkest to lightest.",
         "    /// - Returns: The color, in the Display P3 color space.",
-        "    package func tone(_ tone: Tone) -> Color.Resolved {",
+        "    package func tone(_ tone: Tone) -> Color.Resolved {  // swiftlint:disable:this cyclomatic_complexity",
         "        switch self {",
     ]
     lines += [f"        case .{row.name}: Self.{row.name}(tone)" for row in HUES]
