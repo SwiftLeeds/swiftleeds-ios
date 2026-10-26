@@ -10,6 +10,7 @@ extension HTTPRequestConvertible {
     /// Builds the `URLRequest` for ``request``.
     ///
     /// - Parameter baseURL: The server root the path is appended to.
+    /// - Returns: The request, addressed to the given server root.
     public func urlRequest(baseURL: URL) -> URLRequest {
         request.urlRequest(baseURL: baseURL)
     }
