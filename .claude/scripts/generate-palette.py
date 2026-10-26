@@ -14,6 +14,7 @@ Failures are appended to generate-palette.log beside the script. Standard librar
 
 import argparse
 import colorsys
+import itertools
 import json
 import math
 import re
@@ -317,10 +318,15 @@ LITERAL_PATTERN = re.compile(
 )
 
 
+def p3_oklab(rgb):
+    """Returns (L, a, b) of gamma-encoded Display P3 components."""
+    linear_p3 = [decode(c) for c in rgb]
+    return linear_srgb_to_oklab(mat_vec(P3_TO_SRGB, linear_p3))
+
+
 def p3_oklch(rgb):
     """Returns (L, C, hue in degrees) of gamma-encoded Display P3 components."""
-    linear_p3 = [decode(c) for c in rgb]
-    lab = linear_srgb_to_oklab(mat_vec(P3_TO_SRGB, linear_p3))
+    lab = p3_oklab(rgb)
     return lab[0], math.hypot(lab[1], lab[2]), math.degrees(math.atan2(lab[2], lab[1])) % 360
 
 
@@ -401,6 +407,18 @@ FAMILY_ROLE_TONES = {
 def tones_for(family, role):
     """Returns the four tones of a family's role, one per appearance."""
     return FAMILY_ROLE_TONES.get((family, role), ROLE_TONES[role])
+
+
+# Two families that share a role on one screen must read as two colours. Distance is the OKLab
+# distance times 100 (about 2 is a just-noticeable difference). Text: the rejected warning and
+# error pair measured 7.7, and the lowest shipped AA text pair measured (GOV.UK's tags) was 9.4,
+# so 10 sits above both. Fills: Carbon's and Atlassian's warning and error fills sit at 34, ours at 27.
+SEPARATION_FLOORS = {"text": 10.0, "solid": 20.0}
+# The families checked on text. Sponsor is in: its text shares screens with status text.
+SEPARATED_TEXT = ("success", "warning", "error", "info", "sponsor")
+# The families checked on solid. A sponsor fill never sits beside a status fill, and a muted
+# fill cannot reach 20 from a strong one.
+SEPARATED_FILLS = ("success", "warning", "error", "info")
 
 
 CATALOG_NAME = "Colors.xcassets"
@@ -496,6 +514,31 @@ def check_catalog(files, ramps):
     print(f"self-check: {count} catalog values ok")
 
 
+def check_separation(ramps):
+    """Fail when two families that share a role sit closer than that role's floor in any appearance."""
+    hue_of = dict(FAMILIES)
+
+    def colour(family, role, index):
+        tone = tones_for(family, role)[index]
+        return next(rgb for ramp_tone, _, rgb in ramps[hue_of[family]] if ramp_tone == tone)
+
+    # Subtle is reported only: pale tints sit at 2 to 10 apart and carry no state alone.
+    for role, families in (("text", SEPARATED_TEXT), ("solid", SEPARATED_FILLS), ("subtle", SEPARATED_TEXT)):
+        closest = None
+        for first, second in itertools.combinations(families, 2):
+            for index in range(len(APPEARANCES)):
+                lab_first = p3_oklab(colour(first, role, index))
+                lab_second = p3_oklab(colour(second, role, index))
+                distance = 100 * math.sqrt(sum((a - b) ** 2 for a, b in zip(lab_first, lab_second)))
+                if closest is None or distance < closest[0]:
+                    closest = (distance, first, second, APPEARANCES[index][0])
+        distance, first, second, label = closest
+        print(f"separation {role}: closest {first} and {second} at {distance:.1f} ({label})")
+        floor = SEPARATION_FLOORS.get(role)
+        if floor is not None and distance < floor:
+            fail(f"separation: {role} of {first} and {second} is {distance:.1f} apart in {label}, floor {floor}")
+
+
 def check_stray_files(catalog):
     """Fail when the catalog folder holds anything the tables do not produce, before it is deleted."""
     if not catalog.exists():
@@ -535,6 +578,7 @@ def run(swift_directory, resources_directory):
     self_check(path.name, text, len(HUES) * len(TONES))
     files = build_catalog(ramps)
     check_catalog(files, ramps)
+    check_separation(ramps)
     check_stray_files(resources_directory / CATALOG_NAME)
     path.write_text(text, encoding="utf-8")
     print("hue cases: " + ", ".join(row.name for row in HUES))
