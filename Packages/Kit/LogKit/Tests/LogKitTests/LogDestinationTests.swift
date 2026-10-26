@@ -3,8 +3,10 @@ import LogKit
 import LogKitTestSupport
 import Testing
 
-/// These assert what a destination is *unable* to see. The recorder here writes down whatever it is
-/// handed, so anything it observes is something a real destination could have leaked.
+/// Tests for what a destination is *unable* to see.
+///
+/// The recorder here writes down whatever it is handed, so anything it observes is something a real
+/// destination could have leaked.
 ///
 /// Events are written directly rather than through a level method, so these cover classification
 /// alone. The path from a call site is covered by `InterpolatedEventTests`.

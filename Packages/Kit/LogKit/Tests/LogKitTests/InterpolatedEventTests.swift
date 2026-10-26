@@ -3,9 +3,11 @@ import LogKit
 import LogKitTestSupport
 import Testing
 
-/// The whole path an interpolated message takes: written at a call site, enriched by middleware,
-/// classified by the destination, then rendered. Each step is covered on its own elsewhere; this
-/// covers them composed, which is where the secret-in-the-sentence defect lived.
+/// Tests for the whole path an interpolated message takes.
+///
+/// A message is written at a call site, enriched by middleware, classified by the destination, then
+/// rendered. Each step is covered on its own elsewhere; this covers them composed, which is where
+/// the secret-in-the-sentence defect lived.
 @Suite struct InterpolatedEventTests {
     private let salt = LogSalt(Data("fixed-for-tests".utf8))
 
@@ -69,6 +71,8 @@ import Testing
         #expect(event.message.rendered(with: event.fields) == "Rejected with 500")
     }
 
+    /// Checks that middleware cannot fill a gap with the field it appends.
+    ///
     /// Middleware appends an authored field. It must not be able to fill a gap, however it is named.
     @Test func whenMiddlewareInjectsField_shouldNotFillAnyGap() throws {
         let recorder = LogRecorder()
