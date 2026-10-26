@@ -3,13 +3,18 @@ import AuthenticationInfrastructure
 import Dependencies
 import LogKit
 import LogKitTestSupport
-import NetworkKitTestSupport
 import SecureStorageKit
 import Testing
 
 /// Every caller of the store discards its error with `try?`, so the log is the only place a refusal
 /// is recorded.
 @Suite struct SessionStoreLoggingTests {
+    /// An error the stubbed secure storage throws.
+    private enum StorageStubError: Error, Equatable {
+        /// The stub refused the operation.
+        case refused
+    }
+
     @Test func whenSessionCannotBeStored_shouldLogReasonAtErrorLevel() async throws {
         let session = Session(token: try SessionToken("jwt-abc-123"))
 
@@ -17,7 +22,7 @@ import Testing
 
         #expect(event.level == .error)
         let reason = try #require(event.fields.first { String($0.name) == "reason" })
-        #expect(reason.value == .string("couldNotBuildResponse"))
+        #expect(reason.value == .string("refused"))
     }
 
     @Test func whenSessionCannotBeCleared_shouldLogReasonAtErrorLevel() async throws {
@@ -25,7 +30,7 @@ import Testing
 
         #expect(event.level == .error)
         let reason = try #require(event.fields.first { String($0.name) == "reason" })
-        #expect(reason.value == .string("couldNotBuildResponse"))
+        #expect(reason.value == .string("refused"))
     }
 
     @Test func whenStoredSessionCannotBeRead_shouldLogReasonAtErrorLevel() async throws {
@@ -33,17 +38,17 @@ import Testing
 
         #expect(event.level == .error)
         let reason = try #require(event.fields.first { String($0.name) == "reason" })
-        #expect(reason.value == .string("couldNotBuildResponse"))
+        #expect(reason.value == .string("refused"))
     }
 
     @Test func whenStoreRefuses_shouldRethrowRefusal() async {
         await withDependencies {
             $0.log = LogRecorder().log
-            $0.secureStorage = .failing(with: StubError.couldNotBuildResponse)
+            $0.secureStorage = .failing(with: StorageStubError.refused)
         } operation: {
             let sut = SessionStore.live.logging()
 
-            await #expect(throws: StubError.couldNotBuildResponse) {
+            await #expect(throws: StorageStubError.refused) {
                 try await sut.clear()
             }
         }
@@ -56,7 +61,7 @@ import Testing
 
         await withDependencies {
             $0.log = recorder.log
-            $0.secureStorage = .failing(with: StubError.couldNotBuildResponse)
+            $0.secureStorage = .failing(with: StorageStubError.refused)
         } operation: {
             _ = try? await SessionStore.liveValue.clear()
         }
@@ -176,7 +181,7 @@ import Testing
 
         try? await withDependencies {
             $0.log = recorder.log
-            $0.secureStorage = .failing(with: StubError.couldNotBuildResponse)
+            $0.secureStorage = .failing(with: StorageStubError.refused)
         } operation: {
             try await operation(SessionStore.live.logging())
         }
