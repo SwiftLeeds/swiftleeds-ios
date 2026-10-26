@@ -245,6 +245,8 @@ def chroma_factor(tone, taper_start):
 
 def ramp(row):
     """List of (tone, chroma, [p3 r, g, b rounded to 4 decimals]) from t5 to t95 for a HueRow."""
+    if row.taper_start >= TAPER_END:
+        fail(f"{row.name} starts its taper at t{row.taper_start}, which is not below t{TAPER_END}")
     result = []
     for tone in TONES:
         lightness = tone / 100
@@ -411,13 +413,14 @@ def tones_for(family, role):
 
 # Two families that share a role on one screen must read as two colours. Distance is the OKLab
 # distance times 100 (about 2 is a just-noticeable difference). Text: the rejected warning and
-# error pair measured 7.7, and the lowest shipped AA text pair measured (GOV.UK's tags) was 9.4,
-# so 10 sits above both. Fills: Carbon's and Atlassian's warning and error fills sit at 34, ours at 27.
+# error text pair measured under 8 in every light appearance, and the lowest shipped AA text pair
+# (GOV.UK's tags) measured 9.4, so 10 sits above both. Fills: Carbon's and Atlassian's warning
+# and error fills sit at 34, and our closest status fill pair at 27.
 SEPARATION_FLOORS = {"text": 10.0, "solid": 20.0}
-# The families checked on text. Sponsor is in: its text shares screens with status text.
+# The families checked on text, and reported on subtle. Sponsor is in: its text shares screens
+# with status text.
 SEPARATED_TEXT = ("success", "warning", "error", "info", "sponsor")
-# The families checked on solid. A sponsor fill never sits beside a status fill, and a muted
-# fill cannot reach 20 from a strong one.
+# The families checked on solid. A sponsor fill never sits beside a status fill.
 SEPARATED_FILLS = ("success", "warning", "error", "info")
 
 
