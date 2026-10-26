@@ -5,9 +5,9 @@ Each hue is a ramp from t5 to t95 in OKLCH, converted to Display P3. Two outputs
 Packages/DesignSystem/UIDesign/Sources/UIDesign:
 - Tokens/Colors/Hue/Hue+Tones.swift, the ramps as Swift Color.Resolved literals.
 - Resources/Colors.xcassets, one color set per family and role (light, dark and increased contrast),
-  and six surface sets per brand (three, and three elevated for iOS sheets). A surface set keeps
-  Apple's lightness, sampled on iOS and macOS, and takes the brand's hue. The whole catalog is
-  deleted and rewritten on each run.
+  four role sets per brand (text, solid, onSolid, subtle), and six surface sets per brand (three,
+  and three elevated for iOS sheets). A surface set keeps Apple's lightness, sampled on iOS and
+  macOS, and takes the brand's hue. The whole catalog is deleted and rewritten on each run.
 
 Run it from the repo root: python3 .claude/scripts/generate-palette.py
 Pass --output-root <directory> to write both outputs into that directory instead.
@@ -412,9 +412,41 @@ FAMILY_ROLE_TONES = {
 }
 
 
-def tones_for(family, role):
-    """Returns the four tones of a family's role, one per appearance."""
-    return FAMILY_ROLE_TONES.get((family, role), ROLE_TONES[role])
+@dataclass(frozen=True)
+class Lightness:
+    """An off-grid colour: this OKLCH lightness (0 to 1) in the hue's angle, at the largest chroma
+    Display P3 allows up to CAP."""
+
+    value: float
+
+
+# A brand's role entry per appearance is a grid tone (an int) or Lightness(...).
+# SwiftLeeds, product owner's ruling of 2026-10-26: a bright orange fill, lighter in dark Increase
+# Contrast, with a black label (t5), which keeps clear of the error fill. KotlinLeeds keeps the defaults.
+# build_catalog fails on a key that names no brand or role.
+BRAND_ROLE_TONES = {
+    ("swiftLeeds", "solid"): (Lightness(0.72), Lightness(0.72), Lightness(0.72), Lightness(0.77)),
+    ("swiftLeeds", "onSolid"): (5, 5, 5, 5),
+}
+
+
+def tones_for(name, role, overrides):
+    """Returns the four entries of a family's or brand's role, one per appearance.
+
+    Each is a grid tone, except a brand's override may be Lightness(...).
+    overrides is FAMILY_ROLE_TONES for a family and BRAND_ROLE_TONES for a brand.
+    """
+    return overrides.get((name, role), ROLE_TONES[role])
+
+
+def entry_rgb(entry, ramps, hue_name):
+    """Returns the rounded Display P3 components of one entry of tones_for, in a hue."""
+    if isinstance(entry, Lightness):
+        angle = next(row.angle for row in HUES if row.name == hue_name)
+        chroma = max_p3_chroma(entry.value, angle, CAP)
+        rgb = oklch_to_p3(entry.value, chroma, angle)
+        return [min(max(round(c, DECIMALS), 0.0), 1.0) + 0.0 for c in rgb]
+    return next(rgb for tone, _, rgb in ramps[hue_name] if tone == entry)
 
 
 # Two families that share a role on one screen must read as two colours. Distance is the OKLab
@@ -537,12 +569,11 @@ def json_text(value):
     return json.dumps(value, indent=2, separators=(",", " : "), sort_keys=True) + "\n"
 
 
-def colorset_text(family, role, ramps, hue_name):
-    """Returns the Contents.json text of one color set."""
-    by_tone = {tone: rgb for tone, _, rgb in ramps[hue_name]}
+def colorset_text(tones, ramps, hue_name):
+    """Returns the Contents.json text of one role color set, from its four entries of tones_for."""
     entries = [
-        colorset_entry(by_tone[tone], appearances)
-        for tone, (_, appearances) in zip(tones_for(family, role), APPEARANCES)
+        colorset_entry(entry_rgb(entry, ramps, hue_name), appearances)
+        for entry, (_, appearances) in zip(tones, APPEARANCES)
     ]
     return json_text({"colors": entries, "info": CATALOG_INFO})
 
@@ -567,19 +598,34 @@ def surface_text(brand, angle, surface, layout):
     return json_text({"colors": entries, "info": CATALOG_INFO})
 
 
-def build_brand_catalog(files):
-    """Add every brand's surface sets to the catalog files, and print one line per brand."""
+def build_brand_catalog(files, ramps):
+    """Add every brand's role and surface sets to the catalog files, and print one line per brand."""
     angles = {row.name: row.angle for row in HUES}
+    brand_names = {brand.name for brand in BRANDS}
+    for brand_name, role in BRAND_ROLE_TONES:
+        if brand_name not in brand_names or role not in ROLE_TONES:
+            fail(f"BRAND_ROLE_TONES names an unknown brand or role: {brand_name}, {role}")
     for brand in BRANDS:
         if brand.hue not in angles:
             fail(f"brand {brand.name} names an unknown hue: {brand.hue}")
-        count = 0
+        for role in ROLE_TONES:
+            tones = tones_for(brand.name, role, BRAND_ROLE_TONES)
+            for tone in tones:
+                if isinstance(tone, Lightness):
+                    continue
+                if tone not in TONES:
+                    fail(f"brand {brand.name} role {role} names a tone that is not in the ramp: {tone}")
+            files[f"{brand.name}-{role}.colorset/Contents.json"] = colorset_text(tones, ramps, brand.hue)
+        count = len(ROLE_TONES) * len(APPEARANCES)
         for suffix, surface, layout in surface_sets():
             files[f"{brand.name}-{suffix}.colorset/Contents.json"] = surface_text(
                 brand, angles[brand.hue], surface, layout
             )
             count += len(layout) * len(APPEARANCES)
-        print(f"{brand.name} ({brand.hue}, tint {brand.tint}): {len(surface_sets())} surface sets, {count} values")
+        print(
+            f"{brand.name} ({brand.hue}, tint {brand.tint}): {len(ROLE_TONES)} roles and "
+            f"{len(surface_sets())} surface sets, {count} values"
+        )
 
 
 def build_catalog(ramps):
@@ -594,13 +640,14 @@ def build_catalog(ramps):
         if hue_name not in hue_names:
             fail(f"family {family} names an unknown hue: {hue_name}")
         for role in ROLE_TONES:
-            for tone in tones_for(family, role):
+            tones = tones_for(family, role, FAMILY_ROLE_TONES)
+            for tone in tones:
                 if tone not in TONES:
                     fail(f"family {family} role {role} names a tone that is not in the ramp: {tone}")
-            files[f"{family}-{role}.colorset/Contents.json"] = colorset_text(family, role, ramps, hue_name)
+            files[f"{family}-{role}.colorset/Contents.json"] = colorset_text(tones, ramps, hue_name)
         count = len(ROLE_TONES) * len(APPEARANCES)
         print(f"{family} ({hue_name}): {len(ROLE_TONES)} roles, {count} values")
-    build_brand_catalog(files)
+    build_brand_catalog(files, ramps)
     return files
 
 
@@ -633,6 +680,29 @@ def check_surface_set(relative, text, brand, surface, layout):
     return len(entries)
 
 
+OFF_GRID_TOLERANCE = 0.002  # How far an off-grid entry's rounded literal may sit from its lightness.
+
+
+def check_tone_set(relative, text, tones, ramp_hue, hue_name):
+    """Parse one role color set back against the entries it came from. Returns its value count."""
+    entries = json.loads(text)["colors"]
+    if len(entries) != len(APPEARANCES):
+        fail(f"self-check: {relative} held {len(entries)} entries, expected {len(APPEARANCES)}")
+    for entry, tone, (label, appearances) in zip(entries, tones, APPEARANCES):
+        if entry.get("appearances", []) != appearances:
+            fail(f"self-check: {relative} {label} has the wrong appearances")
+        color = entry["color"]
+        if color["color-space"] != "display-p3" or color["components"]["alpha"] != "1.000":
+            fail(f"self-check: {relative} {label} is not opaque Display P3")
+        parsed = [float(color["components"][key]) for key in ("red", "green", "blue")]
+        expected = [float(component_text(c)) for c in entry_rgb(tone, {hue_name: ramp_hue}, hue_name)]
+        if parsed != expected:
+            fail(f"self-check: {relative} {label} read {parsed}, expected {tone} {expected}")
+        if isinstance(tone, Lightness) and abs(p3_oklch(parsed)[0] - tone.value) > OFF_GRID_TOLERANCE:
+            fail(f"self-check: {relative} {label} has L {p3_oklch(parsed)[0]:.4f}, expected {tone.value}")
+    return len(entries)
+
+
 def check_catalog(files, ramps):
     """Parse every written component back and compare it with the tone literal it came from."""
     hue_of = dict(FAMILIES)
@@ -643,26 +713,18 @@ def check_catalog(files, ramps):
         if relative == "Contents.json":
             continue
         family, role = relative.split(".colorset/")[0].split("-")
-        if family in brand_of:
+        if family in brand_of and role in ROLE_TONES:
+            tones = tones_for(family, role, BRAND_ROLE_TONES)
+            hue_name = brand_of[family].hue
+            count += check_tone_set(relative, text, tones, ramps[hue_name], hue_name)
+        elif family in brand_of:
             surface, layout = layout_of[role]
             count += check_surface_set(relative, text, brand_of[family], surface, layout)
-            continue
-        by_tone = {tone: rgb for tone, _, rgb in ramps[hue_of[family]]}
-        entries = json.loads(text)["colors"]
-        if len(entries) != len(APPEARANCES):
-            fail(f"self-check: {relative} held {len(entries)} entries, expected {len(APPEARANCES)}")
-        for entry, tone, (label, appearances) in zip(entries, tones_for(family, role), APPEARANCES):
-            if entry.get("appearances", []) != appearances:
-                fail(f"self-check: {relative} {label} has the wrong appearances")
-            color = entry["color"]
-            if color["color-space"] != "display-p3" or color["components"]["alpha"] != "1.000":
-                fail(f"self-check: {relative} {label} is not opaque Display P3")
-            parsed = [float(color["components"][key]) for key in ("red", "green", "blue")]
-            expected = [float(component_text(c)) for c in by_tone[tone]]
-            if parsed != expected:
-                fail(f"self-check: {relative} {label} read {parsed}, expected t{tone} {expected}")
-            count += 1
+        else:
+            tones = tones_for(family, role, FAMILY_ROLE_TONES)
+            count += check_tone_set(relative, text, tones, ramps[hue_of[family]], hue_of[family])
     expected_count = len(FAMILIES) * len(ROLE_TONES) * len(APPEARANCES)
+    expected_count += len(BRANDS) * len(ROLE_TONES) * len(APPEARANCES)
     expected_count += len(BRANDS) * sum(len(layout) for _, _, layout in surface_sets()) * len(APPEARANCES)
     if count != expected_count:
         fail(f"self-check: catalog held {count} values, expected {expected_count}")
@@ -674,7 +736,7 @@ def check_separation(ramps):
     hue_of = dict(FAMILIES)
 
     def colour(family, role, index):
-        tone = tones_for(family, role)[index]
+        tone = tones_for(family, role, FAMILY_ROLE_TONES)[index]
         return next(rgb for ramp_tone, _, rgb in ramps[hue_of[family]] if ramp_tone == tone)
 
     # Subtle is reported only: pale tints sit at 2 to 10 apart and carry no state alone.
@@ -692,6 +754,32 @@ def check_separation(ramps):
         floor = SEPARATION_FLOORS.get(role)
         if floor is not None and distance < floor:
             fail(f"separation: {role} of {first} and {second} is {distance:.1f} apart in {label}, floor {floor}")
+    report_brand_separation(ramps)
+
+
+def report_brand_separation(ramps):
+    """Print each brand's closest status family on text and on fill. Reported only, never a floor.
+
+    Brand text never carries meaning, and a brand fill carries identity, not state.
+    """
+    hue_of = dict(FAMILIES)
+    for brand in BRANDS:
+        parts = []
+        for role, families in (("text", SEPARATED_TEXT), ("solid", SEPARATED_FILLS)):
+            closest = None
+            for family in families:
+                for index, (label, _) in enumerate(APPEARANCES):
+                    mine = entry_rgb(tones_for(brand.name, role, BRAND_ROLE_TONES)[index], ramps, brand.hue)
+                    theirs = entry_rgb(
+                        tones_for(family, role, FAMILY_ROLE_TONES)[index], ramps, hue_of[family]
+                    )
+                    lab_mine, lab_theirs = p3_oklab(mine), p3_oklab(theirs)
+                    distance = 100 * math.sqrt(sum((a - b) ** 2 for a, b in zip(lab_mine, lab_theirs)))
+                    if closest is None or distance < closest[0]:
+                        closest = (distance, family, label)
+            distance, family, label = closest
+            parts.append(f"{role} {family} at {distance:.1f} ({label})")
+        print(f"separation brand {brand.name}: closest status family on " + "; ".join(parts))
 
 
 def check_stray_files(catalog):
@@ -700,6 +788,8 @@ def check_stray_files(catalog):
         return
     allowed = {"Contents.json"} | {
         f"{family}-{role}.colorset" for family, _ in FAMILIES for role in ROLE_TONES
+    } | {
+        f"{brand.name}-{role}.colorset" for brand in BRANDS for role in ROLE_TONES
     } | {f"{brand.name}-{suffix}.colorset" for brand in BRANDS for suffix, _, _ in surface_sets()}
     for child in sorted(catalog.iterdir()):
         if child.name not in allowed:

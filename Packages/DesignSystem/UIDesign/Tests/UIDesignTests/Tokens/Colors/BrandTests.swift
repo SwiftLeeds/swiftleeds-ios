@@ -170,6 +170,10 @@ extension BrandTests {
     private static let chromaTolerance = 0.0005
     /// How far a surface's hue may sit from the brand's hue, in degrees.
     private static let hueTolerance = 6.0
+    /// How far a role's lightness may sit from its tone.
+    private static let roleLightnessTolerance = 0.01
+    /// How far a role's hue may sit from the brand's hue, in degrees.
+    private static let roleHueTolerance = 3.0
     /// The lightness range in which a color is neither too dark nor too light to hold a tint.
     private static let tintableLightness = 0.05...0.98
     /// The largest value of one color component in a hex code.
@@ -259,9 +263,80 @@ extension BrandTests {
             }
         }
     }
+
+    /// Checks that the fill takes the brand's hue at the brand's lightness, in light and dark.
+    ///
+    /// - Parameter brand: The brand to check.
+    /// - Throws: When macOS has no appearance that the check resolves under.
+    @MainActor
+    @Test(arguments: Brand.allCases)
+    func whenSolidResolves_shouldTakeBrandHueAtSolidLightness(brand: Brand) throws {
+        let light = OKLCH(try Self.resolve(NSColor(brand.solid), in: .light))
+        let dark = OKLCH(try Self.resolve(NSColor(brand.solid), in: .dark))
+
+        #expect(abs(light.lightness - brand.solidLightness.light) <= Self.roleLightnessTolerance)
+        #expect(abs(dark.lightness - brand.solidLightness.dark) <= Self.roleLightnessTolerance)
+        #expect(light.hueDistance(to: brand.hue) <= Self.roleHueTolerance)
+        #expect(dark.hueDistance(to: brand.hue) <= Self.roleHueTolerance)
+    }
+
+    /// Checks that the label on the fill has the brand's lightness, in light and dark.
+    ///
+    /// - Parameter brand: The brand to check.
+    /// - Throws: When macOS has no appearance that the check resolves under.
+    @MainActor
+    @Test(arguments: Brand.allCases)
+    func whenOnSolidResolves_shouldHaveOnSolidLightness(brand: Brand) throws {
+        let light = OKLCH(try Self.resolve(NSColor(brand.onSolid), in: .light))
+        let dark = OKLCH(try Self.resolve(NSColor(brand.onSolid), in: .dark))
+
+        #expect(abs(light.lightness - brand.onSolidLightness.light) <= Self.roleLightnessTolerance)
+        #expect(abs(dark.lightness - brand.onSolidLightness.dark) <= Self.roleLightnessTolerance)
+    }
+
+    /// Checks that every role is opaque in every appearance.
+    ///
+    /// - Parameter brand: The brand to check.
+    /// - Throws: When macOS has no appearance that the check resolves under.
+    @MainActor
+    @Test(arguments: Brand.allCases)
+    func whenRoleResolves_shouldBeOpaque(brand: Brand) throws {
+        let roles = [brand.text, brand.solid, brand.onSolid, brand.subtle]
+        for role in roles {
+            for appearance in MacAppearance.allCases {
+                let sut = try Self.resolve(NSColor(role), in: appearance)
+
+                #expect(sut.opacity == 1, "\(brand) \(appearance.label) is not opaque")
+            }
+        }
+    }
 }
 
 extension Brand {
+    /// The lightness of a color in light and in dark appearances.
+    fileprivate struct Lightness {
+        /// The OKLCH lightness in light mode.
+        let light: Double
+        /// The OKLCH lightness in dark mode.
+        let dark: Double
+    }
+
+    /// The lightness the fill has in light and dark.
+    fileprivate var solidLightness: Lightness {
+        switch self {
+        case .swiftLeeds: Lightness(light: 0.72, dark: 0.72)  // swiftlint:disable:this no_magic_numbers - fixture data
+        case .kotlinLeeds: Lightness(light: 0.50, dark: 0.60)  // swiftlint:disable:this no_magic_numbers - fixture data
+        }
+    }
+
+    /// The lightness the label on the fill has in light and dark.
+    fileprivate var onSolidLightness: Lightness {
+        switch self {
+        case .swiftLeeds: Lightness(light: 0.05, dark: 0.05)  // swiftlint:disable:this no_magic_numbers - fixture data
+        case .kotlinLeeds: Lightness(light: 0.95, dark: 0.05)  // swiftlint:disable:this no_magic_numbers - fixture data
+        }
+    }
+
     /// The chroma this brand gives its surfaces.
     fileprivate var tint: Double {
         switch self {

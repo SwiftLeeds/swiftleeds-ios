@@ -17,9 +17,32 @@ package enum Brand: CaseIterable, Equatable, Hashable, Sendable {
         case secondarySurface
         /// The color behind content grouped inside grouped content.
         case tertiarySurface
+        /// The color for text or a symbol on a surface.
+        case text
+        /// The color for a filled shape behind `onSolid`.
+        case solid
+        /// The color for text or a symbol on `solid`.
+        case onSolid
+        /// The color for a pale fill behind `text`.
+        case subtle
 
         /// The name of the role's color set for elevated content, such as `elevatedSurface`.
-        var elevatedName: String {
+        ///
+        /// It is `nil` for a role with no elevated set, which is every role but a surface.
+        var elevatedName: String? {
+            switch self {
+            case .surface: elevatedPrefixedName
+            case .secondarySurface: elevatedPrefixedName
+            case .tertiarySurface: elevatedPrefixedName
+            case .text: nil
+            case .solid: nil
+            case .onSolid: nil
+            case .subtle: nil
+            }
+        }
+
+        /// The role's name with `elevated` in front, such as `elevatedSurface`.
+        private var elevatedPrefixedName: String {
             let name = "\(self)"
             return "elevated" + name.prefix(1).uppercased() + name.dropFirst()
         }
@@ -60,6 +83,27 @@ package enum Brand: CaseIterable, Equatable, Hashable, Sendable {
     /// It keeps the lightness of Apple's tertiary background and takes a faint hint of the brand hue.
     /// In a sheet on iOS, it lifts in dark mode as Apple's tertiary background does.
     package var tertiarySurface: Color { color(for: .tertiarySurface) }
+
+    /// The color for text or a symbol on a surface, such as a link or a section title.
+    ///
+    /// It reaches 4.5:1 against ``surface`` and ``secondarySurface``, and against ``subtle``.
+    package var text: Color { color(for: .text) }
+
+    /// The color for a filled shape behind ``onSolid``, such as a button.
+    ///
+    /// ``onSolid`` reaches 4.5:1 against it. It marks the brand, so it has no contrast floor against a
+    /// surface.
+    package var solid: Color { color(for: .solid) }
+
+    /// The color for text or a symbol on ``solid``.
+    ///
+    /// It reaches 4.5:1 against ``solid``.
+    package var onSolid: Color { color(for: .onSolid) }
+
+    /// The color for a pale fill behind ``text``, such as a badge.
+    ///
+    /// ``text`` reaches 4.5:1 against it.
+    package var subtle: Color { color(for: .subtle) }
 
     /// The name this brand's color sets start with in the catalog.
     private var catalogName: String {
@@ -108,14 +152,16 @@ package enum Brand: CaseIterable, Equatable, Hashable, Sendable {
 
     /// Returns the catalog color of this brand for a role.
     ///
-    /// On iOS, the color lifts in an elevated container, such as a sheet. Elsewhere it does not.
+    /// On iOS, a surface lifts in an elevated container, such as a sheet. Elsewhere it does not, and
+    /// no other role does.
     ///
     /// - Parameter role: The job the color does.
     /// - Returns: The color, named after the brand and the role.
     private func color(for role: Role) -> Color {
         let base = resource(named: "\(catalogName)-\(role)")
         #if canImport(UIKit)
-        let elevated = resource(named: "\(catalogName)-\(role.elevatedName)")
+        guard let elevatedName = role.elevatedName else { return Color(base) }
+        let elevated = resource(named: "\(catalogName)-\(elevatedName)")
         let provider = UIColor { traits in
             let chosen = traits.userInterfaceLevel == .elevated ? elevated : base
             return UIColor(resource: chosen).resolvedColor(with: traits)
