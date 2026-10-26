@@ -3,7 +3,9 @@ import Observation
 import SponsorsFeature
 import SwiftUI
 
-/// The sponsors screen. Fetches the sponsors, then hands them to the view that draws them.
+/// The sponsors screen.
+///
+/// It fetches the sponsors, then hands them to the view that draws them.
 public struct SponsorsView: View {
     @State private var viewModel = ViewModel()
     @State private var state = SponsorsContentView.ScreenState.loading
