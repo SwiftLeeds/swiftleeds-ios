@@ -13,7 +13,9 @@ public struct Job: Equatable, Hashable, Identifiable, Sendable {
     /// Where the job is based.
     public let location: String
 
-    /// Where to apply. Absent when the posting has no link.
+    /// Where to apply.
+    ///
+    /// Absent when the posting has no link.
     public let url: URL?
 
     /// Creates a job.
