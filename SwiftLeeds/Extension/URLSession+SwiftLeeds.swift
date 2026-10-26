@@ -2,8 +2,9 @@ import Foundation
 import NetworkKit
 
 extension URLSession {
-    /// For requests that carry the session bearer. Stores nothing, so no
-    /// response holding a token reaches disk.
+    /// A URL session for requests that carry the sign-in bearer token.
+    ///
+    /// It stores nothing, so no response holding a token reaches disk.
     static let authenticated = URLSession(configuration: .api())
 
     /// The bytes of memory the unauthenticated session's cache may use.
@@ -12,8 +13,9 @@ extension URLSession {
     /// The bytes of disk the unauthenticated session's cache may use.
     private static let diskCacheCapacity = 100_000_000
 
-    /// For requests that carry no credentials. Caches what the server marks
-    /// cacheable.
+    /// A URL session for requests that carry no credentials.
+    ///
+    /// It caches what the server marks cacheable.
     static let unauthenticated = URLSession(
         configuration: .api(
             cache: URLCache(memoryCapacity: memoryCacheCapacity, diskCapacity: diskCacheCapacity)
