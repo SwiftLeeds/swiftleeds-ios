@@ -25,6 +25,7 @@ extension LogField {
     /// - Parameters:
     ///   - name: The field's name.
     ///   - error: The error to describe.
+    /// - Returns: An open field whose value is the error's description.
     public static func open(_ name: FieldName, _ error: any Error) -> LogField {
         .open(name, String(logDescribing: error))
     }
@@ -34,6 +35,7 @@ extension LogField {
     /// - Parameters:
     ///   - name: The field's name.
     ///   - error: The error to describe.
+    /// - Returns: A hashed field whose value is the error's description.
     public static func hashed(_ name: FieldName, _ error: any Error) -> LogField {
         .hashed(name, String(logDescribing: error))
     }
@@ -43,6 +45,7 @@ extension LogField {
     /// - Parameters:
     ///   - name: The field's name.
     ///   - error: The error to describe.
+    /// - Returns: A secret field whose value is the error's description.
     public static func secret(_ name: FieldName, _ error: any Error) -> LogField {
         .secret(name, String(logDescribing: error))
     }

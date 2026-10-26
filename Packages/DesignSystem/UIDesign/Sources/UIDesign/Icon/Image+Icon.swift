@@ -11,6 +11,8 @@ extension Image {
     ///     .foregroundStyle(.error, .secondarySurface)
     ///     .symbolEffect(.pulse)
     /// ```
+    ///
+    /// - Parameter icon: The icon to draw.
     public init(icon: Icon) {
         self.init(systemName: String(icon))
     }

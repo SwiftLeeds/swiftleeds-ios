@@ -17,6 +17,7 @@ extension View {
     /// ```
     ///
     /// - Parameter style: The avatar style to apply.
+    /// - Returns: A view that uses the given style for the avatars within it.
     public func avatarStyle(_ style: some AvatarStyle) -> some View {
         environment(\.avatarStyle, style)
     }

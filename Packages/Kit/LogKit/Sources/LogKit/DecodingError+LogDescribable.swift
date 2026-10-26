@@ -29,6 +29,7 @@ extension DecodingError: LogDescribable {
     ///   - context: The error's context, which carries the coding path.
     ///   - key: A further component to put after the path, where the case
     ///     names one.
+    /// - Returns: The path and key joined by dots, or `(root)` when the path is empty and no key is given.
     private static func path(_ context: Context, appending key: String? = nil) -> String {
         let components = context.codingPath.map(\.stringValue) + [key].compactMap { $0 }
         return components.isEmpty ? "(root)" : components.joined(separator: ".")

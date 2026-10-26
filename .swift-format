@@ -72,7 +72,7 @@
     "UseSynthesizedInitializer" : true,
     "UseTripleSlashForDocumentationComments" : true,
     "UseWhereClausesInForLoops" : false,
-    "ValidateDocumentationComments" : false
+    "ValidateDocumentationComments" : true
   },
   "spacesAroundRangeFormationOperators" : false,
   "spacesBeforeEndOfLineComments" : 2,

@@ -74,6 +74,7 @@ extension BarcodeContent {
     ///   - payload: The text the code carries.
     ///   - correction: How much damage the code should survive. Defaults to
     ///     `high`.
+    /// - Returns: Content that draws the payload as a QR code with the given correction.
     package static func qr(_ payload: QRCode.Payload, correction: QRCode.Correction = .high) -> BarcodeContent {
         BarcodeContent(payload, drawnBy: QRCode.Symbology(correction: correction))
     }

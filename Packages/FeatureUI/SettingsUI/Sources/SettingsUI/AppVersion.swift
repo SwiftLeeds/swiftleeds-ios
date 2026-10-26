@@ -28,6 +28,7 @@ public struct AppVersion: Equatable, Hashable, Sendable {
 
     /// Returns whether a component is one or more ASCII digits.
     /// - Parameter component: One dot-separated part of the text.
+    /// - Returns: `true` when the component holds one or more ASCII digits and nothing else.
     private static func isWholeNumber(_ component: Substring) -> Bool {
         !component.isEmpty && component.allSatisfy(\.isASCIIDigit)
     }

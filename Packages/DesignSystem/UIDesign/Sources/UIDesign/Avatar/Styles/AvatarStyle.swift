@@ -34,6 +34,7 @@ public protocol AvatarStyle: DynamicProperty {
     /// hierarchy where this style is the current avatar style.
     ///
     /// - Parameter configuration: The properties of the avatar.
+    /// - Returns: A view that represents the body of an avatar.
     @ViewBuilder @MainActor
     func makeBody(configuration: Configuration) -> Body
 }

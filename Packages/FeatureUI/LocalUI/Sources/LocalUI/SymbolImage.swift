@@ -9,6 +9,8 @@ import UIKit
 /// bundle, such as UIAssets, is not found this way.
 ///
 /// - Parameter name: The SF Symbol, or asset catalog image, name.
+/// - Returns: An image of the symbol, or of the asset catalog entry when no symbol has the name.
+/// - Precondition: An SF Symbol or a main-bundle asset has this name.
 func symbolImage(named name: String) -> Image {
     Image(uiImage: UIImage(systemName: name) ?? UIImage(imageLiteralResourceName: name))
 }
