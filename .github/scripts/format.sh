@@ -131,7 +131,7 @@ count=$(wc -l < "$work/files.txt" | tr -d ' ')
 
 fatal "$count file(s) are not formatted"
 echo "If '[Spacing] add 1 space' follows a ',)' after a format run, put that closing bracket on its own line." >&2
-echo "A format run leaves doc comments alone. Fix a [BeginDocumentationCommentWithOneLineSummary] or [ValidateDocumentationComments] finding by hand." >&2
+echo "A format run cannot fix [BeginDocumentationCommentWithOneLineSummary] or [ValidateDocumentationComments], so fix those by hand." >&2
 {
     echo "### 🎨 Formatting"
     echo
@@ -147,10 +147,10 @@ echo "A format run leaves doc comments alone. Fix a [BeginDocumentationCommentWi
     echo "\`,)\`, move that closing bracket onto its own line. The formatter puts a comma"
     echo "before a bracket on the same line, and then rejects its own output."
     echo
-    echo "The command does not rewrite doc comments, so fix these two by hand:"
+    echo "The command cannot fix two of the rules, so fix those by hand:"
     echo
-    echo "- \`[BeginDocumentationCommentWithOneLineSummary]\`: make the summary one"
-    echo "  sentence, then add a blank \`///\` line. The rule reads the period in"
+    echo "- \`[BeginDocumentationCommentWithOneLineSummary]\`: make the first paragraph"
+    echo "  one sentence that ends in a period. The rule reads the period in"
     echo "  \"Rec. 709\" as the end of a sentence, so reword around it."
     echo "- \`[ValidateDocumentationComments]\`: make the documented parameters match"
     echo "  the signature."

@@ -33,11 +33,11 @@ else
     echo "" >&2
     echo "pre-commit: the files above are not formatted." >&2
     echo "pre-commit: fix every one with .github/scripts/format.sh, then stage the result." >&2
-    echo "pre-commit: format.sh does not rewrite doc comments, so fix these two by hand:" >&2
-    echo "pre-commit: [BeginDocumentationCommentWithOneLineSummary] wants one sentence, then a blank /// line." >&2
+    echo "pre-commit: format.sh cannot fix two of the rules, so fix those by hand:" >&2
+    echo "pre-commit: [BeginDocumentationCommentWithOneLineSummary] wants the first paragraph to be one sentence ending in a period." >&2
     echo "pre-commit:   It reads the period in 'Rec. 709' as the end of a sentence, so reword around it." >&2
     echo "pre-commit: [ValidateDocumentationComments] wants the documented parameters to match the signature." >&2
-    echo "pre-commit: or pass --no-verify to skip." >&2
+    echo "pre-commit: to skip this check, pass --no-verify." >&2
     exit 1
 fi
 
