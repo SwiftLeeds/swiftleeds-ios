@@ -66,6 +66,8 @@ import Testing
         #expect(event.level == .notice)
     }
 
+    /// Checks that a cancelled request logs at debug level.
+    ///
     /// Leaving a screen while it loads cancels the task. That is control flow, not a failure to
     /// report.
     @Test func whenRequestIsCancelled_shouldLogAtDebugRatherThanError() async throws {
@@ -92,6 +94,8 @@ import Testing
         #expect(event.level == .debug)
     }
 
+    /// Checks that an error status logs without raising the level.
+    ///
     /// A 500 reached us, so nothing about the transport failed. This seam records the status it saw
     /// and leaves whoever reads the response to judge it.
     @Test func whenServerRespondsWithErrorStatus_shouldLogStatusWithoutRaisingLevel() async throws {
