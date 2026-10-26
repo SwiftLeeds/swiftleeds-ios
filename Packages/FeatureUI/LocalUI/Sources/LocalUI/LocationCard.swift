@@ -12,7 +12,9 @@ package struct LocationCard: View {
     /// The place's name.
     private let name: String
 
-    /// The place's website. Absent when the place has no usable web address.
+    /// The place's website.
+    ///
+    /// Absent when the place has no usable web address.
     private let websiteURL: URL?
 
     /// Called when the person dismisses the card.
