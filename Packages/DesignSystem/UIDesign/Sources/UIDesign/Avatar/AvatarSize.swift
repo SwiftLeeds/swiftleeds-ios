@@ -20,7 +20,9 @@ extension AvatarSize {
     /// An avatar in a dense row, or in a group of them.
     public static let small = AvatarSize(28)
 
-    /// An avatar in a list row. This is the size a nameplate's row uses.
+    /// An avatar in a list row.
+    ///
+    /// This is the size a nameplate's row uses.
     public static let medium = AvatarSize(40)
 
     /// An avatar in a heading that names a screen's subject.

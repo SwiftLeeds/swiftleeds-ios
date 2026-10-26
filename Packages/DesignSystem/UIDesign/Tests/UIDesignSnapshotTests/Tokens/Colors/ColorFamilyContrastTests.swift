@@ -134,11 +134,11 @@ struct ColorFamilyContrastTests {
         }
     }
 
-    /// The weight of linear red in relative luminance, from Rec. 709.
+    /// The weight of linear red in relative luminance, from ITU-R BT.709.
     private static let redWeight: Float = 0.2126
-    /// The weight of linear green in relative luminance, from Rec. 709.
+    /// The weight of linear green in relative luminance, from ITU-R BT.709.
     private static let greenWeight: Float = 0.7152
-    /// The weight of linear blue in relative luminance, from Rec. 709.
+    /// The weight of linear blue in relative luminance, from ITU-R BT.709.
     private static let blueWeight: Float = 0.0722
     /// The light WCAG adds to both colors of a contrast ratio, for glare on the screen.
     private static let glare: Float = 0.05

@@ -73,7 +73,9 @@ extension Icon {
     /// A solid star, for an item that is already a favorite.
     public static let favoriteFilled = Icon(.starFill)
 
-    /// Leaves the app. Pair it with a link, never with navigation.
+    /// An arrow leaving a square, for an item that opens outside the app.
+    ///
+    /// Pair it with a link, never with navigation.
     public static let openExternal = Icon(.arrowUpRightSquare)
 }
 

@@ -35,11 +35,14 @@ public struct AvatarStyleConfiguration {
     /// The photo, or the view standing in for it.
     public let content: Content
 
-    /// The diameter to draw at. The text size has already scaled it.
+    /// The diameter to draw at.
+    ///
+    /// The text size has already scaled it.
     public let size: AvatarSize
 
-    /// The state to show, drawn and ready to place. Where it goes is the
-    /// style's choice.
+    /// The state to show, drawn and ready to place.
+    ///
+    /// Where it goes is the style's choice.
     public let status: Status?
 
     /// Creates the properties of an avatar, erasing each view's type.
