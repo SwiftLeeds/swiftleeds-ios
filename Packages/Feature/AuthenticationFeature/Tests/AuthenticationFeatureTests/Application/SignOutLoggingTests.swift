@@ -107,6 +107,8 @@ import Testing
         return recorder.events.first
     }
 
+    /// Checks that a store that refuses logs both the cause and the outcome.
+    ///
     /// The store names the mechanism, the use case names the outcome. Two seams, two lines, and no
     /// third line from anywhere else.
     @Test func whenStoreRefuses_shouldLogCauseAndOutcome() async {

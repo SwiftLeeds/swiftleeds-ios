@@ -40,6 +40,8 @@ import Testing
         #expect(event == nil)
     }
 
+    /// Checks that a gateway that succeeds logs nothing itself.
+    ///
     /// The gateway returns what the mapper handed back, and `LoginMapperLoggingTests` pins that the
     /// mapper records it. A line here would repeat it.
     @Test func whenGatewaySucceeds_shouldLogNothing() async throws {

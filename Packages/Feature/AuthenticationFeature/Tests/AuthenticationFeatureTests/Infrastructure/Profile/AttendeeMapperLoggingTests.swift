@@ -95,6 +95,8 @@ import Testing
         #expect(event.level == .debug)
     }
 
+    /// Checks that parsing a valid response logs no attendee detail.
+    ///
     /// The accepted value holds a name, an email address and a ticket reference. None of them
     /// belong in a log line saying the response parsed.
     @Test func whenResponseIsValid_shouldLogNoAttendeeDetail() throws {

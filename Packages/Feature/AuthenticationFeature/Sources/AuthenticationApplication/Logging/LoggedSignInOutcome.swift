@@ -6,6 +6,8 @@ struct LoggedSignInOutcome {
     let level: LogLevel
     let message: LogMessage
 
+    /// The outcome of a sign-in that succeeded.
+    ///
     /// Carries no field. The credential identifies a person, and nothing here needs it.
     static let success = Self(
         level: .notice,

@@ -12,6 +12,8 @@ import Testing
 
 /// Checks that the live `SignIn` reaches the live gateway and the live session store.
 @Suite struct SignInIntegrationTests {
+    /// Checks that a live sign-in stores the session the server returned.
+    ///
     /// Only the live store returns this session. The test store throws on every call.
     @Test func whenResolvedInLiveContext_shouldStoreSessionFromServer() async throws {
         let spy = SecureStorageSpy()

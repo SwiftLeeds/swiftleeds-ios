@@ -81,6 +81,8 @@ import Testing
         #expect(event.level == .debug)
     }
 
+    /// Checks that accepting a token logs no field.
+    ///
     /// The accepted value is a session token. Nothing about it belongs in a log line.
     @Test func whenServerReturnsToken_shouldLogNoToken() throws {
         let event = try #require(try acceptedEvent())
