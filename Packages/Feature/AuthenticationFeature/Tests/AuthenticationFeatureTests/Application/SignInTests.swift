@@ -4,12 +4,6 @@ import Dependencies
 import Testing
 
 @Suite struct SignInTests {
-    /// An error the stubbed gateway throws.
-    private enum StubError: Error, Equatable {
-        /// The gateway refused the credential.
-        case authenticationFailed
-    }
-
     @Test func whenAuthenticationSucceeds_shouldStoreSession() async throws {
         let store = InMemorySessionStore()
 
@@ -26,10 +20,10 @@ import Testing
 
     @Test func whenAuthenticationFails_shouldRethrowFailure() async {
         await withDependencies {
-            $0.authGateway = .failing(with: StubError.authenticationFailed)
+            $0.authGateway = .failing(with: UnexpectedError())
         } operation: {
             let sut = SignIn.liveValue
-            await #expect(throws: StubError.authenticationFailed) {
+            await #expect(throws: UnexpectedError()) {
                 try await sut(credential())
             }
         }
@@ -39,7 +33,7 @@ import Testing
         let store = InMemorySessionStore()
 
         await withDependencies {
-            $0.authGateway = .failing(with: StubError.authenticationFailed)
+            $0.authGateway = .failing(with: UnexpectedError())
             $0.sessionStore = store.sessionStore
         } operation: {
             let sut = SignIn.liveValue

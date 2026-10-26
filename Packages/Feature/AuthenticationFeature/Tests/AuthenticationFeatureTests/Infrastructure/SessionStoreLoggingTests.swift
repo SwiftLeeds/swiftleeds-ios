@@ -3,7 +3,6 @@ import AuthenticationInfrastructure
 import Dependencies
 import LogKit
 import LogKitTestSupport
-import NetworkKitTestSupport
 import SecureStorageKit
 import Testing
 
@@ -17,7 +16,7 @@ import Testing
 
         #expect(event.level == .error)
         let reason = try #require(event.fields.first { String($0.name) == "reason" })
-        #expect(reason.value == .string("couldNotBuildResponse"))
+        #expect(reason.value == .string("UnexpectedError()"))
     }
 
     @Test func whenSessionCannotBeCleared_shouldLogReasonAtErrorLevel() async throws {
@@ -25,7 +24,7 @@ import Testing
 
         #expect(event.level == .error)
         let reason = try #require(event.fields.first { String($0.name) == "reason" })
-        #expect(reason.value == .string("couldNotBuildResponse"))
+        #expect(reason.value == .string("UnexpectedError()"))
     }
 
     @Test func whenStoredSessionCannotBeRead_shouldLogReasonAtErrorLevel() async throws {
@@ -33,17 +32,17 @@ import Testing
 
         #expect(event.level == .error)
         let reason = try #require(event.fields.first { String($0.name) == "reason" })
-        #expect(reason.value == .string("couldNotBuildResponse"))
+        #expect(reason.value == .string("UnexpectedError()"))
     }
 
     @Test func whenStoreRefuses_shouldRethrowRefusal() async {
         await withDependencies {
             $0.log = LogRecorder().log
-            $0.secureStorage = .failing(with: StubError.couldNotBuildResponse)
+            $0.secureStorage = .failing(with: UnexpectedError())
         } operation: {
             let sut = SessionStore.live.logging()
 
-            await #expect(throws: StubError.couldNotBuildResponse) {
+            await #expect(throws: UnexpectedError()) {
                 try await sut.clear()
             }
         }
@@ -56,7 +55,7 @@ import Testing
 
         await withDependencies {
             $0.log = recorder.log
-            $0.secureStorage = .failing(with: StubError.couldNotBuildResponse)
+            $0.secureStorage = .failing(with: UnexpectedError())
         } operation: {
             _ = try? await SessionStore.liveValue.clear()
         }
@@ -176,7 +175,7 @@ import Testing
 
         try? await withDependencies {
             $0.log = recorder.log
-            $0.secureStorage = .failing(with: StubError.couldNotBuildResponse)
+            $0.secureStorage = .failing(with: UnexpectedError())
         } operation: {
             try await operation(SessionStore.live.logging())
         }

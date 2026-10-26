@@ -56,7 +56,7 @@ import Testing
     @Test func whenRequestCannotReachServer_shouldThrowCouldNotReachServer() async throws {
         await #expect(throws: SignInError.couldNotReachServer) {
             try await withDependencies {
-                $0.authHTTPClient = .failing(with: StubError.couldNotBuildResponse)
+                $0.authHTTPClient = .failing(with: UnexpectedError())
             } operation: {
                 try await AuthGateway.liveValue.authenticate(Credential.fixture)
             }
@@ -107,7 +107,7 @@ import Testing
         let recorder = LogRecorder()
 
         try? await withDependencies {
-            $0.authHTTPClient = .failing(with: StubError.couldNotBuildResponse).logging()
+            $0.authHTTPClient = .failing(with: UnexpectedError()).logging()
             $0.log = recorder.log
         } operation: {
             let sut = AuthGateway.liveValue
