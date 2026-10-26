@@ -1,6 +1,8 @@
 import Sharing
 
-/// The key a stored preference is saved under. Changing a key resets every user's saved value.
+/// The key a stored preference is saved under.
+///
+/// Changing a key resets every user's saved value.
 public struct PreferenceKey: Equatable, Hashable, Sendable {
     fileprivate let rawValue: String
 
