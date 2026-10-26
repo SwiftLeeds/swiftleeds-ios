@@ -1,7 +1,13 @@
+import Foundation
+import SwiftUI
 import Testing
 import UIDesign
 
-/// Tests for parsing a ``Brand`` from the text an app declares.
+#if canImport(AppKit)
+import AppKit
+#endif
+
+/// Tests for parsing a ``Brand`` from the text an app declares, and for its surface colors.
 struct BrandTests {
     /// Checks that the SwiftLeeds declaration returns the SwiftLeeds brand.
     @Test
@@ -83,3 +89,193 @@ struct BrandTests {
         }
     }
 }
+
+#if canImport(AppKit)
+extension BrandTests {
+    /// A surface a brand tints, paired with the macOS color it copies the lightness of.
+    private enum Surface: CaseIterable {
+        /// The color behind a window.
+        case surface
+        /// The color behind grouped content in a window.
+        case secondarySurface
+        /// The color behind content grouped inside grouped content.
+        case tertiarySurface
+
+        /// The key the generator's `APPLE_SURFACES` table uses for this surface.
+        var key: String {
+            switch self {
+            case .surface: "surface"
+            case .secondarySurface: "secondarySurface"
+            case .tertiarySurface: "tertiarySurface"
+            }
+        }
+
+        /// The Apple color this surface copies the lightness of.
+        var apple: NSColor {
+            switch self {
+            case .surface: .windowBackgroundColor
+            case .secondarySurface: .controlBackgroundColor
+            case .tertiarySurface: .underPageBackgroundColor
+            }
+        }
+
+        /// Returns the brand's color for this surface.
+        ///
+        /// - Parameter brand: The brand to read.
+        /// - Returns: The brand's tinted surface.
+        func color(of brand: Brand) -> NSColor {
+            switch self {
+            case .surface: NSColor(brand.surface)
+            case .secondarySurface: NSColor(brand.secondarySurface)
+            case .tertiarySurface: NSColor(brand.tertiarySurface)
+            }
+        }
+    }
+
+    /// One way macOS can draw a color, in the generator's order.
+    private enum MacAppearance: CaseIterable {
+        /// Light mode.
+        case light
+        /// Dark mode.
+        case dark
+        /// Light mode with Increase Contrast.
+        case lightIncreasedContrast
+        /// Dark mode with Increase Contrast.
+        case darkIncreasedContrast
+
+        /// The name that failure messages use.
+        var label: String {
+            switch self {
+            case .light: "light"
+            case .dark: "dark"
+            case .lightIncreasedContrast: "light with Increase Contrast"
+            case .darkIncreasedContrast: "dark with Increase Contrast"
+            }
+        }
+
+        /// The AppKit appearance that draws this way.
+        var name: NSAppearance.Name {
+            switch self {
+            case .light: .aqua
+            case .dark: .darkAqua
+            case .lightIncreasedContrast: .accessibilityHighContrastAqua
+            case .darkIncreasedContrast: .accessibilityHighContrastDarkAqua
+            }
+        }
+    }
+
+    /// How far a surface's lightness may sit from Apple's.
+    private static let lightnessTolerance = 0.003
+    /// How far a surface's chroma may sit from the brand's tint.
+    private static let chromaTolerance = 0.0005
+    /// How far a surface's hue may sit from the brand's hue, in degrees.
+    private static let hueTolerance = 6.0
+    /// The lightness range in which a color is neither too dark nor too light to hold a tint.
+    private static let tintableLightness = 0.05...0.98
+    /// The largest value of one color component in a hex code.
+    private static let hexScale: Float = 255
+
+    /// Returns the components a color has under an appearance.
+    ///
+    /// - Parameters:
+    ///   - color: The color to resolve.
+    ///   - appearance: The appearance to resolve it under.
+    /// - Returns: The color as fixed components.
+    /// - Throws: When macOS has no appearance with the appearance's name.
+    @MainActor
+    private static func resolve(_ color: NSColor, in appearance: MacAppearance) throws -> Color.Resolved {
+        let named = try #require(NSAppearance(named: appearance.name))
+        var fixed = color.cgColor
+        named.performAsCurrentDrawingAppearance { fixed = color.cgColor }
+        return Color(cgColor: fixed).resolve(in: EnvironmentValues())
+    }
+
+    /// Returns a color as six hex digits in sRGB, such as `F2F2F7`.
+    ///
+    /// - Parameter color: The color to write.
+    /// - Returns: The hex digits, without a leading `#`.
+    private static func hex(of color: Color.Resolved) -> String {
+        [color.red, color.green, color.blue]
+            .map { String(format: "%02X", Int((min(max($0, 0), 1) * hexScale).rounded())) }
+            .joined()
+    }
+
+    /// Returns Apple's live surfaces in the syntax of the generator's `APPLE_SURFACES` table.
+    ///
+    /// - Returns: One line per surface, ready to paste as its `mac` entry.
+    @MainActor
+    private static func appleSurfaceReport() throws -> String {
+        let lines = try Surface.allCases.map { surface in
+            let codes = try MacAppearance.allCases.map { "\"\(hex(of: try resolve(surface.apple, in: $0)))\"" }
+            return "        \"mac\": (\(codes.joined(separator: ", "))),  # \(surface.key)"
+        }
+        let order = MacAppearance.allCases.map(\.label).joined(separator: ", ")
+        return "Apple's macOS surfaces (\(order)):\n" + lines.joined(separator: "\n")
+    }
+
+    /// Checks that each surface keeps the lightness Apple's matching color has, and is opaque.
+    ///
+    /// - Parameter brand: The brand to check.
+    /// - Throws: When macOS has no appearance that the check resolves under.
+    @MainActor
+    @Test(arguments: Brand.allCases)
+    func whenSurfaceResolves_shouldKeepAppleLightness(brand: Brand) throws {
+        var drifted: [String] = []
+        for surface in Surface.allCases {
+            for appearance in MacAppearance.allCases {
+                let mine = try Self.resolve(surface.color(of: brand), in: appearance)
+                let apple = try Self.resolve(surface.apple, in: appearance)
+                let gap = abs(OKLCH(mine).lightness - OKLCH(apple).lightness)
+                if gap > Self.lightnessTolerance || mine.opacity != 1 {
+                    drifted.append("\(surface.key) \(appearance.label)")
+                }
+            }
+        }
+        let report = try Self.appleSurfaceReport()
+        #expect(drifted.isEmpty, "\(brand) drifted from Apple in \(drifted). \(report)")
+    }
+
+    /// Checks that each surface Apple leaves room to tint takes the brand's hue and chroma.
+    ///
+    /// - Parameter brand: The brand to check.
+    /// - Throws: When macOS has no appearance that the check resolves under.
+    @MainActor
+    @Test(arguments: Brand.allCases)
+    func whenSurfaceResolves_shouldTakeBrandHueAtTint(brand: Brand) throws {
+        for surface in Surface.allCases {
+            for appearance in MacAppearance.allCases {
+                let apple = OKLCH(try Self.resolve(surface.apple, in: appearance))
+                guard Self.tintableLightness.contains(apple.lightness) else { continue }
+                let mine = OKLCH(try Self.resolve(surface.color(of: brand), in: appearance))
+                let shown = "\(brand) \(surface.key) \(appearance.label)"
+                #expect(
+                    abs(mine.chroma - brand.tint) <= Self.chromaTolerance,
+                    "\(shown): chroma \(mine.chroma), expected \(brand.tint)",
+                )
+                #expect(
+                    mine.hueDistance(to: brand.hue) <= Self.hueTolerance,
+                    "\(shown): hue \(mine.hue), expected \(brand.hue)",
+                )
+            }
+        }
+    }
+}
+
+extension Brand {
+    /// The chroma this brand gives its surfaces.
+    fileprivate var tint: Double {
+        switch self {
+        case .swiftLeeds: 0.003  // swiftlint:disable:this no_magic_numbers - fixture data
+        case .kotlinLeeds: 0.006  // swiftlint:disable:this no_magic_numbers - fixture data
+        }
+    }
+
+    /// The hue angle this brand gives its surfaces, in degrees.
+    fileprivate var hue: Double {
+        switch self {
+        case .swiftLeeds: 45  // swiftlint:disable:this no_magic_numbers - fixture data
+        case .kotlinLeeds: 289  // swiftlint:disable:this no_magic_numbers - fixture data
+        }
+    }
+}
+#endif

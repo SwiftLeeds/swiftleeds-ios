@@ -1,8 +1,20 @@
+import SwiftUI
+
 /// The conference an app is built for, which sets its brand color and tints its surfaces.
 ///
 /// Views read the brand from the environment. An app sets it once at its root, and a preview or a
 /// test sets it with `.environment(\.brand, .kotlinLeeds)`.
 package enum Brand: CaseIterable, Equatable, Hashable, Sendable {
+    /// A job a color does for a brand, named as the catalog names it.
+    private enum Role {
+        /// The color behind a screen.
+        case surface
+        /// The color behind grouped content on a screen.
+        case secondarySurface
+        /// The color behind content grouped inside grouped content.
+        case tertiarySurface
+    }
+
     /// The reason a declaration is not a brand.
     package enum ParsingError: Error, Equatable {
         /// The text names no brand. It holds the rejected text.
@@ -20,6 +32,29 @@ package enum Brand: CaseIterable, Equatable, Hashable, Sendable {
 
     /// The Info.plist key an app declares its brand under.
     package static let infoDictionaryKey = "Brand"
+
+    /// The color behind a screen.
+    ///
+    /// It keeps the lightness of Apple's background and takes a faint hint of the brand hue.
+    package var surface: Color { color(for: .surface) }
+
+    /// The color behind grouped content on a screen.
+    ///
+    /// It keeps the lightness of Apple's secondary background and takes a faint hint of the brand hue.
+    package var secondarySurface: Color { color(for: .secondarySurface) }
+
+    /// The color behind content grouped inside grouped content.
+    ///
+    /// It keeps the lightness of Apple's tertiary background and takes a faint hint of the brand hue.
+    package var tertiarySurface: Color { color(for: .tertiarySurface) }
+
+    /// The name this brand's color sets start with in the catalog.
+    private var catalogName: String {
+        switch self {
+        case .swiftLeeds: "swiftLeeds"
+        case .kotlinLeeds: "kotlinLeeds"
+        }
+    }
 
     /// Creates the brand an app declares.
     ///
@@ -56,5 +91,13 @@ package enum Brand: CaseIterable, Equatable, Hashable, Sendable {
             throw .notText(String(describing: declaration))
         }
         try self.init(text)
+    }
+
+    /// Returns the catalog color of this brand for a role.
+    ///
+    /// - Parameter role: The job the color does.
+    /// - Returns: The color, named after the brand and the role.
+    private func color(for role: Role) -> Color {
+        Color(ColorResource(name: "\(catalogName)-\(role)", bundle: .module))
     }
 }

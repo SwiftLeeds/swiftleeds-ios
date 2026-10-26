@@ -11,8 +11,12 @@ enum SystemAppearance: CaseIterable {
     case lightIncreasedContrast
     /// Dark mode with Increase Contrast.
     case darkIncreasedContrast
+    /// Light mode in an elevated container, such as a sheet.
+    case lightElevated
     /// Dark mode in an elevated container, such as a sheet.
     case darkElevated
+    /// Light mode with Increase Contrast in an elevated container.
+    case lightIncreasedContrastElevated
     /// Dark mode with Increase Contrast in an elevated container.
     case darkIncreasedContrastElevated
 
@@ -23,7 +27,9 @@ enum SystemAppearance: CaseIterable {
         case .dark: "dark"
         case .lightIncreasedContrast: "light with Increase Contrast"
         case .darkIncreasedContrast: "dark with Increase Contrast"
+        case .lightElevated: "light elevated"
         case .darkElevated: "dark elevated"
+        case .lightIncreasedContrastElevated: "light elevated with Increase Contrast"
         case .darkIncreasedContrastElevated: "dark elevated with Increase Contrast"
         }
     }
@@ -33,18 +39,42 @@ enum SystemAppearance: CaseIterable {
         switch self {
         case .light: nil
         case .dark: nil
+        case .lightElevated: nil
         case .darkElevated: nil
         case .lightIncreasedContrast: .light
         case .darkIncreasedContrast: .dark
+        case .lightIncreasedContrastElevated: .lightElevated
         case .darkIncreasedContrastElevated: .darkElevated
         }
     }
 
     /// Whether this appearance is light mode.
-    var isLight: Bool { self == .light || self == .lightIncreasedContrast }
+    var isLight: Bool {
+        switch self {
+        case .light: true
+        case .lightIncreasedContrast: true
+        case .lightElevated: true
+        case .lightIncreasedContrastElevated: true
+        case .dark: false
+        case .darkIncreasedContrast: false
+        case .darkElevated: false
+        case .darkIncreasedContrastElevated: false
+        }
+    }
 
     /// Whether this appearance is in an elevated container.
-    private var isElevated: Bool { self == .darkElevated || self == .darkIncreasedContrastElevated }
+    var isElevated: Bool {
+        switch self {
+        case .lightElevated: true
+        case .darkElevated: true
+        case .lightIncreasedContrastElevated: true
+        case .darkIncreasedContrastElevated: true
+        case .light: false
+        case .dark: false
+        case .lightIncreasedContrast: false
+        case .darkIncreasedContrast: false
+        }
+    }
 
     /// The traits the system sets for this appearance.
     @MainActor

@@ -4,8 +4,9 @@
 Each hue is a ramp from t5 to t95 in OKLCH, converted to Display P3. Two outputs, both under
 Packages/DesignSystem/UIDesign/Sources/UIDesign:
 - Tokens/Colors/Hue/Hue+Tones.swift, the ramps as Swift Color.Resolved literals.
-- Resources/Colors.xcassets, one color set per family and role (light, dark and increased contrast).
-  The whole catalog is deleted and rewritten on each run.
+- Resources/Colors.xcassets, one color set per family and role (light, dark and increased contrast),
+  and three surface sets per brand. A surface set keeps Apple's lightness, sampled on iOS and macOS,
+  and takes the brand's hue. The whole catalog is deleted and rewritten on each run.
 
 Run it from the repo root: python3 .claude/scripts/generate-palette.py
 Pass --output-root <directory> to write both outputs into that directory instead.
@@ -428,6 +429,60 @@ SEPARATED_TEXT = ("success", "warning", "error", "info", "sponsor")
 SEPARATED_FILLS = ("success", "warning", "error", "info")
 
 
+@dataclass(frozen=True)
+class BrandRow:
+    name: str  # The catalog prefix, such as "swiftLeeds"; the Swift Brand case has the same name.
+    hue: str  # The name of the HueRow that gives the brand its angle.
+    tint: float  # The OKLCH chroma its surfaces take.
+
+
+# A third brand is a third row here and a case in Swift's Brand.
+BRANDS = [
+    BrandRow("swiftLeeds", hue="orange", tint=0.003),
+    BrandRow("kotlinLeeds", hue="purple", tint=0.006),
+]
+
+# Surfaces a brand tints, in the order of APPLE_SURFACES.
+SURFACES = ("surface", "secondarySurface", "tertiarySurface")
+
+# Apple's own surfaces as sRGB hex, in APPEARANCES order: light, dark, light high contrast, dark
+# high contrast. A brand surface keeps each one's OKLCH lightness and takes the brand's hue.
+# "universal" is iOS and "mac" is macOS, which has its own entries in each color set.
+#
+# Re-sample when BrandSurfaceTests (iOS) or BrandTests (macOS) fails: the failure prints each table
+# below in this syntax. Paste it, then run this script again.
+#
+# universal: printed by BrandSurfaceTests.whenSurfaceResolves_shouldKeepAppleLightness on the
+# iPhone 18 Pro simulator, iOS 27.0 (24A434), on 2026-10-26. Sources: systemBackground,
+# secondarySystemBackground and tertiarySystemBackground. The iPad Pro 11-inch (M5) simulator,
+# iOS 27.0, printed the same values for every surface and appearance, so there is no iPad entry.
+#
+# mac: printed by BrandTests.whenSurfaceResolves_shouldKeepAppleLightness under swift test on
+# macOS 26.6.1 (25G76), on 2026-10-26. Sources: windowBackgroundColor, controlBackgroundColor and
+# underPageBackgroundColor, each fixed with performAsCurrentDrawingAppearance. The two Increase
+# Contrast appearances printed the same values as the standard ones, so they are written equal.
+# macOS is only the test host.
+APPLE_SURFACES = {
+    "surface": {
+        "universal": ("FFFFFF", "000000", "FFFFFF", "000000"),
+        "mac": ("FFFFFF", "1E1E1E", "FFFFFF", "1E1E1E"),
+    },
+    "secondarySurface": {
+        "universal": ("F2F2F7", "1C1C1E", "EBEBF0", "242426"),
+        "mac": ("FFFFFF", "1E1E1E", "FFFFFF", "1E1E1E"),
+    },
+    "tertiarySurface": {
+        "universal": ("FFFFFF", "2C2C2E", "FFFFFF", "363638"),
+        "mac": ("969696", "282828", "969696", "282828"),
+    },
+}
+IDIOMS = ("universal", "mac")  # The platforms of APPLE_SURFACES; each color set holds one entry per appearance of each.
+
+SURFACE_LIGHTNESS_TOLERANCE = 0.003  # How far a surface's OKLCH lightness may sit from Apple's.
+SURFACE_CHROMA_TOLERANCE = 0.0005  # How far its chroma may sit from the brand's tint.
+TINTABLE_LIGHTNESS = (0.05, 0.98)  # Outside this range Apple's surface is too dark or too light to hold a tint.
+
+
 CATALOG_NAME = "Colors.xcassets"
 CATALOG_INFO = {"author": "xcode", "version": 1}
 
@@ -437,8 +492,8 @@ def component_text(value):
     return f"{value:.{DECIMALS}f}"
 
 
-def colorset_entry(rgb, appearances):
-    """Returns one entry of a color set: Display P3 components under the given appearances."""
+def colorset_entry(rgb, appearances, idiom="universal"):
+    """Returns one entry of a color set: Display P3 components under the given appearances, for an idiom."""
     entry = {
         "color": {
             "color-space": "display-p3",
@@ -449,7 +504,7 @@ def colorset_entry(rgb, appearances):
                 "red": component_text(rgb[0]),
             },
         },
-        "idiom": "universal",
+        "idiom": idiom,
     }
     if appearances:
         entry["appearances"] = appearances
@@ -471,8 +526,40 @@ def colorset_text(family, role, ramps, hue_name):
     return json_text({"colors": entries, "info": CATALOG_INFO})
 
 
+def retint(hex_string, hue_degrees, chroma):
+    """Returns Display P3 components with the lightness of an sRGB hex color and a given hue and chroma.
+
+    Black stays black. White clamps to a near white (#FFFEFD at chroma 0.003).
+    """
+    lightness = hex_to_oklch(hex_string)[0]
+    rgb = oklch_to_p3(lightness, chroma, hue_degrees)
+    return [min(max(round(c, DECIMALS), 0.0), 1.0) + 0.0 for c in rgb]
+
+
+def surface_text(brand, angle, surface):
+    """Returns the Contents.json text of one brand surface: every idiom, in every appearance."""
+    entries = [
+        colorset_entry(retint(hex_code, angle, brand.tint), appearances, idiom)
+        for idiom in IDIOMS
+        for hex_code, (_, appearances) in zip(APPLE_SURFACES[surface][idiom], APPEARANCES)
+    ]
+    return json_text({"colors": entries, "info": CATALOG_INFO})
+
+
+def build_brand_catalog(files):
+    """Add every brand's surface sets to the catalog files, and print one line per brand."""
+    angles = {row.name: row.angle for row in HUES}
+    for brand in BRANDS:
+        if brand.hue not in angles:
+            fail(f"brand {brand.name} names an unknown hue: {brand.hue}")
+        for surface in SURFACES:
+            files[f"{brand.name}-{surface}.colorset/Contents.json"] = surface_text(brand, angles[brand.hue], surface)
+        count = len(SURFACES) * len(IDIOMS) * len(APPEARANCES)
+        print(f"{brand.name} ({brand.hue}, tint {brand.tint}): {len(SURFACES)} surfaces, {count} values")
+
+
 def build_catalog(ramps):
-    """Returns the catalog as a dict of relative path -> text, and prints one line per family."""
+    """Returns the catalog as a dict of relative path -> text, and prints one line per family and brand."""
     files = {"Contents.json": json_text({"info": CATALOG_INFO})}
     hue_names = {row.name for row in HUES}
     family_names = {family for family, _ in FAMILIES}
@@ -489,17 +576,50 @@ def build_catalog(ramps):
             files[f"{family}-{role}.colorset/Contents.json"] = colorset_text(family, role, ramps, hue_name)
         count = len(ROLE_TONES) * len(APPEARANCES)
         print(f"{family} ({hue_name}): {len(ROLE_TONES)} roles, {count} values")
+    build_brand_catalog(files)
     return files
+
+
+def check_surface_set(relative, text, brand, surface):
+    """Parse one brand surface set back. Returns its value count.
+
+    Fails unless it holds four entries for each idiom, each opaque Display P3 with Apple's lightness and,
+    where Apple's surface can hold a tint, the brand's chroma.
+    """
+    entries = json.loads(text)["colors"]
+    if len(entries) != len(IDIOMS) * len(APPEARANCES):
+        fail(f"self-check: {relative} held {len(entries)} entries, expected {len(IDIOMS) * len(APPEARANCES)}")
+    low, high = TINTABLE_LIGHTNESS
+    for index, entry in enumerate(entries):
+        idiom = IDIOMS[index // len(APPEARANCES)]
+        label, appearances = APPEARANCES[index % len(APPEARANCES)]
+        if entry["idiom"] != idiom or entry.get("appearances", []) != appearances:
+            fail(f"self-check: {relative} entry {index} is not {idiom} {label}")
+        color = entry["color"]
+        if color["color-space"] != "display-p3" or color["components"]["alpha"] != "1.000":
+            fail(f"self-check: {relative} {idiom} {label} is not opaque Display P3")
+        parsed = [float(color["components"][key]) for key in ("red", "green", "blue")]
+        lightness, chroma, _ = p3_oklch(parsed)
+        sample = hex_to_oklch(APPLE_SURFACES[surface][idiom][index % len(APPEARANCES)])[0]
+        if abs(lightness - sample) > SURFACE_LIGHTNESS_TOLERANCE:
+            fail(f"self-check: {relative} {idiom} {label} has L {lightness:.4f}, Apple's is {sample:.4f}")
+        if low <= sample <= high and abs(chroma - brand.tint) > SURFACE_CHROMA_TOLERANCE:
+            fail(f"self-check: {relative} {idiom} {label} has chroma {chroma:.4f}, expected {brand.tint}")
+    return len(entries)
 
 
 def check_catalog(files, ramps):
     """Parse every written component back and compare it with the tone literal it came from."""
     hue_of = dict(FAMILIES)
+    brand_of = {brand.name: brand for brand in BRANDS}
     count = 0
     for relative, text in files.items():
         if relative == "Contents.json":
             continue
         family, role = relative.split(".colorset/")[0].split("-")
+        if family in brand_of:
+            count += check_surface_set(relative, text, brand_of[family], role)
+            continue
         by_tone = {tone: rgb for tone, _, rgb in ramps[hue_of[family]]}
         entries = json.loads(text)["colors"]
         if len(entries) != len(APPEARANCES):
@@ -516,6 +636,7 @@ def check_catalog(files, ramps):
                 fail(f"self-check: {relative} {label} read {parsed}, expected t{tone} {expected}")
             count += 1
     expected_count = len(FAMILIES) * len(ROLE_TONES) * len(APPEARANCES)
+    expected_count += len(BRANDS) * len(SURFACES) * len(IDIOMS) * len(APPEARANCES)
     if count != expected_count:
         fail(f"self-check: catalog held {count} values, expected {expected_count}")
     print(f"self-check: {count} catalog values ok")
@@ -552,7 +673,7 @@ def check_stray_files(catalog):
         return
     allowed = {"Contents.json"} | {
         f"{family}-{role}.colorset" for family, _ in FAMILIES for role in ROLE_TONES
-    }
+    } | {f"{brand.name}-{surface}.colorset" for brand in BRANDS for surface in SURFACES}
     for child in sorted(catalog.iterdir()):
         if child.name not in allowed:
             fail(f"{catalog} holds a file the generator did not write: {child.name}. Remove it or move it.")
