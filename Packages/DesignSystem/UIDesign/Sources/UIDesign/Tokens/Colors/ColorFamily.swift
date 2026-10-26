@@ -9,11 +9,11 @@ package enum ColorFamily: CaseIterable, Equatable, Hashable, Sendable {
     private enum Role {
         /// The color for text or a symbol on a surface.
         case text
-        /// The color for a strong fill.
+        /// The color for a filled shape behind `onSolid`.
         case solid
-        /// The color for text or a symbol on a strong fill.
+        /// The color for text or a symbol on `solid`.
         case onSolid
-        /// The color for a pale fill.
+        /// The color for a pale fill behind `text`.
         case subtle
     }
 
@@ -43,11 +43,10 @@ package enum ColorFamily: CaseIterable, Equatable, Hashable, Sendable {
     /// It reaches 4.5:1 against `surface` and `secondarySurface`.
     package var text: Color { color(for: .text) }
 
-    /// The color for a filled shape behind ``onSolid``, such as a badge or a status dot.
+    /// The color for a filled shape behind ``onSolid``, such as a status dot or a band.
     ///
-    /// It reaches 4.5:1 against ``onSolid``. Every family but ``warning`` reaches 3:1 against
-    /// `surface` and `secondarySurface`; the warning fill is pale, and its text or symbol carries
-    /// the state.
+    /// It reaches 4.5:1 against ``onSolid``. In dark appearances every family reaches 3:1 against
+    /// `surface` and `secondarySurface`; in light appearances every family but ``warning`` does.
     package var solid: Color { color(for: .solid) }
 
     /// The color for text or a symbol on ``solid``.
