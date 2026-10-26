@@ -59,6 +59,7 @@ extension BarcodeContent {
     ///   - payload: The text the barcode carries. Must be 7-bit ASCII.
     ///   - quietSpace: The light margin, in multiples of the narrowest bar.
     ///     Defaults to ten.
+    /// - Returns: Content that draws the payload as a Code 128 barcode with the given margin.
     package static func code128(_ payload: Code128.Payload, quietSpace: Float = 10) -> BarcodeContent {
         BarcodeContent(payload, drawnBy: Code128.Symbology(quietSpace: quietSpace))
     }
