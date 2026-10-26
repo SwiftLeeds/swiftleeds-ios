@@ -5,6 +5,8 @@ import LogKit
 import LogKitTestSupport
 import Testing
 
+/// Tests for how signing in logs its outcome.
+///
 /// The cause reaches the log at the seam that knew it. These assert the outcome the user got.
 @Suite struct SignInLoggingTests {
     @Test func whenCredentialsAreRejected_shouldLogAtNoticeRatherThanError() async throws {
@@ -33,6 +35,8 @@ import Testing
         #expect(event.level == .error)
     }
 
+    /// Checks that each sign-in outcome logs a different message.
+    ///
     /// A destination groups by message, so two outcomes sharing one message could never be told
     /// apart when filtering. The fallback counts as an outcome and must differ too.
     @Test func whenOutcomesDiffer_shouldLogDifferentMessages() async throws {
@@ -61,6 +65,8 @@ import Testing
         }
     }
 
+    /// Checks that a successful sign-in logs at notice level.
+    ///
     /// Signing in is rare and it starts a session, so the success is worth a line the platform
     /// keeps. It is what anchors a later question about when the session began.
     @Test func whenSignInSucceeds_shouldLogAtNoticeLevel() async throws {

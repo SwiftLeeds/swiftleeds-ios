@@ -7,6 +7,8 @@ import LogKitTestSupport
 import NetworkKitTestSupport
 import Testing
 
+/// Tests for how a profile fetch logs its outcome.
+///
 /// The cause reaches the log at the mapper or the transport. These assert the outcome the user got.
 @Suite struct FetchProfileLoggingTests {
     @Test func whenSessionIsNotAccepted_shouldLogAtNoticeRatherThanError() async throws {
@@ -49,6 +51,8 @@ import Testing
         #expect(Set(messages).count == messages.count)
     }
 
+    /// Checks that a rejected response logs both the cause and the outcome.
+    ///
     /// The mapper names the cause, the use case names the outcome. Two seams, two lines, and no
     /// third line from anywhere else.
     @Test func whenResponseIsRejected_shouldLogCauseAndOutcome() async throws {

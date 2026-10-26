@@ -1,6 +1,8 @@
 import LogKit
 import Testing
 
+/// Tests for joining classified fields into text.
+///
 /// Fields reach a destination already classified, so these cover only the joining. Tokenising and
 /// secret removal are covered by `LogDestinationTests`.
 @Suite struct LogFieldRenderingTests {

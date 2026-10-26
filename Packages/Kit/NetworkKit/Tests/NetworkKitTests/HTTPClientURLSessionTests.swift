@@ -31,6 +31,8 @@ struct HTTPClientURLSessionTests {
         #expect(response.statusCode == 200)
     }
 
+    /// Checks that the adapter throws the session's error unchanged.
+    ///
     /// The adapter reports what the session reported. It does not wrap or reclassify it, so a
     /// caller can still tell an offline device from a cancelled task.
     @Test func whenTransportFails_shouldThrowSessionErrorUnchanged() async {

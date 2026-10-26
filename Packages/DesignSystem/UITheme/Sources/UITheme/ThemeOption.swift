@@ -2,7 +2,7 @@
 import UIKit
 #endif
 
-/// Available theme options for the application
+/// Available theme options for the application.
 public enum ThemeOption: String, CaseIterable, Equatable, Hashable, Sendable {
     /// The appearance the system setting chooses.
     case system = "system"
@@ -11,7 +11,7 @@ public enum ThemeOption: String, CaseIterable, Equatable, Hashable, Sendable {
     /// The dark appearance.
     case dark = "dark"
 
-    /// User-friendly display name for the theme option
+    /// User-friendly display name for the theme option.
     public var displayName: String {
         switch self {
         case .system: return "System"

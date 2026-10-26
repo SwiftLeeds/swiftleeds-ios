@@ -7,7 +7,9 @@ public struct TeamMember: Equatable, Hashable, Identifiable, Sendable {
     /// The member's name.
     public let name: String
 
-    /// What the member does for the conference. Some members have no role.
+    /// What the member does for the conference.
+    ///
+    /// Some members have no role.
     public let role: String?
 
     /// The address of the member's photo.

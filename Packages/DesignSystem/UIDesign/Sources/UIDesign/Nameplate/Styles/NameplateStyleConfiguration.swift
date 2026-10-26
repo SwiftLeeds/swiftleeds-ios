@@ -50,12 +50,14 @@ public struct NameplateStyleConfiguration {
     /// A name for the subject.
     public let title: Title
 
-    /// A description of the subject. It draws nothing when the caller gave
-    /// none.
+    /// A description of the subject.
+    ///
+    /// It draws nothing when the caller gave none.
     public let detail: Detail
 
-    /// A pictorial representation of the subject. It keeps the size it was
-    /// given.
+    /// A pictorial representation of the subject.
+    ///
+    /// It keeps the size it was given.
     public let icon: Icon
 
     /// Creates the properties of a nameplate, erasing each view's type.

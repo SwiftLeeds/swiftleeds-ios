@@ -15,9 +15,14 @@ struct LoggedSessionStoreOutcome {
         message: "The session was cleared",
     )
 
+    /// Returns the outcome of reading the stored session.
+    ///
     /// A read runs on every authenticated request, so it records at the level the platform drops
     /// unless someone is watching. Finding nothing gets its own message, because that is the line
     /// that explains why a user is signed out.
+    ///
+    /// - Parameter foundSession: Whether the store held a session.
+    /// - Returns: The outcome to log for the read.
     static func read(foundSession: Bool) -> Self {
         Self(
             level: .debug,

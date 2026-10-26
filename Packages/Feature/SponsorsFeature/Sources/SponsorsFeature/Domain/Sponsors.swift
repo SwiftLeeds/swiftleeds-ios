@@ -1,4 +1,6 @@
-/// Every sponsor, grouped by level. A level with no sponsors is absent.
+/// Every sponsor, grouped by level.
+///
+/// A level with no sponsors is absent.
 public struct Sponsors: Equatable, Hashable, Sendable {
     /// The sponsors at each level that has any.
     private let levels: [SponsorLevel: [Sponsor]]

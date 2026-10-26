@@ -4,6 +4,8 @@ import LogKitTestSupport
 import Testing
 
 @Suite struct LogDependencyTests {
+    /// Checks that an unconfigured log dependency does not trap.
+    ///
     /// The default is `Log.silent`, so a test that forgets to override gets
     /// silence rather than real output. That it writes nowhere is covered by
     /// `LogCombineTests`.

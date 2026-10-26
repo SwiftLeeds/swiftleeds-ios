@@ -134,6 +134,8 @@ import Testing
         #expect(foundSession.level == .debug)
     }
 
+    /// Checks that each session store outcome logs a different message.
+    ///
     /// Six outcomes, six messages. A destination groups by message, so any pair sharing one could
     /// never be told apart when filtering.
     @Test func whenOutcomesDiffer_shouldLogDifferentMessages() async throws {

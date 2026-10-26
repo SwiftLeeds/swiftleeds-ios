@@ -8,9 +8,13 @@ import UIComponents
 import UIKit
 #endif
 
-/// The sponsors screen, drawn from a state it is given. It fetches nothing.
+/// The sponsors screen, drawn from a state it is given.
+///
+/// It fetches nothing.
 package struct SponsorsContentView: View {
-    /// What the screen shows. A fetch that fails leaves it `empty`.
+    /// What the screen shows.
+    ///
+    /// A fetch that fails leaves it `empty`.
     package enum ScreenState: Equatable {
         case loading
         case empty

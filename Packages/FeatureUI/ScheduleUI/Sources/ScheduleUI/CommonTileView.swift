@@ -2,7 +2,7 @@ import SwiftUI
 import UIAssets
 import UIComponents
 
-/// Generic primary secondary view
+/// Generic primary secondary view.
 package struct CommonTileView<BackgroundType: ShapeStyle>: View {
     @Environment(\.sizeCategory) var sizeCategory
 

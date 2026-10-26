@@ -2,7 +2,9 @@ import Foundation
 
 /// One HTTP header field, as a name and value pair.
 public struct HTTPHeaderField: Equatable, Hashable, Sendable {
-    /// A field name. Case-insensitive, so `Accept` and `accept` are one name.
+    /// A field name.
+    ///
+    /// It is case-insensitive, so `Accept` and `accept` are one name.
     ///
     /// `String(name)` gives back the casing you wrote. Every field RFC 9110 and
     /// RFC 9111 define is a constant, except the three they deprecate:
@@ -31,7 +33,9 @@ public struct HTTPHeaderField: Equatable, Hashable, Sendable {
         }
     }
 
-    /// A field value. Sent exactly as written, and case-sensitive.
+    /// A field value.
+    ///
+    /// It is sent exactly as written, and is case-sensitive.
     public struct Value: Equatable, Hashable, Sendable {
         /// The value, as given.
         fileprivate let value: String

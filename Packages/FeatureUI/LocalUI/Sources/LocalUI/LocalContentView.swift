@@ -6,7 +6,9 @@ import SwiftUI
 import UIAssets
 import UIComponents
 
-/// The local screen, drawn from a state it is given. It fetches nothing.
+/// The local screen, drawn from a state it is given.
+///
+/// It fetches nothing.
 package struct LocalContentView: View {
     /// What the screen shows.
     package enum ScreenState: Equatable, Hashable, Sendable {

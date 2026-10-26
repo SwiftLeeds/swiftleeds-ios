@@ -20,7 +20,9 @@ package enum Code128 {
             self.init(value)
         }
 
-        /// Whether this text can be drawn. Code 128 carries 7-bit ASCII only.
+        /// Whether this text can be drawn.
+        ///
+        /// Code 128 carries 7-bit ASCII only.
         package var isEncodable: Bool {
             !storage.isEmpty && storage.allSatisfy(\.isASCII)
         }

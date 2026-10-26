@@ -3,9 +3,10 @@ import SecureStorageKit
 import SecureStorageKitKeychain
 
 extension KeychainService {
-    /// A fresh, collision-free service, so each test is isolated from every
-    /// other test and from other runs. Tests run in parallel, so they cannot
-    /// share one service and clear it between cases.
+    /// A fresh, collision-free service.
+    ///
+    /// One per test isolates it from every other test and from other runs. Tests run in
+    /// parallel, so they cannot share one service and clear it between cases.
     static var unique: KeychainService {
         KeychainService("co.swiftleeds.securestoragekit.tests.\(UUID().uuidString)")
     }

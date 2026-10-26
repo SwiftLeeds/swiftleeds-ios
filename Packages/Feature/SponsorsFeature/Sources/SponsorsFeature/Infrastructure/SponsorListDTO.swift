@@ -1,6 +1,8 @@
 import Foundation
 
-/// The sponsor list as the backend sends it. Data only.
+/// The sponsor list as the backend sends it.
+///
+/// It carries data only.
 package struct SponsorListDTO: Decodable {
     /// One sponsor as the backend sends it.
     package struct SponsorDTO: Decodable {

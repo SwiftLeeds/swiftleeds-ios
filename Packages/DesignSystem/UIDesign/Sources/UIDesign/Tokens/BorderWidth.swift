@@ -11,7 +11,9 @@ public struct BorderWidth: Equatable, Hashable, Sendable {
 
 extension BorderWidth {
     // swiftlint:disable no_magic_numbers - each number here is the value its name defines
-    /// A hairline. Draws as one device pixel at a display scale of two or more.
+    /// A hairline.
+    ///
+    /// It draws as one device pixel at a display scale of two or more.
     public static let thin = BorderWidth(0.5)
 
     public static let medium = BorderWidth(1)

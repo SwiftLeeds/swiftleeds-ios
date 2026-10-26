@@ -60,8 +60,13 @@ extension BarcodeSymbologyTests {
         return features.compactMap { ($0 as? CIQRCodeFeature)?.messageString }.first
     }
 
-    /// The width of the uniform light border, measured in modules. The module size is derived
-    /// from the top-left finder pattern, whose top edge is seven modules wide in every QR code.
+    /// Returns the width of the uniform light border, measured in modules.
+    ///
+    /// The module size is derived from the top-left finder pattern, whose top edge is seven
+    /// modules wide in every QR code.
+    ///
+    /// - Parameter image: The rendered QR code to measure.
+    /// - Returns: The border width in modules, or 0 when the border cannot be measured.
     fileprivate func quietZoneModules(of image: CGImage) -> Int {
         guard let pixels = grayscalePixels(of: image) else { return 0 }
         let width = image.width

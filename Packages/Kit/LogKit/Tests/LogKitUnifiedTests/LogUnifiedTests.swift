@@ -3,6 +3,8 @@ import LogKit
 import LogKitUnified
 import Testing
 
+/// Tests for every unified logging path, which must complete without trapping.
+///
 /// Unified logging cannot be read back from a test process, so these exercise every path for a
 /// trap or a precondition failure rather than asserting on output. What the destination *renders*
 /// is covered by `LogValueRenderingTests`.

@@ -12,8 +12,9 @@ struct AdaptiveNameplate: View {
     /// The properties of the nameplate.
     let configuration: NameplateStyleConfiguration
 
-    /// The font the title draws in. The detail keeps the body text style at
-    /// every style.
+    /// The font the title draws in.
+    ///
+    /// The detail keeps the body text style at every style.
     let titleFont: Font
 
     var body: some View {

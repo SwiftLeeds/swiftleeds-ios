@@ -26,8 +26,9 @@ package final class SettingsViewModel {
         storedIcon
     }
 
-    /// Changes the app icon, and stores the choice. On failure, keeps the icon and sets
-    /// `showingIconError`.
+    /// Changes the app icon, and stores the choice.
+    ///
+    /// On failure, keeps the icon and sets `showingIconError`.
     package func changeAppIcon(to iconOption: AppIconOption) async {
         @Dependency(\.changeAppIcon) var changeAppIcon
 
