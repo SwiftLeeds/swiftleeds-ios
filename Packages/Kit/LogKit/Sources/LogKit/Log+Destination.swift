@@ -16,6 +16,7 @@ extension Log {
     ///   - secrets: Whether the destination is trusted with secret fields.
     ///     Defaults to removing them.
     ///   - write: Receives each already-classified event.
+    /// - Returns: A log that classifies each event, then hands it to `write`.
     public static func destination(
         salt: LogSalt,
         secrets: SecretPolicy = .remove,
@@ -33,6 +34,7 @@ extension LogEvent {
     /// - Parameters:
     ///   - salt: Mixed into hashed values.
     ///   - secrets: Whether secret fields survive.
+    /// - Returns: The same event, with its fields classified.
     func classified(salt: LogSalt, secrets: SecretPolicy) -> LogEvent {
         LogEvent(
             level: level,
@@ -54,6 +56,7 @@ extension LogFields {
     /// - Parameters:
     ///   - salt: Mixed into hashed values.
     ///   - secrets: Whether secret fields survive.
+    /// - Returns: The fields in their original order, each treated as its sensitivity requires.
     func classified(salt: LogSalt, secrets: SecretPolicy) -> LogFields {
         LogFields(
             compactMap { field in

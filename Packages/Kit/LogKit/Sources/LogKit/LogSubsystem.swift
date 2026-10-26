@@ -19,6 +19,7 @@ public struct LogSubsystem: Hashable, Sendable {
     /// Creates a subsystem, refusing a name that is empty or only whitespace.
     ///
     /// - Parameter value: The name.
+    /// - Throws: ``ParsingError/blank`` when the name is empty or only whitespace.
     public init(_ value: String) throws(ParsingError) {
         guard value.contains(where: { !$0.isWhitespace }) else { throw .blank }
 

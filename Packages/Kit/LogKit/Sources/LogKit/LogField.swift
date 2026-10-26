@@ -35,6 +35,7 @@ public struct LogField: Hashable, Sendable {
     /// - Parameters:
     ///   - name: The name the field is logged under.
     ///   - value: The value to log.
+    /// - Returns: An open field holding the value.
     public static func open(_ name: FieldName, _ value: some LogValueRepresentable) -> Self {
         Self(name: name, value: value.logValue, sensitivity: .open)
     }
@@ -44,6 +45,7 @@ public struct LogField: Hashable, Sendable {
     /// - Parameters:
     ///   - name: The name the field is logged under.
     ///   - value: The value to log.
+    /// - Returns: A hashed field holding the value.
     public static func hashed(_ name: FieldName, _ value: some LogValueRepresentable) -> Self {
         Self(name: name, value: value.logValue, sensitivity: .hashed)
     }
@@ -53,6 +55,7 @@ public struct LogField: Hashable, Sendable {
     /// - Parameters:
     ///   - name: The name the field is logged under.
     ///   - value: The value to log.
+    /// - Returns: A secret field holding the value.
     public static func secret(_ name: FieldName, _ value: some LogValueRepresentable) -> Self {
         Self(name: name, value: value.logValue, sensitivity: .secret)
     }

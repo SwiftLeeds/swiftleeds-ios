@@ -18,6 +18,7 @@ extension Log {
         /// Returns the logger for a category, building it on first use.
         ///
         /// - Parameter category: The area of the app the event came from.
+        /// - Returns: The cached logger for the category, or a new one stored for next time.
         func logger(for category: LogCategory) -> Logger {
             lock.withLock { cache in
                 if let existing = cache[category] { return existing }
@@ -41,6 +42,7 @@ extension Log {
     ///   - subsystem: Names the app the lines came from, in Console.
     ///   - salt: Mixed into hashed values so their tokens cannot be reversed
     ///     by guessing.
+    /// - Returns: A log that writes each event to unified logging, one line per event.
     public static func unified(subsystem: LogSubsystem, salt: LogSalt) -> Log {
         let loggers = LoggerCache(subsystem: String(subsystem))
 

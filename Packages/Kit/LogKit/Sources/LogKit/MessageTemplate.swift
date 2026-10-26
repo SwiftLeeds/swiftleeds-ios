@@ -50,6 +50,7 @@ extension MessageTemplate {
     /// Fills each gap from its own field, in the order they were written.
     ///
     /// - Parameter fields: The fields to read gap values from.
+    /// - Returns: The leading text followed by each gap's value and trailing text.
     package func rendered(with fields: LogFields) -> String {
         gaps.reduce(into: leadingText) { text, gap in
             text += Self.text(for: gap.placeholder, in: fields)
@@ -67,6 +68,7 @@ extension MessageTemplate {
     /// - Parameters:
     ///   - placeholder: The gap's name, matched against a field's name.
     ///   - fields: The fields to search.
+    /// - Returns: The matching field's rendered value, or the redaction marker for a secret or a missing field.
     private static func text(for placeholder: FieldName, in fields: LogFields) -> String {
         guard let field = fields.first(where: { $0.name == placeholder }) else {
             return redactionMarker

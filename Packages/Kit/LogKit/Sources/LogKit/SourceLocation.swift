@@ -27,6 +27,7 @@ public struct SourceLocation: Hashable, Sendable {
     ///   - file: The file, left to expand from `#fileID`.
     ///   - function: The function, left to expand from `#function`.
     ///   - line: The line, left to expand from `#line`.
+    /// - Returns: A location holding the file, function and line.
     public static func here(
         file: String = #fileID,
         function: String = #function,
