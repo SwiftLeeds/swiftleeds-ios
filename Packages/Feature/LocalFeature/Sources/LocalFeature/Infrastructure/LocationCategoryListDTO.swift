@@ -1,6 +1,8 @@
 import Foundation
 
-/// The location categories as the backend sends them. Data only.
+/// The location categories as the backend sends them.
+///
+/// It carries data only.
 package struct LocationCategoryListDTO: Decodable {
     /// One category of locations as the backend sends it.
     package struct LocationCategoryDTO: Decodable {
