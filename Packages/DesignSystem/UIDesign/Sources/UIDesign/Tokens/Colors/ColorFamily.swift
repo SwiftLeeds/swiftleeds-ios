@@ -43,9 +43,11 @@ package enum ColorFamily: CaseIterable, Equatable, Hashable, Sendable {
     /// It reaches 4.5:1 against `surface` and `secondarySurface`.
     package var text: Color { color(for: .text) }
 
-    /// The color for a strong fill, such as a band or a status dot.
+    /// The color for a filled shape behind ``onSolid``, such as a badge or a status dot.
     ///
-    /// It reaches 3:1 against `surface` and `secondarySurface`, and 4.5:1 against ``onSolid``.
+    /// It reaches 4.5:1 against ``onSolid``. Every family but ``warning`` reaches 3:1 against
+    /// `surface` and `secondarySurface`; the warning fill is pale, and its text or symbol carries
+    /// the state.
     package var solid: Color { color(for: .solid) }
 
     /// The color for text or a symbol on ``solid``.

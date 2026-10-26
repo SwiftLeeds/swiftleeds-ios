@@ -43,7 +43,7 @@ public struct AvatarStatus: Equatable {
     ///   - label: What the status means. VoiceOver reads it, and nothing shows it, so write the
     ///     words the person would use: "Checked in", not "green tick".
     ///   - icon: A filled symbol that encloses its own glyph and means the same as the family.
-    ///   - family: The colors of the mark. Its strong fill goes behind the glyph, and the glyph
+    ///   - family: The colors of the mark. Its fill goes behind the glyph, and the glyph
     ///     takes the color made for that fill. Use a status family (``ColorFamily/success``,
     ///     ``ColorFamily/warning``, ``ColorFamily/error`` or ``ColorFamily/info``), so the color
     ///     means the same here as everywhere else.

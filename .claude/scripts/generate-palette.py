@@ -209,9 +209,7 @@ def build_hue_table():
     red = hex_to_oklch("FF3B30")[2]  # Apple system red, light mode
     green = hex_to_oklch("34C759")[2]  # Apple system green
     orange = hex_to_oklch("FF9500")[2]  # Apple system orange
-    # Apple's orange angle goes brown below t55, so amber turns toward red there (Apple's own Increase
-    # Contrast orange sits at 35 degrees) and keeps Apple's angle where it is bright and apart from red.
-    amber_dark = 40.0
+    yellow = hex_to_oklch("FFCC00")[2]  # Apple system yellow
     # The hue of blue, teal, violet and raspberry (0.60, 0.47, 0.76, 0.92) is the session-kind hue
     # from the design gallery. Saturation and brightness were chosen here, and only the resulting
     # OKLCH hue angle is used.
@@ -222,7 +220,9 @@ def build_hue_table():
     return [
         HueRow("red", red, CAP),
         HueRow("green", green, CAP),
-        HueRow("amber", orange, CAP, turn_to=amber_dark),
+        # Turns toward amber as it darkens, so its text tones read as amber, not olive. Yellow's chroma
+        # peaks at t85 to t90, so its taper starts there.
+        HueRow("yellow", yellow, CAP, turn_to=55.0, taper_start=90),
         HueRow("blue", blue, CAP),
         HueRow("teal", teal, CAP),
         HueRow("violet", violet, CAP),
@@ -358,7 +358,7 @@ def progress(row, tones):
 # Each family is a name and the Hue it draws from.
 FAMILIES = [
     ("success", "green"),
-    ("warning", "amber"),
+    ("warning", "yellow"),
     ("error", "red"),
     ("info", "blue"),
     ("neutral", "neutral"),
@@ -388,11 +388,13 @@ ROLE_TONES = {
     "subtle": (95, 20, 95, 15),
 }
 
-# A family and role whose tones differ from ROLE_TONES. Warning text is lighter in light mode: the
-# turned amber is still too dark to read as orange at t45, and t50 is the lightest tone that meets
-# 4.5:1 on its subtle tint. build_catalog fails on a key that names no family or role.
+# Warning is a pale yellow fill with dark text, as Carbon's and Atlassian's. The light Increase
+# Contrast fill stays t85: a darker text on it raises the ratio, and a t80 fill lowered it.
+# build_catalog fails on a key that names no family or role.
 FAMILY_ROLE_TONES = {
     ("warning", "text"): (50, 75, 45, 80),
+    ("warning", "solid"): (85, 80, 85, 85),
+    ("warning", "onSolid"): (10, 5, 5, 5),
 }
 
 
