@@ -208,7 +208,6 @@ def build_hue_table():
     """One row per hue. The source colour of each angle is written out here."""
     red = hex_to_oklch("FF3B30")[2]  # Apple system red, light mode
     green = hex_to_oklch("34C759")[2]  # Apple system green
-    orange = hex_to_oklch("FF9500")[2]  # Apple system orange
     yellow = hex_to_oklch("FFCC00")[2]  # Apple system yellow
     # The hue of blue, teal, violet and raspberry (0.60, 0.47, 0.76, 0.92) is the session-kind hue
     # from the design gallery. Saturation and brightness were chosen here, and only the resulting
@@ -228,7 +227,8 @@ def build_hue_table():
         HueRow("violet", violet, CAP),
         HueRow("raspberry", raspberry, CAP),
         HueRow("neutral", 0.0, 0.0),
-        HueRow("bronze", orange, 0.07),  # Apple's orange angle, muted
+        # Between raspberry (355) and violet (307) at a third of their chroma, so it reads as neither.
+        HueRow("mauve", 340.0, 0.07),
     ]
 
 
@@ -366,7 +366,7 @@ FAMILIES = [
     ("teal", "teal"),
     ("violet", "violet"),
     ("raspberry", "raspberry"),
-    ("sponsor", "bronze"),
+    ("sponsor", "mauve"),
 ]
 
 # The appearances of one color set, in the order Xcode writes them, each with its JSON appearance entries.

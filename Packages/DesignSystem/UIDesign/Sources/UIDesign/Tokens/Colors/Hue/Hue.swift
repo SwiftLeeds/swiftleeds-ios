@@ -58,6 +58,6 @@ package enum Hue: CaseIterable, Equatable, Hashable, Sendable {
     case raspberry
     /// A gray ramp with no hue.
     case neutral
-    /// A muted bronze ramp.
-    case bronze
+    /// A muted mauve ramp.
+    case mauve
 }

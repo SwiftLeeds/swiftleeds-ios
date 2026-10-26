@@ -24,7 +24,7 @@ extension Hue {
         case .violet: Self.violet(tone)
         case .raspberry: Self.raspberry(tone)
         case .neutral: Self.neutral(tone)
-        case .bronze: Self.bronze(tone)
+        case .mauve: Self.mauve(tone)
         }
     }
 
@@ -252,31 +252,31 @@ extension Hue {
         }
     }
 
-    /// Returns bronze at a tone.
+    /// Returns mauve at a tone.
     ///
     /// - Parameter tone: The tone to read.
     /// - Returns: The color at that tone.
-    private static func bronze(_ tone: Tone) -> Color.Resolved {  // swiftlint:disable:this cyclomatic_complexity
+    private static func mauve(_ tone: Tone) -> Color.Resolved {  // swiftlint:disable:this cyclomatic_complexity
         switch tone {
-        case .t5: Color.Resolved(colorSpace: .displayP3, red: 0.0034, green: 0.0011, blue: 0.0000)
-        case .t10: Color.Resolved(colorSpace: .displayP3, red: 0.0272, green: 0.0087, blue: 0.0000)
-        case .t15: Color.Resolved(colorSpace: .displayP3, red: 0.0793, green: 0.0292, blue: 0.0000)
-        case .t20: Color.Resolved(colorSpace: .displayP3, red: 0.1375, green: 0.0644, blue: 0.0000)
-        case .t25: Color.Resolved(colorSpace: .displayP3, red: 0.1994, green: 0.1028, blue: 0.0000)
-        case .t30: Color.Resolved(colorSpace: .displayP3, red: 0.2560, green: 0.1488, blue: 0.0260)
-        case .t35: Color.Resolved(colorSpace: .displayP3, red: 0.3098, green: 0.1992, blue: 0.0811)
-        case .t40: Color.Resolved(colorSpace: .displayP3, red: 0.3650, green: 0.2512, blue: 0.1336)
-        case .t45: Color.Resolved(colorSpace: .displayP3, red: 0.4214, green: 0.3047, blue: 0.1859)
-        case .t50: Color.Resolved(colorSpace: .displayP3, red: 0.4791, green: 0.3595, blue: 0.2391)
-        case .t55: Color.Resolved(colorSpace: .displayP3, red: 0.5379, green: 0.4156, blue: 0.2933)
-        case .t60: Color.Resolved(colorSpace: .displayP3, red: 0.5979, green: 0.4730, blue: 0.3487)
-        case .t65: Color.Resolved(colorSpace: .displayP3, red: 0.6588, green: 0.5316, blue: 0.4052)
-        case .t70: Color.Resolved(colorSpace: .displayP3, red: 0.7208, green: 0.5913, blue: 0.4629)
-        case .t75: Color.Resolved(colorSpace: .displayP3, red: 0.7837, green: 0.6520, blue: 0.5217)
-        case .t80: Color.Resolved(colorSpace: .displayP3, red: 0.8312, green: 0.7192, blue: 0.6090)
-        case .t85: Color.Resolved(colorSpace: .displayP3, red: 0.8787, green: 0.7871, blue: 0.6972)
-        case .t90: Color.Resolved(colorSpace: .displayP3, red: 0.9263, green: 0.8557, blue: 0.7866)
-        case .t95: Color.Resolved(colorSpace: .displayP3, red: 0.9739, green: 0.9250, blue: 0.8772)
+        case .t5: Color.Resolved(colorSpace: .displayP3, red: 0.0046, green: 0.0000, blue: 0.0032)
+        case .t10: Color.Resolved(colorSpace: .displayP3, red: 0.0372, green: 0.0000, blue: 0.0256)
+        case .t15: Color.Resolved(colorSpace: .displayP3, red: 0.0965, green: 0.0015, blue: 0.0749)
+        case .t20: Color.Resolved(colorSpace: .displayP3, red: 0.1454, green: 0.0303, blue: 0.1203)
+        case .t25: Color.Resolved(colorSpace: .displayP3, red: 0.1959, green: 0.0778, blue: 0.1679)
+        case .t30: Color.Resolved(colorSpace: .displayP3, red: 0.2481, green: 0.1262, blue: 0.2175)
+        case .t35: Color.Resolved(colorSpace: .displayP3, red: 0.3017, green: 0.1758, blue: 0.2690)
+        case .t40: Color.Resolved(colorSpace: .displayP3, red: 0.3567, green: 0.2270, blue: 0.3221)
+        case .t45: Color.Resolved(colorSpace: .displayP3, red: 0.4130, green: 0.2797, blue: 0.3766)
+        case .t50: Color.Resolved(colorSpace: .displayP3, red: 0.4705, green: 0.3338, blue: 0.4326)
+        case .t55: Color.Resolved(colorSpace: .displayP3, red: 0.5292, green: 0.3893, blue: 0.4899)
+        case .t60: Color.Resolved(colorSpace: .displayP3, red: 0.5890, green: 0.4460, blue: 0.5484)
+        case .t65: Color.Resolved(colorSpace: .displayP3, red: 0.6498, green: 0.5040, blue: 0.6080)
+        case .t70: Color.Resolved(colorSpace: .displayP3, red: 0.7117, green: 0.5631, blue: 0.6687)
+        case .t75: Color.Resolved(colorSpace: .displayP3, red: 0.7745, green: 0.6232, blue: 0.7304)
+        case .t80: Color.Resolved(colorSpace: .displayP3, red: 0.8234, green: 0.6946, blue: 0.7851)
+        case .t85: Color.Resolved(colorSpace: .displayP3, red: 0.8725, green: 0.7668, blue: 0.8404)
+        case .t90: Color.Resolved(colorSpace: .displayP3, red: 0.9215, green: 0.8400, blue: 0.8964)
+        case .t95: Color.Resolved(colorSpace: .displayP3, red: 0.9706, green: 0.9141, blue: 0.9529)
         }
     }
 }
