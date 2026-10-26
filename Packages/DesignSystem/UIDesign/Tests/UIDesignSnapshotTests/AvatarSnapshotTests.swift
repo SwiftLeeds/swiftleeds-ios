@@ -8,6 +8,16 @@ import UIDesign
 
 @MainActor
 @Suite(.snapshots(record: .never)) struct AvatarSnapshotTests {
+    /// Six made-up people whose initials differ, so the image can tell them apart.
+    private static let people = [
+        PersonNameComponents(givenName: "Ada", familyName: "Archer"),
+        PersonNameComponents(givenName: "Blake", familyName: "Brooks"),
+        PersonNameComponents(givenName: "Casey", familyName: "Cole"),
+        PersonNameComponents(givenName: "Devon", familyName: "Drake"),
+        PersonNameComponents(givenName: "Ellis", familyName: "East"),
+        PersonNameComponents(givenName: "Frankie", familyName: "Fox"),
+    ]
+
     @Test func sizes() {
         let view = HStack(alignment: .bottom, spacing: Spacing.large) {
             avatar(size: AvatarSize.small)
@@ -53,15 +63,6 @@ import UIDesign
 
         assertSnapshots(of: view)
     }
-
-    private static let people = [
-        PersonNameComponents(givenName: "Ada", familyName: "Archer"),
-        PersonNameComponents(givenName: "Blake", familyName: "Brooks"),
-        PersonNameComponents(givenName: "Casey", familyName: "Cole"),
-        PersonNameComponents(givenName: "Devon", familyName: "Drake"),
-        PersonNameComponents(givenName: "Ellis", familyName: "East"),
-        PersonNameComponents(givenName: "Frankie", familyName: "Fox"),
-    ]
 
     @Test func initialsFallbackWithNothingToAbbreviate() {
         let view = Avatar(url: nil, size: AvatarSize.xLarge, fallback: .initials(.init()))

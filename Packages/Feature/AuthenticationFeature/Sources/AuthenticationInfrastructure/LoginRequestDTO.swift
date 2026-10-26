@@ -1,14 +1,15 @@
 import AuthenticationDomain
 
 struct LoginRequestDTO: Encodable {
-    let email: String
-    let ticket: String
-
+    /// The JSON keys of the login request.
     enum CodingKeys: String, CodingKey {
         case email = "email"
         case ticket = "ticket"
         case event = "event"
     }
+
+    let email: String
+    let ticket: String
 
     init(_ credential: Credential) {
         email = String(credential.emailAddress)

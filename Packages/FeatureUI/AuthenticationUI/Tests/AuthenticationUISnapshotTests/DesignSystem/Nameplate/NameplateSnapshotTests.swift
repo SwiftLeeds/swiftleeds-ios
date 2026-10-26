@@ -5,6 +5,44 @@ import Testing
 
 @MainActor
 @Suite struct NameplateSnapshotTests {
+    /// An avatar that shows the initials "AL".
+    private var initialsAvatar: some View {
+        Avatar(url: nil) {
+            Text(verbatim: "AL")
+        }
+    }
+
+    /// An avatar that shows a person symbol.
+    private var personAvatar: some View {
+        Avatar(url: nil) {
+            Image(systemName: "person")
+        }
+    }
+
+    /// Three nameplates, one standard, one unresolved and one without detail.
+    private var samples: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            Nameplate(
+                Text(verbatim: "Ada Lovelace"),
+                detail: Text(verbatim: "ada@example.com"),
+            ) {
+                initialsAvatar
+            }
+
+            Divider()
+
+            Nameplate(Text("Sign In"), role: .unresolved) {
+                personAvatar
+            }
+
+            Divider()
+
+            Nameplate(Text(verbatim: "Ada Lovelace")) {
+                initialsAvatar
+            }
+        }
+    }
+
     @Test func prominent() {
         assertSnapshots(of: samples.snapshotCard())
     }
@@ -51,41 +89,6 @@ import Testing
         }
 
         assertSnapshots(of: view.snapshotCard(width: 220))
-    }
-
-    private var initialsAvatar: some View {
-        Avatar(url: nil) {
-            Text(verbatim: "AL")
-        }
-    }
-
-    private var personAvatar: some View {
-        Avatar(url: nil) {
-            Image(systemName: "person")
-        }
-    }
-
-    private var samples: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            Nameplate(
-                Text(verbatim: "Ada Lovelace"),
-                detail: Text(verbatim: "ada@example.com"),
-            ) {
-                initialsAvatar
-            }
-
-            Divider()
-
-            Nameplate(Text("Sign In"), role: .unresolved) {
-                personAvatar
-            }
-
-            Divider()
-
-            Nameplate(Text(verbatim: "Ada Lovelace")) {
-                initialsAvatar
-            }
-        }
     }
 }
 #endif

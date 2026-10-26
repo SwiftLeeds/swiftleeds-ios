@@ -36,7 +36,7 @@ struct SwiftLeedsApp: App {
             $0.httpClient = HTTPClient.urlSession(.unauthenticated).logging()
             $0.localScheduleStore = .appGroup(AppGroupIdentifier(ConferenceConfig.appGroupIdentifier))
             $0.authHTTPClient = .live(
-                urlSession: .authenticated,
+                transport: .urlSession(.authenticated),
                 onSessionExpiry: {
                     @Dependency(\.signOut) var signOut
                     try? await signOut()
@@ -48,16 +48,16 @@ struct SwiftLeedsApp: App {
         }
     }
 
-    /// Gives the shared URL cache room on disk for remote images.
-    private static func sizeSharedURLCache() {
-        URLCache.shared.diskCapacity = sharedURLCacheDiskCapacityInBytes
-    }
-
     var body: some Scene {
         WindowGroup {
             Tabs()
                 .environmentObject(appState)
                 .applyingSelectedTheme()
         }
+    }
+
+    /// Gives the shared URL cache room on disk for remote images.
+    private static func sizeSharedURLCache() {
+        URLCache.shared.diskCapacity = sharedURLCacheDiskCapacityInBytes
     }
 }

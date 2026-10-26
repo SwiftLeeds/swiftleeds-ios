@@ -46,6 +46,10 @@ package enum QRCode {
         /// The correction level drawn codes use.
         private let correction: Correction
 
+        /// The generator leaves a one-module margin; the specification asks
+        /// for four.
+        private static let missingQuietZoneModules: CGFloat = 3
+
         /// Creates a symbology that draws codes at a correction level.
         /// - Parameter correction: How much damage the code should survive.
         ///   Defaults to `high`.
@@ -60,10 +64,6 @@ package enum QRCode {
             guard let output = filter.outputImage else { return nil }
             return BarcodeImage.render(output, addingQuietZoneOf: Self.missingQuietZoneModules)
         }
-
-        /// The generator leaves a one-module margin; the specification asks
-        /// for four.
-        private static let missingQuietZoneModules: CGFloat = 3
     }
 }
 

@@ -23,7 +23,7 @@
 # and the pre-commit hook checks against. Rule defaults change between versions,
 # so re-run the suite after a bump.
 
-# The violations left after the mechanical fixes, 14 as of 2026-10-23, down from
+# The violations left after the mechanical fixes, 12 as of 2026-10-25, down from
 # 78, plus 197 view layout numbers `no_magic_numbers` found. It found 206, and
 # nine left the baseline when their previews became `#Preview`. They stay
 # recorded rather than fixed, so linting starts green and new code is held to
@@ -244,6 +244,10 @@ opt_in_rules:
   # it is meant. Where one is meant, a comment inside the braces says why.
   - no_empty_block
 
+  # A reader meets what a type is before what it does: cases and nested types,
+  # then properties and initializers, then deinit, then methods.
+  - type_contents_order
+
 # Analyzer rules read the compiler log, so they run only through
 # `swiftlint analyze`, never `swiftlint lint`.
 analyzer_rules:
@@ -375,6 +379,17 @@ no_empty_block:
     - closure_blocks
     - initializer_bodies
 
+# The house order: nested types and cases first, then properties and
+# initializers, then deinit, then methods. SwiftLint's default order wants
+# every property above `init`, which puts a view's `body` above its
+# initializer, and enum cases above nested types.
+type_contents_order:
+  order:
+    - [case, type_alias, associated_type, subtype]
+    - [type_property, instance_property, initializer, ib_inspectable, ib_outlet]
+    - [deinitializer]
+    - [type_method, view_life_cycle_method, ib_action, ib_segue_action, other_method, subscript]
+
 # Setting `excluded` replaces the default list, `LinuxMain.swift` and
 # `main.swift`; neither exists here.
 # - `LogCategories.swift` holds each module's `extension LogCategory`, and
@@ -383,7 +398,7 @@ no_empty_block:
 #   source. Its name says that role, not the placeholder view inside it.
 # - Each `Assert...Snapshots.swift` test helper is named for the assertion it
 #   adds, not for a type.
-# - ScheduleUI's `ScheduleFixtures.swift` holds fixtures for six types, from
+# - ScheduleUI's `ScheduleFixtures.swift` holds fixtures for five types, from
 #   `Speaker` to `Schedule.Slot`, so no one type names it.
 file_name:
   excluded:

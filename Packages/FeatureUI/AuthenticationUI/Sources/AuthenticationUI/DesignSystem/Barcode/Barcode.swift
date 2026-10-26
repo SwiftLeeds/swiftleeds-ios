@@ -17,17 +17,18 @@ import SwiftUI
 /// stretches, because a distorted code stops scanning. Use ``SwiftUICore/View/barcodeStyle(_:)``
 /// for padding and shape.
 package struct Barcode<Placeholder: View, Failure: View>: View {
-    @Environment(\.barcodeStyle) private var style
-
-    private let source: Source
-    private let placeholder: () -> Placeholder
-    private let failure: () -> Failure
-
+    /// Where the code image comes from.
     private enum Source {
         case generated(BarcodeContent)
         case supplied(Image)
         case remote(URL?)
     }
+
+    @Environment(\.barcodeStyle) private var style
+
+    private let source: Source
+    private let placeholder: () -> Placeholder
+    private let failure: () -> Failure
 
     private init(
         source: Source,

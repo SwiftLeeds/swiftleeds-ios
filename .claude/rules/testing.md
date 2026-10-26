@@ -160,8 +160,13 @@ an `internal` mapper the test could not name, and the fix was `package`, not a b
 
 **Keep exactly one integration test for composition.** When a decorator is unit tested directly,
 one integration test asserts the live chain still includes it. Probe it: removing the decorator
-from `liveValue` should fail that test and nothing else. (The guard on `HTTPClient.live` is
-still missing.)
+from `liveValue` should fail that test and nothing else.
+
+**Stub the port you depend on, not the framework beneath it.** Only the adapter's own tests stub
+`URLProtocol`: `HTTPClientURLSessionTests` is the one suite that may. Everything that takes an
+`HTTPClient` is tested with `HTTPClientSpy` or `HTTPClient.responding(with:statusCode:)` from
+`NetworkKitTestSupport`. A composed chain takes its transport as an `HTTPClient`, so the
+composition root picks the adapter, as `SwiftLeedsApp` does for `authHTTPClient`.
 
 ## Spies, the detail
 

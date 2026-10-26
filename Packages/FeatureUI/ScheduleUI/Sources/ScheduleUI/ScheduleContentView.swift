@@ -73,6 +73,32 @@ package struct ScheduleContentView: View {
         }
     }
 
+    /// The menu for choosing a conference, shown when there is more than one.
+    @ToolbarContentBuilder
+    private var conferencePicker: some ToolbarContent {
+        if let currentEvent, events.count > 1 {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Menu {
+                    ForEach(events) { event in
+                        Button {
+                            selectEvent(event)
+                        } label: {
+                            Text(event.name)
+                        }
+                    }
+                } label: {
+                    HStack {
+                        Text(currentEvent.name)
+                        Image(systemName: "chevron.up.chevron.down")
+                            .font(.caption)
+                            .accessibilityHidden(true)
+                    }
+                }
+                .accentColor(Color("AccentColor"))
+            }
+        }
+    }
+
     private func failureView(for conference: String?, reason: ScheduleFetchError) -> some View {
         VStack(spacing: 20) {
             Spacer()
@@ -111,31 +137,6 @@ package struct ScheduleContentView: View {
 
         case .unknown:
             "Something went wrong on our side. Try again later"
-        }
-    }
-
-    @ToolbarContentBuilder
-    private var conferencePicker: some ToolbarContent {
-        if let currentEvent, events.count > 1 {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Menu {
-                    ForEach(events) { event in
-                        Button {
-                            selectEvent(event)
-                        } label: {
-                            Text(event.name)
-                        }
-                    }
-                } label: {
-                    HStack {
-                        Text(currentEvent.name)
-                        Image(systemName: "chevron.up.chevron.down")
-                            .font(.caption)
-                            .accessibilityHidden(true)
-                    }
-                }
-                .accentColor(Color("AccentColor"))
-            }
         }
     }
 

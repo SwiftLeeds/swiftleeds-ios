@@ -13,16 +13,6 @@ extension SignInView {
             case failed(SignInError)
         }
 
-        @ObservationIgnored
-        @Dependency(\.signIn) private var signIn
-
-        package var email = ""
-        package var ticketReference = ""
-        package private(set) var phase: Phase = .editing
-        package var onSignedIn: @MainActor () -> Void = {}
-
-        package init() {}
-
         /// Which alert a failure warrants, if any.
         ///
         /// Names the alert rather than carrying its words: the words are literals in the view, so
@@ -32,6 +22,16 @@ extension SignInView {
             case cannotConnect
             case unexpected
         }
+
+        @ObservationIgnored
+        @Dependency(\.signIn) private var signIn
+
+        package var email = ""
+        package var ticketReference = ""
+        package private(set) var phase: Phase = .editing
+        package var onSignedIn: @MainActor () -> Void = {}
+
+        package init() {}
 
         package var alert: Alert? {
             switch phase {

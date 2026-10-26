@@ -4,6 +4,11 @@ import NetworkKit
 import Testing
 
 @Suite struct EndpointTests {
+    /// The base URL every request in this suite is built on.
+    private var baseURL: URL {
+        get throws { try #require(URL(string: "https://example.com")) }
+    }
+
     @Test func whenLocalRequestIsBuilt_shouldUseGETMethod() throws {
         let request = try Endpoint.local.urlRequest(baseURL: baseURL)
 
@@ -27,9 +32,5 @@ import Testing
         let request = try Endpoint.local.urlRequest(baseURL: baseURL)
 
         #expect(request.httpBody == nil)
-    }
-
-    private var baseURL: URL {
-        get throws { try #require(URL(string: "https://example.com")) }
     }
 }

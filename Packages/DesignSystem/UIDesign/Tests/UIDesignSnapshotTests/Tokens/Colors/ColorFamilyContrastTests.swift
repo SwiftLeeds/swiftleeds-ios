@@ -8,25 +8,6 @@ import UIKit
 /// Tests that every ``ColorFamily`` meets its contrast floors on the system surfaces.
 @MainActor
 struct ColorFamilyContrastTests {
-    /// The weight of linear red in relative luminance, from Rec. 709.
-    private static let redWeight: Float = 0.2126
-    /// The weight of linear green in relative luminance, from Rec. 709.
-    private static let greenWeight: Float = 0.7152
-    /// The weight of linear blue in relative luminance, from Rec. 709.
-    private static let blueWeight: Float = 0.0722
-    /// The light WCAG adds to both colors of a contrast ratio, for glare on the screen.
-    private static let glare: Float = 0.05
-    /// The lowest ratio WCAG accepts for text.
-    nonisolated private static let textFloor: Float = 4.5
-    /// The lowest ratio WCAG accepts for a graphic.
-    nonisolated private static let graphicFloor: Float = 3
-    /// Families whose fill is pale in light appearances, so its edge is not checked against a light
-    /// surface, and its ratio there has no ordering to keep under Increase Contrast.
-    ///
-    /// The text and symbol on such a fill carry the state. In dark appearances the fill is checked
-    /// like any other.
-    nonisolated private static let paleFillFamilies: Set<ColorFamily> = [.warning]
-
     /// A pair of colors from one family, or from a family and a surface, drawn together.
     private enum Pair: CaseIterable {
         /// Family text on the screen background.
@@ -153,6 +134,25 @@ struct ColorFamilyContrastTests {
         }
     }
 
+    /// The weight of linear red in relative luminance, from Rec. 709.
+    private static let redWeight: Float = 0.2126
+    /// The weight of linear green in relative luminance, from Rec. 709.
+    private static let greenWeight: Float = 0.7152
+    /// The weight of linear blue in relative luminance, from Rec. 709.
+    private static let blueWeight: Float = 0.0722
+    /// The light WCAG adds to both colors of a contrast ratio, for glare on the screen.
+    private static let glare: Float = 0.05
+    /// The lowest ratio WCAG accepts for text.
+    nonisolated private static let textFloor: Float = 4.5
+    /// The lowest ratio WCAG accepts for a graphic.
+    nonisolated private static let graphicFloor: Float = 3
+    /// Families whose fill is pale in light appearances, so its edge is not checked against a light
+    /// surface, and its ratio there has no ordering to keep under Increase Contrast.
+    ///
+    /// The text and symbol on such a fill carry the state. In dark appearances the fill is checked
+    /// like any other.
+    nonisolated private static let paleFillFamilies: Set<ColorFamily> = [.warning]
+
     /// Returns the components a color has under an appearance.
     ///
     /// - Parameters:
@@ -192,6 +192,17 @@ struct ColorFamilyContrastTests {
     /// - Returns: The text, such as `4.51`.
     private static func text(of ratio: Float) -> String {
         ratio.formatted(.number.precision(.fractionLength(2)))
+    }
+
+    /// Returns whether a pair is left out of the floor and ordering checks.
+    ///
+    /// - Parameters:
+    ///   - pair: The two colors to compare.
+    ///   - family: The family that supplies them.
+    ///   - appearance: The appearance to draw them under.
+    /// - Returns: `true` for a pale family's fill against a light surface.
+    private static func isExempt(_ pair: Pair, for family: ColorFamily, in appearance: Appearance) -> Bool {
+        pair.comparesFillWithSurface && appearance.isLight && paleFillFamilies.contains(family)
     }
 
     /// Checks that each pair reaches its floor in every appearance.
@@ -241,17 +252,6 @@ struct ColorFamilyContrastTests {
                 "\(family) \(appearance.name): \(Self.text(of: ratio)) reaches the graphic floor",
             )
         }
-    }
-
-    /// Returns whether a pair is left out of the floor and ordering checks.
-    ///
-    /// - Parameters:
-    ///   - pair: The two colors to compare.
-    ///   - family: The family that supplies them.
-    ///   - appearance: The appearance to draw them under.
-    /// - Returns: `true` for a pale family's fill against a light surface.
-    private static func isExempt(_ pair: Pair, for family: ColorFamily, in appearance: Appearance) -> Bool {
-        pair.comparesFillWithSurface && appearance.isLight && paleFillFamilies.contains(family)
     }
 
     /// Checks that resolution sees Increase Contrast, so a wrong path cannot pass unnoticed.

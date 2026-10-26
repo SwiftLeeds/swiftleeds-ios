@@ -13,6 +13,14 @@ import Testing
         /// The stored schedules, by the request each answers.
         private var entries: [ScheduleRequest: StoredSchedule] = [:]
 
+        /// The local store that reads and writes the held schedules.
+        var store: LocalScheduleStore {
+            LocalScheduleStore(
+                load: { [self] request in lock.withLock { entries[request] } },
+                save: { [self] stored, request in lock.withLock { entries[request] = stored } },
+            )
+        }
+
         /// Holds a schedule as if it were already stored.
         ///
         /// - Parameters:
@@ -29,14 +37,6 @@ import Testing
         /// - Returns: The held schedule, or `nil` if none answers the request.
         func saved(for request: ScheduleRequest) -> Schedule? {
             lock.withLock { entries[request]?.schedule }
-        }
-
-        /// The local store that reads and writes the held schedules.
-        var store: LocalScheduleStore {
-            LocalScheduleStore(
-                load: { [self] request in lock.withLock { entries[request] } },
-                save: { [self] stored, request in lock.withLock { entries[request] = stored } },
-            )
         }
     }
 

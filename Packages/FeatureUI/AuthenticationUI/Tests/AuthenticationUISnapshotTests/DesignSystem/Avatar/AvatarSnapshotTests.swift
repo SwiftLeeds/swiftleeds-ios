@@ -5,6 +5,33 @@ import Testing
 
 @MainActor
 @Suite struct AvatarSnapshotTests {
+    /// A row with an initials avatar and a person avatar.
+    private var row: some View {
+        HStack(spacing: 16) {
+            initialsAvatar
+                .frame(width: 56, height: 56)
+
+            personAvatar
+                .frame(width: 56, height: 56)
+        }
+        .font(.title2.weight(.semibold))
+        .foregroundStyle(Color.accentColor)
+    }
+
+    /// An avatar that shows the initials "AL".
+    private var initialsAvatar: some View {
+        Avatar(url: nil) {
+            Text(verbatim: "AL")
+        }
+    }
+
+    /// An avatar that shows a person symbol.
+    private var personAvatar: some View {
+        Avatar(url: nil) {
+            Image(systemName: "person")
+        }
+    }
+
     @Test func sizes() {
         let view = HStack(spacing: 16) {
             initialsAvatar
@@ -36,30 +63,6 @@ import Testing
         }
 
         assertSnapshots(of: view.snapshotCard())
-    }
-
-    private var row: some View {
-        HStack(spacing: 16) {
-            initialsAvatar
-                .frame(width: 56, height: 56)
-
-            personAvatar
-                .frame(width: 56, height: 56)
-        }
-        .font(.title2.weight(.semibold))
-        .foregroundStyle(Color.accentColor)
-    }
-
-    private var initialsAvatar: some View {
-        Avatar(url: nil) {
-            Text(verbatim: "AL")
-        }
-    }
-
-    private var personAvatar: some View {
-        Avatar(url: nil) {
-            Image(systemName: "person")
-        }
     }
 }
 #endif

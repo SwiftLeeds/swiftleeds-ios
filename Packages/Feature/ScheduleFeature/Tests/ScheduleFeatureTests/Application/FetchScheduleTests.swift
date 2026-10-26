@@ -4,19 +4,27 @@ import ScheduleApplication
 import ScheduleDomain
 import Testing
 
-/// Unit tests of the repository call `FetchSchedule` makes.
+/// Unit tests of `FetchSchedule`.
 @Suite struct FetchScheduleTests {
-    /// The event id passes through to the repository unchanged.
-    @Test func whenFetchingOneEvent_shouldAskTheRepositoryForThatEvent() async throws {
-        let recorder = EventRecorder()
-        let event = UUID()
-
-        _ = try await withDependencies {
-            $0.scheduleRepository = .recording(into: recorder, answering: try .fixture())
-        } operation: {
-            try await FetchSchedule.liveValue(for: event)
+    /// The result is the schedule of the event asked for.
+    @Test func whenFetchingOneEvent_shouldReturnScheduleOfThatEvent() async throws {
+        let eventID = UUID()
+        let expected = try Schedule.fixture(eventID: eventID)
+        var repository = ScheduleRepository.testValue
+        repository.fetchSchedule = { requested async throws(ScheduleFetchError) -> Schedule in
+            guard requested == eventID else {
+                reportIssue("fetchSchedule asked for \(requested), expected \(eventID)")
+                throw .unknown
+            }
+            return expected
         }
 
-        #expect(await recorder.events == [event])
+        let schedule = try await withDependencies {
+            $0.scheduleRepository = repository
+        } operation: {
+            try await FetchSchedule.liveValue(for: eventID)
+        }
+
+        #expect(schedule.data.event.id == eventID)
     }
 }
