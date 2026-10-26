@@ -38,6 +38,7 @@ public protocol NameplateStyle: DynamicProperty {
     /// hierarchy where this style is the current nameplate style.
     ///
     /// - Parameter configuration: The properties of the nameplate.
+    /// - Returns: A view that represents the body of a nameplate.
     @ViewBuilder @MainActor
     func makeBody(configuration: Configuration) -> Body
 }

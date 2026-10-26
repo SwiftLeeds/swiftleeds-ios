@@ -18,6 +18,7 @@ extension View {
     /// ```
     ///
     /// - Parameter style: The nameplate style to apply.
+    /// - Returns: A view that uses the given style for the nameplates within it.
     public func nameplateStyle(_ style: some NameplateStyle) -> some View {
         environment(\.nameplateStyle, style)
     }

@@ -69,6 +69,8 @@ public struct AvatarFallback: View {
     /// size, which the avatar has already answered.
     ///
     /// - Parameter name: The name to abbreviate.
+    /// - Returns: A view that shows the initials on a plain fill, or the symbol when the name has nothing to
+    ///   abbreviate.
     @ViewBuilder
     private func initials(of name: PersonNameComponents) -> some View {
         let letters = name.formatted(.name(style: .abbreviated))
@@ -97,6 +99,7 @@ extension AvatarFallback {
     /// nothing to abbreviate draws the symbol instead.
     ///
     /// - Parameter name: The name to abbreviate.
+    /// - Returns: An avatar fallback that draws the name's initials.
     public static func initials(_ name: PersonNameComponents) -> AvatarFallback {
         AvatarFallback(.initials(name))
     }

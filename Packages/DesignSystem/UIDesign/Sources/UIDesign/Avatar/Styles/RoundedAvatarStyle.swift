@@ -34,6 +34,7 @@ extension AvatarStyle where Self == RoundedAvatarStyle {
     /// your own.
     ///
     /// - Parameter cornerRadius: The radius of each corner.
+    /// - Returns: A rounded avatar style that uses the given corner radius.
     public static func rounded(cornerRadius: CornerRadius) -> RoundedAvatarStyle {
         RoundedAvatarStyle(cornerRadius: cornerRadius)
     }

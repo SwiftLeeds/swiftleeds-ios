@@ -114,6 +114,7 @@ import UIDesign
     /// Returns the view at the width a list row gets.
     ///
     /// - Parameter view: The view to size.
+    /// - Returns: The given view, at the width of a list row.
     private func row(_ view: some View) -> some View {
         view.frame(width: rowWidth)
     }
