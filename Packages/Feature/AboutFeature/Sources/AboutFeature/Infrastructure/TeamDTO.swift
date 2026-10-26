@@ -1,4 +1,6 @@
-/// The team as the backend sends it. Data only.
+/// The team as the backend sends it.
+///
+/// It carries data only.
 package struct TeamDTO: Decodable {
     /// One team member as the backend sends it.
     package struct MemberDTO: Decodable {
