@@ -476,7 +476,13 @@ BRANDS = [
 ]
 
 # Surfaces a brand tints, in the order of APPLE_SURFACES.
-SURFACES = ("surface", "secondarySurface", "tertiarySurface", "groupedSurface")
+SURFACES = (
+    "surface",
+    "secondarySurface",
+    "tertiarySurface",
+    "groupedSurface",
+    "secondaryGroupedSurface",
+)
 
 # Apple's own surfaces as sRGB hex, in APPEARANCES order: light, dark, light high contrast, dark
 # high contrast. A brand surface keeps each one's OKLCH lightness and takes the brand's hue.
@@ -490,7 +496,7 @@ SURFACES = ("surface", "secondarySurface", "tertiarySurface", "groupedSurface")
 # secondarySystemBackground and tertiarySystemBackground. The iPad Pro 11-inch (M5) simulator,
 # iOS 27.0, printed the same values for every surface and appearance, so there is no iPad entry.
 # The grouped rows were printed by the same test on the same simulator and OS build on 2026-10-27.
-# Sources: systemGroupedBackground.
+# Sources: systemGroupedBackground and secondarySystemGroupedBackground.
 #
 # elevated: printed by the same test on the same simulator, OS build and date, under traits that set
 # userInterfaceLevel to elevated, in the same four appearances. Light matches universal. Only dark
@@ -503,7 +509,7 @@ SURFACES = ("surface", "secondarySurface", "tertiarySurface", "groupedSurface")
 # as the standard ones, so they are written equal. macOS is only the test host. macOS 26 draws
 # underPageBackgroundColor in light mode as 969696, so the Mac lightness checks run on macOS 27 and
 # later only. macOS has no grouped backgrounds, so each grouped row copies the mac entry of its
-# plain counterpart: groupedSurface takes surface's.
+# plain counterpart: groupedSurface takes surface's, secondaryGroupedSurface secondarySurface's.
 APPLE_SURFACES = {
     "surface": {
         "universal": ("FFFFFF", "000000", "FFFFFF", "000000"),
@@ -523,6 +529,11 @@ APPLE_SURFACES = {
     "groupedSurface": {
         "universal": ("F2F2F7", "000000", "EBEBF0", "000000"),
         "elevated": ("F2F2F7", "1C1C1E", "EBEBF0", "242426"),
+        "mac": ("FFFFFF", "1E1E1E", "FFFFFF", "1E1E1E"),
+    },
+    "secondaryGroupedSurface": {
+        "universal": ("FFFFFF", "1C1C1E", "FFFFFF", "242426"),
+        "elevated": ("FFFFFF", "2C2C2E", "FFFFFF", "363638"),
         "mac": ("FFFFFF", "1E1E1E", "FFFFFF", "1E1E1E"),
     },
 }

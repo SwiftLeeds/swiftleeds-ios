@@ -30,6 +30,9 @@ struct SurfaceColorTests {
         /// The main background of a grouped interface.
         case groupedSurface
 
+        /// The background of content layered on top of the main background of a grouped interface.
+        case secondaryGroupedSurface
+
         #if canImport(AppKit)
         /// Apple's color for this surface on macOS.
         ///
@@ -43,6 +46,8 @@ struct SurfaceColorTests {
             case .tertiarySurface: .underPageBackgroundColor
 
             case .groupedSurface: .windowBackgroundColor
+
+            case .secondaryGroupedSurface: .controlBackgroundColor
             }
         }
         #else
@@ -56,6 +61,8 @@ struct SurfaceColorTests {
             case .tertiarySurface: .tertiarySystemBackground
 
             case .groupedSurface: .systemGroupedBackground
+
+            case .secondaryGroupedSurface: .secondarySystemGroupedBackground
             }
         }
         #endif
@@ -74,6 +81,9 @@ struct SurfaceColorTests {
             case .tertiarySurface: SurfaceColorTests.resolve(.tertiarySurface, in: environment)
 
             case .groupedSurface: SurfaceColorTests.resolve(.groupedSurface, in: environment)
+
+            case .secondaryGroupedSurface:
+                SurfaceColorTests.resolve(.secondaryGroupedSurface, in: environment)
             }
         }
     }

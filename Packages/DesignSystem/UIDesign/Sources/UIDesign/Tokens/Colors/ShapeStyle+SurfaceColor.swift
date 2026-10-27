@@ -16,4 +16,9 @@ extension ShapeStyle where Self == BrandShapeStyle {
 
     /// The main background of a grouped interface.
     public static var groupedSurface: BrandShapeStyle { BrandShapeStyle(role: .groupedSurface) }
+
+    /// The background of content layered on top of the main background of a grouped interface.
+    public static var secondaryGroupedSurface: BrandShapeStyle {
+        BrandShapeStyle(role: .secondaryGroupedSurface)
+    }
 }

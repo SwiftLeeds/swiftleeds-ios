@@ -24,6 +24,9 @@ public struct BrandShapeStyle: ShapeStyle {
 
         /// The main background of a grouped interface.
         case groupedSurface
+
+        /// The background of content layered on top of the main background of a grouped interface.
+        case secondaryGroupedSurface
     }
 
     /// The job this style's color does.
@@ -54,6 +57,8 @@ public struct BrandShapeStyle: ShapeStyle {
         case .tertiarySurface: brand.tertiarySurface
 
         case .groupedSurface: brand.groupedSurface
+
+        case .secondaryGroupedSurface: brand.secondaryGroupedSurface
         }
     }
 }
