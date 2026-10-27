@@ -3,10 +3,8 @@ import SecureStorageKit
 extension SecureStorage {
     /// Returns a secure storage backed by the Keychain, scoped to `service`.
     ///
-    /// It uses generic-password items, and the Keychain encrypts values at rest.
-    ///
-    /// Items are stored `WhenUnlockedThisDeviceOnly`, so they are readable only
-    /// while the device is unlocked and never travel in a backup.
+    /// The Keychain encrypts values at rest. A value can be read only while the device is unlocked,
+    /// and never moves to another device, not even through a backup.
     ///
     /// - Parameter service: The Keychain service that holds every item this storage writes.
     /// - Returns: A secure storage that reads and writes Keychain items for `service`.
