@@ -104,6 +104,8 @@ extension BrandTests {
         case groupedSurface
         /// The color for content layered on top of the main background of a grouped interface.
         case secondaryGroupedSurface
+        /// The color for content layered on top of secondary backgrounds of a grouped interface.
+        case tertiaryGroupedSurface
 
         /// The key the generator's `APPLE_SURFACES` table uses for this surface.
         var key: String {
@@ -113,6 +115,7 @@ extension BrandTests {
             case .tertiarySurface: "tertiarySurface"
             case .groupedSurface: "groupedSurface"
             case .secondaryGroupedSurface: "secondaryGroupedSurface"
+            case .tertiaryGroupedSurface: "tertiaryGroupedSurface"
             }
         }
 
@@ -126,6 +129,7 @@ extension BrandTests {
             case .tertiarySurface: .underPageBackgroundColor
             case .groupedSurface: .windowBackgroundColor
             case .secondaryGroupedSurface: .controlBackgroundColor
+            case .tertiaryGroupedSurface: .underPageBackgroundColor
             }
         }
 
@@ -140,6 +144,7 @@ extension BrandTests {
             case .tertiarySurface: NSColor(brand.tertiarySurface)
             case .groupedSurface: NSColor(brand.groupedSurface)
             case .secondaryGroupedSurface: NSColor(brand.secondaryGroupedSurface)
+            case .tertiaryGroupedSurface: NSColor(brand.tertiaryGroupedSurface)
             }
         }
     }

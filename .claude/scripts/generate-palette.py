@@ -482,6 +482,7 @@ SURFACES = (
     "tertiarySurface",
     "groupedSurface",
     "secondaryGroupedSurface",
+    "tertiaryGroupedSurface",
 )
 
 # Apple's own surfaces as sRGB hex, in APPEARANCES order: light, dark, light high contrast, dark
@@ -496,7 +497,8 @@ SURFACES = (
 # secondarySystemBackground and tertiarySystemBackground. The iPad Pro 11-inch (M5) simulator,
 # iOS 27.0, printed the same values for every surface and appearance, so there is no iPad entry.
 # The grouped rows were printed by the same test on the same simulator and OS build on 2026-10-27.
-# Sources: systemGroupedBackground and secondarySystemGroupedBackground.
+# Sources: systemGroupedBackground, secondarySystemGroupedBackground and
+# tertiarySystemGroupedBackground.
 #
 # elevated: printed by the same test on the same simulator, OS build and date, under traits that set
 # userInterfaceLevel to elevated, in the same four appearances. Light matches universal. Only dark
@@ -509,7 +511,8 @@ SURFACES = (
 # as the standard ones, so they are written equal. macOS is only the test host. macOS 26 draws
 # underPageBackgroundColor in light mode as 969696, so the Mac lightness checks run on macOS 27 and
 # later only. macOS has no grouped backgrounds, so each grouped row copies the mac entry of its
-# plain counterpart: groupedSurface takes surface's, secondaryGroupedSurface secondarySurface's.
+# plain counterpart: groupedSurface takes surface's, secondaryGroupedSurface secondarySurface's,
+# and tertiaryGroupedSurface tertiarySurface's.
 APPLE_SURFACES = {
     "surface": {
         "universal": ("FFFFFF", "000000", "FFFFFF", "000000"),
@@ -535,6 +538,11 @@ APPLE_SURFACES = {
         "universal": ("FFFFFF", "1C1C1E", "FFFFFF", "242426"),
         "elevated": ("FFFFFF", "2C2C2E", "FFFFFF", "363638"),
         "mac": ("FFFFFF", "1E1E1E", "FFFFFF", "1E1E1E"),
+    },
+    "tertiaryGroupedSurface": {
+        "universal": ("F2F2F7", "2C2C2E", "EBEBF0", "363638"),
+        "elevated": ("F2F2F7", "3A3A3C", "EBEBF0", "444446"),
+        "mac": ("F6F6F6", "282828", "F6F6F6", "282828"),
     },
 }
 

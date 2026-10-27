@@ -21,6 +21,8 @@ public enum Brand: CaseIterable, Equatable, Hashable, Sendable {
         case groupedSurface
         /// The color for content layered on top of the main background of a grouped interface.
         case secondaryGroupedSurface
+        /// The color for content layered on top of secondary backgrounds of a grouped interface.
+        case tertiaryGroupedSurface
         /// The color for text or a symbol on a surface.
         case text
         /// The color for a filled shape behind `onSolid`.
@@ -40,6 +42,7 @@ public enum Brand: CaseIterable, Equatable, Hashable, Sendable {
             case .tertiarySurface: elevatedPrefixedName
             case .groupedSurface: elevatedPrefixedName
             case .secondaryGroupedSurface: elevatedPrefixedName
+            case .tertiaryGroupedSurface: elevatedPrefixedName
             case .text: nil
             case .solid: nil
             case .onSolid: nil
@@ -102,6 +105,13 @@ public enum Brand: CaseIterable, Equatable, Hashable, Sendable {
     /// brand hue. In a sheet on iOS, it lifts in dark mode as Apple's secondary grouped background
     /// does.
     package var secondaryGroupedSurface: Color { color(for: .secondaryGroupedSurface) }
+
+    /// The color for content layered on top of secondary backgrounds of a grouped interface.
+    ///
+    /// It keeps the lightness of Apple's tertiary grouped background and takes a faint hint of the
+    /// brand hue. In a sheet on iOS, it lifts in dark mode as Apple's tertiary grouped background
+    /// does.
+    package var tertiaryGroupedSurface: Color { color(for: .tertiaryGroupedSurface) }
 
     /// The color for text or a symbol on a surface, such as a link or a section title.
     ///
