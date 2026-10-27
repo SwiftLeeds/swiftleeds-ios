@@ -109,26 +109,31 @@ fatal () {
     fi
 }
 
-# The folders the scope covers, and any folder to leave out of them. Globs, as
-# SwiftLint's `included:` and `excluded:` take them.
-case "$scope" in
-    app)
-        included="Packages/*/*/Sources SwiftLeeds SwiftLeedsAppClip SwiftLeedsWidget SwiftLeedsPackage"
-        also_excluded="Packages/*/*/Sources/*TestSupport"
-        ;;
-    tests)
-        included="Packages/*/*/Tests Packages/*/*/Sources/*TestSupport"
-        also_excluded="Packages/*/*/Tests/*SnapshotTests"
-        ;;
-    snapshots)
-        included="Packages/*/*/Tests/*SnapshotTests"
-        also_excluded=""
-        ;;
-    *)
-        fatal "Unknown scope '$scope'. Use app, tests or snapshots."
-        exit 2
-        ;;
-esac
+# Sets `included` and `also_excluded` to the folders a scope covers, and any
+# folder to leave out of them. Globs, as SwiftLint's `included:` and `excluded:`
+# take them. Call it directly, not in `$(...)`, or the variables are lost.
+scope_globs () {
+    case "$1" in
+        app)
+            included="Packages/*/*/Sources SwiftLeeds SwiftLeedsAppClip SwiftLeedsWidget SwiftLeedsPackage"
+            also_excluded="Packages/*/*/Sources/*TestSupport"
+            ;;
+        tests)
+            included="Packages/*/*/Tests Packages/*/*/Sources/*TestSupport"
+            also_excluded="Packages/*/*/Tests/*SnapshotTests"
+            ;;
+        snapshots)
+            included="Packages/*/*/Tests/*SnapshotTests"
+            also_excluded=""
+            ;;
+        *)
+            fatal "Unknown scope '$1'. Use app, tests or snapshots."
+            exit 2
+            ;;
+    esac
+}
+
+scope_globs "$scope"
 
 case "$min_files" in
     ''|*[!0-9]*)
