@@ -271,6 +271,9 @@ unused_import:
         - CoreFoundation
         - ObjectiveC
         - Darwin
+        # The SDK puts the C math functions, such as `cbrt`, in its
+        # `_DarwinFoundation1` module, which `Darwin` re-exports.
+        - _DarwinFoundation1
     - module: SwiftUI
       allowed_transitive_imports:
         - CoreFoundation

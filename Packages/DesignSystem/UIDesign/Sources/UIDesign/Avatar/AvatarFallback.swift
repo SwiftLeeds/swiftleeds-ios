@@ -45,7 +45,7 @@ public struct AvatarFallback: View {
 
     /// The person symbol on a plain fill.
     private var symbol: some View {
-        Color.secondarySurface
+        Rectangle().fill(.secondarySurface)
             .overlay {
                 Image(icon: .person)
                     // A font size keeps the symbol's own proportions, which resizing it would not.
@@ -77,7 +77,7 @@ public struct AvatarFallback: View {
         if letters.isEmpty {
             symbol
         } else {
-            Color.secondarySurface
+            Rectangle().fill(.secondarySurface)
                 .overlay {
                     Text(letters)
                         .font(.system(size: CGFloat(diameter) * Self.initialsProportion, weight: .semibold))

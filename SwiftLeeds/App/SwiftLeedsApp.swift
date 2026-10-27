@@ -9,6 +9,7 @@ import ScheduleInfrastructure
 import SecureStorageKit
 import SecureStorageKitKeychain
 import SwiftUI
+import UIDesign
 import UITheme
 
 @main
@@ -52,6 +53,7 @@ struct SwiftLeedsApp: App {
         WindowGroup {
             Tabs()
                 .environmentObject(appState)
+                .environment(\.brand, ConferenceConfig.brand)
                 .applyingSelectedTheme()
         }
     }

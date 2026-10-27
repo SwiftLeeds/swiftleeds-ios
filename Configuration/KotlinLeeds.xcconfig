@@ -4,6 +4,7 @@ PRODUCT_BUNDLE_IDENTIFIER = uk.co.kotlinleeds.KotlinLeeds
 PRODUCT_NAME = KotlinLeeds
 APP_DISPLAY_NAME = KotlinLeeds
 API_HOST = kotlinleeds.co.uk
+BRAND = KotlinLeeds
 CONTACT_EMAIL = info@kotlinleeds.co.uk
 APP_GROUP_IDENTIFIER = group.uk.co.kotlinleeds
 CODE_SIGN_ENTITLEMENTS = SwiftLeeds/KotlinLeeds.entitlements

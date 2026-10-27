@@ -3,6 +3,7 @@ import Foundation
 import NetworkKit
 import ScheduleInfrastructure
 import SwiftUI
+import UIDesign
 import WidgetKit
 
 @main
@@ -20,6 +21,7 @@ struct SwiftLeedsWidget: Widget {
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
             SwiftLeedsWidgetEntryView(entry: entry)
+                .environment(\.brand, ConferenceConfig.brand)
         }
         .configurationDisplayName(Text(verbatim: "\(ConferenceConfig.conferenceName) What's up next?"))
         .description("This widget to know what is the next talk on our stage.")

@@ -4,6 +4,8 @@
 <dict>
 	<key>APIHost</key>
 	<string>$(API_HOST)</string>
+	<key>Brand</key>
+	<string>$(BRAND)</string>
 	<key>ContactEmail</key>
 	<string>$(CONTACT_EMAIL)</string>
 	<key>AppGroupIdentifier</key>

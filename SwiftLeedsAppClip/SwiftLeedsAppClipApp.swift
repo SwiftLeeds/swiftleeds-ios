@@ -3,6 +3,7 @@ import Foundation
 import NetworkKit
 import ScheduleUI
 import SwiftUI
+import UIDesign
 
 @main
 struct SwiftLeedsAppClipApp: App {
@@ -16,6 +17,7 @@ struct SwiftLeedsAppClipApp: App {
     var body: some Scene {
         WindowGroup {
             ScheduleView()
+                .environment(\.brand, ConferenceConfig.brand)
         }
     }
 }

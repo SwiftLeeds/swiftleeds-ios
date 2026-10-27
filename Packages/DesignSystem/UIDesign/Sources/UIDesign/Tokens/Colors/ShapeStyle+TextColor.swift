@@ -29,9 +29,12 @@ extension ShapeStyle where Self == Color {
         Color(.quaternaryLabelColor)
         #endif
     }
+}
 
+/// The color of text on the brand fill.
+extension ShapeStyle where Self == BrandShapeStyle {
     /// Text on a brand colored fill.
     ///
-    /// It doesn't change with the appearance, because the fill beneath it doesn't either.
-    public static var onBrand: Color { .white }
+    /// It reaches 4.5:1 against ``brand`` in every appearance.
+    public static var onBrand: BrandShapeStyle { BrandShapeStyle(role: .onBrand) }
 }
