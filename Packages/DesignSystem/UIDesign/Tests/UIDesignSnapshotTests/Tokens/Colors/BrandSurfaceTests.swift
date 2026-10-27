@@ -16,6 +16,8 @@ struct BrandSurfaceTests {
         case secondarySurface
         /// The color for content layered on top of secondary backgrounds.
         case tertiarySurface
+        /// The color for the main background of a grouped interface.
+        case groupedSurface
 
         /// The key the generator's `APPLE_SURFACES` table uses for this surface.
         var key: String {
@@ -23,6 +25,7 @@ struct BrandSurfaceTests {
             case .surface: "surface"
             case .secondarySurface: "secondarySurface"
             case .tertiarySurface: "tertiarySurface"
+            case .groupedSurface: "groupedSurface"
             }
         }
 
@@ -32,6 +35,7 @@ struct BrandSurfaceTests {
             case .surface: .systemBackground
             case .secondarySurface: .secondarySystemBackground
             case .tertiarySurface: .tertiarySystemBackground
+            case .groupedSurface: .systemGroupedBackground
             }
         }
 
@@ -44,6 +48,7 @@ struct BrandSurfaceTests {
             case .surface: UIColor(brand.surface)
             case .secondarySurface: UIColor(brand.secondarySurface)
             case .tertiarySurface: UIColor(brand.tertiarySurface)
+            case .groupedSurface: UIColor(brand.groupedSurface)
             }
         }
     }

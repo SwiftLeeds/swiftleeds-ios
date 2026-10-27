@@ -27,8 +27,13 @@ struct SurfaceColorTests {
         /// The background of content layered on top of secondary backgrounds.
         case tertiarySurface
 
+        /// The main background of a grouped interface.
+        case groupedSurface
+
         #if canImport(AppKit)
         /// Apple's color for this surface on macOS.
+        ///
+        /// macOS has no grouped backgrounds, so a grouped surface copies its plain counterpart.
         var appleColor: NSColor {
             switch self {
             case .surface: .windowBackgroundColor
@@ -36,6 +41,8 @@ struct SurfaceColorTests {
             case .secondarySurface: .controlBackgroundColor
 
             case .tertiarySurface: .underPageBackgroundColor
+
+            case .groupedSurface: .windowBackgroundColor
             }
         }
         #else
@@ -47,6 +54,8 @@ struct SurfaceColorTests {
             case .secondarySurface: .secondarySystemBackground
 
             case .tertiarySurface: .tertiarySystemBackground
+
+            case .groupedSurface: .systemGroupedBackground
             }
         }
         #endif
@@ -63,6 +72,8 @@ struct SurfaceColorTests {
             case .secondarySurface: SurfaceColorTests.resolve(.secondarySurface, in: environment)
 
             case .tertiarySurface: SurfaceColorTests.resolve(.tertiarySurface, in: environment)
+
+            case .groupedSurface: SurfaceColorTests.resolve(.groupedSurface, in: environment)
             }
         }
     }
