@@ -126,6 +126,18 @@ package struct BrandSpecimen: View {
                 Text("tertiary")
                 Swatch(brand.tertiarySurface)
             }
+            GridRow {
+                Text("grouped")
+                Swatch(brand.groupedSurface)
+            }
+            GridRow {
+                Text("secondary grouped")
+                Swatch(brand.secondaryGroupedSurface)
+            }
+            GridRow {
+                Text("tertiary grouped")
+                Swatch(brand.tertiaryGroupedSurface)
+            }
         }
     }
 }
