@@ -13,8 +13,15 @@
 #                are joined.
 #
 # Exits 0 when every rule is clean, and 1 when a rule reports a violation,
-# SwiftLint fails, or too few files were analysed. On GitHub Actions the failure
-# is also an annotation.
+# SwiftLint fails, or too few files were analysed.
+#
+#     .github/scripts/analyze.sh scopes
+#
+# Runs no SwiftLint. Checks that exactly one scope covers each Swift file git
+# tracks, except the package manifests. Exits 1 when a file has no scope, which
+# the analyser would never read, or more than one.
+#
+# On GitHub Actions a failure in either mode is also an annotation.
 #
 # Each file is judged by one log only, so the verdict does not depend on how
 # many builds happen to mention it:
@@ -29,8 +36,8 @@
 #                                            the iOS snapshot-test build
 #
 # A package sits at Packages/<Folder>/<Name>. The globs go into a config file for
-# SwiftLint, never through the shell, and SwiftLint ignores a glob that matches
-# nothing.
+# SwiftLint, never through the shell's own expansion, and SwiftLint ignores a
+# glob that matches nothing. The scopes check matches them as regexes.
 #
 # A source file compiles differently on each platform, and an import is used or
 # unused depending on which `#if` branch compiled. A file judged by two logs could
@@ -53,25 +60,31 @@
 
 set -uo pipefail
 
-if [ "$#" -lt 3 ]; then
+mode=analyze
+if [ "$#" -eq 1 ] && [ "$1" = scopes ]; then
+    mode=scopes
+elif [ "$#" -lt 3 ]; then
     echo "usage: analyze.sh <app|tests|snapshots> <min-files> <log>..." >&2
+    echo "       analyze.sh scopes" >&2
     exit 2
 fi
 
-scope=$1
-min_files=$2
-shift 2
+if [ "$mode" = analyze ]; then
+    scope=$1
+    min_files=$2
+    shift 2
 
-# A relative log path means relative to where the caller stands, so resolve each
-# one before moving to the repository root.
-logs=()
-for log in "$@"; do
-    case "$log" in
-        /*) logs+=("$log") ;;
-        *) logs+=("$PWD/$log") ;;
-    esac
-done
-set -- "${logs[@]}"
+    # A relative log path means relative to where the caller stands, so resolve
+    # each one before moving to the repository root.
+    logs=()
+    for log in "$@"; do
+        case "$log" in
+            /*) logs+=("$log") ;;
+            *) logs+=("$PWD/$log") ;;
+        esac
+    done
+    set -- "${logs[@]}"
+fi
 
 cd "$(dirname "$0")/../.." || exit 1
 
@@ -132,6 +145,73 @@ scope_globs () {
             ;;
     esac
 }
+
+# Sets `regex` to match a path inside the folder a glob names. `*` stops at `/`,
+# as it does in SwiftLint, so one `*` never spans two folder levels. Only `.` is
+# escaped, so a glob with `+`, `(` or `[` would need more.
+glob_regex () {
+    local glob=${1//./\\.}
+    regex="^${glob//\*/[^/]*}/"
+}
+
+# Succeeds when the file sits inside any of the space-separated globs.
+in_globs () {
+    local file=$1 glob
+    local -a globs
+    read -ra globs <<< "$2"
+    for glob in ${globs[@]+"${globs[@]}"}; do
+        glob_regex "$glob"
+        if [[ $file =~ $regex ]]; then
+            return 0
+        fi
+    done
+    return 1
+}
+
+# Fails on a tracked Swift file that no scope covers, because the analyser would
+# never read it, and on one that two scopes cover, because two builds would
+# judge it. The base config's own `excluded:` list is not read here: it names
+# build output, which git does not track.
+check_scopes () {
+    local file scope covering checked=0 failed=0
+    echo "Checking that one analyse scope covers each tracked Swift file"
+    while IFS= read -r -d '' file; do
+        # A manifest never compiles into a build log, so no scope can analyse it.
+        if [[ $file =~ ^(Packages/[^/]+/[^/]+|SwiftLeedsPackage)/Package\.swift$ ]]; then
+            continue
+        fi
+        checked=$((checked + 1))
+        covering=""
+        for scope in app tests snapshots; do
+            scope_globs "$scope"
+            if in_globs "$file" "$included" && ! in_globs "$file" "$also_excluded"; then
+                covering="$covering $scope"
+            fi
+        done
+        case "$covering" in
+            "")
+                fatal "No analyse scope covers $file, so the analyser never reads it. Add its folder to a scope in analyze.sh."
+                failed=$((failed + 1))
+                ;;
+            *" "*" "*)
+                fatal "$file is in more than one analyse scope ($covering ), so two builds judge it."
+                failed=$((failed + 1))
+                ;;
+        esac
+    done < <(git ls-files -z '*.swift')
+
+    if [ "$checked" -eq 0 ]; then
+        fatal "git tracks no Swift files here, so this check is broken."
+        return 1
+    fi
+    echo "Checked $checked file(s): $failed with no scope or more than one"
+    [ "$failed" -eq 0 ]
+}
+
+if [ "$mode" = scopes ]; then
+    check_scopes
+    exit
+fi
 
 scope_globs "$scope"
 
