@@ -18,13 +18,13 @@ import UIKit
 struct SurfaceColorTests {
     /// A surface token beside the Apple color whose lightness it keeps.
     private enum Surface: CaseIterable {
-        /// The background of a screen.
+        /// The main background of an interface.
         case surface
 
-        /// The background of grouped content.
+        /// The background of content layered on top of the main background.
         case secondarySurface
 
-        /// The background of an element inside grouped content.
+        /// The background of content layered on top of secondary backgrounds.
         case tertiarySurface
 
         #if canImport(AppKit)

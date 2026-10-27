@@ -11,11 +11,11 @@ import UIKit
 public enum Brand: CaseIterable, Equatable, Hashable, Sendable {
     /// A job a color does for a brand, named as the catalog names it.
     private enum Role {
-        /// The color behind a screen.
+        /// The color for the main background of an interface.
         case surface
-        /// The color behind grouped content on a screen.
+        /// The color for content layered on top of the main background.
         case secondarySurface
-        /// The color behind content grouped inside grouped content.
+        /// The color for content layered on top of secondary backgrounds.
         case tertiarySurface
         /// The color for text or a symbol on a surface.
         case text
@@ -66,19 +66,19 @@ public enum Brand: CaseIterable, Equatable, Hashable, Sendable {
     /// The Info.plist key an app declares its brand under.
     package static let infoDictionaryKey = "Brand"
 
-    /// The color behind a screen.
+    /// The color for the main background of an interface.
     ///
     /// It keeps the lightness of Apple's background and takes a faint hint of the brand hue.
     /// In a sheet on iOS, it lifts in dark mode as Apple's background does.
     package var surface: Color { color(for: .surface) }
 
-    /// The color behind grouped content on a screen.
+    /// The color for content layered on top of the main background.
     ///
     /// It keeps the lightness of Apple's secondary background and takes a faint hint of the brand hue.
     /// In a sheet on iOS, it lifts in dark mode as Apple's secondary background does.
     package var secondarySurface: Color { color(for: .secondarySurface) }
 
-    /// The color behind content grouped inside grouped content.
+    /// The color for content layered on top of secondary backgrounds.
     ///
     /// It keeps the lightness of Apple's tertiary background and takes a faint hint of the brand hue.
     /// In a sheet on iOS, it lifts in dark mode as Apple's tertiary background does.

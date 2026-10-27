@@ -8,9 +8,9 @@ import UIDesign
 struct BrandContrastTests {
     /// A pair of colors from one brand, drawn together.
     private enum Pair: CaseIterable {
-        /// Brand text on the screen background.
+        /// Brand text on the main background.
         case textOnSurface
-        /// Brand text on grouped content.
+        /// Brand text on content layered on top of the main background.
         case textOnSecondarySurface
         /// The label on the brand's fill.
         case onSolidOnSolid

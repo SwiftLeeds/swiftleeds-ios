@@ -8,15 +8,15 @@ import UIDesign
 struct ColorFamilyContrastTests {
     /// A pair of colors from one family, or from a family and a surface, drawn together.
     private enum Pair: CaseIterable {
-        /// Family text on the screen background.
+        /// Family text on the main background.
         case textOnSurface
-        /// Family text on grouped content.
+        /// Family text on content layered on top of the main background.
         case textOnSecondarySurface
         /// Family symbol on the family's fill.
         case onSolidOnSolid
-        /// Family fill on the screen background.
+        /// Family fill on the main background.
         case solidOnSurface
-        /// Family fill on grouped content.
+        /// Family fill on content layered on top of the main background.
         case solidOnSecondarySurface
         /// Family text on the family's pale fill.
         case textOnSubtle

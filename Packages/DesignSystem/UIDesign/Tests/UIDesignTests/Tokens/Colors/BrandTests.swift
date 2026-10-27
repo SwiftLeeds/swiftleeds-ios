@@ -94,11 +94,11 @@ struct BrandTests {
 extension BrandTests {
     /// A surface a brand tints, paired with the macOS color it copies the lightness of.
     private enum Surface: CaseIterable {
-        /// The color behind a window.
+        /// The color for the main background of an interface.
         case surface
-        /// The color behind grouped content in a window.
+        /// The color for content layered on top of the main background.
         case secondarySurface
-        /// The color behind content grouped inside grouped content.
+        /// The color for content layered on top of secondary backgrounds.
         case tertiarySurface
 
         /// The key the generator's `APPLE_SURFACES` table uses for this surface.
