@@ -8,7 +8,7 @@ import UIKit
 ///
 /// Views read the brand from the environment. An app sets it once at its root, and a preview or a
 /// test sets it with `.environment(\.brand, .kotlinLeeds)`.
-package enum Brand: CaseIterable, Equatable, Hashable, Sendable {
+public enum Brand: CaseIterable, Equatable, Hashable, Sendable {
     /// A job a color does for a brand, named as the catalog names it.
     private enum Role {
         /// The color behind a screen.
@@ -49,7 +49,7 @@ package enum Brand: CaseIterable, Equatable, Hashable, Sendable {
     }
 
     /// The reason a declaration is not a brand.
-    package enum ParsingError: Error, Equatable {
+    public enum ParsingError: Error, Equatable {
         /// The text names no brand. It holds the rejected text.
         case unknownBrand(String)
 
@@ -139,7 +139,7 @@ package enum Brand: CaseIterable, Equatable, Hashable, Sendable {
     /// - Parameter infoDictionary: The Info.plist entries, such as `Bundle.infoDictionary`.
     /// - Throws: ``ParsingError/unknownBrand(_:)`` when the entry is text that names no brand.
     ///   ``ParsingError/notText(_:)`` when the entry is not text.
-    package init(infoDictionary: [String: Any]) throws(ParsingError) {
+    public init(infoDictionary: [String: Any]) throws(ParsingError) {
         guard let declaration = infoDictionary[Self.infoDictionaryKey] else {
             self = .swiftLeeds
             return

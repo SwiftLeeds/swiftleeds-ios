@@ -70,6 +70,8 @@
 		A11CE570000000000000F3B1 /* ContactEmail+Conference.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11CE570000000000000F3A1 /* ContactEmail+Conference.swift */; };
 		A11CE570000000000000F3B2 /* AppVersion+Current.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11CE570000000000000F3A2 /* AppVersion+Current.swift */; };
 		A11CE570000000000000F4A3 /* UIDesign in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE570000000000000F4A2 /* UIDesign */; };
+		A11CE570000000000000F4A5 /* UIDesign in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE570000000000000F4A4 /* UIDesign */; };
+		A11CE570000000000000F4A7 /* UIDesign in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE570000000000000F4A6 /* UIDesign */; };
 		AE1C801428A7BCD000996659 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AE1C801328A7BCD000996659 /* Settings.bundle */; };
 		AE5EFD73289DC1D000464FE1 /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = AE5EFD72289DC1D000464FE1 /* CachedAsyncImage */; };
 		AE8C1B2828C4B36B00AF7318 /* AppDelegate+Push.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8C1B2728C4B36B00AF7318 /* AppDelegate+Push.swift */; };
@@ -207,6 +209,7 @@
 				A11CE57000000000000000EA /* ScheduleUI in Frameworks */,
 				A11CE570000000000000F5D3 /* ScheduleInfrastructure in Frameworks */,
 				E44377685B94DC7F6465ED4A /* Dependencies in Frameworks */,
+				A11CE570000000000000F4A5 /* UIDesign in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -222,6 +225,7 @@
 				A11CE570000000000000F5D2 /* ScheduleInfrastructure in Frameworks */,
 				A11CE57000000000000000E6 /* Dependencies in Frameworks */,
 				A11CE57000000000000000EC /* NetworkKit in Frameworks */,
+				A11CE570000000000000F4A7 /* UIDesign in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -505,6 +509,7 @@
 				A11CE57000000000000000E9 /* ScheduleUI */,
 				A11CE570000000000000F5C3 /* ScheduleInfrastructure */,
 				39093D62C747210F6BA83C1E /* Dependencies */,
+				A11CE570000000000000F4A4 /* UIDesign */,
 			);
 			productName = SwiftLeedsAppClip;
 			productReference = 0B4CB3C528EAF19000246E62 /* SwiftLeedsAppClip.app */;
@@ -530,6 +535,7 @@
 				A11CE570000000000000F5C2 /* ScheduleInfrastructure */,
 				A11CE57000000000000000E5 /* Dependencies */,
 				A11CE57000000000000000EB /* NetworkKit */,
+				A11CE570000000000000F4A6 /* UIDesign */,
 			);
 			productName = SwiftLeedsWidgetExtension;
 			productReference = 74A09FDD28C6778C00E03F39 /* SwiftLeedsWidgetExtension.appex */;
@@ -1595,6 +1601,14 @@
 			productName = UITheme;
 		};
 		A11CE570000000000000F4A2 /* UIDesign */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = UIDesign;
+		};
+		A11CE570000000000000F4A4 /* UIDesign */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = UIDesign;
+		};
+		A11CE570000000000000F4A6 /* UIDesign */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = UIDesign;
 		};

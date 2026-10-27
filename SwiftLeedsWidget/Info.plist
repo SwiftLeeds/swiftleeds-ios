@@ -8,6 +8,8 @@
 	<string>$(WIDGET_KIND_NAME)</string>
 	<key>APIHost</key>
 	<string>$(API_HOST)</string>
+	<key>Brand</key>
+	<string>$(BRAND)</string>
 	<key>ContactEmail</key>
 	<string>$(CONTACT_EMAIL)</string>
 	<key>AppGroupIdentifier</key>
