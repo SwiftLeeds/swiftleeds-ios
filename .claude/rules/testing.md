@@ -201,8 +201,8 @@ evaluation.
 
 ## Driving the simulator UI
 
-To tap through a screen, hand the work to the `simulator` agent (RocketSim, on an iOS 26 runtime) or
-the `xcode-device` agent (Xcode's Device Hub). The `driving-the-simulator` skill holds
+To tap through a screen, hand the work to the `simulator` agent (RocketSim, on an iOS 27.2 runtime)
+or the `xcode-device` agent (Xcode's Device Hub). The `driving-the-simulator` skill holds
 the Device Hub steps. A check that ends in "then open the Sponsors tab" is fine to plan on those
 routes.
 

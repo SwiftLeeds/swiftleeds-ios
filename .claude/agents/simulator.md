@@ -24,18 +24,22 @@ ln -s /Applications/RocketSim.app/Contents/Resources/Agent-Skill/rocketsim .clau
 If the `rocketsim` skill or CLI is missing, end with `Needs: the RocketSim app: the simulator
 agent drives it`.
 
-## Run on iOS 26, never iOS 27
+## Run on iOS 27.2
 
-**RocketSim cannot read the screen of an iOS 27 simulator.** Xcode 27 blocks its access to the
-accessibility tree, so `elements`, `wait`, taps by label and the audit fail with
-`accessibility_unavailable` (RocketSim's `references/preview.md` and `references/recovery.md`).
-iOS 26 and older still work. iOS 26 was chosen on 2026-10-13, because it is closest to the iOS 27
-design.
+**This file overrides the `rocketsim` skill on iOS versions.** The skill says to prefer iOS 26 and
+to fall back to coordinate taps on iOS 27. With Xcode 27.2, RocketSim reads an iOS 27.2 screen:
+`elements`, taps by label and the audit all passed on 2026-10-27, on a headless simulator.
 
-Run `xcrun simctl runtime list` first. **If no iOS 26 runtime is installed, stop and end with
-`Needs: an iOS 26 simulator runtime: RocketSim cannot read iOS 27 screens`.** Do not fall back to
-iOS 27 or to iOS 18.6 on your own. Take the iPhone device on the newest iOS 26 runtime, and put its
-name in each `-destination` and `udid` lookup below.
+Run `xcrun simctl runtime list` first. Take an iPhone on iOS 27.2 build 24B114, or a newer release
+build. **Never a beta runtime**: its build number ends in a letter, such as 24B91016s. Use the
+device's `udid` in `-destination`, and pass `--udid <udid>` to every `rocketsim` call except
+`network`, which has no such option.
+
+**If a read fails, do not fall back to coordinates.** On `accessibility_unavailable`, or on
+`execution_failed` with "No translation object returned for simulator", run `rocketsim status`,
+`rocketsim doctor` and `readlink /opt/homebrew/bin/rocketsim`. Report all three and end with
+`Needs:`. This failure was seen while that link pointed at `Contents/Helpers/rocketsim`, and it
+cleared after RocketSim restarted.
 
 ## What the brief gives you
 
@@ -54,19 +58,19 @@ For any other app, take all four values from the brief. If one is missing, end w
 
 ## Build and launch
 
-1. Build. Keep code signing on, so the App Group and Keychain entitlements apply:
+1. Find the device: `xcrun simctl list devices available --json`. Take the `udid` of an iPhone
+   under the runtime chosen above.
+2. Build. Keep code signing on, so the App Group and Keychain entitlements apply:
 
    ```bash
    xcodebuild build -project SwiftLeeds.xcodeproj -scheme SwiftLeeds \
-     -destination 'platform=iOS Simulator,name=<iOS 26 iPhone>,OS=<26.x>' \
+     -destination 'platform=iOS Simulator,id=<udid>' \
      -derivedDataPath dd -quiet
    ```
 
    If the build fails on signing, stop and report it with `Needs:`. Do not add
    `CODE_SIGNING_ALLOWED=NO` yourself: the app would launch, but sign-in could fail for a reason
    that has nothing to do with the change.
-2. Find the device: `xcrun simctl list devices available --json`. Take the `udid` of the same
-   iPhone under the iOS 26 runtime.
 3. `xcrun simctl bootstatus <udid> -b`, which boots the device and waits.
 4. `xcrun simctl install <udid> <product path>`.
 5. `xcrun simctl launch <udid> <bundle id> <launch arguments>`.
@@ -83,7 +87,9 @@ One command per call. No pipes, `;`, `&&` or loops.
 - After each action, read the screen again and confirm the change. One retry, then report the
   failure.
 - **Face ID**: `rocketsim interact biometric match`, or `nomatch`.
-- **Offline**: `rocketsim network set airplane`, `3g` or `100-loss`, with `--bundle-id <id>`.
+- **Offline**: `rocketsim network set airplane`, `3g` or `100-loss`, with `--bundle-id <id>` and
+  no `--udid`. On `needs_user_approval`, end with `Needs:`: only a person can approve RocketSim's
+  Network Extension in System Settings.
   **Always run `rocketsim network off` before you finish**, even when the task failed. Otherwise the
   next run starts offline.
 - **Accessibility audit**, when the brief asks: `rocketsim accessibility-audit` on the screen the
