@@ -695,10 +695,22 @@ jobs:
 
       - name: Lint every Swift source
         run: |
+          set -o pipefail
+          # Lint the files git tracks, not the `included:` list in .swiftlint.yml.
+          # A new folder is then linted with no config change, and build output,
+          # which git ignores, is never reached.
+          count=$(git ls-files '*.swift' | wc -l | tr -d ' ')
+          if [ "$count" -eq 0 ]; then
+            # xargs would then run SwiftLint with no paths, which lints `included:`.
+            echo "::error::git tracks no Swift files here, so this check is broken"
+            exit 1
+          fi
           # --strict is what makes this a gate: SwiftLint exits 0 on a warning,
           # so without it the job passes while reporting violations.
           status=0
-          swiftlint lint --strict --reporter github-actions-logging \
+          git ls-files -z '*.swift' \
+            | xargs -0 swiftlint lint --strict --force-exclude \
+              --config .swiftlint.yml --reporter github-actions-logging \
             > "$RUNNER_TEMP/lint.log" 2>&1 || status=$?
           cat "$RUNNER_TEMP/lint.log"
           # A misspelt rule name is only a warning and leaves the exit code at 0,

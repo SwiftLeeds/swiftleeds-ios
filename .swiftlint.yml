@@ -33,6 +33,8 @@
 # so unrelated edits above it do not resurface it. Burn this down over time.
 baseline: .swiftlint.baseline
 
+# CI and the pre-commit hook name their files on the command line, which
+# overrides this list. It decides only what a bare `swiftlint lint` reads.
 included:
   - Packages/*/*/Package.swift
   - Packages/*/*/Sources
