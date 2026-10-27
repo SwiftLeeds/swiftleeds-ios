@@ -4,21 +4,21 @@ import SwiftUI
 /// A view that shows every color token, labeled by its name within its group.
 package struct ColorSpecimen: View {
     /// A view that draws a color in a stroked swatch, visible on its own surface.
-    private struct Swatch: View {
-        /// The color the swatch shows.
-        private let color: Color
+    private struct Swatch<Style: ShapeStyle>: View {
+        /// The shape style the swatch shows.
+        private let style: Style
 
-        /// Creates a swatch that shows a color.
+        /// Creates a swatch that shows a shape style.
         ///
-        /// - Parameter color: The color to show.
-        init(_ color: Color) {
-            self.color = color
+        /// - Parameter style: The shape style to show.
+        init(_ style: Style) {
+            self.style = style
         }
 
-        /// A rounded rectangle filled with the color and outlined.
+        /// A rounded rectangle filled with the style and outlined.
         var body: some View {
             RoundedRectangle(cornerRadius: CGFloat(CornerRadius.small))
-                .fill(color)
+                .fill(style)
                 .frame(width: Sample.width, height: Sample.height)
                 .overlay {
                     RoundedRectangle(cornerRadius: CGFloat(CornerRadius.small))
@@ -28,19 +28,19 @@ package struct ColorSpecimen: View {
     }
 
     /// A swatch with the letters "Aa" drawn on it.
-    private struct GlyphSwatch: View {
-        /// The color of the letters.
-        private let glyph: Color
+    private struct GlyphSwatch<Glyph: ShapeStyle, Fill: ShapeStyle>: View {
+        /// The shape style of the letters.
+        private let glyph: Glyph
 
-        /// The color of the swatch.
-        private let fill: Color
+        /// The shape style of the swatch.
+        private let fill: Fill
 
-        /// Creates a swatch of a color with letters on it.
+        /// Creates a swatch of a shape style with letters on it.
         ///
         /// - Parameters:
-        ///   - glyph: The color of the letters.
-        ///   - fill: The color of the swatch.
-        init(_ glyph: Color, on fill: Color) {
+        ///   - glyph: The shape style of the letters.
+        ///   - fill: The shape style of the swatch.
+        init(_ glyph: Glyph, on fill: Fill) {
             self.glyph = glyph
             self.fill = fill
         }
