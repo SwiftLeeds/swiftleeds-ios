@@ -1,3 +1,4 @@
+import Foundation
 import SwiftUI
 import Testing
 import UIDesign
@@ -92,6 +93,24 @@ struct SurfaceColorTests {
     /// At a chroma this low, the catalog's rounding moves the angle by a few degrees.
     private static let hueTolerance: Double = 6
 
+    #if canImport(AppKit)
+    /// The major version of macOS that the catalog's Mac surfaces were sampled on.
+    nonisolated private static let sampledMacOSMajorVersion = 27
+    #endif
+
+    /// Whether this platform runs the OS version the catalog sampled, or a later one.
+    ///
+    /// It is always `true` on iOS.
+    nonisolated private static let runsOnSampledOSOrLater: Bool = {
+        #if canImport(AppKit)
+        ProcessInfo.processInfo.isOperatingSystemAtLeast(
+            OperatingSystemVersion(majorVersion: sampledMacOSMajorVersion, minorVersion: 0, patchVersion: 0)
+        )
+        #else
+        true
+        #endif
+    }()
+
     /// Returns an environment that carries a brand and a color scheme.
     ///
     /// - Parameters:
@@ -172,7 +191,11 @@ struct SurfaceColorTests {
     ///   - brand: The brand in the environment.
     ///   - colorScheme: The color scheme to resolve in.
     /// - Throws: When the platform has no appearance or no sRGB form for a color.
-    @Test(arguments: Brand.allCases, [ColorScheme.light, .dark])
+    @Test(
+        .enabled(if: Self.runsOnSampledOSOrLater, "The surfaces were sampled on a later OS version"),
+        arguments: Brand.allCases,
+        [ColorScheme.light, .dark],
+    )
     func whenSurfaceResolves_shouldKeepAppleLightness(brand: Brand, colorScheme: ColorScheme) throws {
         let environment = Self.environment(for: brand, in: colorScheme)
         for surface in Surface.allCases {

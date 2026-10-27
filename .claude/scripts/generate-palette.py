@@ -495,10 +495,12 @@ SURFACES = ("surface", "secondarySurface", "tertiarySurface")
 # lifts. macOS has no elevated level, so there is no mac entry.
 #
 # mac: printed by BrandTests.whenSurfaceResolves_shouldKeepAppleLightness under swift test on
-# macOS 26.6.1 (25G76), on 2026-10-26. Sources: windowBackgroundColor, controlBackgroundColor and
-# underPageBackgroundColor, each fixed with performAsCurrentDrawingAppearance. The two Increase
-# Contrast appearances printed the same values as the standard ones, so they are written equal.
-# macOS is only the test host.
+# macOS 27.0.1 (26A434), the CI runner image xcode-27-arm64, on 2026-10-27. Sources:
+# windowBackgroundColor, controlBackgroundColor and underPageBackgroundColor, each fixed with
+# performAsCurrentDrawingAppearance. The two Increase Contrast appearances printed the same values
+# as the standard ones, so they are written equal. macOS is only the test host. macOS 26 draws
+# underPageBackgroundColor in light mode as 969696, so the Mac lightness checks run on macOS 27 and
+# later only.
 APPLE_SURFACES = {
     "surface": {
         "universal": ("FFFFFF", "000000", "FFFFFF", "000000"),
@@ -513,7 +515,7 @@ APPLE_SURFACES = {
     "tertiarySurface": {
         "universal": ("FFFFFF", "2C2C2E", "FFFFFF", "363638"),
         "elevated": ("FFFFFF", "3A3A3C", "FFFFFF", "444446"),
-        "mac": ("969696", "282828", "969696", "282828"),
+        "mac": ("F6F6F6", "282828", "F6F6F6", "282828"),
     },
 }
 

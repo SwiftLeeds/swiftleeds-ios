@@ -75,9 +75,9 @@
         "color-space" : "display-p3",
         "components" : {
           "alpha" : "1.000",
-          "blue" : "0.5830",
-          "green" : "0.5866",
-          "red" : "0.5936"
+          "blue" : "0.9590",
+          "green" : "0.9629",
+          "red" : "0.9706"
         }
       },
       "idiom" : "mac"
@@ -111,9 +111,9 @@
         "color-space" : "display-p3",
         "components" : {
           "alpha" : "1.000",
-          "blue" : "0.5830",
-          "green" : "0.5866",
-          "red" : "0.5936"
+          "blue" : "0.9590",
+          "green" : "0.9629",
+          "red" : "0.9706"
         }
       },
       "idiom" : "mac"

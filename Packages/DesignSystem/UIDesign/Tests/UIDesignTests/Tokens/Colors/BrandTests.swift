@@ -178,6 +178,12 @@ extension BrandTests {
     private static let tintableLightness = 0.05...0.98
     /// The largest value of one color component in a hex code.
     private static let hexScale: Float = 255
+    /// The major version of macOS that the catalog's Mac surfaces were sampled on.
+    private static let sampledMacOSMajorVersion = 27
+    /// Whether this Mac runs the macOS version the catalog sampled, or a later one.
+    private static let runsOnSampledMacOSOrLater = ProcessInfo.processInfo.isOperatingSystemAtLeast(
+        OperatingSystemVersion(majorVersion: sampledMacOSMajorVersion, minorVersion: 0, patchVersion: 0)
+    )
 
     /// Returns the components a color has under an appearance.
     ///
@@ -222,7 +228,13 @@ extension BrandTests {
     /// - Parameter brand: The brand to check.
     /// - Throws: When macOS has no appearance that the check resolves under.
     @MainActor
-    @Test(arguments: Brand.allCases)
+    @Test(
+        .enabled(
+            if: Self.runsOnSampledMacOSOrLater,
+            "The Mac surfaces were sampled on macOS \(Self.sampledMacOSMajorVersion)",
+        ),
+        arguments: Brand.allCases,
+    )
     func whenSurfaceResolves_shouldKeepAppleLightness(brand: Brand) throws {
         var drifted: [String] = []
         for surface in Surface.allCases {
