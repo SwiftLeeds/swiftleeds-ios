@@ -115,7 +115,7 @@ public enum Brand: CaseIterable, Equatable, Hashable, Sendable {
 
     /// The color for text or a symbol on a surface, such as a link or a section title.
     ///
-    /// It reaches 4.5:1 against ``surface`` and ``secondarySurface``, and against ``subtle``.
+    /// It reaches 4.5:1 against every surface, grouped or not, and against ``subtle``.
     package var text: Color { color(for: .text) }
 
     /// The color for a filled shape behind ``onSolid``, such as a button.

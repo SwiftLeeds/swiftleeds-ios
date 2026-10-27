@@ -12,6 +12,14 @@ struct ColorFamilyContrastTests {
         case textOnSurface
         /// Family text on content layered on top of the main background.
         case textOnSecondarySurface
+        /// Family text on content layered on top of secondary backgrounds.
+        case textOnTertiarySurface
+        /// Family text on the main background of a grouped interface.
+        case textOnGroupedSurface
+        /// Family text on content layered on top of the main background of a grouped interface.
+        case textOnSecondaryGroupedSurface
+        /// Family text on content layered on top of secondary backgrounds of a grouped interface.
+        case textOnTertiaryGroupedSurface
         /// Family symbol on the family's fill.
         case onSolidOnSolid
         /// Family fill on the main background.
@@ -26,6 +34,10 @@ struct ColorFamilyContrastTests {
             switch self {
             case .textOnSurface: WCAG.textFloor
             case .textOnSecondarySurface: WCAG.textFloor
+            case .textOnTertiarySurface: WCAG.textFloor
+            case .textOnGroupedSurface: WCAG.textFloor
+            case .textOnSecondaryGroupedSurface: WCAG.textFloor
+            case .textOnTertiaryGroupedSurface: WCAG.textFloor
             case .onSolidOnSolid: WCAG.textFloor
             case .solidOnSurface: WCAG.graphicFloor
             case .solidOnSecondarySurface: WCAG.graphicFloor
@@ -38,6 +50,10 @@ struct ColorFamilyContrastTests {
             switch self {
             case .textOnSurface: false
             case .textOnSecondarySurface: false
+            case .textOnTertiarySurface: false
+            case .textOnGroupedSurface: false
+            case .textOnSecondaryGroupedSurface: false
+            case .textOnTertiaryGroupedSurface: false
             case .onSolidOnSolid: false
             case .solidOnSurface: true
             case .solidOnSecondarySurface: true
@@ -53,6 +69,10 @@ struct ColorFamilyContrastTests {
             switch self {
             case .textOnSurface: family.text
             case .textOnSecondarySurface: family.text
+            case .textOnTertiarySurface: family.text
+            case .textOnGroupedSurface: family.text
+            case .textOnSecondaryGroupedSurface: family.text
+            case .textOnTertiaryGroupedSurface: family.text
             case .onSolidOnSolid: family.onSolid
             case .solidOnSurface: family.solid
             case .solidOnSecondarySurface: family.solid
@@ -70,6 +90,10 @@ struct ColorFamilyContrastTests {
             switch self {
             case .textOnSurface: brand.surface
             case .textOnSecondarySurface: brand.secondarySurface
+            case .textOnTertiarySurface: brand.tertiarySurface
+            case .textOnGroupedSurface: brand.groupedSurface
+            case .textOnSecondaryGroupedSurface: brand.secondaryGroupedSurface
+            case .textOnTertiaryGroupedSurface: brand.tertiaryGroupedSurface
             case .onSolidOnSolid: family.solid
             case .solidOnSurface: brand.surface
             case .solidOnSecondarySurface: brand.secondarySurface
