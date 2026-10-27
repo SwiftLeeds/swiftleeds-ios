@@ -7,9 +7,6 @@ struct LoggedProfileFetchOutcome {
     let message: LogMessage
 
     /// The outcome of a profile fetch that succeeded.
-    ///
-    /// Carries no field. A profile holds a name, an email address and a ticket reference, and none
-    /// of them belong in a log line that says the load worked.
     static let success = Self(
         level: .info,
         message: "The profile loaded",
