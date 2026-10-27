@@ -1,9 +1,7 @@
 #if os(iOS)
-import Foundation
 import SwiftUI
 import Testing
 import UIDesign
-import UIKit
 
 /// Tests that every ``ColorFamily`` meets its contrast floors on each brand's surfaces.
 @MainActor
@@ -26,12 +24,12 @@ struct ColorFamilyContrastTests {
         /// The lowest contrast ratio this pair must reach.
         var floor: Float {
             switch self {
-            case .textOnSurface: ColorFamilyContrastTests.textFloor
-            case .textOnSecondarySurface: ColorFamilyContrastTests.textFloor
-            case .onSolidOnSolid: ColorFamilyContrastTests.textFloor
-            case .solidOnSurface: ColorFamilyContrastTests.graphicFloor
-            case .solidOnSecondarySurface: ColorFamilyContrastTests.graphicFloor
-            case .textOnSubtle: ColorFamilyContrastTests.textFloor
+            case .textOnSurface: WCAG.textFloor
+            case .textOnSecondarySurface: WCAG.textFloor
+            case .onSolidOnSolid: WCAG.textFloor
+            case .solidOnSurface: WCAG.graphicFloor
+            case .solidOnSecondarySurface: WCAG.graphicFloor
+            case .textOnSubtle: WCAG.textFloor
             }
         }
 
@@ -83,44 +81,12 @@ struct ColorFamilyContrastTests {
     /// The ways the system can draw a color, such as light mode or a dark sheet.
     private typealias Appearance = SystemAppearance
 
-    /// The weight of linear red in relative luminance, from ITU-R BT.709.
-    private static let redWeight: Float = 0.2126
-    /// The weight of linear green in relative luminance, from ITU-R BT.709.
-    private static let greenWeight: Float = 0.7152
-    /// The weight of linear blue in relative luminance, from ITU-R BT.709.
-    private static let blueWeight: Float = 0.0722
-    /// The light WCAG adds to both colors of a contrast ratio, for glare on the screen.
-    private static let glare: Float = 0.05
-    /// The lowest ratio WCAG accepts for text.
-    nonisolated private static let textFloor: Float = 4.5
-    /// The lowest ratio WCAG accepts for a graphic.
-    nonisolated private static let graphicFloor: Float = 3
     /// Families whose fill is pale in light appearances, so its edge is not checked against a light
     /// surface, and its ratio there has no ordering to keep under Increase Contrast.
     ///
     /// The text and symbol on such a fill carry the state. In dark appearances the fill is checked
     /// like any other.
     nonisolated private static let paleFillFamilies: Set<ColorFamily> = [.warning]
-
-    /// Returns the components a color has under an appearance.
-    ///
-    /// - Parameters:
-    ///   - color: The color to resolve.
-    ///   - appearance: The appearance to resolve it under.
-    /// - Returns: The color as fixed components.
-    private static func resolve(_ color: Color, in appearance: Appearance) -> Color.Resolved {
-        // Fixed with the traits first: `EnvironmentValues` cannot set Increase Contrast.
-        let fixed = UIColor(color).resolvedColor(with: appearance.traits)
-        return Color(fixed).resolve(in: EnvironmentValues())
-    }
-
-    /// Returns how bright a color looks, from 0 for black to 1 for white.
-    ///
-    /// - Parameter color: The color to measure.
-    /// - Returns: The relative luminance of `color`.
-    private static func luminance(of color: Color.Resolved) -> Float {
-        redWeight * color.linearRed + greenWeight * color.linearGreen + blueWeight * color.linearBlue
-    }
 
     /// Returns the WCAG contrast ratio of a pair for a family under an appearance.
     ///
@@ -136,17 +102,9 @@ struct ColorFamilyContrastTests {
         on brand: Brand,
         in appearance: Appearance,
     ) -> Float {
-        let front = luminance(of: resolve(pair.foreground(of: family), in: appearance))
-        let back = luminance(of: resolve(pair.background(of: family, on: brand), in: appearance))
-        return (max(front, back) + glare) / (min(front, back) + glare)
-    }
-
-    /// Returns a ratio as text with two decimals.
-    ///
-    /// - Parameter ratio: The ratio to show.
-    /// - Returns: The text, such as `4.51`.
-    private static func text(of ratio: Float) -> String {
-        ratio.formatted(.number.precision(.fractionLength(2)))
+        let front = WCAG.resolve(pair.foreground(of: family), in: appearance)
+        let back = WCAG.resolve(pair.background(of: family, on: brand), in: appearance)
+        return WCAG.ratio(between: front, and: back)
     }
 
     /// Returns whether a pair is left out of the floor and ordering checks.
@@ -173,7 +131,7 @@ struct ColorFamilyContrastTests {
                 let ratio = Self.ratio(of: pair, for: family, on: brand, in: appearance)
                 #expect(
                     ratio >= pair.floor,
-                    "\(brand) \(family) \(pair) \(appearance.name): \(Self.text(of: ratio)), floor \(pair.floor)",
+                    "\(brand) \(family) \(pair) \(appearance.name): \(WCAG.text(of: ratio)), floor \(pair.floor)",
                 )
             }
         }
@@ -192,7 +150,7 @@ struct ColorFamilyContrastTests {
                 guard let standard = appearance.withoutIncreasedContrast else { continue }
                 let increased = Self.ratio(of: pair, for: family, on: brand, in: appearance)
                 let normal = Self.ratio(of: pair, for: family, on: brand, in: standard)
-                let shown = "\(Self.text(of: increased)) is below \(Self.text(of: normal))"
+                let shown = "\(WCAG.text(of: increased)) is below \(WCAG.text(of: normal))"
                 #expect(increased >= normal, "\(brand) \(family) \(pair) \(appearance.name): \(shown)")
             }
         }
@@ -209,8 +167,8 @@ struct ColorFamilyContrastTests {
         for appearance in Appearance.allCases where appearance.isLight {
             let ratio = Self.ratio(of: .solidOnSurface, for: family, on: brand, in: appearance)
             #expect(
-                ratio < Self.graphicFloor,
-                "\(brand) \(family) \(appearance.name): \(Self.text(of: ratio)) reaches the graphic floor",
+                ratio < WCAG.graphicFloor,
+                "\(brand) \(family) \(appearance.name): \(WCAG.text(of: ratio)) reaches the graphic floor",
             )
         }
     }
@@ -218,8 +176,8 @@ struct ColorFamilyContrastTests {
     /// Checks that resolution sees Increase Contrast, so a wrong path cannot pass unnoticed.
     @Test
     func whenContrastIsIncreased_shouldResolveToDifferentTone() {
-        let normal = Self.resolve(ColorFamily.info.text, in: .light)
-        let increased = Self.resolve(ColorFamily.info.text, in: .lightIncreasedContrast)
+        let normal = WCAG.resolve(ColorFamily.info.text, in: .light)
+        let increased = WCAG.resolve(ColorFamily.info.text, in: .lightIncreasedContrast)
         #expect(normal != increased)
     }
 }
