@@ -41,7 +41,7 @@ jobs:
       - name: Select Xcode
         uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: '27.0'
+          xcode-version: '27.2'
 
       # Release compiles out every `#if DEBUG` block, so this build fails when
       # the app's shipping code uses a DEBUG-only symbol, and a Debug build
@@ -115,7 +115,7 @@ jobs:
       - name: Select Xcode
         uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: '27.0'
+          xcode-version: '27.2'
 
       - name: Run every package test suite (${{ matrix.configuration }})
         env:
@@ -396,7 +396,7 @@ jobs:
       - name: Select Xcode
         uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: '27.0'
+          xcode-version: '27.2'
 
       # The reference images were recorded on this exact runtime build. An image
       # roll that changes the build, even within iOS 27.0, could move pixels and
@@ -603,7 +603,7 @@ jobs:
       - name: Select Xcode
         uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: '27.0'
+          xcode-version: '27.2'
 
       # A pull request skips the launch only when every file it changes sits
       # in a local package the App Clip does not depend on. Any change outside
