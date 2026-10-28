@@ -756,10 +756,10 @@ jobs:
         if: ${{ !cancelled() }}
         run: .github/scripts/analyze.sh scopes
 
-  # An Xcode project file is a property list, so a repeated object id is
-  # undefined. The parser keeps one definition and drops the other without a
-  # word. That is how the app target once lost a package product link and went
-  # on building anyway, because a second product pulled the module in behind it.
+  # A merge can leave a project file that repeats a key, and the reader keeps one
+  # value and drops the other without a word. In the old property-list format,
+  # that is how the app target once lost a package product link and went on
+  # building anyway, because a second product pulled the module in behind it.
   #
   # This reads a text file. It needs no Xcode, no simulator and no compiler, so
   # it runs on Linux: a macOS runner bills ten times the rate for the same two
@@ -772,47 +772,47 @@ jobs:
       - name: Checkout iOS Repository
         uses: actions/checkout@v4
 
-      - name: Check every object id is defined once
+      # A branch still on the old format can bring project.pbxproj back beside
+      # project.xcproj in a merge, so the old file fails the check too.
+      - name: Check every project file parses and repeats no key
         run: |
           set -euo pipefail
           python3 - <<'PY'
-          import re
+          import json
           import sys
           from pathlib import Path
 
-          # An object definition sits at exactly two tabs. Everything inside one
-          # sits deeper, so this matches definitions and nothing else. Checked
-          # against the parser: on a clean file the count of matches equals the
-          # count of keys plutil reports.
-          definition = re.compile(r"^\t\t([0-9A-F]{24})[ =]")
+          sys.path.insert(0, ".github/scripts")
+          import xcproj
 
-          files = sorted(Path().glob("*.xcodeproj/project.pbxproj"))
-          files += sorted(Path().glob("Packages/*/*/*.xcodeproj/project.pbxproj"))
+          files = sorted(Path().glob("*.xcodeproj/project.xcproj"))
+          files += sorted(Path().glob("Packages/*/*/*.xcodeproj/project.xcproj"))
           if not files:
-              print("::error::Found no project.pbxproj to check")
+              print("::error::Found no project.xcproj to check")
               sys.exit(1)
 
           failed = False
+          old = sorted(Path().glob("*.xcodeproj/project.pbxproj"))
+          old += sorted(Path().glob("Packages/*/*/*.xcodeproj/project.pbxproj"))
+          for path in old:
+              print(f"::error::{path} is the old project format; convert it to project.xcproj and delete it")
+              failed = True
           for path in files:
-              counts = {}
-              for line in path.read_text().splitlines():
-                  match = definition.match(line)
-                  if match:
-                      counts[match.group(1)] = counts.get(match.group(1), 0) + 1
-
-              # Zero matches means the format moved, not that the file is clean.
-              if not counts:
-                  print(f"::error::{path} yielded no object ids, so this check is broken")
+              try:
+                  project = xcproj.load(path)
+              except (json.JSONDecodeError, xcproj.DuplicateKey) as error:
+                  print(f"::error::{path} {error}")
                   failed = True
                   continue
 
-              repeated = sorted(i for i, n in counts.items() if n > 1)
-              if repeated:
-                  print(f"::error::{path} defines these object ids more than once: {', '.join(repeated)}")
+              # Zero targets means the format moved, not that the file is clean.
+              targets = project.get("targets", [])
+              if not targets:
+                  print(f"::error::{path} yielded no targets, so this check is broken")
                   failed = True
                   continue
 
-              print(f"{path}: {len(counts)} object ids, each defined once")
+              print(f"{path}: parses, {len(targets)} targets")
 
           sys.exit(1 if failed else 0)
           PY
