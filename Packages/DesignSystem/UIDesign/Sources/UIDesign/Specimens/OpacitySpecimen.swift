@@ -1,10 +1,14 @@
 #if DEBUG
+import SFSafeSymbols
 import SwiftUI
 
 /// A view that shows every opacity level, and the pattern opacity on a filled band.
 package struct OpacitySpecimen: View {
-    /// One level, drawn as a square of the primary color on the surface, with its percent.
+    /// One level, drawn as a square of the primary color over an eye, with its percent.
     private struct Swatch: View {
+        /// The symbol behind the square, which shows more as the level falls.
+        private static let revealedIcon = Icon(.eyeFill)
+
         /// The level the square shows.
         private let level: OpacityLevel
 
@@ -15,13 +19,14 @@ package struct OpacitySpecimen: View {
             self.level = level
         }
 
-        /// The square at the level, outlined, above its percent.
+        /// The square at the level over an eye, outlined, above its percent.
         var body: some View {
             VStack(spacing: .xxSmall) {
                 Rectangle()
                     .fill(.primary)
                     .opacity(Double(level))
                     .frame(width: OpacitySpecimen.swatchSize, height: OpacitySpecimen.swatchSize)
+                    .background { revealedSymbol }
                     .background(.surface)
                     .overlay {
                         Rectangle()
@@ -29,6 +34,16 @@ package struct OpacitySpecimen: View {
                     }
                 Text(Double(level), format: .percent)
             }
+        }
+
+        /// The eye behind the square, in a color that differs from the square's.
+        private var revealedSymbol: some View {
+            Image(icon: Self.revealedIcon)
+                .resizable()
+                .scaledToFit()
+                .padding(.small)
+                .foregroundStyle(ColorFamily.blue.solid)
+                .accessibilityHidden(true)
         }
     }
 
