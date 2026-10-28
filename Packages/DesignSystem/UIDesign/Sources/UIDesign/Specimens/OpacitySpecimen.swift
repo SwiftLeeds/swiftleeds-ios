@@ -63,10 +63,11 @@ package struct OpacitySpecimen: View {
         /// The filled band, with diagonal lines that run past every edge.
         var body: some View {
             Canvas { context, size in
+                let level = LineWidth.pattern.level(for: context.environment.accessibilitySettings)
                 context.stroke(
-                    Self.lines(in: size),
+                    Self.lines(in: size, overshoot: CGFloat(level)),
                     with: shading,
-                    lineWidth: CGFloat(BorderWidth.thick),
+                    lineWidth: .pattern,
                 )
             }
             .frame(width: OpacitySpecimen.bandWidth, height: OpacitySpecimen.bandHeight)
@@ -75,17 +76,21 @@ package struct OpacitySpecimen: View {
 
         /// Returns diagonal lines that cover a rectangle.
         ///
-        /// - Parameter size: The size of the rectangle to cover.
+        /// Each line runs `overshoot` past every edge, so its square ends leave no notches.
+        ///
+        /// - Parameters:
+        ///   - size: The size of the rectangle to cover.
+        ///   - overshoot: The distance each line runs past an edge, such as one line width.
         /// - Returns: A path of lines that rise from left to right.
-        private static func lines(in size: CGSize) -> Path {
+        private static func lines(in size: CGSize, overshoot: CGFloat) -> Path {
             var path = Path()
             for start in stride(
-                from: -size.height,
-                through: size.width,
-                by: CGFloat(Spacing.small),
+                from: -size.height - overshoot,
+                through: size.width + overshoot,
+                by: CGFloat(Spacing.medium),
             ) {
-                path.move(to: CGPoint(x: start, y: size.height))
-                path.addLine(to: CGPoint(x: start + size.height, y: 0))
+                path.move(to: CGPoint(x: start - overshoot, y: size.height + overshoot))
+                path.addLine(to: CGPoint(x: start + size.height + overshoot, y: -overshoot))
             }
             return path
         }

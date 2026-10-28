@@ -42,6 +42,19 @@ package struct DimensionSpecimen: View {
         }
     }
 
+    /// A view that draws a horizontal bar as thick as a line width level.
+    private struct Line: View {
+        /// The line width level the bar shows.
+        let level: LineWidthLevel
+
+        /// A bar filled with the primary color, as thick as the level.
+        var body: some View {
+            Rectangle()
+                .fill(.primary)
+                .frame(width: Sample.width, height: CGFloat(level))
+        }
+    }
+
     /// A view that draws a square as large as an icon size token.
     private struct Square: View {
         /// The icon size token the square shows.
@@ -83,6 +96,7 @@ package struct DimensionSpecimen: View {
         spacingGroup
         cornerRadiusGroup
         borderWidthGroup
+        lineWidthGroup
         iconSizeGroup
         avatarSizeGroup
     }
@@ -166,6 +180,40 @@ extension DimensionSpecimen {
             GridRow {
                 Text("thick")
                 Border(width: .thick)
+            }
+        }
+    }
+
+    /// The line width scale, from thin to thick.
+    fileprivate var lineWidthGroup: some View {
+        SpecimenGroup("Line") {
+            GridRow {
+                Text("points2")
+                Line(level: .points2)
+            }
+            GridRow {
+                Text("points3")
+                Line(level: .points3)
+            }
+            GridRow {
+                Text("points4")
+                Line(level: .points4)
+            }
+            GridRow {
+                Text("points5")
+                Line(level: .points5)
+            }
+            GridRow {
+                Text("points6")
+                Line(level: .points6)
+            }
+            GridRow {
+                Text("points7")
+                Line(level: .points7)
+            }
+            GridRow {
+                Text("points8")
+                Line(level: .points8)
             }
         }
     }

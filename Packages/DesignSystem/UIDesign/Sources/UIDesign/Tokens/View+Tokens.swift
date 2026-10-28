@@ -1,7 +1,7 @@
 import SwiftUI
 
-// Only for modifiers whose whole purpose is a length. A length among other arguments, such as
-// `Grid` or `strokeBorder`, uses `CGFloat(token)` at the call site.
+// Each overload lets a call site name a token where Apple's API takes a number, as in
+// `.padding(.large)`.
 
 extension View {
     /// Adds a space around this view.
