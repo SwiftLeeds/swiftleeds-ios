@@ -48,8 +48,8 @@ jobs:
       # cannot. Debug is not built here: the test jobs compile the packages in
       # Debug and Release, the launch jobs compile the App Clip in Debug, and a
       # second build would double this job's time.
-      # buildlog_path makes gym keep its raw xcodebuild log in a folder this job
-      # knows, because the analyzer step below reads every compile command from
+      # buildlog_path makes the lane keep its raw xcodebuild log in a folder this
+      # job knows, because the analyzer step below reads every compile command from
       # it. Both brands pass it so the two lanes run the same command.
       - name: Build ${{ matrix.brand }} (${{ matrix.configuration }})
         run: fastlane build scheme:${{ matrix.brand }} configuration:${{ matrix.configuration }} buildlog_path:"$RUNNER_TEMP/build-log"
@@ -84,9 +84,9 @@ jobs:
         run: |
           set -euo pipefail
           logs=("$RUNNER_TEMP"/build-log/*.log)
-          # gym names the file itself, so the folder must hold exactly one.
+          # The lane names the file after the scheme, so the folder must hold exactly one.
           if [ "${#logs[@]}" -ne 1 ] || [ ! -f "${logs[0]}" ]; then
-            echo "::error::Expected one gym build log in $RUNNER_TEMP/build-log, found ${#logs[@]}: ${logs[*]}"
+            echo "::error::Expected one build log in $RUNNER_TEMP/build-log, found ${#logs[@]}: ${logs[*]}"
             exit 1
           fi
           .github/scripts/analyze.sh app 282 "${logs[0]}"
