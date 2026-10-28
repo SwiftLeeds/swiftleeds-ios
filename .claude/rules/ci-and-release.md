@@ -13,15 +13,25 @@ workflows before acting.
 ## Pin the runner image and the Xcode version
 
 `.github/workflows/build.yml` pins `runs-on: xcode-27` and selects Xcode with
-`maxim-lobanov/setup-xcode` (27.0). Moved from `macos-26` and 26.5 on 2026-10-12, branch
-`ci/xcode-27`. GitHub now names macOS images by Xcode version, so no `macos-27` label exists. The
-label does not fix the macOS version, and the image is a public preview, so `setup-xcode` is the
-pin that fails legibly. The snapshot job also checks the exact runtime build (iOS 27.0, 24A434),
-because the references were recorded on it. **Never reintroduce `macos-latest` or a hardcoded
-`DEVELOPER_DIR` path.** An image roll must not be able to break every branch at once with no
-commit to blame; `setup-xcode` fails immediately and legibly when a version is absent, where a
-bad `DEVELOPER_DIR` fails minutes in with a misleading error. (A `macos-latest` roll to the
-`macos-26` image broke every branch for months; fixed in PR #106.)
+`maxim-lobanov/setup-xcode` (27.2). Moved from `macos-26` and 26.5 on 2026-10-12, branch
+`ci/xcode-27`, and from 27.0 to 27.2 on 2026-10-28, branch `ci/xcode-27-2`. GitHub now names macOS
+images by Xcode version, so no `macos-27` label exists. The label does not fix the macOS version,
+and the image is a public preview, so `setup-xcode` is the pin that fails legibly. The snapshot
+job also checks the exact runtime build (iOS 27.0, 24A434), because the references were recorded
+on it. **The simulator runtime stays on iOS 27.0 under Xcode 27.2**: the image (20261022.0305.3)
+has no iOS 27.2 runtime. **Never reintroduce `macos-latest` or a hardcoded `DEVELOPER_DIR`
+path.** An image roll must not be able to break every branch at once with no commit to blame;
+`setup-xcode` fails immediately and legibly when a version is absent, where a bad `DEVELOPER_DIR`
+fails minutes in with a misleading error. (A `macos-latest` roll to the `macos-26` image broke
+every branch for months; fixed in PR #106.)
+
+**`'27.2'` selects the release candidate today, and will move to the final release silently.**
+The image has 27.2 RC (27B48). `setup-xcode` counts an app as stable unless its
+`LicenseInfo.plist` `licenseType` contains "beta", and the RC's is `GM`. So when the image swaps
+the RC for the final 27.2, or adds a 27.2.x, the same pin takes the newest 27.2.x with no commit.
+`'27.2.0'` cannot hold the RC either, because the RC and the final release both report 27.2.0. If
+a run fails for no reason in its diff, read the build number in the `Select Xcode` step first
+("Xcode is set to 27.2.0 (27B48)").
 
 **Keep local Xcode matching the CI pin.** Different Swift compilers judge code differently: a
 `@Test(arguments:)` array with `-.infinity` compiled on 26.0.1 and was rejected on 26.5 as
