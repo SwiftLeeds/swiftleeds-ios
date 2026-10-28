@@ -1,3 +1,4 @@
+import SwiftUI
 import Testing
 import UIDesign
 
@@ -6,12 +7,12 @@ struct OpacityTests {
     /// Settings with standard color differentiation that change only the contrast or the
     /// transparency.
     private static let otherSettingsWithColor = [
-        AccessibilitySettings(
+        UIDesign.AccessibilitySettings(
             differentiation: .standard,
             contrast: .increased,
             transparency: .standard,
         ),
-        AccessibilitySettings(
+        UIDesign.AccessibilitySettings(
             differentiation: .standard,
             contrast: .standard,
             transparency: .reduced,
@@ -21,12 +22,12 @@ struct OpacityTests {
     /// Settings with differentiation without color that also change the contrast or the
     /// transparency.
     private static let otherSettingsWithoutColor = [
-        AccessibilitySettings(
+        UIDesign.AccessibilitySettings(
             differentiation: .withoutColor,
             contrast: .increased,
             transparency: .standard,
         ),
-        AccessibilitySettings(
+        UIDesign.AccessibilitySettings(
             differentiation: .withoutColor,
             contrast: .standard,
             transparency: .reduced,
@@ -37,7 +38,7 @@ struct OpacityTests {
     @Test
     func whenPatternIsResolvedForStandardDifferentiation_shouldReturnEightPercent() {
         let sut = Opacity.pattern
-        let settings = AccessibilitySettings(
+        let settings = UIDesign.AccessibilitySettings(
             differentiation: .standard,
             contrast: .standard,
             transparency: .standard,
@@ -51,7 +52,7 @@ struct OpacityTests {
     @Test
     func whenPatternIsResolvedForDifferentiationWithoutColor_shouldReturnTwentyPercent() {
         let sut = Opacity.pattern
-        let settings = AccessibilitySettings(
+        let settings = UIDesign.AccessibilitySettings(
             differentiation: .withoutColor,
             contrast: .standard,
             transparency: .standard,
@@ -66,7 +67,7 @@ struct OpacityTests {
     /// - Parameter settings: Settings that differ from the standard ones in one place.
     @Test(arguments: otherSettingsWithColor)
     func whenContrastOrTransparencyChanges_shouldReturnPatternAtEightPercent(
-        settings: AccessibilitySettings
+        settings: UIDesign.AccessibilitySettings
     ) {
         let sut = Opacity.pattern
         #expect(sut.level(for: settings) == .percent8)
@@ -77,7 +78,7 @@ struct OpacityTests {
     /// - Parameter settings: Settings without color that also change one other setting.
     @Test(arguments: otherSettingsWithoutColor)
     func whenContrastOrTransparencyChangesWithoutColor_shouldReturnPatternAtTwentyPercent(
-        settings: AccessibilitySettings
+        settings: UIDesign.AccessibilitySettings
     ) {
         let sut = Opacity.pattern
         #expect(sut.level(for: settings) == .percent20)
