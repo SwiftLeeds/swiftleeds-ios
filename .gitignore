@@ -52,7 +52,6 @@ dd-*/
 .agents/
 .claude/skills/*
 !.claude/skills/stacked-prs/
-!.claude/skills/driving-the-simulator/
 
 # CocoaPods
 #
