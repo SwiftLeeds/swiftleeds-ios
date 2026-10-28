@@ -5,9 +5,9 @@ Each hue is a ramp from t5 to t95 in OKLCH, converted to Display P3. Two outputs
 Packages/DesignSystem/UIDesign/Sources/UIDesign:
 - Tokens/Colors/Hue/Hue+Tones.swift, the ramps as Swift Color.Resolved literals.
 - Resources/Colors.xcassets, one color set per family and role (light, dark and increased contrast),
-  four role sets per brand (text, solid, onSolid, subtle), and six surface sets per brand (three,
-  and three elevated for iOS sheets). A surface set keeps Apple's lightness, sampled on iOS and
-  macOS, and takes the brand's hue. The whole catalog is deleted and rewritten on each run.
+  four role sets per brand (text, solid, onSolid, subtle), and two sets per brand for each of
+  SURFACES (one, and one elevated for iOS sheets). A surface set keeps Apple's lightness, sampled
+  on iOS and macOS, and takes the brand's hue. The whole catalog is deleted and rewritten on each run.
 
 Run it from the repo root: python3 .claude/scripts/generate-palette.py
 Pass --output-root <directory> to write both outputs into that directory instead.
@@ -476,7 +476,14 @@ BRANDS = [
 ]
 
 # Surfaces a brand tints, in the order of APPLE_SURFACES.
-SURFACES = ("surface", "secondarySurface", "tertiarySurface")
+SURFACES = (
+    "surface",
+    "secondarySurface",
+    "tertiarySurface",
+    "groupedSurface",
+    "secondaryGroupedSurface",
+    "tertiaryGroupedSurface",
+)
 
 # Apple's own surfaces as sRGB hex, in APPEARANCES order: light, dark, light high contrast, dark
 # high contrast. A brand surface keeps each one's OKLCH lightness and takes the brand's hue.
@@ -489,6 +496,9 @@ SURFACES = ("surface", "secondarySurface", "tertiarySurface")
 # iPhone 18 Pro simulator, iOS 27.0 (24A434), on 2026-10-26. Sources: systemBackground,
 # secondarySystemBackground and tertiarySystemBackground. The iPad Pro 11-inch (M5) simulator,
 # iOS 27.0, printed the same values for every surface and appearance, so there is no iPad entry.
+# The grouped rows were printed by the same test on the same simulator and OS build on 2026-10-27.
+# Sources: systemGroupedBackground, secondarySystemGroupedBackground and
+# tertiarySystemGroupedBackground.
 #
 # elevated: printed by the same test on the same simulator, OS build and date, under traits that set
 # userInterfaceLevel to elevated, in the same four appearances. Light matches universal. Only dark
@@ -500,7 +510,9 @@ SURFACES = ("surface", "secondarySurface", "tertiarySurface")
 # performAsCurrentDrawingAppearance. The two Increase Contrast appearances printed the same values
 # as the standard ones, so they are written equal. macOS is only the test host. macOS 26 draws
 # underPageBackgroundColor in light mode as 969696, so the Mac lightness checks run on macOS 27 and
-# later only.
+# later only. macOS has no grouped backgrounds, so each grouped row copies the mac entry of its
+# plain counterpart: groupedSurface takes surface's, secondaryGroupedSurface secondarySurface's,
+# and tertiaryGroupedSurface tertiarySurface's.
 APPLE_SURFACES = {
     "surface": {
         "universal": ("FFFFFF", "000000", "FFFFFF", "000000"),
@@ -515,6 +527,21 @@ APPLE_SURFACES = {
     "tertiarySurface": {
         "universal": ("FFFFFF", "2C2C2E", "FFFFFF", "363638"),
         "elevated": ("FFFFFF", "3A3A3C", "FFFFFF", "444446"),
+        "mac": ("F6F6F6", "282828", "F6F6F6", "282828"),
+    },
+    "groupedSurface": {
+        "universal": ("F2F2F7", "000000", "EBEBF0", "000000"),
+        "elevated": ("F2F2F7", "1C1C1E", "EBEBF0", "242426"),
+        "mac": ("FFFFFF", "1E1E1E", "FFFFFF", "1E1E1E"),
+    },
+    "secondaryGroupedSurface": {
+        "universal": ("FFFFFF", "1C1C1E", "FFFFFF", "242426"),
+        "elevated": ("FFFFFF", "2C2C2E", "FFFFFF", "363638"),
+        "mac": ("FFFFFF", "1E1E1E", "FFFFFF", "1E1E1E"),
+    },
+    "tertiaryGroupedSurface": {
+        "universal": ("F2F2F7", "2C2C2E", "EBEBF0", "363638"),
+        "elevated": ("F2F2F7", "3A3A3C", "EBEBF0", "444446"),
         "mac": ("F6F6F6", "282828", "F6F6F6", "282828"),
     },
 }

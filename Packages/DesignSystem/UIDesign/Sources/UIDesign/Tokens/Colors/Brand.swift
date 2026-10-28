@@ -11,12 +11,18 @@ import UIKit
 public enum Brand: CaseIterable, Equatable, Hashable, Sendable {
     /// A job a color does for a brand, named as the catalog names it.
     private enum Role {
-        /// The color behind a screen.
+        /// The color for the main background of an interface.
         case surface
-        /// The color behind grouped content on a screen.
+        /// The color for content layered on top of the main background.
         case secondarySurface
-        /// The color behind content grouped inside grouped content.
+        /// The color for content layered on top of secondary backgrounds.
         case tertiarySurface
+        /// The color for the main background of a grouped interface.
+        case groupedSurface
+        /// The color for content layered on top of the main background of a grouped interface.
+        case secondaryGroupedSurface
+        /// The color for content layered on top of secondary backgrounds of a grouped interface.
+        case tertiaryGroupedSurface
         /// The color for text or a symbol on a surface.
         case text
         /// The color for a filled shape behind `onSolid`.
@@ -34,6 +40,9 @@ public enum Brand: CaseIterable, Equatable, Hashable, Sendable {
             case .surface: elevatedPrefixedName
             case .secondarySurface: elevatedPrefixedName
             case .tertiarySurface: elevatedPrefixedName
+            case .groupedSurface: elevatedPrefixedName
+            case .secondaryGroupedSurface: elevatedPrefixedName
+            case .tertiaryGroupedSurface: elevatedPrefixedName
             case .text: nil
             case .solid: nil
             case .onSolid: nil
@@ -66,27 +75,47 @@ public enum Brand: CaseIterable, Equatable, Hashable, Sendable {
     /// The Info.plist key an app declares its brand under.
     package static let infoDictionaryKey = "Brand"
 
-    /// The color behind a screen.
+    /// The color for the main background of an interface.
     ///
     /// It keeps the lightness of Apple's background and takes a faint hint of the brand hue.
     /// In a sheet on iOS, it lifts in dark mode as Apple's background does.
     package var surface: Color { color(for: .surface) }
 
-    /// The color behind grouped content on a screen.
+    /// The color for content layered on top of the main background.
     ///
     /// It keeps the lightness of Apple's secondary background and takes a faint hint of the brand hue.
     /// In a sheet on iOS, it lifts in dark mode as Apple's secondary background does.
     package var secondarySurface: Color { color(for: .secondarySurface) }
 
-    /// The color behind content grouped inside grouped content.
+    /// The color for content layered on top of secondary backgrounds.
     ///
     /// It keeps the lightness of Apple's tertiary background and takes a faint hint of the brand hue.
     /// In a sheet on iOS, it lifts in dark mode as Apple's tertiary background does.
     package var tertiarySurface: Color { color(for: .tertiarySurface) }
 
+    /// The color for the main background of a grouped interface.
+    ///
+    /// It keeps the lightness of Apple's grouped background and takes a faint hint of the brand hue.
+    /// In a sheet on iOS, it lifts in dark mode as Apple's grouped background does.
+    package var groupedSurface: Color { color(for: .groupedSurface) }
+
+    /// The color for content layered on top of the main background of a grouped interface.
+    ///
+    /// It keeps the lightness of Apple's secondary grouped background and takes a faint hint of the
+    /// brand hue. In a sheet on iOS, it lifts in dark mode as Apple's secondary grouped background
+    /// does.
+    package var secondaryGroupedSurface: Color { color(for: .secondaryGroupedSurface) }
+
+    /// The color for content layered on top of secondary backgrounds of a grouped interface.
+    ///
+    /// It keeps the lightness of Apple's tertiary grouped background and takes a faint hint of the
+    /// brand hue. In a sheet on iOS, it lifts in dark mode as Apple's tertiary grouped background
+    /// does.
+    package var tertiaryGroupedSurface: Color { color(for: .tertiaryGroupedSurface) }
+
     /// The color for text or a symbol on a surface, such as a link or a section title.
     ///
-    /// It reaches 4.5:1 against ``surface`` and ``secondarySurface``, and against ``subtle``.
+    /// It reaches 4.5:1 against every surface, grouped or not, and against ``subtle``.
     package var text: Color { color(for: .text) }
 
     /// The color for a filled shape behind ``onSolid``, such as a button.

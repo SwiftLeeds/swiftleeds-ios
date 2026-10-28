@@ -13,14 +13,23 @@ public struct BrandShapeStyle: ShapeStyle {
         /// The label on the brand fill.
         case onBrand
 
-        /// The background of a screen.
+        /// The main background of an interface.
         case surface
 
-        /// The background of grouped content on a screen.
+        /// The background of content layered on top of the main background.
         case secondarySurface
 
-        /// The background of an element inside grouped content.
+        /// The background of content layered on top of secondary backgrounds.
         case tertiarySurface
+
+        /// The main background of a grouped interface.
+        case groupedSurface
+
+        /// The background of content layered on top of the main background of a grouped interface.
+        case secondaryGroupedSurface
+
+        /// The background of content layered on top of secondary backgrounds of a grouped interface.
+        case tertiaryGroupedSurface
     }
 
     /// The job this style's color does.
@@ -49,6 +58,12 @@ public struct BrandShapeStyle: ShapeStyle {
         case .secondarySurface: brand.secondarySurface
 
         case .tertiarySurface: brand.tertiarySurface
+
+        case .groupedSurface: brand.groupedSurface
+
+        case .secondaryGroupedSurface: brand.secondaryGroupedSurface
+
+        case .tertiaryGroupedSurface: brand.tertiaryGroupedSurface
         }
     }
 }

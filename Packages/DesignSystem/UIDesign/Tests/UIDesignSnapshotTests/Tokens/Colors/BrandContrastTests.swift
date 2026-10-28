@@ -8,10 +8,18 @@ import UIDesign
 struct BrandContrastTests {
     /// A pair of colors from one brand, drawn together.
     private enum Pair: CaseIterable {
-        /// Brand text on the screen background.
+        /// Brand text on the main background.
         case textOnSurface
-        /// Brand text on grouped content.
+        /// Brand text on content layered on top of the main background.
         case textOnSecondarySurface
+        /// Brand text on content layered on top of secondary backgrounds.
+        case textOnTertiarySurface
+        /// Brand text on the main background of a grouped interface.
+        case textOnGroupedSurface
+        /// Brand text on content layered on top of the main background of a grouped interface.
+        case textOnSecondaryGroupedSurface
+        /// Brand text on content layered on top of secondary backgrounds of a grouped interface.
+        case textOnTertiaryGroupedSurface
         /// The label on the brand's fill.
         case onSolidOnSolid
         /// Brand text on the brand's pale fill.
@@ -25,6 +33,10 @@ struct BrandContrastTests {
             switch self {
             case .textOnSurface: brand.text
             case .textOnSecondarySurface: brand.text
+            case .textOnTertiarySurface: brand.text
+            case .textOnGroupedSurface: brand.text
+            case .textOnSecondaryGroupedSurface: brand.text
+            case .textOnTertiaryGroupedSurface: brand.text
             case .onSolidOnSolid: brand.onSolid
             case .textOnSubtle: brand.text
             }
@@ -38,6 +50,10 @@ struct BrandContrastTests {
             switch self {
             case .textOnSurface: brand.surface
             case .textOnSecondarySurface: brand.secondarySurface
+            case .textOnTertiarySurface: brand.tertiarySurface
+            case .textOnGroupedSurface: brand.groupedSurface
+            case .textOnSecondaryGroupedSurface: brand.secondaryGroupedSurface
+            case .textOnTertiaryGroupedSurface: brand.tertiaryGroupedSurface
             case .onSolidOnSolid: brand.solid
             case .textOnSubtle: brand.subtle
             }

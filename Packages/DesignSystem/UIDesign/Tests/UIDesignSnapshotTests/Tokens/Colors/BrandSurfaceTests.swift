@@ -10,12 +10,18 @@ import UIKit
 struct BrandSurfaceTests {
     /// A surface a brand tints, paired with the Apple color it copies the lightness of.
     private enum Surface: CaseIterable {
-        /// The color behind a screen.
+        /// The color for the main background of an interface.
         case surface
-        /// The color behind grouped content on a screen.
+        /// The color for content layered on top of the main background.
         case secondarySurface
-        /// The color behind content grouped inside grouped content.
+        /// The color for content layered on top of secondary backgrounds.
         case tertiarySurface
+        /// The color for the main background of a grouped interface.
+        case groupedSurface
+        /// The color for content layered on top of the main background of a grouped interface.
+        case secondaryGroupedSurface
+        /// The color for content layered on top of secondary backgrounds of a grouped interface.
+        case tertiaryGroupedSurface
 
         /// The key the generator's `APPLE_SURFACES` table uses for this surface.
         var key: String {
@@ -23,6 +29,9 @@ struct BrandSurfaceTests {
             case .surface: "surface"
             case .secondarySurface: "secondarySurface"
             case .tertiarySurface: "tertiarySurface"
+            case .groupedSurface: "groupedSurface"
+            case .secondaryGroupedSurface: "secondaryGroupedSurface"
+            case .tertiaryGroupedSurface: "tertiaryGroupedSurface"
             }
         }
 
@@ -32,6 +41,9 @@ struct BrandSurfaceTests {
             case .surface: .systemBackground
             case .secondarySurface: .secondarySystemBackground
             case .tertiarySurface: .tertiarySystemBackground
+            case .groupedSurface: .systemGroupedBackground
+            case .secondaryGroupedSurface: .secondarySystemGroupedBackground
+            case .tertiaryGroupedSurface: .tertiarySystemGroupedBackground
             }
         }
 
@@ -44,6 +56,9 @@ struct BrandSurfaceTests {
             case .surface: UIColor(brand.surface)
             case .secondarySurface: UIColor(brand.secondarySurface)
             case .tertiarySurface: UIColor(brand.tertiarySurface)
+            case .groupedSurface: UIColor(brand.groupedSurface)
+            case .secondaryGroupedSurface: UIColor(brand.secondaryGroupedSurface)
+            case .tertiaryGroupedSurface: UIColor(brand.tertiaryGroupedSurface)
             }
         }
     }

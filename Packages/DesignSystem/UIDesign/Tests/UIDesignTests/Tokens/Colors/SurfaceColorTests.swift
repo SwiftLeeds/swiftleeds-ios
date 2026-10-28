@@ -18,17 +18,28 @@ import UIKit
 struct SurfaceColorTests {
     /// A surface token beside the Apple color whose lightness it keeps.
     private enum Surface: CaseIterable {
-        /// The background of a screen.
+        /// The main background of an interface.
         case surface
 
-        /// The background of grouped content.
+        /// The background of content layered on top of the main background.
         case secondarySurface
 
-        /// The background of an element inside grouped content.
+        /// The background of content layered on top of secondary backgrounds.
         case tertiarySurface
+
+        /// The main background of a grouped interface.
+        case groupedSurface
+
+        /// The background of content layered on top of the main background of a grouped interface.
+        case secondaryGroupedSurface
+
+        /// The background of content layered on top of secondary backgrounds of a grouped interface.
+        case tertiaryGroupedSurface
 
         #if canImport(AppKit)
         /// Apple's color for this surface on macOS.
+        ///
+        /// macOS has no grouped backgrounds, so a grouped surface copies its plain counterpart.
         var appleColor: NSColor {
             switch self {
             case .surface: .windowBackgroundColor
@@ -36,6 +47,12 @@ struct SurfaceColorTests {
             case .secondarySurface: .controlBackgroundColor
 
             case .tertiarySurface: .underPageBackgroundColor
+
+            case .groupedSurface: .windowBackgroundColor
+
+            case .secondaryGroupedSurface: .controlBackgroundColor
+
+            case .tertiaryGroupedSurface: .underPageBackgroundColor
             }
         }
         #else
@@ -47,6 +64,12 @@ struct SurfaceColorTests {
             case .secondarySurface: .secondarySystemBackground
 
             case .tertiarySurface: .tertiarySystemBackground
+
+            case .groupedSurface: .systemGroupedBackground
+
+            case .secondaryGroupedSurface: .secondarySystemGroupedBackground
+
+            case .tertiaryGroupedSurface: .tertiarySystemGroupedBackground
             }
         }
         #endif
@@ -63,6 +86,14 @@ struct SurfaceColorTests {
             case .secondarySurface: SurfaceColorTests.resolve(.secondarySurface, in: environment)
 
             case .tertiarySurface: SurfaceColorTests.resolve(.tertiarySurface, in: environment)
+
+            case .groupedSurface: SurfaceColorTests.resolve(.groupedSurface, in: environment)
+
+            case .secondaryGroupedSurface:
+                SurfaceColorTests.resolve(.secondaryGroupedSurface, in: environment)
+
+            case .tertiaryGroupedSurface:
+                SurfaceColorTests.resolve(.tertiaryGroupedSurface, in: environment)
             }
         }
     }

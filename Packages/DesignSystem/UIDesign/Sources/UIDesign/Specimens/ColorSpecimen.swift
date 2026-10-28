@@ -92,6 +92,18 @@ extension ColorSpecimen {
                 Text("tertiary")
                 Swatch(.tertiarySurface)
             }
+            GridRow {
+                Text("grouped")
+                Swatch(.groupedSurface)
+            }
+            GridRow {
+                Text("secondary grouped")
+                Swatch(.secondaryGroupedSurface)
+            }
+            GridRow {
+                Text("tertiary grouped")
+                Swatch(.tertiaryGroupedSurface)
+            }
         }
     }
 

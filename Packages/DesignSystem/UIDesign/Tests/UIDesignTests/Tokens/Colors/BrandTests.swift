@@ -94,12 +94,18 @@ struct BrandTests {
 extension BrandTests {
     /// A surface a brand tints, paired with the macOS color it copies the lightness of.
     private enum Surface: CaseIterable {
-        /// The color behind a window.
+        /// The color for the main background of an interface.
         case surface
-        /// The color behind grouped content in a window.
+        /// The color for content layered on top of the main background.
         case secondarySurface
-        /// The color behind content grouped inside grouped content.
+        /// The color for content layered on top of secondary backgrounds.
         case tertiarySurface
+        /// The color for the main background of a grouped interface.
+        case groupedSurface
+        /// The color for content layered on top of the main background of a grouped interface.
+        case secondaryGroupedSurface
+        /// The color for content layered on top of secondary backgrounds of a grouped interface.
+        case tertiaryGroupedSurface
 
         /// The key the generator's `APPLE_SURFACES` table uses for this surface.
         var key: String {
@@ -107,15 +113,23 @@ extension BrandTests {
             case .surface: "surface"
             case .secondarySurface: "secondarySurface"
             case .tertiarySurface: "tertiarySurface"
+            case .groupedSurface: "groupedSurface"
+            case .secondaryGroupedSurface: "secondaryGroupedSurface"
+            case .tertiaryGroupedSurface: "tertiaryGroupedSurface"
             }
         }
 
         /// The Apple color this surface copies the lightness of.
+        ///
+        /// macOS has no grouped backgrounds, so a grouped surface copies its plain counterpart.
         var apple: NSColor {
             switch self {
             case .surface: .windowBackgroundColor
             case .secondarySurface: .controlBackgroundColor
             case .tertiarySurface: .underPageBackgroundColor
+            case .groupedSurface: .windowBackgroundColor
+            case .secondaryGroupedSurface: .controlBackgroundColor
+            case .tertiaryGroupedSurface: .underPageBackgroundColor
             }
         }
 
@@ -128,6 +142,9 @@ extension BrandTests {
             case .surface: NSColor(brand.surface)
             case .secondarySurface: NSColor(brand.secondarySurface)
             case .tertiarySurface: NSColor(brand.tertiarySurface)
+            case .groupedSurface: NSColor(brand.groupedSurface)
+            case .secondaryGroupedSurface: NSColor(brand.secondaryGroupedSurface)
+            case .tertiaryGroupedSurface: NSColor(brand.tertiaryGroupedSurface)
             }
         }
     }
