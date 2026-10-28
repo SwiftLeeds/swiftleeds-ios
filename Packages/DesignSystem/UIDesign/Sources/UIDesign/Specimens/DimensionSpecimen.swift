@@ -29,15 +29,15 @@ package struct DimensionSpecimen: View {
         }
     }
 
-    /// A view that draws an outlined rectangle with a border width token.
+    /// A view that draws an outlined rectangle with a border width level.
     private struct Border: View {
-        /// The border width token the outline shows.
-        let width: BorderWidth
+        /// The border width level the outline shows.
+        let level: BorderWidthLevel
 
-        /// A sample rectangle outlined at the border width.
+        /// A sample rectangle outlined at the level.
         var body: some View {
             RoundedRectangle(cornerRadius: CGFloat(CornerRadius.small))
-                .strokeBorder(.primary, lineWidth: CGFloat(width))
+                .strokeBorder(.primary, lineWidth: CGFloat(level))
                 .frame(width: Sample.width, height: Sample.height)
         }
     }
@@ -167,19 +167,20 @@ extension DimensionSpecimen {
         }
     }
 
+    /// The border width scale, from thin to thick.
     fileprivate var borderWidthGroup: some View {
         SpecimenGroup("Border") {
             GridRow {
                 Text("thin")
-                Border(width: .thin)
+                Border(level: .thin)
             }
             GridRow {
                 Text("medium")
-                Border(width: .medium)
+                Border(level: .medium)
             }
             GridRow {
                 Text("thick")
-                Border(width: .thick)
+                Border(level: .thick)
             }
         }
     }

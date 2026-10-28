@@ -22,7 +22,7 @@ package struct ColorSpecimen: View {
                 .frame(width: Sample.width, height: Sample.height)
                 .overlay {
                     RoundedRectangle(cornerRadius: CGFloat(CornerRadius.small))
-                        .strokeBorder(.opaqueBorder, lineWidth: CGFloat(BorderWidth.thin))
+                        .strokeBorder(.opaqueBorder, lineWidth: .edge)
                 }
         }
     }
