@@ -90,16 +90,30 @@ package struct OpacitySpecimen: View {
         }
     }
 
+    /// The appearance the page gray is chosen for.
+    @Environment(\.colorScheme)
+    private var colorScheme
+
     /// Creates a specimen of the opacity levels and the pattern opacity.
     package init() {}
 
-    /// The two groups, one above the other.
+    /// The two groups, one above the other, on a gray page.
     package var body: some View {
         VStack(alignment: .leading, spacing: .xLarge) {
             scaleGroup
             patternGroup
         }
         .padding(.large)
+        .background(Color(Hue.neutral.tone(pageTone)))
+    }
+
+    /// The gray of the page, apart from both a clear and an opaque swatch, with labels at 4.5:1.
+    private var pageTone: Hue.Tone {
+        switch colorScheme {
+        case .dark: .t50
+
+        default: .t65
+        }
     }
 }
 
