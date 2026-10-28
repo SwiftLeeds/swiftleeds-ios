@@ -15,6 +15,9 @@ platform :ios do
       clean: true,
       skip_archive: true,
       skip_codesigning: true,
+      # gym builds its profile mapping by opening project.pbxproj, which the JSON
+      # project format no longer has. An unsigned build needs no mapping.
+      skip_profile_detection: true,
       xcargs: "-skipPackagePluginValidation"
     }
     # The folder gym keeps its raw xcodebuild log in. The log holds every compile
