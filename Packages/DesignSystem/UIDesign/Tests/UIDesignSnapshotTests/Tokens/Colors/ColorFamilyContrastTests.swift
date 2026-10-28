@@ -6,41 +6,68 @@ import UIDesign
 /// Tests that every ``ColorFamily`` meets its contrast floors on each brand's surfaces.
 @MainActor
 struct ColorFamilyContrastTests {
+    /// A surface a family color is drawn on.
+    private enum Surface: CaseIterable {
+        /// The main background.
+        case surface
+        /// Content layered on top of the main background.
+        case secondarySurface
+        /// Content layered on top of secondary backgrounds.
+        case tertiarySurface
+        /// The main background of a grouped interface.
+        case groupedSurface
+        /// Content layered on top of the main background of a grouped interface.
+        case secondaryGroupedSurface
+        /// Content layered on top of secondary backgrounds of a grouped interface.
+        case tertiaryGroupedSurface
+
+        /// Returns the brand's color for this surface.
+        ///
+        /// - Parameter brand: The brand whose surface to read.
+        /// - Returns: The brand's tinted surface.
+        func color(of brand: Brand) -> Color {
+            switch self {
+            case .surface: brand.surface
+            case .secondarySurface: brand.secondarySurface
+            case .tertiarySurface: brand.tertiarySurface
+            case .groupedSurface: brand.groupedSurface
+            case .secondaryGroupedSurface: brand.secondaryGroupedSurface
+            case .tertiaryGroupedSurface: brand.tertiaryGroupedSurface
+            }
+        }
+    }
+
     /// A pair of colors from one family, or from a family and a surface, drawn together.
-    private enum Pair: CaseIterable {
-        /// Family text on the main background.
-        case textOnSurface
-        /// Family text on content layered on top of the main background.
-        case textOnSecondarySurface
-        /// Family text on content layered on top of secondary backgrounds.
-        case textOnTertiarySurface
-        /// Family text on the main background of a grouped interface.
-        case textOnGroupedSurface
-        /// Family text on content layered on top of the main background of a grouped interface.
-        case textOnSecondaryGroupedSurface
-        /// Family text on content layered on top of secondary backgrounds of a grouped interface.
-        case textOnTertiaryGroupedSurface
+    private enum Pair {
+        /// Family text on a surface.
+        case textOn(Surface)
+        /// Family fill on a surface.
+        case solidOn(Surface)
         /// Family symbol on the family's fill.
         case onSolidOnSolid
-        /// Family fill on the main background.
-        case solidOnSurface
-        /// Family fill on content layered on top of the main background.
-        case solidOnSecondarySurface
         /// Family text on the family's pale fill.
         case textOnSubtle
+
+        /// Every pair, with text and fill on each surface.
+        static let allCases: [Self] =
+            Surface.allCases.map(Self.textOn) + Surface.allCases.map(Self.solidOn) + [.onSolidOnSolid, .textOnSubtle]
+
+        /// The pair as a failure message shows it, such as `solidOn tertiarySurface`.
+        var name: String {
+            switch self {
+            case .textOn(let surface): "textOn \(surface)"
+            case .solidOn(let surface): "solidOn \(surface)"
+            case .onSolidOnSolid: "onSolidOnSolid"
+            case .textOnSubtle: "textOnSubtle"
+            }
+        }
 
         /// The lowest contrast ratio this pair must reach.
         var floor: Float {
             switch self {
-            case .textOnSurface: WCAG.textFloor
-            case .textOnSecondarySurface: WCAG.textFloor
-            case .textOnTertiarySurface: WCAG.textFloor
-            case .textOnGroupedSurface: WCAG.textFloor
-            case .textOnSecondaryGroupedSurface: WCAG.textFloor
-            case .textOnTertiaryGroupedSurface: WCAG.textFloor
+            case .textOn: WCAG.textFloor
+            case .solidOn: WCAG.graphicFloor
             case .onSolidOnSolid: WCAG.textFloor
-            case .solidOnSurface: WCAG.graphicFloor
-            case .solidOnSecondarySurface: WCAG.graphicFloor
             case .textOnSubtle: WCAG.textFloor
             }
         }
@@ -48,15 +75,9 @@ struct ColorFamilyContrastTests {
         /// Whether this pair compares the fill with a surface.
         var comparesFillWithSurface: Bool {
             switch self {
-            case .textOnSurface: false
-            case .textOnSecondarySurface: false
-            case .textOnTertiarySurface: false
-            case .textOnGroupedSurface: false
-            case .textOnSecondaryGroupedSurface: false
-            case .textOnTertiaryGroupedSurface: false
+            case .textOn: false
+            case .solidOn: true
             case .onSolidOnSolid: false
-            case .solidOnSurface: true
-            case .solidOnSecondarySurface: true
             case .textOnSubtle: false
             }
         }
@@ -67,15 +88,9 @@ struct ColorFamilyContrastTests {
         /// - Returns: The foreground color of this pair.
         func foreground(of family: ColorFamily) -> Color {
             switch self {
-            case .textOnSurface: family.text
-            case .textOnSecondarySurface: family.text
-            case .textOnTertiarySurface: family.text
-            case .textOnGroupedSurface: family.text
-            case .textOnSecondaryGroupedSurface: family.text
-            case .textOnTertiaryGroupedSurface: family.text
+            case .textOn: family.text
+            case .solidOn: family.solid
             case .onSolidOnSolid: family.onSolid
-            case .solidOnSurface: family.solid
-            case .solidOnSecondarySurface: family.solid
             case .textOnSubtle: family.text
             }
         }
@@ -88,15 +103,9 @@ struct ColorFamilyContrastTests {
         /// - Returns: The background color of this pair.
         func background(of family: ColorFamily, on brand: Brand) -> Color {
             switch self {
-            case .textOnSurface: brand.surface
-            case .textOnSecondarySurface: brand.secondarySurface
-            case .textOnTertiarySurface: brand.tertiarySurface
-            case .textOnGroupedSurface: brand.groupedSurface
-            case .textOnSecondaryGroupedSurface: brand.secondaryGroupedSurface
-            case .textOnTertiaryGroupedSurface: brand.tertiaryGroupedSurface
+            case .textOn(let surface): surface.color(of: brand)
+            case .solidOn(let surface): surface.color(of: brand)
             case .onSolidOnSolid: family.solid
-            case .solidOnSurface: brand.surface
-            case .solidOnSecondarySurface: brand.secondarySurface
             case .textOnSubtle: family.subtle
             }
         }
@@ -155,7 +164,7 @@ struct ColorFamilyContrastTests {
                 let ratio = Self.ratio(of: pair, for: family, on: brand, in: appearance)
                 #expect(
                     ratio >= pair.floor,
-                    "\(brand) \(family) \(pair) \(appearance.name): \(WCAG.text(of: ratio)), floor \(pair.floor)",
+                    "\(brand) \(family) \(pair.name) \(appearance.name): \(WCAG.text(of: ratio)), floor \(pair.floor)",
                 )
             }
         }
@@ -175,7 +184,7 @@ struct ColorFamilyContrastTests {
                 let increased = Self.ratio(of: pair, for: family, on: brand, in: appearance)
                 let normal = Self.ratio(of: pair, for: family, on: brand, in: standard)
                 let shown = "\(WCAG.text(of: increased)) is below \(WCAG.text(of: normal))"
-                #expect(increased >= normal, "\(brand) \(family) \(pair) \(appearance.name): \(shown)")
+                #expect(increased >= normal, "\(brand) \(family) \(pair.name) \(appearance.name): \(shown)")
             }
         }
     }
@@ -189,7 +198,7 @@ struct ColorFamilyContrastTests {
     @Test(arguments: Self.paleFillFamilies, Brand.allCases)
     func whenFillIsPale_shouldSitBelowGraphicFloorOnLightSurfaces(family: ColorFamily, brand: Brand) {
         for appearance in Appearance.allCases where appearance.isLight {
-            let ratio = Self.ratio(of: .solidOnSurface, for: family, on: brand, in: appearance)
+            let ratio = Self.ratio(of: .solidOn(.surface), for: family, on: brand, in: appearance)
             #expect(
                 ratio < WCAG.graphicFloor,
                 "\(brand) \(family) \(appearance.name): \(WCAG.text(of: ratio)) reaches the graphic floor",
