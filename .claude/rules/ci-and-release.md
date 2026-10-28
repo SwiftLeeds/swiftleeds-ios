@@ -1,7 +1,6 @@
 ---
 paths:
   - ".github/**"
-  - "fastlane/**"
   - "Configuration/**"
 ---
 
@@ -40,7 +39,7 @@ ambiguous. When versions diverge, a local pass is weaker evidence; say so. Verif
 
 **Diagnose CI failures by age and spread before reading code.** Unrelated branches failing
 identically at the same step, with the last green run months earlier, is an environment change,
-not anyone's diff. Confirm with `git diff origin/main origin/<branch> -- .github/ fastlane/`
+not anyone's diff. Confirm with `git diff origin/main origin/<branch> -- .github/`
 and `gh run view <id> --log | grep "Image Release"`. When `main` has not run in months, "main is
 green" means nothing.
 
@@ -124,8 +123,8 @@ the first finishing. The workflow declared 7, so two always waited 3 to 4 minute
 A restored cache from a different runner is an untested case whose failure mode is a green tick
 over code that was never really rebuilt. **Revisit when the test step passes 3 to 4 minutes.**
 If done then: the cache key must include the Xcode/Swift version (build products from one Xcode
-are silently invalid for the next, for example 26.5 to 26.6) plus a hash of the `Package.resolved` files. For the build lanes,
-the `clean` action in the `fastlane/Fastfile` lane's `xcodebuild` call blocks DerivedData caching and is the prerequisite to
+are silently invalid for the next, for example 26.5 to 26.6) plus a hash of the `Package.resolved` files. For the build jobs,
+the `clean` action in their `xcodebuild` call blocks DerivedData caching and is the prerequisite to
 remove first.
 
 Options considered and rejected: a runner-per-package matrix (worst cost per second saved, 10x
@@ -167,13 +166,16 @@ matrix is still parked, now as "see whether it is needed" (2026-09-21).
   produce `SwiftLeeds.app`; the App Clip asset catalogs were duplicated in its Resources phase
   (fixed in PR #184); and `aps-environment` is `development` in both apps' entitlements, which
   Xcode rewrites on export, so confirm before a release.
-- The Fastfile's one `build` lane runs `xcodebuild clean build`, unsigned and with no archive,
-  because fastlane's `build_app` cannot read the JSON project format. So CI proves compilation only, in
-  Release for each brand since 2026-10-06. Debug is not built on CI: the test jobs compile the
+- Each build job runs `xcodebuild clean build` itself, unsigned and with no archive. So CI proves
+  compilation only, in Release for each brand since 2026-10-06. Debug is not built on CI: the test
+  jobs compile the
   packages in Debug and Release, the launch jobs compile the App Clip in Debug, and Debug then
   Release in one job measured 8m38s against 4m07s on the critical path (PR #218). Releases are
-  manual (Xcode Archive, then Organizer upload). The planned direction is Fastlane on GitHub
-  Actions, with both apps shipping together.
+  manual (Xcode Archive, then Organizer upload), and both apps ship together.
+- **The repo does not use fastlane.** fastlane's `build_app` reads the project through the
+  `xcodeproj` Ruby gem, which cannot open the JSON format, and fastlane plans no support until the
+  gem has it (fastlane/fastlane#30323). fastlane's upload actions do not read the project, so a
+  release job could still call one on a build that `xcodebuild` archived.
 - `setup-xcode` is nearly free (~2s); the image ships the pinned Xcode.
 - The `maintenance.lock` warnings in CI output are SwiftPM's own cache, not our code.
 
