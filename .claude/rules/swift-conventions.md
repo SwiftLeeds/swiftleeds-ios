@@ -184,6 +184,19 @@ This sits beside the rule against adding structure nobody asked for, from the ot
 rule says do not add a piece nobody asked for, and this one says when a growing list of cases means
 the piece you have is the wrong shape.
 
+### A design token takes the place of the number
+
+**Every `UIDesign` token gets an overload wherever Apple's API takes the number**, so the call
+site names the token: `context.stroke(path, with: shading, lineWidth: .pattern)`, never
+`lineWidth: CGFloat(LineWidth.pattern)`. Ruled by Paul 2026-10-28.
+
+- **The reason is the environment.** A semantic token picks its value from the person's
+  accessibility settings, and a bare number cannot read them. The overload reads them where Apple's
+  API runs.
+- **Add an overload with its first caller**, in the same PR. Do not write a sweep of overloads
+  nobody calls yet.
+- Older call sites that still write `CGFloat(token)` are tracked work, not a precedent.
+
 ## Comments: the discriminators
 
 The general rule is to comment rationale, never the code. These tests decide the hard cases:
