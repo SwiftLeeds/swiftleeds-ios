@@ -199,18 +199,16 @@ Do not name a fixture for a guarantee the type already makes: `Credential.valid`
 because parse-don't-validate means an invalid one cannot exist. Randomised fixtures are under
 evaluation.
 
-## Driving the simulator UI
+## Drive the simulator through the `simulator` agent
 
-To tap through a screen, hand the work to the `simulator` agent (RocketSim, on an iOS 27.2 runtime)
-or the `xcode-device` agent (Xcode's Device Hub). The `driving-the-simulator` skill holds
-the Device Hub steps. A check that ends in "then open the Sponsors tab" is fine to plan on those
-routes.
+To tap through a screen, hand the work to the `simulator` agent (RocketSim, on an iOS 27.2
+runtime). A check that ends in "then open the Sponsors tab" is fine to plan on that route.
 
-If neither agent can run, for example because no suitable runtime is installed, either move the code
-into a package where a test can reach it, or say plainly in the PR that the screen is unverified
-and needs a human.
+If the `simulator` agent cannot run (it ends with a `Needs:` line, for example when RocketSim is
+not installed or a screen read fails), either move the code into a package where a
+test can reach it, or say plainly in the PR that the screen is unverified and needs a human.
 
-History, for anyone who meets the old routes. Before the agents existed, two routes to driving the
+History, for anyone who meets the old routes. Before the agent existed, two routes to driving the
 UI failed on the machine where this was measured (2026-09-11):
 
 - **`idb` was not installed**, so every `ios-simulator-skill` script that reads the accessibility

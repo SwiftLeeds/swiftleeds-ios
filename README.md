@@ -44,7 +44,7 @@ The hook checks only the files you stage. It stays quiet about the violations al
 
 ### Claude Code
 
-If you use [Claude Code](https://claude.com/claude-code), the repo ships its settings, rules, hooks and a few skills in `.claude/`. The other skills it uses are listed in `skills-lock.json`. Install them once per clone. This needs Node 22.20 or later, and the command is experimental, so it may be renamed:
+If you use [Claude Code](https://claude.com/claude-code), the repo ships its settings, rules, hooks and one skill in `.claude/`. The other skills it uses are listed in `skills-lock.json`. Install them once per clone. This needs Node 22.20 or later, and the command is experimental, so it may be renamed:
 
 ```
 npx skills experimental_install
