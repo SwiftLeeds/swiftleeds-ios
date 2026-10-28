@@ -37,6 +37,9 @@ playground.xcworkspace
 .build-shared/
 *.DS_Store
 
+# Python writes bytecode beside a module it imports, such as .github/scripts/xcproj.py
+__pycache__/
+
 # Derived data from a local xcodebuild -derivedDataPath at the repository root
 dd/
 dd-*/

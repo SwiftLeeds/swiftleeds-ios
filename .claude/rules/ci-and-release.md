@@ -115,7 +115,7 @@ A restored cache from a different runner is an untested case whose failure mode 
 over code that was never really rebuilt. **Revisit when the test step passes 3 to 4 minutes.**
 If done then: the cache key must include the Xcode/Swift version (build products from one Xcode
 are silently invalid for the next, for example 26.5 to 26.6) plus a hash of the `Package.resolved` files. For the build lanes,
-`clean: true` in `fastlane/Fastfile` blocks DerivedData caching and is the prerequisite to
+the `clean` action in the `fastlane/Fastfile` lane's `xcodebuild` call blocks DerivedData caching and is the prerequisite to
 remove first.
 
 Options considered and rejected: a runner-per-package matrix (worst cost per second saved, 10x
@@ -157,7 +157,8 @@ matrix is still parked, now as "see whether it is needed" (2026-09-21).
   produce `SwiftLeeds.app`; the App Clip asset catalogs were duplicated in its Resources phase
   (fixed in PR #184); and `aps-environment` is `development` in both apps' entitlements, which
   Xcode rewrites on export, so confirm before a release.
-- The Fastfile's one `build` lane passes `skip_archive: true`, so CI proves compilation only, in
+- The Fastfile's one `build` lane runs `xcodebuild clean build`, unsigned and with no archive,
+  because fastlane's `build_app` cannot read the JSON project format. So CI proves compilation only, in
   Release for each brand since 2026-10-06. Debug is not built on CI: the test jobs compile the
   packages in Debug and Release, the launch jobs compile the App Clip in Debug, and Debug then
   Release in one job measured 8m38s against 4m07s on the critical path (PR #218). Releases are

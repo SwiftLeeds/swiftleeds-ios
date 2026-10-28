@@ -1,0 +1,614 @@
+{
+  "default-configuration": "Release",
+  "configurations": [
+    { "name": "Debug", "file": "Configuration/SwiftLeeds.xcconfig" },
+    { "name": "Debug-KotlinLeeds", "file": "Configuration/KotlinLeeds.xcconfig" },
+    { "name": "Release", "file": "Configuration/SwiftLeeds.xcconfig" },
+    { "name": "Release-KotlinLeeds", "file": "Configuration/KotlinLeeds.xcconfig" },
+  ],
+  "localizations": {
+    "development": "en",
+    "supported": [
+      "Base",
+    ],
+  },
+  "packages": [
+    {
+      "kind": "remote",
+      "repository": "https://github.com/lorenzofiamingo/swiftui-cached-async-image",
+      "version": {
+        "up-to-next-major-version": "2.0.0",
+      },
+    }, {
+      "kind": "remote",
+      "repository": "https://github.com/yazio/ReadabilityModifier",
+      "version": {
+        "version": "1.0.0",
+      },
+    }, {
+      "kind": "remote",
+      "repository": "https://github.com/pointfreeco/swift-dependencies",
+      "version": {
+        "up-to-next-major-version": "1.0.0",
+      },
+    },
+  ],
+  "files": [
+    { "path": "SwiftLeedsPackage" },
+    { "path": "Settings.bundle", "target-membership": [ "SwiftLeeds/resources" ] },
+    { "path": "KotlinLeedsWidgetExtension.entitlements", "index": true },
+    { "path": "SwiftLeedsWidgetExtension.entitlements" },
+    {
+      "kind": "group",
+      "path": "Configuration",
+      "children": [
+        { "path": "KotlinLeeds.xcconfig", "index": true },
+        { "path": "SwiftLeeds.xcconfig", "index": true },
+      ],
+    }, {
+      "kind": "group",
+      "name": "Frameworks",
+      "children": [
+        { "path": "<SDK>/System/Library/Frameworks/SwiftUI.framework", "target-membership": [ "SwiftLeedsWidgetExtension/frameworks" ] },
+        { "path": "<SDK>/System/Library/Frameworks/WidgetKit.framework", "target-membership": [ "SwiftLeedsWidgetExtension/frameworks" ] },
+      ],
+    }, {
+      "kind": "group",
+      "path": "Packages",
+      "children": [
+        {
+          "kind": "group",
+          "path": "DesignSystem",
+          "children": [
+            { "path": "UIComponents" },
+            { "path": "UIDesign" },
+            { "path": "UITheme" },
+          ],
+        }, {
+          "kind": "group",
+          "path": "Feature",
+          "children": [
+            { "path": "AboutFeature" },
+            { "path": "AuthenticationFeature" },
+            { "path": "LocalFeature" },
+            { "path": "ScheduleFeature" },
+            { "path": "SponsorsFeature" },
+          ],
+        }, {
+          "kind": "group",
+          "path": "FeatureUI",
+          "children": [
+            { "path": "AboutUI" },
+            { "path": "AuthenticationUI" },
+            { "path": "LocalUI" },
+            { "path": "ScheduleUI" },
+            { "path": "SettingsUI" },
+            { "path": "SponsorsUI" },
+          ],
+        }, {
+          "kind": "group",
+          "path": "Kit",
+          "children": [
+            { "path": "LogKit" },
+            { "path": "NetworkKit" },
+            { "path": "SecureStorageKit" },
+          ],
+        },
+      ],
+    }, {
+      "kind": "group",
+      "name": "Products",
+      "children": [
+        { "path": "<PRODUCTS>/SwiftLeeds.app", "id": "AECB295327417F9D00CDC983", "type": "wrapper.application", "index": false },
+        { "path": "<PRODUCTS>/SwiftLeedsAppClip.app", "id": "0B4CB3C528EAF19000246E62", "type": "wrapper.application", "index": false, "target-membership": [ { "build-phase": "SwiftLeeds/copy/Embed App Clips", "header-preservation": "remove-on-copy" } ] },
+        { "path": "<PRODUCTS>/SwiftLeedsWidgetExtension.appex", "id": "74A09FDD28C6778C00E03F39", "type": "wrapper.app-extension", "index": false, "target-membership": [ { "build-phase": "SwiftLeeds/copy/Embed Foundation Extensions", "header-preservation": "remove-on-copy" } ] },
+      ],
+    }, {
+      "kind": "group",
+      "path": "SwiftLeeds",
+      "children": [
+        { "path": "KotlinLeeds.entitlements", "index": true },
+        { "path": "SwiftLeeds.entitlements" },
+        {
+          "kind": "group",
+          "path": "App",
+          "children": [
+            { "path": "Info.plist" },
+            { "path": "AppDelegate.swift", "target-membership": [ "SwiftLeeds/compile-sources" ] },
+            { "path": "AppState.swift", "target-membership": [ "SwiftLeeds/compile-sources" ] },
+            { "path": "AppVersion+Current.swift", "index": true, "target-membership": [ "SwiftLeeds/compile-sources" ] },
+            {
+              "path": "ConferenceConfig.swift",
+              "index": true,
+              "target-membership": [
+                "SwiftLeeds/compile-sources",
+                "SwiftLeedsWidgetExtension/compile-sources",
+                "SwiftLeedsAppClip/compile-sources",
+              ],
+            },
+            { "path": "ContactEmail+Conference.swift", "index": true, "target-membership": [ "SwiftLeeds/compile-sources" ] },
+            { "path": "LogCategories.swift", "index": true, "target-membership": [ "SwiftLeeds/compile-sources" ] },
+            { "path": "SwiftLeedsApp.swift", "target-membership": [ "SwiftLeeds/compile-sources" ] },
+            { "path": "TabItems.swift", "target-membership": [ "SwiftLeeds/compile-sources" ] },
+          ],
+        }, {
+          "kind": "group",
+          "path": "Extension",
+          "children": [
+            { "path": "URLSession+SwiftLeeds.swift", "target-membership": [ "SwiftLeeds/compile-sources" ] },
+          ],
+        }, {
+          "kind": "group",
+          "path": "Push",
+          "children": [
+            { "path": "AppDelegate+Push.swift", "target-membership": [ "SwiftLeeds/compile-sources" ] },
+            { "path": "TokenDetails.swift", "target-membership": [ "SwiftLeeds/compile-sources" ] },
+          ],
+        }, {
+          "kind": "group",
+          "path": "Resources",
+          "children": [
+            {
+              "path": "KotlinLeedsAssets.xcassets",
+              "index": true,
+              "target-membership": [
+                "SwiftLeeds/resources",
+                "SwiftLeedsAppClip/resources",
+              ],
+            }, {
+              "path": "KotlinLeedsColors.xcassets",
+              "index": true,
+              "target-membership": [
+                "SwiftLeeds/resources",
+                "SwiftLeedsAppClip/resources",
+              ],
+            }, {
+              "path": "SwiftLeedsAssets.xcassets",
+              "index": true,
+              "target-membership": [
+                "SwiftLeeds/resources",
+                "SwiftLeedsAppClip/resources",
+              ],
+            }, {
+              "path": "SwiftLeedsColors.xcassets",
+              "index": true,
+              "target-membership": [
+                "SwiftLeeds/resources",
+                "SwiftLeedsAppClip/resources",
+              ],
+            },
+          ],
+        }, {
+          "kind": "group",
+          "path": "Views",
+          "children": [
+            {
+              "kind": "group",
+              "path": "Tab",
+              "children": [
+                { "path": "SidebarMainView.swift", "target-membership": [ "SwiftLeeds/compile-sources" ] },
+                { "path": "SidebarView.swift", "target-membership": [ "SwiftLeeds/compile-sources" ] },
+                { "path": "Tabs.swift", "target-membership": [ "SwiftLeeds/compile-sources" ] },
+                { "path": "TabsMainView.swift", "target-membership": [ "SwiftLeeds/compile-sources" ] },
+              ],
+            },
+          ],
+        },
+      ],
+    }, {
+      "kind": "group",
+      "path": "SwiftLeedsAppClip",
+      "children": [
+        { "path": "KotlinLeedsAppClip.entitlements", "index": true },
+        { "path": "SwiftLeedsAppClip.entitlements" },
+        { "path": "Info.plist" },
+        { "path": "SwiftLeedsAppClipApp.swift", "target-membership": [ "SwiftLeedsAppClip/compile-sources" ] },
+        { "path": "KotlinLeedsAssets.xcassets", "index": true, "target-membership": [ "SwiftLeedsAppClip/resources" ] },
+        { "path": "SwiftLeedsAssets.xcassets", "index": true, "target-membership": [ "SwiftLeedsAppClip/resources" ] },
+        {
+          "kind": "group",
+          "path": "Preview Content",
+          "children": [
+            { "path": "Preview Assets.xcassets", "target-membership": [ "SwiftLeedsAppClip/resources" ] },
+          ],
+        },
+      ],
+    }, {
+      "kind": "group",
+      "path": "SwiftLeedsWidget",
+      "children": [
+        { "path": "Info.plist" },
+        { "path": "SwiftLeedsMediumWidgetView.swift", "target-membership": [ "SwiftLeedsWidgetExtension/compile-sources" ] },
+        { "path": "SwiftLeedsSmallWidgetView.swift", "target-membership": [ "SwiftLeedsWidgetExtension/compile-sources" ] },
+        { "path": "SwiftLeedsWidget.swift", "target-membership": [ "SwiftLeedsWidgetExtension/compile-sources" ] },
+        { "path": "SwiftLeedsWidgetEntryView.swift", "target-membership": [ "SwiftLeedsWidgetExtension/compile-sources" ] },
+        { "path": "KotlinLeedsAssets.xcassets", "index": true, "target-membership": [ "SwiftLeedsWidgetExtension/resources" ] },
+        { "path": "SwiftLeedsAssets.xcassets", "index": true, "target-membership": [ "SwiftLeedsWidgetExtension/resources" ] },
+        {
+          "kind": "group",
+          "path": "WidgetSetup",
+          "children": [
+            { "path": "Provider.swift", "target-membership": [ "SwiftLeedsWidgetExtension/compile-sources" ] },
+            { "path": "SwiftLeedsWidgetEntry.swift", "target-membership": [ "SwiftLeedsWidgetExtension/compile-sources" ] },
+            { "path": "WidgetConstants.swift", "target-membership": [ "SwiftLeedsWidgetExtension/compile-sources" ] },
+          ],
+        },
+      ],
+    },
+  ],
+  "targets": [
+    {
+      "name": "SwiftLeeds",
+      "id": "AECB295227417F9D00CDC983",
+      "product": "Products/SwiftLeeds.app",
+      "product-type": "application",
+      "specialized-configurations": [
+        { "name": "Debug", "file": "Configuration/SwiftLeeds.xcconfig" },
+        { "name": "Debug-KotlinLeeds", "file": "Configuration/KotlinLeeds.xcconfig" },
+        { "name": "Release", "file": "Configuration/SwiftLeeds.xcconfig" },
+        { "name": "Release-KotlinLeeds", "file": "Configuration/KotlinLeeds.xcconfig" },
+      ],
+      "dependencies": [
+        "SwiftLeedsWidgetExtension",
+        "SwiftLeedsAppClip",
+      ],
+      "build-phases": [
+        "compile-sources",
+        "frameworks",
+        "resources",
+        {
+          "kind": "copy",
+          "name": "Embed Foundation Extensions",
+          "bundle-base-path": "plugins-directory",
+        }, {
+          "kind": "copy",
+          "name": "Embed App Clips",
+          "bundle-base-path": "build-products-directory",
+          "relative-path": "$(CONTENTS_FOLDER_PATH)/AppClips",
+        },
+      ],
+      "package-product-members": [
+        {
+          "product-name": "AboutFeature",
+          "build-phase": { "build-phase": "frameworks" },
+        }, {
+          "product-name": "AboutUI",
+          "build-phase": { "build-phase": "frameworks" },
+        }, {
+          "product-name": "AuthenticationApplication",
+          "build-phase": { "build-phase": "frameworks" },
+        }, {
+          "product-name": "AuthenticationInfrastructure",
+          "build-phase": { "build-phase": "frameworks" },
+        }, {
+          "product-name": "AuthenticationUI",
+          "build-phase": { "build-phase": "frameworks" },
+        }, {
+          "product-name": "LocalFeature",
+          "build-phase": { "build-phase": "frameworks" },
+        }, {
+          "product-name": "LocalUI",
+          "build-phase": { "build-phase": "frameworks" },
+        }, {
+          "product-name": "LogKit",
+          "build-phase": { "build-phase": "frameworks" },
+        }, {
+          "product-name": "LogKitUnified",
+          "build-phase": { "build-phase": "frameworks" },
+        }, {
+          "product-name": "NetworkKit",
+          "build-phase": { "build-phase": "frameworks" },
+        }, {
+          "product-name": "ScheduleInfrastructure",
+          "build-phase": { "build-phase": "frameworks" },
+        }, {
+          "product-name": "ScheduleUI",
+          "build-phase": { "build-phase": "frameworks" },
+        }, {
+          "product-name": "SecureStorageKit",
+          "build-phase": { "build-phase": "frameworks" },
+        }, {
+          "product-name": "SecureStorageKitKeychain",
+          "build-phase": { "build-phase": "frameworks" },
+        }, {
+          "product-name": "SettingsUI",
+          "build-phase": { "build-phase": "frameworks" },
+        }, {
+          "product-name": "SponsorsFeature",
+          "build-phase": { "build-phase": "frameworks" },
+        }, {
+          "product-name": "SponsorsUI",
+          "build-phase": { "build-phase": "frameworks" },
+        }, {
+          "product-name": "UIAssets",
+          "build-phase": { "build-phase": "frameworks" },
+        }, {
+          "product-name": "UIComponents",
+          "build-phase": { "build-phase": "frameworks" },
+        }, {
+          "product-name": "UIDesign",
+          "build-phase": { "build-phase": "frameworks" },
+        }, {
+          "product-name": "UITheme",
+          "build-phase": { "build-phase": "frameworks" },
+        }, {
+          "package": "ReadabilityModifier",
+          "product-name": "ReadabilityModifier",
+          "build-phase": { "build-phase": "frameworks" },
+        }, {
+          "package": "swift-dependencies",
+          "product-name": "Dependencies",
+          "build-phase": { "build-phase": "frameworks" },
+        }, {
+          "package": "swiftui-cached-async-image",
+          "product-name": "CachedAsyncImage",
+          "build-phase": { "build-phase": "frameworks" },
+        },
+      ],
+      "build-settings": {
+        "ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES": "AppIcon-Space AppIcon-Olympics",
+        "ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME": "AccentColor",
+        "CODE_SIGN_IDENTITY": "Apple Development",
+        "CODE_SIGN_STYLE": "Automatic",
+        "CURRENT_PROJECT_VERSION": "0",
+        "ENABLE_PREVIEWS": "YES",
+        "GENERATE_INFOPLIST_FILE": "YES",
+        "INFOPLIST_FILE": "SwiftLeeds/App/Info.plist",
+        "INFOPLIST_KEY_CFBundleDisplayName": "$(APP_DISPLAY_NAME)",
+        "INFOPLIST_KEY_LSApplicationCategoryType": "public.app-category.developer-tools",
+        "INFOPLIST_KEY_UIApplicationSceneManifest_Generation": "YES",
+        "INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents": "YES",
+        "INFOPLIST_KEY_UIRequiresFullScreen": "YES",
+        "INFOPLIST_KEY_UISupportedInterfaceOrientations": "UIInterfaceOrientationPortrait",
+        "INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad": "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown",
+        "IPHONEOS_DEPLOYMENT_TARGET": "26.0",
+        "LD_RUNPATH_SEARCH_PATHS": [
+          "$(inherited)",
+          "@executable_path/Frameworks",
+        ],
+        "MARKETING_VERSION": "1.5.0",
+        "PRODUCT_NAME": "$(TARGET_NAME)",
+        "PROVISIONING_PROFILE_SPECIFIER": "",
+        "SWIFT_EMIT_LOC_STRINGS": "YES",
+        "SWIFT_VERSION": "5.0",
+        "TARGETED_DEVICE_FAMILY": "1,2",
+      },
+    }, {
+      "name": "SwiftLeedsWidgetExtension",
+      "id": "74A09FDC28C6778C00E03F39",
+      "product": "Products/SwiftLeedsWidgetExtension.appex",
+      "product-type": "app-extension",
+      "specialized-configurations": [
+        { "name": "Debug", "file": "Configuration/SwiftLeeds.xcconfig" },
+        { "name": "Debug-KotlinLeeds", "file": "Configuration/KotlinLeeds.xcconfig" },
+        { "name": "Release", "file": "Configuration/SwiftLeeds.xcconfig" },
+        { "name": "Release-KotlinLeeds", "file": "Configuration/KotlinLeeds.xcconfig" },
+      ],
+      "build-phases": [
+        "compile-sources",
+        "frameworks",
+        "resources",
+      ],
+      "package-product-members": [
+        {
+          "product-name": "NetworkKit",
+          "build-phase": { "build-phase": "frameworks" },
+        }, {
+          "product-name": "ScheduleApplication",
+          "build-phase": { "build-phase": "frameworks" },
+        }, {
+          "product-name": "ScheduleDomain",
+          "build-phase": { "build-phase": "frameworks" },
+        }, {
+          "product-name": "ScheduleInfrastructure",
+          "build-phase": { "build-phase": "frameworks" },
+        }, {
+          "product-name": "UIAssets",
+          "build-phase": { "build-phase": "frameworks" },
+        }, {
+          "product-name": "UIDesign",
+          "build-phase": { "build-phase": "frameworks" },
+        }, {
+          "package": "swift-dependencies",
+          "product-name": "Dependencies",
+          "build-phase": { "build-phase": "frameworks" },
+        },
+      ],
+      "build-settings": {
+        "ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME": "AccentColor",
+        "ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME": "WidgetBackground",
+        "CODE_SIGN_ENTITLEMENTS[config=Debug-KotlinLeeds]": "KotlinLeedsWidgetExtension.entitlements",
+        "CODE_SIGN_ENTITLEMENTS[config=Debug]": "SwiftLeedsWidgetExtension.entitlements",
+        "CODE_SIGN_ENTITLEMENTS[config=Release-KotlinLeeds]": "KotlinLeedsWidgetExtension.entitlements",
+        "CODE_SIGN_ENTITLEMENTS[config=Release]": "SwiftLeedsWidgetExtension.entitlements",
+        "CODE_SIGN_IDENTITY": "Apple Development",
+        "CODE_SIGN_STYLE": "Automatic",
+        "CURRENT_PROJECT_VERSION": "0",
+        "GENERATE_INFOPLIST_FILE": "YES",
+        "INFOPLIST_FILE": "SwiftLeedsWidget/Info.plist",
+        "INFOPLIST_KEY_CFBundleDisplayName": "$(APP_DISPLAY_NAME)",
+        "INFOPLIST_KEY_NSHumanReadableCopyright": "",
+        "IPHONEOS_DEPLOYMENT_TARGET": "26.0",
+        "LD_RUNPATH_SEARCH_PATHS": [
+          "$(inherited)",
+          "@executable_path/Frameworks",
+          "@executable_path/../../Frameworks",
+        ],
+        "MARKETING_VERSION": "1.5.0",
+        "PRODUCT_BUNDLE_IDENTIFIER[config=Debug-KotlinLeeds]": "uk.co.kotlinleeds.KotlinLeeds.KotlinLeedsWidget",
+        "PRODUCT_BUNDLE_IDENTIFIER[config=Debug]": "uk.co.swiftleeds.SwiftLeeds.SwiftLeedsWidget",
+        "PRODUCT_BUNDLE_IDENTIFIER[config=Release-KotlinLeeds]": "uk.co.kotlinleeds.KotlinLeeds.KotlinLeedsWidget",
+        "PRODUCT_BUNDLE_IDENTIFIER[config=Release]": "uk.co.swiftleeds.SwiftLeeds.SwiftLeedsWidget",
+        "PRODUCT_NAME": "$(TARGET_NAME)",
+        "PROVISIONING_PROFILE_SPECIFIER": "",
+        "SKIP_INSTALL": "YES",
+        "SWIFT_EMIT_LOC_STRINGS": "YES",
+        "SWIFT_VERSION": "5.0",
+        "TARGETED_DEVICE_FAMILY": "1,2",
+      },
+    }, {
+      "name": "SwiftLeedsAppClip",
+      "id": "0B4CB3C428EAF19000246E62",
+      "product": "Products/SwiftLeedsAppClip.app",
+      "product-type": "application.on-demand-install-capable",
+      "specialized-configurations": [
+        { "name": "Debug", "file": "Configuration/SwiftLeeds.xcconfig" },
+        { "name": "Debug-KotlinLeeds", "file": "Configuration/KotlinLeeds.xcconfig" },
+        { "name": "Release", "file": "Configuration/SwiftLeeds.xcconfig" },
+        { "name": "Release-KotlinLeeds", "file": "Configuration/KotlinLeeds.xcconfig" },
+      ],
+      "build-phases": [
+        "compile-sources",
+        "frameworks",
+        "resources",
+      ],
+      "package-product-members": [
+        {
+          "product-name": "NetworkKit",
+          "build-phase": { "build-phase": "frameworks" },
+        }, {
+          "product-name": "ScheduleInfrastructure",
+          "build-phase": { "build-phase": "frameworks" },
+        }, {
+          "product-name": "ScheduleUI",
+          "build-phase": { "build-phase": "frameworks" },
+        }, {
+          "product-name": "UIDesign",
+          "build-phase": { "build-phase": "frameworks" },
+        }, {
+          "package": "swift-dependencies",
+          "product-name": "Dependencies",
+          "build-phase": { "build-phase": "frameworks" },
+        },
+      ],
+      "build-settings": {
+        "ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES": "AppIcon-Space AppIcon-Olympics",
+        "ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME": "AccentColor",
+        "CLANG_CXX_LANGUAGE_STANDARD": "gnu++20",
+        "CODE_SIGN_ENTITLEMENTS[config=Debug-KotlinLeeds]": "SwiftLeedsAppClip/KotlinLeedsAppClip.entitlements",
+        "CODE_SIGN_ENTITLEMENTS[config=Debug]": "SwiftLeedsAppClip/SwiftLeedsAppClip.entitlements",
+        "CODE_SIGN_ENTITLEMENTS[config=Release-KotlinLeeds]": "SwiftLeedsAppClip/KotlinLeedsAppClip.entitlements",
+        "CODE_SIGN_ENTITLEMENTS[config=Release]": "SwiftLeedsAppClip/SwiftLeedsAppClip.entitlements",
+        "CODE_SIGN_IDENTITY": "Apple Development",
+        "CODE_SIGN_STYLE": "Automatic",
+        "CURRENT_PROJECT_VERSION": "0",
+        "DEVELOPMENT_ASSET_PATHS": "\"SwiftLeedsAppClip/Preview Content\"",
+        "ENABLE_PREVIEWS": "YES",
+        "GENERATE_INFOPLIST_FILE": "YES",
+        "INFOPLIST_FILE": "SwiftLeedsAppClip/Info.plist",
+        "INFOPLIST_KEY_CFBundleDisplayName[config=Debug-KotlinLeeds]": "KotlinLeeds",
+        "INFOPLIST_KEY_CFBundleDisplayName[config=Debug]": "SwiftLeeds",
+        "INFOPLIST_KEY_CFBundleDisplayName[config=Release-KotlinLeeds]": "KotlinLeeds",
+        "INFOPLIST_KEY_CFBundleDisplayName[config=Release]": "SwiftLeeds",
+        "INFOPLIST_KEY_LSApplicationCategoryType": "public.app-category.developer-tools",
+        "INFOPLIST_KEY_UIApplicationSceneManifest_Generation": "YES",
+        "INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents": "YES",
+        "INFOPLIST_KEY_UILaunchScreen_Generation": "YES",
+        "INFOPLIST_KEY_UIRequiresFullScreen": "YES",
+        "INFOPLIST_KEY_UISupportedInterfaceOrientations": "UIInterfaceOrientationPortrait",
+        "INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad": "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown",
+        "IPHONEOS_DEPLOYMENT_TARGET": "26.0",
+        "LD_RUNPATH_SEARCH_PATHS": [
+          "$(inherited)",
+          "@executable_path/Frameworks",
+        ],
+        "MARKETING_VERSION": "1.5.0",
+        "PRODUCT_BUNDLE_IDENTIFIER[config=Debug-KotlinLeeds]": "uk.co.kotlinleeds.KotlinLeeds.Clip",
+        "PRODUCT_BUNDLE_IDENTIFIER[config=Debug]": "uk.co.swiftleeds.SwiftLeeds.Clip",
+        "PRODUCT_BUNDLE_IDENTIFIER[config=Release-KotlinLeeds]": "uk.co.kotlinleeds.KotlinLeeds.Clip",
+        "PRODUCT_BUNDLE_IDENTIFIER[config=Release]": "uk.co.swiftleeds.SwiftLeeds.Clip",
+        "PRODUCT_NAME": "$(TARGET_NAME)",
+        "PROVISIONING_PROFILE_SPECIFIER": "",
+        "SWIFT_EMIT_LOC_STRINGS": "YES",
+        "SWIFT_VERSION": "5.0",
+        "TARGETED_DEVICE_FAMILY": "1,2",
+      },
+    },
+  ],
+  "build-settings": {
+    "ALWAYS_SEARCH_USER_PATHS": "NO",
+    "CLANG_ANALYZER_NONNULL": "YES",
+    "CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION": "YES_AGGRESSIVE",
+    "CLANG_CXX_LANGUAGE_STANDARD": "gnu++17",
+    "CLANG_CXX_LIBRARY": "libc++",
+    "CLANG_ENABLE_MODULES": "YES",
+    "CLANG_ENABLE_OBJC_ARC": "YES",
+    "CLANG_ENABLE_OBJC_WEAK": "YES",
+    "CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING": "YES",
+    "CLANG_WARN_BOOL_CONVERSION": "YES",
+    "CLANG_WARN_COMMA": "YES",
+    "CLANG_WARN_CONSTANT_CONVERSION": "YES",
+    "CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS": "YES",
+    "CLANG_WARN_DIRECT_OBJC_ISA_USAGE": "YES_ERROR",
+    "CLANG_WARN_DOCUMENTATION_COMMENTS": "YES",
+    "CLANG_WARN_EMPTY_BODY": "YES",
+    "CLANG_WARN_ENUM_CONVERSION": "YES",
+    "CLANG_WARN_INFINITE_RECURSION": "YES",
+    "CLANG_WARN_INT_CONVERSION": "YES",
+    "CLANG_WARN_NON_LITERAL_NULL_CONVERSION": "YES",
+    "CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF": "YES",
+    "CLANG_WARN_OBJC_LITERAL_CONVERSION": "YES",
+    "CLANG_WARN_OBJC_ROOT_CLASS": "YES_ERROR",
+    "CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER": "YES",
+    "CLANG_WARN_RANGE_LOOP_ANALYSIS": "YES",
+    "CLANG_WARN_STRICT_PROTOTYPES": "YES",
+    "CLANG_WARN_SUSPICIOUS_MOVE": "YES",
+    "CLANG_WARN_UNGUARDED_AVAILABILITY": "YES_AGGRESSIVE",
+    "CLANG_WARN_UNREACHABLE_CODE": "YES",
+    "CLANG_WARN__DUPLICATE_METHOD_MATCH": "YES",
+    "COPY_PHASE_STRIP": "NO",
+    "DEBUG_INFORMATION_FORMAT[config=Debug-KotlinLeeds]": "dwarf",
+    "DEBUG_INFORMATION_FORMAT[config=Debug]": "dwarf",
+    "DEBUG_INFORMATION_FORMAT[config=Release-KotlinLeeds]": "dwarf-with-dsym",
+    "DEBUG_INFORMATION_FORMAT[config=Release]": "dwarf-with-dsym",
+    "DEVELOPMENT_TEAM": "K33K6V7FBA",
+    "ENABLE_NS_ASSERTIONS[config=Release-KotlinLeeds]": "NO",
+    "ENABLE_NS_ASSERTIONS[config=Release]": "NO",
+    "ENABLE_STRICT_OBJC_MSGSEND": "YES",
+    "ENABLE_TESTABILITY[config=Debug-KotlinLeeds]": "YES",
+    "ENABLE_TESTABILITY[config=Debug]": "YES",
+    "ENABLE_USER_SCRIPT_SANDBOXING": "YES",
+    "GCC_C_LANGUAGE_STANDARD": "gnu11",
+    "GCC_DYNAMIC_NO_PIC[config=Debug-KotlinLeeds]": "NO",
+    "GCC_DYNAMIC_NO_PIC[config=Debug]": "NO",
+    "GCC_NO_COMMON_BLOCKS": "YES",
+    "GCC_OPTIMIZATION_LEVEL[config=Debug-KotlinLeeds]": "0",
+    "GCC_OPTIMIZATION_LEVEL[config=Debug]": "0",
+    "GCC_PREPROCESSOR_DEFINITIONS[config=Debug-KotlinLeeds]": [
+      "DEBUG=1",
+      "$(inherited)",
+    ],
+    "GCC_PREPROCESSOR_DEFINITIONS[config=Debug]": [
+      "DEBUG=1",
+      "$(inherited)",
+    ],
+    "GCC_WARN_64_TO_32_BIT_CONVERSION": "YES",
+    "GCC_WARN_ABOUT_RETURN_TYPE": "YES_ERROR",
+    "GCC_WARN_UNDECLARED_SELECTOR": "YES",
+    "GCC_WARN_UNINITIALIZED_AUTOS": "YES_AGGRESSIVE",
+    "GCC_WARN_UNUSED_FUNCTION": "YES",
+    "GCC_WARN_UNUSED_VARIABLE": "YES",
+    "IPHONEOS_DEPLOYMENT_TARGET": "26.0",
+    "MTL_ENABLE_DEBUG_INFO[config=Debug-KotlinLeeds]": "INCLUDE_SOURCE",
+    "MTL_ENABLE_DEBUG_INFO[config=Debug]": "INCLUDE_SOURCE",
+    "MTL_ENABLE_DEBUG_INFO[config=Release-KotlinLeeds]": "NO",
+    "MTL_ENABLE_DEBUG_INFO[config=Release]": "NO",
+    "MTL_FAST_MATH": "YES",
+    "ONLY_ACTIVE_ARCH[config=Debug-KotlinLeeds]": "YES",
+    "ONLY_ACTIVE_ARCH[config=Debug]": "YES",
+    "SDKROOT": "iphoneos",
+    "STRING_CATALOG_GENERATE_SYMBOLS": "YES",
+    "SWIFT_ACTIVE_COMPILATION_CONDITIONS[config=Debug-KotlinLeeds]": "DEBUG",
+    "SWIFT_ACTIVE_COMPILATION_CONDITIONS[config=Debug]": "DEBUG",
+    "SWIFT_COMPILATION_MODE[config=Release-KotlinLeeds]": "wholemodule",
+    "SWIFT_COMPILATION_MODE[config=Release]": "wholemodule",
+    "SWIFT_OPTIMIZATION_LEVEL[config=Debug-KotlinLeeds]": "-Onone",
+    "SWIFT_OPTIMIZATION_LEVEL[config=Debug]": "-Onone",
+    "SWIFT_OPTIMIZATION_LEVEL[config=Release-KotlinLeeds]": "-O",
+    "SWIFT_OPTIMIZATION_LEVEL[config=Release]": "-O",
+    "VALIDATE_PRODUCT[config=Release-KotlinLeeds]": "YES",
+    "VALIDATE_PRODUCT[config=Release]": "YES",
+  },
+  "last-upgrade": "26.0",
+  "last-swift-update": "14.0",
+}

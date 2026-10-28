@@ -1,3 +1,6 @@
+require "fileutils"
+require "shellwords"
+
 default_platform(:ios)
 
 # fastlane otherwise writes fastlane/README.md on every run, and the file is
@@ -7,21 +10,32 @@ skip_docs
 platform :ios do
   desc "Build a scheme in a configuration. Both scheme: and configuration: are required; buildlog_path: is optional"
   lane :build do |options|
-    params = {
-      project: "SwiftLeeds.xcodeproj",
-      # A missing option must fail the lane, never build a default.
-      configuration: options.fetch(:configuration),
-      scheme: options.fetch(:scheme),
-      clean: true,
-      skip_archive: true,
-      skip_codesigning: true,
-      xcargs: "-skipPackagePluginValidation"
-    }
-    # The folder gym keeps its raw xcodebuild log in. The log holds every compile
-    # command, which `swiftlint analyze` reads. Without the option gym writes to
-    # its default folder under ~/Library/Logs, which a caller cannot rely on. The
-    # key is added only when given, so an absent option leaves gym's default.
-    params[:buildlog_path] = options[:buildlog_path] if options[:buildlog_path]
-    build_app(params)
+    # A missing option must fail the lane, never build a default.
+    configuration = options.fetch(:configuration)
+    scheme = options.fetch(:scheme)
+
+    # This calls xcodebuild, not build_app: build_app reads the project through
+    # the xcodeproj gem, which cannot open the JSON project format.
+    command = [
+      "xcodebuild", "clean", "build",
+      "-project", "SwiftLeeds.xcodeproj",
+      "-scheme", scheme,
+      "-configuration", configuration,
+      "-destination", "generic/platform=iOS",
+      "-skipPackagePluginValidation",
+      "CODE_SIGNING_ALLOWED=NO"
+    ].shelljoin
+
+    # The folder that keeps the raw xcodebuild log, one file per build. The log
+    # holds every compile command, which `swiftlint analyze` reads.
+    if options[:buildlog_path]
+      folder = File.expand_path(options[:buildlog_path], "..")
+      FileUtils.mkdir_p(folder)
+      log = File.join(folder, "#{scheme}.log")
+      command = "set -o pipefail && #{command} 2>&1 | tee #{log.shellescape}"
+    end
+
+    # Ruby code in a Fastfile runs from the fastlane folder.
+    Dir.chdir("..") { sh(command) }
   end
 end
