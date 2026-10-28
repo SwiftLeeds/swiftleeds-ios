@@ -395,20 +395,28 @@ APPEARANCES = [
 ]
 
 # One tone per appearance, in APPEARANCES order: light, dark, light high contrast, dark high contrast.
+# The dark solid fill is one step lighter with Increase Contrast, because Apple's dark sheet surfaces
+# get lighter with it too, and the fill must keep 3:1 against the tertiary sheet surface.
 ROLE_TONES = {
     "text": (45, 75, 40, 80),
-    "solid": (50, 60, 40, 65),
+    "solid": (50, 70, 40, 75),
     "onSolid": (95, 5, 95, 5),
     "subtle": (95, 20, 95, 15),
 }
 
 # Warning is a pale yellow fill with dark text, as Carbon's and Atlassian's. The light Increase
 # Contrast fill stays t85: a darker text on it raises the ratio, and a t80 fill lowered it.
+# Neutral and success take the lowest dark fill tone that reaches 3:1 on every dark surface, one
+# step below the default. Error takes the same tones, so its coral stays clear of the SwiftLeeds
+# orange fill.
 # build_catalog fails on a key that names no family or role.
 FAMILY_ROLE_TONES = {
     ("warning", "text"): (50, 75, 45, 80),
     ("warning", "solid"): (85, 80, 85, 85),
     ("warning", "onSolid"): (10, 5, 5, 5),
+    ("neutral", "solid"): (50, 65, 40, 70),
+    ("success", "solid"): (50, 65, 40, 70),
+    ("error", "solid"): (50, 65, 40, 70),
 }
 
 
@@ -422,11 +430,14 @@ class Lightness:
 
 # A brand's role entry per appearance is a grid tone (an int) or Lightness(...).
 # SwiftLeeds, product owner's ruling of 2026-10-26: a bright orange fill, lighter in dark Increase
-# Contrast, with a black label (t5), which keeps clear of the error fill. KotlinLeeds keeps the defaults.
+# Contrast, with a black label (t5), which keeps clear of the error fill. KotlinLeeds keeps the
+# default roles, except its fill, which is t60 dark (t65 with Increase Contrast): a lighter purple
+# loses chroma and moves toward the info fill.
 # build_catalog fails on a key that names no brand or role.
 BRAND_ROLE_TONES = {
     ("swiftLeeds", "solid"): (Lightness(0.72), Lightness(0.72), Lightness(0.72), Lightness(0.77)),
     ("swiftLeeds", "onSolid"): (5, 5, 5, 5),
+    ("kotlinLeeds", "solid"): (50, 60, 40, 65),
 }
 
 
@@ -453,7 +464,7 @@ def entry_rgb(entry, ramps, hue_name):
 # distance times 100 (about 2 is a just-noticeable difference). Text: the rejected warning and
 # error text pair measured under 8 in every light appearance, and the lowest shipped AA text pair
 # (GOV.UK's tags) measured 9.4, so 10 sits above both. Fills: Carbon's and Atlassian's warning
-# and error fills sit at 34, and our closest status fill pair at 27.
+# and error fills sit at 34, and our closest status fill pair at 23.9.
 SEPARATION_FLOORS = {"text": 10.0, "solid": 20.0}
 # The families checked on text, and reported on subtle. Sponsor is in: its text shares screens
 # with status text.

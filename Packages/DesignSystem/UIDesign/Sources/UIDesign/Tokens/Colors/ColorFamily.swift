@@ -45,8 +45,8 @@ package enum ColorFamily: CaseIterable, Equatable, Hashable, Sendable {
 
     /// The color for a filled shape behind ``onSolid``, such as a status dot or a band.
     ///
-    /// It reaches 4.5:1 against ``onSolid``. In dark appearances every family reaches 3:1 against
-    /// `surface` and `secondarySurface`; in light appearances every family but ``warning`` does.
+    /// It reaches 4.5:1 against ``onSolid``. It reaches 3:1 against every surface, grouped or not,
+    /// except ``warning`` in light appearances, whose fill is pale.
     package var solid: Color { color(for: .solid) }
 
     /// The color for text or a symbol on ``solid``.
