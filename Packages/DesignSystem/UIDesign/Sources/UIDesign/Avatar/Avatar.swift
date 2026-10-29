@@ -188,7 +188,6 @@ private let previewName = PersonNameComponents(givenName: "Member", familyName: 
             Avatar(url: nil, size: .large, status: AvatarStatus("Checked in"))
 
             Avatar(url: nil, size: .large)
-                .avatarStyle(.rounded(cornerRadius: .small))
         }
         .avatarStyle(.rounded)
     }
