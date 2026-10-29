@@ -1,12 +1,20 @@
 import SwiftUI
 
 extension View {
-    /// Adds a space around this view.
+    /// Adds an equal padding amount to all edges of this view.
+    ///
+    /// - Parameter spacing: The amount to pad this view on each edge.
+    /// - Returns: A view that's padded by the specified amount on all edges.
     public func padding(_ spacing: Spacing) -> some View {
         padding(CGFloat(spacing))
     }
 
-    /// Adds a space along the given edges of this view.
+    /// Adds an equal padding amount to specific edges of this view.
+    ///
+    /// - Parameters:
+    ///   - edges: The set of edges to pad for this view.
+    ///   - spacing: The amount to pad this view on the specified edges.
+    /// - Returns: A view that's padded by the specified amount on the specified edges.
     public func padding(_ edges: Edge.Set, _ spacing: Spacing) -> some View {
         padding(edges, CGFloat(spacing))
     }
@@ -23,7 +31,13 @@ extension View {
 }
 
 extension HStack {
-    /// Creates a horizontal stack with a space between its views.
+    /// Creates a horizontal stack with the given spacing and vertical alignment.
+    ///
+    /// - Parameters:
+    ///   - alignment: The guide for aligning the subviews in this stack. This guide has the same
+    ///     vertical screen coordinate for every subview. The default is `.center`.
+    ///   - spacing: The distance between adjacent subviews.
+    ///   - content: A content builder that creates the content of this stack.
     public init(
         alignment: VerticalAlignment = .center,
         spacing: Spacing,
@@ -34,7 +48,13 @@ extension HStack {
 }
 
 extension VStack {
-    /// Creates a vertical stack with a space between its views.
+    /// Creates an instance with the given spacing and horizontal alignment.
+    ///
+    /// - Parameters:
+    ///   - alignment: The guide for aligning the subviews in this stack. This guide has the same
+    ///     horizontal screen coordinate for every subview. The default is `.center`.
+    ///   - spacing: The distance between adjacent subviews.
+    ///   - content: A content builder that creates the content of this stack.
     public init(
         alignment: HorizontalAlignment = .center,
         spacing: Spacing,
