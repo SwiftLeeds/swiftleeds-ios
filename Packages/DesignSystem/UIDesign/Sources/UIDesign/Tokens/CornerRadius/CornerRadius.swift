@@ -1,35 +1,21 @@
-import CoreGraphics
-
-/// The radius of a rounded corner.
+/// The radius of a rounded corner, named for the job the shape does.
 public struct CornerRadius: Equatable, Hashable, Sendable {
-    fileprivate let points: CGFloat
-
-    init(_ points: CGFloat) {
-        self.points = points
+    /// A job a rounded shape does.
+    private enum Role {
+        /// A square that stands for one thing.
+        case tile
     }
-}
 
-extension CornerRadius {
-    // swiftlint:disable no_magic_numbers - each number here is the value its name defines
-    /// A square corner, with no rounding.
-    public static let zero = CornerRadius(0)
-    public static let small = CornerRadius(8)
+    /// The job this corner radius does.
+    private let role: Role
 
     /// The corner of a square that stands for one thing, such as a logo, an avatar or a swatch.
-    public static let tile = CornerRadius(8)
+    public static let tile = Self(role: .tile)
 
-    public static let medium = CornerRadius(12)
-    public static let large = CornerRadius(16)
-    public static let xLarge = CornerRadius(24)
-
-    /// A fully rounded end. `RoundedRectangle` clamps this to half the shorter side.
-    public static let full = CornerRadius(.infinity)
-    // swiftlint:enable no_magic_numbers
-}
-
-extension CGFloat {
-    /// Creates a length from a corner radius.
-    public init(_ radius: CornerRadius) {
-        self = radius.points
+    /// The level this corner radius has.
+    package var level: CornerRadiusLevel {
+        switch role {
+        case .tile: .points8
+        }
     }
 }
