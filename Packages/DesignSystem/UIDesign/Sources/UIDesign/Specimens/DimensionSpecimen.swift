@@ -1,8 +1,29 @@
 #if DEBUG
 import SwiftUI
 
-/// Draws every dimension token beside its name.
+/// A view that shows one dimension's tokens beside their names.
 package struct DimensionSpecimen: View {
+    /// A kind of dimension token that a specimen can show.
+    package enum Dimension: CaseIterable, Equatable, Hashable, Sendable {
+        /// The ``Spacing`` scale.
+        case spacing
+
+        /// The ``CornerRadiusLevel`` scale, then the nested shape.
+        case cornerRadius
+
+        /// The ``BorderWidthLevel`` scale.
+        case borderWidth
+
+        /// The ``LineWidthLevel`` scale.
+        case lineWidth
+
+        /// The ``IconSize`` scale.
+        case iconSize
+
+        /// The ``AvatarSize`` scale.
+        case avatarSize
+    }
+
     /// A view that draws a bar as wide as a spacing token.
     private struct Bar: View {
         /// The spacing token the bar's width shows.
@@ -112,30 +133,51 @@ package struct DimensionSpecimen: View {
         }
     }
 
-    package init() {}
+    /// The dimension the specimen shows.
+    private let dimension: Dimension
 
-    package var body: some View {
-        ViewThatFits(in: .horizontal) {
-            HStack(alignment: .top, spacing: .xLarge) { groups }
-            VStack(alignment: .leading, spacing: .xLarge) { groups }
-        }
-        .padding(.large)
+    /// Creates a specimen of one dimension.
+    ///
+    /// - Parameter dimension: The dimension to show.
+    package init(_ dimension: Dimension) {
+        self.dimension = dimension
     }
 
+    /// The chosen dimension's tokens, padded.
+    package var body: some View {
+        group
+            .padding(.large)
+    }
+
+    /// The group of tokens for the chosen dimension.
     @ViewBuilder
-    private var groups: some View {
-        spacingGroup
-        cornerRadiusGroup
-        borderWidthGroup
-        lineWidthGroup
-        iconSizeGroup
-        avatarSizeGroup
+    private var group: some View {
+        switch dimension {
+        case .spacing:
+            spacingGroup
+
+        case .cornerRadius:
+            cornerRadiusGroup
+
+        case .borderWidth:
+            borderWidthGroup
+
+        case .lineWidth:
+            lineWidthGroup
+
+        case .iconSize:
+            iconSizeGroup
+
+        case .avatarSize:
+            avatarSizeGroup
+        }
     }
 }
 
 // MARK: - Groups
 
 extension DimensionSpecimen {
+    /// The spacing scale, from the smallest to the largest.
     fileprivate var spacingGroup: some View {
         SpecimenGroup("Spacing") {
             GridRow {
@@ -247,6 +289,7 @@ extension DimensionSpecimen {
         }
     }
 
+    /// The icon size scale, from the smallest to the largest.
     fileprivate var iconSizeGroup: some View {
         SpecimenGroup("Icon") {
             GridRow {
@@ -276,6 +319,7 @@ extension DimensionSpecimen {
         }
     }
 
+    /// The avatar size scale, from the smallest to the largest.
     fileprivate var avatarSizeGroup: some View {
         SpecimenGroup("Avatar") {
             GridRow {
@@ -300,7 +344,11 @@ extension DimensionSpecimen {
 
 #Preview {
     ScrollView([.horizontal, .vertical]) {
-        DimensionSpecimen()
+        VStack(alignment: .leading, spacing: .xLarge) {
+            ForEach(DimensionSpecimen.Dimension.allCases, id: \.self) {
+                DimensionSpecimen($0)
+            }
+        }
     }
 }
 #endif
