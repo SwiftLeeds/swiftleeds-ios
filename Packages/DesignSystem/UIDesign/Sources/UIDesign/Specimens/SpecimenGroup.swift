@@ -17,8 +17,8 @@ struct SpecimenGroup<Content: View>: View {
                 .font(.headline)
             Grid(
                 alignment: .leading,
-                horizontalSpacing: CGFloat(Spacing.medium),
-                verticalSpacing: CGFloat(Spacing.small),
+                horizontalSpacing: .medium,
+                verticalSpacing: .small,
             ) {
                 content()
             }

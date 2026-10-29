@@ -70,3 +70,27 @@ extension VStackLayout {
         self.init(alignment: alignment, spacing: CGFloat(spacing))
     }
 }
+
+extension Grid {
+    /// Creates a grid with the specified spacing, alignment, and child views.
+    ///
+    /// - Parameters:
+    ///   - alignment: The guide for aligning the child views within the space allocated for a
+    ///     given cell. The default is `.center`.
+    ///   - horizontalSpacing: The horizontal distance between each cell.
+    ///   - verticalSpacing: The vertical distance between each cell.
+    ///   - content: A closure that creates the grid's rows.
+    public init(
+        alignment: Alignment = .center,
+        horizontalSpacing: Spacing,
+        verticalSpacing: Spacing,
+        @ViewBuilder content: () -> Content,
+    ) {
+        self.init(
+            alignment: alignment,
+            horizontalSpacing: CGFloat(horizontalSpacing),
+            verticalSpacing: CGFloat(verticalSpacing),
+            content: content,
+        )
+    }
+}
