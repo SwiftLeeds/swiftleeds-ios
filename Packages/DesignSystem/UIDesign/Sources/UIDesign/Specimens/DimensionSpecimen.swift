@@ -29,6 +29,37 @@ package struct DimensionSpecimen: View {
         }
     }
 
+    /// A view that draws a plain concentric shape beside the nested shape inside a rounded card.
+    private struct Nested: View {
+        /// The width of the card.
+        private static let cardWidth: CGFloat = 128
+
+        /// The height of the card.
+        private static let cardHeight: CGFloat = 80
+
+        /// The shape of the card, and the container shape of what it holds.
+        private var cardShape: RoundedRectangle {
+            RoundedRectangle(cornerRadius: CGFloat(CornerRadiusLevel.points24))
+        }
+
+        /// A card holding a plain concentric shape and the nested shape side by side.
+        var body: some View {
+            cardShape
+                .fill(.secondary)
+                .frame(width: Self.cardWidth, height: Self.cardHeight)
+                .overlay {
+                    HStack(spacing: .small) {
+                        ConcentricRectangle()
+                            .fill(.primary)
+                        ConcentricRectangle.nested
+                            .fill(.primary)
+                    }
+                    .padding(.large)
+                    .containerShape(cardShape)
+                }
+        }
+    }
+
     /// A view that draws an outlined rectangle with a border width level.
     private struct Border: View {
         /// The border width level the outline shows.
@@ -156,6 +187,10 @@ extension DimensionSpecimen {
             GridRow {
                 Text("points24")
                 Corner(level: .points24)
+            }
+            GridRow {
+                Text("nested")
+                Nested()
             }
         }
     }
