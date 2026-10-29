@@ -16,14 +16,14 @@ package struct DimensionSpecimen: View {
         }
     }
 
-    /// A view that draws a filled rectangle with a corner radius token.
+    /// A view that draws a filled rectangle with a corner radius level.
     private struct Corner: View {
-        /// The corner radius token the rectangle shows.
-        let radius: CornerRadius
+        /// The corner radius level the rectangle shows.
+        let level: CornerRadiusLevel
 
-        /// A sample rectangle with the radius applied to its corners.
+        /// A sample rectangle with the level applied to its corners.
         var body: some View {
-            RoundedRectangle(cornerRadius: CGFloat(radius))
+            RoundedRectangle(cornerRadius: CGFloat(level))
                 .fill(.primary)
                 .frame(width: Sample.width, height: Sample.height)
         }
@@ -138,31 +138,24 @@ extension DimensionSpecimen {
         }
     }
 
+    /// The corner radius scale, from the smallest to the largest.
     fileprivate var cornerRadiusGroup: some View {
         SpecimenGroup("Radius") {
             GridRow {
-                Text("zero")
-                Corner(radius: .zero)
+                Text("points8")
+                Corner(level: .points8)
             }
             GridRow {
-                Text("small")
-                Corner(radius: .small)
+                Text("points12")
+                Corner(level: .points12)
             }
             GridRow {
-                Text("medium")
-                Corner(radius: .medium)
+                Text("points16")
+                Corner(level: .points16)
             }
             GridRow {
-                Text("large")
-                Corner(radius: .large)
-            }
-            GridRow {
-                Text("xLarge")
-                Corner(radius: .xLarge)
-            }
-            GridRow {
-                Text("full")
-                Corner(radius: .full)
+                Text("points24")
+                Corner(level: .points24)
             }
         }
     }
