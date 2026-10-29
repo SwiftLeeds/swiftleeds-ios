@@ -95,9 +95,6 @@ import UIDesign
             Avatar(url: nil, size: AvatarSize.xLarge)
 
             Avatar(url: nil, size: AvatarSize.xLarge, status: AvatarStatus("Checked in"))
-
-            Avatar(url: nil, size: AvatarSize.xLarge)
-                .avatarStyle(.rounded(cornerRadius: CornerRadius.small))
         }
         .avatarStyle(.rounded)
 

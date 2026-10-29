@@ -17,11 +17,11 @@ package struct ColorSpecimen: View {
 
         /// A rounded rectangle filled with the style and outlined.
         var body: some View {
-            RoundedRectangle(cornerRadius: CGFloat(CornerRadius.small))
+            RoundedRectangle(cornerRadius: .tile)
                 .fill(style)
                 .frame(width: Sample.width, height: Sample.height)
                 .overlay {
-                    RoundedRectangle(cornerRadius: CGFloat(CornerRadius.small))
+                    RoundedRectangle(cornerRadius: .tile)
                         .strokeBorder(.opaqueBorder, lineWidth: .edge)
                 }
         }
@@ -208,7 +208,7 @@ extension ColorSpecimen {
             GlyphSwatch(family.text, on: family.subtle)
             Swatch(.secondarySurface)
                 .overlay {
-                    RoundedRectangle(cornerRadius: CGFloat(CornerRadius.small))
+                    RoundedRectangle(cornerRadius: .tile)
                         .fill(family.subtle)
                         .padding(.small)
                 }

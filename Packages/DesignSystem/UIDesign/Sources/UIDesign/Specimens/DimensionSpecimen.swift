@@ -16,16 +16,47 @@ package struct DimensionSpecimen: View {
         }
     }
 
-    /// A view that draws a filled rectangle with a corner radius token.
+    /// A view that draws a filled rectangle with a corner radius level.
     private struct Corner: View {
-        /// The corner radius token the rectangle shows.
-        let radius: CornerRadius
+        /// The corner radius level the rectangle shows.
+        let level: CornerRadiusLevel
 
-        /// A sample rectangle with the radius applied to its corners.
+        /// A sample rectangle with the level applied to its corners.
         var body: some View {
-            RoundedRectangle(cornerRadius: CGFloat(radius))
+            RoundedRectangle(cornerRadius: CGFloat(level))
                 .fill(.primary)
                 .frame(width: Sample.width, height: Sample.height)
+        }
+    }
+
+    /// A view that draws a plain concentric shape beside the nested shape inside a rounded card.
+    private struct Nested: View {
+        /// The width of the card.
+        private static let cardWidth: CGFloat = 128
+
+        /// The height of the card.
+        private static let cardHeight: CGFloat = 80
+
+        /// The shape of the card, and the container shape of what it holds.
+        private var cardShape: RoundedRectangle {
+            RoundedRectangle(cornerRadius: CGFloat(CornerRadiusLevel.points24))
+        }
+
+        /// A card holding a plain concentric shape and the nested shape side by side.
+        var body: some View {
+            cardShape
+                .fill(.secondary)
+                .frame(width: Self.cardWidth, height: Self.cardHeight)
+                .overlay {
+                    HStack(spacing: .small) {
+                        ConcentricRectangle()
+                            .fill(.primary)
+                        ConcentricRectangle.nested
+                            .fill(.primary)
+                    }
+                    .padding(.large)
+                    .containerShape(cardShape)
+                }
         }
     }
 
@@ -36,7 +67,7 @@ package struct DimensionSpecimen: View {
 
         /// A sample rectangle outlined at the level.
         var body: some View {
-            RoundedRectangle(cornerRadius: CGFloat(CornerRadius.small))
+            RoundedRectangle(cornerRadius: .tile)
                 .strokeBorder(.primary, lineWidth: CGFloat(level))
                 .frame(width: Sample.width, height: Sample.height)
         }
@@ -62,7 +93,7 @@ package struct DimensionSpecimen: View {
 
         /// A square whose sides are the icon size.
         var body: some View {
-            RoundedRectangle(cornerRadius: CGFloat(CornerRadius.small))
+            RoundedRectangle(cornerRadius: .tile)
                 .fill(.primary)
                 .frame(side)
         }
@@ -138,31 +169,28 @@ extension DimensionSpecimen {
         }
     }
 
+    /// The corner radius scale, from the smallest to the largest, then the nested shape.
     fileprivate var cornerRadiusGroup: some View {
         SpecimenGroup("Radius") {
             GridRow {
-                Text("zero")
-                Corner(radius: .zero)
+                Text("points8")
+                Corner(level: .points8)
             }
             GridRow {
-                Text("small")
-                Corner(radius: .small)
+                Text("points12")
+                Corner(level: .points12)
             }
             GridRow {
-                Text("medium")
-                Corner(radius: .medium)
+                Text("points16")
+                Corner(level: .points16)
             }
             GridRow {
-                Text("large")
-                Corner(radius: .large)
+                Text("points24")
+                Corner(level: .points24)
             }
             GridRow {
-                Text("xLarge")
-                Corner(radius: .xLarge)
-            }
-            GridRow {
-                Text("full")
-                Corner(radius: .full)
+                Text("nested")
+                Nested()
             }
         }
     }
