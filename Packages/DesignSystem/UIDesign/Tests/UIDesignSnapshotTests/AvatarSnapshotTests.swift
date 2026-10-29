@@ -70,33 +70,33 @@ import UIDesign
         assertSnapshots(of: view)
     }
 
-    // The smallest size, the default and the largest.
+    /// Checks every size, because the mark's size follows the avatar's.
     @Test func status() {
-        let view = HStack(alignment: .bottom, spacing: Spacing.large) {
-            Avatar(url: nil, size: AvatarSize.small, status: AvatarStatus("Checked in"))
-            Avatar(url: nil, size: AvatarSize.medium, status: AvatarStatus("Checked in"))
-            Avatar(
-                url: nil,
-                size: AvatarSize.xLarge,
-                status: AvatarStatus(
-                    "Waitlisted",
-                    icon: Icon(.exclamationmarkCircleFill),
-                    family: .warning,
-                ),
-            )
-        }
+        let view = avatarsWithStatus().padding(Spacing.large)
 
         assertSnapshots(of: view)
     }
 
-    // One with a status, because a square's corner sits further from its edge than a circle's.
+    /// Checks every size and one avatar without a status, because the mark's size follows the
+    /// avatar's.
     @Test func roundedStyle() {
-        let view = HStack(spacing: Spacing.large) {
+        let view = HStack(alignment: .bottom, spacing: Spacing.large) {
             Avatar(url: nil, size: AvatarSize.xLarge)
 
-            Avatar(url: nil, size: AvatarSize.xLarge, status: AvatarStatus("Checked in"))
+            avatarsWithStatus()
         }
+        .padding(Spacing.large)
         .avatarStyle(.rounded)
+
+        assertSnapshots(of: view)
+    }
+
+    /// Checks that the mark moves to the other corner in a right-to-left language.
+    @Test func roundedStyleRightToLeft() {
+        let view = avatarsWithStatus()
+            .padding(Spacing.large)
+            .avatarStyle(.rounded)
+            .environment(\.layoutDirection, .rightToLeft)
 
         assertSnapshots(of: view)
     }
@@ -118,6 +118,26 @@ import UIDesign
         .redacted(reason: .placeholder)
 
         assertSnapshots(of: view)
+    }
+
+    /// Returns a row of the four avatar sizes, each with a status mark.
+    ///
+    /// - Returns: A row of four avatars, smallest first.
+    private func avatarsWithStatus() -> some View {
+        HStack(alignment: .bottom, spacing: Spacing.large) {
+            Avatar(url: nil, size: AvatarSize.small, status: AvatarStatus("Checked in"))
+            Avatar(url: nil, size: AvatarSize.medium, status: AvatarStatus("Checked in"))
+            Avatar(url: nil, size: AvatarSize.large, status: AvatarStatus("Checked in"))
+            Avatar(
+                url: nil,
+                size: AvatarSize.xLarge,
+                status: AvatarStatus(
+                    "Waitlisted",
+                    icon: Icon(.exclamationmarkCircleFill),
+                    family: .warning,
+                ),
+            )
+        }
     }
 
     // A flat fill, so this suite measures the shape and the size and nothing else.
