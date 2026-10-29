@@ -169,7 +169,7 @@ extension DimensionSpecimen {
         }
     }
 
-    /// The corner radius scale, from the smallest to the largest.
+    /// The corner radius scale, from the smallest to the largest, then the nested shape.
     fileprivate var cornerRadiusGroup: some View {
         SpecimenGroup("Radius") {
             GridRow {
