@@ -36,7 +36,7 @@ package struct DimensionSpecimen: View {
 
         /// A sample rectangle outlined at the level.
         var body: some View {
-            RoundedRectangle(cornerRadius: CGFloat(CornerRadius.small))
+            RoundedRectangle(cornerRadius: .tile)
                 .strokeBorder(.primary, lineWidth: CGFloat(level))
                 .frame(width: Sample.width, height: Sample.height)
         }
@@ -62,7 +62,7 @@ package struct DimensionSpecimen: View {
 
         /// A square whose sides are the icon size.
         var body: some View {
-            RoundedRectangle(cornerRadius: CGFloat(CornerRadius.small))
+            RoundedRectangle(cornerRadius: .tile)
                 .fill(.primary)
                 .frame(side)
         }

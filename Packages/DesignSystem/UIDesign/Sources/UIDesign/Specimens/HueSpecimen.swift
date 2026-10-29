@@ -17,12 +17,12 @@ package struct HueSpecimen: View {
 
         /// The square, filled with the color and outlined.
         var body: some View {
-            RoundedRectangle(cornerRadius: CGFloat(CornerRadius.small))
+            RoundedRectangle(cornerRadius: .tile)
                 .fill(color)
                 .frame(width: HueSpecimen.swatchSize, height: HueSpecimen.swatchSize)
                 // Without the stroke, a swatch close to the page color is invisible.
                 .overlay {
-                    RoundedRectangle(cornerRadius: CGFloat(CornerRadius.small))
+                    RoundedRectangle(cornerRadius: .tile)
                         .strokeBorder(.opaqueBorder, lineWidth: .edge)
                 }
         }

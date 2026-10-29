@@ -14,6 +14,10 @@ extension CornerRadius {
     /// A square corner, with no rounding.
     public static let zero = CornerRadius(0)
     public static let small = CornerRadius(8)
+
+    /// The corner of a square that stands for one thing, such as a logo, an avatar or a swatch.
+    public static let tile = CornerRadius(8)
+
     public static let medium = CornerRadius(12)
     public static let large = CornerRadius(16)
     public static let xLarge = CornerRadius(24)

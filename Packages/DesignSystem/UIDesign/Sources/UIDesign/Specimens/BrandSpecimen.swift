@@ -57,11 +57,11 @@ package struct BrandSpecimen: View {
 
         /// A rounded rectangle filled with the color and outlined.
         var body: some View {
-            RoundedRectangle(cornerRadius: CGFloat(CornerRadius.small))
+            RoundedRectangle(cornerRadius: .tile)
                 .fill(color)
                 .frame(width: Sample.width, height: Sample.height)
                 .overlay {
-                    RoundedRectangle(cornerRadius: CGFloat(CornerRadius.small))
+                    RoundedRectangle(cornerRadius: .tile)
                         .strokeBorder(.opaqueBorder, lineWidth: .edge)
                 }
         }
@@ -74,7 +74,7 @@ package struct BrandSpecimen: View {
     private static let buttonLabel = "Get Tickets"
 
     /// The outline of a sample that is not a button.
-    private static let corners = RoundedRectangle(cornerRadius: CGFloat(CornerRadius.small))
+    private static let corners = RoundedRectangle(cornerRadius: .tile)
 
     /// Creates a specimen of every brand.
     package init() {}
