@@ -256,6 +256,10 @@ exemption: every suppression carries a reason and is tracked as work to remove.
     same case.
   - **Test fixture data** takes `disable:this` with the reason "fixture data", because a fixture
     is data, not magic. Name the number instead when a name adds meaning, such as a phone width.
+- **`identifier_name` has one permanent case: a token block whose names are short sizes**, as
+  `Spacing`'s `xs` to `xl` are. The rule refuses names under three characters. Ruled by Paul
+  2026-10-29: the block's one `disable` and `enable` pair names both rules, and it is never
+  removed.
 
 ## Previews
 
