@@ -46,3 +46,27 @@ extension VStack {
         self.init(alignment: alignment, spacing: CGFloat(spacing), content: content)
     }
 }
+
+extension HStackLayout {
+    /// Creates a horizontal stack with the specified spacing and vertical alignment.
+    ///
+    /// - Parameters:
+    ///   - alignment: The guide for aligning the subviews in this stack. It has the same
+    ///     vertical screen coordinate for all subviews. The default is `.center`.
+    ///   - spacing: The distance between adjacent subviews.
+    public init(alignment: VerticalAlignment = .center, spacing: Spacing) {
+        self.init(alignment: alignment, spacing: CGFloat(spacing))
+    }
+}
+
+extension VStackLayout {
+    /// Creates a vertical stack with the specified spacing and horizontal alignment.
+    ///
+    /// - Parameters:
+    ///   - alignment: The guide for aligning the subviews in this stack. It has the same
+    ///     horizontal screen coordinate for all subviews. The default is `.center`.
+    ///   - spacing: The distance between adjacent subviews.
+    public init(alignment: HorizontalAlignment = .center, spacing: Spacing) {
+        self.init(alignment: alignment, spacing: CGFloat(spacing))
+    }
+}

@@ -44,9 +44,9 @@ struct AdaptiveNameplate: View {
     /// A row, or a stack once the text is too large to sit beside the icon.
     private var layout: AnyLayout {
         if dynamicTypeSize.isAccessibilitySize {
-            AnyLayout(VStackLayout(alignment: .leading, spacing: CGFloat(Spacing.medium)))
+            AnyLayout(VStackLayout(alignment: .leading, spacing: .medium))
         } else {
-            AnyLayout(HStackLayout(alignment: .center, spacing: CGFloat(Spacing.medium)))
+            AnyLayout(HStackLayout(alignment: .center, spacing: .medium))
         }
     }
 }
