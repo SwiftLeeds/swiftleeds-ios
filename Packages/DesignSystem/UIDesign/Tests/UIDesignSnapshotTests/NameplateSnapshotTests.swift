@@ -73,7 +73,7 @@ import UIDesign
     /// Three rows, because a skeleton is judged as a group: the bars should
     /// read as rows and the circles should stay circles.
     @Test func redactedWhileLoading() {
-        let view = VStack(spacing: Spacing.large) {
+        let view = VStack(spacing: Spacing.lg) {
             ForEach(Self.sample, id: \.self) { name in
                 Nameplate(name, detail: Self.company) {
                     Avatar(

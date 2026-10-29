@@ -12,13 +12,13 @@ struct SpecimenGroup<Content: View>: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: .small) {
+        VStack(alignment: .leading, spacing: .sm) {
             Text(title)
                 .font(.headline)
             Grid(
                 alignment: .leading,
-                horizontalSpacing: .medium,
-                verticalSpacing: .small,
+                horizontalSpacing: .md,
+                verticalSpacing: .sm,
             ) {
                 content()
             }

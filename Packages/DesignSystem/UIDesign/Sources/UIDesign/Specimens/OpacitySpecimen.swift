@@ -22,7 +22,7 @@ package struct OpacitySpecimen: View {
 
         /// The square at the level over an eye, outlined, above its percent.
         var body: some View {
-            VStack(spacing: .xxSmall) {
+            VStack(spacing: .xxs) {
                 Rectangle()
                     .fill(.primary)
                     .opacity(Double(level))
@@ -42,7 +42,7 @@ package struct OpacitySpecimen: View {
             Image(icon: Self.revealedIcon)
                 .resizable()
                 .scaledToFit()
-                .padding(.small)
+                .padding(.sm)
                 .foregroundStyle(ColorFamily.blue.solid)
                 .accessibilityHidden(true)
         }
@@ -87,7 +87,7 @@ package struct OpacitySpecimen: View {
             for start in stride(
                 from: -size.height - overshoot,
                 through: size.width + overshoot,
-                by: CGFloat(Spacing.medium),
+                by: CGFloat(Spacing.md),
             ) {
                 path.move(to: CGPoint(x: start - overshoot, y: size.height + overshoot))
                 path.addLine(to: CGPoint(x: start + size.height + overshoot, y: -overshoot))
@@ -105,11 +105,11 @@ package struct OpacitySpecimen: View {
 
     /// The two groups, one above the other, on a gray page.
     package var body: some View {
-        VStack(alignment: .leading, spacing: .xLarge) {
+        VStack(alignment: .leading, spacing: .xl) {
             scaleGroup
             patternGroup
         }
-        .padding(.large)
+        .padding(.lg)
         .background(Color(Hue.neutral.tone(pageTone)))
     }
 
@@ -154,11 +154,11 @@ extension OpacitySpecimen {
     /// The pattern opacity, with and without Differentiate Without Color.
     fileprivate var patternGroup: some View {
         SpecimenGroup("Pattern") {
-            VStack(alignment: .leading, spacing: .xSmall) {
+            VStack(alignment: .leading, spacing: .xs) {
                 Text("pattern")
                 Band(shading: .style(ColorFamily.blue.onSolid.opacity(.pattern)))
             }
-            VStack(alignment: .leading, spacing: .xSmall) {
+            VStack(alignment: .leading, spacing: .xs) {
                 Text("pattern, Differentiate Without Color")
                 Band(shading: .style(ColorFamily.blue.onSolid.opacity(Double(OpacityLevel.percent20))))
             }

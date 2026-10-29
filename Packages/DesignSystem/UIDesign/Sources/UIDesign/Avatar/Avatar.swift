@@ -144,17 +144,17 @@ extension Avatar where Fallback == AvatarFallback {
 private let previewName = PersonNameComponents(givenName: "Member", familyName: "One")
 
 #Preview("Sizes") {
-    HStack(alignment: .bottom, spacing: .large) {
+    HStack(alignment: .bottom, spacing: .lg) {
         Avatar(url: nil, size: .small)
         Avatar(url: nil, size: .medium)
         Avatar(url: nil, size: .large)
         Avatar(url: nil, size: .xLarge)
     }
-    .padding(.large)
+    .padding(.lg)
 }
 
 #Preview("Fallbacks") {
-    HStack(spacing: .large) {
+    HStack(spacing: .lg) {
         Avatar(url: nil, size: .xLarge)
 
         Avatar(url: nil, size: .xLarge, fallback: .initials(previewName))
@@ -165,12 +165,12 @@ private let previewName = PersonNameComponents(givenName: "Member", familyName: 
                 .foregroundStyle(.secondaryText)
         }
     }
-    .padding(.large)
+    .padding(.lg)
 }
 
 #Preview("Styles and status") {
-    VStack(alignment: .leading, spacing: .large) {
-        HStack(spacing: .large) {
+    VStack(alignment: .leading, spacing: .lg) {
+        HStack(spacing: .lg) {
             Avatar(url: nil, size: .large, status: AvatarStatus("Checked in"))
 
             Avatar(
@@ -184,12 +184,12 @@ private let previewName = PersonNameComponents(givenName: "Member", familyName: 
             )
         }
 
-        HStack(spacing: .large) {
+        HStack(spacing: .lg) {
             Avatar(url: nil, size: .large, status: AvatarStatus("Checked in"))
 
             Avatar(url: nil, size: .large)
         }
         .avatarStyle(.rounded)
     }
-    .padding(.large)
+    .padding(.lg)
 }

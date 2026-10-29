@@ -19,7 +19,7 @@ import UIDesign
     ]
 
     @Test func sizes() {
-        let view = HStack(alignment: .bottom, spacing: Spacing.large) {
+        let view = HStack(alignment: .bottom, spacing: Spacing.lg) {
             avatar(size: AvatarSize.small)
             avatar(size: AvatarSize.medium)
             avatar(size: AvatarSize.large)
@@ -32,7 +32,7 @@ import UIDesign
     // The smallest size as well as the largest: the mark is sized from the avatar, and only the
     // smallest one shows whether it overflows at the accessibility text sizes.
     @Test func symbolFallback() {
-        let view = HStack(alignment: .bottom, spacing: Spacing.large) {
+        let view = HStack(alignment: .bottom, spacing: Spacing.lg) {
             Avatar(url: nil, size: AvatarSize.small)
             Avatar(url: nil, size: AvatarSize.xLarge)
         }
@@ -43,7 +43,7 @@ import UIDesign
     // Every size, because the letters are smallest where a caller is most likely to put them.
     @Test func initialsFallback() {
         let name = PersonNameComponents(givenName: "Ada", familyName: "Archer")
-        let view = HStack(alignment: .bottom, spacing: Spacing.large) {
+        let view = HStack(alignment: .bottom, spacing: Spacing.lg) {
             Avatar(url: nil, size: AvatarSize.small, fallback: .initials(name))
             Avatar(url: nil, size: AvatarSize.medium, fallback: .initials(name))
             Avatar(url: nil, size: AvatarSize.large, fallback: .initials(name))
@@ -55,7 +55,7 @@ import UIDesign
 
     // Six people, so the image shows that the initials alone tell them apart.
     @Test func initialsFallbackTellsPeopleApart() {
-        let view = HStack(spacing: Spacing.large) {
+        let view = HStack(spacing: Spacing.lg) {
             ForEach(Self.people, id: \.self) { name in
                 Avatar(url: nil, size: AvatarSize.large, fallback: .initials(name))
             }
@@ -72,7 +72,7 @@ import UIDesign
 
     /// Checks every size, because the mark's size follows the avatar's.
     @Test func status() {
-        let view = avatarsWithStatus().padding(Spacing.large)
+        let view = avatarsWithStatus().padding(Spacing.lg)
 
         assertSnapshots(of: view)
     }
@@ -80,12 +80,12 @@ import UIDesign
     /// Checks every size and one avatar without a status, because the mark's size follows the
     /// avatar's.
     @Test func roundedStyle() {
-        let view = HStack(alignment: .bottom, spacing: Spacing.large) {
+        let view = HStack(alignment: .bottom, spacing: Spacing.lg) {
             Avatar(url: nil, size: AvatarSize.xLarge)
 
             avatarsWithStatus()
         }
-        .padding(Spacing.large)
+        .padding(Spacing.lg)
         .avatarStyle(.rounded)
 
         assertSnapshots(of: view)
@@ -94,7 +94,7 @@ import UIDesign
     /// Checks that the mark moves to the other corner in a right-to-left language.
     @Test func roundedStyleRightToLeft() {
         let view = avatarsWithStatus()
-            .padding(Spacing.large)
+            .padding(Spacing.lg)
             .avatarStyle(.rounded)
             .environment(\.layoutDirection, .rightToLeft)
 
@@ -105,7 +105,7 @@ import UIDesign
     /// otherwise turn into a rectangle sitting inside the avatar's shape.
     @Test func redacted() {
         let name = PersonNameComponents(givenName: "Ada", familyName: "Archer")
-        let view = HStack(spacing: Spacing.large) {
+        let view = HStack(spacing: Spacing.lg) {
             Avatar(url: nil, size: AvatarSize.large)
 
             Avatar(url: nil, size: AvatarSize.large, fallback: .initials(name))
@@ -124,7 +124,7 @@ import UIDesign
     ///
     /// - Returns: A row of four avatars, smallest first.
     private func avatarsWithStatus() -> some View {
-        HStack(alignment: .bottom, spacing: Spacing.large) {
+        HStack(alignment: .bottom, spacing: Spacing.lg) {
             Avatar(url: nil, size: AvatarSize.small, status: AvatarStatus("Checked in"))
             Avatar(url: nil, size: AvatarSize.medium, status: AvatarStatus("Checked in"))
             Avatar(url: nil, size: AvatarSize.large, status: AvatarStatus("Checked in"))

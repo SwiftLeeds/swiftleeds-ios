@@ -59,10 +59,10 @@ package struct ColorSpecimen: View {
 
     package var body: some View {
         ViewThatFits(in: .horizontal) {
-            HStack(alignment: .top, spacing: .xLarge) { groups }
-            VStack(alignment: .leading, spacing: .xLarge) { groups }
+            HStack(alignment: .top, spacing: .xl) { groups }
+            VStack(alignment: .leading, spacing: .xl) { groups }
         }
-        .padding(.large)
+        .padding(.lg)
     }
 
     @ViewBuilder
@@ -210,7 +210,7 @@ extension ColorSpecimen {
                 .overlay {
                     RoundedRectangle(cornerRadius: .tile)
                         .fill(family.subtle)
-                        .padding(.small)
+                        .padding(.sm)
                 }
         }
     }

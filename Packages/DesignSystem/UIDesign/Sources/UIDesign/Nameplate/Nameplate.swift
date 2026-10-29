@@ -146,7 +146,7 @@ private let previewNameComponents = PersonNameComponents(
 )
 
 #Preview("Row") {
-    VStack(spacing: .large) {
+    VStack(spacing: .lg) {
         Nameplate(previewName, detail: previewCompany) {
             Avatar(url: nil, fallback: .initials(previewNameComponents))
         }
@@ -159,7 +159,7 @@ private let previewNameComponents = PersonNameComponents(
             Avatar(url: nil)
         }
     }
-    .padding(.large)
+    .padding(.lg)
 }
 
 #Preview("Heading") {
@@ -172,5 +172,5 @@ private let previewNameComponents = PersonNameComponents(
         )
     }
     .nameplateStyle(.prominent)
-    .padding(.large)
+    .padding(.lg)
 }

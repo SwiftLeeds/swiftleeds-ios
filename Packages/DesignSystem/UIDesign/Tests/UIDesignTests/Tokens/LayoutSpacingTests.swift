@@ -7,14 +7,14 @@ struct LayoutSpacingTests {
     /// Checks that a horizontal stack layout created with a token returns the token's points.
     @Test
     func whenHStackLayoutIsCreatedWithSpacingToken_shouldReturnTokenSpacing() {
-        let sut = HStackLayout(spacing: .medium)
+        let sut = HStackLayout(spacing: .md)
         #expect(sut.spacing == 12)
     }
 
     /// Checks that a vertical stack layout created with a token returns the token's points.
     @Test
     func whenVStackLayoutIsCreatedWithSpacingToken_shouldReturnTokenSpacing() {
-        let sut = VStackLayout(spacing: .medium)
+        let sut = VStackLayout(spacing: .md)
         #expect(sut.spacing == 12)
     }
 }

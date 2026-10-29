@@ -35,7 +35,7 @@ package struct BrandSpecimen: View {
         var body: some View {
             Text(label)
                 .foregroundStyle(foreground)
-                .padding(.small)
+                .padding(.sm)
                 .background(fill, in: shape)
                 .overlay {
                     shape.strokeBorder(.opaqueBorder, lineWidth: .edge)
@@ -82,10 +82,10 @@ package struct BrandSpecimen: View {
     /// The brands side by side, or one above the other when they do not fit.
     package var body: some View {
         ViewThatFits(in: .horizontal) {
-            HStack(alignment: .top, spacing: .xLarge) { columns }
-            VStack(alignment: .leading, spacing: .xLarge) { columns }
+            HStack(alignment: .top, spacing: .xl) { columns }
+            VStack(alignment: .leading, spacing: .xl) { columns }
         }
-        .padding(.large)
+        .padding(.lg)
     }
 
     /// One column for each brand.

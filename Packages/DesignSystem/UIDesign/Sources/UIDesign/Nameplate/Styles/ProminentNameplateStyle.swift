@@ -14,7 +14,7 @@ public struct ProminentNameplateStyle: NameplateStyle {
     @MainActor
     public func makeBody(configuration: Configuration) -> some View {
         AdaptiveNameplate(configuration: configuration, titleFont: .title3.weight(.semibold))
-            .padding(.vertical, .small)
+            .padding(.vertical, .sm)
     }
 }
 

@@ -1,8 +1,5 @@
 import SwiftUI
 
-// Each overload lets a call site name a token where Apple's API takes a number, as in
-// `.padding(.large)`.
-
 extension View {
     /// Adds a space around this view.
     public func padding(_ spacing: Spacing) -> some View {
