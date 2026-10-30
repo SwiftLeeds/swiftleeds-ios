@@ -46,6 +46,9 @@ extension AvatarSize {
     /// Returns this size multiplied by a text scale.
     ///
     /// The result is not one of the named values.
+    ///
+    /// - Parameter scale: The factor to multiply by, where 1 is the default text size.
+    /// - Returns: The scaled size.
     func scaled(by scale: CGFloat) -> AvatarSize {
         AvatarSize(points * scale)
     }
