@@ -35,7 +35,9 @@ extension AvatarSize {
 
 extension CGFloat {
     /// Creates a length from an avatar size.
-    public init(_ size: AvatarSize) {
+    ///
+    /// - Parameter size: The avatar size to convert.
+    package init(_ size: AvatarSize) {
         self = size.points
     }
 }
