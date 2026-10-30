@@ -4,7 +4,7 @@ import CoreGraphics
 public struct IconSize: Equatable, Hashable, Sendable {
     fileprivate let points: CGFloat
 
-    init(_ points: CGFloat) {
+    private init(_ points: CGFloat) {
         self.points = points
     }
 }
@@ -24,7 +24,9 @@ extension IconSize {
 
 extension CGFloat {
     /// Creates a length from an icon size.
-    public init(_ size: IconSize) {
+    ///
+    /// - Parameter size: The icon size to convert.
+    package init(_ size: IconSize) {
         self = size.points
     }
 }
