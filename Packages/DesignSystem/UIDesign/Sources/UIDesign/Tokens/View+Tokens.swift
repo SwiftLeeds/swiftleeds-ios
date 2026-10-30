@@ -22,12 +22,12 @@ extension View {
     /// Positions this view within an invisible frame with the size of an icon.
     ///
     /// - Parameters:
-    ///   - size: The icon size to use for the frame's width and height.
+    ///   - iconSize: The icon size to use for the frame's width and height.
     ///   - alignment: The alignment of this view inside the resulting frame. The default is
     ///     `.center`.
     /// - Returns: A view with fixed dimensions of the icon size.
-    public func frame(_ size: IconSize, alignment: Alignment = .center) -> some View {
-        frame(width: CGFloat(size), height: CGFloat(size), alignment: alignment)
+    public func frame(iconSize: IconSize, alignment: Alignment = .center) -> some View {
+        frame(width: CGFloat(iconSize), height: CGFloat(iconSize), alignment: alignment)
     }
 
     /// Positions this view within an invisible frame with the size of an avatar.

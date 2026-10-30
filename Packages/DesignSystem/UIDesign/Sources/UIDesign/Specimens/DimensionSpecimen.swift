@@ -116,7 +116,7 @@ package struct DimensionSpecimen: View {
         var body: some View {
             RoundedRectangle(cornerRadius: .tile)
                 .fill(.primary)
-                .frame(side)
+                .frame(iconSize: side)
         }
     }
 
