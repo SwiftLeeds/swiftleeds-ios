@@ -129,7 +129,7 @@ package struct DimensionSpecimen: View {
         var body: some View {
             Circle()
                 .fill(.primary)
-                .frame(diameter)
+                .frame(avatarSize: diameter)
         }
     }
 

@@ -33,12 +33,12 @@ extension View {
     /// Positions this view within an invisible frame with the size of an avatar.
     ///
     /// - Parameters:
-    ///   - size: The avatar size to use for the frame's width and height.
+    ///   - avatarSize: The avatar size to use for the frame's width and height.
     ///   - alignment: The alignment of this view inside the resulting frame. The default is
     ///     `.center`.
     /// - Returns: A view with fixed dimensions of the avatar size.
-    public func frame(_ size: AvatarSize, alignment: Alignment = .center) -> some View {
-        frame(width: CGFloat(size), height: CGFloat(size), alignment: alignment)
+    public func frame(avatarSize: AvatarSize, alignment: Alignment = .center) -> some View {
+        frame(width: CGFloat(avatarSize), height: CGFloat(avatarSize), alignment: alignment)
     }
 }
 

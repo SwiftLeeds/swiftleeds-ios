@@ -10,7 +10,7 @@ import SwiftUI
 /// struct SquareAvatarStyle: AvatarStyle {
 ///     func makeBody(configuration: Configuration) -> some View {
 ///         configuration.content
-///             .frame(configuration.size)
+///             .frame(avatarSize: configuration.size)
 ///             .overlay(alignment: .topTrailing) { configuration.status }
 ///     }
 /// }
