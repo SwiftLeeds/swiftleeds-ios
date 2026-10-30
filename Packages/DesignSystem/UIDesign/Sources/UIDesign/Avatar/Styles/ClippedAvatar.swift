@@ -18,7 +18,7 @@ struct ClippedAvatar<ClipShape: Shape>: View {
     var body: some View {
         let limit = statusInsetLimit
         Color.clear
-            .frame(configuration.size)
+            .frame(avatarSize: configuration.size)
             // An overlay, so content larger than the frame cannot grow the avatar.
             .overlay { configuration.content }
             .clipShape(shape)
