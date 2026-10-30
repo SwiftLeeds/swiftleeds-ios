@@ -28,10 +28,10 @@ package struct IconSpecimen: View {
 
     package var body: some View {
         ViewThatFits(in: .horizontal) {
-            HStack(alignment: .top, spacing: .xLarge) { groups }
-            VStack(alignment: .leading, spacing: .xLarge) { groups }
+            HStack(alignment: .top, spacing: .xl) { groups }
+            VStack(alignment: .leading, spacing: .xl) { groups }
         }
-        .padding(.large)
+        .padding(.lg)
     }
 
     @ViewBuilder

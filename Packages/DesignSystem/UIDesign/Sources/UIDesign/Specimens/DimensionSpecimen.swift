@@ -33,7 +33,7 @@ package struct DimensionSpecimen: View {
         var body: some View {
             Rectangle()
                 .fill(.primary)
-                .frame(width: CGFloat(width), height: CGFloat(Spacing.medium))
+                .frame(width: CGFloat(width), height: CGFloat(Spacing.md))
         }
     }
 
@@ -69,13 +69,13 @@ package struct DimensionSpecimen: View {
                 .fill(.secondary)
                 .frame(width: Self.cardWidth, height: Self.cardHeight)
                 .overlay {
-                    HStack(spacing: .small) {
+                    HStack(spacing: .sm) {
                         ConcentricRectangle()
                             .fill(.primary)
                         ConcentricRectangle.nested
                             .fill(.primary)
                     }
-                    .padding(.large)
+                    .padding(.lg)
                     .containerShape(cardShape)
                 }
         }
@@ -146,7 +146,7 @@ package struct DimensionSpecimen: View {
     /// The chosen dimension's tokens, padded.
     package var body: some View {
         group
-            .padding(.large)
+            .padding(.lg)
     }
 
     /// The group of tokens for the chosen dimension.
@@ -181,32 +181,32 @@ extension DimensionSpecimen {
     fileprivate var spacingGroup: some View {
         SpecimenGroup("Spacing") {
             GridRow {
-                Text("xxSmall")
-                Bar(width: .xxSmall)
+                Text("xxs")
+                Bar(width: .xxs)
             }
             GridRow {
-                Text("xSmall")
-                Bar(width: .xSmall)
+                Text("xs")
+                Bar(width: .xs)
             }
             GridRow {
-                Text("small")
-                Bar(width: .small)
+                Text("sm")
+                Bar(width: .sm)
             }
             GridRow {
-                Text("medium")
-                Bar(width: .medium)
+                Text("md")
+                Bar(width: .md)
             }
             GridRow {
-                Text("large")
-                Bar(width: .large)
+                Text("lg")
+                Bar(width: .lg)
             }
             GridRow {
-                Text("xLarge")
-                Bar(width: .xLarge)
+                Text("xl")
+                Bar(width: .xl)
             }
             GridRow {
-                Text("xxLarge")
-                Bar(width: .xxLarge)
+                Text("xxl")
+                Bar(width: .xxl)
             }
         }
     }
@@ -344,7 +344,7 @@ extension DimensionSpecimen {
 
 #Preview {
     ScrollView([.horizontal, .vertical]) {
-        VStack(alignment: .leading, spacing: .xLarge) {
+        VStack(alignment: .leading, spacing: .xl) {
             ForEach(DimensionSpecimen.Dimension.allCases, id: \.self) {
                 DimensionSpecimen($0)
             }

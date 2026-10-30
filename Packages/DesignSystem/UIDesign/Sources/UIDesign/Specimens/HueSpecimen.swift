@@ -35,8 +35,8 @@ package struct HueSpecimen: View {
     package var body: some View {
         Grid(
             alignment: .center,
-            horizontalSpacing: CGFloat(Spacing.xSmall),
-            verticalSpacing: CGFloat(Spacing.xSmall),
+            horizontalSpacing: .xs,
+            verticalSpacing: .xs,
         ) {
             toneHeader
             ForEach(Hue.allCases, id: \.self) { hue in
@@ -44,7 +44,7 @@ package struct HueSpecimen: View {
             }
         }
         .font(.caption2)
-        .padding(.large)
+        .padding(.lg)
     }
 }
 
