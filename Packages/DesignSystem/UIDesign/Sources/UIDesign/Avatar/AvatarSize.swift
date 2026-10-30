@@ -10,7 +10,7 @@ public struct AvatarSize: Equatable, Hashable, Sendable {
     /// Creates a size.
     ///
     /// - Parameter points: The diameter in points.
-    init(_ points: CGFloat) {
+    private init(_ points: CGFloat) {
         self.points = points
     }
 }
