@@ -161,12 +161,13 @@ import UIDesign
         }
     }
 
-    /// Returns a row of four avatars on a surface.
+    /// Returns a row of five avatars on a surface.
     ///
-    /// The row holds initials with a status, a pale photo, a dark photo and a redacted avatar.
+    /// The row holds initials with a status, the default symbol, a pale photo, a dark photo and a
+    /// redacted avatar.
     ///
     /// - Parameter surface: The surface the row sits on.
-    /// - Returns: A padded row of four large avatars on the surface.
+    /// - Returns: A padded row of five large avatars on the surface.
     private func avatarRow(on surface: BrandShapeStyle) -> some View {
         let name = PersonNameComponents(givenName: "Ada", familyName: "Archer")
 
@@ -177,6 +178,8 @@ import UIDesign
                 status: AvatarStatus("Checked in"),
                 fallback: .initials(name),
             )
+
+            Avatar(url: nil, size: AvatarSize.large)
 
             Avatar(url: nil, size: AvatarSize.large) { Self.palePhoto }
 
