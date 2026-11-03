@@ -4,10 +4,10 @@ import UIDesign
 
 /// Tests for the scale of ``BorderWidthLevel``.
 struct BorderWidthLevelTests {
-    /// Checks that the scale holds half a point, one point and one and a half points.
+    /// Checks that the scale holds zero, half a point, one point and one and a half points.
     @Test
-    func whenLevelsAreListed_shouldReturnHalfOneAndOneAndAHalfPoints() {
+    func whenLevelsAreListed_shouldReturnZeroHalfOneAndOneAndAHalfPoints() {
         let widths = BorderWidthLevel.allCases.map(CGFloat.init)
-        #expect(widths == [0.5, 1, 1.5])
+        #expect(widths == [0, 0.5, 1, 1.5])
     }
 }

@@ -15,6 +15,9 @@ package struct BorderWidthLevel: Equatable, Hashable, Sendable {
 
 extension BorderWidthLevel {
     // swiftlint:disable no_magic_numbers - each number here is the value its name defines
+    /// The level of no width: the edge draws nothing.
+    package static let zero = BorderWidthLevel(points: 0)
+
     /// The thinnest level: an edge of half a point.
     package static let thin = BorderWidthLevel(points: 0.5)
 
@@ -27,8 +30,9 @@ extension BorderWidthLevel {
 }
 
 extension BorderWidthLevel: CaseIterable {
-    /// Every level, from thin to thick.
+    /// Every level, from zero to thick.
     package static let allCases: [BorderWidthLevel] = [
+        .zero,
         .thin,
         .medium,
         .thick,
