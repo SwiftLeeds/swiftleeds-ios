@@ -104,8 +104,25 @@ import UIDesign
     /// Checks every fallback, because each draws something a redaction would
     /// otherwise turn into a rectangle sitting inside the avatar's shape.
     @Test func redacted() {
+        let view = redactedAvatars()
+
+        assertSnapshots(of: view)
+    }
+
+    /// Checks the same three fallbacks in the rounded style, because a style changes the skeleton.
+    @Test func roundedStyleRedacted() {
+        let view = redactedAvatars().avatarStyle(.rounded)
+
+        assertSnapshots(of: view)
+    }
+
+    /// Returns a row of three avatars with different fallbacks, drawn as placeholders.
+    ///
+    /// - Returns: A redacted row of a symbol, initials and a custom mark.
+    private func redactedAvatars() -> some View {
         let name = PersonNameComponents(givenName: "Ada", familyName: "Archer")
-        let view = HStack(spacing: Spacing.lg) {
+
+        return HStack(spacing: Spacing.lg) {
             Avatar(url: nil, size: AvatarSize.large)
 
             Avatar(url: nil, size: AvatarSize.large, fallback: .initials(name))
@@ -116,8 +133,6 @@ import UIDesign
             }
         }
         .redacted(reason: .placeholder)
-
-        assertSnapshots(of: view)
     }
 
     /// Returns a row of the four avatar sizes, each with a status mark.
