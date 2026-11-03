@@ -18,6 +18,20 @@ import UIDesign
         PersonNameComponents(givenName: "Frankie", familyName: "Fox"),
     ]
 
+    /// A pale gradient that stands in for a photo of a bright scene.
+    private static let palePhoto = LinearGradient(
+        colors: [.white, Color(white: 0.92)],
+        startPoint: .top,
+        endPoint: .bottom,
+    )
+
+    /// A dark gradient that stands in for a photo of a dim scene.
+    private static let darkPhoto = LinearGradient(
+        colors: [.black, Color(white: 0.12)],
+        startPoint: .top,
+        endPoint: .bottom,
+    )
+
     @Test func sizes() {
         let view = HStack(alignment: .bottom, spacing: Spacing.lg) {
             avatar(size: AvatarSize.small)
@@ -114,6 +128,44 @@ import UIDesign
         let view = redactedAvatars().avatarStyle(.rounded)
 
         assertSnapshots(of: view)
+    }
+
+    /// Checks both styles on both grouped surfaces, because each surface hides something.
+    ///
+    /// In light mode the fallback's disc matches `groupedSurface`, and a pale photo fades into
+    /// `secondaryGroupedSurface`. In dark mode the disc matches `secondaryGroupedSurface`, and a
+    /// dark photo fades into `groupedSurface`.
+    @Test func groupedSurfaces() {
+        let view = VStack(spacing: 0) {
+            avatarRow(on: .groupedSurface)
+            avatarRow(on: .secondaryGroupedSurface)
+            avatarRow(on: .groupedSurface).avatarStyle(.rounded)
+            avatarRow(on: .secondaryGroupedSurface).avatarStyle(.rounded)
+        }
+
+        assertColorSpecimenSnapshots(of: view)
+    }
+
+    /// Returns a row of four avatars on a surface: initials, a pale photo, a dark photo and a
+    /// redacted one.
+    ///
+    /// - Parameter surface: The surface the row sits on.
+    /// - Returns: A padded row of four large avatars on the surface.
+    private func avatarRow(on surface: BrandShapeStyle) -> some View {
+        let name = PersonNameComponents(givenName: "Ada", familyName: "Archer")
+
+        return HStack(spacing: Spacing.lg) {
+            Avatar(url: nil, size: AvatarSize.large, fallback: .initials(name))
+
+            Avatar(url: nil, size: AvatarSize.large) { Self.palePhoto }
+
+            Avatar(url: nil, size: AvatarSize.large) { Self.darkPhoto }
+
+            Avatar(url: nil, size: AvatarSize.large, fallback: .initials(name))
+                .redacted(reason: .placeholder)
+        }
+        .padding(Spacing.lg)
+        .background(surface)
     }
 
     /// Returns a row of three avatars with different fallbacks, drawn as placeholders.
