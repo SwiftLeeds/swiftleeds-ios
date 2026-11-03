@@ -123,14 +123,14 @@ import UIDesign
         assertSnapshots(of: view)
     }
 
-    /// Checks the same three fallbacks in the rounded style, because a style changes the skeleton.
+    /// Checks the symbol, initials and custom fallbacks in the rounded style.
     @Test func roundedStyleRedacted() {
         let view = redactedAvatars().avatarStyle(.rounded)
 
         assertSnapshots(of: view)
     }
 
-    /// Checks both styles on both grouped surfaces, because each surface hides something.
+    /// Checks both styles on both grouped surfaces.
     ///
     /// In light mode the fallback's disc matches `groupedSurface`, and a pale photo fades into
     /// `secondaryGroupedSurface`. In dark mode the disc matches `secondaryGroupedSurface`, and a
@@ -146,8 +146,9 @@ import UIDesign
         assertColorSpecimenSnapshots(of: view)
     }
 
-    /// Returns a row of four avatars on a surface: initials, a pale photo, a dark photo and a
-    /// redacted one.
+    /// Returns a row of four avatars on a surface.
+    ///
+    /// The row holds initials, a pale photo, a dark photo and a redacted avatar.
     ///
     /// - Parameter surface: The surface the row sits on.
     /// - Returns: A padded row of four large avatars on the surface.
@@ -207,7 +208,9 @@ import UIDesign
         }
     }
 
-    /// Returns an avatar with a flat fill, so the image shows only its shape, size and outline.
+    /// Returns an avatar with a flat fill.
+    ///
+    /// The image then shows only its shape, size and outline.
     ///
     /// - Parameter size: The size to draw the avatar at.
     /// - Returns: An avatar of the given size filled with a flat color.

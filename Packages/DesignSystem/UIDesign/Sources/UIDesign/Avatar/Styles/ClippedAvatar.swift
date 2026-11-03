@@ -23,9 +23,8 @@ struct ClippedAvatar<ClipShape: InsettableShape>: View {
             .overlay { configuration.content }
             .clipShape(shape)
             .overlay { shape.strokeBorder(.border, lineWidth: .edge) }
-            // Over the clip and the outline, so neither cuts the status. The guides inset the
-            // status's center from each edge by its own radius, or by `statusInsetLimit` if that
-            // is smaller.
+            // Over the clip and the outline, so neither cuts the status. The guides inset the status's
+            // center from each edge by its own radius, or by `statusInsetLimit` if that is smaller.
             .overlay(alignment: .bottomTrailing) {
                 configuration.status
                     .alignmentGuide(.trailing) {
