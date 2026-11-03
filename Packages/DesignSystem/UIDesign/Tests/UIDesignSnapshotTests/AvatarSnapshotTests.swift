@@ -32,6 +32,16 @@ import UIDesign
         endPoint: .bottom,
     )
 
+    /// Every surface the design system ships, from the base surface to the tertiary grouped one.
+    private static let surfaces: [BrandShapeStyle] = [
+        .surface,
+        .secondarySurface,
+        .tertiarySurface,
+        .groupedSurface,
+        .secondaryGroupedSurface,
+        .tertiaryGroupedSurface,
+    ]
+
     @Test func sizes() {
         let view = HStack(alignment: .bottom, spacing: Spacing.lg) {
             avatar(size: AvatarSize.small)
@@ -130,25 +140,30 @@ import UIDesign
         assertSnapshots(of: view)
     }
 
-    /// Checks both styles on both grouped surfaces.
-    ///
-    /// In light mode the fallback's disc matches `groupedSurface`, and a pale photo fades into
-    /// `secondaryGroupedSurface`. In dark mode the disc matches `secondaryGroupedSurface`, and a
-    /// dark photo fades into `groupedSurface`.
-    @Test func groupedSurfaces() {
+    /// Checks both styles on every surface, because a surface can hide what sits on it.
+    @Test func surfaces() {
         let view = VStack(spacing: 0) {
-            avatarRow(on: .groupedSurface)
-            avatarRow(on: .secondaryGroupedSurface)
-            avatarRow(on: .groupedSurface).avatarStyle(.rounded)
-            avatarRow(on: .secondaryGroupedSurface).avatarStyle(.rounded)
+            surfaceRows()
+            surfaceRows().avatarStyle(.rounded)
         }
 
         assertColorSpecimenSnapshots(of: view)
     }
 
+    /// Returns one row of avatars for each surface.
+    ///
+    /// - Returns: Six rows stacked with no gap, from the base surface to the tertiary grouped one.
+    private func surfaceRows() -> some View {
+        VStack(spacing: 0) {
+            ForEach(Self.surfaces.indices, id: \.self) { index in
+                avatarRow(on: Self.surfaces[index])
+            }
+        }
+    }
+
     /// Returns a row of four avatars on a surface.
     ///
-    /// The row holds initials, a pale photo, a dark photo and a redacted avatar.
+    /// The row holds initials with a status, a pale photo, a dark photo and a redacted avatar.
     ///
     /// - Parameter surface: The surface the row sits on.
     /// - Returns: A padded row of four large avatars on the surface.
@@ -156,7 +171,12 @@ import UIDesign
         let name = PersonNameComponents(givenName: "Ada", familyName: "Archer")
 
         return HStack(spacing: Spacing.lg) {
-            Avatar(url: nil, size: AvatarSize.large, fallback: .initials(name))
+            Avatar(
+                url: nil,
+                size: AvatarSize.large,
+                status: AvatarStatus("Checked in"),
+                fallback: .initials(name),
+            )
 
             Avatar(url: nil, size: AvatarSize.large) { Self.palePhoto }
 

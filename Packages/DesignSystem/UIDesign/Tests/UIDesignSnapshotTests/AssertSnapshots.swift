@@ -96,12 +96,13 @@ func assertSpecimenSnapshots(
     )
 }
 
-/// Compares a color specimen with its reference images at the default text size.
+/// Compares a view with its reference images at the default text size, with and without
+/// Increase Contrast.
 ///
 /// Four images: light and dark, each with and without Increase Contrast.
 ///
-/// Only color has a contrast variant. Increase Contrast can change a color, but not a length
-/// or an icon.
+/// Use it where Increase Contrast changes what is drawn: a color, or the width of an edge.
+/// It does not change an icon.
 @MainActor
 func assertColorSpecimenSnapshots(
     of view: some View,
