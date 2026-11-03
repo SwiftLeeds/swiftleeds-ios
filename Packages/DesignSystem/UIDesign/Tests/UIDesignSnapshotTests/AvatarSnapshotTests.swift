@@ -140,14 +140,14 @@ import UIDesign
         assertSnapshots(of: view)
     }
 
-    /// Checks both styles on every surface, because a surface can hide what sits on it.
+    /// Checks both styles on every surface.
     @Test func surfaces() {
         let view = VStack(spacing: 0) {
             surfaceRows()
             surfaceRows().avatarStyle(.rounded)
         }
 
-        assertColorSpecimenSnapshots(of: view)
+        assertContrastSnapshots(of: view)
     }
 
     /// Returns one row of avatars for each surface.

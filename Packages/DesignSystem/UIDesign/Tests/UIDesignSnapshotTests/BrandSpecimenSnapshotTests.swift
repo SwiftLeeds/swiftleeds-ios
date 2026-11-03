@@ -12,7 +12,7 @@ struct BrandSpecimenSnapshotTests {
     /// Checks the specimen of every brand's roles and surfaces against its reference images.
     @Test
     func brands() {
-        assertColorSpecimenSnapshots(of: BrandSpecimen())
+        assertContrastSnapshots(of: BrandSpecimen())
     }
 
     /// Checks that a component draws the KotlinLeeds surfaces when the environment sets that brand.

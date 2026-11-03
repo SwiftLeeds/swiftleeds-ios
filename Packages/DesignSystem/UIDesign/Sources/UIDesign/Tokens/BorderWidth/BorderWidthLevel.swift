@@ -18,7 +18,7 @@ extension BorderWidthLevel {
     /// The level of no width: the edge draws nothing.
     package static let zero = BorderWidthLevel(points: 0)
 
-    /// The thinnest level: an edge of half a point.
+    /// The thinnest level that draws: an edge of half a point.
     package static let thin = BorderWidthLevel(points: 0.5)
 
     /// The level of 1 point.

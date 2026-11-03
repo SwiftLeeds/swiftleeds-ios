@@ -1,3 +1,5 @@
+import SwiftUI
+
 /// The width of an edge, named for the job it does.
 public struct BorderWidth: Equatable, Hashable, Sendable {
     /// A job an edge does.

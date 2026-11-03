@@ -11,7 +11,7 @@ package struct DimensionSpecimen: View {
         /// The ``CornerRadiusLevel`` scale, then the nested shape.
         case cornerRadius
 
-        /// The ``BorderWidthLevel`` scale.
+        /// The ``BorderWidthLevel`` levels that draw.
         case borderWidth
 
         /// The ``LineWidthLevel`` scale.
@@ -237,7 +237,7 @@ extension DimensionSpecimen {
         }
     }
 
-    /// The border width scale, from thin to thick.
+    /// The border width levels that draw.
     fileprivate var borderWidthGroup: some View {
         SpecimenGroup("Border") {
             GridRow {

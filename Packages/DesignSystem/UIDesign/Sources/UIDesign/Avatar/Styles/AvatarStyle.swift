@@ -19,7 +19,7 @@ import SwiftUI
 /// The status arrives drawn, so a style places it and nothing more. A style
 /// that leaves it out shows no status at all.
 ///
-/// Under Increase Contrast the built-in styles outline the avatar. A custom style draws no outline unless it adds one.
+/// A custom style draws no outline unless it adds one.
 ///
 /// A style may read the environment, so it can answer the color scheme and the
 /// Dynamic Type size.

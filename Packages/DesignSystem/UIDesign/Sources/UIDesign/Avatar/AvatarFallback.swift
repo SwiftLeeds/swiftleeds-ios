@@ -8,7 +8,7 @@ import SwiftUI
 /// Avatar(url: profile.avatarURL)
 /// ```
 ///
-/// The circle stays neutral. A color here would have to mean something, and
+/// The fill stays neutral. A color here would have to mean something, and
 /// the initials already tell one person from another.
 public struct AvatarFallback: View {
     /// What the fallback draws in place of the photo.

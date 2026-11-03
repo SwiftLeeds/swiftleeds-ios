@@ -2,7 +2,7 @@ import SwiftUI
 
 /// An avatar style that draws a rounded square.
 ///
-/// Any status sits on its lower trailing corner.
+/// Any status sits on its lower trailing corner. It adds an outline under Increase Contrast.
 ///
 /// At large sizes and large text sizes, the status can draw outside the avatar's frame.
 ///

@@ -80,7 +80,7 @@ struct BorderWidthTests {
     ///
     /// - Parameter settings: Settings that differ from the standard ones in differentiation
     ///   or transparency.
-    @Test(arguments: [changedSettings[0], changedSettings[2]])
+    @Test(arguments: changedSettings.filter { $0.contrast != .increased })
     func whenDifferentiationOrTransparencyChange_shouldReturnOutlineAtZeroLevel(
         settings: UIDesign.AccessibilitySettings
     ) {

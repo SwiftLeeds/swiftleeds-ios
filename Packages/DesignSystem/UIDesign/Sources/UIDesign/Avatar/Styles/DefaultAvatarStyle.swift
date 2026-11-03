@@ -2,7 +2,8 @@ import SwiftUI
 
 /// The default avatar style.
 ///
-/// It draws a circle, with any status on its lower trailing edge.
+/// It draws a circle, with any status on its lower trailing edge, and an outline under
+/// Increase Contrast.
 ///
 /// You can also use ``AvatarStyle/automatic`` to construct this style.
 public struct DefaultAvatarStyle: AvatarStyle {

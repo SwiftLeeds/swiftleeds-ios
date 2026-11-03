@@ -96,15 +96,22 @@ func assertSpecimenSnapshots(
     )
 }
 
-/// Compares a view with its reference images at the default text size, with and without
-/// Increase Contrast.
+/// Compares a view with its reference images under both contrast settings.
 ///
-/// Four images: light and dark, each with and without Increase Contrast.
+/// Four images: light and dark, each with and without Increase Contrast, at the default text
+/// size.
 ///
 /// Use it where Increase Contrast changes what is drawn: a color, or the width of an edge.
-/// It does not change an icon.
+///
+/// - Parameters:
+///   - view: The view to render.
+///   - fileID: The file identifier of the calling test.
+///   - filePath: The path of the calling test file, where the reference images live.
+///   - testName: The name of the calling test, which names the reference images.
+///   - line: The line of the call, where a failure is reported.
+///   - column: The column of the call, where a failure is reported.
 @MainActor
-func assertColorSpecimenSnapshots(
+func assertContrastSnapshots(
     of view: some View,
     fileID: StaticString = #fileID,
     file filePath: StaticString = #filePath,
