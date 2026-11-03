@@ -207,7 +207,10 @@ import UIDesign
         }
     }
 
-    // A flat fill, so this suite measures the shape and the size and nothing else.
+    /// Returns an avatar with a flat fill, so the image shows only its shape, size and outline.
+    ///
+    /// - Parameter size: The size to draw the avatar at.
+    /// - Returns: An avatar of the given size filled with a flat color.
     private func avatar(size: AvatarSize) -> some View {
         Avatar(url: nil, size: size) {
             Rectangle().fill(.secondarySurface)

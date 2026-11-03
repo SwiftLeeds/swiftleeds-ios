@@ -16,6 +16,9 @@ import SwiftUI
 /// The style clips the avatar to its shape, so a fallback cannot draw outside
 /// it.
 ///
+/// The built-in styles outline the avatar, so it stays visible on a surface of its own color. A
+/// custom style draws its own outline, if it wants one.
+///
 /// Apply `redacted(reason: .placeholder)` to show an avatar whose person is
 /// still loading. It then draws a plain shape and asks for no photo.
 public struct Avatar<Fallback: View>: View {
