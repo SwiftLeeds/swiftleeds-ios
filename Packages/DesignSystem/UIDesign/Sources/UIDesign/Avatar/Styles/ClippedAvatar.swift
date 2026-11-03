@@ -1,8 +1,8 @@
 import SwiftUI
 
-/// An avatar clipped to a shape and outlined, with any status over the outline.
+/// An avatar clipped to a shape, with any status over its edge.
 ///
-/// The built-in avatar styles share this layout.
+/// It draws an outline under Increase Contrast. The built-in avatar styles share this layout.
 struct ClippedAvatar<ClipShape: InsettableShape>: View {
     /// The properties of the avatar.
     let configuration: AvatarStyleConfiguration
@@ -22,7 +22,7 @@ struct ClippedAvatar<ClipShape: InsettableShape>: View {
             // An overlay, so content larger than the frame cannot grow the avatar.
             .overlay { configuration.content }
             .clipShape(shape)
-            .overlay { shape.strokeBorder(.border, lineWidth: .edge) }
+            .overlay { shape.strokeBorder(.avatarOutline, lineWidth: .outline) }
             // Over the clip and the outline, so neither cuts the status. The guides inset the status's
             // center from each edge by its own radius, or by `statusInsetLimit` if that is smaller.
             .overlay(alignment: .bottomTrailing) {

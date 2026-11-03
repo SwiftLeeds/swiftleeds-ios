@@ -23,4 +23,7 @@ extension ShapeStyle where Self == Color {
         Color(.gridColor)
         #endif
     }
+
+    /// The color of an avatar's outline.
+    static var avatarOutline: Color { .tertiaryText }
 }

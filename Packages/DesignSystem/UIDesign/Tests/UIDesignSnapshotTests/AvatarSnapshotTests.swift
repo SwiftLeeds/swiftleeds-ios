@@ -230,7 +230,7 @@ import UIDesign
 
     /// Returns an avatar with a flat fill.
     ///
-    /// The image then shows only its shape, size and outline.
+    /// The image then shows only its shape and size.
     ///
     /// - Parameter size: The size to draw the avatar at.
     /// - Returns: An avatar of the given size filled with a flat color.
