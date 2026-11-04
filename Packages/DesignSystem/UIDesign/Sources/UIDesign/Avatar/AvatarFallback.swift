@@ -60,7 +60,7 @@ public struct AvatarFallback: View {
     private static var symbolProportion: CGFloat { 0.62 }
 
     /// The initials' font size, as a fraction of the avatar's diameter.
-    private static var initialsProportion: CGFloat { 0.46 }
+    private static let initialsProportion: CGFloat = 0.40
 
     /// Returns the person's initials, or the symbol when there is nothing to
     /// abbreviate.
