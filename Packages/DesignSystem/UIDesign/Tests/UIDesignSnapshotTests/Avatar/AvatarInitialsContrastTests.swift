@@ -7,8 +7,6 @@ import UIDesign
 import UIKit
 
 /// Tests that an avatar's initials reach the text contrast floor on every surface.
-///
-/// It reads the pixels of a real render, because the environment cannot set Increase Contrast.
 @MainActor
 @Suite
 struct AvatarInitialsContrastTests {
@@ -26,18 +24,6 @@ struct AvatarInitialsContrastTests {
         case secondaryGroupedSurface
         /// Content layered on top of secondary backgrounds of a grouped interface.
         case tertiaryGroupedSurface
-
-        /// The name that failure messages use.
-        var name: String {
-            switch self {
-            case .surface: "surface"
-            case .secondarySurface: "secondarySurface"
-            case .tertiarySurface: "tertiarySurface"
-            case .groupedSurface: "groupedSurface"
-            case .secondaryGroupedSurface: "secondaryGroupedSurface"
-            case .tertiaryGroupedSurface: "tertiaryGroupedSurface"
-            }
-        }
 
         /// The style that draws this surface.
         var style: BrandShapeStyle {
@@ -76,6 +62,7 @@ struct AvatarInitialsContrastTests {
         ///
         /// - Parameter image: The image to read.
         /// - Throws: When the image has no bitmap, or the context cannot be made.
+        /// - Complexity: O(*n*), where *n* is the number of pixels in the image.
         init(of image: UIImage) throws {
             let cgImage = try #require(image.cgImage)
             let context = try Self.context(width: cgImage.width, height: cgImage.height)
@@ -99,6 +86,7 @@ struct AvatarInitialsContrastTests {
         ///
         /// - Parameter rect: The rectangle in the image, in points.
         /// - Returns: One color for each pixel the rectangle covers.
+        /// - Complexity: O(*n*), where *n* is the number of pixels the rectangle covers.
         func colors(in rect: CGRect) -> [Color.Resolved] {
             let columns = Int(rect.minX * scale)..<Int(rect.maxX * scale)
             let rows = Int(rect.minY * scale)..<Int(rect.maxY * scale)
@@ -162,12 +150,6 @@ struct AvatarInitialsContrastTests {
     /// The side in points of the square that holds the letters and nothing else.
     private static let letterBoxSide: CGFloat = 40
 
-    /// The seconds a render may take before the test gives up.
-    private static let renderTimeout: TimeInterval = 10
-
-    /// The seconds between checks that a render has finished.
-    private static let pollInterval: TimeInterval = 0.01
-
     /// The contrast ratio of two identical colors, which a blank render produces.
     private static let identicalRatio: Float = 1
 
@@ -206,7 +188,7 @@ struct AvatarInitialsContrastTests {
     private func expectFloor(brand: Brand, appearance: SystemAppearance, surface: Surface) throws {
         let ratio = try Self.lettersRatio(brand: brand, appearance: appearance, surface: surface)
         let shown = "\(WCAG.text(of: ratio)), floor \(WCAG.text(of: WCAG.textFloor))"
-        #expect(ratio >= WCAG.textFloor, "\(brand) \(surface.name) \(appearance.name): \(shown)")
+        #expect(ratio >= WCAG.textFloor, "\(brand) \(surface) \(appearance.name): \(shown)")
     }
 
     /// Returns the strongest contrast between any letter pixel and the avatar's fill.
@@ -217,9 +199,11 @@ struct AvatarInitialsContrastTests {
     ///   - surface: The surface the avatar sits on.
     /// - Returns: The ratio, where 1 means the letters cannot be told from the fill.
     /// - Throws: When a render fails or its pixels cannot be read.
+    /// - Complexity: O(*n*), where *n* is the number of pixels in the render.
     private static func lettersRatio(brand: Brand, appearance: SystemAppearance, surface: Surface) throws -> Float {
         let image = try render(brand: brand, appearance: appearance, surface: surface)
         let pixels = try Pixels(of: image)
+        // The fill is translucent, so its real color depends on the surface behind it.
         let fill = pixels.color(at: fillPoint)
         return pixels.colors(in: letterBox)
             .map { WCAG.ratio(between: $0, and: fill) }
@@ -233,7 +217,7 @@ struct AvatarInitialsContrastTests {
     ///   - appearance: The appearance to draw under.
     ///   - surface: The surface the avatar sits on.
     /// - Returns: An image of the avatar, as the system draws it under the appearance.
-    /// - Throws: When the render does not finish in time.
+    /// - Throws: When the render hands back no image.
     private static func render(brand: Brand, appearance: SystemAppearance, surface: Surface) throws -> UIImage {
         let view = Avatar(url: nil, size: AvatarSize.xLarge, fallback: .initials(name))
             .background(surface.style)
@@ -243,18 +227,7 @@ struct AvatarInitialsContrastTests {
         Snapshotting<AnyView, UIImage>.image(traits: appearance.traits)
             .snapshot(AnyView(view))
             .run { capture.image = $0 }
-        waitForImage(in: capture)
         return try #require(capture.image)
-    }
-
-    /// Runs the run loop until a render finishes or the timeout passes.
-    ///
-    /// - Parameter capture: The holder that receives the finished image.
-    private static func waitForImage(in capture: Capture) {
-        let deadline = Date().addingTimeInterval(renderTimeout)
-        while capture.image == nil, Date() < deadline {
-            RunLoop.current.run(until: Date().addingTimeInterval(pollInterval))
-        }
     }
 }
 #endif
