@@ -81,7 +81,7 @@ public struct AvatarFallback: View {
                 .overlay {
                     Text(letters)
                         .font(.system(size: CGFloat(diameter) * Self.initialsProportion, weight: .medium))
-                        .foregroundStyle(.text)
+                        .foregroundStyle(.avatarInitials)
                         .lineLimit(1)
                         .minimumScaleFactor(0.5)
                 }

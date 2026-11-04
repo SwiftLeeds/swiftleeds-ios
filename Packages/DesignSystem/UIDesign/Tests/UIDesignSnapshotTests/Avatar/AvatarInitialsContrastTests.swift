@@ -178,6 +178,37 @@ struct AvatarInitialsContrastTests {
         }
     }
 
+    /// Checks Increase Contrast never lowers the letters' ratio, in every brand and surface.
+    ///
+    /// - Throws: When a render fails or its pixels cannot be read.
+    @Test
+    func whenIncreaseContrastIsOn_shouldNotLowerTheLettersRatio() throws {
+        for brand in Brand.allCases {
+            for appearance in SystemAppearance.allCases {
+                for surface in Surface.allCases {
+                    try expectNotLowered(brand: brand, appearance: appearance, surface: surface)
+                }
+            }
+        }
+    }
+
+    /// Records a failure when Increase Contrast lowers the letters' ratio.
+    ///
+    /// An appearance without Increase Contrast has nothing to compare with, so it passes.
+    ///
+    /// - Parameters:
+    ///   - brand: The brand whose surfaces the avatar sits on.
+    ///   - appearance: The appearance to draw under.
+    ///   - surface: The surface the avatar sits on.
+    /// - Throws: When a render fails or its pixels cannot be read.
+    private func expectNotLowered(brand: Brand, appearance: SystemAppearance, surface: Surface) throws {
+        guard let standard = appearance.withoutIncreasedContrast else { return }
+        let increased = try Self.lettersRatio(brand: brand, appearance: appearance, surface: surface)
+        let normal = try Self.lettersRatio(brand: brand, appearance: standard, surface: surface)
+        let shown = "\(WCAG.text(of: increased)) is below \(WCAG.text(of: normal)) in \(standard.name)"
+        #expect(increased >= normal, "\(brand) \(surface) \(appearance.name): \(shown)")
+    }
+
     /// Records a failure when the letters fall below the text floor.
     ///
     /// - Parameters:
