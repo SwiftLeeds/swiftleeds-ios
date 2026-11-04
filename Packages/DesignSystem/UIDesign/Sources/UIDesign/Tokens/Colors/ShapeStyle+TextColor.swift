@@ -31,6 +31,13 @@ extension ShapeStyle where Self == Color {
     }
 }
 
+extension ShapeStyle where Self == AnyShapeStyle {
+    /// The color of the initials in an avatar's fallback.
+    ///
+    /// It reaches 4.5:1 against ``avatarFill`` on every surface, in every appearance.
+    static var avatarInitials: AnyShapeStyle { AnyShapeStyle(Color.text.opacity(.initials)) }
+}
+
 /// The color of text on the brand fill.
 extension ShapeStyle where Self == BrandShapeStyle {
     /// Text on a brand colored fill.

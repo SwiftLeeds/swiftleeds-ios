@@ -60,7 +60,7 @@ public struct AvatarFallback: View {
     private static var symbolProportion: CGFloat { 0.62 }
 
     /// The initials' font size, as a fraction of the avatar's diameter.
-    private static var initialsProportion: CGFloat { 0.46 }
+    private static let initialsProportion: CGFloat = 0.40
 
     /// Returns the person's initials, or the symbol when there is nothing to
     /// abbreviate.
@@ -80,8 +80,8 @@ public struct AvatarFallback: View {
             Rectangle().fill(.avatarFill)
                 .overlay {
                     Text(letters)
-                        .font(.system(size: CGFloat(diameter) * Self.initialsProportion, weight: .semibold))
-                        .foregroundStyle(.text)
+                        .font(.system(size: CGFloat(diameter) * Self.initialsProportion, weight: .medium))
+                        .foregroundStyle(.avatarInitials)
                         .lineLimit(1)
                         .minimumScaleFactor(0.5)
                 }

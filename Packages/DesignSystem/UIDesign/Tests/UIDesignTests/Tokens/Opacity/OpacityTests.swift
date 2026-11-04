@@ -34,6 +34,34 @@ struct OpacityTests {
         ),
     ]
 
+    /// Settings with standard contrast that change only the differentiation or the transparency.
+    private static let otherSettingsAtStandardContrast = [
+        UIDesign.AccessibilitySettings(
+            differentiation: .withoutColor,
+            contrast: .standard,
+            transparency: .standard,
+        ),
+        UIDesign.AccessibilitySettings(
+            differentiation: .standard,
+            contrast: .standard,
+            transparency: .reduced,
+        ),
+    ]
+
+    /// Settings with increased contrast that change only the differentiation or the transparency.
+    private static let otherSettingsAtIncreasedContrast = [
+        UIDesign.AccessibilitySettings(
+            differentiation: .withoutColor,
+            contrast: .increased,
+            transparency: .standard,
+        ),
+        UIDesign.AccessibilitySettings(
+            differentiation: .standard,
+            contrast: .increased,
+            transparency: .reduced,
+        ),
+    ]
+
     /// Checks that the pattern is faint when people do not need color told apart.
     @Test
     func whenPatternIsResolvedForStandardDifferentiation_shouldReturnEightPercent() {
@@ -82,5 +110,55 @@ struct OpacityTests {
     ) {
         let sut = Opacity.pattern
         #expect(sut.level(for: settings) == .percent20)
+    }
+
+    /// Checks that the initials keep their level at standard contrast.
+    @Test
+    func whenInitialsAreResolvedForStandardContrast_shouldReturnSixtyFourPercent() {
+        let sut = Opacity.initials
+        let settings = UIDesign.AccessibilitySettings(
+            differentiation: .standard,
+            contrast: .standard,
+            transparency: .standard,
+        )
+        let level = sut.level(for: settings)
+        #expect(level == .percent64)
+        #expect(Double(level) == 0.64)
+    }
+
+    /// Checks that the initials grow stronger when Increase Contrast is on.
+    @Test
+    func whenInitialsAreResolvedForIncreasedContrast_shouldReturnSeventySixPercent() {
+        let sut = Opacity.initials
+        let settings = UIDesign.AccessibilitySettings(
+            differentiation: .standard,
+            contrast: .increased,
+            transparency: .standard,
+        )
+        let level = sut.level(for: settings)
+        #expect(level == .percent76)
+        #expect(Double(level) == 0.76)
+    }
+
+    /// Checks that differentiation and transparency leave the initials alone at standard contrast.
+    ///
+    /// - Parameter settings: Standard-contrast settings that differ in one other place.
+    @Test(arguments: otherSettingsAtStandardContrast)
+    func whenDifferentiationOrTransparencyChanges_shouldReturnInitialsAtSixtyFourPercent(
+        settings: UIDesign.AccessibilitySettings
+    ) {
+        let sut = Opacity.initials
+        #expect(sut.level(for: settings) == .percent64)
+    }
+
+    /// Checks that differentiation and transparency leave the initials alone at increased contrast.
+    ///
+    /// - Parameter settings: Increased-contrast settings that differ in one other place.
+    @Test(arguments: otherSettingsAtIncreasedContrast)
+    func whenDifferentiationOrTransparencyChangesWithIncreasedContrast_shouldReturnInitialsAtSeventySixPercent(
+        settings: UIDesign.AccessibilitySettings
+    ) {
+        let sut = Opacity.initials
+        #expect(sut.level(for: settings) == .percent76)
     }
 }
