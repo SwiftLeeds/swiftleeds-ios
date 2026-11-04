@@ -80,7 +80,7 @@ public struct AvatarFallback: View {
             Rectangle().fill(.avatarFill)
                 .overlay {
                     Text(letters)
-                        .font(.system(size: CGFloat(diameter) * Self.initialsProportion, weight: .semibold))
+                        .font(.system(size: CGFloat(diameter) * Self.initialsProportion, weight: .medium))
                         .foregroundStyle(.text)
                         .lineLimit(1)
                         .minimumScaleFactor(0.5)
