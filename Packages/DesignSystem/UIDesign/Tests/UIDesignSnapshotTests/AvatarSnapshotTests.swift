@@ -18,6 +18,30 @@ import UIDesign
         PersonNameComponents(givenName: "Frankie", familyName: "Fox"),
     ]
 
+    /// A pale gradient that stands in for a photo of a bright scene.
+    private static let palePhoto = LinearGradient(
+        colors: [.white, Color(white: 0.92)],
+        startPoint: .top,
+        endPoint: .bottom,
+    )
+
+    /// A dark gradient that stands in for a photo of a dim scene.
+    private static let darkPhoto = LinearGradient(
+        colors: [.black, Color(white: 0.12)],
+        startPoint: .top,
+        endPoint: .bottom,
+    )
+
+    /// Every surface the design system ships, from the base surface to the tertiary grouped one.
+    private static let surfaces: [BrandShapeStyle] = [
+        .surface,
+        .secondarySurface,
+        .tertiarySurface,
+        .groupedSurface,
+        .secondaryGroupedSurface,
+        .tertiaryGroupedSurface,
+    ]
+
     @Test func sizes() {
         let view = HStack(alignment: .bottom, spacing: Spacing.lg) {
             avatar(size: AvatarSize.small)
@@ -104,8 +128,77 @@ import UIDesign
     /// Checks every fallback, because each draws something a redaction would
     /// otherwise turn into a rectangle sitting inside the avatar's shape.
     @Test func redacted() {
+        let view = redactedAvatars()
+
+        assertSnapshots(of: view)
+    }
+
+    /// Checks the symbol, initials and custom fallbacks in the rounded style.
+    @Test func roundedStyleRedacted() {
+        let view = redactedAvatars().avatarStyle(.rounded)
+
+        assertSnapshots(of: view)
+    }
+
+    /// Checks both styles on every surface.
+    @Test func surfaces() {
+        let view = VStack(spacing: 0) {
+            surfaceRows()
+            surfaceRows().avatarStyle(.rounded)
+        }
+
+        assertContrastSnapshots(of: view)
+    }
+
+    /// Returns one row of avatars for each surface.
+    ///
+    /// - Returns: Six rows stacked with no gap, from the base surface to the tertiary grouped one.
+    private func surfaceRows() -> some View {
+        VStack(spacing: 0) {
+            ForEach(Self.surfaces.indices, id: \.self) { index in
+                avatarRow(on: Self.surfaces[index])
+            }
+        }
+    }
+
+    /// Returns a row of five avatars on a surface.
+    ///
+    /// The row holds initials with a status, the default symbol, a pale photo, a dark photo and a
+    /// redacted avatar.
+    ///
+    /// - Parameter surface: The surface the row sits on.
+    /// - Returns: A padded row of five large avatars on the surface.
+    private func avatarRow(on surface: BrandShapeStyle) -> some View {
         let name = PersonNameComponents(givenName: "Ada", familyName: "Archer")
-        let view = HStack(spacing: Spacing.lg) {
+
+        return HStack(spacing: Spacing.lg) {
+            Avatar(
+                url: nil,
+                size: AvatarSize.large,
+                status: AvatarStatus("Checked in"),
+                fallback: .initials(name),
+            )
+
+            Avatar(url: nil, size: AvatarSize.large)
+
+            Avatar(url: nil, size: AvatarSize.large) { Self.palePhoto }
+
+            Avatar(url: nil, size: AvatarSize.large) { Self.darkPhoto }
+
+            Avatar(url: nil, size: AvatarSize.large, fallback: .initials(name))
+                .redacted(reason: .placeholder)
+        }
+        .padding(Spacing.lg)
+        .background(surface)
+    }
+
+    /// Returns a row of three avatars with different fallbacks, drawn as placeholders.
+    ///
+    /// - Returns: A redacted row of a symbol, initials and a custom mark.
+    private func redactedAvatars() -> some View {
+        let name = PersonNameComponents(givenName: "Ada", familyName: "Archer")
+
+        return HStack(spacing: Spacing.lg) {
             Avatar(url: nil, size: AvatarSize.large)
 
             Avatar(url: nil, size: AvatarSize.large, fallback: .initials(name))
@@ -116,8 +209,6 @@ import UIDesign
             }
         }
         .redacted(reason: .placeholder)
-
-        assertSnapshots(of: view)
     }
 
     /// Returns a row of the four avatar sizes, each with a status mark.
@@ -140,7 +231,12 @@ import UIDesign
         }
     }
 
-    // A flat fill, so this suite measures the shape and the size and nothing else.
+    /// Returns an avatar with a flat fill.
+    ///
+    /// The image then shows only its shape and size.
+    ///
+    /// - Parameter size: The size to draw the avatar at.
+    /// - Returns: An avatar of the given size filled with a flat color.
     private func avatar(size: AvatarSize) -> some View {
         Avatar(url: nil, size: size) {
             Rectangle().fill(.secondarySurface)

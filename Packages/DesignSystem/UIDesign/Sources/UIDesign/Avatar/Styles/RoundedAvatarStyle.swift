@@ -1,7 +1,8 @@
 import SwiftUI
 
-/// An avatar style that draws a rounded square, with any status on its lower
-/// trailing corner.
+/// An avatar style that draws a rounded square.
+///
+/// Any status sits on its lower trailing corner. It adds an outline under Increase Contrast.
 ///
 /// At large sizes and large text sizes, the status can draw outside the avatar's frame.
 ///
@@ -22,7 +23,6 @@ public struct RoundedAvatarStyle: AvatarStyle {
 }
 
 extension AvatarStyle where Self == RoundedAvatarStyle {
-    /// An avatar style that draws a rounded square, with any status on its
-    /// lower trailing corner.
+    /// An avatar style that draws a rounded square.
     public static var rounded: RoundedAvatarStyle { RoundedAvatarStyle() }
 }

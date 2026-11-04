@@ -8,7 +8,7 @@ import SwiftUI
 /// Avatar(url: profile.avatarURL)
 /// ```
 ///
-/// The circle stays neutral. A color here would have to mean something, and
+/// The fill stays neutral. A color here would have to mean something, and
 /// the initials already tell one person from another.
 public struct AvatarFallback: View {
     /// What the fallback draws in place of the photo.
@@ -45,7 +45,7 @@ public struct AvatarFallback: View {
 
     /// The person symbol on a plain fill.
     private var symbol: some View {
-        Rectangle().fill(.secondarySurface)
+        Rectangle().fill(.avatarFill)
             .overlay {
                 Image(icon: .person)
                     // A font size keeps the symbol's own proportions, which resizing it would not.
@@ -77,7 +77,7 @@ public struct AvatarFallback: View {
         if letters.isEmpty {
             symbol
         } else {
-            Rectangle().fill(.secondarySurface)
+            Rectangle().fill(.avatarFill)
                 .overlay {
                     Text(letters)
                         .font(.system(size: CGFloat(diameter) * Self.initialsProportion, weight: .semibold))
