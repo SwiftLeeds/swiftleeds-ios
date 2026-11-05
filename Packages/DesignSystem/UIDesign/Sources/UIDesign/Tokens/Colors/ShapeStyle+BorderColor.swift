@@ -6,8 +6,8 @@ extension ShapeStyle where Self == SeparatorShapeStyle {
     public static var border: SeparatorShapeStyle { .separator }
 }
 
-/// The style of an avatar's outline.
-extension ShapeStyle where Self == Color {
-    /// The color of an avatar's outline.
-    static var avatarOutline: Color { .tertiaryText }
+/// The style an avatar draws its outline in.
+extension ShapeStyle where Self == HierarchicalShapeStyle {
+    /// The style of an avatar's outline.
+    static var avatarOutline: HierarchicalShapeStyle { .tertiaryText }
 }
