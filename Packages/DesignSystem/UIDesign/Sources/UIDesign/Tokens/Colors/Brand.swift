@@ -52,8 +52,20 @@ public enum Brand: CaseIterable, Equatable, Hashable, Sendable {
 
         /// The role's name with `elevated` in front, such as `elevatedSurface`.
         private var elevatedPrefixedName: String {
+            "elevated" + capitalizedName
+        }
+
+        #if os(watchOS)
+        /// The name of the role's color set for Increase Contrast, such as `increasedContrastSurface`.
+        var increasedContrastName: String {
+            "increasedContrast" + capitalizedName
+        }
+        #endif
+
+        /// The role's name with a capital first letter, such as `Surface`.
+        private var capitalizedName: String {
             let name = "\(self)"
-            return "elevated" + name.prefix(1).uppercased() + name.dropFirst()
+            return name.prefix(1).uppercased() + name.dropFirst()
         }
     }
 
@@ -182,7 +194,7 @@ public enum Brand: CaseIterable, Equatable, Hashable, Sendable {
     /// Returns the catalog color of this brand for a role.
     ///
     /// On iOS, a surface lifts in an elevated container, such as a sheet. Elsewhere it does not, and
-    /// no other role does.
+    /// no other role does. On watchOS, every role follows Increase Contrast.
     ///
     /// - Parameter role: The job the color does.
     /// - Returns: The color, named after the brand and the role.
@@ -196,6 +208,9 @@ public enum Brand: CaseIterable, Equatable, Hashable, Sendable {
             return UIColor(resource: chosen).resolvedColor(with: traits)
         }
         return Color(provider)
+        #elseif os(watchOS)
+        let increased = resource(named: "\(catalogName)-\(role.increasedContrastName)")
+        return Color(ContrastAdaptiveStyle(standard: base, increased: increased))
         #else
         return Color(base)
         #endif

@@ -15,6 +15,14 @@ package enum ColorFamily: CaseIterable, Equatable, Hashable, Sendable {
         case onSolid
         /// The color for a pale fill behind `text`.
         case subtle
+
+        #if os(watchOS)
+        /// The name of the role's color set for Increase Contrast, such as `increasedContrastText`.
+        var increasedContrastName: String {
+            let name = "\(self)"
+            return "increasedContrast" + name.prefix(1).uppercased() + name.dropFirst()
+        }
+        #endif
     }
 
     /// The family for success.
@@ -59,9 +67,17 @@ package enum ColorFamily: CaseIterable, Equatable, Hashable, Sendable {
 
     /// Returns the catalog color of this family for a role.
     ///
+    /// On watchOS, every role follows Increase Contrast.
+    ///
     /// - Parameter role: The job the color does.
     /// - Returns: The color, named after the family and the role.
     private func color(for role: Role) -> Color {
-        Color(ColorResource(name: "\(self)-\(role)", bundle: .module))
+        let base = ColorResource(name: "\(self)-\(role)", bundle: .module)
+        #if os(watchOS)
+        let increased = ColorResource(name: "\(self)-\(role.increasedContrastName)", bundle: .module)
+        return Color(ContrastAdaptiveStyle(standard: base, increased: increased))
+        #else
+        return Color(base)
+        #endif
     }
 }
