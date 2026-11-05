@@ -4,14 +4,17 @@ import SwiftUI
 import UIKit
 #endif
 
-/// The colors text draws in, from most to least prominent.
-extension ShapeStyle where Self == Color {
+/// The styles text draws in, from most to least prominent.
+extension ShapeStyle where Self == HierarchicalShapeStyle {
     /// The main text on a surface.
-    public static var text: Color { .primary }
+    public static var text: HierarchicalShapeStyle { .primary }
 
     /// Text that supports the main text.
-    public static var secondaryText: Color { .secondary }
+    public static var secondaryText: HierarchicalShapeStyle { .secondary }
+}
 
+/// The colors text draws in, from most to least prominent.
+extension ShapeStyle where Self == Color {
     // swiftlint:disable no_magic_numbers - the sRGB values of the watchOS tokens are defined here
     /// Text that is present but not meant to be read yet.
     public static var tertiaryText: Color {
@@ -38,10 +41,10 @@ extension ShapeStyle where Self == Color {
 }
 
 extension ShapeStyle where Self == AnyShapeStyle {
-    /// The color of the initials in an avatar's fallback.
-    ///
-    /// It reaches 4.5:1 against ``avatarFill`` on every surface, in every appearance.
-    static var avatarInitials: AnyShapeStyle { AnyShapeStyle(Color.text.opacity(.initials)) }
+    /// The style of the initials in an avatar's fallback.
+    static var avatarInitials: AnyShapeStyle {
+        AnyShapeStyle(HierarchicalShapeStyle.text.opacity(.initials))
+    }
 }
 
 /// The color of text on the brand fill.

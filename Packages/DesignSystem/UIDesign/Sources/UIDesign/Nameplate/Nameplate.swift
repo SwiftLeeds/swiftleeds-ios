@@ -15,6 +15,8 @@ import SwiftUI
 /// }
 /// ```
 ///
+/// A nameplate keeps its own colors inside a button or a colored foreground.
+///
 /// VoiceOver reads a nameplate as a single element, so it announces the
 /// subject rather than each line in turn.
 ///
@@ -69,6 +71,7 @@ public struct Nameplate<Title: View, Detail: View, Icon: View>: View {
 
     public var body: some View {
         AnyView(style.makeBody(configuration: configuration))
+            .foregroundStyle(Color.primary)
             .accessibilityElement(children: .combine)
     }
 

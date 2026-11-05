@@ -16,6 +16,8 @@ import SwiftUI
 /// The style clips the avatar to its shape, so a fallback cannot draw outside
 /// it.
 ///
+/// An avatar keeps its own colors inside a button or a colored foreground.
+///
 /// Apply `redacted(reason: .placeholder)` to show an avatar whose person is
 /// still loading. It then draws a plain shape and asks for no photo.
 public struct Avatar<Fallback: View>: View {
@@ -68,6 +70,7 @@ public struct Avatar<Fallback: View>: View {
 
     public var body: some View {
         AnyView(style.makeBody(configuration: configuration))
+            .foregroundStyle(Color.primary)
             .environment(\.avatarDiameter, diameter)
     }
 
