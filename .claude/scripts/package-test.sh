@@ -45,11 +45,15 @@ trap 'rm -f "$log"' EXIT
 #
 # The import check judges only files that recompile, so an up-to-date build
 # passes unchecked.
+#
+# --force-resolved-versions takes versions from the committed Package.resolved, as
+# CI does. After a dependency change, re-resolve and re-pin before running this.
 status=0
 swift test \
     --package-path "$package_path" \
     --scratch-path "$repo/.build-shared" \
     --explicit-target-dependency-import-check error \
+    --force-resolved-versions \
     "$@" >"$log" 2>&1 || status=$?
 
 if [ "$status" -eq 0 ]; then
