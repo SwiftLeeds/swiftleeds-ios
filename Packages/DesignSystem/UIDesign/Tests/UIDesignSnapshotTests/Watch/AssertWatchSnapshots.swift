@@ -1,4 +1,5 @@
 #if os(watchOS)
+import Foundation
 import SnapshotTesting
 import SwiftUI
 import Testing
