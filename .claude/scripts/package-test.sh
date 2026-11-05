@@ -47,7 +47,7 @@ trap 'rm -f "$log"' EXIT
 # passes unchecked.
 #
 # --force-resolved-versions takes versions from the committed Package.resolved, as
-# CI does. After a dependency change, re-resolve and re-pin before running this.
+# CI does. After changing a dependency, update and commit Package.resolved first.
 status=0
 swift test \
     --package-path "$package_path" \
