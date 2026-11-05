@@ -20,11 +20,14 @@ struct WatchModel: Equatable, Sendable {
 
     // swiftlint:disable no_magic_numbers - the measured screen metrics of this model
     /// The Apple Watch SE 3 (40mm), the smallest Watch screen Apple ships.
+    ///
+    /// Its Text Size setting stops at `accessibility1`.
     static let se3FortyMillimeter = Self(
         name: "40mm",
         screenSize: CGSize(width: 162, height: 197),
         pixelsPerPoint: 2,
         defaultTextSize: .large,
+        largestTextSize: .accessibility1,
     )
     // swiftlint:enable no_magic_numbers
 
@@ -40,18 +43,21 @@ struct WatchModel: Equatable, Sendable {
     /// The text size most people read at on this model.
     let defaultTextSize: DynamicTypeSize
 
-    /// The text sizes to record: the default one, and the largest the Watch offers.
+    /// The largest text size this model's Text Size setting offers.
+    let largestTextSize: DynamicTypeSize
+
+    /// The text sizes to record: the default one, and the largest this model offers.
     fileprivate var textSizes: [TextSize] {
         [
             TextSize(name: "default", size: defaultTextSize),
-            TextSize(name: "largest", size: .accessibility3),
+            TextSize(name: "largest", size: largestTextSize),
         ]
     }
 }
 
 /// Compares `view` with its reference images, rendered with `ImageRenderer`.
 ///
-/// Two images: the default text size and the largest accessibility text size. Each image is the
+/// Two images: the default text size and the largest text size the model offers. Each image is the
 /// whole screen of `model`, with the view centered. The appearance is dark, the only one the
 /// Watch has. A run on a simulator with another screen size records an issue and compares nothing.
 ///
