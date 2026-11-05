@@ -74,7 +74,6 @@ package enum ColorFamily: CaseIterable, Equatable, Hashable, Sendable {
     private func color(for role: Role) -> Color {
         let base = ColorResource(name: "\(self)-\(role)", bundle: .module)
         #if os(watchOS)
-        // FB25448508: a Watch catalog drops contrast entries, so a second color set holds that value.
         let increased = ColorResource(name: "\(self)-\(role.increasedContrastName)", bundle: .module)
         return Color(ContrastAdaptiveStyle(standard: base, increased: increased))
         #else

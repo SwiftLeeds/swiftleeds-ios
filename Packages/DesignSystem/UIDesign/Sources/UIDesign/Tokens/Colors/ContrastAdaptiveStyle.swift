@@ -1,7 +1,8 @@
-#if os(watchOS)
 import SwiftUI
 
 /// A color that follows Increase Contrast by choosing between two color sets.
+///
+/// Only watchOS uses it.
 struct ContrastAdaptiveStyle: ShapeStyle, Equatable, Hashable, Sendable {
     /// The color set for standard contrast.
     let standard: ColorResource
@@ -14,7 +15,7 @@ struct ContrastAdaptiveStyle: ShapeStyle, Equatable, Hashable, Sendable {
     /// - Parameter environment: The environment to resolve in.
     /// - Returns: The resolved color of ``increased`` under Increase Contrast, and of ``standard`` otherwise.
     func resolve(in environment: EnvironmentValues) -> Color.Resolved {
+        // FB25448508: a Watch catalog drops contrast entries, so a second color set holds that value.
         Color(environment.colorSchemeContrast == .increased ? increased : standard).resolve(in: environment)
     }
 }
-#endif

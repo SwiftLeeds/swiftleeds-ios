@@ -209,7 +209,6 @@ public enum Brand: CaseIterable, Equatable, Hashable, Sendable {
         }
         return Color(provider)
         #elseif os(watchOS)
-        // FB25448508: a Watch catalog drops contrast entries, so a second color set holds that value.
         let increased = resource(named: "\(catalogName)-\(role.increasedContrastName)")
         return Color(ContrastAdaptiveStyle(standard: base, increased: increased))
         #else
