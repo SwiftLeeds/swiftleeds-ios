@@ -18,16 +18,6 @@ extension ShapeStyle where Self == Color {
         #endif
     }
 
-    /// A solid border, for where content must not show through.
-    public static var opaqueBorder: Color {
-        #if os(iOS)
-        Color(.opaqueSeparator)
-        #elseif os(watchOS)
-        Color(.sRGB, red: 42 / 255, green: 42 / 255, blue: 44 / 255, opacity: 1)
-        #else
-        Color(.gridColor)
-        #endif
-    }
     // swiftlint:enable no_magic_numbers
 
     /// The color of an avatar's outline.

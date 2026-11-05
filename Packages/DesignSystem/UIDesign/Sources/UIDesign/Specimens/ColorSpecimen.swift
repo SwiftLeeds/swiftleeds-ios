@@ -22,7 +22,7 @@ package struct ColorSpecimen: View {
                 .frame(width: Sample.width, height: Sample.height)
                 .overlay {
                     RoundedRectangle(cornerRadius: .tile)
-                        .strokeBorder(.opaqueBorder, lineWidth: .edge)
+                        .strokeBorder(.border, lineWidth: .edge)
                 }
         }
     }
@@ -137,10 +137,6 @@ extension ColorSpecimen {
             GridRow {
                 Text("border")
                 Swatch(.border)
-            }
-            GridRow {
-                Text("opaque")
-                Swatch(.opaqueBorder)
             }
         }
     }
