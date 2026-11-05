@@ -35,6 +35,18 @@ struct ColorCatalogTests {
 
     /// One entry of a color set's `Contents.json`.
     private struct Entry: Decodable {
+        /// A device family a catalog entry applies to.
+        enum Idiom: String, Decodable, Equatable, Hashable, Sendable {
+            /// Every device family without an entry of its own.
+            case universal = "universal"
+
+            /// Apple Watch.
+            case watch = "watch"
+
+            /// Mac.
+            case mac = "mac"
+        }
+
         private enum CodingKeys: String, CodingKey {
             case appearances = "appearances"
             case color = "color"
@@ -48,7 +60,7 @@ struct ColorCatalogTests {
         let color: Color
 
         /// The device family the entry applies to.
-        let idiom: String
+        let idiom: Idiom
 
         /// Creates an entry from a decoder, reading an absent `appearances` key as none.
         ///
@@ -58,7 +70,7 @@ struct ColorCatalogTests {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             appearances = try container.decodeIfPresent([Appearance].self, forKey: .appearances) ?? []
             color = try container.decode(Color.self, forKey: .color)
-            idiom = try container.decode(String.self, forKey: .idiom)
+            idiom = try container.decode(Idiom.self, forKey: .idiom)
         }
     }
 
@@ -70,8 +82,24 @@ struct ColorCatalogTests {
 
     /// A color set folder of the catalog, read from disk.
     private struct ColorSet {
+        /// The folder name of a color set.
+        struct ColorSetName: CustomStringConvertible, Equatable, Hashable, Sendable {
+            /// The folder name as written on disk.
+            private let value: String
+
+            /// The folder name, for failure messages.
+            var description: String { value }
+
+            /// Creates a name from a folder name.
+            ///
+            /// - Parameter value: The folder name of the set.
+            init(_ value: String) {
+                self.value = value
+            }
+        }
+
         /// The folder name of the set.
-        let name: String
+        let name: ColorSetName
 
         /// The decoded `Contents.json` of the set.
         let contents: Contents
@@ -90,9 +118,9 @@ struct ColorCatalogTests {
 
         for set in sets {
             let dark = set.contents.colors.filter {
-                $0.idiom == "universal" && $0.appearances == Self.darkAppearance
+                $0.idiom == .universal && $0.appearances == Self.darkAppearance
             }
-            let watch = set.contents.colors.filter { $0.idiom == "watch" && $0.appearances.isEmpty }
+            let watch = set.contents.colors.filter { $0.idiom == .watch && $0.appearances.isEmpty }
             #expect(dark.count == 1, "\(set.name) needs one dark entry")
             #expect(watch.count == 1, "\(set.name) needs one Watch entry")
             #expect(watch.first?.color == dark.first?.color, "\(set.name) Watch value differs from dark")
@@ -121,7 +149,7 @@ struct ColorCatalogTests {
             .map { folder in
                 let data = try Data(contentsOf: folder.appendingPathComponent("Contents.json"))
                 return ColorSet(
-                    name: folder.lastPathComponent,
+                    name: ColorSet.ColorSetName(folder.lastPathComponent),
                     contents: try JSONDecoder().decode(Contents.self, from: data),
                 )
             }
