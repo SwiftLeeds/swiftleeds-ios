@@ -21,11 +21,15 @@ struct WatchModel: Equatable, Sendable {
     // swiftlint:disable no_magic_numbers - the measured screen metrics of this model
     /// The Apple Watch SE 3 (40mm), the smallest Watch screen Apple ships.
     static let se3FortyMillimeter = Self(
+        name: "40mm",
         screenSize: CGSize(width: 162, height: 197),
         pixelsPerPoint: 2,
         defaultTextSize: .large,
     )
     // swiftlint:enable no_magic_numbers
+
+    /// The part of each reference image's file name that names this model.
+    let name: String
 
     /// The size of the screen in points.
     let screenSize: CGSize
@@ -88,7 +92,7 @@ func assertSnapshots(
         assertSnapshot(
             of: png,
             as: strategy,
-            named: textSize.name,
+            named: "\(model.name)-\(textSize.name)",
             fileID: fileID,
             file: filePath,
             testName: testName,
