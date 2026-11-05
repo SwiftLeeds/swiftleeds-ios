@@ -1,25 +1,13 @@
 import SwiftUI
 
-#if os(iOS)
-import UIKit
-#endif
-
-/// The colors a border or a divider draws in.
-extension ShapeStyle where Self == Color {
-    // swiftlint:disable no_magic_numbers - the sRGB values of the watchOS tokens are defined here
+/// The style a border or a divider draws in.
+extension ShapeStyle where Self == SeparatorShapeStyle {
     /// A border that lets the surface show through.
-    public static var border: Color {
-        #if os(iOS)
-        Color(.separator)
-        #elseif os(watchOS)
-        Color(.sRGB, red: 84 / 255, green: 84 / 255, blue: 88 / 255, opacity: 0.5)
-        #else
-        Color(.separatorColor)
-        #endif
-    }
+    public static var border: SeparatorShapeStyle { .separator }
+}
 
-    // swiftlint:enable no_magic_numbers
-
+/// The style of an avatar's outline.
+extension ShapeStyle where Self == Color {
     /// The color of an avatar's outline.
     static var avatarOutline: Color { .tertiaryText }
 }
