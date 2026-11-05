@@ -8,6 +8,8 @@ Packages/DesignSystem/UIDesign/Sources/UIDesign:
   four role sets per brand (text, solid, onSolid, subtle), and two sets per brand for each of
   SURFACES (one, and one elevated for iOS sheets). A surface set keeps Apple's lightness, sampled
   on iOS and macOS, and takes the brand's hue. The whole catalog is deleted and rewritten on each run.
+Every color set ends with one watch entry, with no appearances, holding the set's dark value. A Watch
+catalog keeps one value per color set, and the Watch is always dark.
 
 Run it from the repo root: python3 .claude/scripts/generate-palette.py
 Pass --output-root <directory> to write both outputs into that directory instead.
@@ -578,6 +580,7 @@ TINTABLE_LIGHTNESS = (0.05, 0.98)  # Outside this range Apple's surface is too d
 
 CATALOG_NAME = "Colors.xcassets"
 CATALOG_INFO = {"author": "xcode", "version": 1}
+DARK_INDEX = 1  # Dark's place in APPEARANCES, and so in each four-entry run of a set.
 
 
 def component_text(value):
@@ -610,11 +613,12 @@ def json_text(value):
 
 
 def colorset_text(tones, ramps, hue_name):
-    """Returns the Contents.json text of one role color set, from its four entries of tones_for."""
+    """Returns the Contents.json text of one role color set: its four entries of tones_for, then a watch entry."""
     entries = [
         colorset_entry(entry_rgb(entry, ramps, hue_name), appearances)
         for entry, (_, appearances) in zip(tones, APPEARANCES)
     ]
+    entries.append(colorset_entry(entry_rgb(tones[DARK_INDEX], ramps, hue_name), [], "watch"))
     return json_text({"colors": entries, "info": CATALOG_INFO})
 
 
@@ -629,12 +633,15 @@ def retint(hex_string, hue_degrees, chroma):
 
 
 def surface_text(brand, angle, surface, layout):
-    """Returns the Contents.json text of one brand surface set: each entry of its layout, in every appearance."""
+    """Returns the Contents.json text of one brand surface set: each entry of its layout, then a watch entry."""
     entries = [
         colorset_entry(retint(hex_code, angle, brand.tint), appearances, idiom)
         for sample, idiom in layout
         for hex_code, (_, appearances) in zip(APPLE_SURFACES[surface][sample], APPEARANCES)
     ]
+    first_sample = layout[0][0]
+    watch_hex = APPLE_SURFACES[surface][first_sample][DARK_INDEX]
+    entries.append(colorset_entry(retint(watch_hex, angle, brand.tint), [], "watch"))
     return json_text({"colors": entries, "info": CATALOG_INFO})
 
 
@@ -694,15 +701,17 @@ def build_catalog(ramps):
 def check_surface_set(relative, text, brand, surface, layout):
     """Parse one brand surface set back. Returns its value count.
 
-    Fails unless it holds four entries for each entry of its layout, and no other, each opaque Display P3
-    with Apple's lightness and, where Apple's surface can hold a tint, the brand's chroma.
+    Fails unless it holds four entries for each entry of its layout, then a watch entry, and no other. Each
+    layout entry is opaque Display P3 with Apple's lightness and, where Apple's surface can hold a tint,
+    the brand's chroma.
     """
     entries = json.loads(text)["colors"]
-    expected_count = len(layout) * len(APPEARANCES)
+    expected_count = len(layout) * len(APPEARANCES) + 1
     if len(entries) != expected_count:
         fail(f"self-check: {relative} held {len(entries)} entries, expected {expected_count}")
+    check_watch_entry(relative, entries)
     low, high = TINTABLE_LIGHTNESS
-    for index, entry in enumerate(entries):
+    for index, entry in enumerate(entries[:-1]):
         sample, idiom = layout[index // len(APPEARANCES)]
         label, appearances = APPEARANCES[index % len(APPEARANCES)]
         if entry["idiom"] != idiom or entry.get("appearances", []) != appearances:
@@ -723,11 +732,21 @@ def check_surface_set(relative, text, brand, surface, layout):
 OFF_GRID_TOLERANCE = 0.002  # How far an off-grid entry's rounded literal may sit from its lightness.
 
 
+def check_watch_entry(relative, entries):
+    """Fail unless the last entry is a watch entry with no appearances and the first dark entry's components."""
+    watch = entries[-1]
+    if watch["idiom"] != "watch" or "appearances" in watch:
+        fail(f"self-check: {relative} does not end with a watch entry without appearances")
+    if watch["color"] != entries[DARK_INDEX]["color"]:
+        fail(f"self-check: {relative} watch entry differs from its dark entry")
+
+
 def check_tone_set(relative, text, tones, ramp_hue, hue_name):
     """Parse one role color set back against the entries it came from. Returns its value count."""
     entries = json.loads(text)["colors"]
-    if len(entries) != len(APPEARANCES):
-        fail(f"self-check: {relative} held {len(entries)} entries, expected {len(APPEARANCES)}")
+    if len(entries) != len(APPEARANCES) + 1:
+        fail(f"self-check: {relative} held {len(entries)} entries, expected {len(APPEARANCES) + 1}")
+    check_watch_entry(relative, entries)
     for entry, tone, (label, appearances) in zip(entries, tones, APPEARANCES):
         if entry.get("appearances", []) != appearances:
             fail(f"self-check: {relative} {label} has the wrong appearances")
@@ -763,9 +782,9 @@ def check_catalog(files, ramps):
         else:
             tones = tones_for(family, role, FAMILY_ROLE_TONES)
             count += check_tone_set(relative, text, tones, ramps[hue_of[family]], hue_of[family])
-    expected_count = len(FAMILIES) * len(ROLE_TONES) * len(APPEARANCES)
-    expected_count += len(BRANDS) * len(ROLE_TONES) * len(APPEARANCES)
-    expected_count += len(BRANDS) * sum(len(layout) for _, _, layout in surface_sets()) * len(APPEARANCES)
+    expected_count = len(FAMILIES) * len(ROLE_TONES) * (len(APPEARANCES) + 1)
+    expected_count += len(BRANDS) * len(ROLE_TONES) * (len(APPEARANCES) + 1)
+    expected_count += len(BRANDS) * sum(len(layout) * len(APPEARANCES) + 1 for _, _, layout in surface_sets())
     if count != expected_count:
         fail(f"self-check: catalog held {count} values, expected {expected_count}")
     print(f"self-check: {count} catalog values ok")
