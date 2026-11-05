@@ -119,7 +119,8 @@ in the package's snapshot target too, because that is the only target CI runs on
    `Packages/<Folder>/<Name>/.swiftpm/xcode/xcshareddata/xcschemes/<Target>.xcscheme`, holding only that
    target. Committed package schemes work; xcodebuild lists them.
 3. `#if os(iOS)` (or `#if os(watchOS)` for a Watch file) around each file, so the target compiles
-   to nothing on macOS.
+   to nothing on macOS. A file outside `Watch/` that both platforms compile takes
+   `#if os(iOS) || os(watchOS)`, so the iOS log judges it.
 
 **The scheme is the point, not a formality.** `-only-testing:` filters what runs, not what builds,
 so without a one-target scheme xcodebuild compiles the package's other test targets anyway. That

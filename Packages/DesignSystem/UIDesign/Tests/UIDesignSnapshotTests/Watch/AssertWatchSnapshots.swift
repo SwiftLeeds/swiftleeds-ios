@@ -10,8 +10,8 @@ import WatchKit
 /// An Apple Watch model that the reference images are recorded for.
 struct WatchModel: Equatable, Sendable {
     /// A text size to record, with the name of its reference image.
-    fileprivate struct TextSize {
-        /// The part of the reference image name that tells this text size from the others.
+    fileprivate struct TextSize: Equatable, Hashable, Sendable {
+        /// The part of the reference image's file name that tells this text size from the others.
         let name: String
 
         /// The text size the view renders with.
@@ -49,7 +49,7 @@ struct WatchModel: Equatable, Sendable {
 ///
 /// Two images: the default text size and the largest accessibility text size. Each image is the
 /// whole screen of `model`, with the view centered. The appearance is dark, the only one the
-/// Watch has. A run on a simulator of another model records an issue and compares nothing.
+/// Watch has. A run on a simulator with another screen size records an issue and compares nothing.
 ///
 /// A view that does not fit the height is cut off, so this asks whether the view fits one screen
 /// with no scrolling. Give it one realistic composition, with at most three elements across. A
