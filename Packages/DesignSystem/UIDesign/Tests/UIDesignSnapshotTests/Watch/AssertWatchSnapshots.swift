@@ -8,11 +8,13 @@ import UIKit
 
 /// Compares `view` with its reference images, rendered with `ImageRenderer`.
 ///
-/// Two images: the default text size and the largest accessibility text size. Each is 162 points
-/// wide, the narrowest Watch screen, on the dark appearance, the only one the Watch has.
+/// Two images: the default text size and the largest accessibility text size. Each image is the
+/// whole screen of the 40mm Watch, 162 by 197 points, the smallest Apple ships, with the view
+/// centered. The appearance is dark, the only one the Watch has.
 ///
-/// Give it one realistic composition, with at most three elements across. A view that a platform
-/// framework draws, such as a web view or some controls, does not render.
+/// A view that does not fit the height is cut off, so this asks whether the view fits one screen
+/// with no scrolling. Give it one realistic composition, with at most three elements across. A
+/// view that a platform framework draws, such as a web view or some controls, does not render.
 ///
 /// - Parameters:
 ///   - view: The view to render.
@@ -68,21 +70,24 @@ private let watchTextSizes = [
 /// The width of the 40mm Watch screen in points, the narrowest Apple ships.
 private let watchScreenWidth: CGFloat = 162
 
+/// The height of the 40mm Watch screen in points, the shortest Apple ships.
+private let watchScreenHeight: CGFloat = 197
+
 /// The pixels drawn for each point.
 private let watchImageScale: CGFloat = 2
 
-/// Returns `view` on a Watch-width dark screen.
+/// Returns `view` centered on a full-size dark Watch screen.
 ///
 /// - Parameters:
 ///   - view: The view to place on the screen.
 ///   - textSize: The text size to render the view with.
-/// - Returns: The view at the Watch width, on the surface color, in the dark appearance.
+/// - Returns: A 162 by 197 point screen on the surface color, in the dark appearance, with the
+///   view centered.
 @MainActor
 private func watchScreen(_ view: some View, textSize: DynamicTypeSize) -> some View {
     view
         .dynamicTypeSize(textSize)
-        .frame(width: watchScreenWidth)
-        .fixedSize(horizontal: false, vertical: true)
+        .frame(width: watchScreenWidth, height: watchScreenHeight)
         .background(.surface)
         .environment(\.colorScheme, .dark)
 }
