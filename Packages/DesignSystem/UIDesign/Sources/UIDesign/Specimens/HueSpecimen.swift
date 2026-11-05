@@ -23,7 +23,7 @@ package struct HueSpecimen: View {
                 // Without the stroke, a swatch close to the page color is invisible.
                 .overlay {
                     RoundedRectangle(cornerRadius: .tile)
-                        .strokeBorder(.opaqueBorder, lineWidth: .edge)
+                        .strokeBorder(.border, lineWidth: .edge)
                 }
         }
     }

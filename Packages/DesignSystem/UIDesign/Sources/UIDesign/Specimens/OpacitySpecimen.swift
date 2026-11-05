@@ -31,7 +31,7 @@ package struct OpacitySpecimen: View {
                     .background(.surface)
                     .overlay {
                         Rectangle()
-                            .strokeBorder(.opaqueBorder, lineWidth: .edge)
+                            .strokeBorder(.border, lineWidth: .edge)
                     }
                 Text(Double(level), format: .percent)
             }

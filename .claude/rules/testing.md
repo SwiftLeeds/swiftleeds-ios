@@ -102,7 +102,10 @@ snapshot instead.
 ## Snapshot tests live in their own target
 
 Decided 2026-08-28. Snapshot tests are behind `#if os(iOS)`, so the macOS CI job cannot see them.
-They get a separate iOS Simulator job, and that job must stay cheap.
+They get a separate iOS Simulator job, and that job must stay cheap. A Watch file in the same
+target sits behind `#if os(watchOS)`, in the target's `Watch/` folder. The iOS log sees such a file
+as empty and reports its imports as missing, so `analyze.sh` judges that folder as its own scope.
+CI does not yet run it.
 
 Since 2026-10-25 one other iOS-only test shares the snapshot target: UIDesign's
 `ColorFamilyContrastTests`, which needs iOS traits to resolve Increase Contrast. A test like it goes
@@ -115,7 +118,9 @@ in the package's snapshot target too, because that is the only target CI runs on
 2. A shared scheme of **the same name**, at
    `Packages/<Folder>/<Name>/.swiftpm/xcode/xcshareddata/xcschemes/<Target>.xcscheme`, holding only that
    target. Committed package schemes work; xcodebuild lists them.
-3. `#if os(iOS)` around each file, so the target compiles to nothing on macOS.
+3. `#if os(iOS)` (or `#if os(watchOS)` for a Watch file) around each file, so the target compiles
+   to nothing on macOS. A file outside `Watch/` that both platforms compile takes
+   `#if os(iOS) || os(watchOS)`, so the iOS log judges it.
 
 **The scheme is the point, not a formality.** `-only-testing:` filters what runs, not what builds,
 so without a one-target scheme xcodebuild compiles the package's other test targets anyway. That

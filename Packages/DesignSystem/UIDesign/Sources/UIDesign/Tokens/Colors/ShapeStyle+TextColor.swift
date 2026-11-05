@@ -1,41 +1,27 @@
 import SwiftUI
 
-#if os(iOS)
-import UIKit
-#endif
-
-/// The colors text draws in, from most to least prominent.
-extension ShapeStyle where Self == Color {
+/// The styles text draws in, from most to least prominent.
+///
+/// Each style is a level of the current foreground style, so it takes a color set around it.
+extension ShapeStyle where Self == HierarchicalShapeStyle {
     /// The main text on a surface.
-    public static var text: Color { .primary }
+    public static var text: HierarchicalShapeStyle { .primary }
 
     /// Text that supports the main text.
-    public static var secondaryText: Color { .secondary }
+    public static var secondaryText: HierarchicalShapeStyle { .secondary }
 
     /// Text that is present but not meant to be read yet.
-    public static var tertiaryText: Color {
-        #if os(iOS)
-        Color(.tertiaryLabel)
-        #else
-        Color(.tertiaryLabelColor)
-        #endif
-    }
+    public static var tertiaryText: HierarchicalShapeStyle { .tertiary }
 
     /// Text in a control the person can't use right now.
-    public static var disabledText: Color {
-        #if os(iOS)
-        Color(.quaternaryLabel)
-        #else
-        Color(.quaternaryLabelColor)
-        #endif
-    }
+    public static var disabledText: HierarchicalShapeStyle { .quaternary }
 }
 
 extension ShapeStyle where Self == AnyShapeStyle {
-    /// The color of the initials in an avatar's fallback.
-    ///
-    /// It reaches 4.5:1 against ``avatarFill`` on every surface, in every appearance.
-    static var avatarInitials: AnyShapeStyle { AnyShapeStyle(Color.text.opacity(.initials)) }
+    /// The style of the initials in an avatar's fallback.
+    static var avatarInitials: AnyShapeStyle {
+        AnyShapeStyle(HierarchicalShapeStyle.text.opacity(.initials))
+    }
 }
 
 /// The color of text on the brand fill.

@@ -6,7 +6,7 @@
 #
 #     .github/scripts/analyze.sh <scope> <min-files> <log>...
 #
-#     scope      app, tests or snapshots (below)
+#     scope      app, tests, snapshots or watch (below)
 #     min-files  fail when a run analyses fewer files than this
 #     log        a raw build log. SwiftPM prints compile commands only with -v,
 #                so a `swift build` or `swift test` log needs it. Several logs
@@ -32,8 +32,10 @@
 #     tests      Packages/*/*/Tests, except the *SnapshotTests folders, and the
 #                *TestSupport targets, which no app links
 #                                            the macOS package build
-#     snapshots  Packages/*/*/Tests/*SnapshotTests
+#     snapshots  Packages/*/*/Tests/*SnapshotTests, except their Watch folders
 #                                            the iOS snapshot-test build
+#     watch      Packages/*/*/Tests/*SnapshotTests/Watch
+#                                            the watchOS snapshot-test build
 #
 # A package sits at Packages/<Folder>/<Name>. The globs go into a config file for
 # SwiftLint, never through the shell's own expansion, and SwiftLint ignores a
@@ -64,7 +66,7 @@ mode=analyze
 if [ "$#" -eq 1 ] && [ "$1" = scopes ]; then
     mode=scopes
 elif [ "$#" -lt 3 ]; then
-    echo "usage: analyze.sh <app|tests|snapshots> <min-files> <log>..." >&2
+    echo "usage: analyze.sh <app|tests|snapshots|watch> <min-files> <log>..." >&2
     echo "       analyze.sh scopes" >&2
     exit 2
 fi
@@ -137,10 +139,14 @@ scope_globs () {
             ;;
         snapshots)
             included="Packages/*/*/Tests/*SnapshotTests"
+            also_excluded="Packages/*/*/Tests/*SnapshotTests/Watch"
+            ;;
+        watch)
+            included="Packages/*/*/Tests/*SnapshotTests/Watch"
             also_excluded=""
             ;;
         *)
-            fatal "Unknown scope '$1'. Use app, tests or snapshots."
+            fatal "Unknown scope '$1'. Use app, tests, snapshots or watch."
             exit 2
             ;;
     esac
@@ -182,7 +188,7 @@ check_scopes () {
         fi
         checked=$((checked + 1))
         covering=""
-        for scope in app tests snapshots; do
+        for scope in app tests snapshots watch; do
             scope_globs "$scope"
             if in_globs "$file" "$included" && ! in_globs "$file" "$also_excluded"; then
                 covering="$covering $scope"

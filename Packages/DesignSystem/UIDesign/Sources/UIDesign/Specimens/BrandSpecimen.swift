@@ -38,7 +38,7 @@ package struct BrandSpecimen: View {
                 .padding(.sm)
                 .background(fill, in: shape)
                 .overlay {
-                    shape.strokeBorder(.opaqueBorder, lineWidth: .edge)
+                    shape.strokeBorder(.border, lineWidth: .edge)
                 }
         }
     }
@@ -62,7 +62,7 @@ package struct BrandSpecimen: View {
                 .frame(width: Sample.width, height: Sample.height)
                 .overlay {
                     RoundedRectangle(cornerRadius: .tile)
-                        .strokeBorder(.opaqueBorder, lineWidth: .edge)
+                        .strokeBorder(.border, lineWidth: .edge)
                 }
         }
     }

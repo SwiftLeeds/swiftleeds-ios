@@ -69,6 +69,18 @@
         }
       },
       "idiom" : "universal"
+    },
+    {
+      "color" : {
+        "color-space" : "display-p3",
+        "components" : {
+          "alpha" : "1.000",
+          "blue" : "0.2532",
+          "green" : "0.5167",
+          "red" : "0.9953"
+        }
+      },
+      "idiom" : "watch"
     }
   ],
   "info" : {

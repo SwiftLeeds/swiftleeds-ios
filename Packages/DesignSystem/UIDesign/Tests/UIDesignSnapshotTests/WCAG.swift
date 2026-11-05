@@ -1,7 +1,6 @@
-#if os(iOS)
+#if os(iOS) || os(watchOS)
 import Foundation
 import SwiftUI
-import UIKit
 
 /// The Web Content Accessibility Guidelines contrast math that the contrast suites share.
 enum WCAG {
@@ -26,24 +25,11 @@ enum WCAG {
     /// The decimal places a ratio shows in a failure message.
     private static let shownDecimals = 2
 
-    /// Returns the components a color has under an appearance.
-    ///
-    /// - Parameters:
-    ///   - color: The color to resolve.
-    ///   - appearance: The appearance to resolve it under.
-    /// - Returns: The color as fixed components.
-    @MainActor
-    static func resolve(_ color: Color, in appearance: SystemAppearance) -> Color.Resolved {
-        // Fixed with the traits first: `EnvironmentValues` cannot set Increase Contrast.
-        let fixed = UIColor(color).resolvedColor(with: appearance.traits)
-        return Color(fixed).resolve(in: EnvironmentValues())
-    }
-
     /// Returns how bright a color looks, from 0 for black to 1 for white.
     ///
     /// - Parameter color: The color to measure.
     /// - Returns: The relative luminance of `color`.
-    private static func luminance(of color: Color.Resolved) -> Float {
+    static func luminance(of color: Color.Resolved) -> Float {
         redWeight * color.linearRed + greenWeight * color.linearGreen + blueWeight * color.linearBlue
     }
 

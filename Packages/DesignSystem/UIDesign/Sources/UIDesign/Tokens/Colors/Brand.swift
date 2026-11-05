@@ -1,6 +1,6 @@
 import SwiftUI
 
-#if canImport(UIKit)
+#if os(iOS)
 import UIKit
 #endif
 
@@ -188,7 +188,7 @@ public enum Brand: CaseIterable, Equatable, Hashable, Sendable {
     /// - Returns: The color, named after the brand and the role.
     private func color(for role: Role) -> Color {
         let base = resource(named: "\(catalogName)-\(role)")
-        #if canImport(UIKit)
+        #if os(iOS)
         guard let elevatedName = role.elevatedName else { return Color(base) }
         let elevated = resource(named: "\(catalogName)-\(elevatedName)")
         let provider = UIColor { traits in
