@@ -7,7 +7,6 @@ import Testing
 import UIDesign
 import UniformTypeIdentifiers
 
-/// Tests that a surrounding foreground style cannot color an avatar or a nameplate.
 @MainActor
 @Suite
 struct NeutralForegroundTests {
@@ -32,10 +31,6 @@ struct NeutralForegroundTests {
         #endif
     }
 
-    /// Checks a red foreground around an avatar changes none of its pixels.
-    ///
-    /// - Parameter colorScheme: The appearance to draw under.
-    /// - Throws: When a render hands back no image.
     @Test(arguments: colorSchemes)
     func whenAvatarIsInsideRedForeground_shouldDrawTheSameAsAlone(colorScheme: ColorScheme) throws {
         let sut = Avatar(url: nil, size: AvatarSize.large, fallback: .initials(Self.name))
@@ -46,10 +41,6 @@ struct NeutralForegroundTests {
         #expect(inRed == alone)
     }
 
-    /// Checks a red foreground around a nameplate changes none of its pixels.
-    ///
-    /// - Parameter colorScheme: The appearance to draw under.
-    /// - Throws: When a render hands back no image.
     @Test(arguments: colorSchemes)
     func whenNameplateIsInsideRedForeground_shouldDrawTheSameAsAlone(colorScheme: ColorScheme) throws {
         let sut = Nameplate("Ada Archer", detail: "Northern Software") {
@@ -62,10 +53,6 @@ struct NeutralForegroundTests {
         #expect(inRed == alone)
     }
 
-    /// Checks an icon styled inside the nameplate's builder draws in that style.
-    ///
-    /// - Parameter colorScheme: The appearance to draw under.
-    /// - Throws: When a render hands back no image, or its pixels cannot be read.
     @Test(arguments: colorSchemes)
     func whenNameplateIconIsStyledGreen_shouldDrawGreenPixels(colorScheme: ColorScheme) throws {
         let sut = Nameplate("Ada Archer", detail: "Northern Software") {
@@ -83,18 +70,13 @@ struct NeutralForegroundTests {
     }
 
     #if os(iOS)
-    /// Checks a button tinted red leaves no red in an avatar's initials.
-    ///
-    /// Plain text in the same button shows that the tint draws.
-    ///
-    /// - Parameter colorScheme: The appearance to draw under.
-    /// - Throws: When a render hands back no image, or its pixels cannot be read.
     @Test(arguments: colorSchemes)
     func whenAvatarIsInsideTintedButton_shouldDrawNoRedPixels(colorScheme: ColorScheme) throws {
         let sut = Avatar(url: nil, size: AvatarSize.large, fallback: .initials(Self.name))
         let text = Text("Ada Archer")
 
         let avatarPixels = try Self.pixels(of: Self.tintedButton(sut), colorScheme: colorScheme)
+        // Plain text in the same button shows that the tint draws.
         let textPixels = try Self.pixels(of: Self.tintedButton(text), colorScheme: colorScheme)
 
         #expect(!Self.contains(avatarPixels, where: Self.isRed))

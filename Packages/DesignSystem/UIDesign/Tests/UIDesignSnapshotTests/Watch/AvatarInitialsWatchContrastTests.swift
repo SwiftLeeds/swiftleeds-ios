@@ -5,7 +5,6 @@ import SwiftUI
 import Testing
 import UIDesign
 
-/// Tests that an avatar's initials reach the text contrast floor on the Watch.
 @MainActor
 @Suite
 struct AvatarInitialsWatchContrastTests {
@@ -38,9 +37,6 @@ struct AvatarInitialsWatchContrastTests {
         return CGRect(x: origin, y: origin, width: letterBoxSide, height: letterBoxSide)
     }
 
-    /// Checks the initials reach the text floor against the avatar's fill.
-    ///
-    /// - Throws: When a render hands back no image, or its pixels cannot be read.
     @Test
     func whenInitialsAreOnFill_shouldReachTextFloor() throws {
         let ratio = try Self.lettersRatio(contrast: .standard)
@@ -48,9 +44,6 @@ struct AvatarInitialsWatchContrastTests {
         #expect(ratio >= WCAG.textFloor, "\(WCAG.text(of: ratio)), floor \(WCAG.text(of: WCAG.textFloor))")
     }
 
-    /// Checks Increase Contrast never lowers the initials' ratio.
-    ///
-    /// - Throws: When a render hands back no image, or its pixels cannot be read.
     @Test
     func whenContrastIsIncreased_shouldNotLowerRatio() throws {
         let standard = try Self.lettersRatio(contrast: .standard)

@@ -1,10 +1,6 @@
 import Foundation
 import Testing
 
-/// Tests that every color set in the catalog draws the same on the Watch as in dark mode.
-///
-/// The Watch has one appearance, always dark. A set with no Watch entry falls back to its light
-/// value there, so the test reads the catalog's files.
 struct ColorCatalogTests {
     /// One appearance a catalog entry applies to, such as dark mode.
     private struct Appearance: Decodable, Equatable {
@@ -111,7 +107,6 @@ struct ColorCatalogTests {
     /// The appearance a catalog entry applies to: dark mode.
     private static let darkAppearance = [Appearance(appearance: "luminosity", value: "dark")]
 
-    /// Checks that each color set holds one Watch entry equal to its dark entry.
     @Test func whenColorSetIsInCatalog_shouldHaveWatchEntryWithDarkValue() throws {
         let sets = try Self.colorSets()
         #expect(sets.count >= Self.minimumSetCount)
