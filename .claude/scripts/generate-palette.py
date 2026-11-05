@@ -8,9 +8,9 @@ Packages/DesignSystem/UIDesign/Sources/UIDesign:
   four role sets per brand (text, solid, onSolid, subtle), and two sets per brand for each of
   SURFACES (one, and one elevated for iOS sheets). A surface set keeps Apple's lightness, sampled
   on iOS and macOS, and takes the brand's hue. The whole catalog is deleted and rewritten on each run.
-Every color set ends with one watch entry, with no appearances, holding the set's dark value. A Watch
+Every base set ends with one watch entry, with no appearances, holding the set's dark value. A Watch
 catalog keeps one value per color set, and the Watch is always dark.
-Every set except the elevated surface sets also gets a second set, whose role takes the prefix
+Every base set except the elevated surface sets also gets a second set, whose role takes the prefix
 increasedContrast (blue-text gives blue-increasedContrastText). It holds one watch entry, with no
 appearances, set to the base set's dark Increase Contrast value, because a Watch catalog drops contrast
 entries. The second set is written even where it equals the dark value, so code needs no per-role switch.
@@ -691,13 +691,14 @@ def build_brand_catalog(files, ramps):
             files[f"{brand.name}-{increased_contrast_role(role)}.colorset/Contents.json"] = (
                 increased_contrast_text(rgb)
             )
-        count = len(ROLE_TONES) * len(APPEARANCES)
+        count = len(ROLE_TONES) * (len(APPEARANCES) + 2)
         for suffix, surface, layout in surface_sets():
             files[f"{brand.name}-{suffix}.colorset/Contents.json"] = surface_text(
                 brand, angles[brand.hue], surface, layout
             )
-            count += len(layout) * len(APPEARANCES)
+            count += len(layout) * len(APPEARANCES) + 1
             if layout == BASE_LAYOUT:
+                count += 1
                 hex_code = APPLE_SURFACES[surface][layout[0][0]][DARK_HIGH_CONTRAST_INDEX]
                 rgb = retint(hex_code, angles[brand.hue], brand.tint)
                 files[f"{brand.name}-{increased_contrast_role(suffix)}.colorset/Contents.json"] = (
@@ -728,7 +729,7 @@ def build_catalog(ramps):
             files[f"{family}-{role}.colorset/Contents.json"] = colorset_text(tones, ramps, hue_name)
             rgb = entry_rgb(tones[DARK_HIGH_CONTRAST_INDEX], ramps, hue_name)
             files[f"{family}-{increased_contrast_role(role)}.colorset/Contents.json"] = increased_contrast_text(rgb)
-        count = len(ROLE_TONES) * len(APPEARANCES)
+        count = len(ROLE_TONES) * (len(APPEARANCES) + 2)
         print(f"{family} ({hue_name}): {len(ROLE_TONES)} roles, {count} values")
     build_brand_catalog(files, ramps)
     return files
