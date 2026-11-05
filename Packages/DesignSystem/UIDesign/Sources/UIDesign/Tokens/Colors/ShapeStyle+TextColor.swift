@@ -1,6 +1,8 @@
 import SwiftUI
 
 /// The styles text draws in, from most to least prominent.
+///
+/// Each style is a level of the current foreground style, so it takes a color set around it.
 extension ShapeStyle where Self == HierarchicalShapeStyle {
     /// The main text on a surface.
     public static var text: HierarchicalShapeStyle { .primary }

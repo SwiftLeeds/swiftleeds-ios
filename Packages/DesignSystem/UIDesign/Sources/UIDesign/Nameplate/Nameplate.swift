@@ -15,7 +15,9 @@ import SwiftUI
 /// }
 /// ```
 ///
-/// A nameplate keeps its own colors inside a button or a colored foreground.
+/// A surrounding foreground or button does not color a nameplate's text. An
+/// icon with no style of its own draws in the primary color, so style an icon
+/// inside its builder to color it.
 ///
 /// VoiceOver reads a nameplate as a single element, so it announces the
 /// subject rather than each line in turn.
