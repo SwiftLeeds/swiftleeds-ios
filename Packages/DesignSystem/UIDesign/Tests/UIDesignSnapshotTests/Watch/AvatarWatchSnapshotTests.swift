@@ -46,5 +46,17 @@ import UIDesign
 
         assertSnapshots(of: view)
     }
+
+    @Test func increasedContrastStatusMark() {
+        let view = Avatar(
+            url: nil,
+            size: AvatarSize.large,
+            status: AvatarStatus("Checked in"),
+            fallback: .initials(Self.name),
+        )
+        .environment(\._colorSchemeContrast, .increased)
+
+        assertSnapshots(of: view)
+    }
 }
 #endif
