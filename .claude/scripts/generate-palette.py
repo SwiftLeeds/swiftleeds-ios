@@ -10,6 +10,10 @@ Packages/DesignSystem/UIDesign/Sources/UIDesign:
   on iOS and macOS, and takes the brand's hue. The whole catalog is deleted and rewritten on each run.
 Every color set ends with one watch entry, with no appearances, holding the set's dark value. A Watch
 catalog keeps one value per color set, and the Watch is always dark.
+Every set except the elevated surface sets also gets a second set, whose role takes the prefix
+increasedContrast (blue-text gives blue-increasedContrastText). It holds one watch entry, with no
+appearances, set to the base set's dark Increase Contrast value, because a Watch catalog drops contrast
+entries. The second set is written even where it equals the dark value, so code needs no per-role switch.
 
 Run it from the repo root: python3 .claude/scripts/generate-palette.py
 Pass --output-root <directory> to write both outputs into that directory instead.
@@ -581,6 +585,21 @@ TINTABLE_LIGHTNESS = (0.05, 0.98)  # Outside this range Apple's surface is too d
 CATALOG_NAME = "Colors.xcassets"
 CATALOG_INFO = {"author": "xcode", "version": 1}
 DARK_INDEX = 1  # Dark's place in APPEARANCES, and so in each four-entry run of a set.
+DARK_HIGH_CONTRAST_INDEX = 3  # Dark high contrast's place in APPEARANCES, and so in each four-entry run.
+INCREASED_CONTRAST_PREFIX = "increasedContrast"  # What the second set's role takes before its capital letter.
+
+
+def increased_contrast_role(role):
+    """Returns the role of a set's second set: text gives increasedContrastText."""
+    return INCREASED_CONTRAST_PREFIX + role[0].upper() + role[1:]
+
+
+def base_role(role):
+    """Returns the role a second set's role was built from, or None when the role is not a second set's."""
+    if not role.startswith(INCREASED_CONTRAST_PREFIX):
+        return None
+    rest = role[len(INCREASED_CONTRAST_PREFIX):]
+    return rest[0].lower() + rest[1:]
 
 
 def component_text(value):
@@ -620,6 +639,11 @@ def colorset_text(tones, ramps, hue_name):
     ]
     entries.append(colorset_entry(entry_rgb(tones[DARK_INDEX], ramps, hue_name), [], "watch"))
     return json_text({"colors": entries, "info": CATALOG_INFO})
+
+
+def increased_contrast_text(rgb):
+    """Returns the Contents.json text of a second set: one watch entry with no appearances."""
+    return json_text({"colors": [colorset_entry(rgb, [], "watch")], "info": CATALOG_INFO})
 
 
 def retint(hex_string, hue_degrees, chroma):
@@ -663,12 +687,22 @@ def build_brand_catalog(files, ramps):
                 if tone not in TONES:
                     fail(f"brand {brand.name} role {role} names a tone that is not in the ramp: {tone}")
             files[f"{brand.name}-{role}.colorset/Contents.json"] = colorset_text(tones, ramps, brand.hue)
+            rgb = entry_rgb(tones[DARK_HIGH_CONTRAST_INDEX], ramps, brand.hue)
+            files[f"{brand.name}-{increased_contrast_role(role)}.colorset/Contents.json"] = (
+                increased_contrast_text(rgb)
+            )
         count = len(ROLE_TONES) * len(APPEARANCES)
         for suffix, surface, layout in surface_sets():
             files[f"{brand.name}-{suffix}.colorset/Contents.json"] = surface_text(
                 brand, angles[brand.hue], surface, layout
             )
             count += len(layout) * len(APPEARANCES)
+            if layout == BASE_LAYOUT:
+                hex_code = APPLE_SURFACES[surface][layout[0][0]][DARK_HIGH_CONTRAST_INDEX]
+                rgb = retint(hex_code, angles[brand.hue], brand.tint)
+                files[f"{brand.name}-{increased_contrast_role(suffix)}.colorset/Contents.json"] = (
+                    increased_contrast_text(rgb)
+                )
         print(
             f"{brand.name} ({brand.hue}, tint {brand.tint}): {len(ROLE_TONES)} roles and "
             f"{len(surface_sets())} surface sets, {count} values"
@@ -692,6 +726,8 @@ def build_catalog(ramps):
                 if tone not in TONES:
                     fail(f"family {family} role {role} names a tone that is not in the ramp: {tone}")
             files[f"{family}-{role}.colorset/Contents.json"] = colorset_text(tones, ramps, hue_name)
+            rgb = entry_rgb(tones[DARK_HIGH_CONTRAST_INDEX], ramps, hue_name)
+            files[f"{family}-{increased_contrast_role(role)}.colorset/Contents.json"] = increased_contrast_text(rgb)
         count = len(ROLE_TONES) * len(APPEARANCES)
         print(f"{family} ({hue_name}): {len(ROLE_TONES)} roles, {count} values")
     build_brand_catalog(files, ramps)
@@ -762,6 +798,24 @@ def check_tone_set(relative, text, tones, ramp_hue, hue_name):
     return len(entries)
 
 
+def check_increased_contrast_set(relative, text, base_text):
+    """Fail unless a second set holds one watch entry equal to its base set's dark high contrast entry.
+
+    Returns its value count.
+    """
+    entries = json.loads(text)["colors"]
+    if len(entries) != 1:
+        fail(f"self-check: {relative} held {len(entries)} entries, expected 1")
+    if entries[0]["idiom"] != "watch" or "appearances" in entries[0]:
+        fail(f"self-check: {relative} is not a watch entry without appearances")
+    base_entry = json.loads(base_text)["colors"][DARK_HIGH_CONTRAST_INDEX]
+    if base_entry["idiom"] != "universal" or base_entry.get("appearances") != APPEARANCES[DARK_HIGH_CONTRAST_INDEX][1]:
+        fail(f"self-check: {relative} has a base set whose entry {DARK_HIGH_CONTRAST_INDEX} is not dark high contrast")
+    if entries[0]["color"] != base_entry["color"]:
+        fail(f"self-check: {relative} differs from the dark high contrast entry of its base set")
+    return len(entries)
+
+
 def check_catalog(files, ramps):
     """Parse every written component back and compare it with the tone literal it came from."""
     hue_of = dict(FAMILIES)
@@ -772,7 +826,13 @@ def check_catalog(files, ramps):
         if relative == "Contents.json":
             continue
         family, role = relative.split(".colorset/")[0].split("-")
-        if family in brand_of and role in ROLE_TONES:
+        original_role = base_role(role)
+        if original_role is not None:
+            base_text = files.get(f"{family}-{original_role}.colorset/Contents.json")
+            if base_text is None:
+                fail(f"self-check: {relative} has no base set")
+            count += check_increased_contrast_set(relative, text, base_text)
+        elif family in brand_of and role in ROLE_TONES:
             tones = tones_for(family, role, BRAND_ROLE_TONES)
             hue_name = brand_of[family].hue
             count += check_tone_set(relative, text, tones, ramps[hue_name], hue_name)
@@ -785,6 +845,8 @@ def check_catalog(files, ramps):
     expected_count = len(FAMILIES) * len(ROLE_TONES) * (len(APPEARANCES) + 1)
     expected_count += len(BRANDS) * len(ROLE_TONES) * (len(APPEARANCES) + 1)
     expected_count += len(BRANDS) * sum(len(layout) * len(APPEARANCES) + 1 for _, _, layout in surface_sets())
+    expected_count += len(FAMILIES) * len(ROLE_TONES) + len(BRANDS) * len(ROLE_TONES)
+    expected_count += len(BRANDS) * sum(1 for _, _, layout in surface_sets() if layout == BASE_LAYOUT)
     if count != expected_count:
         fail(f"self-check: catalog held {count} values, expected {expected_count}")
     print(f"self-check: {count} catalog values ok")
@@ -850,6 +912,16 @@ def check_stray_files(catalog):
     } | {
         f"{brand.name}-{role}.colorset" for brand in BRANDS for role in ROLE_TONES
     } | {f"{brand.name}-{suffix}.colorset" for brand in BRANDS for suffix, _, _ in surface_sets()}
+    allowed |= {
+        f"{family}-{increased_contrast_role(role)}.colorset" for family, _ in FAMILIES for role in ROLE_TONES
+    } | {
+        f"{brand.name}-{increased_contrast_role(role)}.colorset" for brand in BRANDS for role in ROLE_TONES
+    } | {
+        f"{brand.name}-{increased_contrast_role(suffix)}.colorset"
+        for brand in BRANDS
+        for suffix, _, layout in surface_sets()
+        if layout == BASE_LAYOUT
+    }
     for child in sorted(catalog.iterdir()):
         if child.name not in allowed:
             fail(f"{catalog} holds a file the generator did not write: {child.name}. Remove it or move it.")

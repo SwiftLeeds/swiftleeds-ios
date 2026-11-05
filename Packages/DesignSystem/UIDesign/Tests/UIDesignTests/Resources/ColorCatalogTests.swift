@@ -86,6 +86,24 @@ struct ColorCatalogTests {
             /// The folder name, for failure messages.
             var description: String { value }
 
+            /// The part of the folder name before the first hyphen, such as `blue`.
+            private var family: Substring { value.prefix { $0 != "-" } }
+
+            /// The part of the folder name after the first hyphen, such as `text.colorset`.
+            private var role: Substring { value.drop { $0 != "-" }.dropFirst() }
+
+            /// Whether the set is an elevated surface set, which has no increased contrast set.
+            var isElevated: Bool { role.hasPrefix("elevated") }
+
+            /// The name of the set that holds this set's increased contrast value on Apple Watch.
+            ///
+            /// The role takes the prefix `increasedContrast`, so `blue-text` gives
+            /// `blue-increasedContrastText`.
+            var increasedContrastName: Self {
+                guard let first = role.first else { return self }
+                return Self("\(family)-increasedContrast\(first.uppercased())\(role.dropFirst())")
+            }
+
             /// Creates a name from a folder name.
             ///
             /// - Parameter value: The folder name of the set.
@@ -101,14 +119,56 @@ struct ColorCatalogTests {
         let contents: Contents
     }
 
-    /// The smallest number of sets the catalog holds today.
+    /// The sets of the catalog, split into base sets and increased contrast sets.
+    private struct Catalog {
+        /// Every set that is not the increased contrast set of another set.
+        let bases: [ColorSet]
+
+        /// Every set whose name is built from the name of a non-elevated base set.
+        let increasedContrastSets: [ColorSet]
+    }
+
+    /// The smallest number of base sets the catalog holds today.
+    ///
+    /// It does not count increased contrast sets.
     private static let minimumSetCount = 72
+
+    /// The number of increased contrast sets: one for each base set that is not elevated.
+    private static let increasedContrastSetCount = 60
 
     /// The appearance a catalog entry applies to: dark mode.
     private static let darkAppearance = [Appearance(appearance: "luminosity", value: "dark")]
 
+    /// The appearances of an entry that is dark with Increase Contrast, in the order Xcode writes them.
+    private static let darkHighContrastAppearances = [
+        Appearance(appearance: "luminosity", value: "dark"),
+        Appearance(appearance: "contrast", value: "high"),
+    ]
+
+    @Test func whenColorSetIsNotElevated_shouldHaveIncreasedContrastSetWithDarkContrastValue() throws {
+        let catalog = try Self.catalog()
+        let expectedSets = catalog.bases.filter { !$0.name.isElevated }
+        #expect(catalog.increasedContrastSets.count == Self.increasedContrastSetCount)
+
+        for base in expectedSets {
+            let second = catalog.increasedContrastSets.first { $0.name == base.name.increasedContrastName }
+            let increased = try #require(second, "\(base.name) needs a set named \(base.name.increasedContrastName)")
+            let dark = base.contents.colors.filter {
+                $0.idiom == .universal && $0.appearances == Self.darkHighContrastAppearances
+            }
+            #expect(increased.contents.colors.count == 1, "\(increased.name) needs exactly one entry")
+            let watch = increased.contents.colors.filter { $0.idiom == .watch && $0.appearances.isEmpty }
+            #expect(watch.count == 1, "\(increased.name) needs a Watch entry with no appearances")
+            #expect(dark.count == 1, "\(base.name) needs one dark high contrast entry")
+            #expect(
+                increased.contents.colors.first?.color == dark.first?.color,
+                "\(increased.name) differs from the dark high contrast value of \(base.name)",
+            )
+        }
+    }
+
     @Test func whenColorSetIsInCatalog_shouldHaveWatchEntryWithDarkValue() throws {
-        let sets = try Self.colorSets()
+        let sets = try Self.catalog().bases
         #expect(sets.count >= Self.minimumSetCount)
 
         for set in sets {
@@ -120,6 +180,27 @@ struct ColorCatalogTests {
             #expect(watch.count == 1, "\(set.name) needs one Watch entry")
             #expect(watch.first?.color == dark.first?.color, "\(set.name) Watch value differs from dark")
         }
+    }
+
+    /// Reads the catalog and splits its sets into base sets and increased contrast sets.
+    ///
+    /// An increased contrast set is a set whose name is built from a non-elevated set. A stray
+    /// set that no base set builds stays among the bases.
+    ///
+    /// - Returns: The base sets and the increased contrast sets.
+    /// - Throws: An error when the catalog or one of its files cannot be read or decoded.
+    private static func catalog() throws -> Catalog {
+        let sets = try colorSets()
+        let existing = Set(sets.map(\.name))
+        let increasedNames = Set(
+            sets.filter { !$0.name.isElevated }
+                .map(\.name.increasedContrastName)
+                .filter { existing.contains($0) }
+        )
+        return Catalog(
+            bases: sets.filter { !increasedNames.contains($0.name) },
+            increasedContrastSets: sets.filter { increasedNames.contains($0.name) },
+        )
     }
 
     /// Reads the sets in the catalog.
