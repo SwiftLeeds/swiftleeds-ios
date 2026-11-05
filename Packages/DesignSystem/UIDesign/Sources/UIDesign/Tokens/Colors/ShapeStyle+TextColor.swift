@@ -12,10 +12,13 @@ extension ShapeStyle where Self == Color {
     /// Text that supports the main text.
     public static var secondaryText: Color { .secondary }
 
+    // swiftlint:disable no_magic_numbers - the sRGB values of the watchOS tokens are defined here
     /// Text that is present but not meant to be read yet.
     public static var tertiaryText: Color {
         #if os(iOS)
         Color(.tertiaryLabel)
+        #elseif os(watchOS)
+        Color(.sRGB, red: 235 / 255, green: 235 / 255, blue: 245 / 255, opacity: 0.298)
         #else
         Color(.tertiaryLabelColor)
         #endif
@@ -25,10 +28,13 @@ extension ShapeStyle where Self == Color {
     public static var disabledText: Color {
         #if os(iOS)
         Color(.quaternaryLabel)
+        #elseif os(watchOS)
+        Color(.sRGB, red: 235 / 255, green: 235 / 255, blue: 245 / 255, opacity: 0.157)
         #else
         Color(.quaternaryLabelColor)
         #endif
     }
+    // swiftlint:enable no_magic_numbers
 }
 
 extension ShapeStyle where Self == AnyShapeStyle {

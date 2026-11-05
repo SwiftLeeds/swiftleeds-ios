@@ -7,6 +7,7 @@ let package = Package(
     platforms: [
         .iOS(.v26),
         .macOS(.v26),
+        .watchOS(.v26),
     ],
     products: [
         .library(name: "UIDesign", targets: ["UIDesign"])
