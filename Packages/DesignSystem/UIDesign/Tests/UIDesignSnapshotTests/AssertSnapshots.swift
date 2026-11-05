@@ -39,7 +39,7 @@ func assertSnapshots(
 /// Apple allows at most three elements across a watch screen, each at least 44 points.
 ///
 /// This is a narrow-width check on iOS, not the Watch check. It borrows the width of a watch and
-/// nothing else: the Watch's own check is the helper in `AssertWatchSnapshots.swift`.
+/// nothing else.
 @MainActor
 func assertCompactSnapshots(
     of view: some View,

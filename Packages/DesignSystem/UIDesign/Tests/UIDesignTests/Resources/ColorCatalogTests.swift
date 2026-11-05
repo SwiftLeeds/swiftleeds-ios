@@ -19,7 +19,10 @@ struct ColorCatalogTests {
     private struct Color: Decodable, Equatable {
         /// The keys of a color in `Contents.json`.
         private enum CodingKeys: String, CodingKey {
+            /// The key that names the color space, spelled with a hyphen.
             case colorSpace = "color-space"
+
+            /// The key that holds the components.
             case components = "components"
         }
 
@@ -32,7 +35,6 @@ struct ColorCatalogTests {
 
     /// One entry of a color set's `Contents.json`.
     private struct Entry: Decodable {
-        /// The keys of an entry in `Contents.json`.
         private enum CodingKeys: String, CodingKey {
             case appearances = "appearances"
             case color = "color"
@@ -66,12 +68,22 @@ struct ColorCatalogTests {
         let colors: [Entry]
     }
 
+    /// A color set folder of the catalog, read from disk.
+    private struct ColorSet {
+        /// The folder name of the set.
+        let name: String
+
+        /// The decoded `Contents.json` of the set.
+        let contents: Contents
+    }
+
     /// The smallest number of sets the catalog holds today.
     private static let minimumSetCount = 72
 
     /// The appearance a catalog entry applies to: dark mode.
     private static let darkAppearance = [Appearance(appearance: "luminosity", value: "dark")]
 
+    /// Checks that each color set holds one Watch entry equal to its dark entry.
     @Test func whenColorSetIsInCatalog_shouldHaveWatchEntryWithDarkValue() throws {
         let sets = try Self.colorSets()
         #expect(sets.count >= Self.minimumSetCount)
@@ -91,9 +103,8 @@ struct ColorCatalogTests {
     ///
     /// - Returns: Each set's folder name and contents, sorted by name.
     /// - Throws: An error when the catalog or one of its files cannot be read or decoded.
-    private static func colorSets() throws -> [(name: String, contents: Contents)] {
+    private static func colorSets() throws -> [ColorSet] {
         let packageRoot = URL(fileURLWithPath: #filePath)
-            .deletingLastPathComponent()
             .deletingLastPathComponent()
             .deletingLastPathComponent()
             .deletingLastPathComponent()
@@ -109,7 +120,10 @@ struct ColorCatalogTests {
             .sorted { $0.lastPathComponent < $1.lastPathComponent }
             .map { folder in
                 let data = try Data(contentsOf: folder.appendingPathComponent("Contents.json"))
-                return (folder.lastPathComponent, try JSONDecoder().decode(Contents.self, from: data))
+                return ColorSet(
+                    name: folder.lastPathComponent,
+                    contents: try JSONDecoder().decode(Contents.self, from: data),
+                )
             }
     }
 }

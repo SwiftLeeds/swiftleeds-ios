@@ -14,7 +14,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/SFSafeSymbols/SFSafeSymbols", from: "7.0.0"),
-        .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", from: "1.19.4"),
+        .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", from: "1.19.5"),
     ],
     targets: [
         .target(

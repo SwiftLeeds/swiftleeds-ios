@@ -6,13 +6,13 @@ import Testing
 import UIDesign
 import UIKit
 
-/// Compares `view` with its reference images, drawn the way the Watch draws it.
+/// Compares `view` with its reference images, rendered with `ImageRenderer`.
 ///
 /// Two images: the default text size and the largest accessibility text size. Each is 162 points
 /// wide, the narrowest Watch screen, on the dark appearance, the only one the Watch has.
 ///
-/// This is the real Watch check. Give it one realistic composition, with at most three elements
-/// across.
+/// Give it one realistic composition, with at most three elements across. A view that a platform
+/// framework draws, such as a web view or some controls, does not render.
 ///
 /// - Parameters:
 ///   - view: The view to render.
