@@ -33,7 +33,7 @@ struct ColorFamilyWatchContrastTests {
         }
     }
 
-    /// The largest difference allowed in one component, as the catalog stores four decimal places.
+    /// The largest difference allowed in one component.
     private static let tolerance: Float = 0.001
 
     /// Every color of every family.
@@ -81,13 +81,7 @@ struct ColorFamilyWatchContrastTests {
         var environment = EnvironmentValues()
         environment.colorScheme = .dark
         environment._colorSchemeContrast = contrast
-        let actual = role.color(role.family).resolve(in: environment)
-        return [
-            abs(actual.red - expected.red),
-            abs(actual.green - expected.green),
-            abs(actual.blue - expected.blue),
-            abs(actual.opacity - expected.opacity),
-        ].max() ?? .infinity
+        return role.color(role.family).resolve(in: environment).largestDifference(from: expected)
     }
 }
 #endif

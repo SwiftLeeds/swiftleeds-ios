@@ -153,15 +153,15 @@ struct ColorCatalogTests {
         for base in expectedSets {
             let second = catalog.increasedContrastSets.first { $0.name == base.name.increasedContrastName }
             let increased = try #require(second, "\(base.name) needs a set named \(base.name.increasedContrastName)")
-            let dark = base.contents.colors.filter {
+            let darkHighContrast = base.contents.colors.filter {
                 $0.idiom == .universal && $0.appearances == Self.darkHighContrastAppearances
             }
             #expect(increased.contents.colors.count == 1, "\(increased.name) needs exactly one entry")
             let watch = increased.contents.colors.filter { $0.idiom == .watch && $0.appearances.isEmpty }
             #expect(watch.count == 1, "\(increased.name) needs a Watch entry with no appearances")
-            #expect(dark.count == 1, "\(base.name) needs one dark high contrast entry")
+            #expect(darkHighContrast.count == 1, "\(base.name) needs one dark high contrast entry")
             #expect(
-                increased.contents.colors.first?.color == dark.first?.color,
+                increased.contents.colors.first?.color == darkHighContrast.first?.color,
                 "\(increased.name) differs from the dark high contrast value of \(base.name)",
             )
         }
