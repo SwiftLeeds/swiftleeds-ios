@@ -44,5 +44,63 @@ import UIDesign
 
         assertSnapshots(of: view)
     }
+
+    @Test func withoutDetail() {
+        let view = Nameplate(Self.name) {
+            Avatar(url: nil, size: AvatarSize.medium, fallback: .initials(Self.nameComponents))
+        }
+
+        assertSnapshots(of: view)
+    }
+
+    @Test func prominentStyle() {
+        let view = Nameplate(Self.name, detail: Self.company) {
+            Avatar(url: nil, size: AvatarSize.large, fallback: .initials(Self.nameComponents))
+        }
+        .nameplateStyle(.prominent)
+
+        assertSnapshots(of: view)
+    }
+
+    @Test func withStatus() {
+        let view = Nameplate(Self.name, detail: Self.company) {
+            Avatar(
+                url: nil,
+                size: AvatarSize.medium,
+                status: AvatarStatus("Checked in"),
+                fallback: .initials(Self.nameComponents),
+            )
+        }
+
+        assertSnapshots(of: view)
+    }
+
+    @Test func redacted() {
+        let view = Nameplate(Self.name, detail: Self.company) {
+            Avatar(url: nil, size: AvatarSize.medium, fallback: .initials(Self.nameComponents))
+        }
+        .redacted(reason: .placeholder)
+
+        assertSnapshots(of: view)
+    }
+
+    @Test func redactedProminent() {
+        let view = Nameplate(Self.name, detail: Self.company) {
+            Avatar(url: nil, size: AvatarSize.large, fallback: .initials(Self.nameComponents))
+        }
+        .nameplateStyle(.prominent)
+        .redacted(reason: .placeholder)
+
+        assertSnapshots(of: view)
+    }
+
+    @Test func increasedContrast() {
+        let view = Nameplate(Self.name, detail: Self.company) {
+            Avatar(url: nil, size: AvatarSize.medium, fallback: .initials(Self.nameComponents))
+        }
+        .environment(\._colorSchemeContrast, .increased)
+
+        assertSnapshots(of: view)
+    }
 }
 #endif
