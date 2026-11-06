@@ -133,17 +133,18 @@ func assertSnapshots(
     }
 }
 
-/// Returns `view` centered on a full-size dark Watch screen.
+/// Returns `view` centered on a full-size dark Watch screen, inside the system's side margin.
 ///
 /// - Parameters:
 ///   - view: The view to place on the screen.
 ///   - model: The Watch model whose screen size the result takes.
 ///   - textSize: The text size to render the view with.
 /// - Returns: A screen of the model's size on the surface color, in the dark appearance, with the
-///   view centered.
+///   view centered between the system's leading and trailing margins.
 @MainActor
 private func watchScreen(_ view: some View, on model: WatchModel, textSize: DynamicTypeSize) -> some View {
     view
+        .scenePadding(.horizontal)
         .dynamicTypeSize(textSize)
         .frame(width: model.screenSize.width, height: model.screenSize.height)
         .background(.surface)
