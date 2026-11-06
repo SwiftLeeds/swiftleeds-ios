@@ -428,40 +428,12 @@ jobs:
         id: snapshots
         run: |
           set -uo pipefail
-          # A pull request runs only the snapshot targets its diff can change:
-          # a package's own files, or those of a local package it depends on,
-          # directly or not. A change to CI or to the app project runs them all.
-          # A push to main always runs them all, which catches anything a pull
-          # request skipped.
-          changed=""
-          run_all=true
-          # --no-renames lists both paths of a moved file, so a file moved into
-          # a package still counts as a change where it came from.
-          if [ -n "$BASE_REF" ] && changed=$(git diff --name-only --no-renames "origin/$BASE_REF...HEAD"); then
-            run_all=false
-            if grep -qE '^(\.github/|SwiftLeeds\.xcodeproj/)' <<< "$changed"; then
-              run_all=true
-            fi
-          fi
-          # Prints the repository paths of a package and of every local package
-          # it depends on, directly or not.
-          local_package_paths() {
-            (cd "$1" && swift package show-dependencies --format json) \
-              | jq -r '.. | objects | select(has("path")) | .path' \
-              | grep -v -e '/\.build/' -e '/SourcePackages/' \
-              | sed "s|^$(pwd -P)/||"
-          }
-          # When the dependencies cannot be listed, or the list does not name
-          # the package itself, the package counts as affected. So a failure
-          # here runs a test rather than skipping one.
+          # A pull request runs only the snapshot targets its diff can change.
+          # The script decides which: 0 affected, 1 not, anything else an
+          # error, which runs the target.
           is_affected() {
-            $run_all && return 0
-            paths=$(local_package_paths "$1") || return 0
-            grep -qx "$1" <<< "$paths" || return 0
-            for path in $paths; do
-              grep -q "^$path/" <<< "$changed" && return 0
-            done
-            return 1
+            .github/scripts/is-affected.sh "$1"
+            [ $? -ne 1 ]
           }
           # The scheme names every snapshot target and the package that holds
           # it, and the lint job fails when the scheme and the manifests name
@@ -552,7 +524,11 @@ jobs:
           # builds only the affected targets, and one target may hold a single
           # file, so the floor there is 1: it still catches a log that lost
           # everything.
-          if $run_all; then
+          # GitHub runs this step with `bash -e`, so the exit status is caught
+          # here rather than ending the step.
+          scope=0
+          .github/scripts/is-affected.sh all || scope=$?
+          if [ "$scope" -ne 1 ]; then
             min_files=42
           else
             min_files=1
