@@ -18,7 +18,7 @@ struct WatchModel: Equatable, Sendable {
         let size: DynamicTypeSize
     }
 
-    // swiftlint:disable no_magic_numbers - the measured screen metrics of this model
+    // swiftlint:disable no_magic_numbers - the measured screen metrics of these models
     /// The Apple Watch SE 3 (40mm), the smallest Watch screen Apple ships.
     ///
     /// Its Text Size setting stops at `accessibility1`.
