@@ -35,10 +35,14 @@ extension String {
 // MARK: - Navigation
 
 extension Icon {
-    /// A left chevron, for the previous screen.
-    public static let back = Icon(.chevronLeft)
-    /// A right chevron, for the next screen.
-    public static let forward = Icon(.chevronRight)
+    /// A chevron that points back, for the previous screen.
+    ///
+    /// It points left, and right in a right-to-left language.
+    public static let back = Icon(.chevronBackward)
+    /// A chevron that points forward, for the next screen.
+    ///
+    /// It points right, and left in a right-to-left language.
+    public static let forward = Icon(.chevronForward)
     /// An X, for dismissing a sheet or screen.
     public static let close = Icon(.xmark)
     /// Three dots, for further actions.
@@ -75,8 +79,9 @@ extension Icon {
 
     /// An arrow leaving a square, for an item that opens outside the app.
     ///
-    /// Pair it with a link, never with navigation.
-    public static let openExternal = Icon(.arrowUpRightSquare)
+    /// Pair it with a link, never with navigation. The arrow points up and
+    /// forward, so it mirrors in a right-to-left language.
+    public static let openExternal = Icon(.arrowUpForwardSquare)
 }
 
 // MARK: - State
