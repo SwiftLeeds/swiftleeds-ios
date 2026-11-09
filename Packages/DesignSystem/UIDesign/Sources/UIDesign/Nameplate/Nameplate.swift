@@ -23,10 +23,10 @@ import SwiftUI
 /// subject rather than each line in turn.
 ///
 /// On iOS and macOS, the icon moves above the text at the accessibility text
-/// sizes, so a row becomes a stack. On the Watch, the default style draws no
-/// icon, and the title and the detail each keep to one line. It shows an
-/// avatar's status at the trailing end of the title's line. The prominent style instead centers
-/// the icon above the text, at every text size.
+/// sizes, so a row becomes a stack. On the Watch, the title and the detail
+/// each keep to one line. The default style draws no icon, and shows an
+/// avatar's status at the trailing end of the title's line. The prominent
+/// style centers the icon above the text, at every text size.
 ///
 /// ### Showing a loading state
 ///
@@ -44,7 +44,8 @@ import SwiftUI
 /// ```
 ///
 /// Text needs a width before it can be redacted, so a row of empty strings
-/// draws nothing. Supply sample rows while the real ones load.
+/// draws nothing. Supply sample rows while the real ones load. On the Watch, a
+/// loading row shows no status.
 public struct Nameplate<Title: View, Detail: View, Icon: View>: View {
     /// The current nameplate style.
     @Environment(\.nameplateStyle) private var style

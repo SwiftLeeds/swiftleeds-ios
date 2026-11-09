@@ -10,8 +10,6 @@ struct TitleAndDetailNameplate: View {
     let configuration: NameplateStyleConfiguration
 
     /// The font the title draws in.
-    ///
-    /// The detail keeps the body text style at every style.
     let titleFont: Font
 
     var body: some View {
@@ -23,11 +21,6 @@ struct TitleAndDetailNameplate: View {
                 .foregroundStyle(.secondaryText)
                 .lineLimit(1)
         }
-        // The nameplate reads as one element, and VoiceOver combines its
-        // children in order. This reads the name before the detail.
-        .accessibilitySortPriority(1)
-        // Fill the width the caller gives, so a row stays leading aligned.
-        .frame(maxWidth: .infinity, alignment: .leading)
     }
 
     /// The title, with the status of the icon's avatar at the trailing edge.

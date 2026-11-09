@@ -21,7 +21,7 @@ import SwiftUI
 ///
 /// Draw all three of the configuration's views. One that a style leaves out
 /// reaches neither the screen nor VoiceOver, because a nameplate reads as a
-/// single element. On the Watch, the default style leaves the icon out.
+/// single element.
 ///
 /// A style may read the environment, so it can answer the color scheme and the
 /// Dynamic Type size.

@@ -9,8 +9,6 @@ struct StackedNameplate: View {
     let configuration: NameplateStyleConfiguration
 
     /// The font the title draws in.
-    ///
-    /// The detail keeps the body text style at every style.
     let titleFont: Font
 
     var body: some View {
