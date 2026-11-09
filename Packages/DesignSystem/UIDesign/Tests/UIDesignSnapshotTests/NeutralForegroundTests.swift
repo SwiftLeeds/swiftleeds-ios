@@ -58,9 +58,15 @@ struct NeutralForegroundTests {
         let sut = Nameplate("Ada Archer", detail: "Northern Software") {
             Image(systemName: "star.fill").foregroundStyle(.green)
         }
+        #if os(watchOS)
+        .nameplateStyle(.prominent)
+        #endif
         let unstyled = Nameplate("Ada Archer", detail: "Northern Software") {
             Image(systemName: "star.fill")
         }
+        #if os(watchOS)
+        .nameplateStyle(.prominent)
+        #endif
 
         let styledPixels = try Self.pixels(of: sut, colorScheme: colorScheme)
         let unstyledPixels = try Self.pixels(of: unstyled, colorScheme: colorScheme)

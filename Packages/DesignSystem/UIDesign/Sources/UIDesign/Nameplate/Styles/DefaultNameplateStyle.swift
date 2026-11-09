@@ -10,7 +10,11 @@ public struct DefaultNameplateStyle: NameplateStyle {
 
     @MainActor
     public func makeBody(configuration: Configuration) -> some View {
+        #if os(watchOS)
+        TitleAndDetailNameplate(configuration: configuration, titleFont: .headline)
+        #else
         AdaptiveNameplate(configuration: configuration, titleFont: .headline)
+        #endif
     }
 }
 

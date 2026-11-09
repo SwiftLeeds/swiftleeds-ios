@@ -22,8 +22,9 @@ import SwiftUI
 /// VoiceOver reads a nameplate as a single element, so it announces the
 /// subject rather than each line in turn.
 ///
-/// With either built-in style, the icon moves above the text at the
-/// accessibility text sizes, so a row becomes a stack.
+/// On iOS and macOS, the icon moves above the text at the accessibility text
+/// sizes, so a row becomes a stack. On the Watch, the default style draws no
+/// icon, and the title and the detail each keep to one line.
 ///
 /// ### Showing a loading state
 ///
