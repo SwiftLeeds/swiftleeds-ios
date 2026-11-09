@@ -62,6 +62,29 @@ import UIDesign
         assertSnapshots(of: view)
     }
 
+    @Test func prominentWithStatus() {
+        let view = Nameplate(Self.name, detail: Self.company) {
+            Avatar(
+                url: nil,
+                size: AvatarSize.large,
+                status: AvatarStatus("Checked in"),
+                fallback: .initials(Self.nameComponents),
+            )
+        }
+        .nameplateStyle(.prominent)
+
+        assertSnapshots(of: view)
+    }
+
+    @Test func prominentWithLongName() {
+        let view = Nameplate(Self.longName, detail: Self.company) {
+            Avatar(url: nil, size: AvatarSize.large, fallback: .initials(Self.longNameComponents))
+        }
+        .nameplateStyle(.prominent)
+
+        assertSnapshots(of: view)
+    }
+
     @Test func withStatus() {
         let view = Nameplate(Self.name, detail: Self.company) {
             Avatar(
