@@ -37,11 +37,11 @@ extension String {
 extension Icon {
     /// A chevron that points back, for the previous screen.
     ///
-    /// It points left, and right in a right-to-left language.
+    /// It points left in a left-to-right layout, and right in a right-to-left one.
     public static let back = Icon(.chevronBackward)
     /// A chevron that points forward, for the next screen.
     ///
-    /// It points right, and left in a right-to-left language.
+    /// It points right in a left-to-right layout, and left in a right-to-left one.
     public static let forward = Icon(.chevronForward)
     /// An X, for dismissing a sheet or screen.
     public static let close = Icon(.xmark)
@@ -79,8 +79,10 @@ extension Icon {
 
     /// An arrow leaving a square, for an item that opens outside the app.
     ///
-    /// Pair it with a link, never with navigation. The arrow points up and
-    /// forward, so it mirrors in a right-to-left language.
+    /// Pair it with a link, never with navigation.
+    ///
+    /// It points up and right in a left-to-right layout, and up and left in a
+    /// right-to-left one.
     public static let openExternal = Icon(.arrowUpForwardSquare)
 }
 
