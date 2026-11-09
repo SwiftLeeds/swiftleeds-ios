@@ -597,6 +597,23 @@ jobs:
             fi
           done
 
+      # PROBE ONLY: why does xcodebuild not offer the watchOS 27.0 devices?
+      - name: Probe the watchOS 27.0 destinations
+        continue-on-error: true
+        run: |
+          set -x
+          xcodebuild -version
+          xcodebuild -showsdks
+          xcrun simctl runtime list -v || true
+          xcrun simctl list runtimes -j | python3 -c 'import json,sys; [print(json.dumps(r, indent=1)) for r in json.load(sys.stdin)["runtimes"] if "watchOS" in r["name"]]' || true
+          udid=$(xcrun simctl list devices -j | python3 -c 'import json,sys; d=json.load(sys.stdin)["devices"]["com.apple.CoreSimulator.SimRuntime.watchOS-27-0"]; print([x["udid"] for x in d if x["name"]=="Apple Watch SE 3 (40mm)"][0])')
+          echo "40mm on 27.0: $udid"
+          xcrun simctl list devices -j | python3 -c 'import json,sys; print(json.dumps(json.load(sys.stdin)["devices"]["com.apple.CoreSimulator.SimRuntime.watchOS-27-0"], indent=1))' || true
+          xcodebuild -showdestinations -project SwiftLeeds.xcodeproj -scheme UIDesignSnapshotTests 2>&1 | sed -n '/Ineligible/,$p' || true
+          xcrun simctl boot "$udid" || true
+          xcodebuild -showdestinations -project SwiftLeeds.xcodeproj -scheme UIDesignSnapshotTests 2>&1 | rg -i 'watch' || xcodebuild -showdestinations -project SwiftLeeds.xcodeproj -scheme UIDesignSnapshotTests 2>&1 | grep -i watch || true
+          xcodebuild build-for-testing -project SwiftLeeds.xcodeproj -scheme UIDesignSnapshotTests -destination "id=$udid" -derivedDataPath "$RUNNER_TEMP/probe-dd" -skipPackagePluginValidation 2>&1 | tail -40 || true
+
       # Exit 1 means UIDesign cannot be affected, and any other exit runs the
       # tests. A skipped run sets no output, so every step below is skipped.
       - name: Decide whether this pull request can affect UIDesign
