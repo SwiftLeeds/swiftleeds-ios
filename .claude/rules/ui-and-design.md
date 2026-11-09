@@ -170,7 +170,6 @@ in an Arabic capture of the person page.
   `forward` name.
 - **Capture right-to-left** for any view with a directional mark, with the launch argument
   `-AppleLanguages (ar)`, and open the image.
-- Known offender: `Icon.openExternal` in `UIDesign` is `arrow.up.right.square`. Not yet fixed.
 
 ## A line or a stroke is 2pt or more
 
