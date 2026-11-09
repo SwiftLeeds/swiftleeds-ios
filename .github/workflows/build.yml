@@ -597,6 +597,30 @@ jobs:
             fi
           done
 
+      # The runner image registers watchOS 27.0 twice, and about 20 seconds
+      # after the simulator service starts, the duplicate's clean-up breaks the
+      # runtime (actions/runner-images#14946). A device booted before then kept
+      # working in a probe run, so both boot here, before anything slower. Both
+      # boots start before either wait, so neither misses that window.
+      - name: Boot the Watch simulators
+        run: |
+          set -euo pipefail
+          udids=()
+          for device in 'Apple Watch SE 3 (40mm)' 'Apple Watch Series 12 (46mm)'; do
+            udid=$(xcrun simctl list devices -j | python3 -c '
+          import json, sys
+          devices = json.load(sys.stdin)["devices"]["com.apple.CoreSimulator.SimRuntime.watchOS-27-0"]
+          print(next(d["udid"] for d in devices if d["name"] == sys.argv[1]))
+          ' "$device")
+            udids+=("$udid")
+            # A device that is already booted refuses a second boot. The wait
+            # below is the check.
+            xcrun simctl boot "$udid" || true
+          done
+          for udid in "${udids[@]}"; do
+            xcrun simctl bootstatus "$udid" -b
+          done
+
       # Exit 1 means UIDesign cannot be affected, and any other exit runs the
       # tests. A skipped run sets no output, so every step below is skipped.
       - name: Decide whether this pull request can affect UIDesign

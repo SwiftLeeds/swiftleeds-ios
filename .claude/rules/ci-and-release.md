@@ -165,6 +165,10 @@ matrix is still parked, now as "see whether it is needed" (2026-09-21).
 - **Name the two devices, `Apple Watch SE 3 (40mm)` and `Apple Watch Series 12 (46mm)`, and pin
   `OS=27.0`.** A newer runner image (20261104) adds watchOS 27.2 with the same device names, so
   without the pin a test could land on the wrong runtime.
+- **Boot both Watch simulators straight after the runtime check.** The `xcode-27` image registers
+  watchOS 27.0 twice, and the duplicate's clean-up breaks the runtime about 20 seconds after the
+  simulator service starts (actions/runner-images#14946). A device booted before then kept working
+  in one probe run. Remove the step once that issue is fixed.
 - **Build once, then test each device in its own call.** Each call has its own exit status, its
   own result bundle and its own test count, so a failure names the model that broke.
 - **Keep the floor at 26 tests per device.** A lower count means a suite was lost.
