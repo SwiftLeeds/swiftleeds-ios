@@ -375,7 +375,7 @@ jobs:
   # traits. They sit behind `#if os(iOS)`, so the macOS job above cannot see
   # them. Every other test compiles and runs there, and the app build jobs
   # compile the iOS-only sources, so nothing is covered twice and nothing is
-  # left out.
+  # left out. The Watch files in these targets run in the Watch job below.
   #
   # A package opts in by declaring a test target whose name ends in
   # SnapshotTests, plus a shared scheme of the same name holding only that
@@ -537,7 +537,8 @@ jobs:
           echo "analyze=true" >> "$GITHUB_OUTPUT"
 
       # The iOS build is the one log that judges the snapshot targets, because
-      # they compile only on iOS. The script's header explains the split. A step
+      # they compile only on iOS. The Watch folders are judged by the Watch
+      # job's log instead. The script's header explains the split. A step
       # that selected no target sets no output, so nothing was built and this is
       # skipped; a failed test step skips it too, as there is no verdict to add.
       - name: Install SwiftLint
@@ -549,6 +550,153 @@ jobs:
         env:
           MIN_FILES: ${{ steps.snapshots.outputs.min_files }}
         run: .github/scripts/analyze.sh snapshots "$MIN_FILES" "$RUNNER_TEMP/snapshot-build.log"
+
+  # The Watch files in the snapshot targets sit behind `#if os(watchOS)`, so
+  # the iOS job above compiles them as empty files. The references were
+  # recorded on a 40mm and a 46mm simulator, and each model draws its own
+  # images, so each runs its own test call.
+  test-snapshots-watchos:
+    name: Test Snapshots (watchOS Simulator)
+    runs-on: xcode-27
+    env:
+      # Empty on a push, which is how the skip step knows to run everything.
+      BASE_REF: ${{ github.base_ref }}
+    steps:
+      - name: Checkout iOS Repository
+        uses: actions/checkout@v4
+        with:
+          # The whole history, so a pull request can be compared with its base.
+          fetch-depth: 0
+
+      - name: Select Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: '27.2'
+
+      # The references were recorded on this exact runtime build. A newer runner
+      # image adds watchOS 27.2 beside 27.0 with the same device names, so
+      # `OS=27.0` below is what keeps a test off it.
+      - name: Check the pinned simulator runtime and devices are present
+        run: |
+          set -euo pipefail
+          runtimes=$(xcrun simctl list runtimes)
+          echo "$runtimes"
+          count=$(grep -cF 'watchOS 27.0 (' <<< "$runtimes" || true)
+          if [ "$count" -ne 1 ] || ! grep -qF 'watchOS 27.0 (27.0 - 24R362)' <<< "$runtimes"; then
+            echo "::error::The references need watchOS 27.0 (24R362) as the only watchOS 27.0 runtime. This runner has $count watchOS 27.0 runtime(s), listed above."
+            exit 1
+          fi
+          # Both device names also exist under other runtimes, so only the
+          # lines below the watchOS 27.0 header count.
+          devices=$(xcrun simctl list devices | awk '/^-- /{in27=($0=="-- watchOS 27.0 --")} in27')
+          echo "$devices"
+          for device in 'Apple Watch SE 3 (40mm)' 'Apple Watch Series 12 (46mm)'; do
+            if ! grep -qF "$device (" <<< "$devices"; then
+              echo "::error::The watchOS 27.0 runtime has no $device simulator"
+              exit 1
+            fi
+          done
+
+      # Exit 1 means UIDesign cannot be affected, and any other exit runs the
+      # tests. A skipped run sets no output, so every step below is skipped.
+      - name: Decide whether this pull request can affect UIDesign
+        id: scope
+        run: |
+          set -uo pipefail
+          # GitHub runs this step with `bash -e`, so the exit status is caught
+          # here rather than ending the step.
+          scope=0
+          .github/scripts/is-affected.sh Packages/DesignSystem/UIDesign || scope=$?
+          if [ "$scope" -eq 1 ]; then
+            echo "Skipped, because this pull request cannot affect UIDesign"
+            exit 0
+          fi
+          echo "run=true" >> "$GITHUB_OUTPUT"
+
+      # The generic destination builds once for both models. Each test call
+      # below then names its device.
+      - name: Build the Watch snapshot tests
+        if: ${{ steps.scope.outputs.run == 'true' }}
+        run: |
+          set -euo pipefail
+          # tee keeps the raw output for the analyzer step below.
+          xcodebuild build-for-testing -project SwiftLeeds.xcodeproj \
+            -scheme UIDesignSnapshotTests \
+            -destination 'generic/platform=watchOS Simulator' \
+            -derivedDataPath "$RUNNER_TEMP/watch-derived-data" \
+            -skipPackagePluginValidation 2>&1 \
+            | tee "$RUNNER_TEMP/watch-build.log"
+
+      # One call per model, so each has its own exit status, its own result
+      # bundle and its own test count. Both run even when the first fails, so a
+      # run names every model that broke.
+      #
+      # The snapshot library writes a failed image under SNAPSHOT_ARTIFACTS. A
+      # variable reaches the test runner only with the TEST_RUNNER_ prefix.
+      #
+      # 26 is the count on each simulator today, in 8 suites. The floor catches
+      # a suite that went missing, which still passes.
+      - name: Run the Watch snapshot tests
+        if: ${{ steps.scope.outputs.run == 'true' }}
+        run: |
+          set -uo pipefail
+          failed=0
+          run_model() {
+            model=$1
+            device=$2
+            bundle="$RUNNER_TEMP/watch-$model.xcresult"
+            # GitHub runs this step with `bash -e`, so each status is caught
+            # here and the second model still runs.
+            status=0
+            TEST_RUNNER_SNAPSHOT_ARTIFACTS="$RUNNER_TEMP/watch-artifacts/$model" \
+              xcodebuild test-without-building -project SwiftLeeds.xcodeproj \
+                -scheme UIDesignSnapshotTests \
+                -destination "platform=watchOS Simulator,name=$device,OS=27.0" \
+                -derivedDataPath "$RUNNER_TEMP/watch-derived-data" \
+                -parallel-testing-enabled NO \
+                -resultBundlePath "$bundle" \
+                -skipPackagePluginValidation || status=$?
+            if [ "$status" -ne 0 ]; then
+              echo "::error::The Watch snapshot tests failed on the $model"
+              failed=1
+            fi
+            total=$(xcrun xcresulttool get test-results summary --path "$bundle" \
+              | python3 -c 'import json, sys; print(json.load(sys.stdin)["totalTestCount"])') \
+              || total=0
+            echo "The $model run counted $total tests"
+            if [ "${total:-0}" -lt 26 ]; then
+              echo "::error::Only ${total:-0} tests ran on the $model, and 26 is the known count. A suite may have been lost."
+              failed=1
+            fi
+          }
+          run_model 40mm 'Apple Watch SE 3 (40mm)'
+          run_model 46mm 'Apple Watch Series 12 (46mm)'
+          exit "$failed"
+
+      - name: Upload the failed Watch snapshots
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: watch-snapshot-failures
+          path: |
+            ${{ runner.temp }}/watch-40mm.xcresult
+            ${{ runner.temp }}/watch-46mm.xcresult
+            ${{ runner.temp }}/watch-artifacts
+          if-no-files-found: ignore
+
+      # The Watch build is the one log that judges the Watch folders, because
+      # the iOS build compiles them as empty. A skipped run sets no output, so
+      # nothing was built and this is skipped.
+      - name: Install SwiftLint
+        if: ${{ steps.scope.outputs.run == 'true' }}
+        run: .github/scripts/install-swiftlint.sh
+
+      # 9 is one below the 10 files this scope analysed on one local run. The
+      # floor catches a log that lost its files, which analyses 0 and still
+      # exits 0.
+      - name: Analyse the Watch snapshot tests
+        if: ${{ steps.scope.outputs.run == 'true' }}
+        run: .github/scripts/analyze.sh watch 9 "$RUNNER_TEMP/watch-build.log"
 
   # The app build jobs compile the App Clip for both brands, but a trap at
   # launch compiles cleanly. This installs and launches it, and fails if the

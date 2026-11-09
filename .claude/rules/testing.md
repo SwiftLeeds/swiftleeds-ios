@@ -105,7 +105,7 @@ Decided 2026-08-28. Snapshot tests are behind `#if os(iOS)`, so the macOS CI job
 They get a separate iOS Simulator job, and that job must stay cheap. A Watch file in the same
 target sits behind `#if os(watchOS)`, in the target's `Watch/` folder. The iOS log sees such a file
 as empty and reports its imports as missing, so `analyze.sh` judges that folder as its own scope.
-CI does not yet run it.
+A separate Watch job runs those files on two watchOS simulators.
 
 Since 2026-10-25 one other iOS-only test shares the snapshot target: UIDesign's
 `ColorFamilyContrastTests`, which needs iOS traits to resolve Increase Contrast. A test like it goes

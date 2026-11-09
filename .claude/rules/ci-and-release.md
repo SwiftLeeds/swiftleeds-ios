@@ -158,6 +158,28 @@ matrix is still parked, now as "see whether it is needed" (2026-09-21).
   median 264s against 301s, but the gap sits inside the runner's own spread. Neither arm swapped,
   so memory is not the blocker; the measurement simply cannot size the gain.
 
+## The Watch snapshot job
+
+- **Pin the runtime to watchOS 27.0 (24R362).** The references were recorded on it. The job fails
+  in one line when that build is missing or a second watchOS 27.0 build sits beside it.
+- **Name the two devices, `Apple Watch SE 3 (40mm)` and `Apple Watch Series 12 (46mm)`, and pin
+  `OS=27.0`.** A newer runner image (20261104) adds watchOS 27.2 with the same device names, so
+  without the pin a test could land on the wrong runtime.
+- **Build once, then test each device in its own call.** Each call has its own exit status, its
+  own result bundle and its own test count, so a failure names the model that broke.
+- **Keep the floor at 26 tests per device.** A lower count means a suite was lost.
+- **Skip the job when the pull request cannot affect UIDesign.** It asks `is-affected.sh`, and only
+  an exit of exactly 1 skips.
+- **Expect an eighth macOS job on a five-runner account.** A run gets longer by about one queued
+  job.
+
+## Run a step body the way GitHub runs it
+
+- **Test a `run:` block locally with `bash -e <file>`.** GitHub runs every step as `bash -e {0}`,
+  and `set -uo pipefail` does not clear `-e`.
+- **Catch a status you mean to read**: `status=0; command || status=$?`. A bare command that
+  exits non-zero ends the step before the next line reads `$?`.
+
 ## Build configuration facts
 
 - Two apps, one target, four configurations, driven by `Configuration/*.xcconfig`. Three known
