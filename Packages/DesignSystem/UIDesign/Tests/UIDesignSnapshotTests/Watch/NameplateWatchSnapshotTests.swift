@@ -1,5 +1,6 @@
 #if os(watchOS)
 import Foundation
+import SFSafeSymbols
 import SnapshotTesting
 import SwiftUI
 import Testing
