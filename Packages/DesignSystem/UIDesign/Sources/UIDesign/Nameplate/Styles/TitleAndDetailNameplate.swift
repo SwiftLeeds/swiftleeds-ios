@@ -3,7 +3,7 @@ import SwiftUI
 /// A nameplate layout that draws the title and the detail without the icon.
 ///
 /// The title and the detail each keep to one line, and a line too long for the
-/// width ends with an ellipsis.
+/// width ends with an ellipsis. An avatar's status shows in front of the title.
 struct TitleAndDetailNameplate: View {
     /// The properties of the nameplate.
     let configuration: NameplateStyleConfiguration
@@ -15,10 +15,7 @@ struct TitleAndDetailNameplate: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: .xxs) {
-            configuration.title
-                .font(titleFont)
-                .foregroundStyle(.text)
-                .lineLimit(1)
+            titleLine
 
             configuration.detail
                 .font(.body)
@@ -30,5 +27,39 @@ struct TitleAndDetailNameplate: View {
         .accessibilitySortPriority(1)
         // Fill the width the caller gives, so a row stays leading aligned.
         .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    /// The title, with the status of the icon's avatar in front of it.
+    private var titleLine: some View {
+        HStack(alignment: .firstTextBaseline, spacing: .xs) {
+            // Reads the icon for its status and draws nothing of it.
+            Group(subviews: configuration.icon) { subviews in
+                if let status = subviews.lazy.compactMap(\.containerValues.avatarStatus).first {
+                    statusMark(status)
+                }
+            }
+
+            configuration.title
+                .lineLimit(1)
+                // Above the status, so VoiceOver reads the name first.
+                .accessibilitySortPriority(1)
+        }
+        .font(titleFont)
+        .foregroundStyle(.text)
+    }
+
+    /// Draws the symbol of a status, with its label for VoiceOver.
+    ///
+    /// - Parameter status: The status to draw.
+    /// - Returns: A view that shows only the symbol of the status.
+    private func statusMark(_ status: AvatarStatus) -> some View {
+        Label {
+            Text(status.label)
+        } icon: {
+            Image(icon: status.icon)
+                .symbolRenderingMode(.palette)
+                .foregroundStyle(status.family.onSolid, status.family.solid)
+        }
+        .labelStyle(.iconOnly)
     }
 }
