@@ -25,7 +25,7 @@ import SwiftUI
 /// On iOS and macOS, the icon moves above the text at the accessibility text
 /// sizes, so a row becomes a stack. On the Watch, the default style draws no
 /// icon, and the title and the detail each keep to one line. It shows an
-/// avatar's status in front of the title. The prominent style instead centers
+/// avatar's status at the trailing end of the title's line. The prominent style instead centers
 /// the icon above the text, at every text size.
 ///
 /// ### Showing a loading state
