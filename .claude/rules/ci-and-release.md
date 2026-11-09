@@ -171,7 +171,7 @@ matrix is still parked, now as "see whether it is needed" (2026-09-21).
   in one probe run. Remove the step once that issue is fixed.
 - **Build once, then test each device in its own call.** Each call has its own exit status, its
   own result bundle and its own test count, so a failure names the model that broke.
-- **Keep the floor at 26 tests per device.** A lower count means a suite was lost.
+- **Keep the floor at 34 tests per device.** A lower count means a suite was lost.
 - **Skip the job when the pull request cannot affect UIDesign.** It asks `is-affected.sh`, and only
   an exit of exactly 1 skips.
 - **Expect an eighth macOS job on a five-runner account.** A run gets longer by about one queued
