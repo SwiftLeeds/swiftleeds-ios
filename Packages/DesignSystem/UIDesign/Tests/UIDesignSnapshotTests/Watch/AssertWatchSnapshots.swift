@@ -1,5 +1,6 @@
 #if os(watchOS)
 import Foundation
+import ImageIO
 import SnapshotTesting
 import SwiftUI
 import Testing
@@ -118,11 +119,9 @@ func assertSnapshots(
             Issue.record("No image was rendered for the \(textSize.name) text size.")
             continue
         }
-        var strategy = Snapshotting<Data, Data>.data
-        strategy.pathExtension = "png"
         assertSnapshot(
             of: png,
-            as: strategy,
+            as: Snapshotting(pathExtension: "png", diffing: pixelDiffing()),
             named: "\(model.name)-\(textSize.name)",
             fileID: fileID,
             file: filePath,
@@ -162,5 +161,102 @@ private func pngData(of view: some View, on model: WatchModel) -> Data? {
     let renderer = ImageRenderer(content: view)
     renderer.scale = model.pixelsPerPoint
     return renderer.uiImage?.pngData()
+}
+
+/// The bits in each color component of a decoded pixel.
+private let bitsPerComponent = 8
+
+/// The bytes in one decoded pixel: red, green, blue and alpha.
+private let bytesPerPixel = 4
+
+/// Returns a strategy that compares PNG data by 8-bit sRGB pixels, with no tolerance.
+///
+/// The strategy stores the PNG unchanged.
+///
+/// - Returns: A diffing strategy for PNG data.
+private func pixelDiffing() -> Diffing<Data> {
+    .diff(toData: { $0 }, fromData: { $0 }, diffV2: pixelDifference)
+}
+
+/// Returns a failure when the snapshot's pixels differ from the reference's.
+///
+/// - Parameters:
+///   - reference: The PNG data of the reference image.
+///   - snapshot: The PNG data of the newly rendered image.
+/// - Returns: A message and the rendered PNG as an attachment, or `nil` when the pixels match.
+private func pixelDifference(_ reference: Data, _ snapshot: Data) -> (String, [DiffAttachment])? {
+    guard reference != snapshot else { return nil }
+    return differenceMessage(reference, snapshot).map { ($0, [.data(snapshot, name: "failure.png")]) }
+}
+
+/// Returns what differs between two PNG images, judged by decoded pixels.
+///
+/// - Parameters:
+///   - reference: The PNG data of the reference image.
+///   - snapshot: The PNG data of the newly rendered image.
+/// - Returns: A message naming the size or pixel difference, or `nil` when the pixels match.
+private func differenceMessage(_ reference: Data, _ snapshot: Data) -> String? {
+    guard let old = decodedPixels(of: reference), let new = decodedPixels(of: snapshot) else {
+        return "A PNG image could not be decoded."
+    }
+    guard old.width == new.width, old.height == new.height else {
+        return "Sizes differ: reference \(old.width)x\(old.height) pixels, "
+            + "snapshot \(new.width)x\(new.height) pixels."
+    }
+    let count = differingPixelCount(old, new)
+    return count == 0 ? nil : "\(count) pixels differ from the reference."
+}
+
+/// Returns the PNG image drawn into an sRGB context of 8-bit red, green, blue and alpha pixels.
+///
+/// - Parameter png: The PNG data to decode.
+/// - Returns: A context holding the pixels, or `nil` when the data is not a drawable image.
+private func decodedPixels(of png: Data) -> CGContext? {
+    guard
+        let source = CGImageSourceCreateWithData(png as CFData, nil),
+        let image = CGImageSourceCreateImageAtIndex(source, 0, nil),
+        let context = CGContext(
+            data: nil,
+            width: image.width,
+            height: image.height,
+            bitsPerComponent: bitsPerComponent,
+            bytesPerRow: image.width * bytesPerPixel,
+            space: CGColorSpace(name: CGColorSpace.sRGB) ?? CGColorSpaceCreateDeviceRGB(),
+            bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue,
+        )
+    else { return nil }
+    context.draw(image, in: CGRect(x: 0, y: 0, width: image.width, height: image.height))
+    return context.data == nil ? nil : context
+}
+
+/// Returns how many pixels differ between two decoded images of the same size.
+///
+/// - Parameters:
+///   - lhs: The first decoded image.
+///   - rhs: The second decoded image, the same size as `lhs`.
+/// - Returns: The number of pixels with any byte that differs.
+private func differingPixelCount(_ lhs: CGContext, _ rhs: CGContext) -> Int {
+    withPixelBytes(of: lhs) { left in
+        withPixelBytes(of: rhs) { right in
+            stride(from: 0, to: left.count, by: bytesPerPixel).lazy.filter { offset in
+                !left[offset..<offset + bytesPerPixel].elementsEqual(right[offset..<offset + bytesPerPixel])
+            }.count
+        }
+    }
+}
+
+/// Passes the bytes of a decoded image to a closure and returns its result.
+///
+/// - Parameters:
+///   - context: The decoded image.
+///   - body: A closure that reads the bytes of every row, or an empty buffer when there is no data.
+/// - Returns: The result of `body`.
+private func withPixelBytes<Result>(
+    of context: CGContext,
+    _ body: (UnsafeBufferPointer<UInt8>) -> Result,
+) -> Result {
+    guard let data = context.data else { return body(UnsafeBufferPointer(start: nil, count: 0)) }
+    let start = data.assumingMemoryBound(to: UInt8.self)
+    return body(UnsafeBufferPointer(start: start, count: context.bytesPerRow * context.height))
 }
 #endif

@@ -2,7 +2,7 @@
 #
 # Uploads the committed snapshot reference images to Screenshotbot, so a reviewer
 # can see each changed image in the pull request. Git still owns the images and
-# the simulator job still compares pixels. This only shows them.
+# the simulator jobs still compare pixels. This only shows them.
 #
 # Each package with snapshot tests is one Screenshotbot channel, `ios/<Package>`.
 # The channels are batched into one pull request status, `ios-snapshot-tests`.
