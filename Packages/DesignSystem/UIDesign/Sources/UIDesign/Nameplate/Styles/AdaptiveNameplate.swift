@@ -3,8 +3,8 @@ import SwiftUI
 /// A nameplate layout that adapts to the text size.
 ///
 /// The icon sits beside the text, and above it at the accessibility text
-/// sizes. The built-in styles share this layout, so they differ only in
-/// typography and spacing.
+/// sizes. The built-in styles on iOS and macOS share this layout, so they
+/// differ only in typography and spacing.
 struct AdaptiveNameplate: View {
     /// The current Dynamic Type size.
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize

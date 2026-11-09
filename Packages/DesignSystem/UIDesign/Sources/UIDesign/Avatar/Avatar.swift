@@ -74,6 +74,7 @@ public struct Avatar<Fallback: View>: View {
         AnyView(style.makeBody(configuration: configuration))
             .foregroundStyle(Color.primary)
             .environment(\.avatarDiameter, diameter)
+            .containerValue(\.avatarStatus, status)
     }
 
     /// The properties handed to the current avatar style.

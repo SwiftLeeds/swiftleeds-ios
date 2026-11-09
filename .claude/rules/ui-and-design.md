@@ -70,6 +70,17 @@ Extends `swiftui-style-driven-components`.
 - **Vertical growth is correct behavior**, not a defect. A row that becomes two lines at an
   accessibility size has done the right thing.
 
+### The Watch follows Apple's Contacts app instead
+
+Decided by Paul 2026-11-09, after a render trial of six layouts on the 40mm and the 46mm.
+
+- **Never put a picture beside a person's name on the Watch.** Beside an avatar that grows, the
+  40mm leaves the text about a third of the screen, and words break with no hyphen.
+- **A row shows no picture**, as the Contacts list does. With no icon, a row has no axis to switch.
+- **A heading puts the picture above the name, centered**, as the Contacts detail screen does.
+- **A name and its detail each keep to one line, cut with "…"**, as Contacts cuts a long name. This
+  replaces "let text take as many lines as it needs" on the Watch only.
+
 ## Glass cannot sample glass
 
 Extends `swiftui-liquid-glass`.

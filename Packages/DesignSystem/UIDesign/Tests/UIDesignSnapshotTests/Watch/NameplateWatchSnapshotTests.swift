@@ -1,5 +1,6 @@
 #if os(watchOS)
 import Foundation
+import SFSafeSymbols
 import SnapshotTesting
 import SwiftUI
 import Testing
@@ -62,12 +63,121 @@ import UIDesign
         assertSnapshots(of: view)
     }
 
+    @Test func prominentWithStatus() {
+        let view = Nameplate(Self.name, detail: Self.company) {
+            Avatar(
+                url: nil,
+                size: AvatarSize.large,
+                status: AvatarStatus("Checked in"),
+                fallback: .initials(Self.nameComponents),
+            )
+        }
+        .nameplateStyle(.prominent)
+
+        assertSnapshots(of: view)
+    }
+
+    @Test func prominentWithLongName() {
+        let view = Nameplate(Self.longName, detail: Self.company) {
+            Avatar(url: nil, size: AvatarSize.large, fallback: .initials(Self.longNameComponents))
+        }
+        .nameplateStyle(.prominent)
+
+        assertSnapshots(of: view)
+    }
+
     @Test func withStatus() {
         let view = Nameplate(Self.name, detail: Self.company) {
             Avatar(
                 url: nil,
                 size: AvatarSize.medium,
                 status: AvatarStatus("Checked in"),
+                fallback: .initials(Self.nameComponents),
+            )
+        }
+
+        assertSnapshots(of: view)
+    }
+
+    @Test func withStatusAndLongName() {
+        let view = Nameplate(Self.longName, detail: Self.company) {
+            Avatar(
+                url: nil,
+                size: AvatarSize.medium,
+                status: AvatarStatus("Checked in"),
+                fallback: .initials(Self.longNameComponents),
+            )
+        }
+
+        assertSnapshots(of: view)
+    }
+
+    @Test func withStatusAndBoldText() {
+        let view = Nameplate(Self.name, detail: Self.company) {
+            Avatar(
+                url: nil,
+                size: AvatarSize.medium,
+                status: AvatarStatus("Checked in"),
+                fallback: .initials(Self.nameComponents),
+            )
+        }
+        .environment(\.legibilityWeight, .bold)
+
+        assertSnapshots(of: view)
+    }
+
+    @Test func withStatusAndIncreasedContrast() {
+        let view = Nameplate(Self.name, detail: Self.company) {
+            Avatar(
+                url: nil,
+                size: AvatarSize.medium,
+                status: AvatarStatus("Checked in"),
+                fallback: .initials(Self.nameComponents),
+            )
+        }
+        .environment(\._colorSchemeContrast, .increased)
+
+        assertSnapshots(of: view)
+    }
+
+    @Test func withStatusRightToLeft() {
+        let view = Nameplate(Self.name, detail: Self.company) {
+            Avatar(
+                url: nil,
+                size: AvatarSize.medium,
+                status: AvatarStatus("Checked in"),
+                fallback: .initials(Self.nameComponents),
+            )
+        }
+        .environment(\.layoutDirection, .rightToLeft)
+
+        assertSnapshots(of: view)
+    }
+
+    @Test func withStatusRedacted() {
+        let view = Nameplate(Self.name, detail: Self.company) {
+            Avatar(
+                url: nil,
+                size: AvatarSize.medium,
+                status: AvatarStatus("Checked in"),
+                fallback: .initials(Self.nameComponents),
+            )
+        }
+        .redacted(reason: .placeholder)
+
+        assertSnapshots(of: view)
+    }
+
+    @Test func withWarningStatus() {
+        let view = Nameplate(Self.name, detail: Self.company) {
+            Avatar(
+                url: nil,
+                size: AvatarSize.medium,
+                status: AvatarStatus(
+                    "Waitlisted",
+                    icon: Icon(.exclamationmarkCircleFill),
+                    family: .warning,
+                ),
                 fallback: .initials(Self.nameComponents),
             )
         }

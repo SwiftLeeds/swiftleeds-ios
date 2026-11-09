@@ -658,7 +658,7 @@ jobs:
       # The snapshot library writes a failed image under SNAPSHOT_ARTIFACTS. A
       # variable reaches the test runner only with the TEST_RUNNER_ prefix.
       #
-      # 26 is the count on each simulator today, in 8 suites. The floor catches
+      # 34 is the count on each simulator today, in 8 suites. The floor catches
       # a suite that went missing, which still passes.
       - name: Run the Watch snapshot tests
         if: ${{ steps.scope.outputs.run == 'true' }}
@@ -688,8 +688,8 @@ jobs:
               | python3 -c 'import json, sys; print(json.load(sys.stdin)["totalTestCount"])') \
               || total=0
             echo "The $model run counted $total tests"
-            if [ "${total:-0}" -lt 26 ]; then
-              echo "::error::Only ${total:-0} tests ran on the $model, and 26 is the known count. A suite may have been lost."
+            if [ "${total:-0}" -lt 34 ]; then
+              echo "::error::Only ${total:-0} tests ran on the $model, and 34 is the known count. A suite may have been lost."
               failed=1
             fi
           }
