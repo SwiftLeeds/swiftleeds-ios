@@ -3,6 +3,8 @@ import SwiftUI
 extension Image {
     /// Creates an image of an icon.
     ///
+    /// Hide a decorative icon from VoiceOver, and give an informative one a label.
+    ///
     /// The result is an ordinary image, so every symbol modifier applies to it:
     ///
     /// ```swift
