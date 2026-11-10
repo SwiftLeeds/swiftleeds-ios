@@ -24,6 +24,9 @@ This file holds what is specific to this codebase, or not yet promoted to a wide
 - **A view model serves one user goal, never every job on a screen.** When a screen does two
   separate things, such as a list and a sign-in prompt, split it into sub-views, and nest a
   `ViewModel` under each one that has state or actions. Each view nests at most one `ViewModel`.
+- **A view model holds no view code**: no property or method that returns a view (`some View`,
+  `AnyView`, `Text`), and no `@ViewBuilder` or `@ContentBuilder`. The view builds views; the view
+  model holds state and actions.
 - **Keep an Application-layer use case even when it is a pure pass-through** (`FetchProfile`
   forwarding to `AttendeeRepository.fetch`). Uniformity wins over the "no boundary without a
   benefit" lean; this is an explicit preference.
