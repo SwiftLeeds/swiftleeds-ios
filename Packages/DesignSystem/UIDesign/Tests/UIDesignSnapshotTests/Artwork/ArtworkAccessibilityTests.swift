@@ -9,10 +9,25 @@ import UIKit
 @Suite
 struct ArtworkAccessibilityTests {
     @Test
-    func whenArtworkSitsBesideText_shouldAddNoElement() throws {
+    func whenArtworkSitsBesideText_shouldExposeOnlyTextElement() throws {
         let elements = try AccessibilityTree.elements(
             of: HStack {
                 Artwork(icon: Icon(.hammerFill), palette: .teal)
+                Text("Building Accessible Apps")
+            }
+        )
+        #expect(elements.count == 1)
+        let element = try #require(elements.first)
+        #expect(element.label == "Building Accessible Apps")
+        #expect(element.traits == .staticText)
+    }
+
+    @Test
+    func whenLoadingArtworkSitsBesideText_shouldExposeOnlyTextElement() throws {
+        let elements = try AccessibilityTree.elements(
+            of: HStack {
+                Artwork(icon: Icon(.hammerFill), palette: .teal)
+                    .redacted(reason: .placeholder)
                 Text("Building Accessible Apps")
             }
         )
