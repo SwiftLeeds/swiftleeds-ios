@@ -11,7 +11,19 @@ import SwiftUI
 /// HStack {
 ///     Text(session.title)
 ///     Badge("Workshop")
+///         .badgePalette(.teal)
 /// }
+/// ```
+///
+/// A badge is neutral until a ``BadgePalette`` says otherwise. The palette comes
+/// from the environment, so one modifier on a stack colors every badge in it.
+///
+/// ```swift
+/// VStack {
+///     Badge("Workshop")
+///     Badge("Talk")
+/// }
+/// .badgePalette(.violet)
 /// ```
 ///
 /// A badge is essential content, so it grows with the text size. The word carries
@@ -23,6 +35,9 @@ import SwiftUI
 public struct Badge<Label: View>: View {
     /// The current badge style.
     @Environment(\.badgeStyle) private var style
+
+    /// The current badge palette.
+    @Environment(\.badgePalette) private var palette
 
     /// The content of the badge.
     private let label: Label
@@ -40,13 +55,25 @@ public struct Badge<Label: View>: View {
 
     /// The properties handed to the current badge style.
     private var configuration: BadgeStyleConfiguration {
-        BadgeStyleConfiguration(label: label, colors: .neutral)
+        BadgeStyleConfiguration(label: label, colors: palette.colors)
     }
 }
 
 #Preview("Short title") {
     Badge("Workshop")
         .padding(.lg)
+}
+
+#Preview("Palettes") {
+    VStack(alignment: .leading, spacing: .md) {
+        Badge("Neutral").badgePalette(.neutral)
+        Badge("Blue").badgePalette(.blue)
+        Badge("Teal").badgePalette(.teal)
+        Badge("Violet").badgePalette(.violet)
+        Badge("Raspberry").badgePalette(.raspberry)
+        Badge("Sponsor").badgePalette(.sponsor)
+    }
+    .padding(.lg)
 }
 
 #Preview("Long title") {

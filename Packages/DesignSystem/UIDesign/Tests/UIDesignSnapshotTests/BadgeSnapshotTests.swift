@@ -34,6 +34,39 @@ import UIDesign
             .background(surface)
     }
 
+    /// The six palettes, each with "Workshop", stacked on a surface.
+    private func palettes(on surface: some ShapeStyle) -> some View {
+        VStack(alignment: .leading, spacing: .md) {
+            Badge("Workshop").badgePalette(.neutral)
+            Badge("Workshop").badgePalette(.blue)
+            Badge("Workshop").badgePalette(.teal)
+            Badge("Workshop").badgePalette(.violet)
+            Badge("Workshop").badgePalette(.raspberry)
+            Badge("Workshop").badgePalette(.sponsor)
+        }
+        .padding(.lg)
+        .background(surface)
+    }
+
+    @Test func palettesOnSurface() {
+        assertContrastSnapshots(of: palettes(on: .surface))
+    }
+
+    @Test func palettesOnSecondarySurface() {
+        assertContrastSnapshots(of: palettes(on: .secondarySurface))
+    }
+
+    @Test func paletteSetOnParentReachesEveryBadge() {
+        let view = HStack {
+            Badge("Workshop")
+            Badge("Talk")
+        }
+        .badgePalette(.teal)
+        .padding(.lg)
+        .background(.surface)
+        assertSpecimenSnapshots(of: view)
+    }
+
     @Test func workshopOnSurface() {
         assertContrastSnapshots(of: badge(on: .surface))
     }
