@@ -7,6 +7,9 @@ import SwiftUI
 ///
 /// VoiceOver does not read an artwork. It fills the frame it is given and reads no text size.
 ///
+/// Apply `redacted(reason: .placeholder)` to show an artwork whose item is still loading. It then
+/// draws a plain shape.
+///
 /// ```swift
 /// Artwork(icon: Icon(.hammerFill), palette: .teal)
 ///     .clipShape(RoundedRectangle(cornerRadius: .tile))
@@ -30,6 +33,9 @@ public struct Artwork: View {
         public static let raspberry = Self(family: .raspberry)
     }
 
+    /// The current redaction reasons applied to the view hierarchy.
+    @Environment(\.redactionReasons) private var redactionReasons
+
     /// The symbol to draw.
     private let icon: Icon
 
@@ -50,6 +56,22 @@ public struct Artwork: View {
     private static let symbolScale: CGFloat = 0.40
 
     public var body: some View {
+        if redactionReasons.contains(.placeholder) {
+            placeholder
+        } else {
+            art
+        }
+    }
+
+    /// A plain shape that shows no palette and no symbol.
+    private var placeholder: some View {
+        Rectangle()
+            .fill(.avatarFill)
+            .accessibilityHidden(true)
+    }
+
+    /// The palette's gradient with the symbol in the center.
+    private var art: some View {
         ZStack {
             Rectangle().fill(palette.family.solid.gradient)
             Image(icon: icon)
@@ -76,6 +98,18 @@ public struct Artwork: View {
         Artwork(icon: Icon(.hammerFill), palette: .raspberry)
             .frame(avatarSize: .large)
     }
+    .padding(.lg)
+}
+
+#Preview("Loading") {
+    HStack(spacing: .lg) {
+        Artwork(icon: Icon(.hammerFill), palette: .blue)
+            .frame(avatarSize: .large)
+
+        Artwork(icon: Icon(.hammerFill), palette: .teal)
+            .frame(avatarSize: .large)
+    }
+    .redacted(reason: .placeholder)
     .padding(.lg)
 }
 

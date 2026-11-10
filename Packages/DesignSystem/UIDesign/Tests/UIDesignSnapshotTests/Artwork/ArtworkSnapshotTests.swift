@@ -55,6 +55,10 @@ import UIDesign
         assertContrastSnapshots(of: heroStack)
     }
 
+    @Test func loading() {
+        assertSpecimenSnapshots(of: thumbnailStrip.redacted(reason: .placeholder))
+    }
+
     @Test func thumbnailsAtLargestTextSize() {
         assertSpecimenSnapshots(of: thumbnailStrip.dynamicTypeSize(.accessibility5))
     }
