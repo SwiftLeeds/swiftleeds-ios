@@ -283,3 +283,9 @@ swift build -c release \
 
 `--scratch-path` is not optional. Without it the build writes `Packages/<Folder>/<Name>/.build`, a full
 copy of every dependency, and a hook denies the command.
+
+**Share preview setup with a `PreviewModifier`**, not a copied block in each preview. Apple caches the
+result of its static `makeSharedContext()` for every preview that uses the same modifier type; apply
+it with `#Preview(traits: .modifier(<Modifier>()))`. Previews share that context, so keep mutable
+reference types out of it, or one preview's changes leak into the next. A `PreviewModifier` is
+preview-only helper code, so it takes its own `#if DEBUG` guard.
