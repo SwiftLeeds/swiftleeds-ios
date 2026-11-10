@@ -22,6 +22,21 @@ import SwiftUI
 ///
 /// Apply `redacted(reason: .placeholder)` to show an avatar whose person is
 /// still loading. It then draws a plain shape and asks for no photo.
+///
+/// ### Naming an avatar for VoiceOver
+///
+/// A lone avatar with no status adds no element. Make it one, label it and
+/// mark it as an image.
+///
+/// ```swift
+/// Avatar(url: speaker.photoURL)
+///     .accessibilityElement()
+///     .accessibilityLabel(speaker.name)
+///     .accessibilityAddTraits(.isImage)
+/// ```
+///
+/// A label on an avatar with a status replaces the status. Never label an
+/// avatar inside a ``Nameplate``, which then says the name twice.
 public struct Avatar<Fallback: View>: View {
     /// The current avatar style.
     @Environment(\.avatarStyle) private var style

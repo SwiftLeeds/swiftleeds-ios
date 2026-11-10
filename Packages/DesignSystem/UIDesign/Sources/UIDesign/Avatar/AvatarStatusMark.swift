@@ -22,6 +22,7 @@ struct AvatarStatusMark: View {
             .padding(ringWidth)
             .background(.surface, in: .circle)
             .accessibilityLabel(status.label)
+            .accessibilityStatusTraits()
     }
 
     /// The width of the whole mark, including its ring.

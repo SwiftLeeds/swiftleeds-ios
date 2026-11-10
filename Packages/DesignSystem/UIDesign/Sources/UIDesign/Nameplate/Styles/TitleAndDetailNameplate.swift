@@ -56,5 +56,6 @@ struct TitleAndDetailNameplate: View {
                 .foregroundStyle(status.family.onSolid, status.family.solid)
         }
         .labelStyle(.iconOnly)
+        .accessibilityStatusTraits()
     }
 }

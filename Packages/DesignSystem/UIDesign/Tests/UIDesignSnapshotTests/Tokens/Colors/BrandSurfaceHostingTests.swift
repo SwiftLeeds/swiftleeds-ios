@@ -14,29 +14,6 @@ struct BrandSurfaceHostingTests {
         case neverResolved
     }
 
-    /// A maker of a window for a hosted view.
-    @MainActor
-    private protocol WindowMaking {
-        /// Returns a window that fills a frame.
-        ///
-        /// - Parameter frame: The frame of the window.
-        /// - Returns: The window.
-        func makeWindow(frame: CGRect) -> UIWindow
-    }
-
-    /// A maker of a window with no window scene, because the test bundle has none.
-    @MainActor
-    private struct SceneFreeWindow: WindowMaking {
-        /// Returns a window with no window scene that fills a frame.
-        ///
-        /// - Parameter frame: The frame of the window.
-        /// - Returns: The window.
-        @available(iOS, deprecated: 26.0, message: "Only for a test bundle with no window scene")
-        func makeWindow(frame: CGRect) -> UIWindow {
-            UIWindow(frame: frame)
-        }
-    }
-
     /// A place for the hosted view to leave the color it resolved.
     private final class Receipt {
         /// The color the hosted view resolved, or `nil` before SwiftUI evaluates it.
