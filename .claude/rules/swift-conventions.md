@@ -21,6 +21,9 @@ This file holds what is specific to this codebase, or not yet promoted to a wide
   view model and stop CI's macOS job from testing it. Name it `<View>Model`, as `AboutViewModel`.
   Never import UIKit or Combine into a view model. Decided 2026-09-21; the aim is to make
   such a view cross-platform later and then nest the view model.
+- **A view model serves one user goal, never every job on a screen.** When a screen does two
+  separate things, such as a list and a sign-in prompt, split it into sub-views, and nest a
+  `ViewModel` under each one that has state or actions. Each view nests at most one `ViewModel`.
 - **Keep an Application-layer use case even when it is a pure pass-through** (`FetchProfile`
   forwarding to `AttendeeRepository.fetch`). Uniformity wins over the "no boundary without a
   benefit" lean; this is an explicit preference.
