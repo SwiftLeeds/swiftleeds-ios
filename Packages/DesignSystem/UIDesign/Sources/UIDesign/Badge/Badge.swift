@@ -15,6 +15,17 @@ import SwiftUI
 /// }
 /// ```
 ///
+/// To draw an icon before the word, pass one.
+///
+/// ```swift
+/// Badge("Workshop", icon: Icon(.hammerFill))
+/// ```
+///
+/// The badge always shows its icon beside the word, even when a parent sets a
+/// label style. To change the look, set a custom ``BadgeStyle``.
+///
+/// VoiceOver reads the word and skips the icon.
+///
 /// A badge is neutral until a ``BadgePalette`` says otherwise. The palette comes
 /// from the environment, so one modifier on a stack colors every badge in it.
 ///
@@ -72,6 +83,14 @@ public struct Badge<Label: View>: View {
         Badge("Violet").badgePalette(.violet)
         Badge("Raspberry").badgePalette(.raspberry)
         Badge("Sponsor").badgePalette(.sponsor)
+    }
+    .padding(.lg)
+}
+
+#Preview("Icons") {
+    VStack(alignment: .leading, spacing: .md) {
+        Badge("Workshop", icon: Icon(.hammerFill))
+        Badge("Workshop", icon: Icon(.hammerFill)).badgePalette(.teal)
     }
     .padding(.lg)
 }

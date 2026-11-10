@@ -10,6 +10,9 @@ public struct TintedBadgeStyle: BadgeStyle {
     @MainActor
     public func makeBody(configuration: Configuration) -> some View {
         configuration.label
+            .labelStyle(.titleAndIcon)
+            .labelIconToTitleSpacing(.xs)
+            .imageScale(.small)
             .font(.caption.weight(.semibold))
             .foregroundStyle(configuration.colors.text)
             .padding(.horizontal, .sm)

@@ -1,4 +1,5 @@
 #if os(iOS)
+import SFSafeSymbols
 import SnapshotTesting
 import SwiftUI
 import Testing
@@ -24,8 +25,21 @@ import UIDesign
     /// The width of a narrow column, in points, which makes a long title wrap.
     private static let narrowWidth: CGFloat = 160
 
+    /// The height of a list that holds two rows, in points.
+    private static let listHeight: CGFloat = 220
+
     /// A title long enough to wrap in a narrow column.
     private static let longTitle = "Fully booked, join the waiting list"
+
+    /// A neutral and a teal badge, each with a hammer icon, on the primary surface.
+    private var iconBadges: some View {
+        VStack(alignment: .leading, spacing: .md) {
+            Badge("Workshop", icon: Icon(.hammerFill))
+            Badge("Workshop", icon: Icon(.hammerFill)).badgePalette(.teal)
+        }
+        .padding(.lg)
+        .background(.surface)
+    }
 
     /// A short badge on a surface, with room around it.
     private func badge(on surface: some ShapeStyle) -> some View {
@@ -46,6 +60,33 @@ import UIDesign
         }
         .padding(.lg)
         .background(surface)
+    }
+
+    @Test func iconOnSurface() {
+        assertContrastSnapshots(of: iconBadges)
+    }
+
+    @Test func iconInListRow() {
+        let view = List {
+            HStack {
+                Text("Building accessible apps")
+                Badge("Workshop", icon: Icon(.hammerFill))
+            }
+            HStack {
+                Text("Building accessible apps")
+                Badge("Workshop", icon: Icon(.hammerFill)).badgePalette(.teal)
+            }
+        }
+        .frame(width: rowWidth, height: Self.listHeight)
+        assertSpecimenSnapshots(of: view)
+    }
+
+    @Test func whenCallerSetsTitleOnlyLabelStyle_shouldKeepSymbol() {
+        let view = Badge("Workshop", icon: Icon(.hammerFill))
+            .labelStyle(.titleOnly)
+            .padding(.lg)
+            .background(.surface)
+        assertSpecimenSnapshots(of: view)
     }
 
     @Test func palettesOnSurface() {

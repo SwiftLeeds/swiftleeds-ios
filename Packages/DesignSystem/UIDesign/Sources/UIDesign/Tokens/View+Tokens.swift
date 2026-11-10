@@ -19,6 +19,14 @@ extension View {
         padding(edges, CGFloat(spacing))
     }
 
+    /// Sets the spacing between the icon and the title of labels in this view.
+    ///
+    /// - Parameter spacing: The distance between the icon and the title.
+    /// - Returns: A view whose labels draw the given distance between icon and title.
+    public func labelIconToTitleSpacing(_ spacing: Spacing) -> some View {
+        labelIconToTitleSpacing(CGFloat(spacing))
+    }
+
     /// Positions this view within an invisible frame with the size of an icon.
     ///
     /// - Parameters:
