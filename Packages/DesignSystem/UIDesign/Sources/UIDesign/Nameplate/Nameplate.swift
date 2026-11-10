@@ -20,7 +20,8 @@ import SwiftUI
 /// inside its builder to color it.
 ///
 /// VoiceOver reads a nameplate as a single element, so it announces the
-/// subject rather than each line in turn.
+/// subject rather than each line in turn. Inside a button, give Voice Control
+/// a short name with `accessibilityInputLabels(_:)`, such as the title alone.
 ///
 /// On iOS and macOS, the icon moves above the text at the accessibility text
 /// sizes, so a row becomes a stack. On the Watch, the title and the detail
