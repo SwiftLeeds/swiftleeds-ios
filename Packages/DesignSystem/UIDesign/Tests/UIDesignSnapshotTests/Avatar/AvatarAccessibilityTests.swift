@@ -36,5 +36,16 @@ struct AvatarAccessibilityTests {
         #expect(element.label == "Ada Archer")
         #expect(element.traits == .staticText)
     }
+
+    @Test
+    func whenAvatarHasStatus_shouldReadStatusAsOneImageElement() throws {
+        let elements = try AccessibilityTree.elements(
+            of: Avatar(url: nil, status: AvatarStatus("Checked in"))
+        )
+        #expect(elements.count == 1)
+        let element = try #require(elements.first)
+        #expect(element.label == "Checked in")
+        #expect(element.traits == .image)
+    }
 }
 #endif
