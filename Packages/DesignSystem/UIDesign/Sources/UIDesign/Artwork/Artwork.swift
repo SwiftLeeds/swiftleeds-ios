@@ -3,6 +3,8 @@ import SwiftUI
 
 /// A view that shows a symbol on a colored background, as decoration.
 ///
+/// The palette's gradient fills the frame. The symbol sits in the center, in a muted color.
+///
 /// VoiceOver does not read an artwork. It fills the frame it is given and reads no text size.
 ///
 /// ```swift
@@ -44,9 +46,19 @@ public struct Artwork: View {
         self.palette = palette
     }
 
+    /// The symbol's size as a fraction of the art's shorter side.
+    private static let symbolScale: CGFloat = 0.40
+
     public var body: some View {
-        Image(icon: icon)
-            .accessibilityHidden(true)
+        ZStack {
+            Rectangle().fill(palette.family.solid.gradient)
+            Image(icon: icon)
+                .resizable()
+                .scaledToFit()
+                .scaleEffect(Self.symbolScale)
+                .foregroundStyle(palette.family.onSolid.secondary)
+        }
+        .accessibilityHidden(true)
     }
 }
 
@@ -65,4 +77,10 @@ public struct Artwork: View {
             .frame(avatarSize: .large)
     }
     .padding(.lg)
+}
+
+#Preview("Hero") {
+    Artwork(icon: Icon(.hammerFill), palette: .teal)
+        .frame(maxWidth: .infinity)
+        .aspectRatio(3 / 2, contentMode: .fit)
 }
