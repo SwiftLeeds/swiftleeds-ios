@@ -7,6 +7,15 @@ import UIDesign
 
 @MainActor
 @Suite(.snapshots(record: .never)) struct ArtworkSnapshotTests {
+    /// One artwork to draw.
+    private struct Sample: Equatable, Hashable {
+        /// The symbol to draw.
+        let icon: Icon
+
+        /// The colors to draw with.
+        let palette: Artwork.Palette
+    }
+
     /// The width and height of a thumbnail.
     private static let thumbnailSide: CGFloat = 56
 
@@ -17,18 +26,18 @@ import UIDesign
     private static let heroHeight: CGFloat = 250
 
     /// The four palettes with a symbol each, so the image can tell them apart.
-    private static let artworks: [(icon: Icon, palette: Artwork.Palette)] = [
-        (Icon(.microphoneFill), .blue),
-        (Icon(.boltFill), .violet),
-        (Icon(.hammerFill), .teal),
-        (Icon(.person2Fill), .raspberry),
+    private static let samples = [
+        Sample(icon: Icon(.microphoneFill), palette: .blue),
+        Sample(icon: Icon(.boltFill), palette: .violet),
+        Sample(icon: Icon(.hammerFill), palette: .teal),
+        Sample(icon: Icon(.person2Fill), palette: .raspberry),
     ]
 
     /// The four palettes side by side, each clipped to a tile.
     private var thumbnailStrip: some View {
         HStack(spacing: .md) {
-            ForEach(Self.artworks.indices, id: \.self) { index in
-                Artwork(icon: Self.artworks[index].icon, palette: Self.artworks[index].palette)
+            ForEach(Self.samples, id: \.self) { sample in
+                Artwork(icon: sample.icon, palette: sample.palette)
                     .frame(width: Self.thumbnailSide, height: Self.thumbnailSide)
                     .clipShape(RoundedRectangle(cornerRadius: .tile))
             }
@@ -39,8 +48,8 @@ import UIDesign
     /// The four palettes stacked, each as wide as a phone screen.
     private var heroStack: some View {
         VStack(spacing: .md) {
-            ForEach(Self.artworks.indices, id: \.self) { index in
-                Artwork(icon: Self.artworks[index].icon, palette: Self.artworks[index].palette)
+            ForEach(Self.samples, id: \.self) { sample in
+                Artwork(icon: sample.icon, palette: sample.palette)
                     .frame(width: Self.heroWidth, height: Self.heroHeight)
             }
         }
@@ -60,7 +69,10 @@ import UIDesign
     }
 
     @Test func thumbnailsAtLargestTextSize() {
-        assertSpecimenSnapshots(of: thumbnailStrip.dynamicTypeSize(.accessibility5))
+        assertSpecimenSnapshots(
+            of: thumbnailStrip.dynamicTypeSize(.accessibility5),
+            testName: "thumbnails",
+        )
     }
 }
 #endif

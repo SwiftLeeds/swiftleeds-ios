@@ -52,22 +52,24 @@ public struct Artwork: View {
         self.palette = palette
     }
 
-    /// The symbol's size as a fraction of the art's shorter side.
+    /// The symbol's size as a fraction of the largest size that fits the frame.
     private static let symbolScale: CGFloat = 0.40
 
+    /// The artwork, or a plain fill while it loads.
     public var body: some View {
-        if redactionReasons.contains(.placeholder) {
-            placeholder
-        } else {
-            art
+        Group {
+            if redactionReasons.contains(.placeholder) {
+                placeholder
+            } else {
+                art
+            }
         }
+        .accessibilityHidden(true)
     }
 
     /// A plain shape that shows no palette and no symbol.
     private var placeholder: some View {
-        Rectangle()
-            .fill(.avatarFill)
-            .accessibilityHidden(true)
+        Rectangle().fill(.avatarFill)
     }
 
     /// The palette's gradient with the symbol in the center.
@@ -80,7 +82,7 @@ public struct Artwork: View {
                 .scaleEffect(Self.symbolScale)
                 .foregroundStyle(palette.family.onSolid.secondary)
         }
-        .accessibilityHidden(true)
+        .dynamicTypeSize(.large)
     }
 }
 
