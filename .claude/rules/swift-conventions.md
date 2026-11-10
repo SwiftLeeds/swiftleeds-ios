@@ -21,6 +21,12 @@ This file holds what is specific to this codebase, or not yet promoted to a wide
   view model and stop CI's macOS job from testing it. Name it `<View>Model`, as `AboutViewModel`.
   Never import UIKit or Combine into a view model. Decided 2026-09-21; the aim is to make
   such a view cross-platform later and then nest the view model.
+- **A view model serves one user goal, never every job on a screen.** When a screen does two
+  separate things, such as a list and a sign-in prompt, split it into sub-views, and nest a
+  `ViewModel` under each one that has state or actions. Each view nests at most one `ViewModel`.
+- **A view model holds no view code**: no property or method that returns a view (`some View`,
+  `AnyView`, `Text`), and no `@ViewBuilder` or `@ContentBuilder`. The view builds views; the view
+  model holds state and actions.
 - **Keep an Application-layer use case even when it is a pure pass-through** (`FetchProfile`
   forwarding to `AttendeeRepository.fetch`). Uniformity wins over the "no boundary without a
   benefit" lean; this is an explicit preference.
@@ -277,3 +283,9 @@ swift build -c release \
 
 `--scratch-path` is not optional. Without it the build writes `Packages/<Folder>/<Name>/.build`, a full
 copy of every dependency, and a hook denies the command.
+
+**Share preview setup with a `PreviewModifier`**, not a copied block in each preview. Apple caches the
+result of its static `makeSharedContext()` for every preview that uses the same modifier type; apply
+it with `#Preview(traits: .modifier(<Modifier>()))`. Previews share that context, so keep mutable
+reference types out of it, or one preview's changes leak into the next. A `PreviewModifier` is
+preview-only helper code, so it takes its own `#if DEBUG` guard.
