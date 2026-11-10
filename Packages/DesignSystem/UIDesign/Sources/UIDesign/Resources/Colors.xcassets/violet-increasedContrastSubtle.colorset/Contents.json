@@ -5,9 +5,9 @@
         "color-space" : "display-p3",
         "components" : {
           "alpha" : "1.000",
-          "blue" : "0.1363",
+          "blue" : "0.3073",
           "green" : "0.0000",
-          "red" : "0.0690"
+          "red" : "0.1799"
         }
       },
       "idiom" : "watch"
