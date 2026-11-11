@@ -13,29 +13,34 @@ import SwiftUI
 /// Badge("Cancelled", status: .error)
 /// ```
 public struct BadgeStatus: Equatable, Hashable, Sendable {
-    /// The colors this status draws with.
-    fileprivate let family: ColorFamily
-
-    /// The icon this status draws.
-    fileprivate let icon: Icon
-
-    /// A status for something that worked, such as a confirmed seat.
-    public static let success = Self(family: .success, icon: Icon(.checkmarkCircleFill))
-
-    /// A status for something that needs a look, such as few seats left.
-    public static let warning = Self(family: .warning, icon: Icon(.exclamationmarkTriangleFill))
-
-    /// A status for something that failed, such as a cancelled session.
-    public static let error = Self(family: .error, icon: Icon(.xmarkOctagonFill))
-
-    /// A status for something to know, such as a new session.
-    public static let info = Self(family: .info, icon: Icon(.infoCircleFill))
-}
-
-extension BadgeStatus {
     /// The colors a badge draws with.
-    package var colors: ColorFamily { family }
+    let colors: ColorFamily
 
     /// The icon a badge draws before its word.
-    package var symbol: Icon { icon }
+    let symbol: Icon
+
+    /// A status for something that worked, such as a confirmed seat.
+    public static let success = Self(colors: .success, symbol: Icon(.checkmarkCircleFill))
+
+    /// A status for something that needs a look, such as few seats left.
+    public static let warning = Self(
+        colors: .warning,
+        symbol: Icon(.exclamationmarkTriangleFill),
+    )
+
+    /// A status for something that failed, such as a cancelled session.
+    public static let error = Self(colors: .error, symbol: Icon(.xmarkOctagonFill))
+
+    /// A status for something to know, such as a new session.
+    public static let info = Self(colors: .info, symbol: Icon(.infoCircleFill))
+
+    /// Creates a status that draws with a color family and an icon.
+    ///
+    /// - Parameters:
+    ///   - colors: The colors the status draws with.
+    ///   - symbol: The icon the status draws before the word.
+    private init(colors: ColorFamily, symbol: Icon) {
+        self.colors = colors
+        self.symbol = symbol
+    }
 }
