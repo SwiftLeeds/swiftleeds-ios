@@ -199,10 +199,8 @@ Overrides `swiftui-style-driven-components`, which skips the protocol for a comp
 
 - **Give each reusable `UIDesign` component a style protocol when it is first built**, even with one
   look. Callers can then restyle it without a change to the component.
-- **A style cannot read the environment itself.** The component reads its style from the
-  environment as `any <Component>Style`, so an `@Environment` or `@ScaledMetric` on the style keeps
-  its first value. Read them in a view that `makeBody` returns, as `BadgeCapsule` and
-  `AdaptiveNameplate` do.
+- **Draw a style read from the environment through a generic view that stores the style**, so
+  SwiftUI installs the style's property wrappers. `Badge` does this.
 
 ## A `List` restyles every `Label` inside a row
 
