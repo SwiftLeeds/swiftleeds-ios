@@ -2,7 +2,7 @@ import SwiftUI
 
 /// A badge style that draws the label on a solid capsule of the family's color.
 ///
-/// Use it for a badge that must stand out, such as a live state. The tinted style is the default.
+/// Use it for a badge that must stand out, such as a live state.
 public struct FilledBadgeStyle: BadgeStyle {
     /// Creates a filled badge style.
     public init() {}

@@ -3,9 +3,6 @@ import SwiftUI
 /// A view that draws a badge's label on a filled capsule, with padding that grows with the text.
 struct BadgeCapsule: View {
     /// How far the text size has grown from its default.
-    ///
-    /// It scales 1 rather than a length, because the padding tokens are fixed, so each
-    /// one multiplies by it.
     @ScaledMetric(relativeTo: .caption) private var textScale: CGFloat = 1
 
     /// The properties of the badge.

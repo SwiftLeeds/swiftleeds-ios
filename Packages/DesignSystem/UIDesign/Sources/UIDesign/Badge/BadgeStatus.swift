@@ -6,8 +6,8 @@ import SwiftUI
 /// A status marks what needs attention, not a mood. Green is for success only and red is for
 /// error only. The word carries the meaning, and the icon and color support it.
 ///
-/// Unlike ``AvatarStatus``, which is a label, an icon and a family for an avatar, a badge status
-/// is one of four fixed states. A badge with a status ignores ``SwiftUI/View/badgePalette(_:)``.
+/// A badge status is one of four fixed states. A badge with a status ignores
+/// ``SwiftUI/View/badgePalette(_:)``.
 ///
 /// ```swift
 /// Badge("Cancelled", status: .error)

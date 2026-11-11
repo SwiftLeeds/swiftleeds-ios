@@ -29,7 +29,7 @@ public protocol BadgeStyle: DynamicProperty {
 
     /// Creates a view that represents the body of a badge.
     ///
-    /// The system calls this method for each `Badge` instance in a view
+    /// The system calls this method for each ``Badge`` instance in a view
     /// hierarchy where this style is the current badge style.
     ///
     /// - Parameter configuration: The properties of the badge.

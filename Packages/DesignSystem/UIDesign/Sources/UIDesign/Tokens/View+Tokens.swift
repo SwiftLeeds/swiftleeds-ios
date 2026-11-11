@@ -19,12 +19,12 @@ extension View {
         padding(edges, CGFloat(spacing))
     }
 
-    /// Adds padding to specific edges of this view, scaled by the text size.
+    /// Adds padding to specific edges of this view, multiplied by a factor.
     ///
     /// - Parameters:
     ///   - edges: The set of edges to pad for this view.
-    ///   - spacing: The amount to pad this view on the specified edges at the default text size.
-    ///   - factor: How far the text size has grown from its default. It multiplies the spacing.
+    ///   - spacing: The amount to pad this view on the specified edges.
+    ///   - factor: The unitless ratio the spacing is multiplied by.
     /// - Returns: A view that's padded by the scaled amount on the specified edges.
     public func padding(_ edges: Edge.Set, _ spacing: Spacing, scaledBy factor: CGFloat) -> some View {
         padding(edges, CGFloat(spacing) * factor)
