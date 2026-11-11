@@ -93,6 +93,18 @@ import UIDesign
         assertSpecimenSnapshots(of: view)
     }
 
+    @Test func badgesAtLargestTextSize() {
+        let view = VStack(alignment: .leading, spacing: .md) {
+            Badge("Workshop")
+            Badge("Workshop", icon: Icon(.hammerFill))
+            Badge("Cancelled", status: .error)
+        }
+        .padding(.lg)
+        .background(.surface)
+        .dynamicTypeSize(.accessibility5)
+        assertSpecimenSnapshots(of: view, testName: "badgesAtLargestTextSize")
+    }
+
     @Test func iconOnSurface() {
         assertContrastSnapshots(of: iconBadges)
     }
