@@ -192,3 +192,23 @@ Overrides `swiftui-style-driven-components`, which names it
 - **So the file takes the extended type's name**, as `EnvironmentValues+AvatarStyle.swift` and
   `EnvironmentValues+NameplateStyle.swift` do. It stays in the `EnvironmentKeys/` folder.
 - A token file follows the same pattern: `ShapeStyle+BorderColor.swift`, not `BorderColor.swift`.
+
+## Every generic component takes a style protocol from the start
+
+Overrides `swiftui-style-driven-components`, which skips the protocol for a component with one look.
+
+- **Give each reusable `UIDesign` component a style protocol when it is first built**, even with one
+  look. Callers can then restyle it without a change to the component.
+- **A style cannot read the environment itself.** The component reads its style from the
+  environment as `any <Component>Style`, so an `@Environment` or `@ScaledMetric` on the style keeps
+  its first value. Read them in a view that `makeBody` returns, as `BadgeCapsule` and
+  `AdaptiveNameplate` do.
+
+## A `List` restyles every `Label` inside a row
+
+- **Inside a `List` or `Form`, the automatic label style becomes the list's own.** It draws a larger
+  icon in the accent color, reserves an icon column, and moves the row's separator to the label's
+  title. This happens however deep the `Label` sits, so a component that holds one changes too.
+- **Snapshot such a component inside a real `List` row.** No other image shows the change.
+- **Opt out with `.labelStyle(.titleAndIcon)`, or any custom label style.** Apple's `Label` page
+  names `.titleAndIcon` as the way to show both parts in a container with another default.
