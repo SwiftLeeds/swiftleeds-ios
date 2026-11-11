@@ -21,7 +21,7 @@ import SwiftUI
 /// Badge("Workshop", icon: Icon(.hammerFill))
 /// ```
 ///
-/// The badge always shows its icon beside the word, even when a parent sets a
+/// The built-in styles keep the icon beside the word, even when a parent sets a
 /// label style. To change the look, set a custom ``BadgeStyle``.
 ///
 /// VoiceOver reads the word and skips the icon.
@@ -50,6 +50,19 @@ public struct Badge<Label: View>: View {
         case palette
         /// A status, which ignores the palette.
         case status(BadgeStatus)
+    }
+
+    /// A view that draws a badge in a style, so the style's property wrappers update.
+    private struct ResolvedBadgeStyle<Style: BadgeStyle>: View {
+        /// The style that draws the badge.
+        let style: Style
+
+        /// The properties of the badge.
+        let configuration: BadgeStyleConfiguration
+
+        var body: some View {
+            style.makeBody(configuration: configuration)
+        }
     }
 
     /// The current badge style.
@@ -83,7 +96,7 @@ public struct Badge<Label: View>: View {
     }
 
     public var body: some View {
-        AnyView(style.makeBody(configuration: configuration))
+        AnyView(resolved(in: style))
     }
 
     /// The properties handed to the current badge style.
@@ -97,6 +110,14 @@ public struct Badge<Label: View>: View {
         case .palette: palette.colors
         case .status(let status): status.colors
         }
+    }
+
+    /// Returns a view that draws the badge in the given style.
+    ///
+    /// - Parameter style: The style to draw the badge in.
+    /// - Returns: A view that stores the style, so its property wrappers update.
+    private func resolved(in style: some BadgeStyle) -> some View {
+        ResolvedBadgeStyle(style: style, configuration: configuration)
     }
 }
 

@@ -16,14 +16,10 @@ import SwiftUI
 ///
 /// Draw the configuration's label. A style that leaves it out hides the badge's word.
 ///
-/// An environment value or `ScaledMetric` on the style itself does not update. To answer the
-/// color scheme or the Dynamic Type size, return a view that reads it.
+/// A style may read the environment, such as the color scheme or the Dynamic Type size.
 ///
-/// ```swift
-/// func makeBody(configuration: Configuration) -> some View {
-///     ScaledBadge(configuration: configuration) // a view with its own @ScaledMetric
-/// }
-/// ```
+/// Inside a `List`, a `Label` takes the list's label style unless the style sets one, as the
+/// built-in styles set `.titleAndIcon`.
 public protocol BadgeStyle: DynamicProperty {
     /// A view that represents the body of a badge.
     associatedtype Body: View

@@ -22,6 +22,16 @@ import UIDesign
         }
     }
 
+    /// A badge style that draws the color scheme it reads from the environment as a word.
+    private struct ColorSchemeBadgeStyle: BadgeStyle {
+        /// The color scheme the style reads from the environment.
+        @Environment(\.colorScheme) private var colorScheme
+
+        func makeBody(configuration: Configuration) -> some View {
+            Text(colorScheme == .dark ? "dark" : "light")
+        }
+    }
+
     /// The width of a narrow column, in points, which makes a long title wrap.
     private static let narrowWidth: CGFloat = 160
 
@@ -250,6 +260,14 @@ import UIDesign
             .frame(width: Self.narrowWidth)
             .background(.surface)
         assertContrastSnapshots(of: view)
+    }
+
+    @Test func whenStyleReadsColorScheme_shouldSeeTheCurrentScheme() {
+        let view = Badge("Workshop")
+            .badgeStyle(ColorSchemeBadgeStyle())
+            .padding(.lg)
+            .background(.surface)
+        assertSpecimenSnapshots(of: view)
     }
 
     @Test func styleSetOnParentReachesBadge() {
