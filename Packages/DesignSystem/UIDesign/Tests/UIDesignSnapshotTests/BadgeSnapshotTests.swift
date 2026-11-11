@@ -41,6 +41,18 @@ import UIDesign
         .background(.surface)
     }
 
+    /// A title-only, an icon and a status badge, stacked on the primary surface.
+    private var loadingBadges: some View {
+        VStack(alignment: .leading, spacing: .md) {
+            Badge("Workshop")
+            Badge("Workshop", icon: Icon(.hammerFill)).badgePalette(.teal)
+            Badge("Cancelled", status: .error)
+        }
+        .padding(.lg)
+        .background(.surface)
+        .redacted(reason: .placeholder)
+    }
+
     /// A short badge on a surface, with room around it.
     private func badge(on surface: some ShapeStyle) -> some View {
         Badge("Workshop")
@@ -159,6 +171,14 @@ import UIDesign
         .badgeStyle(.filled)
         .frame(width: rowWidth, height: Self.listHeight)
         assertSpecimenSnapshots(of: view)
+    }
+
+    @Test func loadingTinted() {
+        assertSpecimenSnapshots(of: loadingBadges.badgeStyle(.tinted))
+    }
+
+    @Test func loadingFilled() {
+        assertSpecimenSnapshots(of: loadingBadges.badgeStyle(.filled))
     }
 
     @Test func iconOnSurface() {
