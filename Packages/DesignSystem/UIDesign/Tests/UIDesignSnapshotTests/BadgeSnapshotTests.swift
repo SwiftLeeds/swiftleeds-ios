@@ -62,6 +62,37 @@ import UIDesign
         .background(surface)
     }
 
+    /// The four statuses stacked on a surface.
+    private func statuses(on surface: some ShapeStyle) -> some View {
+        VStack(alignment: .leading, spacing: .md) {
+            Badge("Confirmed", status: .success)
+            Badge("Few seats", status: .warning)
+            Badge("Cancelled", status: .error)
+            Badge("New", status: .info)
+        }
+        .padding(.lg)
+        .background(surface)
+    }
+
+    @Test func statusesOnSurface() {
+        assertContrastSnapshots(of: statuses(on: .surface))
+    }
+
+    @Test func statusesOnSecondarySurface() {
+        assertContrastSnapshots(of: statuses(on: .secondarySurface))
+    }
+
+    @Test func whenStatusSitsInsidePalette_shouldKeepStatusColors() {
+        let view = VStack(alignment: .leading, spacing: .md) {
+            Badge("Cancelled", status: .error)
+            Badge("Workshop")
+        }
+        .badgePalette(.teal)
+        .padding(.lg)
+        .background(.surface)
+        assertSpecimenSnapshots(of: view)
+    }
+
     @Test func iconOnSurface() {
         assertContrastSnapshots(of: iconBadges)
     }

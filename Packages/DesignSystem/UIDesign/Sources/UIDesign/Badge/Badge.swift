@@ -44,6 +44,14 @@ import SwiftUI
 /// A long title wraps onto more lines. To keep a badge on one line, apply
 /// `lineLimit(_:)` to it.
 public struct Badge<Label: View>: View {
+    /// Where a badge takes its colors from.
+    private enum Source {
+        /// The palette set in the environment.
+        case palette
+        /// A status, which ignores the palette.
+        case status(BadgeStatus)
+    }
+
     /// The current badge style.
     @Environment(\.badgeStyle) private var style
 
@@ -53,11 +61,25 @@ public struct Badge<Label: View>: View {
     /// The content of the badge.
     private let label: Label
 
+    /// Where the badge takes its colors from.
+    private let source: Source
+
     /// Creates a badge with a custom label.
     ///
     /// - Parameter label: A content builder that creates the badge's label.
     public init(@ViewBuilder label: () -> Label) {
         self.label = label()
+        source = .palette
+    }
+
+    /// Creates a badge that draws the colors of a status.
+    ///
+    /// - Parameters:
+    ///   - status: The status whose colors the badge draws.
+    ///   - label: A content builder that creates the badge's label.
+    init(status: BadgeStatus, @ViewBuilder label: () -> Label) {
+        self.label = label()
+        source = .status(status)
     }
 
     public var body: some View {
@@ -66,7 +88,15 @@ public struct Badge<Label: View>: View {
 
     /// The properties handed to the current badge style.
     private var configuration: BadgeStyleConfiguration {
-        BadgeStyleConfiguration(label: label, colors: palette.colors)
+        BadgeStyleConfiguration(label: label, colors: colors)
+    }
+
+    /// The colors the badge draws with, from its status or else the environment palette.
+    private var colors: ColorFamily {
+        switch source {
+        case .palette: palette.colors
+        case .status(let status): status.colors
+        }
     }
 }
 
@@ -83,6 +113,16 @@ public struct Badge<Label: View>: View {
         Badge("Violet").badgePalette(.violet)
         Badge("Raspberry").badgePalette(.raspberry)
         Badge("Sponsor").badgePalette(.sponsor)
+    }
+    .padding(.lg)
+}
+
+#Preview("Statuses") {
+    VStack(alignment: .leading, spacing: .md) {
+        Badge("Confirmed", status: .success)
+        Badge("Few seats", status: .warning)
+        Badge("Cancelled", status: .error)
+        Badge("New", status: .info)
     }
     .padding(.lg)
 }
