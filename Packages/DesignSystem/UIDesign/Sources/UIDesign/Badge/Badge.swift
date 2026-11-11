@@ -127,6 +127,15 @@ public struct Badge<Label: View>: View {
     .padding(.lg)
 }
 
+#Preview("Filled") {
+    VStack(alignment: .leading, spacing: .md) {
+        Badge("Live", status: .error)
+        Badge("Workshop", icon: Icon(.hammerFill)).badgePalette(.teal)
+    }
+    .badgeStyle(.filled)
+    .padding(.lg)
+}
+
 #Preview("Icons") {
     VStack(alignment: .leading, spacing: .md) {
         Badge("Workshop", icon: Icon(.hammerFill))

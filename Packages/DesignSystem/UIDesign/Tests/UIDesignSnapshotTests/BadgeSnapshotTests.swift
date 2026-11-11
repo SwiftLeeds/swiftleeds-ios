@@ -105,6 +105,62 @@ import UIDesign
         assertSpecimenSnapshots(of: view, testName: "badgesAtLargestTextSize")
     }
 
+    /// The six palettes and the four statuses in the filled style, stacked on a surface.
+    private func filledFamilies(on surface: some ShapeStyle) -> some View {
+        VStack(alignment: .leading, spacing: .md) {
+            Badge("Workshop").badgePalette(.neutral)
+            Badge("Workshop").badgePalette(.blue)
+            Badge("Workshop").badgePalette(.teal)
+            Badge("Workshop").badgePalette(.violet)
+            Badge("Workshop").badgePalette(.raspberry)
+            Badge("Workshop").badgePalette(.sponsor)
+            Badge("Confirmed", status: .success)
+            Badge("Few seats", status: .warning)
+            Badge("Cancelled", status: .error)
+            Badge("New", status: .info)
+        }
+        .badgeStyle(.filled)
+        .padding(.lg)
+        .background(surface)
+    }
+
+    @Test func filledOnSurface() {
+        assertContrastSnapshots(of: filledFamilies(on: .surface))
+    }
+
+    @Test func filledOnSecondarySurface() {
+        assertContrastSnapshots(of: filledFamilies(on: .secondarySurface))
+    }
+
+    @Test func filledAtLargestTextSize() {
+        let view = VStack(alignment: .leading, spacing: .md) {
+            Badge("Workshop")
+            Badge("Workshop", icon: Icon(.hammerFill))
+            Badge("Cancelled", status: .error)
+        }
+        .badgeStyle(.filled)
+        .padding(.lg)
+        .background(.surface)
+        .dynamicTypeSize(.accessibility5)
+        assertSpecimenSnapshots(of: view, testName: "filledAtLargestTextSize")
+    }
+
+    @Test func filledInListRow() {
+        let view = List {
+            HStack {
+                Text("Building accessible apps")
+                Badge("Live", status: .error)
+            }
+            HStack {
+                Text("Building accessible apps")
+                Badge("Workshop", icon: Icon(.hammerFill)).badgePalette(.teal)
+            }
+        }
+        .badgeStyle(.filled)
+        .frame(width: rowWidth, height: Self.listHeight)
+        assertSpecimenSnapshots(of: view)
+    }
+
     @Test func iconOnSurface() {
         assertContrastSnapshots(of: iconBadges)
     }
