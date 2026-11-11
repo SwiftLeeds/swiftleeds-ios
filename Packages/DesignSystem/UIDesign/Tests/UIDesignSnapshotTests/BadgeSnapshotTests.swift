@@ -124,7 +124,7 @@ import UIDesign
         .padding(.lg)
         .background(.surface)
         .dynamicTypeSize(.accessibility5)
-        assertSpecimenSnapshots(of: view, testName: "badgesAtLargestTextSize")
+        assertSpecimenSnapshots(of: view)
     }
 
     /// The six palettes and the four statuses in the filled style, stacked on a surface.
@@ -164,7 +164,7 @@ import UIDesign
         .padding(.lg)
         .background(.surface)
         .dynamicTypeSize(.accessibility5)
-        assertSpecimenSnapshots(of: view, testName: "filledAtLargestTextSize")
+        assertSpecimenSnapshots(of: view)
     }
 
     @Test func filledInListRow() {
@@ -226,7 +226,7 @@ import UIDesign
         assertContrastSnapshots(of: palettes(on: .secondarySurface))
     }
 
-    @Test func paletteSetOnParentReachesEveryBadge() {
+    @Test func whenPaletteIsSetOnParent_shouldReachEveryBadge() {
         let view = HStack {
             Badge("Workshop")
             Badge("Talk")
@@ -270,7 +270,7 @@ import UIDesign
         assertSpecimenSnapshots(of: view)
     }
 
-    @Test func styleSetOnParentReachesBadge() {
+    @Test func whenStyleIsSetOnParent_shouldReachBadge() {
         let view = VStack { Badge("Workshop") }
             .badgeStyle(FixedFrameBadgeStyle())
             .padding(.lg)

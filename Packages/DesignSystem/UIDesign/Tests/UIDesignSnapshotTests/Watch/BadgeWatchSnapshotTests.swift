@@ -23,6 +23,13 @@ import UIDesign
         assertSnapshots(of: badges.badgeStyle(.tinted))
     }
 
+    @Test func tintedIncreasedContrast() {
+        let view = badges.badgeStyle(.tinted)
+            .environment(\._colorSchemeContrast, .increased)
+
+        assertSnapshots(of: view)
+    }
+
     @Test func filled() {
         assertSnapshots(of: badges.badgeStyle(.filled))
     }
