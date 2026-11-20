@@ -17,7 +17,7 @@ struct BadgeCapsule: View {
     var body: some View {
         configuration.label
             .labelStyle(.titleAndIcon)
-            .labelIconToTitleSpacing(.xs)
+            .labelIconToTitleSpacing(.xs, scaledBy: textScale)
             .imageScale(.small)
             .font(.caption.weight(.semibold))
             .lineLimit(1)
