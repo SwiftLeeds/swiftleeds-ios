@@ -41,8 +41,8 @@ import SwiftUI
 /// the meaning. The capsule's color only supports it, so choose a word that reads
 /// the same without color.
 ///
-/// A long title wraps onto more lines. To keep a badge on one line, apply
-/// `lineLimit(_:)` to it.
+/// A badge keeps to one line and ends a long title with "…". VoiceOver reads the
+/// whole title, so keep badge words short.
 public struct Badge<Label: View>: View {
     /// Where a badge takes its colors from.
     private enum Source {

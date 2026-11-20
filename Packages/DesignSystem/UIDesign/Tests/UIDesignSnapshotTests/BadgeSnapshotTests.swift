@@ -32,13 +32,13 @@ import UIDesign
         }
     }
 
-    /// The width of a narrow column, in points, which makes a long title wrap.
+    /// The width of a narrow column, in points, which makes a long title run out of room.
     private static let narrowWidth: CGFloat = 160
 
     /// The height of a list that holds two rows, in points.
     private static let listHeight: CGFloat = 220
 
-    /// A title long enough to wrap in a narrow column.
+    /// A title too long to fit on one line in a narrow column.
     private static let longTitle = "Fully booked, join the waiting list"
 
     /// A neutral and a teal badge, each with a hammer icon, on the primary surface.
@@ -245,17 +245,8 @@ import UIDesign
         assertContrastSnapshots(of: badge(on: .secondarySurface))
     }
 
-    @Test func longTitleWraps() {
+    @Test func whenTitleIsLong_shouldCutToOneLine() {
         let view = Badge(Self.longTitle)
-            .padding(.lg)
-            .frame(width: Self.narrowWidth)
-            .background(.surface)
-        assertContrastSnapshots(of: view)
-    }
-
-    @Test func longTitleWithLineLimit() {
-        let view = Badge(Self.longTitle)
-            .lineLimit(1)
             .padding(.lg)
             .frame(width: Self.narrowWidth)
             .background(.surface)

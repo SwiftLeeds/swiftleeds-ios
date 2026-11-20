@@ -34,5 +34,16 @@ struct BadgeAccessibilityTests {
         #expect(element.label == "Workshop")
         #expect(element.traits == .staticText)
     }
+
+    @Test
+    func whenBadgeTitleIsLong_shouldReadWholeTitleAsOneStaticTextElement() throws {
+        let title = "Fully booked, join the waiting list"
+        let view = Badge(title).frame(width: 160)
+        let elements = try AccessibilityTree.elements(of: view)
+        #expect(elements.count == 1)
+        let element = try #require(elements.first)
+        #expect(element.label == title)
+        #expect(element.traits == .staticText)
+    }
 }
 #endif
