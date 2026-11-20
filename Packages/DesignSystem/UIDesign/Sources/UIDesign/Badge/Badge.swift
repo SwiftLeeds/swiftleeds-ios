@@ -1,3 +1,4 @@
+import SFSafeSymbols
 import SwiftUI
 
 /// A view that shows a short word in a small capsule.

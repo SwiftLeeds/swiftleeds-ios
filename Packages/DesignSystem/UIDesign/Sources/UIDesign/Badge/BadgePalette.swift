@@ -1,5 +1,3 @@
-import SwiftUI
-
 /// A set of colors for a badge.
 ///
 /// To set the palette of the badges within a view hierarchy, use the

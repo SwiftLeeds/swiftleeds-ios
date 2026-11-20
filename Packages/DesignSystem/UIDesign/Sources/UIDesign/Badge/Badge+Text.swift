@@ -1,3 +1,4 @@
+import Foundation
 import SwiftUI
 
 extension Badge where Label == Text {

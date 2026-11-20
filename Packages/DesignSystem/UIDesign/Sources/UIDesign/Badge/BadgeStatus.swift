@@ -1,5 +1,4 @@
 import SFSafeSymbols
-import SwiftUI
 
 /// A state that a badge marks, with a color family and an icon of its own.
 ///
