@@ -298,13 +298,13 @@ extension BadgeSnapshotTests {
     @Test func whenRowIsAtLargestTextSize_shouldStackBadgeUnderTitle() {
         let view = List { SessionRow() }
             .dynamicTypeSize(.accessibility5)
-            .frame(width: rowWidth, height: Self.largestRowListHeight)
+            .frame(width: narrowestPhoneWidth, height: Self.largestRowListHeight)
         assertSpecimenSnapshots(of: view)
     }
 
     @Test func whenRowIsAtDefaultTextSize_shouldKeepBadgeOnTitleFirstLine() {
         let view = List { SessionRow() }
-            .frame(width: rowWidth, height: Self.defaultRowListHeight)
+            .frame(width: narrowestPhoneWidth, height: Self.defaultRowListHeight)
         assertSpecimenSnapshots(of: view)
     }
 
@@ -316,10 +316,13 @@ extension BadgeSnapshotTests {
             Badge("New", status: .info)
             Badge("Workshop", icon: Icon(.hammerFill)).badgePalette(.teal).badgeStyle(.filled)
         }
-        .environment(\.legibilityWeight, .bold)
         .padding(.lg)
         .background(.surface)
-        let light = UITraitCollection { $0.userInterfaceStyle = .light }
+        let light = UITraitCollection {
+            $0.userInterfaceStyle = .light
+            $0.legibilityWeight = .bold
+        }
+        // The snapshot helpers have no light-only variant, so this calls assertSnapshot directly.
         assertSnapshot(
             of: view.dynamicTypeSize(.large).fixedSize(),
             as: .image(traits: light),

@@ -143,8 +143,10 @@ private let compactWidth: CGFloat = 162
 /// at its natural width and no line ever wraps.
 let rowWidth = narrowestPhoneWidth - listMargin * bothSides
 
-// The screen width of an iPhone SE.
-private let narrowestPhoneWidth: CGFloat = 375
+/// The screen width of the narrowest phone we design for, an iPhone SE.
+///
+/// A list framed at this width draws its own margins, so a row inside it is ``rowWidth`` wide.
+let narrowestPhoneWidth: CGFloat = 375
 
 // The space a list leaves on each side of a row.
 private let listMargin: CGFloat = 16
