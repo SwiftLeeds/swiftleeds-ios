@@ -63,6 +63,9 @@ public struct Notice<Title: View, Icon: View, Description: View, Actions: View>:
         }
     }
 
+    /// The current notice style.
+    @Environment(\.noticeStyle) private var style
+
     /// The title of the notice.
     private let title: Title
 
@@ -97,12 +100,20 @@ public struct Notice<Title: View, Icon: View, Description: View, Actions: View>:
     }
 
     public var body: some View {
-        ResolvedNoticeStyle(style: DefaultNoticeStyle(), configuration: configuration)
+        AnyView(resolved(in: style))
     }
 
     /// The properties handed to the notice style.
     private var configuration: NoticeStyleConfiguration {
         NoticeStyleConfiguration(title: title, icon: icon, description: description, actions: actions)
+    }
+
+    /// Returns a view that draws the notice in the given style.
+    ///
+    /// - Parameter style: The style to draw the notice in.
+    /// - Returns: A view that draws the notice in `style`.
+    private func resolved(in style: some NoticeStyle) -> some View {
+        ResolvedNoticeStyle(style: style, configuration: configuration)
     }
 }
 

@@ -2,6 +2,9 @@ import SwiftUI
 
 /// A type that applies a custom appearance to all notices within a view hierarchy.
 ///
+/// To configure the current notice style for a view hierarchy, use the
+/// ``SwiftUI/View/noticeStyle(_:)`` modifier.
+///
 /// ```swift
 /// struct PlainNoticeStyle: NoticeStyle {
 ///     func makeBody(configuration: Configuration) -> some View {
