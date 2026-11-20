@@ -201,6 +201,10 @@ Overrides `swiftui-style-driven-components`, which skips the protocol for a comp
   look. Callers can then restyle it without a change to the component.
 - **Draw a style read from the environment through a generic view that stores the style**, so
   SwiftUI installs the style's property wrappers. `Badge` does this.
+- **Do not trust `@Environment` on an `Avatar` or `Nameplate` style yet.** Both still call
+  `makeBody` on the `any` style, so a wrapper on the style reads its default value. Read the
+  environment in a view the style returns, as `AdaptiveNameplate` does, until they draw their styles
+  as `Badge` does.
 
 ## A `List` restyles every `Label` inside a row
 
