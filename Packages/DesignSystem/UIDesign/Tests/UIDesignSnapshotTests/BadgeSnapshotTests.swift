@@ -4,6 +4,7 @@ import SnapshotTesting
 import SwiftUI
 import Testing
 import UIDesign
+import UIKit
 
 @MainActor
 @Suite(.snapshots(record: .never)) struct BadgeSnapshotTests {
@@ -267,6 +268,63 @@ import UIDesign
             .padding(.lg)
             .background(.surface)
         assertSpecimenSnapshots(of: view)
+    }
+}
+
+extension BadgeSnapshotTests {
+    /// A title and a badge that stack at accessibility text sizes, as the badge's documentation shows.
+    private struct SessionRow: View {
+        /// The current Dynamic Type size.
+        @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+
+        var body: some View {
+            let layout =
+                dynamicTypeSize.isAccessibilitySize
+                ? AnyLayout(VStackLayout(alignment: .leading))
+                : AnyLayout(HStackLayout(alignment: .firstTextBaseline))
+            layout {
+                Text("Building apps")
+                Badge("Workshop", icon: Icon(.hammerFill)).badgePalette(.teal)
+            }
+        }
+    }
+
+    /// The height of a list that holds one row at the default text size, in points.
+    private static let defaultRowListHeight: CGFloat = 100
+
+    /// The height of a list that holds one stacked row at the largest text size, in points.
+    private static let largestRowListHeight: CGFloat = 320
+
+    @Test func whenRowIsAtLargestTextSize_shouldStackBadgeUnderTitle() {
+        let view = List { SessionRow() }
+            .dynamicTypeSize(.accessibility5)
+            .frame(width: rowWidth, height: Self.largestRowListHeight)
+        assertSpecimenSnapshots(of: view)
+    }
+
+    @Test func whenRowIsAtDefaultTextSize_shouldKeepBadgeOnTitleFirstLine() {
+        let view = List { SessionRow() }
+            .frame(width: rowWidth, height: Self.defaultRowListHeight)
+        assertSpecimenSnapshots(of: view)
+    }
+
+    @Test func whenTextIsBold_shouldDrawBoldBadges() {
+        let view = VStack(alignment: .leading, spacing: .md) {
+            Badge("Confirmed", status: .success)
+            Badge("Few seats", status: .warning)
+            Badge("Cancelled", status: .error)
+            Badge("New", status: .info)
+            Badge("Workshop", icon: Icon(.hammerFill)).badgePalette(.teal).badgeStyle(.filled)
+        }
+        .environment(\.legibilityWeight, .bold)
+        .padding(.lg)
+        .background(.surface)
+        let light = UITraitCollection { $0.userInterfaceStyle = .light }
+        assertSnapshot(
+            of: view.dynamicTypeSize(.large).fixedSize(),
+            as: .image(traits: light),
+            named: "light-default",
+        )
     }
 }
 #endif
