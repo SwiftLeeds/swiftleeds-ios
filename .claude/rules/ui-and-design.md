@@ -81,6 +81,14 @@ Decided by Paul 2026-11-09, after a render trial of six layouts on the 40mm and 
 - **A name and its detail each keep to one line, cut with "…"**, as Contacts cuts a long name. This
   replaces "let text take as many lines as it needs" on the Watch only.
 
+### A badge keeps to one line
+
+- **Keep a `Badge` to one line, cut with "…", on every platform.** A capsule cannot hold three
+  lines: its corners grow with its height, so the first letter falls outside the fill. This
+  replaces "let text take as many lines as it needs" for `Badge` only.
+- **Keep badge words short**, because a badge shows only what fits on one line. VoiceOver still
+  reads the whole title.
+
 ## Glass cannot sample glass
 
 Extends `swiftui-liquid-glass`.
