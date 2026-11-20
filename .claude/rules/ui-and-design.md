@@ -81,6 +81,14 @@ Decided by Paul 2026-11-09, after a render trial of six layouts on the 40mm and 
 - **A name and its detail each keep to one line, cut with "…"**, as Contacts cuts a long name. This
   replaces "let text take as many lines as it needs" on the Watch only.
 
+### A badge keeps to one line
+
+- **Keep a `Badge` to one line, cut with "…", on every platform.** A capsule cannot hold three
+  lines: its corners grow with its height, so the first letter falls outside the fill. This
+  replaces "let text take as many lines as it needs" for `Badge` only.
+- **Keep badge words short**, because a badge shows only what fits on one line. VoiceOver still
+  reads the whole title.
+
 ## Glass cannot sample glass
 
 Extends `swiftui-liquid-glass`.
@@ -192,3 +200,25 @@ Overrides `swiftui-style-driven-components`, which names it
 - **So the file takes the extended type's name**, as `EnvironmentValues+AvatarStyle.swift` and
   `EnvironmentValues+NameplateStyle.swift` do. It stays in the `EnvironmentKeys/` folder.
 - A token file follows the same pattern: `ShapeStyle+BorderColor.swift`, not `BorderColor.swift`.
+
+## Every generic component takes a style protocol from the start
+
+Overrides `swiftui-style-driven-components`, which skips the protocol for a component with one look.
+
+- **Give each reusable `UIDesign` component a style protocol when it is first built**, even with one
+  look. Callers can then restyle it without a change to the component.
+- **Draw a style read from the environment through a generic view that stores the style**, so
+  SwiftUI installs the style's property wrappers. `Badge` does this.
+- **Do not trust `@Environment` on an `Avatar` or `Nameplate` style yet.** Both still call
+  `makeBody` on the `any` style, so a wrapper on the style reads its default value. Read the
+  environment in a view the style returns, as `AdaptiveNameplate` does, until they draw their styles
+  as `Badge` does.
+
+## A `List` restyles every `Label` inside a row
+
+- **Inside a `List` or `Form`, the automatic label style becomes the list's own.** It draws a larger
+  icon in the accent color, reserves an icon column, and moves the row's separator to the label's
+  title. This happens however deep the `Label` sits, so a component that holds one changes too.
+- **Snapshot such a component inside a real `List` row.** No other image shows the change.
+- **Opt out with `.labelStyle(.titleAndIcon)`, or any custom label style.** Apple's `Label` page
+  names `.titleAndIcon` as the way to show both parts in a container with another default.

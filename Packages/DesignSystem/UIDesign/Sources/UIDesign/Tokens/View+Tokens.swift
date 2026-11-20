@@ -19,6 +19,27 @@ extension View {
         padding(edges, CGFloat(spacing))
     }
 
+    /// Adds padding to specific edges of this view, multiplied by a factor.
+    ///
+    /// - Parameters:
+    ///   - edges: The set of edges to pad for this view.
+    ///   - spacing: The amount to pad this view on the specified edges.
+    ///   - factor: The unitless ratio the spacing is multiplied by.
+    /// - Returns: A view that's padded by the scaled amount on the specified edges.
+    public func padding(_ edges: Edge.Set, _ spacing: Spacing, scaledBy factor: CGFloat) -> some View {
+        padding(edges, CGFloat(spacing) * factor)
+    }
+
+    /// Sets the spacing between the icon and title of labels, multiplied by a factor.
+    ///
+    /// - Parameters:
+    ///   - spacing: The distance between the icon and the title.
+    ///   - factor: The unitless ratio the spacing is multiplied by.
+    /// - Returns: A view whose labels draw the scaled distance between icon and title.
+    public func labelIconToTitleSpacing(_ spacing: Spacing, scaledBy factor: CGFloat) -> some View {
+        labelIconToTitleSpacing(CGFloat(spacing) * factor)
+    }
+
     /// Positions this view within an invisible frame with the size of an icon.
     ///
     /// - Parameters:

@@ -407,7 +407,7 @@ ROLE_TONES = {
     "text": (45, 75, 40, 80),
     "solid": (50, 70, 40, 75),
     "onSolid": (95, 5, 95, 5),
-    "subtle": (95, 20, 95, 15),
+    "subtle": (90, 25, 90, 25),
 }
 
 # Warning is a pale yellow fill with dark text, as Carbon's and Atlassian's. The light Increase
