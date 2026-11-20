@@ -8,13 +8,24 @@ import SwiftUI
 /// You create a badge with a title.
 ///
 /// ```swift
-/// let layout = dynamicTypeSize.isAccessibilitySize
-///     ? AnyLayout(VStackLayout(alignment: .leading))
-///     : AnyLayout(HStackLayout(alignment: .firstTextBaseline))
-/// layout {
-///     Text(session.title)
-///     Badge("Workshop")
-///         .badgePalette(.teal)
+/// Badge("Workshop")
+/// ```
+///
+/// In a row, stack the badge under the title at accessibility sizes.
+///
+/// ```swift
+/// @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+///
+/// var body: some View {
+///     let layout =
+///         dynamicTypeSize.isAccessibilitySize
+///         ? AnyLayout(VStackLayout(alignment: .leading))
+///         : AnyLayout(HStackLayout(alignment: .firstTextBaseline))
+///     layout {
+///         Text(session.title)
+///         Badge("Workshop")
+///             .badgePalette(.teal)
+///     }
 /// }
 /// ```
 ///
@@ -44,8 +55,9 @@ import SwiftUI
 /// the meaning. The capsule's color only supports it, so choose a word that reads
 /// the same without color.
 ///
-/// A badge keeps to one line and ends a long title with "…". VoiceOver reads the
-/// whole title, so keep badge words short.
+/// A badge keeps to one line and ends a long title with "…". Keep badge words
+/// short: a badge shows only what fits on one line, but VoiceOver reads the
+/// whole title.
 public struct Badge<Label: View>: View {
     /// Where a badge takes its colors from.
     private enum Source {
@@ -65,6 +77,7 @@ public struct Badge<Label: View>: View {
 
         var body: some View {
             style.makeBody(configuration: configuration)
+                .lineLimit(1)
         }
     }
 

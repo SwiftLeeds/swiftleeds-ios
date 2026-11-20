@@ -20,7 +20,6 @@ struct BadgeCapsule: View {
             .labelIconToTitleSpacing(.xs, scaledBy: textScale)
             .imageScale(.small)
             .font(.caption.weight(.semibold))
-            .lineLimit(1)
             .foregroundStyle(foreground)
             .padding(.horizontal, .sm, scaledBy: textScale)
             .padding(.vertical, .xxs, scaledBy: textScale)

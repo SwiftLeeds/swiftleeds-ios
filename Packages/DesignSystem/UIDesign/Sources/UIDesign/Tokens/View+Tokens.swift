@@ -30,8 +30,7 @@ extension View {
         padding(edges, CGFloat(spacing) * factor)
     }
 
-    /// Sets the spacing between the icon and the title of labels in this view, multiplied by a
-    /// factor.
+    /// Sets the spacing between the icon and title of labels, multiplied by a factor.
     ///
     /// - Parameters:
     ///   - spacing: The distance between the icon and the title.
