@@ -8,7 +8,10 @@ import SwiftUI
 /// You create a badge with a title.
 ///
 /// ```swift
-/// HStack {
+/// let layout = dynamicTypeSize.isAccessibilitySize
+///     ? AnyLayout(VStackLayout(alignment: .leading))
+///     : AnyLayout(HStackLayout(alignment: .firstTextBaseline))
+/// layout {
 ///     Text(session.title)
 ///     Badge("Workshop")
 ///         .badgePalette(.teal)
@@ -52,7 +55,7 @@ public struct Badge<Label: View>: View {
         case status(BadgeStatus)
     }
 
-    /// A view that draws a badge in a style, so the style's property wrappers update.
+    /// A view that draws a badge in a given style.
     private struct ResolvedBadgeStyle<Style: BadgeStyle>: View {
         /// The style that draws the badge.
         let style: Style
@@ -115,7 +118,7 @@ public struct Badge<Label: View>: View {
     /// Returns a view that draws the badge in the given style.
     ///
     /// - Parameter style: The style to draw the badge in.
-    /// - Returns: A view that stores the style, so its property wrappers update.
+    /// - Returns: A view that draws the badge in `style`.
     private func resolved(in style: some BadgeStyle) -> some View {
         ResolvedBadgeStyle(style: style, configuration: configuration)
     }

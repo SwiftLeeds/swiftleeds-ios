@@ -18,8 +18,7 @@ import SwiftUI
 ///
 /// A style may read the environment, such as the color scheme or the Dynamic Type size.
 ///
-/// Inside a `List`, a `Label` takes the list's label style unless the style sets one, as the
-/// built-in styles set `.titleAndIcon`.
+/// Inside a `List`, set a label style in `makeBody`, or a `Label` takes the list's.
 public protocol BadgeStyle: DynamicProperty {
     /// A view that represents the body of a badge.
     associatedtype Body: View

@@ -63,7 +63,7 @@ extension Badge where Label == SwiftUI.Label<Text, Image> {
             SwiftUI.Label {
                 Text(titleKey)
             } icon: {
-                Image(icon: status.symbol)
+                Image(icon: status.icon)
             }
         }
     }
@@ -81,7 +81,7 @@ extension Badge where Label == SwiftUI.Label<Text, Image> {
             SwiftUI.Label {
                 Text(titleResource)
             } icon: {
-                Image(icon: status.symbol)
+                Image(icon: status.icon)
             }
         }
     }
@@ -101,7 +101,7 @@ extension Badge where Label == SwiftUI.Label<Text, Image> {
             SwiftUI.Label {
                 Text(title)
             } icon: {
-                Image(icon: status.symbol)
+                Image(icon: status.icon)
             }
         }
     }

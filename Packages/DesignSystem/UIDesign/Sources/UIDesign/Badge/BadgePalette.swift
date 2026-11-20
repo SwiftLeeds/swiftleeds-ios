@@ -5,7 +5,7 @@ import SwiftUI
 /// To set the palette of the badges within a view hierarchy, use the
 /// ``SwiftUI/View/badgePalette(_:)`` modifier.
 public struct BadgePalette: Equatable, Hashable, Sendable {
-    /// The colors a badge draws with.
+    /// The colors the palette draws with.
     let colors: ColorFamily
 
     /// A neutral palette with no hue.
