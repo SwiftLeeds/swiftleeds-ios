@@ -119,8 +119,10 @@ import UIKit
 
     @Test func whenLocaleIsArabic_shouldDrawArabicRightToLeft() {
         let view = countdown(timeLeft: 12 * 60, locale: Self.arabic)
+            .frame(width: narrowestPhoneWidth, alignment: .leading)
             .padding(.lg)
             .background(.surface)
+            .environment(\.layoutDirection, .rightToLeft)
         assertSpecimenSnapshots(of: view)
     }
 }
