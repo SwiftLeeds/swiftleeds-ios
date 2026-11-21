@@ -4,6 +4,7 @@ import SnapshotTesting
 import SwiftUI
 import Testing
 import UIDesign
+import UIKit
 
 @MainActor
 @Suite(.snapshots(record: .never)) struct CountdownWatchSnapshotTests {
