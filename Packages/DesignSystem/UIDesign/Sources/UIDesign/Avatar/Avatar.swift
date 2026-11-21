@@ -123,7 +123,7 @@ public struct Avatar<Fallback: View>: View {
             if redactionReasons.contains(.placeholder) {
                 // Redaction ignores the clip shape, so draw the plain shape here
                 // and ask for no photo.
-                Rectangle().fill(.avatarFill)
+                Rectangle().fill(.secondaryFill)
             } else {
                 AsyncImage(url: url) { phase in
                     if case .success(let image) = phase {

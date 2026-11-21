@@ -45,7 +45,7 @@ public struct AvatarFallback: View {
 
     /// The person symbol on a plain fill.
     private var symbol: some View {
-        Rectangle().fill(.avatarFill)
+        Rectangle().fill(.secondaryFill)
             .overlay {
                 Image(icon: .person)
                     // A font size keeps the symbol's own proportions, which resizing it would not.
