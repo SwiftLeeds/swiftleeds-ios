@@ -12,7 +12,7 @@ import UIKit
 struct PhotoIntegrationTests {
     /// The reason a test could not set up or read a hosted photo.
     private enum ProbeError: Error {
-        /// The picture could not be drawn or encoded.
+        /// The window's pixels could not be read.
         case noPicture
         /// The picture did not load into the window in time.
         case neverLoaded
@@ -30,8 +30,8 @@ struct PhotoIntegrationTests {
     /// The largest gap per color component that still counts as the same color.
     private static let tolerance: Float = 4.0 / 255
 
-    /// How long to wait for the picture to load.
-    private static let timeout = Duration.seconds(5)
+    /// How many times to check for the picture before giving up.
+    private static let attempts = 100
 
     /// How long to wait between checks for the picture.
     private static let interval = Duration.milliseconds(50)
@@ -93,15 +93,18 @@ struct PhotoIntegrationTests {
         return pixels
     }
 
-    /// Reads the window until its frame's center shows the picture's sky, or time runs out.
+    /// Reads the window until its frame's center shows the picture's sky, or the checks run out.
     ///
     /// - Parameter window: The window to read.
     /// - Returns: The pixels read once the picture had loaded.
-    /// - Throws: ``ProbeError/neverLoaded`` when the picture has not loaded within ``timeout``.
+    /// - Throws: ``ProbeError/neverLoaded`` when the picture has not loaded after ``attempts``
+    ///   checks, ``ProbeError/noPicture`` when the window's pixels cannot be read, and
+    ///   `CancellationError` when the task is cancelled while it waits.
     private static func pixelsOnceLoaded(in window: UIWindow) async throws -> Pixels {
         let sky = Image.samplePhotoSky.resolve(in: EnvironmentValues())
-        let deadline = ContinuousClock.now + timeout
-        while ContinuousClock.now < deadline {
+        // The checks are counted, not timed: other suites hold the main actor, and a deadline on the
+        // clock would run out before this test had a turn to see the picture.
+        for _ in 0..<attempts {
             let pixels = try pixels(of: window)
             let centre = pixels.color(at: CGPoint(x: frameRect.midX, y: frameRect.midY))
             if isClose(centre, to: sky) { return pixels }
@@ -137,12 +140,9 @@ struct PhotoIntegrationTests {
         let url = try Self.writeSamplePhoto()
         defer { try? FileManager.default.removeItem(at: url) }
         let window = Self.window(showing: url)
+        defer { window.isHidden = true }
 
         let pixels = try await Self.pixelsOnceLoaded(in: window)
-
-        let sky = Image.samplePhotoSky.resolve(in: EnvironmentValues())
-        let centre = pixels.color(at: CGPoint(x: Self.frameRect.midX, y: Self.frameRect.midY))
-        #expect(Self.isClose(centre, to: sky), "centre \(centre), expected sky \(sky)")
 
         let forbidden = [Image.samplePhotoLeadingBar, Image.samplePhotoTrailingBar].map {
             $0.resolve(in: EnvironmentValues())
@@ -155,7 +155,12 @@ struct PhotoIntegrationTests {
 
         let beside = [
             CGRect(x: 0, y: 0, width: Self.frameRect.minX, height: Self.windowSize.height),
-            CGRect(x: Self.frameRect.maxX, y: 0, width: Self.frameRect.minX, height: Self.windowSize.height),
+            CGRect(
+                x: Self.frameRect.maxX,
+                y: 0,
+                width: Self.windowSize.width - Self.frameRect.maxX,
+                height: Self.windowSize.height,
+            ),
         ]
         let spill = beside.flatMap { pixels.colors(in: $0) }.filter { !Self.isClose($0, to: Self.background) }
         #expect(spill.isEmpty, "\(spill.count) pixels beside the frame are not background, so the picture spilled")
