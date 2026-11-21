@@ -20,6 +20,23 @@ import SwiftUI
 ///     Artwork(icon: Icon(.hammerFill), palette: .teal)
 /// }
 /// ```
+///
+/// ### Naming a photo for VoiceOver
+///
+/// A photo is decoration. VoiceOver skips it and its fallback, so a photo
+/// beside a title adds no element. If the photo shows something the text
+/// does not, make it one element, describe what it shows and mark it as an
+/// image.
+///
+/// ```swift
+/// Photo(url: venue.entrancePhotoURL)
+///     .accessibilityElement()
+///     .accessibilityLabel("The main entrance, with a ramp to the left")
+///     .accessibilityAddTraits(.isImage)
+/// ```
+///
+/// The label stays when the picture fails to load, so describe the place
+/// rather than the picture.
 public struct Photo<Fallback: View>: View {
     /// Where a photo gets its picture from.
     private enum Source {
@@ -87,6 +104,7 @@ public struct Photo<Fallback: View>: View {
         Color.clear
             .overlay { shown }
             .clipped()
+            .accessibilityHidden(true)
     }
 
     /// What the photo shows now, by where its picture comes from.
