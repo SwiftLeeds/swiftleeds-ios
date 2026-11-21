@@ -11,21 +11,30 @@ import Foundation
 /// let style = CountdownFormatStyle(to: start)
 /// style.format(start.addingTimeInterval(-12 * 60))  // "in 12 min"
 /// ```
-public struct CountdownFormatStyle: DiscreteFormatStyle, Codable, Equatable, Hashable, Sendable {
+public struct CountdownFormatStyle: DiscreteFormatStyle, Equatable, Hashable, Sendable {
     /// The time before the start from which the words read "now".
     private static let lastMinute = Duration.seconds(secondsPerMinute)
 
     /// The number of seconds in a minute.
     private static let secondsPerMinute = 60
 
-    /// The moment the countdown runs to.
-    private let start: Date
-
     /// The relative style that words the time, anchored at the start.
     private var relative: Date.AnchoredRelativeFormatStyle
 
+    /// The moment the countdown runs to.
+    private var start: Date { relative.anchor }
+
     /// The relative style that words "now", in the language of the locale.
-    private var nowWord: Date.AnchoredRelativeFormatStyle
+    private var nowWord: Date.AnchoredRelativeFormatStyle {
+        var word = Date.AnchoredRelativeFormatStyle(
+            anchor: start,
+            presentation: .named,
+            unitsStyle: relative.unitsStyle,
+        )
+        word.locale = relative.locale
+        word.calendar = relative.calendar
+        return word
+    }
 
     /// The first moment that reads "now".
     private var lastMinuteStart: Date {
@@ -51,18 +60,29 @@ public struct CountdownFormatStyle: DiscreteFormatStyle, Codable, Equatable, Has
     ///   - spoken: Whether to word the time in full, such as "in 12 minutes", for VoiceOver.
     init(to start: Date, spoken: Bool) {
         let unitsStyle: Date.AnchoredRelativeFormatStyle.UnitsStyle = spoken ? .wide : .abbreviated
-        self.start = start
         relative = Date.AnchoredRelativeFormatStyle(
             anchor: start,
             allowedFields: [.day, .hour, .minute],
             presentation: .numeric,
             unitsStyle: unitsStyle,
         )
-        nowWord = Date.AnchoredRelativeFormatStyle(
-            anchor: start,
-            presentation: .named,
-            unitsStyle: unitsStyle,
-        )
+    }
+
+    /// Creates a format style from an encoded one.
+    ///
+    /// - Parameter decoder: The decoder to read the style from.
+    /// - Throws: An error if the data is not an encoded format style.
+    public init(from decoder: any Decoder) throws {
+        relative = try decoder.singleValueContainer().decode(Date.AnchoredRelativeFormatStyle.self)
+    }
+
+    /// Encodes the style, with the moment it counts to, its wording, locale and calendar.
+    ///
+    /// - Parameter encoder: The encoder to write the style to.
+    /// - Throws: An error if the encoder cannot write the style.
+    public func encode(to encoder: any Encoder) throws {
+        var container = encoder.singleValueContainer()
+        try container.encode(relative)
     }
 
     /// Returns the words for the time left from a moment until the start.
@@ -94,7 +114,6 @@ public struct CountdownFormatStyle: DiscreteFormatStyle, Codable, Equatable, Has
     public func locale(_ locale: Locale) -> Self {
         var copy = self
         copy.relative.locale = locale
-        copy.nowWord.locale = locale
         return copy
     }
 
@@ -111,7 +130,6 @@ public struct CountdownFormatStyle: DiscreteFormatStyle, Codable, Equatable, Has
     public func calendar(_ calendar: Calendar) -> Self {
         var copy = self
         copy.relative.calendar = calendar
-        copy.nowWord.calendar = calendar
         return copy
     }
 

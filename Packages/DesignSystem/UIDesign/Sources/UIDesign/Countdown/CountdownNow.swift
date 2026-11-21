@@ -2,9 +2,9 @@ import Foundation
 import SwiftUI
 
 /// The moment a countdown counts from: the clock, a test or a preview.
-package struct CountdownNow: Equatable, Hashable, Sendable {
+package struct CountdownNow: Sendable {
     /// Where the moment comes from.
-    private enum Source: Equatable, Hashable, Sendable {
+    private enum Source: Sendable {
         /// The system clock.
         case live
         /// A moment set by the caller.

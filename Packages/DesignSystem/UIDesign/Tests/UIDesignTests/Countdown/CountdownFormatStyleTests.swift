@@ -185,4 +185,30 @@ struct CountdownFormatStyleTests {
         let expected = CountdownFormatStyle(to: Self.start).format(now)
         #expect(now.formatted(.countdown(to: Self.start)) == expected)
     }
+
+    @Test
+    func whenEncodedAndDecoded_shouldReturnEqualStyle() throws {
+        let sut = Self.britishEnglishInGMT
+        let data = try JSONEncoder().encode(sut)
+        #expect(try JSONDecoder().decode(CountdownFormatStyle.self, from: data) == sut)
+    }
+
+    @Test
+    func whenEncodedStartIsEdited_shouldCountToTheEditedStartEverywhere() throws {
+        let editedStart = Self.start.addingTimeInterval(600)
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = .sortedKeys
+        let json = try #require(String(data: encoder.encode(Self.britishEnglishInGMT), encoding: .utf8))
+        let startText = "800000000"
+        let occurrences = json.ranges(of: startText)
+        #expect(!occurrences.isEmpty)
+        for occurrence in occurrences {
+            var edited = json
+            edited.replaceSubrange(occurrence, with: "800000600")
+            let sut = try JSONDecoder().decode(CountdownFormatStyle.self, from: Data(edited.utf8))
+            #expect(sut.format(editedStart.addingTimeInterval(-12 * 60)) == "in 12 min")
+            #expect(sut.format(editedStart.addingTimeInterval(-30)) == "now")
+            #expect(sut.format(editedStart.addingTimeInterval(5 * 60)) == "now")
+        }
+    }
 }
