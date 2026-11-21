@@ -91,6 +91,87 @@ import UIKit
         assertCompactSnapshots(of: noticeList.frame(height: Self.compactListHeight))
     }
 
+    @Test func whenTextIsBold_shouldDrawBoldText() {
+        let view = noticeList.frame(width: narrowestPhoneWidth, height: Self.listHeight)
+        let light = UITraitCollection {
+            $0.userInterfaceStyle = .light
+            $0.legibilityWeight = .bold
+        }
+        let dark = UITraitCollection {
+            $0.userInterfaceStyle = .dark
+            $0.legibilityWeight = .bold
+        }
+        // The snapshot helpers cannot set Bold Text, so this calls assertSnapshot directly.
+        assertSnapshot(of: view.dynamicTypeSize(.large).fixedSize(), as: .image(traits: light), named: "light-default")
+        assertSnapshot(of: view.dynamicTypeSize(.large).fixedSize(), as: .image(traits: dark), named: "dark-default")
+    }
+
+    @Test func whenLoading_shouldRedactEveryPart() {
+        let list = noticeList.frame(width: narrowestPhoneWidth, height: Self.listHeight)
+        assertSpecimenSnapshots(of: list.redacted(reason: .placeholder))
+    }
+
+    @Test func whenOnDarkElevatedSheet_shouldKeepText() {
+        let view = noticeList.frame(width: narrowestPhoneWidth, height: Self.listHeight)
+        let sheet = UITraitCollection {
+            $0.userInterfaceStyle = .dark
+            $0.userInterfaceLevel = .elevated
+        }
+        // The snapshot helpers have no elevated variant, so this calls assertSnapshot directly.
+        assertSnapshot(
+            of: view.dynamicTypeSize(.large).fixedSize(),
+            as: .image(traits: sheet),
+            named: "dark-elevated",
+        )
+    }
+
+    @Test func whenNoSettingsAreOn_shouldDrawNotice() {
+        let view = noticeList.frame(width: narrowestPhoneWidth, height: Self.listHeight)
+        let settings = UITraitCollection { $0.userInterfaceStyle = .light }
+        assertSnapshot(
+            of: view.dynamicTypeSize(.large).fixedSize(),
+            as: .image(traits: settings),
+            named: "light-default",
+        )
+    }
+
+    @Test func whenTextIsLargest_shouldStackIconAboveText() {
+        let view = noticeList.frame(width: narrowestPhoneWidth, height: Self.tallListHeight)
+        let settings = UITraitCollection { $0.userInterfaceStyle = .light }
+        assertSnapshot(
+            of: view.dynamicTypeSize(.accessibility5).fixedSize(),
+            as: .image(traits: settings),
+            named: "light-accessibility",
+        )
+    }
+
+    @Test func whenContrastIsIncreased_shouldDrawNotice() {
+        let view = noticeList.frame(width: narrowestPhoneWidth, height: Self.listHeight)
+        let settings = UITraitCollection {
+            $0.userInterfaceStyle = .light
+            $0.accessibilityContrast = .high
+        }
+        assertSnapshot(
+            of: view.dynamicTypeSize(.large).fixedSize(),
+            as: .image(traits: settings),
+            named: "light-increased-contrast",
+        )
+    }
+
+    @Test func whenEverySettingIsOn_shouldKeepTextReadable() {
+        let view = noticeList.frame(width: narrowestPhoneWidth, height: Self.tallListHeight)
+        let settings = UITraitCollection {
+            $0.userInterfaceStyle = .dark
+            $0.accessibilityContrast = .high
+            $0.legibilityWeight = .bold
+        }
+        assertSnapshot(
+            of: view.dynamicTypeSize(.accessibility5).fixedSize(),
+            as: .image(traits: settings),
+            named: "dark-accessibility-increased-contrast-bold",
+        )
+    }
+
     @Test func whenNoticeHasNoActions_shouldLeaveNoGapBelowText() {
         let view = outlined(
             Notice(
