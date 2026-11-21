@@ -17,7 +17,7 @@ import UIKit
     /// The moment every test counts towards.
     private static let start = Date(timeIntervalSinceReferenceDate: 800_000_000)
 
-    /// A countdown with the clock pinned to a time before the start.
+    /// Returns a countdown with the clock pinned to a time before the start.
     ///
     /// - Parameters:
     ///   - timeLeft: How long before the start the pinned clock reads.

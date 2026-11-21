@@ -4,6 +4,9 @@ import Foundation
 ///
 /// The words are abbreviated and counted in days, hours or minutes, such as "in 12 min".
 ///
+/// In a `Text`, the format takes the view's locale, but not its time zone. Set another time
+/// zone with ``CountdownFormatStyle/calendar(_:)``.
+///
 /// ```swift
 /// let style = CountdownFormatStyle(to: start)
 /// style.format(start.addingTimeInterval(-12 * 60))  // "in 12 min"
@@ -30,6 +33,11 @@ public struct CountdownFormatStyle: DiscreteFormatStyle, Codable, Equatable, Has
     }
 
     /// Creates a format style that words the time left until a start.
+    ///
+    /// ```swift
+    /// let style = CountdownFormatStyle(to: start)
+    /// style.format(start.addingTimeInterval(-12 * 60))  // "in 12 min"
+    /// ```
     ///
     /// - Parameter start: The moment the countdown runs to.
     public init(to start: Date) {
@@ -61,14 +69,25 @@ public struct CountdownFormatStyle: DiscreteFormatStyle, Codable, Equatable, Has
     ///
     /// It reads "now" from the last minute before the start, and after it.
     ///
+    /// ```swift
+    /// let style = CountdownFormatStyle(to: start)
+    /// style.format(start.addingTimeInterval(-12 * 60))  // "in 12 min"
+    /// style.format(start.addingTimeInterval(-30))  // "now"
+    /// ```
+    ///
     /// - Parameter now: The moment to count from.
-    /// - Returns: The abbreviated time left, such as "in 12 min", or "now".
+    /// - Returns: The time left, such as "in 12 min", or "now".
     public func format(_ now: Date) -> String {
         guard now < lastMinuteStart else { return nowWord.format(start) }
         return relative.format(now)
     }
 
     /// Returns a copy that words the time in a locale.
+    ///
+    /// ```swift
+    /// let style = CountdownFormatStyle(to: start).locale(Locale(identifier: "de_DE"))
+    /// style.format(start.addingTimeInterval(-12 * 60))  // "in 12 Min."
+    /// ```
     ///
     /// - Parameter locale: The locale that decides the language of the words.
     /// - Returns: A format style that uses `locale`.
@@ -81,6 +100,12 @@ public struct CountdownFormatStyle: DiscreteFormatStyle, Codable, Equatable, Has
 
     /// Returns a copy that counts days in a calendar.
     ///
+    /// ```swift
+    /// var calendar = Calendar(identifier: .gregorian)
+    /// calendar.timeZone = .gmt
+    /// let style = CountdownFormatStyle(to: start).calendar(calendar)  // counts days in GMT
+    /// ```
+    ///
     /// - Parameter calendar: The calendar, with its time zone, that decides where a day starts.
     /// - Returns: A format style that uses `calendar`.
     public func calendar(_ calendar: Calendar) -> Self {
@@ -91,6 +116,12 @@ public struct CountdownFormatStyle: DiscreteFormatStyle, Codable, Equatable, Has
     }
 
     /// Returns the last moment before a moment that reads differently from it.
+    ///
+    /// ```swift
+    /// let style = CountdownFormatStyle(to: start)
+    /// let now = start.addingTimeInterval(-12 * 60)
+    /// let earlier = style.discreteInput(before: now)  // the last moment that reads "in 13 min"
+    /// ```
     ///
     /// - Parameter now: The moment to look back from.
     /// - Returns: The last moment that reads differently from `now`, or `nil` if there is none.
@@ -105,6 +136,12 @@ public struct CountdownFormatStyle: DiscreteFormatStyle, Codable, Equatable, Has
     ///
     /// Once the words read "now" they never change again.
     ///
+    /// ```swift
+    /// let style = CountdownFormatStyle(to: start)
+    /// style.discreteInput(after: start.addingTimeInterval(-61))  // start - 60 s, where it reads "now"
+    /// style.discreteInput(after: start)  // nil
+    /// ```
+    ///
     /// - Parameter now: The moment to look forward from.
     /// - Returns: The first moment that reads differently from `now`, or `nil` if none does.
     public func discreteInput(after now: Date) -> Date? {
@@ -118,6 +155,13 @@ public struct CountdownFormatStyle: DiscreteFormatStyle, Codable, Equatable, Has
 
 extension FormatStyle where Self == CountdownFormatStyle {
     /// Returns a format style that words the time left until a start.
+    ///
+    /// In a `Text`, the format takes the view's locale, but not its time zone. Set another time
+    /// zone with ``CountdownFormatStyle/calendar(_:)``.
+    ///
+    /// ```swift
+    /// Text(.currentDate, format: .countdown(to: session.start))  // "in 12 min"
+    /// ```
     ///
     /// - Parameter start: The moment the countdown runs to.
     /// - Returns: A format style that counts down to `start`.

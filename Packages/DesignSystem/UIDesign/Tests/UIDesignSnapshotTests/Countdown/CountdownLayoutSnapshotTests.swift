@@ -28,7 +28,7 @@ import UIKit
     /// The traits of a light screen.
     private static let light = UITraitCollection { $0.userInterfaceStyle = .light }
 
-    /// A countdown with the clock pinned to a time before the start.
+    /// Returns a countdown with the clock pinned to a time before the start.
     ///
     /// - Parameters:
     ///   - timeLeft: How long before the start the pinned clock reads.
@@ -41,7 +41,7 @@ import UIKit
             .environment(\.layoutDirection, locale == Self.arabic ? .rightToLeft : .leftToRight)
     }
 
-    /// A badge for each wording, stacked on the primary surface.
+    /// Returns a badge for each wording, stacked on the primary surface.
     ///
     /// - Parameter locale: The locale the countdowns word the time in.
     /// - Returns: The badges.
@@ -55,7 +55,9 @@ import UIKit
         .background(.surface)
     }
 
-    /// Returns a view at the largest text size, as wide as a list row on the narrowest phone.
+    /// Returns a view at the largest text size, as wide as a narrow list row.
+    ///
+    /// The width is that of a list row on the narrowest phone.
     ///
     /// - Parameter view: The view to size.
     /// - Returns: The view at the largest accessibility text size.

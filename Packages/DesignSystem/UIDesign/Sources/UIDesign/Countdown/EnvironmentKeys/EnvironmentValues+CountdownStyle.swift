@@ -8,13 +8,6 @@ extension EnvironmentValues {
 extension View {
     /// Sets the style for countdowns within this view.
     ///
-    /// ```swift
-    /// VStack {
-    ///     Countdown(to: session.start)
-    /// }
-    /// .countdownStyle(.automatic)
-    /// ```
-    ///
     /// - Parameter style: The countdown style to apply.
     /// - Returns: A view that uses the given style for the countdowns within it.
     public func countdownStyle(_ style: some CountdownStyle) -> some View {

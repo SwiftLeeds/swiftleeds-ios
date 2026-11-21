@@ -11,7 +11,7 @@ struct CountdownAccessibilityTests {
     /// The moment every test counts towards.
     private static let start = Date(timeIntervalSinceReferenceDate: 800_000_000)
 
-    /// A countdown in British English with the clock pinned to a time before the start.
+    /// Returns a countdown in British English with the clock pinned before the start.
     ///
     /// - Parameter timeLeft: How long before the start the pinned clock reads. A negative value
     ///   reads a time after the start.

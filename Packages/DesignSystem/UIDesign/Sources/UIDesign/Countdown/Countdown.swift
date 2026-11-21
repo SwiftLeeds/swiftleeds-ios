@@ -57,6 +57,7 @@ public struct Countdown: View {
         self.start = start
     }
 
+    /// The countdown, with a spoken label and the trait of text that updates often.
     public var body: some View {
         AnyView(resolved(in: style))
             .accessibilityLabel(now.text(counting: formatStyle(spoken: true)))

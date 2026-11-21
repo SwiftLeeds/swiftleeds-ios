@@ -20,7 +20,7 @@ public struct CountdownStyleConfiguration {
     /// The words that say how long is left.
     public let label: Label
 
-    /// Creates the properties of a countdown, erasing the label's type.
+    /// Creates the properties of a countdown.
     ///
     /// - Parameter label: The view showing the time left.
     @MainActor

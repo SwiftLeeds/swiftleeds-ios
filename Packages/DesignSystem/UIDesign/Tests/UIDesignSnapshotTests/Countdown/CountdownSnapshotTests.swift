@@ -8,17 +8,21 @@ import UIKit
 
 @MainActor
 @Suite(.snapshots(record: .never)) struct CountdownSnapshotTests {
-    /// A countdown style that draws the color scheme it reads from the environment as a word.
+    /// A countdown style that draws the current color scheme as a word.
     private struct ColorSchemeCountdownStyle: CountdownStyle {
         /// The color scheme the style reads from the environment.
         @Environment(\.colorScheme) private var colorScheme
 
+        /// Creates a view that represents the body of a countdown.
+        ///
+        /// - Parameter configuration: The properties of the countdown.
+        /// - Returns: A view that shows the color scheme as a word.
         func makeBody(configuration: Configuration) -> some View {
             Text(colorScheme == .dark ? "dark" : "light")
         }
     }
 
-    /// A countdown style that draws the label in a fixed frame, so a test can tell it from the default.
+    /// A countdown style that draws the label in a fixed frame.
     private struct FixedFrameCountdownStyle: CountdownStyle {
         /// The width of the frame, in points.
         static let width: CGFloat = 160
@@ -26,6 +30,10 @@ import UIKit
         /// The height of the frame, in points.
         static let height: CGFloat = 44
 
+        /// Creates a view that represents the body of a countdown.
+        ///
+        /// - Parameter configuration: The properties of the countdown.
+        /// - Returns: A view that shows the label in a bordered frame.
         func makeBody(configuration: Configuration) -> some View {
             configuration.label
                 .frame(width: Self.width, height: Self.height)
@@ -55,7 +63,7 @@ import UIKit
         .background(.surface)
     }
 
-    /// The countdown in British English with the clock pinned to a time before the start.
+    /// Returns a countdown with the clock pinned to a time before the start, in British English.
     ///
     /// - Parameter timeLeft: How long before the start the pinned clock reads.
     /// - Returns: A countdown on the primary surface, with room around it.
@@ -67,9 +75,10 @@ import UIKit
             .background(.surface)
     }
 
-    /// A countdown that runs 23 hours to 09:00 GMT on 29 March 2026, in a time zone.
+    /// Returns a countdown across a UK clock change, in a time zone.
     ///
-    /// UK clocks go forward that morning, so the wording depends on the time zone.
+    /// It runs 23 hours to 09:00 GMT on 29 March 2026. UK clocks go forward that morning, so the
+    /// wording depends on the time zone.
     ///
     /// - Parameter timeZone: The time zone the environment sets.
     /// - Returns: A countdown on the primary surface, with room around it.

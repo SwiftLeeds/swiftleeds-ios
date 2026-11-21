@@ -17,8 +17,8 @@ struct CountdownFormatStyleTests {
         return calendar
     }
 
-    /// A step back from a moment, in seconds, that is small enough to land in the text before it.
-    private static let justBefore: TimeInterval = 0.001
+    /// A step in seconds that is small enough to stay inside one text.
+    private static let tinyStep: TimeInterval = 0.001
 
     /// A countdown to the start in British English and a Gregorian calendar in GMT.
     private static var britishEnglishInGMT: CountdownFormatStyle {
@@ -125,7 +125,7 @@ struct CountdownFormatStyleTests {
         let now = Self.start.addingTimeInterval(-(12 * 60 + 10))
         let moment = try #require(sut.discreteInput(after: now))
         #expect(sut.format(moment) != sut.format(now))
-        #expect(sut.format(moment.addingTimeInterval(-Self.justBefore)) == sut.format(now))
+        #expect(sut.format(moment.addingTimeInterval(-Self.tinyStep)) == sut.format(now))
     }
 
     @Test
@@ -134,7 +134,7 @@ struct CountdownFormatStyleTests {
         let now = Self.start.addingTimeInterval(-12 * 60)
         let moment = try #require(sut.discreteInput(before: now))
         #expect(sut.format(moment) != sut.format(now))
-        #expect(sut.format(moment.addingTimeInterval(Self.justBefore)) == sut.format(now))
+        #expect(sut.format(moment.addingTimeInterval(Self.tinyStep)) == sut.format(now))
     }
 
     @Test
@@ -165,7 +165,7 @@ struct CountdownFormatStyleTests {
         let moment = try #require(sut.discreteInput(before: now))
         #expect(moment < now)
         #expect(sut.format(moment) != sut.format(now))
-        #expect(sut.format(moment.addingTimeInterval(Self.justBefore)) == sut.format(now))
+        #expect(sut.format(moment.addingTimeInterval(Self.tinyStep)) == sut.format(now))
     }
 
     @Test
