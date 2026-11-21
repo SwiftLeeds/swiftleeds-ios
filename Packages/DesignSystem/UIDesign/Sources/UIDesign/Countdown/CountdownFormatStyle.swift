@@ -12,11 +12,8 @@ import Foundation
 /// style.format(start.addingTimeInterval(-12 * 60))  // "in 12 min"
 /// ```
 public struct CountdownFormatStyle: DiscreteFormatStyle, Equatable, Hashable, Sendable {
-    /// The time before the start from which the words read "now".
-    private static let lastMinute = Duration.seconds(secondsPerMinute)
-
-    /// The number of seconds in a minute.
-    private static let secondsPerMinute = 60
+    /// The time before the start, in seconds, from which the words read "now".
+    private static let lastMinute: TimeInterval = 60
 
     /// The relative style that words the time, anchored at the start.
     private var relative: Date.AnchoredRelativeFormatStyle
@@ -38,7 +35,7 @@ public struct CountdownFormatStyle: DiscreteFormatStyle, Equatable, Hashable, Se
 
     /// The first moment that reads "now".
     private var lastMinuteStart: Date {
-        start.addingTimeInterval(-TimeInterval(Self.lastMinute.components.seconds))
+        start.addingTimeInterval(-Self.lastMinute)
     }
 
     /// Creates a format style that words the time left until a start.
@@ -50,21 +47,20 @@ public struct CountdownFormatStyle: DiscreteFormatStyle, Equatable, Hashable, Se
     ///
     /// - Parameter start: The moment the countdown runs to.
     public init(to start: Date) {
-        self.init(to: start, spoken: false)
+        self.init(to: start, wording: .shown)
     }
 
     /// Creates a format style that words the time left until a start.
     ///
     /// - Parameters:
     ///   - start: The moment the countdown runs to.
-    ///   - spoken: Whether to word the time in full, such as "in 12 minutes", for VoiceOver.
-    init(to start: Date, spoken: Bool) {
-        let unitsStyle: Date.AnchoredRelativeFormatStyle.UnitsStyle = spoken ? .wide : .abbreviated
+    ///   - wording: Whether to word the time in short words for the screen or in full for VoiceOver.
+    init(to start: Date, wording: CountdownWording) {
         relative = Date.AnchoredRelativeFormatStyle(
             anchor: start,
             allowedFields: [.day, .hour, .minute],
             presentation: .numeric,
-            unitsStyle: unitsStyle,
+            unitsStyle: wording.unitsStyle,
         )
     }
 
