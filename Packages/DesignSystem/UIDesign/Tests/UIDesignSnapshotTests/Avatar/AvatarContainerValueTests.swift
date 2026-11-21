@@ -1,5 +1,4 @@
 #if os(iOS)
-import Foundation
 import SwiftUI
 import Testing
 import UIDesign
