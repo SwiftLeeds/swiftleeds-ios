@@ -17,6 +17,9 @@ struct CountdownFormatStyleTests {
         return calendar
     }
 
+    /// A step back from a moment, in seconds, that is small enough to land in the text before it.
+    private static let justBefore: TimeInterval = 0.001
+
     /// A countdown to the start in British English and a Gregorian calendar in GMT.
     private static var britishEnglishInGMT: CountdownFormatStyle {
         CountdownFormatStyle(to: start)
@@ -114,5 +117,58 @@ struct CountdownFormatStyleTests {
         let sut = Self.britishEnglishInGMT.locale(Locale(identifier: "de_DE"))
         let now = Self.start.addingTimeInterval(-30)
         #expect(sut.format(now) == "jetzt")
+    }
+
+    @Test
+    func whenTwelveMinutesTenSecondsRemain_shouldReturnFirstMomentOfNextText() throws {
+        let sut = Self.britishEnglishInGMT
+        let now = Self.start.addingTimeInterval(-(12 * 60 + 10))
+        let moment = try #require(sut.discreteInput(after: now))
+        #expect(sut.format(moment) != sut.format(now))
+        #expect(sut.format(moment.addingTimeInterval(-Self.justBefore)) == sut.format(now))
+    }
+
+    @Test
+    func whenTwelveMinutesRemain_shouldReturnLastMomentOfPreviousText() throws {
+        let sut = Self.britishEnglishInGMT
+        let now = Self.start.addingTimeInterval(-12 * 60)
+        let moment = try #require(sut.discreteInput(before: now))
+        #expect(sut.format(moment) != sut.format(now))
+        #expect(sut.format(moment.addingTimeInterval(Self.justBefore)) == sut.format(now))
+    }
+
+    @Test
+    func whenSixtyOneSecondsRemain_shouldReturnStartOfNowStretch() {
+        let sut = Self.britishEnglishInGMT
+        let now = Self.start.addingTimeInterval(-61)
+        #expect(sut.discreteInput(after: now) == Self.start.addingTimeInterval(-60))
+    }
+
+    @Test
+    func whenEightySecondsRemain_shouldReturnStartOfNowStretch() {
+        let sut = Self.britishEnglishInGMT
+        let now = Self.start.addingTimeInterval(-80)
+        #expect(sut.discreteInput(after: now) == Self.start.addingTimeInterval(-60))
+    }
+
+    @Test(arguments: [-60.0, -30.0, 5 * 60.0])
+    func whenReadingNow_shouldReturnNoNextChange(secondsFromStart: TimeInterval) {
+        let sut = Self.britishEnglishInGMT
+        let now = Self.start.addingTimeInterval(secondsFromStart)
+        #expect(sut.discreteInput(after: now) == nil)
+    }
+
+    @Test(arguments: [-30.0, 5 * 60.0])
+    func whenReadingNow_shouldReturnStartOfNowStretchBefore(secondsFromStart: TimeInterval) {
+        let sut = Self.britishEnglishInGMT
+        let now = Self.start.addingTimeInterval(secondsFromStart)
+        #expect(sut.discreteInput(before: now) == Self.start.addingTimeInterval(-60))
+    }
+
+    @Test
+    func whenMadeWithStaticMember_shouldFormatLikeInitializer() {
+        let now = Self.start.addingTimeInterval(-12 * 60)
+        let expected = CountdownFormatStyle(to: Self.start).format(now)
+        #expect(now.formatted(.countdown(to: Self.start)) == expected)
     }
 }
