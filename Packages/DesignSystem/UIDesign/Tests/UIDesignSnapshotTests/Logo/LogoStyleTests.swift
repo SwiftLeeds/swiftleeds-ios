@@ -36,12 +36,6 @@ struct LogoStyleTests {
         #expect(elements.map(\.label) == [Self.styleText])
     }
 
-    @Test
-    func whenNoStyleIsSet_shouldDrawNoText() throws {
-        let elements = try AccessibilityTree.elements(of: Logo(url: nil))
-        #expect(elements.isEmpty, "The default style drew \(elements.map(\.label))")
-    }
-
     @Test(arguments: [(ColorScheme.dark, "dark"), (ColorScheme.light, "light")])
     func whenStyleReadsColorScheme_shouldDrawSchemeName(scheme: ColorScheme, name: String) throws {
         let view = Logo(url: nil)

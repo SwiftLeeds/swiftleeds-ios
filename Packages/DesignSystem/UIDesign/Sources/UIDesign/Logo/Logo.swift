@@ -11,6 +11,26 @@ import SwiftUI
 /// Logo(url: sponsor.logoURL)
 ///     .frame(width: 56, height: 56)
 /// ```
+///
+/// ## Making a logo accessible
+///
+/// A logo adds nothing to the accessibility tree until its caller names it. Its
+/// mark and its fallback are hidden from VoiceOver, so the fallback never reads
+/// as text and a mark that failed to load leaves no gap.
+///
+/// Name a logo that carries information, such as a sponsor's mark on its own.
+/// Make it one element, give it the company's name, and mark it as an image:
+///
+/// ```swift
+/// Logo(url: sponsor.logoURL)
+///     .frame(width: 56, height: 56)
+///     .accessibilityElement()
+///     .accessibilityLabel("Example Co")
+///     .accessibilityAddTraits(.isImage)
+/// ```
+///
+/// Leave a logo unnamed when the company's name sits beside it, because the
+/// logo then repeats what that text says.
 public struct Logo<Fallback: View>: View {
     /// Where the mark comes from.
     private enum Source {
@@ -80,7 +100,7 @@ public struct Logo<Fallback: View>: View {
 
     /// The properties handed to the current logo style.
     private var configuration: LogoStyleConfiguration {
-        LogoStyleConfiguration(content: content)
+        LogoStyleConfiguration(content: content.accessibilityHidden(true))
     }
 
     /// The mark fitted to the frame, the fallback standing in for it, or nothing while it loads.
