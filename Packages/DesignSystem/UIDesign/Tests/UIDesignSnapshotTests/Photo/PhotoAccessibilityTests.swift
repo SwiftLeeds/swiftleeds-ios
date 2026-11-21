@@ -8,6 +8,44 @@ import UIKit
 @MainActor
 @Suite
 struct PhotoAccessibilityTests {
+    /// A way a photo can show, which its caller names for VoiceOver.
+    private enum LabeledCase: CaseIterable {
+        /// The picture loaded.
+        case loaded
+        /// The picture is still loading.
+        case loading
+        /// The picture failed to load.
+        case failed
+        /// There is no URL.
+        case noURL
+
+        /// The photo in this case, named with the recipe the type documents.
+        @MainActor var labeledPhoto: some View {
+            unlabeledPhoto
+                .frame(width: 100, height: 100)
+                .accessibilityElement()
+                .accessibilityLabel("The main entrance, with a ramp to the left")
+                .accessibilityAddTraits(.isImage)
+        }
+
+        /// The photo in this case, before the caller names it.
+        @MainActor private var unlabeledPhoto: Photo<Text> {
+            switch self {
+            case .loaded:
+                PhotoAccessibilityTests.photo(in: PhotoAccessibilityTests.loaded)
+
+            case .loading:
+                PhotoAccessibilityTests.photo(in: .empty)
+
+            case .failed:
+                PhotoAccessibilityTests.photo(in: PhotoAccessibilityTests.failed)
+
+            case .noURL:
+                Photo(url: nil) { Text("Fallback") }
+            }
+        }
+    }
+
     /// The phase of a picture that loaded.
     private static var loaded: AsyncImagePhase { .success(.samplePhoto) }
 
@@ -20,18 +58,6 @@ struct PhotoAccessibilityTests {
     /// - Returns: The photo.
     private static func photo(in phase: AsyncImagePhase) -> Photo<Text> {
         Photo(phase: phase) { Text("Fallback") }
-    }
-
-    /// A photo that its caller names for VoiceOver, with the recipe the type documents.
-    ///
-    /// - Parameter phase: The phase to draw.
-    /// - Returns: The labeled photo.
-    private static func labeledPhoto(in phase: AsyncImagePhase) -> some View {
-        photo(in: phase)
-            .frame(width: 100, height: 100)
-            .accessibilityElement()
-            .accessibilityLabel("The main entrance, with a ramp to the left")
-            .accessibilityAddTraits(.isImage)
     }
 
     @Test
@@ -54,11 +80,10 @@ struct PhotoAccessibilityTests {
         #expect(elements.map(\.label) == ["Main Hall"])
     }
 
-    @Test(arguments: [("loaded", true), ("failed", false)])
-    func whenCallerLabelsPhoto_shouldReadOneImageElementWithCallersLabel(phaseName: String, isLoaded: Bool) throws {
-        let view = Self.labeledPhoto(in: isLoaded ? Self.loaded : Self.failed)
-        let elements = try AccessibilityTree.elements(of: view)
-        let element = try #require(elements.first, "no element in the \(phaseName) phase")
+    @Test(arguments: LabeledCase.allCases)
+    private func whenCallerLabelsPhoto_shouldReadOneImageElementWithCallersLabel(labeledCase: LabeledCase) throws {
+        let elements = try AccessibilityTree.elements(of: labeledCase.labeledPhoto)
+        let element = try #require(elements.first, "no element when \(labeledCase)")
         #expect(elements.count == 1)
         #expect(element.label == "The main entrance, with a ramp to the left")
         #expect(element.traits.contains(.image))

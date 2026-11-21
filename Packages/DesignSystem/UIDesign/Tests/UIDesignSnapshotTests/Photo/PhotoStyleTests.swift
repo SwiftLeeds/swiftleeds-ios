@@ -34,9 +34,9 @@ struct PhotoStyleTests {
     }
 
     @Test
-    func whenNoStyleIsSet_shouldNotDrawCustomStylesBody() throws {
-        let elements = try AccessibilityTree.elements(of: Photo(url: nil))
-        #expect(!elements.map(\.label).contains(WordPhotoStyle.word))
+    func whenNoStyleIsSet_shouldExposeNoElement() throws {
+        let elements = try AccessibilityTree.elements(of: Photo(url: nil) { Text("Fallback") })
+        #expect(elements.isEmpty)
     }
 
     @Test(arguments: [(ColorScheme.dark, "dark"), (ColorScheme.light, "light")])
