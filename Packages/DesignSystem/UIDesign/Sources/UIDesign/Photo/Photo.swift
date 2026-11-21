@@ -104,6 +104,7 @@ public struct Photo<Fallback: View>: View {
         Color.clear
             .overlay { shown }
             .clipped()
+            .contentShape(Rectangle())
             .accessibilityHidden(true)
     }
 
