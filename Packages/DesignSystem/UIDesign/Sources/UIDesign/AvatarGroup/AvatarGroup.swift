@@ -152,6 +152,12 @@ private let previewPeople = [
             }
         }
         .avatarStyle(.rounded)
+
+        AvatarGroup {
+            ForEach(0..<5, id: \.self) { index in
+                Avatar(url: nil, size: .small, fallback: .initials(previewPeople[index % previewPeople.count]))
+            }
+        }
     }
     .padding(.lg)
 }
