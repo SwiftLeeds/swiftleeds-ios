@@ -7,6 +7,9 @@ import UIKit
 
 @MainActor
 @Suite(.snapshots(record: .never)) struct LogoSnapshotTests {
+    /// A load failure with no detail, for a phase that is a failure.
+    private struct SampleLoadError: Error {}
+
     /// The side of a logo's frame, as a sponsor row draws it, in points.
     private static let tileSide: CGFloat = 56
 
@@ -48,6 +51,33 @@ import UIKit
             .frame(width: Self.tileSide, height: Self.tileSide)
             .padding(.lg)
             .background(.surface)
+    }
+
+    /// Draws a logo with a text fallback in a logo's frame, on the base surface.
+    ///
+    /// - Parameter phase: The phase of loading to draw.
+    /// - Returns: The logo with room around it.
+    private func logoWithTextFallback(in phase: AsyncImagePhase) -> some View {
+        Logo(phase: phase) { Text("EX") }
+            .frame(width: Self.tileSide, height: Self.tileSide)
+            .padding(.lg)
+            .background(.surface)
+    }
+
+    @Test func whenUrlIsNilWithTextFallback_shouldDrawTextOnTile() {
+        let view = Logo(url: nil) { Text("EX") }
+            .frame(width: Self.tileSide, height: Self.tileSide)
+            .padding(.lg)
+            .background(.surface)
+        assertContrastSnapshots(of: view)
+    }
+
+    @Test func whenPhaseIsEmptyWithTextFallback_shouldDrawEmptyTile() {
+        assertContrastSnapshots(of: logoWithTextFallback(in: .empty))
+    }
+
+    @Test func whenPhaseIsFailureWithTextFallback_shouldDrawTextOnTile() {
+        assertContrastSnapshots(of: logoWithTextFallback(in: .failure(SampleLoadError())))
     }
 
     @Test func whenPhaseIsSuccessWithDarkInkMark_shouldDrawMarkInsetOnTile() {

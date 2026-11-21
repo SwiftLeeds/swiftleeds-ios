@@ -46,6 +46,23 @@ public struct Logo<Fallback: View>: View {
     /// What to draw when there is no mark to show.
     private let fallback: Fallback
 
+    /// Creates a logo that loads its mark from a URL, with a view to draw when there is no mark.
+    ///
+    /// ```swift
+    /// Logo(url: sponsor.logoURL) {
+    ///     Text("EX")
+    /// }
+    /// ```
+    ///
+    /// - Parameters:
+    ///   - url: Where the mark loads from. A `nil` url draws the fallback.
+    ///   - fallback: A content builder that creates what to draw when there is no mark to show.
+    ///     It does not show while the logo loads.
+    public init(url: URL?, @ViewBuilder fallback: () -> Fallback) {
+        source = url.map(Source.url) ?? .noLogo
+        self.fallback = fallback()
+    }
+
     /// Creates a logo that draws one phase of loading, for tests and previews.
     ///
     /// - Parameters:
@@ -108,12 +125,37 @@ public struct Logo<Fallback: View>: View {
     }
 }
 
+#if DEBUG
+#Preview("No logo") {
+    Logo(url: nil) { Text("EX") }
+        .frame(width: 56, height: 56)
+        .padding()
+}
+
+#Preview("Loading") {
+    Logo(phase: .empty) { Text("EX") }
+        .frame(width: 56, height: 56)
+        .padding()
+}
+
+#Preview("Loaded") {
+    Logo(phase: .success(.previewMark)) { Text("EX") }
+        .frame(width: 56, height: 56)
+        .padding()
+}
+
+#Preview("Failed") {
+    Logo(phase: .failure(URLError(.badServerResponse))) { Text("EX") }
+        .frame(width: 56, height: 56)
+        .padding()
+}
+#endif
+
 extension Logo where Fallback == EmptyView {
     /// Creates a logo that loads its mark from a URL.
     ///
     /// - Parameter url: Where the mark loads from. A `nil` url draws nothing and asks for nothing.
     public init(url: URL?) {
-        source = url.map(Source.url) ?? .noLogo
-        fallback = EmptyView()
+        self.init(url: url) { EmptyView() }
     }
 }
