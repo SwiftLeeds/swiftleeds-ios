@@ -85,6 +85,12 @@ import UIKit
         PersonNameComponents(givenName: "Frankie", familyName: "Fox"),
     ]
 
+    /// The traits of a light screen with Bold Text on.
+    private static let boldTraits = UITraitCollection {
+        $0.userInterfaceStyle = .light
+        $0.legibilityWeight = .bold
+    }
+
     /// Three avatars with initials, the group the style tests draw in their own style.
     private static var threeAvatars: some View {
         AvatarGroup {
@@ -257,17 +263,14 @@ extension AvatarGroupSnapshotTests {
     }
 
     @Test func whenTextIsBold_shouldDrawCountAsInitials() {
-        let view = Self.group(of: 4)
-        let traits = UITraitCollection {
-            $0.userInterfaceStyle = .light
-            $0.legibilityWeight = .bold
-        }
+        let view = Self.group(of: 4).dynamicTypeSize(.large).fixedSize()
         // The snapshot helpers have no Bold variant, so this calls assertSnapshot directly.
-        assertSnapshot(
-            of: view.dynamicTypeSize(.large).fixedSize(),
-            as: .image(traits: traits),
-            named: "light-default",
-        )
+        assertSnapshot(of: view, as: .image(traits: Self.boldTraits), named: "light-bold")
+    }
+
+    @Test func whenTextIsBoldAndCountIsPastNinetyNine_shouldKeepCountInsideDisc() {
+        let view = Self.group(of: 102).dynamicTypeSize(.large).fixedSize()
+        assertSnapshot(of: view, as: .image(traits: Self.boldTraits), named: "light-bold")
     }
 
     @Test func whenInListRow_shouldKeepRowLayout() {
