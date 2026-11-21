@@ -54,7 +54,7 @@ public struct CountdownFormatStyle: DiscreteFormatStyle, Equatable, Hashable, Se
     ///
     /// - Parameters:
     ///   - start: The moment the countdown runs to.
-    ///   - wording: Whether to word the time in short words for the screen or in full for VoiceOver.
+    ///   - wording: The wording: short for the screen, or in full for VoiceOver.
     init(to start: Date, wording: CountdownWording) {
         relative = Date.AnchoredRelativeFormatStyle(
             anchor: start,
@@ -64,18 +64,12 @@ public struct CountdownFormatStyle: DiscreteFormatStyle, Equatable, Hashable, Se
         )
     }
 
-    /// Creates a format style from an encoded one.
-    ///
-    /// - Parameter decoder: The decoder to read the style from.
-    /// - Throws: An error if the data is not an encoded format style.
+    /// Creates a format style from the moment it counts to, its wording, locale and calendar.
     public init(from decoder: any Decoder) throws {
         relative = try decoder.singleValueContainer().decode(Date.AnchoredRelativeFormatStyle.self)
     }
 
-    /// Encodes the style, with the moment it counts to, its wording, locale and calendar.
-    ///
-    /// - Parameter encoder: The encoder to write the style to.
-    /// - Throws: An error if the encoder cannot write the style.
+    /// Encodes the moment the style counts to, its wording, locale and calendar.
     public func encode(to encoder: any Encoder) throws {
         var container = encoder.singleValueContainer()
         try container.encode(relative)

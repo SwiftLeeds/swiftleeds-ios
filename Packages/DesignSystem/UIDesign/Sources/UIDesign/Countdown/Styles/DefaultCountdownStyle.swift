@@ -12,7 +12,7 @@ public struct DefaultCountdownStyle: CountdownStyle {
 
     /// Creates a view that represents the body of a countdown.
     ///
-    /// The system calls this method for each `Countdown` instance in a view hierarchy where this
+    /// The system calls this method for each ``Countdown`` instance in a view hierarchy where this
     /// style is the current countdown style.
     ///
     /// - Parameter configuration: The properties of the countdown.

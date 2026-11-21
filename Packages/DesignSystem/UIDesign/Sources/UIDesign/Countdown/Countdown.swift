@@ -78,7 +78,7 @@ public struct Countdown: View {
 
     /// Returns the format style that words the time left.
     ///
-    /// - Parameter wording: Whether to word the time in short words for the screen or in full.
+    /// - Parameter wording: The wording: short for the screen, or in full for VoiceOver.
     /// - Returns: A format style that counts days in the current calendar and time zone.
     private func formatStyle(wording: CountdownWording) -> CountdownFormatStyle {
         CountdownFormatStyle(to: start, wording: wording).calendar(countingCalendar)
