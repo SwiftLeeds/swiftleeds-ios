@@ -27,20 +27,20 @@ struct PhotoStyleTests {
     }
 
     @Test
-    func whenCustomStyleIsSet_shouldDrawTheStylesOwnBody() throws {
+    func whenCustomStyleIsSet_shouldDrawStylesOwnBody() throws {
         let view = Photo(url: nil).photoStyle(WordPhotoStyle())
         let elements = try AccessibilityTree.elements(of: view)
         #expect(elements.map(\.label) == [WordPhotoStyle.word])
     }
 
     @Test
-    func whenNoStyleIsSet_shouldNotDrawTheCustomStylesBody() throws {
+    func whenNoStyleIsSet_shouldNotDrawCustomStylesBody() throws {
         let elements = try AccessibilityTree.elements(of: Photo(url: nil))
         #expect(!elements.map(\.label).contains(WordPhotoStyle.word))
     }
 
     @Test(arguments: [(ColorScheme.dark, "dark"), (ColorScheme.light, "light")])
-    func whenRenderedInColorScheme_shouldReadThatSchemeInTheStyle(scheme: ColorScheme, word: String) throws {
+    func whenRenderedInColorScheme_shouldReadSchemeInStyle(scheme: ColorScheme, word: String) throws {
         let view = Photo(url: nil)
             .photoStyle(ColorSchemePhotoStyle())
             .environment(\.colorScheme, scheme)
