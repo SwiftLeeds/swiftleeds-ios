@@ -56,7 +56,7 @@ import UIKit
         .background(.surface)
     }
 
-    @Test func whenStyleReadsColorScheme_shouldSeeTheCurrentScheme() {
+    @Test func whenStyleReadsColorScheme_shouldSeeCurrentScheme() {
         assertSpecimenSnapshots(of: notice.noticeStyle(ColorSchemeNoticeStyle()))
     }
 
@@ -83,7 +83,7 @@ import UIKit
         assertContrastSnapshots(of: view)
     }
 
-    @Test func whenTextIsAccessibilitySize_shouldStackIconAboveTitle() {
+    @Test func whenTextIsAccessibilitySize_shouldHideIcon() {
         assertSnapshots(of: noticeList.frame(width: narrowestPhoneWidth, height: Self.tallListHeight))
     }
 
@@ -125,39 +125,6 @@ import UIKit
         )
     }
 
-    @Test func whenNoSettingsAreOn_shouldDrawNotice() {
-        let view = noticeList.frame(width: narrowestPhoneWidth, height: Self.listHeight)
-        let settings = UITraitCollection { $0.userInterfaceStyle = .light }
-        assertSnapshot(
-            of: view.dynamicTypeSize(.large).fixedSize(),
-            as: .image(traits: settings),
-            named: "light-default",
-        )
-    }
-
-    @Test func whenTextIsLargest_shouldStackIconAboveText() {
-        let view = noticeList.frame(width: narrowestPhoneWidth, height: Self.tallListHeight)
-        let settings = UITraitCollection { $0.userInterfaceStyle = .light }
-        assertSnapshot(
-            of: view.dynamicTypeSize(.accessibility5).fixedSize(),
-            as: .image(traits: settings),
-            named: "light-accessibility",
-        )
-    }
-
-    @Test func whenContrastIsIncreased_shouldDrawNotice() {
-        let view = noticeList.frame(width: narrowestPhoneWidth, height: Self.listHeight)
-        let settings = UITraitCollection {
-            $0.userInterfaceStyle = .light
-            $0.accessibilityContrast = .high
-        }
-        assertSnapshot(
-            of: view.dynamicTypeSize(.large).fixedSize(),
-            as: .image(traits: settings),
-            named: "light-increased-contrast",
-        )
-    }
-
     @Test func whenEverySettingIsOn_shouldKeepTextReadable() {
         let view = noticeList.frame(width: narrowestPhoneWidth, height: Self.tallListHeight)
         let settings = UITraitCollection {
@@ -183,7 +150,7 @@ import UIKit
         assertSpecimenSnapshots(of: view)
     }
 
-    @Test func whenNoticeHasAnAction_shouldLeaveGapBelowText() {
+    @Test func whenNoticeHasAction_shouldLeaveGapBelowText() {
         let view = outlined(
             Notice(
                 title: { Text("You're offline") },
@@ -213,14 +180,20 @@ extension NoticeSnapshotTests {
         }
     }
 
+    /// The width of the outline, in points.
+    private static let outlineWidth: CGFloat = 1
+
     /// Returns a notice at a row's width with its bounds outlined, so a gap inside it shows.
+    ///
+    /// The outline sits just outside the notice, so it cannot hide anything that overflows.
     ///
     /// - Parameter notice: The notice to outline.
     /// - Returns: The notice, outlined, on the primary surface.
     private func outlined(_ notice: some View) -> some View {
         notice
             .frame(width: rowWidth)
-            .border(Color.primary)
+            .padding(Self.outlineWidth)
+            .border(Color.primary, width: Self.outlineWidth)
             .padding(.lg)
             .background(.surface)
     }
