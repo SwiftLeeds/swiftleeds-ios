@@ -11,6 +11,26 @@ import UIKit
     /// A failure to hand to a photo in its failed phase.
     private static let failure = URLError(.badServerResponse)
 
+    /// The width of a portrait frame, in points.
+    private static let portraitWidth: CGFloat = 100
+
+    /// The height of a portrait frame, in points.
+    private static let portraitHeight: CGFloat = 150
+
+    /// The space around a portrait frame, wide enough to show a picture that overflows it.
+    private static let overflowRoom: CGFloat = 64
+
+    /// The shape of a hero, as width over height.
+    private static let heroRatio: CGFloat = 16.0 / 9.0
+
+    /// A loaded picture in a portrait frame, with room around it to show any overflow.
+    private var croppedPicture: some View {
+        Photo(phase: .success(.samplePhoto)) { EmptyView() }
+            .frame(width: Self.portraitWidth, height: Self.portraitHeight)
+            .padding(Self.overflowRoom)
+            .background(.surface)
+    }
+
     /// Frames a photo and clips it as a thumbnail, on the base surface.
     ///
     /// - Parameter photo: The photo to show.
@@ -59,6 +79,39 @@ import UIKit
 
     @Test func whenPhaseIsFailure_shouldDrawFallback() {
         assertContrastSnapshots(of: thumbnail(phase: .failure(Self.failure)))
+    }
+
+    @Test func whenPhaseIsFailureAtLargestTextSize_shouldDrawSameFallback() {
+        assertSpecimenSnapshots(
+            of: thumbnail(phase: .failure(Self.failure)).dynamicTypeSize(.accessibility5),
+            testName: "whenPhaseIsFailure_shouldDrawFallback",
+        )
+    }
+
+    @Test func whenPhaseIsEmptyInHeroAtCompactWidth_shouldDrawGreyFill() {
+        let hero = Photo(phase: .empty) { EmptyView() }
+            .aspectRatio(Self.heroRatio, contentMode: .fit)
+            .padding(.lg)
+            .background(.surface)
+        assertCompactSnapshots(of: hero)
+    }
+
+    @Test func whenPictureLoadedInPortraitFrame_shouldCropToFrame() {
+        assertSpecimenSnapshots(of: croppedPicture)
+    }
+
+    @Test func whenPictureLoadedWithEverySettingOn_shouldCropToFrame() {
+        let everySetting = UITraitCollection {
+            $0.userInterfaceStyle = .dark
+            $0.accessibilityContrast = .high
+            $0.legibilityWeight = .bold
+            $0.preferredContentSizeCategory = .accessibilityExtraExtraExtraLarge
+        }
+        assertSnapshot(
+            of: croppedPicture.dynamicTypeSize(.accessibility5).fixedSize(),
+            as: .image(traits: everySetting),
+            named: "every-setting",
+        )
     }
 
     @Test func whenPhotoIsRedactedInFailedPhase_shouldDrawGreyFillWithoutFallback() {
