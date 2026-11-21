@@ -1,10 +1,8 @@
 #if os(iOS)
-import Foundation
 import SFSafeSymbols
 import SwiftUI
 import Testing
 import UIDesign
-import UIKit
 
 @MainActor
 @Suite
@@ -39,21 +37,6 @@ struct NoticeAccessibilityTests {
     /// The label of the one element that reads the title and the description together.
     private static let groupedLabel = "\(title), \(description)"
 
-    /// The side of the smallest target Apple allows, in points.
-    private static let minimumTargetSide: CGFloat = 44
-
-    /// How far a measured side may fall short of a target side, in points.
-    private static let tolerance: CGFloat = 0.5
-
-    /// The side of the square window a view is hosted in, in points.
-    private static let hostSide: CGFloat = 400
-
-    /// How long the run loop spins, in seconds, so SwiftUI can build its accessibility tree.
-    private static let settleTime: TimeInterval = 0.3
-
-    /// The deepest level of the tree that the walk visits.
-    private static let maximumDepth = 30
-
     /// A notice with a title, a description and one action, built through the convenience initializer.
     private var notice: some View {
         Notice(Self.title, icon: Icon(.wifiSlash), description: Text(Self.description)) {
@@ -81,47 +64,6 @@ struct NoticeAccessibilityTests {
     private func readsTitle(of notice: some View) throws -> Bool {
         let labels = try AccessibilityTree.elements(of: notice).compactMap(\.label)
         return labels.contains { $0.contains(Self.title) }
-    }
-
-    /// Returns the accessibility frame of the first button a view exposes, in screen points.
-    ///
-    /// - Parameter view: The view to host and read.
-    /// - Returns: The frame, or `nil` when the view exposes no button.
-    /// - Throws: ``AccessibilityTree/SwitchOnError`` when accessibility cannot be turned on.
-    private func buttonFrame(of view: some View) throws -> CGRect? {
-        // Reading any tree switches accessibility on, so the hosted window below builds its own tree.
-        _ = try AccessibilityTree.elements(of: EmptyView())
-        let host = UIHostingController(rootView: view)
-        let frame = CGRect(x: 0, y: 0, width: Self.hostSide, height: Self.hostSide)
-        let window = (SceneFreeWindow() as any WindowMaking).makeWindow(frame: frame)
-        window.rootViewController = host
-        window.makeKeyAndVisible()
-        host.view.frame = frame
-        host.view.layoutIfNeeded()
-        RunLoop.current.run(until: Date(timeIntervalSinceNow: Self.settleTime))
-        host.view.layoutIfNeeded()
-        return button(in: host.view, depth: 0)?.accessibilityFrame
-    }
-
-    /// Returns the first button at or below an object, in the order the hierarchy lists them.
-    ///
-    /// - Parameters:
-    ///   - object: The object to start from.
-    ///   - depth: How many levels the walk has already gone down.
-    /// - Returns: The button, or `nil` when there is none.
-    private func button(in object: NSObject, depth: Int) -> NSObject? {
-        guard depth < Self.maximumDepth else { return nil }
-        if object.isAccessibilityElement {
-            return object.accessibilityTraits == .button ? object : nil
-        }
-        let declared = object.accessibilityElements?.compactMap { $0 as? NSObject } ?? []
-        let count = object.accessibilityElementCount()
-        let indexed =
-            count == NSNotFound
-            ? [] : (0..<count).compactMap { object.accessibilityElement(at: $0) as? NSObject }
-        let subviews = (object as? UIView)?.subviews ?? []
-        let children = [declared, indexed, subviews].first { !$0.isEmpty } ?? []
-        return children.lazy.compactMap { button(in: $0, depth: depth + 1) }.first
     }
 
     @Test
@@ -217,20 +159,6 @@ struct NoticeAccessibilityTests {
         let elements = try AccessibilityTree.elements(of: noticeInList)
         #expect(elements.map(\.label) == [Self.groupedLabel, "Try Again"])
         #expect(elements.map(\.traits) == [.staticText, .button])
-    }
-
-    @Test
-    func whenButtonIsBorderless_shouldGrowAccessibilityFrameToMinimumTargetSide() throws {
-        let frame = try #require(try buttonFrame(of: noticeInList))
-        #expect(frame.width >= Self.minimumTargetSide - Self.tolerance)
-        #expect(frame.height >= Self.minimumTargetSide - Self.tolerance)
-    }
-
-    @Test
-    func whenStyleDrawsActionsAsTheyAre_shouldReadButtonBelowMinimumTargetSide() throws {
-        let view = noticeInList.noticeStyle(UngroupedNoticeStyle())
-        let frame = try #require(try buttonFrame(of: view))
-        #expect(frame.height < Self.minimumTargetSide - Self.tolerance)
     }
 }
 #endif
