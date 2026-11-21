@@ -58,6 +58,19 @@ import SwiftUI
 /// }
 /// ```
 public struct AvatarGroup<Content: View>: View {
+    /// A view that draws an avatar group in a given style.
+    private struct ResolvedAvatarGroupStyle<Style: AvatarGroupStyle>: View {
+        /// The style that draws the group.
+        let style: Style
+
+        /// The properties of the avatar group.
+        let configuration: AvatarGroupStyleConfiguration
+
+        var body: some View {
+            style.makeBody(configuration: configuration)
+        }
+    }
+
     /// The current avatar group style.
     @Environment(\.avatarGroupStyle) private var style
 
@@ -73,12 +86,20 @@ public struct AvatarGroup<Content: View>: View {
     }
 
     public var body: some View {
-        AnyView(style.makeBody(configuration: configuration))
+        AnyView(resolved(in: style))
     }
 
     /// The properties handed to the current avatar group style.
     private var configuration: AvatarGroupStyleConfiguration {
         AvatarGroupStyleConfiguration(content: content, overflow: EmptyView?.none)
+    }
+
+    /// Returns a view that draws the group in the given style.
+    ///
+    /// - Parameter style: The style to draw the group in.
+    /// - Returns: A view that draws the group in `style`.
+    private func resolved(in style: some AvatarGroupStyle) -> some View {
+        ResolvedAvatarGroupStyle(style: style, configuration: configuration)
     }
 }
 
