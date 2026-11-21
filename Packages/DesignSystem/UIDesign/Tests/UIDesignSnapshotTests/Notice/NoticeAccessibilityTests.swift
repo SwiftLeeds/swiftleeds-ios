@@ -1,4 +1,5 @@
 #if os(iOS)
+import Foundation
 import SFSafeSymbols
 import SwiftUI
 import Testing
@@ -88,6 +89,7 @@ struct NoticeAccessibilityTests {
     /// - Returns: The frame, or `nil` when the view exposes no button.
     /// - Throws: ``AccessibilityTree/SwitchOnError`` when accessibility cannot be turned on.
     private func buttonFrame(of view: some View) throws -> CGRect? {
+        // Reading any tree switches accessibility on, so the hosted window below builds its own tree.
         _ = try AccessibilityTree.elements(of: EmptyView())
         let host = UIHostingController(rootView: view)
         let frame = CGRect(x: 0, y: 0, width: Self.hostSide, height: Self.hostSide)
@@ -174,7 +176,7 @@ struct NoticeAccessibilityTests {
     }
 
     @Test
-    func whenStyleDrawsConfigurationIcon_shouldReadOnlyTheIconOutsideTheConfiguration() throws {
+    func whenStyleDrawsConfigurationIcon_shouldReadOnlyIconOutsideConfiguration() throws {
         let view = notice.noticeStyle(IconBesideOutsideIconStyle())
         let images = try AccessibilityTree.elements(of: view).filter { $0.traits.contains(.image) }
         #expect(images.count == 1)
@@ -199,7 +201,7 @@ struct NoticeAccessibilityTests {
     }
 
     @Test
-    func whenNoticeHasAnAction_shouldReadOneButton() throws {
+    func whenNoticeHasAction_shouldReadOneButton() throws {
         let notice = Notice(
             title: { Text(Self.title) },
             icon: { Image(icon: Icon(.wifiSlash)) },
@@ -218,7 +220,7 @@ struct NoticeAccessibilityTests {
     }
 
     @Test
-    func whenButtonIsBorderless_shouldReachMinimumTargetSide() throws {
+    func whenButtonIsBorderless_shouldGrowAccessibilityFrameToMinimumTargetSide() throws {
         let frame = try #require(try buttonFrame(of: noticeInList))
         #expect(frame.width >= Self.minimumTargetSide - Self.tolerance)
         #expect(frame.height >= Self.minimumTargetSide - Self.tolerance)
