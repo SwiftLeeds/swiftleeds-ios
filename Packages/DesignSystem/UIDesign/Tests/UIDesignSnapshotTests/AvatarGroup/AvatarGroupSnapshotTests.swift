@@ -178,6 +178,18 @@ import UIKit
         assertSnapshots(of: Self.group(of: 14))
     }
 
+    @Test func whenFourLargeAvatars_shouldDrawCountAtLargeSize() {
+        let view = AvatarGroup {
+            ForEach(Self.people.prefix(4), id: \.self) { name in
+                Avatar(url: nil, size: .large, fallback: .initials(name))
+            }
+        }
+        .padding(.lg)
+        .background(.surface)
+
+        assertSnapshots(of: view)
+    }
+
     @Test func whenHundredAndOneAvatars_shouldShowCountOfNinetyNine() {
         assertSnapshots(of: Self.group(of: 101))
     }
