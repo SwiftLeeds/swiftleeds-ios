@@ -1,3 +1,4 @@
+import Foundation
 import SwiftUI
 
 /// A view that draws the count of the people an avatar group has no room for.
