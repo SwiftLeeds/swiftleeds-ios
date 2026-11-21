@@ -1,5 +1,6 @@
 #if os(watchOS)
 import Foundation
+import SFSafeSymbols
 import SnapshotTesting
 import SwiftUI
 import Testing
@@ -30,6 +31,31 @@ import UIDesign
             .environment(\._colorSchemeContrast, .increased)
 
         assertSnapshots(of: view)
+    }
+
+    @Test func whenFirstTwoOfFiveHaveStatuses_shouldKeepEachMarkWithItsAvatar() {
+        assertSnapshots(of: Self.statusGroup(count: 5))
+    }
+
+    /// Returns a group of small avatars with initials, the first two with a status.
+    ///
+    /// - Parameter count: How many people the group holds. The names repeat after six.
+    /// - Returns: A group that shows two avatars and a count when `count` is above three.
+    private static func statusGroup(count: Int) -> some View {
+        AvatarGroup {
+            ForEach(0..<count, id: \.self) { index in
+                Avatar(
+                    url: nil,
+                    size: .small,
+                    status: index == 0
+                        ? AvatarStatus("Checked in")
+                        : index == 1
+                            ? AvatarStatus("Waitlisted", icon: Icon(.exclamationmarkCircleFill), family: .warning)
+                            : nil,
+                    fallback: .initials(people[index % people.count]),
+                )
+            }
+        }
     }
 
     /// Returns a group of small avatars with initials.
