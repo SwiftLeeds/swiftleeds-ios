@@ -35,6 +35,9 @@ import UIDesign
     /// The moment every test counts towards.
     private static let start = Date(timeIntervalSinceReferenceDate: 800_000_000)
 
+    /// 09:00 GMT on 29 March 2026, the day UK clocks go forward.
+    private static let clockChangeStart = Date(timeIntervalSince1970: 1_774_774_800)
+
     /// Countdowns for each number of minutes left, trailing-aligned, each on its own fill.
     ///
     /// The fill shows the width of each row.
@@ -59,6 +62,21 @@ import UIDesign
         Countdown(to: Self.start)
             .countdownNow(.fixed(Self.start.addingTimeInterval(-timeLeft)))
             .environment(\.locale, Locale(identifier: "en_GB"))
+            .padding(.lg)
+            .background(.surface)
+    }
+
+    /// A countdown that runs 23 hours to 09:00 GMT on 29 March 2026, in a time zone.
+    ///
+    /// UK clocks go forward that morning, so the wording depends on the time zone.
+    ///
+    /// - Parameter timeZone: The time zone the environment sets.
+    /// - Returns: A countdown on the primary surface, with room around it.
+    private func countdownAcrossClockChange(in timeZone: TimeZone) -> some View {
+        Countdown(to: Self.clockChangeStart)
+            .countdownNow(.fixed(Self.clockChangeStart.addingTimeInterval(-23 * 60 * 60)))
+            .environment(\.locale, Locale(identifier: "en_GB"))
+            .environment(\.timeZone, timeZone)
             .padding(.lg)
             .background(.surface)
     }
@@ -90,6 +108,15 @@ import UIDesign
         .padding(.lg)
         .background(.surface)
         assertSpecimenSnapshots(of: view)
+    }
+
+    @Test func whenTimeZoneIsLondonAcrossClockChange_shouldDrawInOneDay() throws {
+        let london = try #require(TimeZone(identifier: "Europe/London"))
+        assertSpecimenSnapshots(of: countdownAcrossClockChange(in: london))
+    }
+
+    @Test func whenTimeZoneIsGMTAcrossClockChange_shouldDrawInTwentyThreeHr() {
+        assertSpecimenSnapshots(of: countdownAcrossClockChange(in: .gmt))
     }
 }
 #endif

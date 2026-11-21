@@ -41,6 +41,12 @@ public struct Countdown: View {
     /// The moment the countdown counts from.
     @Environment(\.countdownNow) private var now
 
+    /// The current calendar.
+    @Environment(\.calendar) private var calendar
+
+    /// The current time zone.
+    @Environment(\.timeZone) private var timeZone
+
     /// The moment the countdown counts to.
     private let start: Date
 
@@ -53,13 +59,28 @@ public struct Countdown: View {
 
     public var body: some View {
         AnyView(resolved(in: style))
-            .accessibilityLabel(now.text(counting: CountdownFormatStyle(to: start, spoken: true)))
+            .accessibilityLabel(now.text(counting: formatStyle(spoken: true)))
             .accessibilityAddTraits(.updatesFrequently)
     }
 
     /// The properties handed to the current countdown style.
     private var configuration: CountdownStyleConfiguration {
-        CountdownStyleConfiguration(label: now.text(counting: CountdownFormatStyle(to: start)))
+        CountdownStyleConfiguration(label: now.text(counting: formatStyle(spoken: false)))
+    }
+
+    /// The calendar the countdown counts days in: the current calendar, in the current time zone.
+    private var countingCalendar: Calendar {
+        var counting = calendar
+        counting.timeZone = timeZone
+        return counting
+    }
+
+    /// Returns the format style that words the time left.
+    ///
+    /// - Parameter spoken: Whether to word the time in full, for VoiceOver.
+    /// - Returns: A format style that counts days in the current calendar and time zone.
+    private func formatStyle(spoken: Bool) -> CountdownFormatStyle {
+        CountdownFormatStyle(to: start, spoken: spoken).calendar(countingCalendar)
     }
 
     /// Returns a view that draws the countdown in the given style.
