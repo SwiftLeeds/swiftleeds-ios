@@ -9,27 +9,53 @@ import Foundation
 /// style.format(start.addingTimeInterval(-12 * 60))  // "in 12 min"
 /// ```
 public struct CountdownFormatStyle: DiscreteFormatStyle, Codable, Equatable, Hashable, Sendable {
+    /// The time before the start from which the words read "now".
+    private static let lastMinute = Duration.seconds(secondsPerMinute)
+
+    /// The number of seconds in a minute.
+    private static let secondsPerMinute = 60
+
+    /// The moment the countdown runs to.
+    private let start: Date
+
     /// The relative style that words the time, anchored at the start.
     private var relative: Date.AnchoredRelativeFormatStyle
+
+    /// The relative style that words "now", in the language of the locale.
+    private var nowWord: Date.AnchoredRelativeFormatStyle
+
+    /// The first moment that reads "now".
+    private var lastMinuteStart: Date {
+        start.addingTimeInterval(-TimeInterval(Self.lastMinute.components.seconds))
+    }
 
     /// Creates a format style that words the time left until a start.
     ///
     /// - Parameter start: The moment the countdown runs to.
     public init(to start: Date) {
+        self.start = start
         relative = Date.AnchoredRelativeFormatStyle(
             anchor: start,
             allowedFields: [.day, .hour, .minute],
             presentation: .numeric,
             unitsStyle: .abbreviated,
         )
+        nowWord = Date.AnchoredRelativeFormatStyle(
+            anchor: start,
+            presentation: .named,
+            unitsStyle: .abbreviated,
+        )
     }
 
     /// Returns the words for the time left from a moment until the start.
     ///
+    /// It reads "now" from the last minute before the start, and after it.
+    ///
     /// - Parameter now: The moment to count from.
-    /// - Returns: The abbreviated time left, such as "in 12 min".
+    /// - Returns: The abbreviated time left, such as "in 12 min", or "now".
     public func format(_ now: Date) -> String {
-        relative.format(now)
+        guard now < lastMinuteStart else { return nowWord.format(start) }
+        return relative.format(now)
     }
 
     /// Returns a copy that words the time in a locale.
@@ -39,6 +65,7 @@ public struct CountdownFormatStyle: DiscreteFormatStyle, Codable, Equatable, Has
     public func locale(_ locale: Locale) -> Self {
         var copy = self
         copy.relative.locale = locale
+        copy.nowWord.locale = locale
         return copy
     }
 
@@ -49,6 +76,7 @@ public struct CountdownFormatStyle: DiscreteFormatStyle, Codable, Equatable, Has
     public func calendar(_ calendar: Calendar) -> Self {
         var copy = self
         copy.relative.calendar = calendar
+        copy.nowWord.calendar = calendar
         return copy
     }
 

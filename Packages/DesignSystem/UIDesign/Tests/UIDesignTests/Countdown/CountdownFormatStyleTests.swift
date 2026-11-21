@@ -80,4 +80,39 @@ struct CountdownFormatStyleTests {
         let now = try Self.clockChangeStart.addingTimeInterval(-23 * 60 * 60)
         #expect(sut.format(now) == "in 23 hr")
     }
+
+    @Test
+    func whenSixtySecondsRemain_shouldReturnNow() {
+        let sut = Self.britishEnglishInGMT
+        let now = Self.start.addingTimeInterval(-60)
+        #expect(sut.format(now) == "now")
+    }
+
+    @Test
+    func whenSixtyOneSecondsRemain_shouldReturnInOneMin() {
+        let sut = Self.britishEnglishInGMT
+        let now = Self.start.addingTimeInterval(-61)
+        #expect(sut.format(now) == "in 1 min")
+    }
+
+    @Test
+    func whenThirtySecondsRemain_shouldReturnNow() {
+        let sut = Self.britishEnglishInGMT
+        let now = Self.start.addingTimeInterval(-30)
+        #expect(sut.format(now) == "now")
+    }
+
+    @Test
+    func whenStartHasPassed_shouldReturnNow() {
+        let sut = Self.britishEnglishInGMT
+        let now = Self.start.addingTimeInterval(5 * 60)
+        #expect(sut.format(now) == "now")
+    }
+
+    @Test
+    func whenLocaleIsGerman_shouldReturnJetzt() {
+        let sut = Self.britishEnglishInGMT.locale(Locale(identifier: "de_DE"))
+        let now = Self.start.addingTimeInterval(-30)
+        #expect(sut.format(now) == "jetzt")
+    }
 }
