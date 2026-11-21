@@ -72,6 +72,35 @@ import UIKit
             .background(.surface)
     }
 
+    @Test func whenLoadedLogoIsAtLargestTextSize_shouldMatchDefaultReferences() {
+        assertSpecimenSnapshots(
+            of: loadedLogo(Self.darkInkMark).dynamicTypeSize(.accessibility5),
+            testName: "whenPhaseIsSuccessWithDarkInkMark_shouldDrawMarkInsetOnTile",
+        )
+    }
+
+    @Test func whenEverySettingIsOn_shouldDrawTilesAndMarks() {
+        // This image is for a person to judge. Its Bold key only proves that the image renders
+        // with Bold on, so it is not a guard against a regression.
+        let allSettings = UITraitCollection {
+            $0.userInterfaceStyle = .dark
+            $0.accessibilityContrast = .high
+            $0.legibilityWeight = .bold
+        }
+        let view = HStack(spacing: .lg) {
+            loadedLogo(Self.darkInkMark)
+            loadedLogo(.wideSampleMark)
+            logoWithTextFallback(in: .failure(SampleLoadError()))
+        }
+        .dynamicTypeSize(.accessibility5)
+        // The snapshot helpers have no Bold variant, so this calls assertSnapshot directly.
+        assertSnapshot(
+            of: view.fixedSize(),
+            as: .image(traits: allSettings),
+            named: "dark-increased-contrast-accessibility5-bold",
+        )
+    }
+
     @Test func whenFailedLogoIsRedacted_shouldDrawGreyTileWithoutFallback() {
         let view = logoWithTextFallback(in: .failure(SampleLoadError()))
             .redacted(reason: .placeholder)
