@@ -1,9 +1,9 @@
 import SwiftUI
 
 extension ShapeStyle where Self == AnyShapeStyle {
-    /// The fill that stands in for content that is missing or still loading.
+    /// The fill for medium-size shapes.
     static var secondaryFill: AnyShapeStyle { AnyShapeStyle(.fill.secondary) }
 
-    /// The fill of an avatar's fallback and skeleton.
+    /// A second name for ``secondaryFill``.
     static var avatarFill: AnyShapeStyle { .secondaryFill }
 }
