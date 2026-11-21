@@ -15,6 +15,9 @@ import SwiftUI
 ///
 /// Draw the configuration's content. A style that leaves it out hides the logo's mark.
 ///
+/// When a logo is redacted, its content is a plain gray fill in place of the mark. A style
+/// that insets its content draws that fill at full size, so it covers the whole logo.
+///
 /// A style may read the environment, such as the color scheme or the Dynamic Type size.
 public protocol LogoStyle: DynamicProperty {
     /// A view that represents the body of a logo.

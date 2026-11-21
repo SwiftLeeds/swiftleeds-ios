@@ -10,14 +10,6 @@ import UIKit
 @MainActor
 @Suite
 struct LogoIntegrationTests {
-    /// The reason a test could not set up or read the logo.
-    private enum ProbeError: Error {
-        /// The sample mark could not be encoded as a PNG.
-        case noMarkData
-        /// The hosted view drew no image.
-        case noImage
-    }
-
     /// The side of the square frame the logo is hosted in, in points.
     private static let side: CGFloat = 200
 
@@ -30,13 +22,16 @@ struct LogoIntegrationTests {
     /// The largest gap per color component that still counts as the same color.
     private static let tolerance: Float = 4.0 / 255
 
-    /// The fraction of the frame's height that the top band covers.
-    private static let bandFraction: CGFloat = 0.1
+    /// How far down the frame the probe point above the mark sits, as a fraction of the frame's height.
+    ///
+    /// The point lies between the tile's inset edge and the top of the fitted mark, so only a mark
+    /// that is stretched to the inset reaches it.
+    private static let aboveMarkFraction: CGFloat = 0.3
 
     /// Writes the wide sample mark to a temporary file.
     ///
     /// - Returns: The URL of the PNG file.
-    /// - Throws: ``ProbeError/noMarkData`` when the mark has no PNG form, or a file error.
+    /// - Throws: A `#require` failure when the mark has no PNG form, or the file error of the write.
     private static func writeWideMark() throws -> URL {
         let renderer = ImageRenderer(content: Image.wideSampleMark)
         renderer.scale = 1
@@ -50,7 +45,8 @@ struct LogoIntegrationTests {
     ///
     /// - Parameter window: The window to draw.
     /// - Returns: The pixels of the window, at one pixel to the point.
-    /// - Throws: ``ProbeError/noImage`` when the drawing has no bitmap.
+    /// - Throws: A `#require` failure when the drawing has no bitmap, or the error `Pixels` throws
+    ///   when it cannot read the bitmap.
     private static func pixels(of window: UIWindow) throws -> Pixels {
         let format = UIGraphicsImageRendererFormat()
         format.scale = 1
@@ -108,10 +104,10 @@ struct LogoIntegrationTests {
         host.view.frame = frame
         host.view.layoutIfNeeded()
 
-        let leadingBarCentre = CGPoint(x: Self.side / 4, y: Self.side / 2)
+        let leadingBarCenter = CGPoint(x: Self.side / 4, y: Self.side / 2)
         var checks = 0
         var pixels = try Self.pixels(of: window)
-        while !Self.isBar(pixels.color(at: leadingBarCentre)), checks < Self.checkLimit {
+        while !Self.isBar(pixels.color(at: leadingBarCenter)), checks < Self.checkLimit {
             try await Task.sleep(for: Self.interval)
             pixels = try Self.pixels(of: window)
             checks += 1
@@ -119,12 +115,11 @@ struct LogoIntegrationTests {
 
         let leadingBar = Self.resolved(Image.wideSampleMarkLeadingBar)
         #expect(
-            Self.isClose(pixels.color(at: leadingBarCentre), to: leadingBar),
-            "The leading bar's centre is \(pixels.color(at: leadingBarCentre)), expected \(leadingBar)",
+            Self.isClose(pixels.color(at: leadingBarCenter), to: leadingBar),
+            "The leading bar's center is \(pixels.color(at: leadingBarCenter)), expected \(leadingBar)",
         )
-        let band = CGRect(x: 0, y: 0, width: Self.side, height: Self.side * Self.bandFraction)
-        let stretched = pixels.colors(in: band).filter(Self.isBar)
-        #expect(stretched.isEmpty, "The mark reaches the top tenth of the frame in \(stretched.count) pixels")
+        let aboveMark = pixels.color(at: CGPoint(x: Self.side / 4, y: Self.side * Self.aboveMarkFraction))
+        #expect(!Self.isBar(aboveMark), "The mark is stretched above its fitted height: \(aboveMark)")
     }
 }
 #endif

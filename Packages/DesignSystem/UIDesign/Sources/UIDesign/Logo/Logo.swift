@@ -6,7 +6,7 @@ import SwiftUI
 /// The mark loads from `url`. It keeps its proportions, so a wide mark leaves
 /// space above and below it rather than being cropped or stretched. The frame
 /// is the caller's, and a screen scales it with `@ScaledMetric`. A redacted logo
-/// draws a plain grey tile, and asks for no mark.
+/// draws gray in place of the mark.
 ///
 /// ```swift
 /// Logo(url: sponsor.logoURL)
@@ -74,14 +74,15 @@ public struct Logo<Fallback: View>: View {
     ///
     /// ```swift
     /// Logo(url: sponsor.logoURL) {
-    ///     Text("EX")
+    ///     Image(systemName: "building.2")
     /// }
     /// ```
     ///
     /// - Parameters:
-    ///   - url: Where the mark loads from. A `nil` url draws the fallback.
+    ///   - url: Where the mark loads from. A `nil` URL draws the fallback.
     ///   - fallback: A content builder that creates what to draw when there is no mark to show.
-    ///     It does not show while the logo loads.
+    ///     It does not show while the logo loads. Text in the fallback needs a frame that scales
+    ///     with the text size, or `.minimumScaleFactor`. A symbol needs neither.
     public init(url: URL?, @ViewBuilder fallback: () -> Fallback) {
         source = url.map(Source.url) ?? .noLogo
         self.fallback = fallback()
@@ -109,7 +110,7 @@ public struct Logo<Fallback: View>: View {
 
     /// The mark fitted to the frame, the fallback standing in for it, or nothing while it loads.
     ///
-    /// A redacted logo draws a plain grey shape and asks for no mark.
+    /// A redacted logo draws a plain gray shape in place of the mark.
     @ViewBuilder
     private var content: some View {
         if redactionReasons.contains(.placeholder) {
@@ -162,37 +163,37 @@ public struct Logo<Fallback: View>: View {
     }
 }
 
+extension Logo where Fallback == EmptyView {
+    /// Creates a logo that loads its mark from a URL.
+    ///
+    /// - Parameter url: Where the mark loads from. A `nil` URL draws the empty tile.
+    public init(url: URL?) {
+        self.init(url: url) { EmptyView() }
+    }
+}
+
 #if DEBUG
 #Preview("No logo") {
-    Logo(url: nil) { Text("EX") }
+    Logo(url: nil) { Image(systemName: "building.2") }
         .frame(width: 56, height: 56)
         .padding()
 }
 
 #Preview("Loading") {
-    Logo(phase: .empty) { Text("EX") }
+    Logo(phase: .empty) { Image(systemName: "building.2") }
         .frame(width: 56, height: 56)
         .padding()
 }
 
 #Preview("Loaded") {
-    Logo(phase: .success(.previewMark)) { Text("EX") }
+    Logo(phase: .success(.previewMark)) { Image(systemName: "building.2") }
         .frame(width: 56, height: 56)
         .padding()
 }
 
 #Preview("Failed") {
-    Logo(phase: .failure(URLError(.badServerResponse))) { Text("EX") }
+    Logo(phase: .failure(URLError(.badServerResponse))) { Image(systemName: "building.2") }
         .frame(width: 56, height: 56)
         .padding()
 }
 #endif
-
-extension Logo where Fallback == EmptyView {
-    /// Creates a logo that loads its mark from a URL.
-    ///
-    /// - Parameter url: Where the mark loads from. A `nil` url draws nothing and asks for nothing.
-    public init(url: URL?) {
-        self.init(url: url) { EmptyView() }
-    }
-}

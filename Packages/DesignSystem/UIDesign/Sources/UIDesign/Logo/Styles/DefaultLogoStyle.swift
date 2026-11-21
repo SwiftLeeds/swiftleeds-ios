@@ -2,7 +2,10 @@ import SwiftUI
 
 /// The default logo style.
 ///
-/// Like `DefaultButtonStyle` and `DefaultLabelStyle`, it is reached as ``LogoStyle/automatic``.
+/// It draws the mark inset on a rounded square, filled with the surface color, or with the
+/// secondary color in dark mode. Increase Contrast adds an outline.
+///
+/// You can also use ``LogoStyle/automatic`` to construct this style.
 public struct DefaultLogoStyle: LogoStyle {
     /// The share of the tile that the mark may fill.
     private struct MarkScale {
@@ -30,9 +33,17 @@ public struct DefaultLogoStyle: LogoStyle {
     /// The current redaction reasons applied to the view hierarchy.
     @Environment(\.redactionReasons) private var redactionReasons
 
+    /// The current color scheme.
+    @Environment(\.colorScheme) private var colorScheme
+
     /// The rounded square the logo is drawn on.
     private var tile: RoundedRectangle {
         RoundedRectangle(cornerRadius: .tile)
+    }
+
+    /// What the tile is filled with: the secondary color in dark mode, the surface color otherwise.
+    private var tileFill: AnyShapeStyle {
+        colorScheme == .dark ? AnyShapeStyle(Color.secondary) : AnyShapeStyle(BrandShapeStyle.surface)
     }
 
     /// Creates the default logo style.
@@ -43,9 +54,10 @@ public struct DefaultLogoStyle: LogoStyle {
         let scale = redactionReasons.contains(.placeholder) ? MarkScale.whole : MarkScale.inset
         return Color.clear
             .overlay { scale.applied(to: configuration.content) }
-            .background(.surface, in: tile)
+            .background(tileFill, in: tile)
             .clipShape(tile)
             .overlay { tile.strokeBorder(.border, lineWidth: .edge) }
+            .overlay { tile.strokeBorder(.avatarOutline, lineWidth: .outline) }
     }
 }
 

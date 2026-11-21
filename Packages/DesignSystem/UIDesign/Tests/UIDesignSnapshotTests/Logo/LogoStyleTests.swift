@@ -15,14 +15,14 @@ struct LogoStyleTests {
         }
     }
 
-    /// A style that draws the name of the color scheme it reads from the environment.
+    /// A style that draws the name of the color scheme it reads from the environment, such as "dark".
     private struct SchemeLogoStyle: LogoStyle {
         /// The color scheme this style reads.
         @Environment(\.colorScheme) private var colorScheme
 
         @MainActor
         func makeBody(configuration: Configuration) -> some View {
-            Text(colorScheme == .dark ? "dark" : "light")
+            Text(String(describing: colorScheme))
         }
     }
 
@@ -36,13 +36,13 @@ struct LogoStyleTests {
         #expect(elements.map(\.label) == [Self.styleText])
     }
 
-    @Test(arguments: [(ColorScheme.dark, "dark"), (ColorScheme.light, "light")])
-    func whenStyleReadsColorScheme_shouldDrawSchemeName(scheme: ColorScheme, name: String) throws {
+    @Test(arguments: ColorScheme.allCases)
+    func whenStyleReadsColorScheme_shouldDrawSchemeName(scheme: ColorScheme) throws {
         let view = Logo(url: nil)
             .logoStyle(SchemeLogoStyle())
             .environment(\.colorScheme, scheme)
         let elements = try AccessibilityTree.elements(of: view)
-        #expect(elements.map(\.label) == [name])
+        #expect(elements.map(\.label) == [String(describing: scheme)])
     }
 }
 #endif

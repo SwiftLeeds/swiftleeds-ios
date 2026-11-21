@@ -8,7 +8,7 @@ extension Image {
     /// The width of the preview mark's ring, in points.
     private static let previewMarkRingWidth: CGFloat = 28
 
-    /// The share of the preview mark's side left clear on each edge of its centre dot.
+    /// The share of the preview mark's side left clear on each edge of its center dot.
     private static let previewMarkDotMarginShare: CGFloat = 0.35
 
     /// A made-up round mark of a ring and a dot, with no lettering, for previews.

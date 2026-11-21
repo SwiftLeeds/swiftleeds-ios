@@ -18,47 +18,41 @@ import UIKit
         }
     }
 
-    /// The side of a logo's frame, as a sponsor row draws it, in points.
-    private static let tileSide: CGFloat = 56
+    /// A row of logos, each framed as a screen frames one: the frame scales with the text size.
+    private struct ScaledLogoRow: View {
+        /// The side of a logo's frame, in points at the default text size.
+        @ScaledMetric(relativeTo: .body) private var side = LogoSnapshotTests.tileSide
 
-    /// The side of the dark sample mark, in points.
-    private static let darkMarkSide: CGFloat = 200
+        var body: some View {
+            HStack(spacing: .lg) {
+                tile(Logo(phase: .success(.darkInkSampleMark)) { EmptyView() })
+                tile(Logo(phase: .success(.wideSampleMark)) { EmptyView() })
+                tile(Logo(phase: .success(.whiteBackedSampleMark)) { EmptyView() })
+                tile(Logo(phase: .failure(SampleLoadError())) { Text("EX") })
+            }
+        }
 
-    /// The width of the dark sample mark's ring, in points.
-    private static let darkMarkRingWidth: CGFloat = 24
-
-    /// The share of the dark sample mark's side that its centre dot spans.
-    private static let darkMarkDotShare: CGFloat = 0.3
-
-    /// The lightness of the dark sample mark's ink, from 0 (black) to 1 (white).
-    private static let darkInk = Color(white: 0.1)
-
-    /// A made-up round mark in dark ink on a transparent background, with no lettering.
-    private static var darkInkMark: Image {
-        let size = CGSize(width: darkMarkSide, height: darkMarkSide)
-        return Image(size: size) { context in
-            let outer = CGRect(origin: .zero, size: size).insetBy(dx: darkMarkRingWidth, dy: darkMarkRingWidth)
-            context.stroke(Path(ellipseIn: outer), with: .color(darkInk), lineWidth: darkMarkRingWidth)
-            let dotSide = size.width * darkMarkDotShare
-            let dot = CGRect(
-                x: (size.width - dotSide) / 2,
-                y: (size.height - dotSide) / 2,
-                width: dotSide,
-                height: dotSide,
-            )
-            context.fill(Path(ellipseIn: dot), with: .color(darkInk))
+        /// Frames a logo at the scaled side, on the base surface.
+        ///
+        /// - Parameter logo: The logo to frame.
+        /// - Returns: The logo with room around it.
+        private func tile(_ logo: some View) -> some View {
+            logo
+                .frame(width: side, height: side)
+                .padding(.lg)
+                .background(.surface)
         }
     }
+
+    /// The side of a logo's frame, as a sponsor row draws it, in points.
+    private static let tileSide: CGFloat = 56
 
     /// Draws a loaded mark in a logo's frame, on the base surface.
     ///
     /// - Parameter mark: The image the logo has loaded.
     /// - Returns: The logo with room around it.
     private func loadedLogo(_ mark: Image) -> some View {
-        Logo(phase: .success(mark)) { EmptyView() }
-            .frame(width: Self.tileSide, height: Self.tileSide)
-            .padding(.lg)
-            .background(.surface)
+        loadedLogo(mark, on: BrandShapeStyle.surface)
     }
 
     /// Draws a logo with a text fallback in a logo's frame, on the base surface.
@@ -72,9 +66,22 @@ import UIKit
             .background(.surface)
     }
 
+    /// Draws a loaded mark in a logo's frame, on a background.
+    ///
+    /// - Parameters:
+    ///   - mark: The image the logo has loaded.
+    ///   - background: The style the logo's surroundings are drawn in.
+    /// - Returns: The logo with room around it.
+    private func loadedLogo(_ mark: Image, on background: some ShapeStyle) -> some View {
+        Logo(phase: .success(mark)) { EmptyView() }
+            .frame(width: Self.tileSide, height: Self.tileSide)
+            .padding(.lg)
+            .background(background)
+    }
+
     @Test func whenLoadedLogoIsAtLargestTextSize_shouldMatchDefaultReferences() {
         assertSpecimenSnapshots(
-            of: loadedLogo(Self.darkInkMark).dynamicTypeSize(.accessibility5),
+            of: loadedLogo(.darkInkSampleMark).dynamicTypeSize(.accessibility5),
             testName: "whenPhaseIsSuccessWithDarkInkMark_shouldDrawMarkInsetOnTile",
         )
     }
@@ -87,12 +94,7 @@ import UIKit
             $0.accessibilityContrast = .high
             $0.legibilityWeight = .bold
         }
-        let view = HStack(spacing: .lg) {
-            loadedLogo(Self.darkInkMark)
-            loadedLogo(.wideSampleMark)
-            logoWithTextFallback(in: .failure(SampleLoadError()))
-        }
-        .dynamicTypeSize(.accessibility5)
+        let view = ScaledLogoRow().dynamicTypeSize(.accessibility5)
         // The snapshot helpers have no Bold variant, so this calls assertSnapshot directly.
         assertSnapshot(
             of: view.fixedSize(),
@@ -101,26 +103,26 @@ import UIKit
         )
     }
 
-    @Test func whenFailedLogoIsRedacted_shouldDrawGreyTileWithoutFallback() {
+    @Test func whenFailedLogoIsRedacted_shouldDrawGrayTileWithoutFallback() {
         let view = logoWithTextFallback(in: .failure(SampleLoadError()))
             .redacted(reason: .placeholder)
         assertSpecimenSnapshots(of: view)
     }
 
-    @Test func whenLoadedLogoIsRedacted_shouldDrawGreyTileWithoutMark() {
-        let view = loadedLogo(Self.darkInkMark)
+    @Test func whenLoadedLogoIsRedacted_shouldDrawGrayTileWithoutMark() {
+        let view = loadedLogo(.darkInkSampleMark)
             .redacted(reason: .placeholder)
         assertSpecimenSnapshots(of: view)
     }
 
-    @Test func whenRedactedLogoHasCustomStyle_shouldDrawGreyFill() {
+    @Test func whenRedactedLogoHasCustomStyle_shouldDrawGrayFill() {
         let view = logoWithTextFallback(in: .failure(SampleLoadError()))
             .logoStyle(ContentOnlyLogoStyle())
             .redacted(reason: .placeholder)
         assertSpecimenSnapshots(of: view)
     }
 
-    @Test func whenUrlIsNilWithTextFallback_shouldDrawTextOnTile() {
+    @Test func whenURLIsNilWithTextFallback_shouldDrawTextOnTile() {
         let view = Logo(url: nil) { Text("EX") }
             .frame(width: Self.tileSide, height: Self.tileSide)
             .padding(.lg)
@@ -137,35 +139,57 @@ import UIKit
     }
 
     @Test func whenPhaseIsSuccessWithDarkInkMark_shouldDrawMarkInsetOnTile() {
-        assertContrastSnapshots(of: loadedLogo(Self.darkInkMark))
+        assertContrastSnapshots(of: loadedLogo(.darkInkSampleMark))
     }
 
     @Test func whenPhaseIsSuccessWithWideMark_shouldDrawMarkInsetOnTile() {
         assertContrastSnapshots(of: loadedLogo(.wideSampleMark))
     }
 
-    @Test func whenTileSitsOnSurfaceOfOwnColor_shouldDrawEdgeAroundTile() {
+    @Test func whenPhaseIsSuccessWithWhiteBackedMark_shouldDrawMarkInsetOnTile() {
+        assertContrastSnapshots(of: loadedLogo(.whiteBackedSampleMark))
+    }
+
+    @Test func whenTileSitsOnGroupedSurface_shouldDrawEdgeAroundTile() {
         let view = Logo(phase: .empty) { EmptyView() }
             .frame(width: Self.tileSide, height: Self.tileSide)
             .padding(.lg)
-            .background(.surface)
-        assertSpecimenSnapshots(of: view)
+            .background(.groupedSurface)
+        let light = UITraitCollection { $0.userInterfaceStyle = .light }
+        // Light only: in dark mode the grouped surface and the surface are both black, so a dark
+        // image would match the empty-phase image. This calls assertSnapshot directly.
+        assertSnapshot(
+            of: view.dynamicTypeSize(.large).fixedSize(),
+            as: .image(traits: light),
+            named: "light-default",
+        )
     }
 
-    @Test func whenPhaseIsSuccessInDarkElevatedSheet_shouldDrawTileOnElevatedSurface() {
+    @Test func whenPhaseIsSuccessOnGrayPageInDarkElevatedSheet_shouldDrawMarkOnTile() {
+        assertDarkElevatedSnapshot(of: loadedLogo(.darkInkSampleMark, on: Color.gray))
+    }
+
+    @Test func whenPhaseIsSuccessOnGroupedSurfaceInDarkElevatedSheet_shouldDrawMarkOnTile() {
+        assertDarkElevatedSnapshot(of: loadedLogo(.darkInkSampleMark, on: .groupedSurface))
+    }
+
+    /// Compares a view with its reference image in a dark, elevated sheet.
+    ///
+    /// The snapshot helpers have no elevated variant, so this calls `assertSnapshot` directly.
+    ///
+    /// - Parameters:
+    ///   - view: The view to draw.
+    ///   - testName: The name of the test, which names the reference image.
+    private func assertDarkElevatedSnapshot(of view: some View, testName: String = #function) {
         let darkElevated = UITraitCollection {
             $0.userInterfaceStyle = .dark
             $0.userInterfaceLevel = .elevated
         }
-        let view = Logo(phase: .success(Self.darkInkMark)) { EmptyView() }
-            .frame(width: Self.tileSide, height: Self.tileSide)
-            .padding(.lg)
-            .background(Color.gray)
-        // The snapshot helpers have no elevated variant, so this calls assertSnapshot directly.
         assertSnapshot(
             of: view.dynamicTypeSize(.large).fixedSize(),
             as: .image(traits: darkElevated),
             named: "dark-elevated",
+            testName: testName,
         )
     }
 }
