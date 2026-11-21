@@ -24,8 +24,7 @@ struct AvatarFillText: View {
     ///
     /// - Parameters:
     ///   - text: The text to draw.
-    ///   - shrinksToFit: Whether the text may shrink to fit the avatar. A bare `Bool` because it is
-    ///     a view-layer switch with two states, named at each call site.
+    ///   - shrinksToFit: Whether the text may shrink to fit the avatar.
     init(_ text: Text, shrinksToFit: Bool) {
         self.text = text
         self.shrinksToFit = shrinksToFit

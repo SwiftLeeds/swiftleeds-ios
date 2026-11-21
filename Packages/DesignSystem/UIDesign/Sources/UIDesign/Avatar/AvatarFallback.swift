@@ -62,9 +62,6 @@ public struct AvatarFallback: View {
     /// Returns the person's initials, or the symbol when there is nothing to
     /// abbreviate.
     ///
-    /// The letters take their size from the avatar rather than from the text
-    /// size, which the avatar has already answered.
-    ///
     /// - Parameter name: The name to abbreviate.
     /// - Returns: A view that shows the initials on a plain fill, or the symbol when the name has nothing to
     ///   abbreviate.
