@@ -7,6 +7,31 @@ import UIDesign
 
 @MainActor
 @Suite(.snapshots(record: .never)) struct CountdownSnapshotTests {
+    /// A countdown style that draws the color scheme it reads from the environment as a word.
+    private struct ColorSchemeCountdownStyle: CountdownStyle {
+        /// The color scheme the style reads from the environment.
+        @Environment(\.colorScheme) private var colorScheme
+
+        func makeBody(configuration: Configuration) -> some View {
+            Text(colorScheme == .dark ? "dark" : "light")
+        }
+    }
+
+    /// A countdown style that draws the label in a fixed frame, so a test can tell it from the default.
+    private struct FixedFrameCountdownStyle: CountdownStyle {
+        /// The width of the frame, in points.
+        static let width: CGFloat = 160
+
+        /// The height of the frame, in points.
+        static let height: CGFloat = 44
+
+        func makeBody(configuration: Configuration) -> some View {
+            configuration.label
+                .frame(width: Self.width, height: Self.height)
+                .border(Color.primary)
+        }
+    }
+
     /// The moment every test counts towards.
     private static let start = Date(timeIntervalSinceReferenceDate: 800_000_000)
 
@@ -44,6 +69,27 @@ import UIDesign
 
     @Test func whenNumberChanges_shouldKeepWidthWithinSameDigitCount() {
         assertSnapshots(of: changingNumbers)
+    }
+
+    @Test func whenStyleReadsColorScheme_shouldSeeTheCurrentScheme() {
+        let view = Countdown(to: Self.start)
+            .countdownNow(.fixed(Self.start.addingTimeInterval(-12 * 60)))
+            .countdownStyle(ColorSchemeCountdownStyle())
+            .padding(.lg)
+            .background(.surface)
+        assertSpecimenSnapshots(of: view)
+    }
+
+    @Test func whenStyleIsSetOnParent_shouldReachCountdown() {
+        let view = VStack {
+            Countdown(to: Self.start)
+                .countdownNow(.fixed(Self.start.addingTimeInterval(-12 * 60)))
+        }
+        .environment(\.locale, Locale(identifier: "en_GB"))
+        .countdownStyle(FixedFrameCountdownStyle())
+        .padding(.lg)
+        .background(.surface)
+        assertSpecimenSnapshots(of: view)
     }
 }
 #endif

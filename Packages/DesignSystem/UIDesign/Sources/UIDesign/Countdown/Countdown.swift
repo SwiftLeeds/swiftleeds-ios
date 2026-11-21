@@ -18,6 +18,19 @@ import SwiftUI
 /// A countdown is not a control. A screen that shows an action should not hide it when the
 /// countdown reads "now".
 public struct Countdown: View {
+    /// A view that draws a countdown in a given style.
+    private struct ResolvedCountdownStyle<Style: CountdownStyle>: View {
+        /// The style that draws the countdown.
+        let style: Style
+
+        /// The properties of the countdown.
+        let configuration: CountdownStyleConfiguration
+
+        var body: some View {
+            style.makeBody(configuration: configuration)
+        }
+    }
+
     /// The current countdown style.
     @Environment(\.countdownStyle) private var style
 
@@ -35,11 +48,19 @@ public struct Countdown: View {
     }
 
     public var body: some View {
-        AnyView(style.makeBody(configuration: configuration))
+        AnyView(resolved(in: style))
     }
 
     /// The properties handed to the current countdown style.
     private var configuration: CountdownStyleConfiguration {
         CountdownStyleConfiguration(label: now.text(counting: CountdownFormatStyle(to: start)))
+    }
+
+    /// Returns a view that draws the countdown in the given style.
+    ///
+    /// - Parameter style: The style to draw the countdown in.
+    /// - Returns: A view that draws the countdown in `style`.
+    private func resolved(in style: some CountdownStyle) -> some View {
+        ResolvedCountdownStyle(style: style, configuration: configuration)
     }
 }
