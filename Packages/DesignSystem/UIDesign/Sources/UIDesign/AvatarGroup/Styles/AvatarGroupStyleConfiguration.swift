@@ -33,11 +33,15 @@ public struct AvatarGroupStyleConfiguration {
     }
 
     /// The avatars to show.
+    ///
+    /// Each avatar is a separate view, so a modifier on `content` applies to each one.
+    /// Place `content` in a stack to treat the avatars as one view.
     public let content: Content
 
     /// The count of the people who do not fit, drawn and ready to place.
     ///
-    /// It is `nil` when every person fits. Where it goes is the style's choice.
+    /// It is `nil` when every person fits. A style places it where it chooses, and a
+    /// style that leaves it out hides the count.
     public let overflow: Overflow?
 
     /// Creates the properties of an avatar group, erasing each view's type.

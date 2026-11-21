@@ -331,7 +331,7 @@ extension AvatarGroupSnapshotTests {
         )
     }
 
-    /// Returns a group of five small avatars with initials, the first two with a status.
+    /// Returns a group of small avatars with initials, the first two with a status.
     ///
     /// - Parameter count: How many people the group holds.
     /// - Returns: A group that shows two avatars and a count when `count` is above three.

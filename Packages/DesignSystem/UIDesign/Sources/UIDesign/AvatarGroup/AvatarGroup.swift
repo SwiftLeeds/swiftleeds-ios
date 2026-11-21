@@ -20,9 +20,11 @@ import SwiftUI
 ///
 /// ### Naming a group for VoiceOver
 ///
-/// A group adds no element of its own, and each avatar's status stays an
-/// element. To make a group that stands alone one element, label it and mark it
-/// as an image.
+/// A group adds no element of its own, and the status of each avatar it shows
+/// stays an element. A status on a person the group does not show, past the
+/// second when "+N" shows, is neither drawn nor read. Put people with a status
+/// first, or name the status in the group's own label. To make a group that
+/// stands alone one element, label it and mark it as an image.
 ///
 /// ```swift
 /// AvatarGroup {
@@ -40,8 +42,8 @@ import SwiftUI
 ///
 /// ### Placing a group beside names
 ///
-/// At the accessibility text sizes three avatars take about two fifths of a row.
-/// Stack the group above the names then, to give the names more width.
+/// At the accessibility text sizes a group takes much of a row's width. Stack
+/// the group above the names then, to give the names more width.
 ///
 /// ```swift
 /// @Environment(\.dynamicTypeSize) private var dynamicTypeSize
@@ -93,17 +95,17 @@ public struct AvatarGroup<Content: View>: View {
 
     /// The properties handed to the current avatar group style.
     ///
-    /// A group of more than the mark limit shows all but one mark's worth of avatars and a
+    /// A group of more than the drawn limit shows one fewer avatar than the limit, then a
     /// count of the rest. A group with no avatar to take a size from shows every member.
     ///
     /// - Parameter subviews: The members of the group.
     /// - Returns: The avatars to show and, when some do not fit, the count of the rest.
     private func configuration(for subviews: SubviewsCollection) -> AvatarGroupStyleConfiguration {
         let size = subviews.lazy.compactMap(\.containerValues.avatarSize).first
-        guard subviews.count > markLimit, let size else {
+        guard subviews.count > drawnLimit, let size else {
             return AvatarGroupStyleConfiguration(content: ForEach(subviews) { $0 }, overflow: EmptyView?.none)
         }
-        let shown = markLimit - 1
+        let shown = drawnLimit - 1
         return AvatarGroupStyleConfiguration(
             content: ForEach(subviews.prefix(shown)) { $0 },
             overflow: Avatar(url: nil, size: size) { AvatarGroupOverflowCount(subviews.count - shown) },
@@ -121,9 +123,10 @@ public struct AvatarGroup<Content: View>: View {
     }
 }
 
-/// The most marks a group draws across, the count included.
-private let markLimit = 3
+/// The most avatars a group draws across, the count included.
+private let drawnLimit = 3
 
+/// The names of the people the previews draw.
 private let previewPeople = [
     PersonNameComponents(givenName: "Ada", familyName: "Archer"),
     PersonNameComponents(givenName: "Blake", familyName: "Brooks"),

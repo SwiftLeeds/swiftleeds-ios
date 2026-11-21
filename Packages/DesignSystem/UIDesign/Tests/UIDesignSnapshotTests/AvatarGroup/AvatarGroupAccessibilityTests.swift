@@ -89,7 +89,7 @@ struct AvatarGroupAccessibilityTests {
         #expect(element.traits == .image)
     }
 
-    /// Returns a group of avatars beside the names it stands for, as a Schedule row draws it.
+    /// Returns a group of avatars beside the names it stands for.
     ///
     /// - Parameters:
     ///   - count: How many people the group holds.

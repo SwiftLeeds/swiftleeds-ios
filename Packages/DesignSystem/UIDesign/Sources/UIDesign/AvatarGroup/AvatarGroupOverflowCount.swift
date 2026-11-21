@@ -8,9 +8,7 @@ struct AvatarGroupOverflowCount: View {
     /// The diameter of the avatar containing this view.
     @Environment(\.avatarDiameter) private var diameter
 
-    /// The count of hidden people.
-    ///
-    /// A count is a number the view only formats, and it carries no rule.
+    /// The number of people the group has no room for.
     private let hiddenCount: Int
 
     /// The count's font size, as a fraction of the avatar's diameter.

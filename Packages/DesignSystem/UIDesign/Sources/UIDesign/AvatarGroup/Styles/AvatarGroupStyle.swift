@@ -17,9 +17,6 @@ import SwiftUI
 /// }
 /// ```
 ///
-/// The count of the people who do not fit arrives drawn, so a style places it
-/// and nothing more. A style that leaves it out hides the count.
-///
 /// A style may read the environment, so it can answer the color scheme and the
 /// Dynamic Type size.
 public protocol AvatarGroupStyle: DynamicProperty {
