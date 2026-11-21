@@ -19,6 +19,9 @@ public struct Logo<Fallback: View>: View {
 
         /// The mark loads from this URL.
         case url(URL)
+
+        /// A phase of loading, drawn as it is.
+        case phase(AsyncImagePhase)
     }
 
     /// A view that draws a logo in a given style.
@@ -40,6 +43,20 @@ public struct Logo<Fallback: View>: View {
     /// Where the mark comes from.
     private let source: Source
 
+    /// What to draw when there is no mark to show.
+    private let fallback: Fallback
+
+    /// Creates a logo that draws one phase of loading, for tests and previews.
+    ///
+    /// - Parameters:
+    ///   - phase: The phase to draw.
+    ///   - fallback: A content builder that creates what to draw when the
+    ///     phase is a failure.
+    package init(phase: AsyncImagePhase, @ViewBuilder fallback: () -> Fallback) {
+        source = .phase(phase)
+        self.fallback = fallback()
+    }
+
     public var body: some View {
         AnyView(resolved(in: style))
     }
@@ -49,21 +66,36 @@ public struct Logo<Fallback: View>: View {
         LogoStyleConfiguration(content: content)
     }
 
-    /// The mark fitted to the frame, or nothing while it loads.
+    /// The mark fitted to the frame, the fallback standing in for it, or nothing while it loads.
     @ViewBuilder
     private var content: some View {
         switch source {
         case .noLogo:
-            EmptyView()
+            fallback
 
         case .url(let url):
             AsyncImage(url: url) { phase in
-                if case .success(let image) = phase {
-                    image
-                        .resizable()
-                        .scaledToFit()
-                }
+                drawing(phase)
             }
+
+        case .phase(let phase):
+            drawing(phase)
+        }
+    }
+
+    /// Returns what the logo draws in one phase of loading.
+    ///
+    /// - Parameter phase: The phase to draw.
+    /// - Returns: The mark fitted to the frame when it loaded, the fallback
+    ///   when it failed, and nothing while it loads.
+    @ViewBuilder
+    private func drawing(_ phase: AsyncImagePhase) -> some View {
+        if let image = phase.image {
+            image
+                .resizable()
+                .scaledToFit()
+        } else if phase.error != nil {
+            fallback
         }
     }
 
@@ -82,5 +114,6 @@ extension Logo where Fallback == EmptyView {
     /// - Parameter url: Where the mark loads from. A `nil` url draws nothing and asks for nothing.
     public init(url: URL?) {
         source = url.map(Source.url) ?? .noLogo
+        fallback = EmptyView()
     }
 }
