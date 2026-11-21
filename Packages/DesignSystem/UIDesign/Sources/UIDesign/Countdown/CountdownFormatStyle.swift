@@ -90,14 +90,14 @@ public struct CountdownFormatStyle: DiscreteFormatStyle, Codable, Equatable, Has
         return copy
     }
 
-    /// Returns the moment before a moment at which the words last changed.
-    ///
-    /// From the last minute on, that is the moment the words start to read "now".
+    /// Returns the last moment before a moment that reads differently from it.
     ///
     /// - Parameter now: The moment to look back from.
-    /// - Returns: The moment the words last changed, or `nil` if there is none.
+    /// - Returns: The last moment that reads differently from `now`, or `nil` if there is none.
     public func discreteInput(before now: Date) -> Date? {
-        guard now < lastMinuteStart else { return lastMinuteStart }
+        guard now < lastMinuteStart else {
+            return Date(timeIntervalSinceReferenceDate: lastMinuteStart.timeIntervalSinceReferenceDate.nextDown)
+        }
         return relative.discreteInput(before: now)
     }
 

@@ -158,11 +158,25 @@ struct CountdownFormatStyleTests {
         #expect(sut.discreteInput(after: now) == nil)
     }
 
-    @Test(arguments: [-30.0, 5 * 60.0])
-    func whenReadingNow_shouldReturnStartOfNowStretchBefore(secondsFromStart: TimeInterval) {
+    @Test(arguments: [-60.0, -30.0, 5 * 60.0])
+    func whenReadingNow_shouldReturnLastMomentOfPreviousText(secondsFromStart: TimeInterval) throws {
         let sut = Self.britishEnglishInGMT
         let now = Self.start.addingTimeInterval(secondsFromStart)
-        #expect(sut.discreteInput(before: now) == Self.start.addingTimeInterval(-60))
+        let moment = try #require(sut.discreteInput(before: now))
+        #expect(moment < now)
+        #expect(sut.format(moment) != sut.format(now))
+        #expect(sut.format(moment.addingTimeInterval(Self.justBefore)) == sut.format(now))
+    }
+
+    @Test
+    func whenWalkingBackFromNow_shouldReturnEarlierMomentEachStep() throws {
+        let sut = Self.britishEnglishInGMT
+        var moment = Self.start.addingTimeInterval(-60)
+        for _ in 0..<5 {
+            let earlier = try #require(sut.discreteInput(before: moment))
+            #expect(earlier < moment)
+            moment = earlier
+        }
     }
 
     @Test
