@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// A view that draws a short text on the avatar fill, sized to the avatar.
+/// A view that draws a short text on a neutral grey fill, sized to the avatar.
 ///
 /// The text takes its size from the avatar's diameter rather than from the text size, which the
 /// avatar has already answered.
@@ -20,7 +20,7 @@ struct AvatarFillText: View {
     /// The smallest fraction of its size that text may shrink to.
     private static let smallestScale: CGFloat = 0.5
 
-    /// Creates a view that draws a text on the avatar fill.
+    /// Creates a view that draws a text on a neutral grey fill.
     ///
     /// - Parameters:
     ///   - text: The text to draw.
@@ -31,7 +31,7 @@ struct AvatarFillText: View {
     }
 
     var body: some View {
-        Rectangle().fill(.avatarFill)
+        Rectangle().fill(.secondaryFill)
             .overlay {
                 text
                     .font(.system(size: CGFloat(diameter) * Self.proportion, weight: .medium))
