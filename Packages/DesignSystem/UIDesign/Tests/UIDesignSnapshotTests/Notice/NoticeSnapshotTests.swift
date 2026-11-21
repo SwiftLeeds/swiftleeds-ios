@@ -36,6 +36,12 @@ import UIKit
     /// The height of a list that holds one notice and room around it, in points.
     private static let listHeight: CGFloat = 260
 
+    /// The height of a list tall enough for a notice at the largest text size, in points.
+    private static let tallListHeight: CGFloat = 900
+
+    /// The height of a list tall enough for a notice at the largest text size on a narrow screen, in points.
+    private static let compactListHeight: CGFloat = 2_400
+
     /// A notice with a title, a description and an action, on the primary surface.
     private var notice: some View {
         Notice(
@@ -75,6 +81,67 @@ import UIKit
         }
         .frame(width: narrowestPhoneWidth, height: Self.listHeight)
         assertContrastSnapshots(of: view)
+    }
+
+    @Test func whenTextIsAccessibilitySize_shouldStackIconAboveTitle() {
+        assertSnapshots(of: noticeList.frame(width: narrowestPhoneWidth, height: Self.tallListHeight))
+    }
+
+    @Test func whenWidthIsCompact_shouldWrapText() {
+        assertCompactSnapshots(of: noticeList.frame(height: Self.compactListHeight))
+    }
+
+    @Test func whenNoticeHasNoActions_shouldLeaveNoGapBelowText() {
+        let view = outlined(
+            Notice(
+                title: { Text("You're offline") },
+                icon: { Image(icon: Icon(.wifiSlash)) },
+                description: { Text("The schedule shows what was saved. It updates when you reconnect.") },
+            )
+        )
+        assertSpecimenSnapshots(of: view)
+    }
+
+    @Test func whenNoticeHasAnAction_shouldLeaveGapBelowText() {
+        let view = outlined(
+            Notice(
+                title: { Text("You're offline") },
+                icon: { Image(icon: Icon(.wifiSlash)) },
+                description: { Text("The schedule shows what was saved. It updates when you reconnect.") },
+                actions: { Button("Try Again") {}.buttonStyle(.borderless) },
+            )
+        )
+        assertSpecimenSnapshots(of: view)
+    }
+}
+
+extension NoticeSnapshotTests {
+    /// The documented call site: a notice with a borderless action in a list section.
+    private var noticeList: some View {
+        List {
+            Section {
+                Notice(
+                    "You're offline",
+                    icon: Icon(.wifiSlash),
+                    description: Text("The schedule shows what was saved. It updates when you reconnect."),
+                ) {
+                    Button("Try Again") {}
+                        .buttonStyle(.borderless)
+                }
+            }
+        }
+    }
+
+    /// Returns a notice at a row's width with its bounds outlined, so a gap inside it shows.
+    ///
+    /// - Parameter notice: The notice to outline.
+    /// - Returns: The notice, outlined, on the primary surface.
+    private func outlined(_ notice: some View) -> some View {
+        notice
+            .frame(width: rowWidth)
+            .border(Color.primary)
+            .padding(.lg)
+            .background(.surface)
     }
 }
 #endif

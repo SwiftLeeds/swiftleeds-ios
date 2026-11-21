@@ -4,7 +4,7 @@ import SwiftUI
 ///
 /// You can also use ``NoticeStyle/automatic`` to construct this style.
 public struct DefaultNoticeStyle: NoticeStyle {
-    /// A view that draws the parts of a notice beside each other.
+    /// A view that draws the parts of a notice, with the icon beside or above the text.
     private struct Content: View {
         /// The smallest side of a tappable target, in points, as Apple sets it.
         private static let minimumTargetSide: CGFloat = 44
@@ -15,8 +15,20 @@ public struct DefaultNoticeStyle: NoticeStyle {
         /// The properties of the notice.
         let configuration: NoticeStyleConfiguration
 
+        /// The current Dynamic Type size.
+        @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+
         /// The measured height of the actions, in points.
         @State private var actionsHeight: CGFloat = 0
+
+        /// The icon beside the text, or above it at accessibility sizes, where the text needs the width.
+        private var layout: AnyLayout {
+            if dynamicTypeSize.isAccessibilitySize {
+                AnyLayout(VStackLayout(alignment: .leading, spacing: .md))
+            } else {
+                AnyLayout(HStackLayout(alignment: .firstTextBaseline, spacing: .md))
+            }
+        }
 
         /// How far the actions' tappable area grows on every side, in points.
         ///
@@ -26,7 +38,7 @@ public struct DefaultNoticeStyle: NoticeStyle {
         }
 
         var body: some View {
-            HStackLayout(alignment: .firstTextBaseline, spacing: .md) {
+            layout {
                 configuration.icon
                     .font(.title3)
                     .foregroundStyle(.secondary)
