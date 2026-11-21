@@ -5,7 +5,8 @@ import SwiftUI
 ///
 /// The mark loads from `url`. It keeps its proportions, so a wide mark leaves
 /// space above and below it rather than being cropped or stretched. The frame
-/// is the caller's, and a screen scales it with `@ScaledMetric`.
+/// is the caller's, and a screen scales it with `@ScaledMetric`. A redacted logo
+/// draws a plain grey tile, and asks for no mark.
 ///
 /// ```swift
 /// Logo(url: sponsor.logoURL)
@@ -60,6 +61,9 @@ public struct Logo<Fallback: View>: View {
     /// The current logo style.
     @Environment(\.logoStyle) private var style
 
+    /// The current redaction reasons applied to the view hierarchy.
+    @Environment(\.redactionReasons) private var redactionReasons
+
     /// Where the mark comes from.
     private let source: Source
 
@@ -104,8 +108,21 @@ public struct Logo<Fallback: View>: View {
     }
 
     /// The mark fitted to the frame, the fallback standing in for it, or nothing while it loads.
+    ///
+    /// A redacted logo draws a plain grey shape and asks for no mark.
     @ViewBuilder
     private var content: some View {
+        if redactionReasons.contains(.placeholder) {
+            // Redaction ignores a clip shape and draws a bar for text, so draw the plain shape.
+            Rectangle().fill(.avatarFill)
+        } else {
+            loadedContent
+        }
+    }
+
+    /// The mark, the fallback, or nothing, for a logo that is not redacted.
+    @ViewBuilder
+    private var loadedContent: some View {
         switch source {
         case .noLogo:
             fallback

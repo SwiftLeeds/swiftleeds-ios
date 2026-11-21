@@ -12,6 +12,9 @@ public struct DefaultLogoStyle: LogoStyle {
         /// The share a mark fills, which leaves a margin around it.
         static let inset = Self(fraction: insetFraction)
 
+        /// The share a placeholder fills, which is the whole tile.
+        static let whole = Self(fraction: 1)
+
         /// The fraction of the tile's side, from 0 to 1.
         let fraction: CGFloat
 
@@ -24,6 +27,9 @@ public struct DefaultLogoStyle: LogoStyle {
         }
     }
 
+    /// The current redaction reasons applied to the view hierarchy.
+    @Environment(\.redactionReasons) private var redactionReasons
+
     /// The rounded square the logo is drawn on.
     private var tile: RoundedRectangle {
         RoundedRectangle(cornerRadius: .tile)
@@ -34,8 +40,9 @@ public struct DefaultLogoStyle: LogoStyle {
 
     @MainActor
     public func makeBody(configuration: Configuration) -> some View {
-        Color.clear
-            .overlay { MarkScale.inset.applied(to: configuration.content) }
+        let scale = redactionReasons.contains(.placeholder) ? MarkScale.whole : MarkScale.inset
+        return Color.clear
+            .overlay { scale.applied(to: configuration.content) }
             .background(.surface, in: tile)
             .clipShape(tile)
             .overlay { tile.strokeBorder(.border, lineWidth: .edge) }

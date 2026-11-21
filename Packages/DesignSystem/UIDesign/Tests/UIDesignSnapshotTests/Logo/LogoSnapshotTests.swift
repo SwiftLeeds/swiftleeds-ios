@@ -10,6 +10,14 @@ import UIKit
     /// A load failure with no detail, for a phase that is a failure.
     private struct SampleLoadError: Error {}
 
+    /// A style that draws the logo's content and nothing else.
+    private struct ContentOnlyLogoStyle: LogoStyle {
+        @MainActor
+        func makeBody(configuration: Configuration) -> some View {
+            configuration.content
+        }
+    }
+
     /// The side of a logo's frame, as a sponsor row draws it, in points.
     private static let tileSide: CGFloat = 56
 
@@ -62,6 +70,25 @@ import UIKit
             .frame(width: Self.tileSide, height: Self.tileSide)
             .padding(.lg)
             .background(.surface)
+    }
+
+    @Test func whenFailedLogoIsRedacted_shouldDrawGreyTileWithoutFallback() {
+        let view = logoWithTextFallback(in: .failure(SampleLoadError()))
+            .redacted(reason: .placeholder)
+        assertSpecimenSnapshots(of: view)
+    }
+
+    @Test func whenLoadedLogoIsRedacted_shouldDrawGreyTileWithoutMark() {
+        let view = loadedLogo(Self.darkInkMark)
+            .redacted(reason: .placeholder)
+        assertSpecimenSnapshots(of: view)
+    }
+
+    @Test func whenRedactedLogoHasCustomStyle_shouldDrawGreyFill() {
+        let view = logoWithTextFallback(in: .failure(SampleLoadError()))
+            .logoStyle(ContentOnlyLogoStyle())
+            .redacted(reason: .placeholder)
+        assertSpecimenSnapshots(of: view)
     }
 
     @Test func whenUrlIsNilWithTextFallback_shouldDrawTextOnTile() {
