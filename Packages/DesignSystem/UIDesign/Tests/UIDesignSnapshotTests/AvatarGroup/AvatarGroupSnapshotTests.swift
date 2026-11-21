@@ -127,5 +127,47 @@ import UIDesign
 
         assertSpecimenSnapshots(of: view)
     }
+
+    @Test func whenFourAvatars_shouldShowTwoAndCountOfTwo() {
+        assertSnapshots(of: Self.group(of: 4))
+    }
+
+    @Test func whenFourteenAvatars_shouldShowCountOfTwelve() {
+        assertSnapshots(of: Self.group(of: 14))
+    }
+
+    @Test func whenHundredAndOneAvatars_shouldShowCountOfNinetyNine() {
+        assertSnapshots(of: Self.group(of: 101))
+    }
+
+    @Test func whenHundredAndTwoAvatars_shouldShowNinetyNinePlus() {
+        assertSnapshots(of: Self.group(of: 102))
+    }
+
+    @Test func whenNoMemberIsAvatar_shouldShowEveryMemberAndNoCount() {
+        let view = AvatarGroup {
+            ForEach(0..<5, id: \.self) { _ in
+                Circle().fill(.secondarySurface).frame(width: 28, height: 28)
+            }
+        }
+        .padding(.lg)
+        .background(.surface)
+
+        assertSnapshots(of: view)
+    }
+
+    /// Returns a group of small avatars with initials, on the primary surface.
+    ///
+    /// - Parameter count: How many people the group holds. The names repeat after six.
+    /// - Returns: A padded group.
+    private static func group(of count: Int) -> some View {
+        AvatarGroup {
+            ForEach(0..<count, id: \.self) { index in
+                Avatar(url: nil, size: .small, fallback: .initials(people[index % people.count]))
+            }
+        }
+        .padding(.lg)
+        .background(.surface)
+    }
 }
 #endif

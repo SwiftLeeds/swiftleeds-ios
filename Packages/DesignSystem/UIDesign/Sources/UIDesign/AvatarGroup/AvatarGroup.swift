@@ -86,22 +86,43 @@ public struct AvatarGroup<Content: View>: View {
     }
 
     public var body: some View {
-        AnyView(resolved(in: style))
+        Group(subviews: content) { subviews in
+            AnyView(resolved(in: style, for: subviews))
+        }
     }
 
     /// The properties handed to the current avatar group style.
-    private var configuration: AvatarGroupStyleConfiguration {
-        AvatarGroupStyleConfiguration(content: content, overflow: EmptyView?.none)
+    ///
+    /// A group of more than the mark limit shows all but one mark's worth of avatars and a
+    /// count of the rest. A group with no avatar to take a size from shows every member.
+    ///
+    /// - Parameter subviews: The members of the group.
+    /// - Returns: The avatars to show and, when some do not fit, the count of the rest.
+    private func configuration(for subviews: SubviewsCollection) -> AvatarGroupStyleConfiguration {
+        let size = subviews.lazy.compactMap(\.containerValues.avatarSize).first
+        guard subviews.count > markLimit, let size else {
+            return AvatarGroupStyleConfiguration(content: ForEach(subviews) { $0 }, overflow: EmptyView?.none)
+        }
+        let shown = markLimit - 1
+        return AvatarGroupStyleConfiguration(
+            content: ForEach(subviews.prefix(shown)) { $0 },
+            overflow: Avatar(url: nil, size: size) { AvatarGroupOverflowCount(subviews.count - shown) },
+        )
     }
 
     /// Returns a view that draws the group in the given style.
     ///
-    /// - Parameter style: The style to draw the group in.
+    /// - Parameters:
+    ///   - style: The style to draw the group in.
+    ///   - subviews: The members of the group.
     /// - Returns: A view that draws the group in `style`.
-    private func resolved(in style: some AvatarGroupStyle) -> some View {
-        ResolvedAvatarGroupStyle(style: style, configuration: configuration)
+    private func resolved(in style: some AvatarGroupStyle, for subviews: SubviewsCollection) -> some View {
+        ResolvedAvatarGroupStyle(style: style, configuration: configuration(for: subviews))
     }
 }
+
+/// The most marks a group draws across, the count included.
+private let markLimit = 3
 
 private let previewPeople = [
     PersonNameComponents(givenName: "Ada", familyName: "Archer"),
