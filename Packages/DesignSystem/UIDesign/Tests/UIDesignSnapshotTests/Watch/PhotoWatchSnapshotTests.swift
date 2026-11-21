@@ -6,8 +6,11 @@ import UIDesign
 
 @MainActor
 @Suite(.snapshots(record: .never)) struct PhotoWatchSnapshotTests {
-    /// The shape of the photo, as width over height.
+    /// The shape of the loading photo, as width over height.
     private static let ratio: CGFloat = 16.0 / 9.0
+
+    /// The shape of the portrait photo, as width over height.
+    private static let portraitRatio: CGFloat = 2.0 / 3.0
 
     /// Frames a photo as wide as the screen allows.
     ///
@@ -30,12 +33,8 @@ import UIDesign
     }
 
     @Test func whenPhaseIsSuccess_shouldDrawPicture() {
-        assertSnapshots(of: photo(in: .success(.samplePhoto)))
-    }
-
-    @Test func whenPhaseIsSuccessWithIncreasedContrast_shouldDrawPicture() {
-        let view = photo(in: .success(.samplePhoto))
-            .environment(\._colorSchemeContrast, .increased)
+        let view = Photo(phase: .success(.samplePhoto)) { EmptyView() }
+            .aspectRatio(Self.portraitRatio, contentMode: .fit)
 
         assertSnapshots(of: view)
     }
