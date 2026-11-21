@@ -62,6 +62,9 @@ public struct Photo<Fallback: View>: View {
     /// The current photo style.
     @Environment(\.photoStyle) private var style
 
+    /// The reasons to redact the photo's content.
+    @Environment(\.redactionReasons) private var redactionReasons
+
     /// Where the picture comes from.
     private let source: Source
 
@@ -110,17 +113,21 @@ public struct Photo<Fallback: View>: View {
 
     /// What the photo shows now, by where its picture comes from.
     @ViewBuilder private var shown: some View {
-        switch source {
-        case .url(let url?):
-            AsyncImage(url: url) { phase in
+        if redactionReasons.contains(.placeholder) {
+            Color.clear
+        } else {
+            switch source {
+            case .url(let url?):
+                AsyncImage(url: url) { phase in
+                    drawing(phase)
+                }
+
+            case .url(nil):
+                fallback
+
+            case .phase(let phase):
                 drawing(phase)
             }
-
-        case .url(nil):
-            fallback
-
-        case .phase(let phase):
-            drawing(phase)
         }
     }
 

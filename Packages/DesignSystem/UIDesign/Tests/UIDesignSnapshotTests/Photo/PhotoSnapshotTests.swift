@@ -60,5 +60,15 @@ import UIKit
     @Test func whenPhaseIsFailure_shouldDrawFallback() {
         assertContrastSnapshots(of: thumbnail(phase: .failure(Self.failure)))
     }
+
+    @Test func whenPhotoIsRedactedInFailedPhase_shouldDrawGreyFillWithoutFallback() {
+        let photo = Photo(phase: .failure(Self.failure)) { Text("Fallback") }
+        assertContrastSnapshots(of: thumbnail(photo).redacted(reason: .placeholder))
+    }
+
+    @Test func whenPhotoIsRedactedInLoadedPhase_shouldDrawGreyFillWithoutPicture() {
+        let photo = Photo(phase: .success(.samplePhoto)) { Text("Fallback") }
+        assertContrastSnapshots(of: thumbnail(photo).redacted(reason: .placeholder))
+    }
 }
 #endif
