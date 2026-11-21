@@ -29,7 +29,7 @@ public struct NoticeStyleConfiguration {
             _body = { AnyView(body) }
         }
 
-        public var body: some View { _body() }
+        public var body: some View { _body().accessibilityHidden(true) }
     }
 
     /// A type-erased description view of a notice.
@@ -65,7 +65,7 @@ public struct NoticeStyleConfiguration {
     /// A short name for the condition.
     public let title: Title
 
-    /// A symbol that illustrates the condition.
+    /// A symbol that illustrates the condition, which VoiceOver skips.
     public let icon: Icon
 
     /// A sentence that explains the condition.

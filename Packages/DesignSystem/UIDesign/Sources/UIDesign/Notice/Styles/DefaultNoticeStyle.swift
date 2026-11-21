@@ -42,6 +42,7 @@ public struct DefaultNoticeStyle: NoticeStyle {
                             .foregroundStyle(.secondary)
                             .fixedSize(horizontal: false, vertical: true)
                     }
+                    .accessibilityElement(children: .combine)
                     configuration.actions
                         .onGeometryChange(for: CGFloat.self) { geometry in
                             geometry.size.height

@@ -45,8 +45,15 @@ import SwiftUI
 ///
 /// The announcement comes from the `Accessibility` framework.
 ///
-/// The title, the description and the action are essential content, so they grow with the
-/// text size. The icon is decoration and keeps its size.
+/// VoiceOver reads the title and the description as one element, then the action as a button.
+/// It skips the icon, so the title must say what the icon shows.
+///
+/// | Part | Kind | Text size | VoiceOver |
+/// | --- | --- | --- | --- |
+/// | Title | Essential | Grows | Read, with the description |
+/// | Description | Essential | Grows | Read, with the title |
+/// | Icon | Decoration | Keeps its size | Skipped |
+/// | Action | Essential | Grows | Its own button |
 public struct Notice<Title: View, Icon: View, Description: View, Actions: View>: View {
     /// A view that draws a notice in a given style.
     ///

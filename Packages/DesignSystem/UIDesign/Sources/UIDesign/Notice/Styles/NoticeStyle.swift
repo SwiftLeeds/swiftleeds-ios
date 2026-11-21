@@ -19,6 +19,11 @@ import SwiftUI
 ///
 /// Draw every part of the configuration. A style that leaves one out hides it from the notice.
 ///
+/// Grouping the title and the description is the style's job. Wrap them in
+/// `.accessibilityElement(children: .combine)` so VoiceOver reads them as one element, and keep
+/// the actions outside the group so each action stays its own control. The configuration hides
+/// the icon from VoiceOver for every style.
+///
 /// Inside a `List`, a `Label` takes the list's label style. The configuration carries the title
 /// and the icon apart for that reason, so draw them without wrapping them in a `Label`.
 public protocol NoticeStyle: DynamicProperty {
