@@ -11,15 +11,20 @@ struct CountdownAccessibilityTests {
     /// The moment every test counts towards.
     private static let start = Date(timeIntervalSinceReferenceDate: 800_000_000)
 
-    /// Returns a countdown in British English with the clock pinned before the start.
+    /// Returns a countdown with the clock pinned before the start.
     ///
-    /// - Parameter timeLeft: How long before the start the pinned clock reads. A negative value
-    ///   reads a time after the start.
+    /// - Parameters:
+    ///   - timeLeft: How long before the start the pinned clock reads. A negative value
+    ///     reads a time after the start.
+    ///   - locale: The locale the countdown words the time in. The default is British English.
     /// - Returns: The countdown.
-    private func countdown(timeLeft: TimeInterval) -> some View {
+    private func countdown(
+        timeLeft: TimeInterval,
+        locale: Locale = Locale(identifier: "en_GB"),
+    ) -> some View {
         Countdown(to: Self.start)
             .countdownNow(.fixed(Self.start.addingTimeInterval(-timeLeft)))
-            .environment(\.locale, Locale(identifier: "en_GB"))
+            .environment(\.locale, locale)
     }
 
     @Test
@@ -37,6 +42,13 @@ struct CountdownAccessibilityTests {
         let element = try #require(elements.first)
         #expect(element.label == "now")
         #expect(element.traits == [.staticText, .updatesFrequently])
+    }
+
+    @Test
+    func whenLocaleIsGerman_shouldReadWideFormInGerman() throws {
+        let view = countdown(timeLeft: 12 * 60, locale: Locale(identifier: "de_DE"))
+        let element = try #require(try AccessibilityTree.elements(of: view).first)
+        #expect(element.label == "in 12 Minuten")
     }
 
     @Test
