@@ -48,6 +48,19 @@ import SwiftUI
 /// draws nothing. Supply sample rows while the real ones load. On the Watch, a
 /// loading row shows no status.
 public struct Nameplate<Title: View, Detail: View, Icon: View>: View {
+    /// A view that draws a nameplate in a given style.
+    private struct ResolvedNameplateStyle<Style: NameplateStyle>: View {
+        /// The style that draws the nameplate.
+        let style: Style
+
+        /// The properties of the nameplate.
+        let configuration: NameplateStyleConfiguration
+
+        var body: some View {
+            style.makeBody(configuration: configuration)
+        }
+    }
+
     /// The current nameplate style.
     @Environment(\.nameplateStyle) private var style
 
@@ -77,7 +90,7 @@ public struct Nameplate<Title: View, Detail: View, Icon: View>: View {
     }
 
     public var body: some View {
-        AnyView(style.makeBody(configuration: configuration))
+        AnyView(resolved(in: style))
             .foregroundStyle(Color.primary)
             .accessibilityElement(children: .combine)
     }
@@ -85,6 +98,14 @@ public struct Nameplate<Title: View, Detail: View, Icon: View>: View {
     /// The properties handed to the current nameplate style.
     private var configuration: NameplateStyleConfiguration {
         NameplateStyleConfiguration(title: title, detail: detail, icon: icon)
+    }
+
+    /// Returns a view that draws the nameplate in the given style.
+    ///
+    /// - Parameter style: The style to draw the nameplate in.
+    /// - Returns: A view that draws the nameplate in `style`.
+    private func resolved(in style: some NameplateStyle) -> some View {
+        ResolvedNameplateStyle(style: style, configuration: configuration)
     }
 }
 
