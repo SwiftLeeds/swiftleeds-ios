@@ -90,6 +90,7 @@ public struct Avatar<Fallback: View>: View {
             .foregroundStyle(Color.primary)
             .environment(\.avatarDiameter, diameter)
             .containerValue(\.avatarStatus, status)
+            .containerValue(\.avatarSize, size)
     }
 
     /// The properties handed to the current avatar style.

@@ -59,14 +59,8 @@ public struct AvatarFallback: View {
     /// The symbol's font size, as a fraction of the avatar's diameter.
     private static var symbolProportion: CGFloat { 0.62 }
 
-    /// The initials' font size, as a fraction of the avatar's diameter.
-    private static let initialsProportion: CGFloat = 0.40
-
     /// Returns the person's initials, or the symbol when there is nothing to
     /// abbreviate.
-    ///
-    /// The letters take their size from the avatar rather than from the text
-    /// size, which the avatar has already answered.
     ///
     /// - Parameter name: The name to abbreviate.
     /// - Returns: A view that shows the initials on a plain fill, or the symbol when the name has nothing to
@@ -77,14 +71,7 @@ public struct AvatarFallback: View {
         if letters.isEmpty {
             symbol
         } else {
-            Rectangle().fill(.avatarFill)
-                .overlay {
-                    Text(letters)
-                        .font(.system(size: CGFloat(diameter) * Self.initialsProportion, weight: .medium))
-                        .foregroundStyle(.avatarInitials)
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.5)
-                }
+            AvatarFillText(Text(letters), shrinksToFit: true)
         }
     }
 }
