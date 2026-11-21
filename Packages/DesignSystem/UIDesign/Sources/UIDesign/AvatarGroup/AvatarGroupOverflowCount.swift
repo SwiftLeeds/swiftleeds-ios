@@ -2,17 +2,10 @@ import SwiftUI
 
 /// A view that draws the count of the people an avatar group has no room for.
 ///
-/// It fills its container with the avatar fill and draws the count at the size
-/// of an avatar's initials.
+/// It draws the count on the avatar fill, as an avatar draws its initials, but never shrinks it.
 struct AvatarGroupOverflowCount: View {
-    /// The diameter of the avatar containing this view.
-    @Environment(\.avatarDiameter) private var diameter
-
     /// The number of people the group has no room for.
     private let hiddenCount: Int
-
-    /// The count's font size, as a fraction of the avatar's diameter.
-    private static let proportion: CGFloat = 0.40
 
     /// The largest count drawn in full, past which the view draws it with a plus.
     private static let largestFullCount = 99
@@ -25,13 +18,7 @@ struct AvatarGroupOverflowCount: View {
     }
 
     var body: some View {
-        Rectangle().fill(.avatarFill)
-            .overlay {
-                label
-                    .font(.system(size: CGFloat(diameter) * Self.proportion, weight: .medium))
-                    .foregroundStyle(.avatarInitials)
-                    .lineLimit(1)
-            }
+        AvatarFillText(label, shrinksToFit: false)
     }
 
     /// The count as text, with a leading plus, or the largest full count and a plus past it.
