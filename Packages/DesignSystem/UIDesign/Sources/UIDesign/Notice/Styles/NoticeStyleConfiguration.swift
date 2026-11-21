@@ -29,6 +29,7 @@ public struct NoticeStyleConfiguration {
             _body = { AnyView(body) }
         }
 
+        /// The icon, hidden from VoiceOver.
         public var body: some View { _body().accessibilityHidden(true) }
     }
 

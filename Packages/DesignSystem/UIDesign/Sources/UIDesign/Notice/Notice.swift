@@ -6,16 +6,10 @@ import SwiftUI
 /// A notice sits in a list section, such as "You're offline" with a "Try Again" button.
 /// It draws no surface and adds no padding, so the section supplies both.
 ///
-/// You create a notice with a title, an icon, a description and an action.
-///
 /// ```swift
 /// List {
 ///     Section {
-///         Notice(
-///             "You're offline",
-///             icon: Icon(.wifiSlash),
-///             description: Text("The schedule shows what was saved. It updates when you reconnect."),
-///         ) {
+///         Notice("You're offline", icon: Icon(.wifiSlash), description: Text("...")) {
 ///             Button("Try Again") { reload() }
 ///                 .buttonStyle(.borderless)
 ///         }
@@ -23,19 +17,18 @@ import SwiftUI
 /// }
 /// ```
 ///
-/// In a `List` row, give the button the `.borderless` style. A button with the automatic style
-/// makes the whole row its target, so a tap on the title or the description runs the action.
-/// The notice never sets a button style itself. It grows the borderless button's tappable area
-/// to the minimum target size.
+/// In a `List` row on iOS, give the button the `.borderless` style. The automatic style makes the
+/// whole row its target. On watchOS, give it `.buttonStyle(.bordered)`, which draws a capsule, so
+/// the action looks tappable.
 ///
-/// A notice does not announce itself when it appears. The screen that changes the condition
-/// announces it, using the same localized title the notice shows.
+/// A notice does not announce itself. The screen that shows it announces it, from a container
+/// that stays on screen, with the title the notice shows.
 ///
 /// ```swift
-/// private let offlineTitle: LocalizedStringResource = "You're offline"
-///
-/// Notice(offlineTitle, icon: Icon(.wifiSlash), description: Text("...")) {
-///     Button("Try Again") { reload() }.buttonStyle(.borderless)
+/// List {
+///     if isOffline {
+///         Section { Notice(offlineTitle, icon: Icon(.wifiSlash), description: Text("...")) { ... } }
+///     }
 /// }
 /// .onChange(of: isOffline) { _, isOffline in
 ///     guard isOffline else { return }
@@ -43,17 +36,8 @@ import SwiftUI
 /// }
 /// ```
 ///
-/// The announcement comes from the `Accessibility` framework.
-///
 /// VoiceOver reads the title and the description as one element, then the action as a button.
 /// It skips the icon, so the title must say what the icon shows.
-///
-/// | Part | Kind | Text size | VoiceOver |
-/// | --- | --- | --- | --- |
-/// | Title | Essential | Grows | Read, with the description |
-/// | Description | Essential | Grows | Read, with the title |
-/// | Icon | Decoration | Keeps its size | Skipped |
-/// | Action | Essential | Grows | Its own button |
 public struct Notice<Title: View, Icon: View, Description: View, Actions: View>: View {
     /// A view that draws a notice in a given style.
     ///

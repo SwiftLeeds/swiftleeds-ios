@@ -9,8 +9,12 @@ import SwiftUI
 /// struct PlainNoticeStyle: NoticeStyle {
 ///     func makeBody(configuration: Configuration) -> some View {
 ///         VStack(alignment: .leading) {
-///             configuration.title
-///             configuration.description
+///             configuration.icon
+///             VStack(alignment: .leading) {
+///                 configuration.title
+///                 configuration.description
+///             }
+///             .accessibilityElement(children: .combine)
 ///             configuration.actions
 ///         }
 ///     }
@@ -23,9 +27,6 @@ import SwiftUI
 /// `.accessibilityElement(children: .combine)` so VoiceOver reads them as one element, and keep
 /// the actions outside the group so each action stays its own control. The configuration hides
 /// the icon from VoiceOver for every style.
-///
-/// Inside a `List`, a `Label` takes the list's label style. The configuration carries the title
-/// and the icon apart for that reason, so draw them without wrapping them in a `Label`.
 public protocol NoticeStyle: DynamicProperty {
     /// A view that represents the body of a notice.
     associatedtype Body: View

@@ -5,8 +5,8 @@ extension Notice where Title == Text, Icon == Image, Description == Text {
     /// Creates a notice with a title generated from a localized string.
     ///
     /// - Parameters:
-    ///   - titleKey: The key for the notice's localized title.
-    ///   - icon: The icon to draw beside the title.
+    ///   - titleKey: A title generated from a localized string.
+    ///   - icon: The icon that illustrates the condition.
     ///   - description: The text that explains the condition.
     ///   - actions: A content builder that creates the notice's actions.
     public init(
@@ -27,7 +27,7 @@ extension Notice where Title == Text, Icon == Image, Description == Text {
     ///
     /// - Parameters:
     ///   - titleResource: The resource for the notice's localized title.
-    ///   - icon: The icon to draw beside the title.
+    ///   - icon: The icon that illustrates the condition.
     ///   - description: The text that explains the condition.
     ///   - actions: A content builder that creates the notice's actions.
     @_disfavoredOverload
@@ -52,7 +52,7 @@ extension Notice where Title == Text, Icon == Image, Description == Text {
     ///
     /// - Parameters:
     ///   - title: A string used as the notice's title.
-    ///   - icon: The icon to draw beside the title.
+    ///   - icon: The icon that illustrates the condition.
     ///   - description: The text that explains the condition.
     ///   - actions: A content builder that creates the notice's actions.
     @_disfavoredOverload
