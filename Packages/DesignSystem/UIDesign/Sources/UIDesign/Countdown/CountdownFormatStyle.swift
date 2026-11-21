@@ -33,17 +33,27 @@ public struct CountdownFormatStyle: DiscreteFormatStyle, Codable, Equatable, Has
     ///
     /// - Parameter start: The moment the countdown runs to.
     public init(to start: Date) {
+        self.init(to: start, spoken: false)
+    }
+
+    /// Creates a format style that words the time left until a start.
+    ///
+    /// - Parameters:
+    ///   - start: The moment the countdown runs to.
+    ///   - spoken: Whether to word the time in full, such as "in 12 minutes", for VoiceOver.
+    init(to start: Date, spoken: Bool) {
+        let unitsStyle: Date.AnchoredRelativeFormatStyle.UnitsStyle = spoken ? .wide : .abbreviated
         self.start = start
         relative = Date.AnchoredRelativeFormatStyle(
             anchor: start,
             allowedFields: [.day, .hour, .minute],
             presentation: .numeric,
-            unitsStyle: .abbreviated,
+            unitsStyle: unitsStyle,
         )
         nowWord = Date.AnchoredRelativeFormatStyle(
             anchor: start,
             presentation: .named,
-            unitsStyle: .abbreviated,
+            unitsStyle: unitsStyle,
         )
     }
 

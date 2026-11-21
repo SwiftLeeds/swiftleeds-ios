@@ -15,6 +15,10 @@ import SwiftUI
 /// A countdown is essential content, so it grows with the text size. It draws no color of
 /// its own: it takes the font and color of the view around it.
 ///
+/// VoiceOver reads the time in full, such as "in 12 minutes", and treats the text as one that
+/// updates often, so it does not announce each change. A redacted countdown is hidden from
+/// VoiceOver.
+///
 /// A countdown is not a control. A screen that shows an action should not hide it when the
 /// countdown reads "now".
 public struct Countdown: View {
@@ -49,6 +53,8 @@ public struct Countdown: View {
 
     public var body: some View {
         AnyView(resolved(in: style))
+            .accessibilityLabel(now.text(counting: CountdownFormatStyle(to: start, spoken: true)))
+            .accessibilityAddTraits(.updatesFrequently)
     }
 
     /// The properties handed to the current countdown style.
