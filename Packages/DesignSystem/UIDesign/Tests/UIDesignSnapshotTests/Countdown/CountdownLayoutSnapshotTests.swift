@@ -68,7 +68,7 @@ import UIKit
             .fixedSize(horizontal: false, vertical: true)
     }
 
-    @Test func whenTrailingInListRows_shouldAlignLeadingEdges() {
+    @Test func whenTrailingInListRows_shouldKeepWidthWithinSameDigitCount() {
         let list = List {
             ForEach([18, 12, 11, 10, 9], id: \.self) { minutes in
                 HStack {
