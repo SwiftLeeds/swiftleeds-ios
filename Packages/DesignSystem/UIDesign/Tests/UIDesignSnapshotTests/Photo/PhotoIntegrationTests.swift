@@ -91,17 +91,18 @@ struct PhotoIntegrationTests {
         return pixels
     }
 
-    /// Reads the window until its frame shows something other than the background, or time runs out.
+    /// Reads the window until its frame's center shows the picture's sky, or time runs out.
     ///
     /// - Parameter window: The window to read.
     /// - Returns: The pixels read once the picture had loaded.
     /// - Throws: ``ProbeError/neverLoaded`` when the picture has not loaded within ``timeout``.
     private static func pixelsOnceLoaded(in window: UIWindow) async throws -> Pixels {
+        let sky = Image.samplePhotoSky.resolve(in: EnvironmentValues())
         let deadline = ContinuousClock.now + timeout
         while ContinuousClock.now < deadline {
             let pixels = try pixels(of: window)
             let centre = pixels.color(at: CGPoint(x: frameRect.midX, y: frameRect.midY))
-            if !isClose(centre, to: background) { return pixels }
+            if isClose(centre, to: sky) { return pixels }
             try await Task.sleep(for: interval)
         }
         throw ProbeError.neverLoaded

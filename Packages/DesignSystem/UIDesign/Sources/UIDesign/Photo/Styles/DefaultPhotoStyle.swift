@@ -8,6 +8,7 @@ public struct DefaultPhotoStyle: PhotoStyle {
     @MainActor
     public func makeBody(configuration: Configuration) -> some View {
         configuration.content
+            .background(.avatarFill)
     }
 }
 
