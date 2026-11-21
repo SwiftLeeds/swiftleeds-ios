@@ -198,6 +198,13 @@ import UIKit
         assertSnapshots(of: Self.group(of: 102))
     }
 
+    @Test func whenCountIsPastNinetyNineInArabicEgypt_shouldDrawArabicIndicDigits() {
+        let view = Self.group(of: 102)
+            .environment(\.locale, Locale(identifier: "ar-EG"))
+
+        assertSnapshots(of: view)
+    }
+
     @Test func whenNoMemberIsAvatar_shouldShowEveryMemberAndNoCount() {
         let view = AvatarGroup {
             ForEach(0..<5, id: \.self) { _ in

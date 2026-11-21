@@ -37,7 +37,7 @@ struct AvatarGroupOverflowCount: View {
     /// The count as text, with a leading plus, or the largest full count and a plus past it.
     private var label: Text {
         if hiddenCount > Self.largestFullCount {
-            Text(verbatim: Self.largestFullCount.formatted() + "+")
+            Text("\(Self.largestFullCount, format: .number)+", bundle: .module)
         } else {
             Text(hiddenCount, format: .number.sign(strategy: .always()))
         }
