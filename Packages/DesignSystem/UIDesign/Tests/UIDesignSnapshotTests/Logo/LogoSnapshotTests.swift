@@ -58,6 +58,14 @@ import UIKit
         assertContrastSnapshots(of: loadedLogo(.wideSampleMark))
     }
 
+    @Test func whenTileSitsOnSurfaceOfOwnColor_shouldDrawEdgeAroundTile() {
+        let view = Logo(phase: .empty) { EmptyView() }
+            .frame(width: Self.tileSide, height: Self.tileSide)
+            .padding(.lg)
+            .background(.surface)
+        assertSpecimenSnapshots(of: view)
+    }
+
     @Test func whenPhaseIsSuccessInDarkElevatedSheet_shouldDrawTileOnElevatedSurface() {
         let darkElevated = UITraitCollection {
             $0.userInterfaceStyle = .dark

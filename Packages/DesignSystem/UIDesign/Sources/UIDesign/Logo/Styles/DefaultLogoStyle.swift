@@ -25,7 +25,7 @@ public struct DefaultLogoStyle: LogoStyle {
     }
 
     /// The rounded square the logo is drawn on.
-    private var tile: some Shape {
+    private var tile: RoundedRectangle {
         RoundedRectangle(cornerRadius: .tile)
     }
 
@@ -38,6 +38,7 @@ public struct DefaultLogoStyle: LogoStyle {
             .overlay { MarkScale.inset.applied(to: configuration.content) }
             .background(.surface, in: tile)
             .clipShape(tile)
+            .overlay { tile.strokeBorder(.border, lineWidth: .edge) }
     }
 }
 
