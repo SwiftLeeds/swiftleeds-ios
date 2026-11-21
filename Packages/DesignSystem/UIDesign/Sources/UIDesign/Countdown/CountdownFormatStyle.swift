@@ -1,0 +1,80 @@
+import Foundation
+
+/// A format style that words the time left until a start.
+///
+/// The words are abbreviated and counted in days, hours or minutes, such as "in 12 min".
+///
+/// ```swift
+/// let style = CountdownFormatStyle(to: start)
+/// style.format(start.addingTimeInterval(-12 * 60))  // "in 12 min"
+/// ```
+public struct CountdownFormatStyle: DiscreteFormatStyle, Codable, Equatable, Hashable, Sendable {
+    /// The relative style that words the time, anchored at the start.
+    private var relative: Date.AnchoredRelativeFormatStyle
+
+    /// Creates a format style that words the time left until a start.
+    ///
+    /// - Parameter start: The moment the countdown runs to.
+    public init(to start: Date) {
+        relative = Date.AnchoredRelativeFormatStyle(
+            anchor: start,
+            allowedFields: [.day, .hour, .minute],
+            presentation: .numeric,
+            unitsStyle: .abbreviated,
+        )
+    }
+
+    /// Returns the words for the time left from a moment until the start.
+    ///
+    /// - Parameter now: The moment to count from.
+    /// - Returns: The abbreviated time left, such as "in 12 min".
+    public func format(_ now: Date) -> String {
+        relative.format(now)
+    }
+
+    /// Returns a copy that words the time in a locale.
+    ///
+    /// - Parameter locale: The locale that decides the language of the words.
+    /// - Returns: A format style that uses `locale`.
+    public func locale(_ locale: Locale) -> Self {
+        var copy = self
+        copy.relative.locale = locale
+        return copy
+    }
+
+    /// Returns a copy that counts days in a calendar.
+    ///
+    /// - Parameter calendar: The calendar, with its time zone, that decides where a day starts.
+    /// - Returns: A format style that uses `calendar`.
+    public func calendar(_ calendar: Calendar) -> Self {
+        var copy = self
+        copy.relative.calendar = calendar
+        return copy
+    }
+
+    /// Returns the latest moment before a moment at which the words are the same.
+    ///
+    /// - Parameter now: The moment to look back from.
+    /// - Returns: The earliest moment that reads the same as `now`, or `nil` if there is none.
+    public func discreteInput(before now: Date) -> Date? {
+        relative.discreteInput(before: now)
+    }
+
+    /// Returns the first moment after a moment at which the words change.
+    ///
+    /// - Parameter now: The moment to look forward from.
+    /// - Returns: The first moment that reads differently from `now`, or `nil` if there is none.
+    public func discreteInput(after now: Date) -> Date? {
+        relative.discreteInput(after: now)
+    }
+}
+
+extension FormatStyle where Self == CountdownFormatStyle {
+    /// Returns a format style that words the time left until a start.
+    ///
+    /// - Parameter start: The moment the countdown runs to.
+    /// - Returns: A format style that counts down to `start`.
+    public static func countdown(to start: Date) -> CountdownFormatStyle {
+        CountdownFormatStyle(to: start)
+    }
+}
