@@ -69,6 +69,24 @@ struct AvatarGroupAccessibilityTests {
     }
 
     @Test
+    func whenStatusIsOnFourthOfFive_shouldReadNoStatus() throws {
+        let elements = try AccessibilityTree.elements(
+            of: Self.row(count: 5, statuses: [nil, nil, nil, Self.waitlisted])
+        )
+
+        #expect(elements.map(\.label) == ["Ada Archer and 4 others"])
+    }
+
+    @Test
+    func whenStatusIsOnSecondOfFive_shouldReadStatus() throws {
+        let elements = try AccessibilityTree.elements(
+            of: Self.row(count: 5, statuses: [nil, Self.waitlisted])
+        )
+
+        #expect(elements.map(\.label) == ["Waitlisted", "Ada Archer and 4 others"])
+    }
+
+    @Test
     func whenGroupIsEmpty_shouldAddNoElement() throws {
         let elements = try AccessibilityTree.elements(of: AvatarGroup {})
 
@@ -93,9 +111,10 @@ struct AvatarGroupAccessibilityTests {
     ///
     /// - Parameters:
     ///   - count: How many people the group holds.
-    ///   - statuses: The statuses of the first people, in order. The rest have none.
+    ///   - statuses: The status of each of the first people, in order, with `nil` for none.
+    ///     The rest have none.
     /// - Returns: A row with the group, then one line of text naming the people.
-    private static func row(count: Int, statuses: [AvatarStatus]) -> some View {
+    private static func row(count: Int, statuses: [AvatarStatus?]) -> some View {
         HStack {
             AvatarGroup {
                 ForEach(0..<count, id: \.self) { index in
