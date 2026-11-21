@@ -21,11 +21,37 @@ public struct Logo<Fallback: View>: View {
         case url(URL)
     }
 
+    /// A view that draws a logo in a given style.
+    private struct ResolvedLogoStyle<Style: LogoStyle>: View {
+        /// The style that draws the logo.
+        let style: Style
+
+        /// The properties of the logo.
+        let configuration: LogoStyleConfiguration
+
+        var body: some View {
+            style.makeBody(configuration: configuration)
+        }
+    }
+
+    /// The current logo style.
+    @Environment(\.logoStyle) private var style
+
     /// Where the mark comes from.
     private let source: Source
 
-    /// The mark fitted to the frame, or nothing while it loads.
     public var body: some View {
+        AnyView(resolved(in: style))
+    }
+
+    /// The properties handed to the current logo style.
+    private var configuration: LogoStyleConfiguration {
+        LogoStyleConfiguration(content: content)
+    }
+
+    /// The mark fitted to the frame, or nothing while it loads.
+    @ViewBuilder
+    private var content: some View {
         switch source {
         case .noLogo:
             EmptyView()
@@ -39,6 +65,14 @@ public struct Logo<Fallback: View>: View {
                 }
             }
         }
+    }
+
+    /// Returns a view that draws the logo in the given style.
+    ///
+    /// - Parameter style: The style to draw the logo in.
+    /// - Returns: A view that draws the logo in `style`.
+    private func resolved(in style: some LogoStyle) -> some View {
+        ResolvedLogoStyle(style: style, configuration: configuration)
     }
 }
 
