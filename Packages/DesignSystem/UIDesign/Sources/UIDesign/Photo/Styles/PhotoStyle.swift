@@ -16,6 +16,8 @@ import SwiftUI
 ///
 /// Draw the configuration's content. A style that leaves it out hides the photo.
 ///
+/// The content is clear while the picture loads, so a style draws its own fill.
+///
 /// A style may read the environment, such as the color scheme.
 public protocol PhotoStyle: DynamicProperty {
     /// A view that represents the body of a photo.

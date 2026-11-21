@@ -12,14 +12,16 @@ import SwiftUI
 ///     .frame(width: 100, height: 150)
 /// ```
 ///
-/// While the picture loads, a photo draws a plain fill. If there is no URL, or
-/// the picture fails to load, it draws a fallback instead.
+/// While the picture loads, the fallback does not show. If there is no URL, or
+/// the picture fails to load, a photo draws the fallback instead.
 ///
 /// ```swift
 /// Photo(url: activity.imageURL) {
 ///     Artwork(icon: Icon(.hammerFill), palette: .teal)
 /// }
 /// ```
+///
+/// A redacted photo draws a plain fill, with no picture and no fallback.
 ///
 /// ### Naming a photo for VoiceOver
 ///
@@ -40,8 +42,10 @@ import SwiftUI
 public struct Photo<Fallback: View>: View {
     /// Where a photo gets its picture from.
     private enum Source {
-        /// A URL to load from, or `nil` when no picture was provided.
-        case url(URL?)
+        /// No URL was provided, so there is no picture to load.
+        case noPicture
+        /// A URL to load the picture from.
+        case url(URL)
         /// A phase of loading, drawn as it is.
         case phase(AsyncImagePhase)
     }
@@ -78,7 +82,7 @@ public struct Photo<Fallback: View>: View {
     ///   - fallback: A content builder that creates what to draw when there is
     ///     no picture to show. It does not show while the picture loads.
     public init(url: URL?, @ViewBuilder fallback: () -> Fallback) {
-        source = .url(url)
+        source = url.map(Source.url) ?? .noPicture
         self.fallback = fallback()
     }
 
@@ -114,15 +118,15 @@ public struct Photo<Fallback: View>: View {
     /// What the photo shows now, by where its picture comes from.
     @ViewBuilder private var shown: some View {
         if redactionReasons.contains(.placeholder) {
-            Color.clear
+            Rectangle().fill(.avatarFill)
         } else {
             switch source {
-            case .url(let url?):
+            case .url(let url):
                 AsyncImage(url: url) { phase in
                     drawing(phase)
                 }
 
-            case .url(nil):
+            case .noPicture:
                 fallback
 
             case .phase(let phase):
@@ -142,6 +146,8 @@ public struct Photo<Fallback: View>: View {
             image
                 .resizable()
                 .scaledToFill()
+                // Smart Invert inverts images unless told not to. The fallback is not a photo, so it inverts.
+                .accessibilityIgnoresInvertColors()
         } else if phase.error != nil {
             fallback
         }
@@ -157,9 +163,9 @@ public struct Photo<Fallback: View>: View {
 }
 
 extension Photo where Fallback == EmptyView {
-    /// Creates a photo that shows the grey fill when it has no picture to show.
+    /// Creates a photo that draws no fallback when it has no picture to show.
     ///
-    /// - Parameter url: Where the picture loads from. A `nil` url shows the fill.
+    /// - Parameter url: Where the picture loads from. A `nil` url draws no picture.
     public init(url: URL?) {
         self.init(url: url) { EmptyView() }
     }

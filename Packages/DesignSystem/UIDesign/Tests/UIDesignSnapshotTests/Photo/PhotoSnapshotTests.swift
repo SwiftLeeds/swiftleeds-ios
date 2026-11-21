@@ -9,6 +9,13 @@ import UIKit
 
 @MainActor
 @Suite(.snapshots(record: .never)) struct PhotoSnapshotTests {
+    /// A photo style that draws the content and nothing behind it.
+    private struct ContentOnlyPhotoStyle: PhotoStyle {
+        func makeBody(configuration: Configuration) -> some View {
+            configuration.content
+        }
+    }
+
     /// A failure to hand to a photo in its failed phase.
     private static let failure = URLError(.badServerResponse)
 
@@ -26,10 +33,28 @@ import UIKit
 
     /// A loaded picture in a portrait frame, with room around it to show any overflow.
     private var croppedPicture: some View {
-        Photo(phase: .success(.samplePhoto)) { EmptyView() }
-            .frame(width: Self.portraitWidth, height: Self.portraitHeight)
+        portraitPhoto(in: .success(.samplePhoto))
             .padding(Self.overflowRoom)
             .background(.surface)
+    }
+
+    /// A loaded picture and a failed one side by side, each in a portrait frame, with room around them.
+    private var loadedAndFailedPhotos: some View {
+        HStack(spacing: Self.overflowRoom) {
+            portraitPhoto(in: .success(.samplePhoto))
+            portraitPhoto(in: .failure(Self.failure))
+        }
+        .padding(Self.overflowRoom)
+        .background(.surface)
+    }
+
+    /// Draws a photo in one phase in a portrait frame, with an artwork as its fallback.
+    ///
+    /// - Parameter phase: The phase to draw.
+    /// - Returns: The framed photo.
+    private func portraitPhoto(in phase: AsyncImagePhase) -> some View {
+        Photo(phase: phase) { Artwork(icon: Icon(.hammerFill), palette: .teal) }
+            .frame(width: Self.portraitWidth, height: Self.portraitHeight)
     }
 
     /// Frames a photo and clips it as a thumbnail, on the base surface.
@@ -82,26 +107,22 @@ import UIKit
         assertContrastSnapshots(of: thumbnail(phase: .failure(Self.failure)))
     }
 
-    @Test func whenPhaseIsFailureAtLargestTextSize_shouldDrawSameFallback() {
-        assertSpecimenSnapshots(
-            of: thumbnail(phase: .failure(Self.failure)).dynamicTypeSize(.accessibility5),
-            testName: "whenPhaseIsFailure_shouldDrawFallback",
-        )
+    @Test func whenPhaseIsFailureInHeroAtCompactWidth_shouldDrawFallbackAcrossWidth() {
+        let hero = Photo(phase: .failure(Self.failure)) { Artwork(icon: Icon(.hammerFill), palette: .teal) }
+            .aspectRatio(Self.heroRatio, contentMode: .fit)
+        assertCompactSnapshots(of: hero)
     }
 
-    @Test func whenPhaseIsEmptyInHeroAtCompactWidth_shouldDrawGreyFill() {
-        let hero = Photo(phase: .empty) { EmptyView() }
-            .aspectRatio(Self.heroRatio, contentMode: .fit)
-            .padding(.lg)
-            .background(.surface)
-        assertCompactSnapshots(of: hero)
+    @Test func whenFallbackIsSymbol_shouldDrawSymbolOnGreyFill() {
+        let photo = Photo(phase: .failure(Self.failure)) { Image(systemSymbol: .photo).font(.largeTitle) }
+        assertContrastSnapshots(of: thumbnail(photo))
     }
 
     @Test func whenPictureLoadedInPortraitFrame_shouldCropToFrame() {
         assertSpecimenSnapshots(of: croppedPicture)
     }
 
-    @Test func whenPictureLoadedWithEverySettingOn_shouldCropToFrame() {
+    @Test func whenPhotosLoadedAndFailedWithEverySettingOn_shouldDrawPictureAndFallback() {
         let everySetting = UITraitCollection {
             $0.userInterfaceStyle = .dark
             $0.accessibilityContrast = .high
@@ -109,7 +130,7 @@ import UIKit
             $0.preferredContentSizeCategory = .accessibilityExtraExtraExtraLarge
         }
         assertSnapshot(
-            of: croppedPicture.dynamicTypeSize(.accessibility5).fixedSize(),
+            of: loadedAndFailedPhotos.dynamicTypeSize(.accessibility5).fixedSize(),
             as: .image(traits: everySetting),
             named: "every-setting",
         )
@@ -118,6 +139,12 @@ import UIKit
     @Test func whenPhotoIsRedactedInFailedPhase_shouldDrawGreyFillWithoutFallback() {
         let photo = Photo(phase: .failure(Self.failure)) { Text("Fallback") }
         assertContrastSnapshots(of: thumbnail(photo).redacted(reason: .placeholder))
+    }
+
+    @Test func whenPhotoIsRedactedUnderCustomStyle_shouldDrawGreyFill() {
+        let photo = Photo(phase: .success(.samplePhoto)) { Text("Fallback") }
+            .photoStyle(ContentOnlyPhotoStyle())
+        assertSpecimenSnapshots(of: thumbnail(photo).redacted(reason: .placeholder))
     }
 
     @Test func whenPhotoIsRedactedInLoadedPhase_shouldDrawGreyFillWithoutPicture() {
