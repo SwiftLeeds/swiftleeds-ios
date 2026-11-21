@@ -1,8 +1,10 @@
 #if os(iOS)
+import Foundation
 import SFSafeSymbols
 import SwiftUI
 import Testing
 import UIDesign
+import UIKit
 
 @MainActor
 @Suite
