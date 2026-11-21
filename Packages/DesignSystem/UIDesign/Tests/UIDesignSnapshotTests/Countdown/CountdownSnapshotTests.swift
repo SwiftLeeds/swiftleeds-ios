@@ -4,6 +4,7 @@ import SnapshotTesting
 import SwiftUI
 import Testing
 import UIDesign
+import UIKit
 
 @MainActor
 @Suite(.snapshots(record: .never)) struct CountdownSnapshotTests {
@@ -108,6 +109,42 @@ import UIDesign
         .padding(.lg)
         .background(.surface)
         assertSpecimenSnapshots(of: view)
+    }
+
+    @Test func whenLoading_shouldDrawSkeleton() {
+        assertSnapshots(of: countdown(timeLeft: 12 * 60).redacted(reason: .placeholder))
+    }
+
+    @Test func whenTextIsBold_shouldDrawBoldDigits() {
+        let light = UITraitCollection {
+            $0.userInterfaceStyle = .light
+            $0.legibilityWeight = .bold
+        }
+        // The snapshot helpers have no light-only variant, so this calls assertSnapshot directly.
+        assertSnapshot(
+            of: countdown(timeLeft: 12 * 60).dynamicTypeSize(.large).fixedSize(),
+            as: .image(traits: light),
+            named: "light-default",
+        )
+    }
+
+    @Test func whenEverySettingIsOn_shouldDrawLargeBoldText() {
+        let light = UITraitCollection {
+            $0.userInterfaceStyle = .light
+            $0.legibilityWeight = .bold
+            $0.accessibilityContrast = .high
+        }
+        let view = Badge {
+            Countdown(to: Self.start)
+                .countdownNow(.fixed(Self.start.addingTimeInterval(-12 * 60)))
+        }
+        .environment(\.locale, Locale(identifier: "en_GB"))
+        .padding(.lg)
+        .background(.surface)
+        .dynamicTypeSize(.accessibility5)
+        .frame(width: rowWidth)
+        .fixedSize(horizontal: false, vertical: true)
+        assertSnapshot(of: view, as: .image(traits: light), named: "light-accessibility")
     }
 
     @Test func whenTimeZoneIsLondonAcrossClockChange_shouldDrawInOneDay() throws {
