@@ -92,3 +92,15 @@ public struct Countdown: View {
         ResolvedCountdownStyle(style: style, configuration: configuration)
     }
 }
+
+#Preview("Times left") {
+    let start = Date(timeIntervalSinceReferenceDate: 800_000_000)
+    return VStack(alignment: .leading, spacing: .md) {
+        ForEach([12 * 60, 2 * 60 * 60, 30], id: \.self) { secondsLeft in
+            Countdown(to: start)
+                .countdownNow(.fixed(start.addingTimeInterval(-TimeInterval(secondsLeft))))
+        }
+    }
+    .environment(\.locale, Locale(identifier: "en_GB"))
+    .padding(.lg)
+}
