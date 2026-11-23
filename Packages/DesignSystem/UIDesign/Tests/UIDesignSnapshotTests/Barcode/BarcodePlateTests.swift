@@ -1,4 +1,5 @@
 #if os(iOS)
+import CoreImage
 import QuartzCore
 import SwiftUI
 import Testing
@@ -73,6 +74,18 @@ struct BarcodePlateTests {
     /// - Throws: ``ProbeError/codeNeverDrawn`` when the code's marks never show in the render.
     ///   Also when the code, the render or the pixels cannot be made.
     private static func renderedPixels(brand: Brand, appearance: SystemAppearance) async throws -> RGBAPixels {
+        try RGBAPixels(of: try await renderedImage(brand: brand, appearance: appearance))
+    }
+
+    /// Returns the picture of a default barcode on a grouped surface, drawn on screen.
+    ///
+    /// - Parameters:
+    ///   - brand: The brand the barcode reads from its environment.
+    ///   - appearance: The appearance the host is drawn in.
+    /// - Returns: The picture of the render, at the render scale.
+    /// - Throws: ``ProbeError/codeNeverDrawn`` when the code's marks never show in the render.
+    ///   Also when the code, the render or the pixels cannot be made.
+    private static func renderedImage(brand: Brand, appearance: SystemAppearance) async throws -> CGImage {
         let view = Barcode(try QRCode(text), label: Text("Ticket QR code"))
             .frame(width: side, height: side)
             .background(.groupedSurface)
@@ -88,25 +101,42 @@ struct BarcodePlateTests {
         host.view.frame = frame
         host.view.layoutIfNeeded()
         for _ in 0..<attempts {
-            let pixels = try pixels(of: window)
-            if showsMarks(in: pixels) { return pixels }
+            let image = try image(of: window)
+            if showsMarks(in: try RGBAPixels(of: image)) { return image }
             try await Task.sleep(for: pollInterval)
         }
         throw ProbeError.codeNeverDrawn
     }
 
-    /// Returns the pixels of what a window shows now.
+    /// Returns the picture of what a window shows now.
     ///
     /// - Parameter window: The window to read.
-    /// - Returns: The window's pixels, at the render scale.
-    /// - Throws: When the picture or its pixels cannot be made.
-    private static func pixels(of window: UIWindow) throws -> RGBAPixels {
+    /// - Returns: The window's picture, at the render scale.
+    /// - Throws: When the picture cannot be made.
+    private static func image(of window: UIWindow) throws -> CGImage {
         let format = UIGraphicsImageRendererFormat()
         format.scale = renderScale
         let image = UIGraphicsImageRenderer(size: window.bounds.size, format: format).image { context in
             window.layer.render(in: context.cgContext)
         }
-        return try RGBAPixels(of: try #require(image.cgImage))
+        return try #require(image.cgImage)
+    }
+
+    /// Returns the text a QR code in a picture carries.
+    ///
+    /// - Parameter image: The picture to scan.
+    /// - Returns: The text of the first QR code found, or `nil` when there is none.
+    /// - Throws: When the detector cannot be made.
+    private static func decodedText(in image: CGImage) throws -> String? {
+        let detector = try #require(
+            CIDetector(
+                ofType: CIDetectorTypeQRCode,
+                context: nil,
+                options: [CIDetectorAccuracy: CIDetectorAccuracyHigh],
+            )
+        )
+        let features = detector.features(in: CIImage(cgImage: image))
+        return features.compactMap { ($0 as? CIQRCodeFeature)?.messageString }.first
     }
 
     /// Returns whether the top-leading finder pattern's black center shows in a render.
@@ -182,6 +212,15 @@ struct BarcodePlateTests {
             failing.isEmpty,
             "\(brand) \(appearance.name): \(summary), first drawn \(String(describing: shown))",
         )
+    }
+
+    @Test(arguments: Brand.allCases, appearances)
+    func whenDrawn_shouldScanBackAsCodeText(brand: Brand, appearance: SystemAppearance) async throws {
+        let image = try await Self.renderedImage(brand: brand, appearance: appearance)
+        let decoded = try Self.decodedText(in: image)
+        var shown = "nothing"
+        if let decoded { shown = "\"\(decoded)\"" }
+        #expect(decoded == Self.text, "\(brand) \(appearance.name): decoded \(shown), expected \(Self.text)")
     }
 }
 #endif
