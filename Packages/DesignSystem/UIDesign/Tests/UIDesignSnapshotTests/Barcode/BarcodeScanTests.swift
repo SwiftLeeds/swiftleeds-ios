@@ -29,8 +29,14 @@ struct BarcodeScanTests {
     /// The most alpha, out of 255, that a pixel may have and still count as clear.
     private static let clearTolerance: UInt8 = 8
 
-    @Test
-    func whenFramed_shouldFillFrameWithCode() throws {
+    /// The most alpha, out of 255, that a pixel may lack and still count as opaque.
+    private static let opaqueFloor = 255 - clearTolerance
+
+    /// Returns the pixels of a barcode drawn in the frame, with no style around it.
+    ///
+    /// - Returns: The pixels of the render, at the render scale.
+    /// - Throws: When the code, the render or the pixels cannot be made.
+    private func renderedPixels() throws -> RGBAPixels {
         let code = try QRCode(Self.text)
         let view = Barcode(code, label: Text("Ticket QR code"))
             .barcodeStyle(ContentOnlyBarcodeStyle())
@@ -38,7 +44,27 @@ struct BarcodeScanTests {
         let renderer = ImageRenderer(content: view)
         renderer.scale = Self.renderScale
         let image = try #require(renderer.cgImage)
-        let pixels = try RGBAPixels(of: image)
+        return try RGBAPixels(of: image)
+    }
+
+    @Test
+    func whenScaledUp_shouldDrawOnlyOpaqueBlackOrClearPixels() throws {
+        let pixels = try renderedPixels()
+        let rows = 0..<pixels.height
+        let failingCount = (0..<pixels.width).flatMap { column in
+            rows.map { pixels.pixel(x: column, y: $0) }
+        }.count { pixel in
+            let isClear = pixel.alpha <= Self.clearTolerance
+            let isOpaque = pixel.alpha >= Self.opaqueFloor
+            let isBlack = max(pixel.red, pixel.green, pixel.blue) <= Self.clearTolerance
+            return !(isClear || (isOpaque && isBlack))
+        }
+        #expect(failingCount == 0, "\(failingCount) pixels are neither opaque black nor clear")
+    }
+
+    @Test
+    func whenFramed_shouldFillFrameWithCode() throws {
+        let pixels = try renderedPixels()
         let opaqueColumns = (0..<pixels.width).filter { column in
             (0..<pixels.height).contains { pixels.pixel(x: column, y: $0).alpha > Self.clearTolerance }
         }

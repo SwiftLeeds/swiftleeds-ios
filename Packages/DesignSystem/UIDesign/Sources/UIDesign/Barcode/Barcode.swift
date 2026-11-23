@@ -61,6 +61,7 @@ public struct Barcode: View {
         BarcodeStyleConfiguration(
             content: Image(code, label: label)
                 .resizable()
+                .interpolation(.none)
                 .scaledToFit()
         )
     }
