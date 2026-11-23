@@ -24,5 +24,14 @@ struct BarcodeAccessibilityTests {
         #expect(element.traits.contains(.image))
         #expect(element.value == nil)
     }
+
+    @Test
+    func whenRedacted_shouldExposeNoElement() throws {
+        let code = try QRCode(Self.text)
+        let sut = Barcode(code, label: Text(Self.label))
+            .redacted(reason: .placeholder)
+        let elements = try AccessibilityTree.elements(of: sut)
+        #expect(elements.isEmpty, "\(elements.count) elements are exposed")
+    }
 }
 #endif

@@ -32,5 +32,9 @@ import UIDesign
     @Test func whenDrawnOnGroupedSurface_shouldDrawCodeOnRoundedPlate() {
         assertContrastSnapshots(of: Self.specimen())
     }
+
+    @Test func whenRedacted_shouldHideCode() {
+        assertSpecimenSnapshots(of: Self.specimen().redacted(reason: .placeholder))
+    }
 }
 #endif
