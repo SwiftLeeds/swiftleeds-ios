@@ -3,7 +3,7 @@ import SwiftUI
 
 /// The default barcode style.
 ///
-/// It draws the barcode's symbol as it is.
+/// It draws the code on the brand's scannable surface.
 ///
 /// You can also use ``BarcodeStyle/automatic`` to construct this style.
 public struct DefaultBarcodeStyle: BarcodeStyle {
@@ -13,6 +13,7 @@ public struct DefaultBarcodeStyle: BarcodeStyle {
     @MainActor
     public func makeBody(configuration: Configuration) -> some View {
         configuration.content
+            .background(.scannableSurface)
     }
 }
 
