@@ -71,7 +71,6 @@ import UIKit
         .tertiaryGroupedSurface,
     ]
 
-    /// Checks every size, with and without a status, because the mark sits over the ring.
     @Test func ringedStyle() {
         let view = VStack(alignment: .leading, spacing: Spacing.lg) {
             row(status: nil)
@@ -84,7 +83,6 @@ import UIKit
         assertSnapshots(of: view)
     }
 
-    /// Checks every palette on every surface, because the ring has to show against each of them.
     @Test func ringedStyleSurfaces() {
         let view = VStack(spacing: 0) {
             ForEach(Self.surfaces.indices, id: \.self) { index in
@@ -95,7 +93,6 @@ import UIKit
         assertContrastSnapshots(of: view)
     }
 
-    /// Checks every palette on the elevated dark sheet, which lifts the grouped surface.
     @Test func ringedStyleOnElevatedSheet() {
         let view = paletteRow().background(.tertiaryGroupedSurface)
         let traits = UITraitCollection {
@@ -110,7 +107,6 @@ import UIKit
         )
     }
 
-    /// Checks the initials under Bold Text, because the letters get heavier inside the ring.
     @Test func ringedStyleBold() {
         let traits = UITraitCollection {
             $0.userInterfaceStyle = .light
@@ -124,7 +120,6 @@ import UIKit
         )
     }
 
-    /// Checks the ring under no settings, large text, Increase Contrast and all together.
     @Test func ringedStyleFinalSet() {
         let light = UITraitCollection { $0.userInterfaceStyle = .light }
         let increasedContrast = UITraitCollection {
@@ -156,7 +151,6 @@ import UIKit
         )
     }
 
-    /// Checks that the status moves to the lower leading side, over the ring, in a right-to-left language.
     @Test func ringedStyleRightToLeft() {
         let view = ringedRow(status: AvatarStatus("Checked in"))
             .environment(\.layoutDirection, .rightToLeft)
@@ -164,8 +158,6 @@ import UIKit
         assertSnapshots(of: view)
     }
 
-    /// Checks the symbol, initials and custom fallbacks while loading, because redaction ignores a
-    /// clip shape and each fallback would otherwise draw a square inside the circle.
     @Test func ringedStyleRedacted() {
         let view = HStack(spacing: Spacing.lg) {
             Avatar(url: nil, size: .large)
@@ -185,7 +177,6 @@ import UIKit
         assertSnapshots(of: view)
     }
 
-    /// Checks a ringed nameplate in its default and prominent styles, because the ring shows through its icon.
     @Test func ringedStyleInNameplate() {
         let view = VStack(alignment: .leading, spacing: Spacing.xl) {
             Nameplate("Ada Archer", detail: "Speaker") {
@@ -205,7 +196,6 @@ import UIKit
         assertSnapshots(of: view)
     }
 
-    /// Checks that names line up in a real list that mixes ringed and default rows.
     @Test func ringedStyleInMixedList() {
         assertSnapshots(of: MixedList())
     }

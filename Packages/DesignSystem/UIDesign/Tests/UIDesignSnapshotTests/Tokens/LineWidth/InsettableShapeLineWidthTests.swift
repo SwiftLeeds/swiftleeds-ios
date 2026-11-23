@@ -3,7 +3,6 @@ import SwiftUI
 import Testing
 import UIDesign
 
-/// Tests for how a shape strokes its border with a ``LineWidth`` token.
 @MainActor
 struct InsettableShapeLineWidthTests {
     /// The side of the square that each circle is drawn in, in points.

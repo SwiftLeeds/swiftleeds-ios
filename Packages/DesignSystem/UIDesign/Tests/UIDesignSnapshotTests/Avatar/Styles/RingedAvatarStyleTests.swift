@@ -5,7 +5,6 @@ import Testing
 import UIDesign
 import UIKit
 
-/// Tests for the ring that ``RingedAvatarStyle`` draws.
 @MainActor
 @Suite
 struct RingedAvatarStyleTests {
@@ -24,7 +23,8 @@ struct RingedAvatarStyleTests {
     /// How far in from the avatar's top edge a pixel just inside the frame lies, in points.
     private static let justInside: CGFloat = 0.5
 
-    /// How far out from the avatar's top edge a pixel just outside the frame lies, in points.
+    /// A negative offset: how far outside the avatar's top edge a pixel just outside the frame lies,
+    /// in points.
     private static let justOutside: CGFloat = -1
 
     /// The largest gap per color component that still counts as the same color.
@@ -86,14 +86,14 @@ struct RingedAvatarStyleTests {
 
     /// Returns whether two resolved colors are within the tolerance in every component.
     ///
-    /// The expected color is clamped to the sRGB range first, because the render holds sRGB pixels
-    /// and a catalog color may lie outside that range.
+    /// The expected color is clamped to the sRGB range first.
     ///
     /// - Parameters:
     ///   - color: The color to check.
     ///   - expected: The color to compare with.
     /// - Returns: Whether the red, green and blue components each differ by the tolerance or less.
     private static func isClose(_ color: Color.Resolved, to expected: Color.Resolved) -> Bool {
+        // The render holds sRGB pixels, and a catalog color may lie outside that range.
         abs(color.red - clamped(expected.red)) <= tolerance
             && abs(color.green - clamped(expected.green)) <= tolerance
             && abs(color.blue - clamped(expected.blue)) <= tolerance

@@ -2,7 +2,6 @@ import SwiftUI
 import Testing
 import UIDesign
 
-/// Tests for ``AvatarRingPalette`` and its environment value.
 struct AvatarRingPaletteTests {
     /// Two different palettes from the six the type names.
     fileprivate struct PalettePair: CustomTestStringConvertible {
@@ -43,9 +42,6 @@ struct AvatarRingPaletteTests {
         #expect(sut.avatarRingPalette == .neutral)
     }
 
-    /// Checks that two palettes of different names are not equal.
-    ///
-    /// - Parameter pair: Two different palettes.
     @Test(arguments: pairs)
     fileprivate func whenPalettesNameDifferentFamilies_shouldNotBeEqual(pair: PalettePair) {
         #expect(pair.first != pair.second)

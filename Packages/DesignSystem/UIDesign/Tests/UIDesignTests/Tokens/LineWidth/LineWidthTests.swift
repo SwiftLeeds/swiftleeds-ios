@@ -63,9 +63,6 @@ struct LineWidthTests {
         #expect(sut.level(for: settings) == .points3)
     }
 
-    /// Checks that the ring is three points wide under every combination of settings.
-    ///
-    /// - Parameter settings: One combination of differentiation, contrast and transparency.
     @Test(arguments: everySetting)
     func whenRoleIsRing_shouldReturnThreePointsUnderEverySetting(
         settings: UIDesign.AccessibilitySettings
