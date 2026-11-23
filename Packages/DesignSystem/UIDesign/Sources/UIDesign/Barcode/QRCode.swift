@@ -27,7 +27,9 @@ public struct QRCode: Equatable, Hashable, Sendable {
     /// The most bytes a version 40 code at level H holds in byte mode.
     private static let capacityInBytes = 1_273
 
-    /// The modules the generator leaves out of the 4-module quiet zone the QR standard asks for.
+    /// The modules the generator leaves out of the quiet zone.
+    ///
+    /// The QR standard asks for a quiet zone of 4 modules.
     private static let missingQuietZoneModules: CGFloat = 3
 
     /// The text the code carries.
@@ -37,6 +39,12 @@ public struct QRCode: Equatable, Hashable, Sendable {
     fileprivate let image: CGImage
 
     /// Creates a code that carries the given text.
+    ///
+    /// ```swift
+    /// do {
+    ///     let code = try QRCode("ti_ExampleTicket0000000000")
+    /// } catch .empty { print("There is no text to encode.") }
+    /// ```
     ///
     /// - Parameter text: The text the code carries.
     /// - Throws: ``ParsingError/empty`` when `text` is empty.
@@ -120,6 +128,10 @@ public struct QRCode: Equatable, Hashable, Sendable {
 
 extension Image {
     /// Creates an image that draws a QR code at one pixel for each module.
+    ///
+    /// ```swift
+    /// Image(code, label: Text("Ticket QR code"))
+    /// ```
     ///
     /// - Parameters:
     ///   - code: The code to draw.

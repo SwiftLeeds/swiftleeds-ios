@@ -85,16 +85,22 @@ struct QRCodeTests {
     /// How many pixels the renderer draws for each point.
     private static let renderScale: CGFloat = 8
 
-    /// The modules across the drawn code: 33 for the fixture, plus the quiet zone on both sides.
+    /// The modules across the drawn code, with its quiet zone.
+    ///
+    /// The fixture is 33 modules, and the quiet zone adds 4 on each side.
     private static let modulesWithQuietZone = 41
 
     /// The modules of clear quiet zone on each side of the code.
     private static let quietZoneModules = 4
 
-    /// How far a channel may sit from its expected value, on a scale from 0 to 255.
+    /// How far a channel may sit from its expected value.
+    ///
+    /// A channel runs from 0 to 255.
     nonisolated private static let channelTolerance = 8
 
-    /// The distance from the top and the leading edge to the center of the first dark module, in modules.
+    /// The distance from the top and the leading edge to the first dark module's center.
+    ///
+    /// It is counted in modules.
     private static let firstModuleCenter = 4.5
 
     /// The largest value of one channel.

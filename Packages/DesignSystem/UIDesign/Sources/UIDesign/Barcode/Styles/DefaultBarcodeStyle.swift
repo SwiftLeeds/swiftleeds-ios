@@ -15,6 +15,13 @@ public struct DefaultBarcodeStyle: BarcodeStyle {
     /// Creates the default barcode style.
     public init() {}
 
+    /// Creates a view that represents the body of a barcode.
+    ///
+    /// The system calls this method for each ``Barcode`` instance in a view
+    /// hierarchy where this style is the current barcode style.
+    ///
+    /// - Parameter configuration: The properties of the barcode.
+    /// - Returns: A view that represents the body of a barcode.
     @MainActor
     public func makeBody(configuration: Configuration) -> some View {
         configuration.content

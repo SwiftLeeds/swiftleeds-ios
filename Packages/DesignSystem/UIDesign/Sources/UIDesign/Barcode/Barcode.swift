@@ -4,7 +4,7 @@ import SwiftUI
 /// A view that draws a QR code for a scanner to read.
 ///
 /// A barcode is essential content, so give it a label that names what it is. It does not
-/// scale with the text size. The caller's frame sets its size.
+/// scale with the text size, and it ignores Smart Invert. The caller's frame sets its size.
 ///
 /// ```swift
 /// Barcode(code, label: Text("Ticket QR code"))
@@ -54,7 +54,7 @@ public struct Barcode: View {
 
     public var body: some View {
         AnyView(resolved(in: style))
-            // Smart Invert would turn the marks white, which no scanner reads, so it skips every style.
+            // Smart Invert would turn the marks white, which may not scan, so it skips every style.
             .accessibilityIgnoresInvertColors()
     }
 
@@ -85,7 +85,9 @@ extension Barcode {
     /// The side of the preview barcode's frame.
     fileprivate static let previewSide: CGFloat = 220
 
-    /// A barcode of made-up text in a frame on a grouped surface, or the reason there is none.
+    /// A barcode of made-up text in a frame on a grouped surface.
+    ///
+    /// When no code can be made, it shows the reason instead.
     @ViewBuilder
     fileprivate static var preview: some View {
         Group {

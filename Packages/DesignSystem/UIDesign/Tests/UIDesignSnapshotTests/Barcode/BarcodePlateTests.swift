@@ -27,19 +27,27 @@ struct BarcodePlateTests {
     /// The made-up text the code carries.
     private static let text = "ti_ExampleTicket0000000000"
 
-    /// The modules across the fixture's code with its quiet zone: 33 in version 4, and 4 on each side.
+    /// The modules across the fixture's code with its quiet zone.
+    ///
+    /// The code is 33 modules in version 4, and the quiet zone adds 4 on each side.
     private static let modulesWithQuietZone = 41.0
 
-    /// How far into the code, in modules, the middle of the quiet zone's innermost row sits.
+    /// How far into the code the middle of the quiet zone's innermost row sits.
+    ///
+    /// It is counted in modules.
     private static let ringRowOffset = 3.5
 
-    /// How far into the code, in modules, the middle of the black center of the top-leading finder pattern sits.
+    /// How far into the code the black center of the top-leading finder pattern sits.
+    ///
+    /// It is counted in modules, to the middle of that center.
     private static let finderMarkOffset = 7.5
 
-    /// The brightest channel, out of 255, that still counts as a black mark when checking the code was drawn.
+    /// The brightest channel, out of 255, that still counts as a black mark.
+    ///
+    /// The test uses it to check that the code was drawn.
     private static let drawnMarkCeiling: UInt8 = 96
 
-    /// How many times the render is read before the test gives up on the code appearing.
+    /// How many times the render is read before the test gives up.
     private static let attempts = 50
 
     /// How long to wait between two reads of the render.
@@ -51,7 +59,9 @@ struct BarcodePlateTests {
     /// The number of pixels in one point of the render.
     private static let renderScale: CGFloat = 3
 
-    /// The width, in pixels, of the plate's rounded corner at each side, where the plate is not drawn.
+    /// The width, in pixels, of the plate's rounded corner at each side.
+    ///
+    /// The plate is not drawn there.
     private static let cornerRadiusInPixels = Int((CGFloat(CornerRadius.tile.level) * renderScale).rounded(.up))
 
     /// The most a channel may sit from the plate's, out of 255.

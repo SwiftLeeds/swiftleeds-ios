@@ -8,17 +8,27 @@ import UIDesign
 struct BarcodeStyleTests {
     /// A style that draws its own text and ignores the barcode's content.
     private struct TextBarcodeStyle: BarcodeStyle {
+        /// Creates a view that represents the body of a barcode.
+        ///
+        /// - Parameter configuration: The properties of the barcode.
+        /// - Returns: A view that represents the body of a barcode.
         @MainActor
         func makeBody(configuration: Configuration) -> some View {
             Text(BarcodeStyleTests.styleText)
         }
     }
 
-    /// A style that draws the name of the color scheme it reads from the environment, such as "dark".
+    /// A style that draws the name of the color scheme it reads.
+    ///
+    /// The name comes from the environment, such as "dark".
     private struct SchemeBarcodeStyle: BarcodeStyle {
         /// The color scheme this style reads.
         @Environment(\.colorScheme) private var colorScheme
 
+        /// Creates a view that represents the body of a barcode.
+        ///
+        /// - Parameter configuration: The properties of the barcode.
+        /// - Returns: A view that represents the body of a barcode.
         @MainActor
         func makeBody(configuration: Configuration) -> some View {
             Text(String(describing: colorScheme))

@@ -8,6 +8,10 @@ import UIDesign
 struct BarcodeScanTests {
     /// A style that draws the barcode's content and nothing else.
     private struct ContentOnlyBarcodeStyle: BarcodeStyle {
+        /// Creates a view that represents the body of a barcode.
+        ///
+        /// - Parameter configuration: The properties of the barcode.
+        /// - Returns: A view that represents the body of a barcode.
         @MainActor
         func makeBody(configuration: Configuration) -> some View {
             configuration.content
@@ -23,10 +27,12 @@ struct BarcodeScanTests {
     /// The number of pixels in one point of the render.
     private static let renderScale: CGFloat = 3
 
-    /// The share of the frame's width that the code's marks must span, from 0 to 1.
+    /// The share of the frame's width the code's marks must span.
+    ///
+    /// It runs from 0 to 1.
     private static let minimumSpan = 0.7
 
-    /// The most alpha, out of 255, that a pixel may have and still count as clear.
+    /// The most alpha, out of 255, a pixel may have and count as clear.
     private static let clearTolerance: UInt8 = 8
 
     /// The brightest color channel, out of 255, that still counts as black.

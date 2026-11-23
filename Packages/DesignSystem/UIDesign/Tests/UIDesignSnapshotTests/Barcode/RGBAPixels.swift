@@ -1,7 +1,9 @@
 #if os(iOS)
 import CoreGraphics
 
-/// The pixels of a rendered image with their alpha, read as 8-bit sRGB, for the barcode suites.
+/// The pixels of a rendered image with their alpha, for the barcode suites.
+///
+/// They are read as 8-bit sRGB.
 struct RGBAPixels: Equatable, Hashable, Sendable {
     /// One pixel's channels, each from 0 to 255.
     struct Pixel: Equatable, Hashable, Sendable {
