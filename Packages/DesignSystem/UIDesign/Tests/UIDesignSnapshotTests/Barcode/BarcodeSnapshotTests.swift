@@ -38,6 +38,20 @@ import UIKit
         assertSpecimenSnapshots(of: Self.specimen().redacted(reason: .placeholder))
     }
 
+    @Test func whenEverySettingIsOn_shouldDrawPlateAndCode() {
+        let allSettings = UITraitCollection {
+            $0.userInterfaceStyle = .dark
+            $0.accessibilityContrast = .high
+            $0.legibilityWeight = .bold
+        }
+        // The snapshot helpers have no Bold variant, so this calls assertSnapshot directly.
+        assertSnapshot(
+            of: AnyView(Self.specimen().dynamicTypeSize(.accessibility5).fixedSize()),
+            as: .image(traits: allSettings),
+            named: "dark-increased-contrast-accessibility5-bold",
+        )
+    }
+
     @Test func whenAtLargestTextSize_shouldMatchDefaultReferences() {
         let light = UITraitCollection { $0.userInterfaceStyle = .light }
         // The view is built as the contrast helper builds it, so it compares with that reference.
