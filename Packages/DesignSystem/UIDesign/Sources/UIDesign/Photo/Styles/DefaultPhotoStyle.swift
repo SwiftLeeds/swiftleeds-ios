@@ -13,7 +13,7 @@ public struct DefaultPhotoStyle: PhotoStyle {
     @MainActor
     public func makeBody(configuration: Configuration) -> some View {
         configuration.content
-            .background(redactionReasons.contains(.placeholder) ? AnyShapeStyle(.clear) : .avatarFill)
+            .background(redactionReasons.contains(.placeholder) ? AnyShapeStyle(.clear) : .secondaryFill)
     }
 }
 

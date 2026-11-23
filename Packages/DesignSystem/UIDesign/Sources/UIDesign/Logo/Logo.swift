@@ -115,7 +115,7 @@ public struct Logo<Fallback: View>: View {
     private var content: some View {
         if redactionReasons.contains(.placeholder) {
             // Redaction ignores a clip shape and draws a bar for text, so draw the plain shape.
-            Rectangle().fill(.avatarFill)
+            Rectangle().fill(.secondaryFill)
         } else {
             loadedContent
         }
