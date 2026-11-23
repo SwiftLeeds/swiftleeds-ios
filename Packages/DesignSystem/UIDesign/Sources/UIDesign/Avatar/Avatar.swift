@@ -236,3 +236,15 @@ private let previewName = PersonNameComponents(givenName: "Member", familyName: 
     }
     .padding(.lg)
 }
+
+#Preview("Ringed") {
+    HStack(alignment: .bottom, spacing: .lg) {
+        Avatar(url: nil, size: .small, fallback: .initials(previewName))
+        Avatar(url: nil, size: .medium, fallback: .initials(previewName))
+        Avatar(url: nil, size: .large, status: AvatarStatus("Checked in"), fallback: .initials(previewName))
+        Avatar(url: nil, size: .xLarge, fallback: .initials(previewName))
+    }
+    .avatarStyle(.ringed)
+    .avatarRingPalette(.blue)
+    .padding(.lg)
+}
