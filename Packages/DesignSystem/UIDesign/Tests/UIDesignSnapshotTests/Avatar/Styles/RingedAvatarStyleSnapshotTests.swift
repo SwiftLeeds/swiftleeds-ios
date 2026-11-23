@@ -68,6 +68,71 @@ import UIKit
         )
     }
 
+    /// Checks the initials under Bold Text, because the letters get heavier inside the ring.
+    @Test func ringedStyleBold() {
+        let traits = UITraitCollection {
+            $0.userInterfaceStyle = .light
+            $0.legibilityWeight = .bold
+        }
+        // The snapshot helpers have no Bold variant, so this calls assertSnapshot directly.
+        assertSnapshot(
+            of: ringedRow(status: AvatarStatus("Checked in")).dynamicTypeSize(.large).fixedSize(),
+            as: .image(traits: traits),
+            named: "light-bold",
+        )
+    }
+
+    /// Checks the ring under no settings, large text, Increase Contrast and all together.
+    @Test func ringedStyleFinalSet() {
+        let light = UITraitCollection { $0.userInterfaceStyle = .light }
+        let increasedContrast = UITraitCollection {
+            $0.userInterfaceStyle = .light
+            $0.accessibilityContrast = .high
+        }
+        let everything = UITraitCollection {
+            $0.userInterfaceStyle = .dark
+            $0.accessibilityContrast = .high
+            $0.legibilityWeight = .bold
+        }
+        let view = ringedRow(status: AvatarStatus("Checked in"))
+        // The snapshot helpers have no combined variant, so this calls assertSnapshot directly.
+        assertSnapshot(of: view.dynamicTypeSize(.large).fixedSize(), as: .image(traits: light), named: "none")
+        assertSnapshot(
+            of: view.dynamicTypeSize(.accessibility5).fixedSize(),
+            as: .image(traits: light),
+            named: "large-text",
+        )
+        assertSnapshot(
+            of: view.dynamicTypeSize(.large).fixedSize(),
+            as: .image(traits: increasedContrast),
+            named: "increased-contrast",
+        )
+        assertSnapshot(
+            of: view.environment(\.layoutDirection, .rightToLeft).dynamicTypeSize(.accessibility5).fixedSize(),
+            as: .image(traits: everything),
+            named: "all-together",
+        )
+    }
+
+    /// Checks that the status moves to the lower leading side, over the ring, in a right-to-left language.
+    @Test func ringedStyleRightToLeft() {
+        let view = ringedRow(status: AvatarStatus("Checked in"))
+            .environment(\.layoutDirection, .rightToLeft)
+
+        assertSnapshots(of: view)
+    }
+
+    /// Returns a padded row of every size in the ringed style, with initials.
+    ///
+    /// - Parameter status: The state to show on each avatar, if any.
+    /// - Returns: A row of four blue-ringed avatars, smallest first.
+    private func ringedRow(status: AvatarStatus?) -> some View {
+        row(status: status)
+            .avatarStyle(.ringed)
+            .avatarRingPalette(.blue)
+            .padding(Spacing.lg)
+    }
+
     /// Returns a padded row with one ringed avatar for each palette.
     ///
     /// - Returns: A row of six avatars with initials.
