@@ -34,13 +34,15 @@ struct BarcodeScanTests {
 
     /// Returns the pixels of a barcode drawn in the frame, with no style around it.
     ///
+    /// - Parameter layoutDirection: The layout direction of the environment. The default is left to right.
     /// - Returns: The pixels of the render, at the render scale.
     /// - Throws: When the code, the render or the pixels cannot be made.
-    private func renderedPixels() throws -> RGBAPixels {
+    private func renderedPixels(layoutDirection: LayoutDirection = .leftToRight) throws -> RGBAPixels {
         let code = try QRCode(Self.text)
         let view = Barcode(code, label: Text("Ticket QR code"))
             .barcodeStyle(ContentOnlyBarcodeStyle())
             .frame(width: Self.side, height: Self.side)
+            .environment(\.layoutDirection, layoutDirection)
         let renderer = ImageRenderer(content: view)
         renderer.scale = Self.renderScale
         let image = try #require(renderer.cgImage)
@@ -60,6 +62,21 @@ struct BarcodeScanTests {
             return !(isClear || (isOpaque && isBlack))
         }
         #expect(failingCount == 0, "\(failingCount) pixels are neither opaque black nor clear")
+    }
+
+    @Test
+    func whenLayoutIsRightToLeft_shouldDrawSamePixelsAsLeftToRight() throws {
+        let leftToRight = try renderedPixels(layoutDirection: .leftToRight)
+        let rightToLeft = try renderedPixels(layoutDirection: .rightToLeft)
+        #expect(leftToRight.width == rightToLeft.width)
+        #expect(leftToRight.height == rightToLeft.height)
+        let rows = 0..<leftToRight.height
+        let differingCount = (0..<leftToRight.width).flatMap { column in
+            rows.map { (column, $0) }
+        }.count { column, row in
+            leftToRight.pixel(x: column, y: row) != rightToLeft.pixel(x: column, y: row)
+        }
+        #expect(differingCount == 0, "\(differingCount) pixels differ between the two directions")
     }
 
     @Test
