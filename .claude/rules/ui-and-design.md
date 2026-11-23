@@ -208,11 +208,10 @@ Overrides `swiftui-style-driven-components`, which skips the protocol for a comp
 - **Give each reusable `UIDesign` component a style protocol when it is first built**, even with one
   look. Callers can then restyle it without a change to the component.
 - **Draw a style read from the environment through a generic view that stores the style**, so
-  SwiftUI installs the style's property wrappers. `Badge` does this.
-- **Do not trust `@Environment` on an `Avatar` or `Nameplate` style yet.** Both still call
-  `makeBody` on the `any` style, so a wrapper on the style reads its default value. Read the
-  environment in a view the style returns, as `AdaptiveNameplate` does, until they draw their styles
-  as `Badge` does.
+  SwiftUI installs the style's property wrappers. Every `UIDesign` component with a style does this.
+- **Test it with a style that reads `\.colorScheme` and draws it as a word**, read through
+  `AccessibilityTree` in each scheme, as `PhotoStyleTests` does. Its dark case fails while the
+  component calls `makeBody` on the `any` style, and it needs no recorded image.
 
 ## A `List` restyles every `Label` inside a row
 

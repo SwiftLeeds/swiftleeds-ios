@@ -38,6 +38,19 @@ import SwiftUI
 /// A label on an avatar with a status replaces the status. Never label an
 /// avatar inside a ``Nameplate``, which then says the name twice.
 public struct Avatar<Fallback: View>: View {
+    /// A view that draws an avatar in a given style.
+    private struct ResolvedAvatarStyle<Style: AvatarStyle>: View {
+        /// The style that draws the avatar.
+        let style: Style
+
+        /// The properties of the avatar.
+        let configuration: AvatarStyleConfiguration
+
+        var body: some View {
+            style.makeBody(configuration: configuration)
+        }
+    }
+
     /// The current avatar style.
     @Environment(\.avatarStyle) private var style
 
@@ -86,7 +99,7 @@ public struct Avatar<Fallback: View>: View {
     }
 
     public var body: some View {
-        AnyView(style.makeBody(configuration: configuration))
+        AnyView(resolved(in: style))
             .foregroundStyle(Color.primary)
             .environment(\.avatarDiameter, diameter)
             .containerValue(\.avatarStatus, status)
@@ -137,6 +150,14 @@ public struct Avatar<Fallback: View>: View {
             }
         }
         .accessibilityHidden(true)
+    }
+
+    /// Returns a view that draws the avatar in the given style.
+    ///
+    /// - Parameter style: The style to draw the avatar in.
+    /// - Returns: A view that draws the avatar in `style`.
+    private func resolved(in style: some AvatarStyle) -> some View {
+        ResolvedAvatarStyle(style: style, configuration: configuration)
     }
 }
 

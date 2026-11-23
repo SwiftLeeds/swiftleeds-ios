@@ -3,7 +3,7 @@ import SwiftUI
 
 /// A view that draws the count of the people an avatar group has no room for.
 ///
-/// It draws the count on the avatar fill, as an avatar draws its initials, but never shrinks it.
+/// It draws the count on a plain fill, as an avatar draws its initials, but never shrinks it.
 struct AvatarGroupOverflowCount: View {
     /// The number of people the group has no room for.
     private let hiddenCount: Int
