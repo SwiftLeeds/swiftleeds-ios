@@ -4,7 +4,7 @@ public struct LineWidth: Equatable, Hashable, Sendable {
     private enum Role {
         /// The lines of a faint texture over a fill.
         case pattern
-        /// The ring round a person's avatar.
+        /// The ring around a person's avatar.
         case ring
     }
 
@@ -16,7 +16,7 @@ public struct LineWidth: Equatable, Hashable, Sendable {
     /// It keeps its width under every accessibility setting.
     public static let pattern = Self(role: .pattern)
 
-    /// The ring round a person's avatar.
+    /// The ring around a person's avatar.
     ///
     /// It keeps its width under every accessibility setting.
     package static let ring = Self(role: .ring)

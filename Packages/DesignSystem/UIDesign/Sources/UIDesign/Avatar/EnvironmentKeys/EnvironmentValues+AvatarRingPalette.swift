@@ -2,6 +2,8 @@ import SwiftUI
 
 extension EnvironmentValues {
     /// The palette applied to the avatar rings in the view hierarchy.
+    ///
+    /// The default is ``AvatarRingPalette/neutral``.
     @Entry public var avatarRingPalette: AvatarRingPalette = .neutral
 }
 

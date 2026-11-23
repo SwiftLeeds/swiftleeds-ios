@@ -1,4 +1,4 @@
-/// A set of colors for the ring round an avatar.
+/// A set of colors for the ring around an avatar.
 ///
 /// To set the palette of the avatars within a view hierarchy, use the
 /// ``SwiftUI/View/avatarRingPalette(_:)`` modifier.

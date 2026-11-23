@@ -3,8 +3,8 @@ import SwiftUI
 /// An avatar style that draws a circle with a ring in one color on its rim.
 ///
 /// The ring is decoration. It repeats the role that the text beside the avatar states, so show
-/// the role name beside the avatar, as ``Nameplate`` does. The ring sits inside the avatar's
-/// frame, so a ringed avatar takes the same space as one in the default style.
+/// the role name beside the avatar. The ring sits inside the avatar's frame, so a ringed avatar
+/// takes the same space as one in the default style.
 ///
 /// Set the ring's color with the ``SwiftUI/View/avatarRingPalette(_:)`` modifier.
 ///
@@ -16,11 +16,11 @@ import SwiftUI
 /// .avatarRingPalette(.blue)
 /// ```
 ///
-/// Inside an ``AvatarGroup``, every avatar and the count of the rest take the ring. Ring a person
-/// only where their role name shows.
+/// The style rings every avatar it reaches, so inside an ``AvatarGroup`` the count of the rest
+/// takes a ring too. Ring a person only where their role name shows.
 ///
-/// Any status sits on the avatar's lower trailing edge, over the ring. It adds an outline under
-/// Increase Contrast.
+/// Any status sits on the avatar's lower trailing edge, over the ring. The style adds an outline
+/// under Increase Contrast, over the ring's outer edge.
 ///
 /// You can also use ``AvatarStyle/ringed`` to construct this style.
 public struct RingedAvatarStyle: AvatarStyle {
@@ -30,6 +30,10 @@ public struct RingedAvatarStyle: AvatarStyle {
     /// Creates a ringed avatar style.
     public init() {}
 
+    /// Creates a view that represents the body of an avatar.
+    ///
+    /// - Parameter configuration: The properties of the avatar.
+    /// - Returns: A view that draws the avatar as a circle with a ring on its rim.
     @MainActor
     public func makeBody(configuration: Configuration) -> some View {
         ClippedAvatar(configuration: ringed(configuration), shape: .circle)
