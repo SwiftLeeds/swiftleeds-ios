@@ -6,6 +6,8 @@ import Foundation
 import SwiftUI
 
 /// A QR code that carries a piece of text.
+///
+/// Draw it with ``Barcode``.
 public struct QRCode: Equatable, Hashable, Sendable {
     /// The reason text does not become a code.
     public enum ParsingError: Error, Equatable, Sendable {
