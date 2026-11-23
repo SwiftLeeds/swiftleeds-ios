@@ -65,5 +65,17 @@ struct ScannableSurfaceTests {
         }
         #expect(mismatched.isEmpty, "\(brand) scannable surface differs in \(mismatched)")
     }
+
+    @Test(arguments: Brand.allCases)
+    func whenContrastIsIncreased_shouldNotLowerContrastWithBlackMarks(brand: Brand) {
+        let marks = Color.black.resolve(in: EnvironmentValues())
+        for appearance in SystemAppearance.allCases {
+            guard let standard = appearance.withoutIncreasedContrast else { continue }
+            let increased = WCAG.ratio(between: marks, and: WCAG.resolve(brand.scannableSurface, in: appearance))
+            let normal = WCAG.ratio(between: marks, and: WCAG.resolve(brand.scannableSurface, in: standard))
+            let shown = "\(WCAG.text(of: increased)) is below \(WCAG.text(of: normal))"
+            #expect(increased >= normal, "\(brand) \(appearance.name): \(shown)")
+        }
+    }
 }
 #endif
