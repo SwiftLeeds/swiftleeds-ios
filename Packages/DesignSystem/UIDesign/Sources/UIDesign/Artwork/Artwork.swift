@@ -1,14 +1,11 @@
 import SFSafeSymbols
 import SwiftUI
 
-/// A view that shows a symbol on a colored background, as decoration.
+/// A view that shows a symbol as decoration.
 ///
-/// The palette's gradient fills the frame. The symbol sits in the center, in a muted color.
+/// VoiceOver does not read an artwork's symbol.
 ///
-/// VoiceOver does not read an artwork. It fills the frame it is given and reads no text size.
-///
-/// Apply `redacted(reason: .placeholder)` to show an artwork whose item is still loading. It then
-/// draws a plain shape.
+/// Apply `redacted(reason: .placeholder)` to show an artwork whose item is still loading.
 ///
 /// ```swift
 /// Artwork(icon: Icon(.hammerFill), palette: .teal)
@@ -18,7 +15,7 @@ public struct Artwork: View {
     /// A set of colors for an artwork.
     public struct Palette: Equatable, Hashable, Sendable {
         /// The colors this palette draws with.
-        fileprivate let family: ColorFamily
+        let family: ColorFamily
 
         /// A blue palette.
         public static let blue = Self(family: .blue)
@@ -33,8 +30,19 @@ public struct Artwork: View {
         public static let raspberry = Self(family: .raspberry)
     }
 
-    /// The current redaction reasons applied to the view hierarchy.
-    @Environment(\.redactionReasons) private var redactionReasons
+    /// A view that draws an artwork in a given style.
+    private struct ResolvedArtworkStyle<Style: ArtworkStyle>: View {
+        /// The style that draws the artwork.
+        let style: Style
+
+        /// The properties of the artwork.
+        let configuration: ArtworkStyleConfiguration
+
+        var body: some View { style.makeBody(configuration: configuration) }
+    }
+
+    /// The current artwork style.
+    @Environment(\.artworkStyle) private var style
 
     /// The symbol to draw.
     private let icon: Icon
@@ -52,37 +60,28 @@ public struct Artwork: View {
         self.palette = palette
     }
 
-    /// The symbol's size as a fraction of the largest size that fits the frame.
-    private static let symbolScale: CGFloat = 0.40
+    /// The artwork, drawn by the current artwork style.
+    public var body: some View { AnyView(resolved(in: style)) }
 
-    /// The artwork, or a plain fill while it loads.
-    public var body: some View {
-        Group {
-            if redactionReasons.contains(.placeholder) {
-                placeholder
-            } else {
-                art
-            }
-        }
-        .accessibilityHidden(true)
+    /// The properties handed to the current artwork style.
+    private var configuration: ArtworkStyleConfiguration {
+        ArtworkStyleConfiguration(symbol: symbol, palette: palette)
     }
 
-    /// A plain shape that shows no palette and no symbol.
-    private var placeholder: some View {
-        Rectangle().fill(.secondaryFill)
+    /// The symbol, fitted to the space the style gives it and hidden from VoiceOver.
+    private var symbol: some View {
+        Image(icon: icon)
+            .resizable()
+            .scaledToFit()
+            .accessibilityHidden(true)
     }
 
-    /// The palette's gradient with the symbol in the center.
-    private var art: some View {
-        ZStack {
-            Rectangle().fill(palette.family.solid.gradient)
-            Image(icon: icon)
-                .resizable()
-                .scaledToFit()
-                .scaleEffect(Self.symbolScale)
-                .foregroundStyle(palette.family.onSolid.secondary)
-        }
-        .dynamicTypeSize(.large)
+    /// Returns a view that draws the artwork in the given style.
+    ///
+    /// - Parameter style: The style to draw the artwork in.
+    /// - Returns: A view that draws the artwork in `style`.
+    private func resolved(in style: some ArtworkStyle) -> some View {
+        ResolvedArtworkStyle(style: style, configuration: configuration)
     }
 }
 
