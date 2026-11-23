@@ -122,6 +122,27 @@ import UIKit
         assertSnapshots(of: view)
     }
 
+    /// Checks the symbol, initials and custom fallbacks while loading, because redaction ignores a
+    /// clip shape and each fallback would otherwise draw a square inside the circle.
+    @Test func ringedStyleRedacted() {
+        let view = HStack(spacing: Spacing.lg) {
+            Avatar(url: nil, size: .large)
+
+            Avatar(url: nil, size: .large, fallback: .initials(Self.name))
+
+            Avatar(url: nil, size: .large) {
+                Image(icon: .locked)
+                    .foregroundStyle(.secondaryText)
+            }
+        }
+        .redacted(reason: .placeholder)
+        .avatarStyle(.ringed)
+        .avatarRingPalette(.blue)
+        .padding(Spacing.lg)
+
+        assertSnapshots(of: view)
+    }
+
     /// Returns a padded row of every size in the ringed style, with initials.
     ///
     /// - Parameter status: The state to show on each avatar, if any.
