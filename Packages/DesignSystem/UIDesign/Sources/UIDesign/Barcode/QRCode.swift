@@ -16,6 +16,9 @@ public struct QRCode: Equatable, Hashable, Sendable {
     /// The error correction level the generator uses: the one that survives the most damage.
     private static let correctionLevel = "H"
 
+    /// The modules the generator leaves out of the 4-module quiet zone the QR standard asks for.
+    private static let missingQuietZoneModules: CGFloat = 3
+
     /// The text the code carries.
     fileprivate let text: String
 
@@ -27,15 +30,57 @@ public struct QRCode: Equatable, Hashable, Sendable {
     /// - Parameter text: The text the code carries.
     /// - Throws: ``ParsingError/notDrawn`` when CoreImage draws no picture of the text.
     public init(_ text: String) throws(ParsingError) {
-        let filter = CIFilter.qrCodeGenerator()
-        filter.message = Data(text.utf8)
-        filter.correctionLevel = Self.correctionLevel
-        guard
-            let output = filter.outputImage,
-            let image = CIContext().createCGImage(output, from: output.extent)
-        else { throw .notDrawn }
+        guard let generated = Self.generate(text) else { throw .notDrawn }
+        let marks = Self.blackModulesOnClear(generated)
+        guard let image = Self.render(Self.addingQuietZone(to: marks)) else { throw .notDrawn }
         self.text = text
         self.image = image
+    }
+
+    /// Returns the generator's picture of text: black modules on white, with a one-module margin.
+    ///
+    /// - Parameter text: The text to encode.
+    /// - Returns: The picture, or `nil` when the generator makes none.
+    private static func generate(_ text: String) -> CIImage? {
+        let filter = CIFilter.qrCodeGenerator()
+        filter.message = Data(text.utf8)
+        filter.correctionLevel = correctionLevel
+        return filter.outputImage
+    }
+
+    /// Returns a picture where each dark module is opaque black and everything else is clear.
+    ///
+    /// - Parameter generated: The generator's black on white picture.
+    /// - Returns: The picture with the white turned clear.
+    private static func blackModulesOnClear(_ generated: CIImage) -> CIImage {
+        let inverted = generated.applyingFilter("CIColorInvert")
+        let masked = inverted.applyingFilter("CIMaskToAlpha")
+        return masked.applyingFilter(
+            "CIColorMatrix",
+            parameters: [
+                "inputRVector": CIVector(x: 0, y: 0, z: 0, w: 0),
+                "inputGVector": CIVector(x: 0, y: 0, z: 0, w: 0),
+                "inputBVector": CIVector(x: 0, y: 0, z: 0, w: 0),
+                "inputAVector": CIVector(x: 0, y: 0, z: 0, w: 1),
+            ],
+        )
+    }
+
+    /// Returns a picture with the quiet zone the generator leaves out added around it, clear.
+    ///
+    /// - Parameter marks: The picture to extend.
+    /// - Returns: The picture with a clear border on every side.
+    private static func addingQuietZone(to marks: CIImage) -> CIImage {
+        let extended = marks.extent.insetBy(dx: -missingQuietZoneModules, dy: -missingQuietZoneModules)
+        return marks.composited(over: CIImage(color: .clear).cropped(to: extended))
+    }
+
+    /// Returns a picture as an image with alpha, one pixel for each module.
+    ///
+    /// - Parameter picture: The picture to render.
+    /// - Returns: The image, or `nil` when CoreImage draws none.
+    private static func render(_ picture: CIImage) -> CGImage? {
+        CIContext().createCGImage(picture, from: picture.extent)
     }
 
     /// Returns whether two codes carry the same text.
