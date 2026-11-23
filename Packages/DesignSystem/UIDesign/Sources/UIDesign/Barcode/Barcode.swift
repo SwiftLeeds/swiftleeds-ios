@@ -54,6 +54,8 @@ public struct Barcode: View {
 
     public var body: some View {
         AnyView(resolved(in: style))
+            // Smart Invert would turn the marks white, which no scanner reads, so it skips every style.
+            .accessibilityIgnoresInvertColors()
     }
 
     /// The properties handed to the current barcode style.
