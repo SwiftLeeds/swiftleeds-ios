@@ -4,7 +4,6 @@ import Testing
 import UIDesign
 import UIKit
 
-/// Tests that the scannable surface stays a light brand surface in every appearance.
 @MainActor
 struct ScannableSurfaceTests {
     /// How far a channel may sit from the expected one, as a fraction of its full range.
@@ -47,9 +46,6 @@ struct ScannableSurfaceTests {
             && abs(first.blue - second.blue) <= channelTolerance
     }
 
-    /// Checks that the scannable surface is a light brand surface in every appearance.
-    ///
-    /// - Parameter brand: The brand to check.
     @Test(arguments: Brand.allCases)
     func whenResolvedInAppearance_shouldMatchLightBrandSurface(brand: Brand) {
         var mismatched: [String] = []
