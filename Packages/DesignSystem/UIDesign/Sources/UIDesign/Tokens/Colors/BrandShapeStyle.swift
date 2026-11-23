@@ -30,6 +30,11 @@ public struct BrandShapeStyle: ShapeStyle {
 
         /// The background of content layered on top of secondary backgrounds of a grouped interface.
         case tertiaryGroupedSurface
+
+        #if !os(watchOS)
+        /// The plate a scanner reads a code from.
+        case scannableSurface
+        #endif
     }
 
     /// The job this style's color does.
@@ -64,6 +69,10 @@ public struct BrandShapeStyle: ShapeStyle {
         case .secondaryGroupedSurface: brand.secondaryGroupedSurface
 
         case .tertiaryGroupedSurface: brand.tertiaryGroupedSurface
+
+        #if !os(watchOS)
+        case .scannableSurface: brand.scannableSurface
+        #endif
         }
     }
 }

@@ -73,5 +73,16 @@ struct ScannableSurfaceTests {
             #expect(increased >= normal, "\(brand) \(appearance.name): \(shown)")
         }
     }
+
+    @Test(arguments: Brand.allCases)
+    func whenBrandIsInEnvironment_shouldResolveThatBrandsPlate(brand: Brand) {
+        var environment = EnvironmentValues()
+        environment.brand = brand
+        environment.colorScheme = .dark
+        let style: BrandShapeStyle = .scannableSurface
+        let actual = Self.resolve(style.resolve(in: environment), with: SystemAppearance.dark.traits)
+        let expected = Self.resolve(brand.scannableSurface, with: SystemAppearance.dark.traits)
+        #expect(Self.areClose(actual, expected), "\(brand) plate \(actual), expected \(expected)")
+    }
 }
 #endif
