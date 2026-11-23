@@ -29,7 +29,10 @@ struct BarcodeScanTests {
     /// The most alpha, out of 255, that a pixel may have and still count as clear.
     private static let clearTolerance: UInt8 = 8
 
-    /// The most alpha, out of 255, that a pixel may lack and still count as opaque.
+    /// The brightest color channel, out of 255, that still counts as black.
+    private static let blackCeiling: UInt8 = 8
+
+    /// The least alpha, out of 255, that a pixel must have to count as opaque.
     private static let opaqueFloor = 255 - clearTolerance
 
     /// Returns the pixels of a barcode drawn in the frame, with no style around it.
@@ -58,7 +61,7 @@ struct BarcodeScanTests {
         }.count { pixel in
             let isClear = pixel.alpha <= Self.clearTolerance
             let isOpaque = pixel.alpha >= Self.opaqueFloor
-            let isBlack = max(pixel.red, pixel.green, pixel.blue) <= Self.clearTolerance
+            let isBlack = max(pixel.red, pixel.green, pixel.blue) <= Self.blackCeiling
             return !(isClear || (isOpaque && isBlack))
         }
         #expect(failingCount == 0, "\(failingCount) pixels are neither opaque black nor clear")

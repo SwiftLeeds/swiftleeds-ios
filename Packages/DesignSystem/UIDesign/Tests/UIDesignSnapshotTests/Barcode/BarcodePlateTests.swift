@@ -51,6 +51,9 @@ struct BarcodePlateTests {
     /// The number of pixels in one point of the render.
     private static let renderScale: CGFloat = 3
 
+    /// The width, in pixels, of the plate's rounded corner at each side, where the plate is not drawn.
+    private static let cornerRadiusInPixels = Int((CGFloat(CornerRadius.tile.level) * renderScale).rounded(.up))
+
     /// The most a channel may sit from the plate's, out of 255.
     private static let channelTolerance = 8
 
@@ -154,10 +157,10 @@ struct BarcodePlateTests {
     /// - Parameter pixels: The render to sample.
     /// - Returns: Every pixel of the quiet zone's innermost row.
     private static func plateSamples(in pixels: RGBAPixels) -> [Sample] {
-        // The light modules inside the code are covered by `QRCodeTests` and by the scan test.
         // This render blurs a one-module ring, so only the quiet zone's row can be read exactly.
         let ringRow = Int(ringRowOffset * Double(pixels.width) / modulesWithQuietZone)
-        return (0..<pixels.width).map { Sample(column: $0, row: ringRow) }
+        let columns = cornerRadiusInPixels..<(pixels.width - cornerRadiusInPixels)
+        return columns.map { Sample(column: $0, row: ringRow) }
     }
 
     /// Returns the pixel the plate has under an appearance.

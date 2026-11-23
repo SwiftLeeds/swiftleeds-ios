@@ -191,7 +191,8 @@ struct QRCodeTests {
     func whenTextIsAtCapacity_shouldEncode() throws {
         let text = String(repeating: "a", count: Self.capacityInBytes)
         let code = try QRCode(text)
-        #expect(code == (try QRCode(text)))
+        let message = try Self.scan(try Self.render(code))
+        #expect(message == text)
     }
 
     @Test
