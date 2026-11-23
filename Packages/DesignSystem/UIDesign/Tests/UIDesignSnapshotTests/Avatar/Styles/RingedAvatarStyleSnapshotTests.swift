@@ -8,6 +8,48 @@ import UIKit
 
 @MainActor
 @Suite(.snapshots(record: .never)) struct RingedAvatarStyleSnapshotTests {
+    /// A real list of five nameplates, the second ringed in blue and the fourth in raspberry.
+    private struct MixedList: View {
+        /// The current Dynamic Type size, which sets how tall the list must be to show every row.
+        @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+
+        /// Five made-up people, each with a role.
+        private let people = [
+            ("Ada Archer", PersonNameComponents(givenName: "Ada", familyName: "Archer")),
+            ("Blake Brooks", PersonNameComponents(givenName: "Blake", familyName: "Brooks")),
+            ("Casey Cole", PersonNameComponents(givenName: "Casey", familyName: "Cole")),
+            ("Devon Drake", PersonNameComponents(givenName: "Devon", familyName: "Drake")),
+            ("Ellis East", PersonNameComponents(givenName: "Ellis", familyName: "East")),
+        ]
+
+        /// The height that shows five rows at the current text size.
+        private var height: CGFloat {
+            if dynamicTypeSize.isAccessibilitySize { return 1_500 }
+            return dynamicTypeSize >= .xxxLarge ? 520 : 410
+        }
+
+        var body: some View {
+            List {
+                row(0)
+                row(1).avatarStyle(.ringed).avatarRingPalette(.blue)
+                row(2)
+                row(3).avatarStyle(.ringed).avatarRingPalette(.raspberry)
+                row(4)
+            }
+            .frame(width: narrowestPhoneWidth, height: height)
+        }
+
+        /// Returns the nameplate of one person.
+        ///
+        /// - Parameter index: The place of the person in the list.
+        /// - Returns: A nameplate with a medium avatar and the detail "Speaker".
+        private func row(_ index: Int) -> some View {
+            Nameplate(people[index].0, detail: "Speaker") {
+                Avatar(url: nil, size: .medium, fallback: .initials(people[index].1))
+            }
+        }
+    }
+
     /// A made-up person whose initials differ.
     private static let name = PersonNameComponents(givenName: "Ada", familyName: "Archer")
 
@@ -141,6 +183,31 @@ import UIKit
         .padding(Spacing.lg)
 
         assertSnapshots(of: view)
+    }
+
+    /// Checks a ringed nameplate in its default and prominent styles, because the ring shows through its icon.
+    @Test func ringedStyleInNameplate() {
+        let view = VStack(alignment: .leading, spacing: Spacing.xl) {
+            Nameplate("Ada Archer", detail: "Speaker") {
+                Avatar(url: nil, size: .large, status: AvatarStatus("Checked in"), fallback: .initials(Self.name))
+            }
+            .nameplateStyle(.prominent)
+
+            Nameplate("Ada Archer", detail: "Speaker") {
+                Avatar(url: nil, size: .medium, fallback: .initials(Self.name))
+            }
+        }
+        .avatarStyle(.ringed)
+        .avatarRingPalette(.blue)
+        .frame(width: rowWidth)
+        .padding(Spacing.lg)
+
+        assertSnapshots(of: view)
+    }
+
+    /// Checks that names line up in a real list that mixes ringed and default rows.
+    @Test func ringedStyleInMixedList() {
+        assertSnapshots(of: MixedList())
     }
 
     /// Returns a padded row of every size in the ringed style, with initials.
