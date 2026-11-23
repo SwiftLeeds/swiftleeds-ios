@@ -2,7 +2,7 @@ import SwiftUI
 
 /// The default photo style.
 ///
-/// It draws the grey fill behind the content.
+/// It draws the gray fill behind the content.
 public struct DefaultPhotoStyle: PhotoStyle {
     /// The reasons to redact the photo's content.
     @Environment(\.redactionReasons) private var redactionReasons
