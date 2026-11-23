@@ -1,4 +1,5 @@
 #if os(iOS)
+import SFSafeSymbols
 import SwiftUI
 import Testing
 import UIDesign
