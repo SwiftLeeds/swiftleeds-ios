@@ -31,7 +31,7 @@ public struct QRCode: Equatable, Hashable, Sendable {
     private static let missingQuietZoneModules: CGFloat = 3
 
     /// The text the code carries.
-    fileprivate let text: String
+    private let text: String
 
     /// The picture of the code.
     fileprivate let image: CGImage
