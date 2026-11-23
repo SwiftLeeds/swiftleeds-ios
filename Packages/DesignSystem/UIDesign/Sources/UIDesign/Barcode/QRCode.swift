@@ -9,12 +9,21 @@ import SwiftUI
 public struct QRCode: Equatable, Hashable, Sendable {
     /// The reason text does not become a code.
     public enum ParsingError: Error, Equatable, Sendable {
+        /// The text is empty.
+        case empty
+
+        /// The text is longer than a code holds.
+        case tooLong
+
         /// CoreImage drew nothing. No known input causes it.
         case notDrawn
     }
 
     /// The error correction level the generator uses: the one that survives the most damage.
     private static let correctionLevel = "H"
+
+    /// The most bytes a version 40 code at level H holds in byte mode.
+    private static let capacityInBytes = 1_273
 
     /// The modules the generator leaves out of the 4-module quiet zone the QR standard asks for.
     private static let missingQuietZoneModules: CGFloat = 3
@@ -28,13 +37,26 @@ public struct QRCode: Equatable, Hashable, Sendable {
     /// Creates a code that carries the given text.
     ///
     /// - Parameter text: The text the code carries.
-    /// - Throws: ``ParsingError/notDrawn`` when CoreImage draws no picture of the text.
+    /// - Throws: ``ParsingError/empty`` when `text` is empty.
+    ///   ``ParsingError/tooLong`` when `text` is more than 1273 bytes in UTF-8.
+    ///   ``ParsingError/notDrawn`` when CoreImage draws no picture of the text.
     public init(_ text: String) throws(ParsingError) {
+        try Self.check(text)
         guard let generated = Self.generate(text) else { throw .notDrawn }
         let marks = Self.blackModulesOnClear(generated)
         guard let image = Self.render(Self.addingQuietZone(to: marks)) else { throw .notDrawn }
         self.text = text
         self.image = image
+    }
+
+    /// Checks that text is not empty and fits in a code.
+    ///
+    /// - Parameter text: The text to check.
+    /// - Throws: ``ParsingError/empty`` when `text` is empty.
+    ///   ``ParsingError/tooLong`` when `text` is more than the capacity in UTF-8 bytes.
+    private static func check(_ text: String) throws(ParsingError) {
+        guard !text.isEmpty else { throw .empty }
+        guard text.utf8.count <= capacityInBytes else { throw .tooLong }
     }
 
     /// Returns the generator's picture of text: black modules on white, with a one-module margin.

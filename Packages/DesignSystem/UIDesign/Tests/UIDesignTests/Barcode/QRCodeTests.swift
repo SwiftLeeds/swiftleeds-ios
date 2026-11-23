@@ -109,6 +109,12 @@ struct QRCodeTests {
     /// The number of bits in one channel.
     nonisolated private static let bitsPerChannel = 8
 
+    /// The most bytes of text a code holds.
+    private static let capacityInBytes = 1_273
+
+    /// The number of two-byte characters whose text is one byte over the capacity.
+    private static let twoByteCharactersOverCapacity = 637
+
     /// Returns the picture of a code on its plate, as a scanner would see it.
     ///
     /// - Parameter code: The code to draw.
@@ -174,6 +180,30 @@ struct QRCodeTests {
         let sample = Int(Self.firstModuleCenter * modulePixels)
         #expect(unclear.isEmpty, "\(unclear.count) pixels in the quiet zone are not clear")
         #expect(pixels.isOpaqueBlack(column: sample, row: sample))
+    }
+
+    @Test
+    func whenTextIsEmpty_shouldThrowEmpty() {
+        #expect(throws: QRCode.ParsingError.empty) { try QRCode("") }
+    }
+
+    @Test
+    func whenTextIsAtCapacity_shouldEncode() throws {
+        let text = String(repeating: "a", count: Self.capacityInBytes)
+        let code = try QRCode(text)
+        #expect(code == (try QRCode(text)))
+    }
+
+    @Test
+    func whenTextIsOneByteOverCapacity_shouldThrowTooLong() {
+        let text = String(repeating: "a", count: Self.capacityInBytes + 1)
+        #expect(throws: QRCode.ParsingError.tooLong) { try QRCode(text) }
+    }
+
+    @Test
+    func whenMultibyteTextIsOverCapacityInBytes_shouldThrowTooLong() {
+        let text = String(repeating: "\u{E9}", count: Self.twoByteCharactersOverCapacity)
+        #expect(throws: QRCode.ParsingError.tooLong) { try QRCode(text) }
     }
 
     @Test
