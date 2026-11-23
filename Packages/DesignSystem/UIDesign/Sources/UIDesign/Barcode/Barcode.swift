@@ -16,6 +16,22 @@ import SwiftUI
 /// A barcode is one element. VoiceOver reads its label and says it is an image. It never
 /// reads the text the code carries.
 public struct Barcode: View {
+    /// A view that draws a barcode in a given style.
+    private struct ResolvedBarcodeStyle<Style: BarcodeStyle>: View {
+        /// The style that draws the barcode.
+        let style: Style
+
+        /// The properties of the barcode.
+        let configuration: BarcodeStyleConfiguration
+
+        var body: some View {
+            style.makeBody(configuration: configuration)
+        }
+    }
+
+    /// The current barcode style.
+    @Environment(\.barcodeStyle) private var style
+
     /// The code to draw.
     private let code: QRCode
 
@@ -37,7 +53,20 @@ public struct Barcode: View {
     }
 
     public var body: some View {
-        Image(code, label: label)
+        AnyView(resolved(in: style))
+    }
+
+    /// The properties handed to the current barcode style.
+    private var configuration: BarcodeStyleConfiguration {
+        BarcodeStyleConfiguration(content: Image(code, label: label))
+    }
+
+    /// Returns a view that draws the barcode in the given style.
+    ///
+    /// - Parameter style: The style to draw the barcode in.
+    /// - Returns: A view that draws the barcode in `style`.
+    private func resolved(in style: some BarcodeStyle) -> some View {
+        ResolvedBarcodeStyle(style: style, configuration: configuration)
     }
 }
 
