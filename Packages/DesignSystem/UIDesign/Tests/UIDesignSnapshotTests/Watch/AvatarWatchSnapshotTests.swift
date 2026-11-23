@@ -58,5 +58,32 @@ import UIDesign
 
         assertSnapshots(of: view)
     }
+
+    @Test func ringedStyle() {
+        let view = Avatar(
+            url: nil,
+            size: AvatarSize.large,
+            status: AvatarStatus("Checked in"),
+            fallback: .initials(Self.name),
+        )
+        .avatarStyle(.ringed)
+        .avatarRingPalette(.blue)
+
+        assertSnapshots(of: view)
+    }
+
+    @Test func ringedStyleIncreasedContrast() {
+        let view = Avatar(
+            url: nil,
+            size: AvatarSize.large,
+            status: AvatarStatus("Checked in"),
+            fallback: .initials(Self.name),
+        )
+        .avatarStyle(.ringed)
+        .avatarRingPalette(.blue)
+        .environment(\._colorSchemeContrast, .increased)
+
+        assertSnapshots(of: view)
+    }
 }
 #endif

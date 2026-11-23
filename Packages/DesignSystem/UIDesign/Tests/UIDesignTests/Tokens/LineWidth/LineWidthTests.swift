@@ -23,6 +23,21 @@ struct LineWidthTests {
         ),
     ]
 
+    /// Every combination of differentiation, contrast and transparency.
+    private static let everySetting: [UIDesign.AccessibilitySettings] = [
+        UIDesign.ColorDifferentiation.standard, .withoutColor,
+    ].flatMap { differentiation in
+        [ColorSchemeContrast.standard, .increased].flatMap { contrast in
+            [UIDesign.Transparency.standard, .reduced].map { transparency in
+                UIDesign.AccessibilitySettings(
+                    differentiation: differentiation,
+                    contrast: contrast,
+                    transparency: transparency,
+                )
+            }
+        }
+    }
+
     /// Checks that the pattern is three points wide under standard settings.
     @Test
     func whenPatternIsResolvedForStandardSettings_shouldReturnThreePoints() {
@@ -46,5 +61,15 @@ struct LineWidthTests {
     ) {
         let sut = LineWidth.pattern
         #expect(sut.level(for: settings) == .points3)
+    }
+
+    @Test(arguments: everySetting)
+    func whenRoleIsRing_shouldReturnThreePointsUnderEverySetting(
+        settings: UIDesign.AccessibilitySettings
+    ) {
+        let sut = LineWidth.ring
+        let level = sut.level(for: settings)
+        #expect(level == .points3)
+        #expect(CGFloat(level) == 3)
     }
 }

@@ -4,6 +4,8 @@ public struct LineWidth: Equatable, Hashable, Sendable {
     private enum Role {
         /// The lines of a faint texture over a fill.
         case pattern
+        /// The ring around a person's avatar.
+        case ring
     }
 
     /// The job this line width does.
@@ -14,6 +16,11 @@ public struct LineWidth: Equatable, Hashable, Sendable {
     /// It keeps its width under every accessibility setting.
     public static let pattern = Self(role: .pattern)
 
+    /// The ring around a person's avatar.
+    ///
+    /// It keeps its width under every accessibility setting.
+    package static let ring = Self(role: .ring)
+
     /// Returns the level this line width has under some accessibility settings.
     ///
     /// - Parameter settings: The accessibility settings to read.
@@ -21,6 +28,7 @@ public struct LineWidth: Equatable, Hashable, Sendable {
     package func level(for settings: AccessibilitySettings) -> LineWidthLevel {
         switch role {
         case .pattern: .points3
+        case .ring: .points3
         }
     }
 }
