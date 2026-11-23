@@ -15,22 +15,33 @@ struct AvatarRingPaletteTests {
         let testDescription: String
     }
 
+    /// A palette with the name that a test report shows for it.
+    private struct NamedPalette {
+        /// The name of the palette, as the type spells it.
+        ///
+        /// A `String` because a test report shows it.
+        let name: String
+
+        /// The palette.
+        let palette: AvatarRingPalette
+    }
+
     /// Every pair of two different palettes.
     private static let pairs: [PalettePair] = {
-        let named: [(String, AvatarRingPalette)] = [
-            ("neutral", .neutral),
-            ("blue", .blue),
-            ("teal", .teal),
-            ("violet", .violet),
-            ("raspberry", .raspberry),
-            ("sponsor", .sponsor),
+        let named = [
+            NamedPalette(name: "neutral", palette: .neutral),
+            NamedPalette(name: "blue", palette: .blue),
+            NamedPalette(name: "teal", palette: .teal),
+            NamedPalette(name: "violet", palette: .violet),
+            NamedPalette(name: "raspberry", palette: .raspberry),
+            NamedPalette(name: "sponsor", palette: .sponsor),
         ]
         return named.indices.flatMap { first in
             named.indices.dropFirst(first + 1).map { second in
                 PalettePair(
-                    first: named[first].1,
-                    second: named[second].1,
-                    testDescription: "\(named[first].0) and \(named[second].0)",
+                    first: named[first].palette,
+                    second: named[second].palette,
+                    testDescription: "\(named[first].name) and \(named[second].name)",
                 )
             }
         }

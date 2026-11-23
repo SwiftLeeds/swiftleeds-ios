@@ -8,18 +8,54 @@ import UIKit
 
 @MainActor
 @Suite(.snapshots(record: .never)) struct RingedAvatarStyleSnapshotTests {
-    /// A real list of five nameplates, the second ringed in blue and the fourth in raspberry.
+    /// A real list of five nameplates.
+    ///
+    /// Speakers have a blue ring, the host a raspberry one, and attendees have none.
     private struct MixedList: View {
+        /// A made-up person in the list, with the role that the row's detail names.
+        private struct Person {
+            /// The name that gives the avatar its initials and the row its title.
+            let nameComponents: PersonNameComponents
+
+            /// The role that the row's detail names.
+            ///
+            /// A `String` because the nameplate's detail takes one.
+            let role: String
+
+            /// The ring palette of the row, or `nil` for a row with the default style and no ring.
+            let palette: AvatarRingPalette?
+        }
+
         /// The current Dynamic Type size, which sets how tall the list must be to show every row.
         @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
         /// Five made-up people, each with a role.
         private let people = [
-            ("Ada Archer", PersonNameComponents(givenName: "Ada", familyName: "Archer")),
-            ("Blake Brooks", PersonNameComponents(givenName: "Blake", familyName: "Brooks")),
-            ("Casey Cole", PersonNameComponents(givenName: "Casey", familyName: "Cole")),
-            ("Devon Drake", PersonNameComponents(givenName: "Devon", familyName: "Drake")),
-            ("Ellis East", PersonNameComponents(givenName: "Ellis", familyName: "East")),
+            Person(
+                nameComponents: PersonNameComponents(givenName: "Ada", familyName: "Archer"),
+                role: "Speaker",
+                palette: .blue,
+            ),
+            Person(
+                nameComponents: PersonNameComponents(givenName: "Blake", familyName: "Brooks"),
+                role: "Attendee",
+                palette: nil,
+            ),
+            Person(
+                nameComponents: PersonNameComponents(givenName: "Casey", familyName: "Cole"),
+                role: "Host",
+                palette: .raspberry,
+            ),
+            Person(
+                nameComponents: PersonNameComponents(givenName: "Devon", familyName: "Drake"),
+                role: "Attendee",
+                palette: nil,
+            ),
+            Person(
+                nameComponents: PersonNameComponents(givenName: "Ellis", familyName: "East"),
+                role: "Speaker",
+                palette: .blue,
+            ),
         ]
 
         /// The height that shows five rows at the current text size.
@@ -30,22 +66,26 @@ import UIKit
 
         var body: some View {
             List {
-                row(0)
-                row(1).avatarStyle(.ringed).avatarRingPalette(.blue)
-                row(2)
-                row(3).avatarStyle(.ringed).avatarRingPalette(.raspberry)
-                row(4)
+                ForEach(people, id: \.nameComponents) { person in
+                    row(person)
+                }
             }
             .frame(width: narrowestPhoneWidth, height: height)
         }
 
-        /// Returns the nameplate of one person.
+        /// Returns the nameplate of one person, ringed when the person has a palette.
         ///
-        /// - Parameter index: The place of the person in the list.
-        /// - Returns: A nameplate with a medium avatar and the detail "Speaker".
-        private func row(_ index: Int) -> some View {
-            Nameplate(people[index].0, detail: "Speaker") {
-                Avatar(url: nil, size: .medium, fallback: .initials(people[index].1))
+        /// - Parameter person: The person to show.
+        /// - Returns: A nameplate with a medium avatar and the person's role as its detail.
+        @ViewBuilder
+        private func row(_ person: Person) -> some View {
+            let nameplate = Nameplate(person.nameComponents.formatted(.name(style: .medium)), detail: person.role) {
+                Avatar(url: nil, size: .medium, fallback: .initials(person.nameComponents))
+            }
+            if let palette = person.palette {
+                nameplate.avatarStyle(.ringed).avatarRingPalette(palette)
+            } else {
+                nameplate
             }
         }
     }
