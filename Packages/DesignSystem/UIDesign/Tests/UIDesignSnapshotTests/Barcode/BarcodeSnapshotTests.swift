@@ -3,6 +3,7 @@ import SnapshotTesting
 import SwiftUI
 import Testing
 import UIDesign
+import UIKit
 
 @MainActor
 @Suite(.snapshots(record: .never)) struct BarcodeSnapshotTests {
@@ -35,6 +36,17 @@ import UIDesign
 
     @Test func whenRedacted_shouldHideCode() {
         assertSpecimenSnapshots(of: Self.specimen().redacted(reason: .placeholder))
+    }
+
+    @Test func whenAtLargestTextSize_shouldMatchDefaultReferences() {
+        let light = UITraitCollection { $0.userInterfaceStyle = .light }
+        // The view is built as the contrast helper builds it, so it compares with that reference.
+        assertSnapshot(
+            of: AnyView(Self.specimen().dynamicTypeSize(.accessibility5).fixedSize()),
+            as: .image(traits: light),
+            named: "light-default",
+            testName: "whenDrawnOnGroupedSurface_shouldDrawCodeOnRoundedPlate()",
+        )
     }
 }
 #endif
