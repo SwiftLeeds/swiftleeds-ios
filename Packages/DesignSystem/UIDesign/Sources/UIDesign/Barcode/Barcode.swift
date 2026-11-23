@@ -58,7 +58,11 @@ public struct Barcode: View {
 
     /// The properties handed to the current barcode style.
     private var configuration: BarcodeStyleConfiguration {
-        BarcodeStyleConfiguration(content: Image(code, label: label))
+        BarcodeStyleConfiguration(
+            content: Image(code, label: label)
+                .resizable()
+                .scaledToFit()
+        )
     }
 
     /// Returns a view that draws the barcode in the given style.
