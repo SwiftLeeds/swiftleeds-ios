@@ -119,7 +119,7 @@ public struct Photo<Fallback: View>: View {
     /// What the photo shows now, by where its picture comes from.
     @ViewBuilder private var shown: some View {
         if redactionReasons.contains(.placeholder) {
-            Rectangle().fill(.avatarFill)
+            Rectangle().fill(.secondaryFill)
         } else {
             switch source {
             case .url(let url):

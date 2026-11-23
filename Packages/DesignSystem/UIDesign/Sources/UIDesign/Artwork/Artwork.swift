@@ -69,7 +69,7 @@ public struct Artwork: View {
 
     /// A plain shape that shows no palette and no symbol.
     private var placeholder: some View {
-        Rectangle().fill(.avatarFill)
+        Rectangle().fill(.secondaryFill)
     }
 
     /// The palette's gradient with the symbol in the center.
