@@ -5,7 +5,7 @@ import SwiftUI
 /// It draws the symbol on a colored background. The palette's gradient fills the frame. The
 /// symbol sits in the center, in a muted color. The artwork reads no text size.
 ///
-/// When the artwork is redacted, it draws a plain gray fill with no gradient and no symbol.
+/// When the artwork is redacted as a placeholder, it draws a plain gray fill with no gradient and no symbol.
 ///
 /// You can also use ``ArtworkStyle/automatic`` to construct this style.
 public struct DefaultArtworkStyle: ArtworkStyle {
@@ -23,7 +23,7 @@ public struct DefaultArtworkStyle: ArtworkStyle {
     /// Creates the default artwork style.
     public init() {}
 
-    /// Creates a view that represents the body of an artwork.
+    /// Creates a view that draws the gradient and symbol, or a gray fill while loading.
     ///
     /// - Parameter configuration: The properties of the artwork.
     /// - Returns: A view that represents the body of an artwork.

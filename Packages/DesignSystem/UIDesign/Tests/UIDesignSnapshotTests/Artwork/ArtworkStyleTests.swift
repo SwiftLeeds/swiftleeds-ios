@@ -23,7 +23,7 @@ struct ArtworkStyleTests {
         }
     }
 
-    /// A style that draws the name of the color scheme it reads from the environment, such as "dark".
+    /// A style that draws the name of the current color scheme.
     private struct SchemeArtworkStyle: ArtworkStyle {
         /// The color scheme this style reads.
         @Environment(\.colorScheme) private var colorScheme
