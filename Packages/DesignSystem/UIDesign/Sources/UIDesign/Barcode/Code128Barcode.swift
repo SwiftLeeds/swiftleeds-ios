@@ -20,6 +20,13 @@ public struct Code128Barcode: BarcodeContent {
         case notDrawn
     }
 
+    /// The modules the generator leaves out of the quiet zone.
+    ///
+    /// The Code 128 spec asks for a quiet zone of 10 modules, and the generator leaves none.
+    private static let missingQuietZone = BarcodeImage.QuietZone(
+        modules: 10  // swiftlint:disable:this no_magic_numbers - the spec's 10-module zone, less the generator's 0
+    )
+
     /// The bytes the barcode carries.
     private let message: Data
 
@@ -37,7 +44,7 @@ public struct Code128Barcode: BarcodeContent {
     public init(_ text: String) throws(ParsingError) {
         let message = Data(text.utf8)
         guard let generated = Self.generate(message) else { throw .notDrawn }
-        guard let image = BarcodeImage.render(generated, addingQuietZone: BarcodeImage.QuietZone(modules: 0)) else {
+        guard let image = BarcodeImage.render(generated, addingQuietZone: Self.missingQuietZone) else {
             throw .notDrawn
         }
         self.message = message
