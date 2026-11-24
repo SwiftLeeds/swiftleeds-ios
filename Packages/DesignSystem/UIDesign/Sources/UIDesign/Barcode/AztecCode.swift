@@ -22,7 +22,7 @@ public struct AztecCode: BarcodeContent {
 
     /// The modules the generator leaves out of the quiet zone.
     ///
-    /// The generator draws no quiet zone.
+    /// The code keeps 2 clear modules so a rounded plate never cuts a mark, and the generator leaves all 2.
     private static let missingQuietZone = BarcodeImage.QuietZone(modules: 0)
 
     /// The bytes the code carries.

@@ -7,6 +7,65 @@ struct AztecCodeTests {
     /// Made-up text for the code.
     private static let fixtureText = "LOCKER-0042"
 
+    /// About two hundred made-up letters, to show the margin does not depend on the message size.
+    private static let longText = String(repeating: "ABCDEFGHIJ", count: 20)
+
+    /// The texts the quiet zone is checked on.
+    private static let quietZoneTexts = [fixtureText, longText]
+
+    /// The modules of clear quiet zone each side keeps.
+    private static let quietZoneModules = 2
+
+    /// The pixels the stored picture spends on each module.
+    private static let storedPixelsPerModule = 10
+
+    /// Returns whether every pixel in a block of the picture is clear.
+    ///
+    /// - Parameters:
+    ///   - pixels: The stored picture.
+    ///   - columns: The columns of the block.
+    ///   - rows: The rows of the block.
+    /// - Returns: `true` when every pixel in the block is clear.
+    private static func isClear(_ pixels: RenderedPixels, columns: Range<Int>, rows: Range<Int>) -> Bool {
+        rows.allSatisfy { row in columns.allSatisfy { column in pixels.isClear(column: column, row: row) } }
+    }
+
+    /// Returns whether any pixel in a block of the picture is opaque black.
+    ///
+    /// - Parameters:
+    ///   - pixels: The stored picture.
+    ///   - columns: The columns of the block.
+    ///   - rows: The rows of the block.
+    /// - Returns: `true` when at least one pixel in the block is opaque black.
+    private static func hasBlack(_ pixels: RenderedPixels, columns: Range<Int>, rows: Range<Int>) -> Bool {
+        rows.contains { row in columns.contains { column in pixels.isOpaqueBlack(column: column, row: row) } }
+    }
+
+    @Test(arguments: quietZoneTexts)
+    func whenTextIsEncoded_shouldHaveTwoClearModulesEachSide(text: String) throws {
+        let sut = try AztecCode(text)
+        let pixels = try RenderedPixels(of: sut.cgImage)
+        let zone = Self.quietZoneModules * Self.storedPixelsPerModule
+        let moduleSpan = Self.storedPixelsPerModule
+        let width = pixels.side
+        let height = sut.cgImage.height
+        #expect(width.isMultiple(of: moduleSpan), "The picture is not at ten pixels for each module")
+        let allColumns = 0..<width
+        let allRows = 0..<height
+        #expect(Self.isClear(pixels, columns: 0..<zone, rows: allRows), "The left zone is not clear")
+        #expect(Self.isClear(pixels, columns: (width - zone)..<width, rows: allRows), "The right zone is not clear")
+        #expect(Self.isClear(pixels, columns: allColumns, rows: 0..<zone), "The top zone is not clear")
+        #expect(Self.isClear(pixels, columns: allColumns, rows: (height - zone)..<height), "The bottom is not clear")
+        let innerLeft = zone..<(zone + moduleSpan)
+        let innerRight = (width - zone - moduleSpan)..<(width - zone)
+        let innerTop = zone..<(zone + moduleSpan)
+        let innerBottom = (height - zone - moduleSpan)..<(height - zone)
+        #expect(Self.hasBlack(pixels, columns: innerLeft, rows: allRows), "No mark just inside the left zone")
+        #expect(Self.hasBlack(pixels, columns: innerRight, rows: allRows), "No mark just inside the right zone")
+        #expect(Self.hasBlack(pixels, columns: allColumns, rows: innerTop), "No mark just inside the top zone")
+        #expect(Self.hasBlack(pixels, columns: allColumns, rows: innerBottom), "No mark just inside the bottom zone")
+    }
+
     @Test
     func whenTextIsEncoded_shouldScanBackAsSameText() throws {
         let sut = try AztecCode(Self.fixtureText)
