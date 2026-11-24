@@ -1,4 +1,5 @@
 #if os(macOS)
+import Foundation
 import Testing
 import UIDesign
 import Vision
@@ -95,6 +96,24 @@ struct AztecCodeTests {
         #expect(throws: AztecCode.ParsingError.tooLong) {
             try AztecCode(Self.accentedText(count: Self.generatorLimit + 1))
         }
+    }
+
+    @Test
+    func whenBytesMatchText_shouldEqualTextCode() throws {
+        let fromBytes = try AztecCode(Data(Self.fixtureText.utf8))
+        let fromText = try AztecCode(Self.fixtureText)
+        #expect(fromBytes == fromText)
+    }
+
+    @Test
+    func whenBytesAreEmpty_shouldThrowEmpty() {
+        #expect(throws: AztecCode.ValidationError.empty) { try AztecCode(Data()) }
+    }
+
+    @Test
+    func whenBytesAreOneOverGeneratorLimit_shouldThrowTooLong() {
+        let bytes = Data(Self.accentedText(count: Self.generatorLimit + 1).utf8)
+        #expect(throws: AztecCode.ValidationError.tooLong) { try AztecCode(bytes) }
     }
 
     @Test

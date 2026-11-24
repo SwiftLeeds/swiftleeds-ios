@@ -26,6 +26,18 @@ public struct AztecCode: BarcodeContent {
         case notDrawn
     }
 
+    /// The reason bytes do not become an Aztec code.
+    public enum ValidationError: Error, Equatable, Sendable {
+        /// The message is empty.
+        case empty
+
+        /// The message is longer than one code holds.
+        case tooLong
+
+        /// CoreImage drew nothing. No known input causes it.
+        case notDrawn
+    }
+
     /// The modules the generator leaves out of the quiet zone.
     ///
     /// The code keeps 2 clear modules so a rounded plate never cuts a mark, and the generator leaves all 2.
@@ -48,7 +60,33 @@ public struct AztecCode: BarcodeContent {
     ///   ``ParsingError/tooLong`` when the generator cannot fit `text` in one code.
     ///   ``ParsingError/notDrawn`` when CoreImage draws no picture of the generated code.
     public init(_ text: String) throws(ParsingError) {
-        let message = Data(text.utf8)
+        do throws(ValidationError) {
+            try self.init(Data(text.utf8))
+        } catch {
+            switch error {
+            case .empty:
+                throw .empty
+
+            case .tooLong:
+                throw .tooLong
+
+            case .notDrawn:
+                throw .notDrawn
+            }
+        }
+    }
+
+    /// Creates an Aztec code that carries the given bytes.
+    ///
+    /// ```swift
+    /// let code = try AztecCode(Data([0x01, 0x02, 0x03]))
+    /// ```
+    ///
+    /// - Parameter message: The bytes the code carries.
+    /// - Throws: ``ValidationError/empty`` when `message` is empty.
+    ///   ``ValidationError/tooLong`` when the generator cannot fit `message` in one code.
+    ///   ``ValidationError/notDrawn`` when CoreImage draws no picture of the generated code.
+    public init(_ message: Data) throws(ValidationError) {
         try Self.check(message)
         guard let generated = Self.generate(message) else { throw .tooLong }
         guard let image = BarcodeImage.render(generated, addingQuietZone: Self.missingQuietZone) else {
@@ -61,8 +99,8 @@ public struct AztecCode: BarcodeContent {
     /// Checks that a message is not empty.
     ///
     /// - Parameter message: The bytes to check.
-    /// - Throws: ``ParsingError/empty`` when `message` is empty.
-    private static func check(_ message: Data) throws(ParsingError) {
+    /// - Throws: ``ValidationError/empty`` when `message` is empty.
+    private static func check(_ message: Data) throws(ValidationError) {
         guard !message.isEmpty else { throw .empty }
     }
 
