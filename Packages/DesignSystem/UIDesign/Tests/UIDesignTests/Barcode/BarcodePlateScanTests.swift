@@ -2,84 +2,9 @@
 import SwiftUI
 import Testing
 import UIDesign
-import Vision
 
 @MainActor
 struct BarcodePlateScanTests {
-    /// A kind of code the plate tests draw, with the made-up text it carries.
-    enum Fixture: CaseIterable, Sendable {
-        /// A QR code.
-        case qrCode
-
-        /// An Aztec code.
-        case aztec
-
-        /// A PDF417 barcode.
-        case pdf417
-
-        /// A Code 128 barcode.
-        case code128
-
-        /// The side of a square frame, in points.
-        private static let squareSide: CGFloat = 220
-
-        /// The width of a wide frame, in points.
-        private static let wideWidth: CGFloat = 320
-
-        /// The made-up text the code carries.
-        var text: String {
-            switch self {
-            case .qrCode: "ti_ExampleTicket0000000000"
-            case .aztec: "LOCKER-0042"
-            case .pdf417: "EXAMPLE PASS 0001"
-            case .code128: "ABCD-0001"
-            }
-        }
-
-        /// The kind of barcode Vision looks for.
-        var symbology: VNBarcodeSymbology {
-            switch self {
-            case .qrCode: .qr
-            case .aztec: .aztec
-            case .pdf417: .pdf417
-            case .code128: .code128
-            }
-        }
-
-        /// The width of the frame the code is drawn in, in points.
-        var frameWidth: CGFloat {
-            switch self {
-            case .qrCode: Self.squareSide
-            case .aztec: Self.squareSide
-            case .pdf417: Self.wideWidth
-            case .code128: Self.wideWidth
-            }
-        }
-
-        /// The height of the frame the code is drawn in, or `nil` to let the code's shape set it.
-        var frameHeight: CGFloat? {
-            switch self {
-            case .qrCode: Self.squareSide
-            case .aztec: Self.squareSide
-            case .pdf417: nil
-            case .code128: nil
-            }
-        }
-
-        /// Creates the code for this fixture's text.
-        ///
-        /// - Returns: The code.
-        /// - Throws: When the text cannot be encoded.
-        func makeContent() throws -> any BarcodeContent {
-            switch self {
-            case .qrCode: try QRCode(text)
-            case .aztec: try AztecCode(text)
-            case .pdf417: try PDF417Barcode(text)
-            case .code128: try Code128Barcode(text)
-            }
-        }
-    }
-
     /// A pixel position in a rendered picture.
     private struct PlatePoint {
         /// The column, from the left.
@@ -220,7 +145,7 @@ struct BarcodePlateScanTests {
     /// - Throws: When the picture cannot be made or read.
     private func expectScan(
         of view: some View,
-        fixture: Fixture,
+        fixture: BarcodeFixture,
         code: any BarcodeContent,
         plate: Color,
     ) throws {
@@ -231,8 +156,8 @@ struct BarcodePlateScanTests {
         #expect(BarcodeReader.payload(of: image, as: fixture.symbology) == fixture.text)
     }
 
-    @Test(arguments: Brand.allCases, Fixture.allCases)
-    func whenDrawnWithDefaultStyle_shouldScanBackAsCodeText(brand: Brand, fixture: Fixture) throws {
+    @Test(arguments: Brand.allCases, BarcodeFixture.allCases)
+    func whenDrawnWithDefaultStyle_shouldScanBackAsCodeText(brand: Brand, fixture: BarcodeFixture) throws {
         let code = try fixture.makeContent()
         let view = Barcode(code, label: Text("Code"))
             .frame(width: fixture.frameWidth, height: fixture.frameHeight)
@@ -240,8 +165,8 @@ struct BarcodePlateScanTests {
         try expectScan(of: view, fixture: fixture, code: code, plate: brand.surface)
     }
 
-    @Test(arguments: Brand.allCases, Fixture.allCases)
-    func whenDrawnOnSecondarySurface_shouldScanBackAsCodeText(brand: Brand, fixture: Fixture) throws {
+    @Test(arguments: Brand.allCases, BarcodeFixture.allCases)
+    func whenDrawnOnSecondarySurface_shouldScanBackAsCodeText(brand: Brand, fixture: BarcodeFixture) throws {
         let code = try fixture.makeContent()
         let plate = Color(Self.resolvedLight(brand.secondarySurface))
         let view = Image(code.cgImage, scale: 1, label: Text("Code"))
