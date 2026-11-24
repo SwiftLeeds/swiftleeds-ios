@@ -15,6 +15,15 @@ import SwiftUI
 ///
 /// A barcode is one element. VoiceOver reads its label and says it is an image. It never
 /// reads the text the code carries.
+///
+/// ## Choosing where the picture comes from
+///
+/// A barcode draws a code made on the device, or an image you supply. For a supplied image,
+/// you keep the image's quiet zone: the barcode adds none.
+///
+/// ```swift
+/// Barcode(membershipCodeImage, label: Text("Membership QR code"))
+/// ```
 public struct Barcode: View {
     /// A view that draws a barcode in a given style.
     private struct ResolvedBarcodeStyle<Style: BarcodeStyle>: View {
@@ -49,6 +58,24 @@ public struct Barcode: View {
     ///   - label: The label VoiceOver reads for the barcode.
     public init(_ code: some BarcodeContent, label: Text) {
         picture = code.cgImage
+        self.label = label
+    }
+
+    /// Creates a barcode that draws an image you supply, with a label for VoiceOver.
+    ///
+    /// The barcode adds no quiet zone, the clear margin a scanner needs around the marks. Give
+    /// the image its own margin. A tightly cropped image can lose marks under the rounded
+    /// corners of the plate.
+    ///
+    /// ```swift
+    /// Barcode(membershipCodeImage, label: Text("Membership QR code"))
+    /// ```
+    ///
+    /// - Parameters:
+    ///   - image: The image to draw.
+    ///   - label: The label VoiceOver reads for the barcode.
+    public init(_ image: CGImage, label: Text) {
+        picture = image
         self.label = label
     }
 
