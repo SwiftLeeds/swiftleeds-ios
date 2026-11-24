@@ -7,6 +7,11 @@ struct AztecCodeTests {
     /// Made-up text for the code.
     private static let fixtureText = "LOCKER-0042"
 
+    /// The most e-acute characters CoreImage's generator draws in one code.
+    ///
+    /// Measured on CoreImage on 2026-11-24, on macOS 26.6.1 (25G76). Each character is 2 UTF-8 bytes.
+    private static let generatorLimit = 959
+
     /// About two hundred made-up letters, to show the margin does not depend on the message size.
     private static let longText = String(repeating: "ABCDEFGHIJ", count: 20)
 
@@ -18,6 +23,14 @@ struct AztecCodeTests {
 
     /// The pixels the stored picture spends on each module.
     private static let storedPixelsPerModule = 10
+
+    /// Returns text of e-acute characters, which the generator packs as bytes.
+    ///
+    /// - Parameter count: The number of characters.
+    /// - Returns: The text.
+    private static func accentedText(count: Int) -> String {
+        String(repeating: "\u{E9}", count: count)
+    }
 
     /// Returns whether every pixel in a block of the picture is clear.
     ///
@@ -64,6 +77,24 @@ struct AztecCodeTests {
         #expect(Self.hasBlack(pixels, columns: innerRight, rows: allRows), "No mark just inside the right zone")
         #expect(Self.hasBlack(pixels, columns: allColumns, rows: innerTop), "No mark just inside the top zone")
         #expect(Self.hasBlack(pixels, columns: allColumns, rows: innerBottom), "No mark just inside the bottom zone")
+    }
+
+    @Test
+    func whenTextIsEmpty_shouldThrowEmpty() {
+        #expect(throws: AztecCode.ParsingError.empty) { try AztecCode("") }
+    }
+
+    @Test
+    func whenTextIsAtGeneratorLimit_shouldEncode() throws {
+        let sut = try AztecCode(Self.accentedText(count: Self.generatorLimit))
+        #expect(sut.cgImage.width > 0)
+    }
+
+    @Test
+    func whenTextIsOneOverGeneratorLimit_shouldThrowTooLong() {
+        #expect(throws: AztecCode.ParsingError.tooLong) {
+            try AztecCode(Self.accentedText(count: Self.generatorLimit + 1))
+        }
     }
 
     @Test

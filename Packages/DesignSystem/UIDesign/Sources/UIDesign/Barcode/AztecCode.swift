@@ -16,6 +16,12 @@ import Foundation
 public struct AztecCode: BarcodeContent {
     /// The reason text does not become an Aztec code.
     public enum ParsingError: Error, Equatable, Sendable {
+        /// The text is empty.
+        case empty
+
+        /// The text is longer than one code holds.
+        case tooLong
+
         /// CoreImage drew nothing. No known input causes it.
         case notDrawn
     }
@@ -38,16 +44,26 @@ public struct AztecCode: BarcodeContent {
     /// ```
     ///
     /// - Parameter text: The text the code carries.
-    /// - Throws: ``ParsingError/notDrawn`` when CoreImage draws no picture of the generated code.
+    /// - Throws: ``ParsingError/empty`` when `text` is empty.
+    ///   ``ParsingError/tooLong`` when the generator cannot fit `text` in one code.
+    ///   ``ParsingError/notDrawn`` when CoreImage draws no picture of the generated code.
     public init(_ text: String) throws(ParsingError) {
         let message = Data(text.utf8)
-        guard let generated = Self.generate(message),
-            let image = BarcodeImage.render(generated, addingQuietZone: Self.missingQuietZone)
-        else {
+        try Self.check(message)
+        guard let generated = Self.generate(message) else { throw .tooLong }
+        guard let image = BarcodeImage.render(generated, addingQuietZone: Self.missingQuietZone) else {
             throw .notDrawn
         }
         self.message = message
         self.cgImage = image
+    }
+
+    /// Checks that a message is not empty.
+    ///
+    /// - Parameter message: The bytes to check.
+    /// - Throws: ``ParsingError/empty`` when `message` is empty.
+    private static func check(_ message: Data) throws(ParsingError) {
+        guard !message.isEmpty else { throw .empty }
     }
 
     /// Returns the generator's picture of a message, at the generator's own size and level.
