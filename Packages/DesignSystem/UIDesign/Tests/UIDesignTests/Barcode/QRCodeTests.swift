@@ -31,11 +31,43 @@ struct QRCodeTests {
     /// The pixels the stored picture spends on each module.
     private static let storedPixelsPerModule = 10
 
-    /// The most bytes of text a code holds.
-    private static let capacityInBytes = 1_273
+    /// Made-up text for two codes that differ only in level.
+    private static let exampleText = "ex_member_0001"
+
+    /// The most bytes a version 40 code holds at the low level.
+    private static let lowCapacityInBytes = 2_953
+
+    /// The most bytes a version 40 code holds at the medium level.
+    private static let mediumCapacityInBytes = 2_331
+
+    /// The most bytes a version 40 code holds at the quartile level.
+    private static let quartileCapacityInBytes = 1_663
+
+    /// The most bytes a version 40 code holds at the high level.
+    private static let highCapacityInBytes = 1_273
 
     /// The number of two-byte characters whose text is one byte over the capacity.
     private static let twoByteCharactersOverCapacity = 637
+
+    /// Returns the most bytes of text a code holds at a level.
+    ///
+    /// - Parameter level: The error correction level.
+    /// - Returns: The capacity of a version 40 code in byte mode.
+    private static func capacityInBytes(of level: QRCode.ErrorCorrectionLevel) -> Int {
+        switch level {
+        case .low:
+            lowCapacityInBytes
+
+        case .medium:
+            mediumCapacityInBytes
+
+        case .quartile:
+            quartileCapacityInBytes
+
+        case .high:
+            highCapacityInBytes
+        }
+    }
 
     /// Returns the picture of a code on its plate, as a scanner would see it.
     ///
@@ -139,18 +171,25 @@ struct QRCodeTests {
         #expect(throws: QRCode.ParsingError.empty) { try QRCode("") }
     }
 
-    @Test
-    func whenTextIsAtCapacity_shouldEncode() throws {
-        let text = String(repeating: "a", count: Self.capacityInBytes)
-        let code = try QRCode(text)
+    @Test(arguments: QRCode.ErrorCorrectionLevel.allCases)
+    func whenTextIsAtLevelCapacity_shouldEncodeAndScanBack(level: QRCode.ErrorCorrectionLevel) throws {
+        let text = String(repeating: "a", count: Self.capacityInBytes(of: level))
+        let code = try QRCode(text, errorCorrection: level)
         let message = try Self.scan(try Self.render(code))
         #expect(message == text)
     }
 
+    @Test(arguments: QRCode.ErrorCorrectionLevel.allCases)
+    func whenTextIsOneByteOverLevelCapacity_shouldThrowTooLong(level: QRCode.ErrorCorrectionLevel) {
+        let text = String(repeating: "a", count: Self.capacityInBytes(of: level) + 1)
+        #expect(throws: QRCode.ParsingError.tooLong) { try QRCode(text, errorCorrection: level) }
+    }
+
     @Test
-    func whenTextIsOneByteOverCapacity_shouldThrowTooLong() {
-        let text = String(repeating: "a", count: Self.capacityInBytes + 1)
-        #expect(throws: QRCode.ParsingError.tooLong) { try QRCode(text) }
+    func whenLevelsDiffer_shouldNotBeEqual() throws {
+        let low = try QRCode(Self.exampleText, errorCorrection: .low)
+        let high = try QRCode(Self.exampleText, errorCorrection: .high)
+        #expect(low != high)
     }
 
     @Test
