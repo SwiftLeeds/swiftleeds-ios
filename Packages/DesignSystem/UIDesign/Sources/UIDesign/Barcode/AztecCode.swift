@@ -1,0 +1,73 @@
+#if canImport(CoreImage)
+import CoreGraphics
+import CoreImage
+import CoreImage.CIFilterBuiltins
+import Foundation
+
+/// An Aztec code that carries a line of text, drawn as a square with a bullseye in the middle.
+///
+/// Draw it with ``Barcode``.
+///
+/// ```swift
+/// let code = try AztecCode("LOCKER-0042")
+/// Barcode(code, label: Text("Locker code"))
+///     .frame(width: 220, height: 220)
+/// ```
+public struct AztecCode: BarcodeContent {
+    /// The reason text does not become an Aztec code.
+    public enum ParsingError: Error, Equatable, Sendable {
+        /// CoreImage drew nothing. No known input causes it.
+        case notDrawn
+    }
+
+    /// The modules the generator leaves out of the quiet zone.
+    ///
+    /// The generator draws no quiet zone.
+    private static let missingQuietZone = BarcodeImage.QuietZone(modules: 0)
+
+    /// The bytes the code carries.
+    private let message: Data
+
+    /// The picture of the code.
+    public let cgImage: CGImage
+
+    /// Creates an Aztec code that carries the given text.
+    ///
+    /// ```swift
+    /// let code = try AztecCode("LOCKER-0042")
+    /// ```
+    ///
+    /// - Parameter text: The text the code carries.
+    /// - Throws: ``ParsingError/notDrawn`` when CoreImage draws no picture of the generated code.
+    public init(_ text: String) throws(ParsingError) {
+        let message = Data(text.utf8)
+        guard let generated = Self.generate(message),
+            let image = BarcodeImage.render(generated, addingQuietZone: Self.missingQuietZone)
+        else {
+            throw .notDrawn
+        }
+        self.message = message
+        self.cgImage = image
+    }
+
+    /// Returns the generator's picture of a message, at the generator's own size and level.
+    ///
+    /// - Parameter message: The bytes to encode.
+    /// - Returns: The picture, or `nil` when the generator makes none.
+    private static func generate(_ message: Data) -> CIImage? {
+        let filter = CIFilter.aztecCodeGenerator()
+        filter.message = message
+        return filter.outputImage
+    }
+
+    /// Returns whether two codes carry the same bytes.
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        lhs.message == rhs.message
+    }
+
+    /// Hashes the bytes the code carries.
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(message)
+    }
+}
+#endif
