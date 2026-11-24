@@ -1,4 +1,5 @@
 #if os(macOS)
+import Foundation
 import Testing
 import UIDesign
 import Vision
@@ -95,6 +96,24 @@ struct PDF417BarcodeTests {
         #expect(throws: PDF417Barcode.ParsingError.tooLong) {
             try PDF417Barcode(Self.accentedText(count: Self.generatorLimit + 1))
         }
+    }
+
+    @Test
+    func whenBytesMatchText_shouldEqualTextCode() throws {
+        let fromBytes = try PDF417Barcode(Data(Self.fixtureText.utf8))
+        let fromText = try PDF417Barcode(Self.fixtureText)
+        #expect(fromBytes == fromText)
+    }
+
+    @Test
+    func whenBytesAreEmpty_shouldThrowEmpty() {
+        #expect(throws: PDF417Barcode.ValidationError.empty) { try PDF417Barcode(Data()) }
+    }
+
+    @Test
+    func whenBytesAreOneOverGeneratorLimit_shouldThrowTooLong() {
+        let bytes = Data(Self.accentedText(count: Self.generatorLimit + 1).utf8)
+        #expect(throws: PDF417Barcode.ValidationError.tooLong) { try PDF417Barcode(bytes) }
     }
 
     @Test

@@ -26,6 +26,18 @@ public struct PDF417Barcode: BarcodeContent {
         case notDrawn
     }
 
+    /// The reason bytes do not become a barcode.
+    public enum ValidationError: Error, Equatable, Sendable {
+        /// The message is empty.
+        case empty
+
+        /// The message is longer than one barcode holds.
+        case tooLong
+
+        /// CoreImage drew nothing. No known input causes it.
+        case notDrawn
+    }
+
     /// The modules the generator leaves out of the quiet zone.
     ///
     /// The PDF417 spec asks for a quiet zone of 2 modules, and the generator leaves all 2.
@@ -48,8 +60,34 @@ public struct PDF417Barcode: BarcodeContent {
     ///   ``ParsingError/tooLong`` when the generator cannot fit `text` in one barcode.
     ///   ``ParsingError/notDrawn`` when CoreImage draws no picture of the generated barcode.
     public init(_ text: String) throws(ParsingError) {
-        try Self.check(text)
-        let message = Data(text.utf8)
+        do throws(ValidationError) {
+            try self.init(Data(text.utf8))
+        } catch {
+            switch error {
+            case .empty:
+                throw .empty
+
+            case .tooLong:
+                throw .tooLong
+
+            case .notDrawn:
+                throw .notDrawn
+            }
+        }
+    }
+
+    /// Creates a barcode that carries the given bytes.
+    ///
+    /// ```swift
+    /// let code = try PDF417Barcode(Data([0x01, 0x02, 0x03]))
+    /// ```
+    ///
+    /// - Parameter message: The bytes the barcode carries.
+    /// - Throws: ``ValidationError/empty`` when `message` is empty.
+    ///   ``ValidationError/tooLong`` when the generator cannot fit `message` in one barcode.
+    ///   ``ValidationError/notDrawn`` when CoreImage draws no picture of the generated barcode.
+    public init(_ message: Data) throws(ValidationError) {
+        try Self.check(message)
         guard let generated = Self.generate(message) else { throw .tooLong }
         guard let image = BarcodeImage.render(generated, addingQuietZone: Self.missingQuietZone) else {
             throw .notDrawn
@@ -58,12 +96,12 @@ public struct PDF417Barcode: BarcodeContent {
         self.cgImage = image
     }
 
-    /// Checks that text is not empty.
+    /// Checks that a message is not empty.
     ///
-    /// - Parameter text: The text to check.
-    /// - Throws: ``ParsingError/empty`` when `text` is empty.
-    private static func check(_ text: String) throws(ParsingError) {
-        guard !text.isEmpty else { throw .empty }
+    /// - Parameter message: The bytes to check.
+    /// - Throws: ``ValidationError/empty`` when `message` is empty.
+    private static func check(_ message: Data) throws(ValidationError) {
+        guard !message.isEmpty else { throw .empty }
     }
 
     /// Returns the generator's picture of a message, at the generator's own size and level.
