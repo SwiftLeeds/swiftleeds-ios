@@ -4,6 +4,11 @@ import UIDesign
 import Vision
 
 struct PDF417BarcodeTests {
+    /// The most e-acute characters CoreImage's generator draws in one barcode.
+    ///
+    /// Measured on CoreImage on 2026-11-24, on macOS 26.6.1 (25G76). Each character is 2 UTF-8 bytes.
+    private static let generatorLimit = 517
+
     /// Made-up text for the code.
     private static let fixtureText = "EXAMPLE PASS 0001"
 
@@ -18,6 +23,14 @@ struct PDF417BarcodeTests {
 
     /// The pixels the stored picture spends on each module.
     private static let storedPixelsPerModule = 10
+
+    /// Returns text of e-acute characters, which the generator packs as bytes.
+    ///
+    /// - Parameter count: The number of characters.
+    /// - Returns: The text.
+    private static func accentedText(count: Int) -> String {
+        String(repeating: "\u{E9}", count: count)
+    }
 
     /// Returns whether every pixel in a block of the picture is clear.
     ///
@@ -64,6 +77,24 @@ struct PDF417BarcodeTests {
         #expect(Self.hasBlack(pixels, columns: innerRight, rows: allRows), "No bar just inside the right zone")
         #expect(Self.hasBlack(pixels, columns: allColumns, rows: innerTop), "No bar just inside the top zone")
         #expect(Self.hasBlack(pixels, columns: allColumns, rows: innerBottom), "No bar just inside the bottom zone")
+    }
+
+    @Test
+    func whenTextIsEmpty_shouldThrowEmpty() {
+        #expect(throws: PDF417Barcode.ParsingError.empty) { try PDF417Barcode("") }
+    }
+
+    @Test
+    func whenTextIsAtGeneratorLimit_shouldEncode() throws {
+        let sut = try PDF417Barcode(Self.accentedText(count: Self.generatorLimit))
+        #expect(sut.cgImage.width > 0)
+    }
+
+    @Test
+    func whenTextIsOneOverGeneratorLimit_shouldThrowTooLong() {
+        #expect(throws: PDF417Barcode.ParsingError.tooLong) {
+            try PDF417Barcode(Self.accentedText(count: Self.generatorLimit + 1))
+        }
     }
 
     @Test

@@ -16,6 +16,12 @@ import Foundation
 public struct PDF417Barcode: BarcodeContent {
     /// The reason text does not become a barcode.
     public enum ParsingError: Error, Equatable, Sendable {
+        /// The text is empty.
+        case empty
+
+        /// The text is longer than one barcode holds.
+        case tooLong
+
         /// CoreImage drew nothing. No known input causes it.
         case notDrawn
     }
@@ -38,15 +44,26 @@ public struct PDF417Barcode: BarcodeContent {
     /// ```
     ///
     /// - Parameter text: The text the barcode carries.
-    /// - Throws: ``ParsingError/notDrawn`` when CoreImage draws no picture of the text.
+    /// - Throws: ``ParsingError/empty`` when `text` is empty.
+    ///   ``ParsingError/tooLong`` when the generator cannot fit `text` in one barcode.
+    ///   ``ParsingError/notDrawn`` when CoreImage draws no picture of the generated barcode.
     public init(_ text: String) throws(ParsingError) {
+        try Self.check(text)
         let message = Data(text.utf8)
-        guard let generated = Self.generate(message) else { throw .notDrawn }
+        guard let generated = Self.generate(message) else { throw .tooLong }
         guard let image = BarcodeImage.render(generated, addingQuietZone: Self.missingQuietZone) else {
             throw .notDrawn
         }
         self.message = message
         self.cgImage = image
+    }
+
+    /// Checks that text is not empty.
+    ///
+    /// - Parameter text: The text to check.
+    /// - Throws: ``ParsingError/empty`` when `text` is empty.
+    private static func check(_ text: String) throws(ParsingError) {
+        guard !text.isEmpty else { throw .empty }
     }
 
     /// Returns the generator's picture of a message, at the generator's own size and level.
