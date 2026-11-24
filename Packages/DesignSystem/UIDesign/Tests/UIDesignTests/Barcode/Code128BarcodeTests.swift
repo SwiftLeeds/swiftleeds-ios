@@ -16,6 +16,21 @@ struct Code128BarcodeTests {
     /// Text with two characters that are not ASCII, the first an e with an acute accent.
     private static let twoNonASCIIText = "\u{E9}a \u{FC}"
 
+    /// Forty letters, which draw 495 modules across with the quiet zone.
+    private static let fortyLetters = String(repeating: "ABCDEFGHIJ", count: 4)
+
+    /// The modules across a code of ``fortyLetters``, measured at one pixel for each module.
+    private static let fortyLetterModules = 495
+
+    /// Two hundred letters, which draw 2255 modules across with the quiet zone.
+    private static let twoHundredLetters = String(repeating: "ABCDEFGHIJ", count: 20)
+
+    /// The modules across a code of ``twoHundredLetters``, measured at one pixel for each module.
+    private static let twoHundredLetterModules = 2_255
+
+    /// The most pixels the longer side of a stored picture may span, while each module keeps whole pixels.
+    private static let longerSideCap = 2_048
+
     /// The modules of clear quiet zone the Code 128 spec asks for on each side.
     private static let quietZoneModules = 10
 
@@ -64,6 +79,20 @@ struct Code128BarcodeTests {
         let innerRight = (width - zone - moduleSpan)..<(width - zone)
         #expect(Self.hasBlack(pixels, columns: innerLeft, rows: allRows), "No bar starts at the left zone's edge")
         #expect(Self.hasBlack(pixels, columns: innerRight, rows: allRows), "No bar ends at the right zone's edge")
+    }
+
+    @Test
+    func whenWidthAtTenPixelsWouldPassCap_shouldUseLargestWholeScaleUnderCap() throws {
+        let sut = try Code128Barcode(Self.fortyLetters)
+        let scale = Self.longerSideCap / Self.fortyLetterModules
+        #expect(scale < Self.storedPixelsPerModule)
+        #expect(sut.cgImage.width == Self.fortyLetterModules * scale)
+    }
+
+    @Test
+    func whenModulesPassCap_shouldUseOnePixelPerModule() throws {
+        let sut = try Code128Barcode(Self.twoHundredLetters)
+        #expect(sut.cgImage.width == Self.twoHundredLetterModules)
     }
 
     @Test

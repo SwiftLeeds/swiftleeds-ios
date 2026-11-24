@@ -20,10 +20,16 @@ enum BarcodeImage {
     /// The context that renders every barcode, in software so the result is the same everywhere.
     private static let context = CIContext(options: [.useSoftwareRenderer: true])
 
-    /// The pixels the image spends on each module.
+    /// The most pixels the image spends on each module.
     private static let pixelsPerModule = 10
 
-    /// Returns a generated code as an image with alpha, ten pixels for each module.
+    /// The most pixels the longer side of the image spans, unless one pixel for each module needs more.
+    private static let longerSideCap = 2_048
+
+    /// The fewest pixels the image spends on each module.
+    private static let fewestPixelsPerModule = 1
+
+    /// Returns a generated code as an image with alpha, at most ten pixels for each module.
     ///
     /// - Parameters:
     ///   - generated: The generator's picture: black modules on white.
@@ -38,10 +44,19 @@ enum BarcodeImage {
     /// Returns a picture with each module drawn as a square of whole pixels, with hard edges.
     ///
     /// - Parameter picture: The picture at one pixel for each module.
-    /// - Returns: The picture at ``pixelsPerModule`` pixels for each module.
+    /// - Returns: The picture at the whole number of pixels for each module that ``wholePixelsPerModule(for:)`` gives.
     private static func scaledUp(_ picture: CIImage) -> CIImage {
-        let scale = CGFloat(pixelsPerModule)
+        let scale = CGFloat(wholePixelsPerModule(for: picture))
         return picture.samplingNearest().transformed(by: CGAffineTransform(scaleX: scale, y: scale))
+    }
+
+    /// Returns the largest whole number of pixels for each module that keeps the longer side within the cap.
+    ///
+    /// - Parameter picture: The picture at one pixel for each module.
+    /// - Returns: A number from ``fewestPixelsPerModule`` to ``pixelsPerModule``.
+    private static func wholePixelsPerModule(for picture: CIImage) -> Int {
+        let longerSide = Int(max(picture.extent.width, picture.extent.height))
+        return min(pixelsPerModule, max(fewestPixelsPerModule, longerSideCap / longerSide))
     }
 
     /// Returns a picture where each dark module is opaque black and everything else is clear.
