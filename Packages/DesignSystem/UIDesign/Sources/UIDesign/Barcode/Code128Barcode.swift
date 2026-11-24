@@ -16,6 +16,12 @@ import Foundation
 public struct Code128Barcode: BarcodeContent {
     /// The reason text does not become a barcode.
     public enum ParsingError: Error, Equatable, Sendable {
+        /// The text is empty.
+        case empty
+
+        /// The text holds a character that Code 128 cannot carry. The case holds the first one.
+        case unsupportedCharacter(Character)
+
         /// CoreImage drew nothing. No known input causes it.
         case notDrawn
     }
@@ -40,8 +46,11 @@ public struct Code128Barcode: BarcodeContent {
     /// ```
     ///
     /// - Parameter text: The text the barcode carries.
-    /// - Throws: ``ParsingError/notDrawn`` when CoreImage draws no picture of the text.
+    /// - Throws: ``ParsingError/empty`` when `text` is empty.
+    ///   ``ParsingError/unsupportedCharacter(_:)`` when `text` holds a character that is not ASCII.
+    ///   ``ParsingError/notDrawn`` when CoreImage draws no picture of the text.
     public init(_ text: String) throws(ParsingError) {
+        try Self.check(text)
         let message = Data(text.utf8)
         guard let generated = Self.generate(message) else { throw .notDrawn }
         guard let image = BarcodeImage.render(generated, addingQuietZone: Self.missingQuietZone) else {
@@ -49,6 +58,18 @@ public struct Code128Barcode: BarcodeContent {
         }
         self.message = message
         self.cgImage = image
+    }
+
+    /// Checks that text is not empty and holds only ASCII characters.
+    ///
+    /// - Parameter text: The text to check.
+    /// - Throws: ``ParsingError/empty`` when `text` is empty.
+    ///   ``ParsingError/unsupportedCharacter(_:)`` with the first character that is not ASCII.
+    private static func check(_ text: String) throws(ParsingError) {
+        guard !text.isEmpty else { throw .empty }
+        if let character = text.first(where: { !$0.isASCII }) {
+            throw .unsupportedCharacter(character)
+        }
     }
 
     /// Returns the generator's picture of a message: black bars on white, with no quiet zone.

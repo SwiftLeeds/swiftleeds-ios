@@ -7,6 +7,15 @@ struct Code128BarcodeTests {
     /// Made-up text for the code.
     private static let fixtureText = "ABCD-0001"
 
+    /// ASCII text that differs from a non-ASCII fixture only in one letter.
+    private static let asciiText = "cafe"
+
+    /// Text whose last letter is not ASCII.
+    private static let nonASCIIText = "caf\u{E9}"
+
+    /// Text with two characters that are not ASCII, the first an e with an acute accent.
+    private static let twoNonASCIIText = "\u{E9}a \u{FC}"
+
     /// The modules of clear quiet zone the Code 128 spec asks for on each side.
     private static let quietZoneModules = 10
 
@@ -55,6 +64,32 @@ struct Code128BarcodeTests {
         let innerRight = (width - zone - moduleSpan)..<(width - zone)
         #expect(Self.hasBlack(pixels, columns: innerLeft, rows: allRows), "No bar starts at the left zone's edge")
         #expect(Self.hasBlack(pixels, columns: innerRight, rows: allRows), "No bar ends at the right zone's edge")
+    }
+
+    @Test
+    func whenTextIsEmpty_shouldThrowEmpty() {
+        #expect(throws: Code128Barcode.ParsingError.empty) { try Code128Barcode("") }
+    }
+
+    @Test
+    func whenTextHasNonASCIICharacter_shouldThrowUnsupportedCharacter() {
+        #expect(throws: Code128Barcode.ParsingError.unsupportedCharacter("\u{E9}")) {
+            try Code128Barcode(Self.nonASCIIText)
+        }
+    }
+
+    @Test
+    func whenTextHasTwoNonASCIICharacters_shouldThrowFirst() {
+        #expect(throws: Code128Barcode.ParsingError.unsupportedCharacter("\u{E9}")) {
+            try Code128Barcode(Self.twoNonASCIIText)
+        }
+    }
+
+    @Test
+    func whenTextIsASCII_shouldReturnBarcode() throws {
+        let sut = try Code128Barcode(Self.asciiText)
+        let text = BarcodeReader.payload(of: sut.cgImage, as: .code128)
+        #expect(text == Self.asciiText)
     }
 
     @Test
