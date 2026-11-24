@@ -1,5 +1,6 @@
 #if canImport(CoreImage)
 import CoreImage
+import Foundation
 import SwiftUI
 import Testing
 import UIDesign
@@ -183,6 +184,37 @@ struct QRCodeTests {
     func whenTextIsOneByteOverLevelCapacity_shouldThrowTooLong(level: QRCode.ErrorCorrectionLevel) {
         let text = String(repeating: "a", count: Self.capacityInBytes(of: level) + 1)
         #expect(throws: QRCode.ParsingError.tooLong) { try QRCode(text, errorCorrection: level) }
+    }
+
+    @Test
+    func whenBytesMatchText_shouldEqualTextCode() throws {
+        let fromBytes = try QRCode(Data(Self.exampleText.utf8))
+        let fromText = try QRCode(Self.exampleText)
+        #expect(fromBytes == fromText)
+    }
+
+    @Test
+    func whenBytesAreAtHighCapacity_shouldEncode() throws {
+        let message = Data(repeating: UInt8.max, count: Self.highCapacityInBytes)
+        #expect(throws: Never.self) { try QRCode(message) }
+    }
+
+    @Test
+    func whenBytesAreOneOverHighCapacity_shouldThrowTooLong() {
+        let message = Data(repeating: UInt8.max, count: Self.highCapacityInBytes + 1)
+        #expect(throws: QRCode.ValidationError.tooLong) { try QRCode(message) }
+    }
+
+    @Test
+    func whenBytesAreEmpty_shouldThrowEmpty() {
+        #expect(throws: QRCode.ValidationError.empty) { try QRCode(Data()) }
+    }
+
+    @Test
+    func whenBytesDifferOnlyInInvalidUTF8_shouldNotBeEqual() throws {
+        let first = try QRCode(Data([UInt8.max]))
+        let second = try QRCode(Data([UInt8.max - 1]))
+        #expect(first != second)
     }
 
     @Test

@@ -20,6 +20,18 @@ public struct QRCode: BarcodeContent {
         case notDrawn
     }
 
+    /// The reason bytes do not become a code.
+    public enum ValidationError: Error, Equatable, Sendable {
+        /// The message is empty.
+        case empty
+
+        /// The message is longer than a code holds at its level.
+        case tooLong
+
+        /// CoreImage drew nothing. No known input causes it.
+        case notDrawn
+    }
+
     /// How much damage a code survives and still scans.
     ///
     /// A higher level survives more damage and holds less text.
@@ -80,8 +92,8 @@ public struct QRCode: BarcodeContent {
         modules: 3  // swiftlint:disable:this no_magic_numbers - the QR standard's quiet zone, less 1
     )
 
-    /// The text the code carries.
-    private let text: String
+    /// The bytes the code carries.
+    private let message: Data
 
     /// The level of error correction the code was made at.
     private let errorCorrection: ErrorCorrectionLevel
@@ -104,49 +116,78 @@ public struct QRCode: BarcodeContent {
     ///   ``ParsingError/tooLong`` when `text` is more bytes in UTF-8 than the level holds.
     ///   ``ParsingError/notDrawn`` when CoreImage draws no picture of the text.
     public init(_ text: String, errorCorrection: ErrorCorrectionLevel = .high) throws(ParsingError) {
-        try Self.check(text, at: errorCorrection)
-        guard let generated = Self.generate(text, at: errorCorrection) else { throw .notDrawn }
+        do throws(ValidationError) {
+            try self.init(Data(text.utf8), errorCorrection: errorCorrection)
+        } catch {
+            switch error {
+            case .empty:
+                throw .empty
+
+            case .tooLong:
+                throw .tooLong
+
+            case .notDrawn:
+                throw .notDrawn
+            }
+        }
+    }
+
+    /// Creates a code that carries the given bytes.
+    ///
+    /// ```swift
+    /// let code = try QRCode(Data([0x01, 0x02, 0x03]), errorCorrection: .medium)
+    /// ```
+    ///
+    /// - Parameters:
+    ///   - message: The bytes the code carries.
+    ///   - errorCorrection: How much damage the code survives. The default is ``ErrorCorrectionLevel/high``.
+    /// - Throws: ``ValidationError/empty`` when `message` is empty.
+    ///   ``ValidationError/tooLong`` when `message` is more bytes than the level holds.
+    ///   ``ValidationError/notDrawn`` when CoreImage draws no picture of the bytes.
+    public init(_ message: Data, errorCorrection: ErrorCorrectionLevel = .high) throws(ValidationError) {
+        try Self.check(message, at: errorCorrection)
+        guard let generated = Self.generate(message, at: errorCorrection) else { throw .notDrawn }
         guard let image = BarcodeImage.render(generated, addingQuietZone: Self.missingQuietZone) else {
             throw .notDrawn
         }
-        self.text = text
+        self.message = message
         self.errorCorrection = errorCorrection
         self.cgImage = image
     }
 
-    /// Checks that text is not empty and fits in a code at a level.
+    /// Checks that a message is not empty and fits in a code at a level.
     ///
     /// - Parameters:
-    ///   - text: The text to check.
+    ///   - message: The bytes to check.
     ///   - level: The level the code is made at.
-    /// - Throws: ``ParsingError/empty`` when `text` is empty.
-    ///   ``ParsingError/tooLong`` when `text` is more than the level's capacity in UTF-8 bytes.
-    private static func check(_ text: String, at level: ErrorCorrectionLevel) throws(ParsingError) {
-        guard !text.isEmpty else { throw .empty }
-        guard text.utf8.count <= level.capacityInBytes else { throw .tooLong }
+    /// - Throws: ``ValidationError/empty`` when `message` is empty.
+    ///   ``ValidationError/tooLong`` when `message` is more bytes than the level holds.
+    private static func check(_ message: Data, at level: ErrorCorrectionLevel) throws(ValidationError) {
+        guard !message.isEmpty else { throw .empty }
+        guard message.count <= level.capacityInBytes else { throw .tooLong }
     }
 
-    /// Returns the generator's picture of text: black modules on white, with a one-module margin.
+    /// Returns the generator's picture of a message: black modules on white, with a one-module margin.
     ///
     /// - Parameters:
-    ///   - text: The text to encode.
+    ///   - message: The bytes to encode.
     ///   - level: The level to make the code at.
     /// - Returns: The picture, or `nil` when the generator makes none.
-    private static func generate(_ text: String, at level: ErrorCorrectionLevel) -> CIImage? {
+    private static func generate(_ message: Data, at level: ErrorCorrectionLevel) -> CIImage? {
         let filter = CIFilter.qrCodeGenerator()
-        filter.message = Data(text.utf8)
+        filter.message = message
         filter.correctionLevel = level.generatorLetter
         return filter.outputImage
     }
 
-    /// Returns whether two codes carry the same text at the same level.
+    /// Returns whether two codes carry the same bytes at the same level.
     public static func == (lhs: Self, rhs: Self) -> Bool {
-        lhs.text == rhs.text && lhs.errorCorrection == rhs.errorCorrection
+        lhs.message == rhs.message && lhs.errorCorrection == rhs.errorCorrection
     }
 
-    /// Hashes the text and the level the code carries.
+    /// Hashes the bytes and the level the code carries.
     public func hash(into hasher: inout Hasher) {
-        hasher.combine(text)
+        hasher.combine(message)
         hasher.combine(errorCorrection)
     }
 }
