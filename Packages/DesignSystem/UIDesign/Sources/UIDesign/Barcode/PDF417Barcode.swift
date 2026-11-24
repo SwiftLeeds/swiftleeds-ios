@@ -20,8 +20,10 @@ public struct PDF417Barcode: BarcodeContent {
         case notDrawn
     }
 
-    /// The modules added around the generator's picture.
-    private static let addedQuietZone = BarcodeImage.QuietZone(modules: 0)
+    /// The modules the generator leaves out of the quiet zone.
+    ///
+    /// The PDF417 spec asks for a quiet zone of 2 modules, and the generator leaves all 2.
+    private static let missingQuietZone = BarcodeImage.QuietZone(modules: 0)
 
     /// The bytes the barcode carries.
     private let message: Data
@@ -40,7 +42,7 @@ public struct PDF417Barcode: BarcodeContent {
     public init(_ text: String) throws(ParsingError) {
         let message = Data(text.utf8)
         guard let generated = Self.generate(message) else { throw .notDrawn }
-        guard let image = BarcodeImage.render(generated, addingQuietZone: Self.addedQuietZone) else {
+        guard let image = BarcodeImage.render(generated, addingQuietZone: Self.missingQuietZone) else {
             throw .notDrawn
         }
         self.message = message
