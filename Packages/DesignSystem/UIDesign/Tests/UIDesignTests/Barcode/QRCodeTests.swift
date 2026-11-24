@@ -17,8 +17,8 @@ struct QRCodeTests {
 
     /// The modules across the drawn code, with its quiet zone.
     ///
-    /// The fixture is 33 modules, and the quiet zone adds 4 on each side.
-    private static let modulesWithQuietZone = 41
+    /// The fixture is 29 modules, and the quiet zone adds 4 on each side.
+    private static let modulesWithQuietZone = 37
 
     /// The modules of clear quiet zone on each side of the code.
     private static let quietZoneModules = 4
@@ -27,6 +27,9 @@ struct QRCodeTests {
     ///
     /// It is counted in modules.
     private static let firstModuleCenter = 4.5
+
+    /// The pixels the stored picture spends on each module.
+    private static let storedPixelsPerModule = 10
 
     /// The most bytes of text a code holds.
     private static let capacityInBytes = 1_273
@@ -80,6 +83,36 @@ struct QRCodeTests {
         )
         let features = detector.features(in: CIImage(cgImage: picture))
         return features.compactMap { ($0 as? CIQRCodeFeature)?.messageString }.first
+    }
+
+    /// Returns whether every pixel of one module's square is opaque black, or every one is clear.
+    ///
+    /// - Parameters:
+    ///   - pixels: The stored picture, at ``storedPixelsPerModule`` for each module.
+    ///   - column: The module's column, from the left.
+    ///   - row: The module's row, from the top.
+    /// - Returns: `true` when the square holds one value.
+    private static func isUniform(_ pixels: RenderedPixels, column: Int, row: Int) -> Bool {
+        let span = 0..<storedPixelsPerModule
+        let squares = span.flatMap { down in
+            span.map { across in (column * storedPixelsPerModule + across, row * storedPixelsPerModule + down) }
+        }
+        let allClear = squares.allSatisfy { pixels.isClear(column: $0, row: $1) }
+        let allBlack = squares.allSatisfy { pixels.isOpaqueBlack(column: $0, row: $1) }
+        return allClear || allBlack
+    }
+
+    @Test
+    func whenTextIsEncoded_shouldStoreEachModuleAsUniformTenPixelSquare() throws {
+        let code = try QRCode(Self.fixtureText)
+        let pixels = try RenderedPixels(of: code.cgImage)
+        let expectedSide = Self.modulesWithQuietZone * Self.storedPixelsPerModule
+        try #require(pixels.side == expectedSide, "The stored picture is \(pixels.side) pixels across")
+        let modules = 0..<Self.modulesWithQuietZone
+        let mixed = modules.flatMap { row in
+            modules.filter { column in !Self.isUniform(pixels, column: column, row: row) }
+        }
+        #expect(mixed.isEmpty, "\(mixed.count) modules are not one value")
     }
 
     @Test

@@ -20,7 +20,10 @@ enum BarcodeImage {
     /// The context that renders every barcode, in software so the result is the same everywhere.
     private static let context = CIContext(options: [.useSoftwareRenderer: true])
 
-    /// Returns a generated code as an image with alpha, one pixel for each module.
+    /// The pixels the image spends on each module.
+    private static let pixelsPerModule = 10
+
+    /// Returns a generated code as an image with alpha, ten pixels for each module.
     ///
     /// - Parameters:
     ///   - generated: The generator's picture: black modules on white.
@@ -28,8 +31,17 @@ enum BarcodeImage {
     /// - Returns: The image, or `nil` when CoreImage draws none.
     static func render(_ generated: CIImage, addingQuietZone missingQuietZone: QuietZone) -> CGImage? {
         let marks = blackModulesOnClear(generated)
-        let picture = addingQuietZone(missingQuietZone, to: marks)
+        let picture = scaledUp(addingQuietZone(missingQuietZone, to: marks))
         return context.createCGImage(picture, from: picture.extent)
+    }
+
+    /// Returns a picture with each module drawn as a square of whole pixels, with hard edges.
+    ///
+    /// - Parameter picture: The picture at one pixel for each module.
+    /// - Returns: The picture at ``pixelsPerModule`` pixels for each module.
+    private static func scaledUp(_ picture: CIImage) -> CIImage {
+        let scale = CGFloat(pixelsPerModule)
+        return picture.samplingNearest().transformed(by: CGAffineTransform(scaleX: scale, y: scale))
     }
 
     /// Returns a picture where each dark module is opaque black and everything else is clear.

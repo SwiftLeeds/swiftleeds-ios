@@ -29,8 +29,8 @@ struct BarcodePlateTests {
 
     /// The modules across the fixture's code with its quiet zone.
     ///
-    /// The code is 33 modules in version 4, and the quiet zone adds 4 on each side.
-    private static let modulesWithQuietZone = 41.0
+    /// The code is 29 modules in version 3, and the quiet zone adds 4 on each side.
+    private static let modulesWithQuietZone = 37.0
 
     /// How far into the code the middle of the quiet zone's innermost row sits.
     ///
@@ -41,6 +41,24 @@ struct BarcodePlateTests {
     ///
     /// It is counted in modules, to the middle of that center.
     private static let finderMarkOffset = 7.5
+
+    /// How far into the render the middle of the finder's one-module light ring sits.
+    ///
+    /// It is counted in modules, to the middle of the ring's leading side.
+    private static let finderLightRingOffset = 5.5
+
+    /// How far either side of the ring's middle the plate must show.
+    ///
+    /// It is counted in modules, and half the ring's width leaves its edges unchecked.
+    private static let finderLightRingHalfSpan = 0.25
+
+    /// Where the finder's edges lie along its center row.
+    ///
+    /// Each is a boundary between a black and a light module, counted in modules from the leading edge.
+    private static let finderEdgeOffsets = [4.0, 5.0, 6.0, 9.0, 10.0, 11.0]
+
+    /// The most pixels at one edge that may be neither plate nor black.
+    private static let mostBlendedPixelsPerEdge = 2
 
     /// The brightest channel, out of 255, that still counts as a black mark.
     ///
@@ -224,6 +242,59 @@ struct BarcodePlateTests {
         #expect(
             failing.isEmpty,
             "\(brand) \(appearance.name): \(summary), first drawn \(String(describing: shown))",
+        )
+    }
+
+    /// Returns the pixel position of a distance counted in modules.
+    ///
+    /// - Parameters:
+    ///   - modules: The distance from the leading or top edge, in modules.
+    ///   - pixels: The render the distance is measured in.
+    /// - Returns: The position, in whole pixels.
+    private static func position(ofModules modules: Double, in pixels: RGBAPixels) -> Int {
+        Int(modules * Double(pixels.width) / modulesWithQuietZone)
+    }
+
+    /// Returns whether a pixel is opaque black, within the tolerance of every channel.
+    ///
+    /// - Parameter pixel: The pixel drawn.
+    /// - Returns: Whether red, green and blue are each within ``channelTolerance`` of 0, and alpha is full.
+    private static func isBlack(_ pixel: RGBAPixels.Pixel) -> Bool {
+        pixel.alpha == UInt8.max && Int(max(pixel.red, pixel.green, pixel.blue)) <= channelTolerance
+    }
+
+    @Test(arguments: Brand.allCases, appearances)
+    func whenDrawn_shouldShowFinderLightRingAsPlate(brand: Brand, appearance: SystemAppearance) async throws {
+        let pixels = try await Self.renderedPixels(brand: brand, appearance: appearance)
+        let plate = Self.platePixel(of: brand, in: appearance)
+        let first = Self.position(ofModules: Self.finderLightRingOffset - Self.finderLightRingHalfSpan, in: pixels)
+        let last = Self.position(ofModules: Self.finderLightRingOffset + Self.finderLightRingHalfSpan, in: pixels)
+        let row = Self.position(ofModules: Self.finderMarkOffset, in: pixels)
+        let failing = (first...last).filter { !Self.isPlate(pixels.pixel(x: $0, y: row), plate) }
+        let shown = failing.first.map { pixels.pixel(x: $0, y: row) }
+        let summary = "\(failing.count) of \(last - first + 1) ring pixels miss the plate \(plate)"
+        #expect(
+            failing.isEmpty,
+            "\(brand) \(appearance.name): \(summary), first drawn \(String(describing: shown))",
+        )
+    }
+
+    @Test(arguments: Brand.allCases, appearances)
+    func whenDrawn_shouldBlendAtMostTwoPixelsPerEdge(brand: Brand, appearance: SystemAppearance) async throws {
+        let pixels = try await Self.renderedPixels(brand: brand, appearance: appearance)
+        let plate = Self.platePixel(of: brand, in: appearance)
+        let row = Self.position(ofModules: Self.finderMarkOffset, in: pixels)
+        let blended = Self.finderEdgeOffsets.map { edge in
+            let first = Self.position(ofModules: edge - 0.5, in: pixels)
+            let last = Self.position(ofModules: edge + 0.5, in: pixels)
+            return (first..<last).count { column in
+                let pixel = pixels.pixel(x: column, y: row)
+                return !Self.isPlate(pixel, plate) && !Self.isBlack(pixel)
+            }
+        }
+        #expect(
+            blended.allSatisfy { $0 <= Self.mostBlendedPixelsPerEdge },
+            "\(brand) \(appearance.name): blended pixels at each edge \(blended)",
         )
     }
 
