@@ -18,6 +18,21 @@ struct BarcodePlateTests {
         let row: Int
     }
 
+    /// One brand, appearance and kind of code to check the plate under.
+    struct PlateCase: Sendable, CustomTestStringConvertible {
+        /// The brand the barcode reads from its environment.
+        let brand: Brand
+
+        /// The appearance the host is drawn in.
+        let appearance: SystemAppearance
+
+        /// The kind of code drawn.
+        let fixture: BarcodePlateFixture
+
+        /// The name the test run shows for this case.
+        var testDescription: String { "\(brand) \(appearance.name) \(fixture)" }
+    }
+
     /// The reason a test could not read the barcode's render.
     private enum ProbeError: Error {
         /// The render never showed the code's marks.
@@ -32,10 +47,10 @@ struct BarcodePlateTests {
     /// The code is 29 modules in version 3, and the quiet zone adds 4 on each side.
     private static let modulesWithQuietZone = 37.0
 
-    /// How far into the code the middle of the quiet zone's innermost row sits.
+    /// How far inside the quiet zone's far edge the middle of its innermost row sits.
     ///
-    /// It is counted in modules.
-    private static let ringRowOffset = 3.5
+    /// It is counted in modules, so the row's middle sits that far short of the code's first mark.
+    private static let innermostRowInset = 0.5
 
     /// How far into the code the black center of the top-leading finder pattern sits.
     ///
@@ -71,9 +86,6 @@ struct BarcodePlateTests {
     /// How long to wait between two reads of the render.
     private static let pollInterval = Duration.milliseconds(20)
 
-    /// The side of the frame the barcode fills, in points.
-    private static let side: CGFloat = 220
-
     /// The number of pixels in one point of the render.
     private static let renderScale: CGFloat = 3
 
@@ -96,16 +108,28 @@ struct BarcodePlateTests {
         .darkIncreasedContrast,
     ]
 
+    /// Every brand under every appearance with every kind of code.
+    nonisolated private static let plateCases: [PlateCase] = Brand.allCases.flatMap { brand in
+        appearances.flatMap { appearance in
+            BarcodePlateFixture.allCases.map { PlateCase(brand: brand, appearance: appearance, fixture: $0) }
+        }
+    }
+
     /// Returns the pixels of a default barcode on a grouped surface, drawn on screen.
     ///
     /// - Parameters:
     ///   - brand: The brand the barcode reads from its environment.
     ///   - appearance: The appearance the host is drawn in.
+    ///   - fixture: The kind of code to draw. The default is the QR code.
     /// - Returns: The pixels of the render, at the render scale.
     /// - Throws: ``ProbeError/codeNeverDrawn`` when the code's marks never show in the render.
     ///   Also when the code, the render or the pixels cannot be made.
-    private static func renderedPixels(brand: Brand, appearance: SystemAppearance) async throws -> RGBAPixels {
-        try RGBAPixels(of: try await renderedImage(brand: brand, appearance: appearance))
+    private static func renderedPixels(
+        brand: Brand,
+        appearance: SystemAppearance,
+        fixture: BarcodePlateFixture = .qrCode,
+    ) async throws -> RGBAPixels {
+        try RGBAPixels(of: try await renderedImage(brand: brand, appearance: appearance, fixture: fixture))
     }
 
     /// Returns the picture of a default barcode on a grouped surface, drawn on screen.
@@ -113,19 +137,25 @@ struct BarcodePlateTests {
     /// - Parameters:
     ///   - brand: The brand the barcode reads from its environment.
     ///   - appearance: The appearance the host is drawn in.
+    ///   - fixture: The kind of code to draw. The default is the QR code.
     /// - Returns: The picture of the render, at the render scale.
     /// - Throws: ``ProbeError/codeNeverDrawn`` when the code's marks never show in the render.
     ///   Also when the code, the render or the pixels cannot be made.
-    private static func renderedImage(brand: Brand, appearance: SystemAppearance) async throws -> CGImage {
-        let view = Barcode(try QRCode(text), label: Text("Ticket QR code"))
-            .frame(width: side, height: side)
+    private static func renderedImage(
+        brand: Brand,
+        appearance: SystemAppearance,
+        fixture: BarcodePlateFixture = .qrCode,
+    ) async throws -> CGImage {
+        let size = fixture.frameSize
+        let view = Barcode(try fixture.makeContent(), label: Text("Code"))
+            .frame(width: size.width, height: size.height)
             .background(.groupedSurface)
             .environment(\.brand, brand)
         let host = UIHostingController(rootView: view.ignoresSafeArea())
         // Traits, not `EnvironmentValues`, because the environment cannot set Increase Contrast.
         host.traitOverrides.userInterfaceStyle = appearance.isLight ? .light : .dark
         host.traitOverrides.accessibilityContrast = appearance.withoutIncreasedContrast == nil ? .normal : .high
-        let frame = CGRect(x: 0, y: 0, width: side, height: side)
+        let frame = CGRect(origin: .zero, size: size)
         let window = (SceneFreeWindow() as any WindowMaking).makeWindow(frame: frame)
         window.rootViewController = host
         window.makeKeyAndVisible()
@@ -133,7 +163,7 @@ struct BarcodePlateTests {
         host.view.layoutIfNeeded()
         for _ in 0..<attempts {
             let image = try image(of: window)
-            if showsMarks(in: try RGBAPixels(of: image)) { return image }
+            if showsMarks(in: try RGBAPixels(of: image), of: fixture) { return image }
             try await Task.sleep(for: pollInterval)
         }
         throw ProbeError.codeNeverDrawn
@@ -170,35 +200,57 @@ struct BarcodePlateTests {
         return features.compactMap { ($0 as? CIQRCodeFeature)?.messageString }.first
     }
 
-    /// Returns whether the top-leading finder pattern's black center shows in a render.
+    /// Returns whether a module that is dark in the stored code is dark in a render.
     ///
-    /// - Parameter pixels: The render to read.
+    /// - Parameters:
+    ///   - pixels: The render to read.
+    ///   - fixture: The kind of code the render draws.
     /// - Returns: Whether the pixel there is black.
-    private static func showsMarks(in pixels: RGBAPixels) -> Bool {
-        let place = Int(finderMarkOffset * Double(pixels.width) / modulesWithQuietZone)
-        let pixel = pixels.pixel(x: place, y: place)
-        return pixel.alpha == UInt8.max && max(pixel.red, pixel.green, pixel.blue) <= drawnMarkCeiling
+    private static func showsMarks(in pixels: RGBAPixels, of fixture: BarcodePlateFixture) -> Bool {
+        let layout = fixture.layout
+        let column = Int(layout.darkColumn * Double(pixels.width) / Double(layout.modulesAcross))
+        let row = Int(layout.darkRow * Double(pixels.height) / Double(layout.modulesDown))
+        return isDark(pixels.pixel(x: column, y: row))
+    }
+
+    /// Returns whether a pixel is opaque and dark enough to be a mark.
+    ///
+    /// - Parameter pixel: The pixel drawn.
+    /// - Returns: Whether alpha is full and every color channel is at most ``drawnMarkCeiling``.
+    private static func isDark(_ pixel: RGBAPixels.Pixel) -> Bool {
+        pixel.alpha == UInt8.max && max(pixel.red, pixel.green, pixel.blue) <= drawnMarkCeiling
     }
 
     /// Returns the places where only the plate may show.
     ///
-    /// - Parameter pixels: The render to sample.
-    /// - Returns: Every pixel of the quiet zone's innermost row.
-    private static func plateSamples(in pixels: RGBAPixels) -> [Sample] {
+    /// - Parameters:
+    ///   - pixels: The render to sample.
+    ///   - fixture: The kind of code the render draws.
+    /// - Returns: Every pixel of the quiet zone's innermost row, inside the plate's rounded corners.
+    private static func plateSamples(in pixels: RGBAPixels, of fixture: BarcodePlateFixture) -> [Sample] {
         // This render blurs a one-module ring, so only the quiet zone's row can be read exactly.
-        let ringRow = Int(ringRowOffset * Double(pixels.width) / modulesWithQuietZone)
+        let layout = fixture.layout
+        let rowModules = Double(layout.quietZone) - innermostRowInset
+        let ringRow = Int(rowModules * Double(pixels.height) / Double(layout.modulesDown))
         let columns = cornerRadiusInPixels..<(pixels.width - cornerRadiusInPixels)
         return columns.map { Sample(column: $0, row: ringRow) }
     }
 
     /// Returns the pixel the plate has under an appearance.
     ///
+    /// The rule is written here, apart from the token the plate reads, so a wrong plate cannot
+    /// agree with its own expectation. The plate is the brand's surface in light mode. Only dark
+    /// mode at standard contrast uses the brand's secondary surface, also in light mode.
+    ///
     /// - Parameters:
     ///   - brand: The brand whose plate to read.
-    ///   - appearance: The appearance to resolve the plate under.
+    ///   - appearance: The appearance the plate is drawn in.
     /// - Returns: The plate as an opaque 8-bit pixel.
     private static func platePixel(of brand: Brand, in appearance: SystemAppearance) -> RGBAPixels.Pixel {
-        let resolved = Color(UIColor(brand.scannableSurface).resolvedColor(with: appearance.traits))
+        let isDarkAtStandardContrast = !appearance.isLight && appearance.withoutIncreasedContrast == nil
+        let source = isDarkAtStandardContrast ? brand.secondarySurface : brand.surface
+        let light = UITraitCollection(userInterfaceStyle: .light)
+        let resolved = Color(UIColor(source).resolvedColor(with: light))
             .resolve(in: EnvironmentValues())
         return RGBAPixels.Pixel(
             red: channel(resolved.red),
@@ -228,21 +280,32 @@ struct BarcodePlateTests {
             && abs(Int(pixel.blue) - Int(plate.blue)) <= channelTolerance
     }
 
-    @Test(arguments: Brand.allCases, appearances)
-    func whenDrawn_shouldShowScannableSurfaceThroughLightAreas(
-        brand: Brand,
-        appearance: SystemAppearance,
-    ) async throws {
-        let pixels = try await Self.renderedPixels(brand: brand, appearance: appearance)
+    @Test(arguments: plateCases)
+    func whenDrawn_shouldShowScannableSurfaceThroughLightAreas(plateCase: PlateCase) async throws {
+        let (brand, appearance, fixture) = (plateCase.brand, plateCase.appearance, plateCase.fixture)
+        let pixels = try await Self.renderedPixels(brand: brand, appearance: appearance, fixture: fixture)
         let plate = Self.platePixel(of: brand, in: appearance)
-        let samples = Self.plateSamples(in: pixels)
+        let samples = Self.plateSamples(in: pixels, of: fixture)
         let failing = samples.filter { !Self.isPlate(pixels.pixel(x: $0.column, y: $0.row), plate) }
         let shown = failing.first.map { pixels.pixel(x: $0.column, y: $0.row) }
         let summary = "\(failing.count) of \(samples.count) samples miss the plate \(plate)"
         #expect(
             failing.isEmpty,
-            "\(brand) \(appearance.name): \(summary), first drawn \(String(describing: shown))",
+            "\(brand) \(appearance.name) \(fixture): \(summary), first drawn \(String(describing: shown))",
         )
+    }
+
+    @Test(arguments: BarcodePlateFixture.allCases)
+    func whenStored_shouldBeDarkAtPollModule(fixture: BarcodePlateFixture) throws {
+        let image = try fixture.makeContent().cgImage
+        let layout = fixture.layout
+        let pixelsPerModule = image.width / layout.modulesAcross
+        #expect(image.width == layout.modulesAcross * pixelsPerModule, "\(fixture): width is not whole modules")
+        #expect(image.height == layout.modulesDown * pixelsPerModule, "\(fixture): height is not whole modules")
+        let pixels = try RGBAPixels(of: image)
+        let column = Int(layout.darkColumn * Double(pixelsPerModule))
+        let row = Int(layout.darkRow * Double(pixelsPerModule))
+        #expect(Self.isDark(pixels.pixel(x: column, y: row)), "\(fixture): the poll module is not dark")
     }
 
     /// Returns the pixel position of a distance counted in modules.
