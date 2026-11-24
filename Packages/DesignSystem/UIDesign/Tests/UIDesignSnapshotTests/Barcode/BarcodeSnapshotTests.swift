@@ -13,6 +13,18 @@ import UIKit
     /// The side of the barcode's frame, in points.
     private static let side: CGFloat = 220
 
+    /// The made-up text the Aztec code carries.
+    private static let aztecText = "LOCKER-0042"
+
+    /// The made-up text the PDF417 barcode carries.
+    private static let pdf417Text = "EXAMPLE PASS 0001"
+
+    /// The made-up text the Code 128 barcode carries.
+    private static let code128Text = "ABCD-0001"
+
+    /// The width of the frame a wide barcode is drawn in, in points.
+    private static let wideWidth: CGFloat = 320
+
     /// Returns a barcode in its own frame, with room around it, on a grouped surface.
     ///
     /// - Returns: The view to record, or the reason there is no code.
@@ -28,6 +40,59 @@ import UIKit
         case .failure(let error):
             Text("No code: \(String(describing: error))")
         }
+    }
+
+    /// Returns a barcode at a given width and its own height, on a grouped surface.
+    ///
+    /// The height follows the picture's shape, so the plate fits the code on both axes.
+    ///
+    /// - Parameters:
+    ///   - make: Creates the code to draw.
+    ///   - label: The accessibility label of the barcode.
+    ///   - width: The width of the frame, in points.
+    /// - Returns: The view to record, or the reason there is no code.
+    @ViewBuilder
+    private static func specimen(
+        of make: () throws -> any BarcodeContent,
+        label: LocalizedStringKey,
+        width: CGFloat,
+    ) -> some View {
+        switch Result(catching: make) {
+        case .success(let code):
+            Barcode(code, label: Text(label))
+                .frame(width: width, height: width * CGFloat(code.cgImage.height) / CGFloat(code.cgImage.width))
+                .padding(.lg)
+                .background(.groupedSurface)
+
+        case .failure(let error):
+            Text("No code: \(String(describing: error))")
+        }
+    }
+
+    @Test func whenAztecCodeIsDrawnOnGroupedSurface_shouldShowPlateBehindCode() {
+        assertContrastSnapshots(
+            of: Self.specimen(of: { try AztecCode(Self.aztecText) }, label: "Locker Aztec code", width: Self.side)
+        )
+    }
+
+    @Test func whenPDF417BarcodeIsDrawnOnGroupedSurface_shouldShowPlateBehindCode() {
+        assertContrastSnapshots(
+            of: Self.specimen(
+                of: { try PDF417Barcode(Self.pdf417Text) },
+                label: "Pass PDF417 barcode",
+                width: Self.wideWidth,
+            )
+        )
+    }
+
+    @Test func whenCode128BarcodeIsDrawnOnGroupedSurface_shouldShowPlateBehindCode() {
+        assertContrastSnapshots(
+            of: Self.specimen(
+                of: { try Code128Barcode(Self.code128Text) },
+                label: "Code 128 barcode",
+                width: Self.wideWidth,
+            )
+        )
     }
 
     @Test func whenDrawnOnGroupedSurface_shouldDrawCodeOnRoundedPlate() {
