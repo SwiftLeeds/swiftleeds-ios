@@ -3,12 +3,11 @@ import CoreGraphics
 import CoreImage
 import CoreImage.CIFilterBuiltins
 import Foundation
-import SwiftUI
 
 /// A QR code that carries a piece of text.
 ///
 /// Draw it with ``Barcode``.
-public struct QRCode: Equatable, Hashable, Sendable {
+public struct QRCode: BarcodeContent {
     /// The reason text does not become a code.
     public enum ParsingError: Error, Equatable, Sendable {
         /// The text is empty.
@@ -38,7 +37,7 @@ public struct QRCode: Equatable, Hashable, Sendable {
     private let text: String
 
     /// The picture of the code.
-    fileprivate let image: CGImage
+    public let cgImage: CGImage
 
     /// Creates a code that carries the given text.
     ///
@@ -59,7 +58,7 @@ public struct QRCode: Equatable, Hashable, Sendable {
             throw .notDrawn
         }
         self.text = text
-        self.image = image
+        self.cgImage = image
     }
 
     /// Checks that text is not empty and fits in a code.
@@ -91,21 +90,6 @@ public struct QRCode: Equatable, Hashable, Sendable {
     /// Hashes the text the code carries.
     public func hash(into hasher: inout Hasher) {
         hasher.combine(text)
-    }
-}
-
-extension Image {
-    /// Creates an image that draws a QR code at one pixel for each module.
-    ///
-    /// ```swift
-    /// Image(code, label: Text("Ticket QR code"))
-    /// ```
-    ///
-    /// - Parameters:
-    ///   - code: The code to draw.
-    ///   - label: The label VoiceOver reads for the image.
-    package init(_ code: QRCode, label: Text) {
-        self.init(code.image, scale: 1, label: label)
     }
 }
 #endif

@@ -40,7 +40,7 @@ struct QRCodeTests {
     /// - Returns: The rendered picture.
     /// - Throws: When the renderer draws no picture.
     private static func render(_ code: QRCode) throws -> CGImage {
-        let content = Image(code, label: Text("Test code"))
+        let content = Image(code.cgImage, scale: 1, label: Text("Test code"))
             .resizable()
             .interpolation(.none)
             .frame(width: drawnSide, height: drawnSide)
@@ -56,7 +56,7 @@ struct QRCodeTests {
     /// - Returns: The rendered picture, with alpha.
     /// - Throws: When the renderer draws no picture.
     private static func renderWithoutPlate(_ code: QRCode) throws -> CGImage {
-        let content = Image(code, label: Text("Test code"))
+        let content = Image(code.cgImage, scale: 1, label: Text("Test code"))
             .resizable()
             .interpolation(.none)
             .frame(width: drawnSide, height: drawnSide)

@@ -11,7 +11,7 @@ extension View {
     ///
     /// ```swift
     /// VStack {
-    ///     Barcode(code, label: Text("Ticket QR code"))
+    ///     Barcode(code, label: Text("Check-in QR code"))
     /// }
     /// .barcodeStyle(.automatic)
     /// ```

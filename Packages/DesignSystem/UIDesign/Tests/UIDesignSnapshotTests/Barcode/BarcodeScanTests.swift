@@ -58,6 +58,39 @@ struct BarcodeScanTests {
         return try RGBAPixels(of: image)
     }
 
+    /// Returns the pixel at the center of one module of a rendered picture.
+    ///
+    /// - Parameters:
+    ///   - pixels: The rendered picture, split into equal modules.
+    ///   - column: The module's column, from the left.
+    ///   - row: The module's row, from the top.
+    /// - Returns: The pixel at the module's center.
+    private static func centerPixel(of pixels: RGBAPixels, column: Int, row: Int) -> RGBAPixels.Pixel {
+        let module = pixels.width / CheckerBarcodeContent.modulesAcross
+        let halfModule = module / 2
+        return pixels.pixel(x: column * module + halfModule, y: row * module + halfModule)
+    }
+
+    @Test
+    func whenContentIsCustom_shouldDrawItsPixels() throws {
+        let view = Barcode(try CheckerBarcodeContent(), label: Text("Check-in QR code"))
+            .barcodeStyle(ContentOnlyBarcodeStyle())
+            .frame(width: Self.side, height: Self.side)
+        let renderer = ImageRenderer(content: view)
+        renderer.scale = Self.renderScale
+        let pixels = try RGBAPixels(of: try #require(renderer.cgImage))
+        let topLeft = Self.centerPixel(of: pixels, column: 0, row: 0)
+        let topRight = Self.centerPixel(of: pixels, column: 1, row: 0)
+        let bottomLeft = Self.centerPixel(of: pixels, column: 0, row: 1)
+        let bottomRight = Self.centerPixel(of: pixels, column: 1, row: 1)
+        #expect(topLeft.alpha >= Self.opaqueFloor)
+        #expect(max(topLeft.red, topLeft.green, topLeft.blue) <= Self.blackCeiling)
+        #expect(topRight.alpha <= Self.clearTolerance)
+        #expect(bottomLeft.alpha <= Self.clearTolerance)
+        #expect(bottomRight.alpha >= Self.opaqueFloor)
+        #expect(max(bottomRight.red, bottomRight.green, bottomRight.blue) <= Self.blackCeiling)
+    }
+
     @Test
     func whenScaledUp_shouldDrawOnlyOpaqueBlackOrClearPixels() throws {
         let pixels = try renderedPixels()

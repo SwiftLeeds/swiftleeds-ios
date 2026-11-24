@@ -1,13 +1,13 @@
 #if canImport(CoreImage)
 import SwiftUI
 
-/// A view that draws a QR code for a scanner to read.
+/// A view that draws a code for a scanner to read.
 ///
 /// A barcode is essential content, so give it a label that names what it is. It does not
 /// scale with the text size, and it ignores Smart Invert. The caller's frame sets its size.
 ///
 /// ```swift
-/// Barcode(code, label: Text("Ticket QR code"))
+/// Barcode(code, label: Text("Check-in QR code"))
 ///     .frame(width: 220, height: 220)
 /// ```
 ///
@@ -32,23 +32,23 @@ public struct Barcode: View {
     /// The current barcode style.
     @Environment(\.barcodeStyle) private var style
 
-    /// The code to draw.
-    private let code: QRCode
+    /// The picture of the code to draw.
+    private let picture: CGImage
 
     /// The label VoiceOver reads for the barcode.
     private let label: Text
 
-    /// Creates a barcode that draws a QR code, with a label for VoiceOver.
+    /// Creates a barcode that draws a code, with a label for VoiceOver.
     ///
     /// ```swift
-    /// Barcode(code, label: Text("Ticket QR code"))
+    /// Barcode(code, label: Text("Check-in QR code"))
     /// ```
     ///
     /// - Parameters:
     ///   - code: The code to draw.
     ///   - label: The label VoiceOver reads for the barcode.
-    public init(_ code: QRCode, label: Text) {
-        self.code = code
+    public init(_ code: some BarcodeContent, label: Text) {
+        picture = code.cgImage
         self.label = label
     }
 
@@ -61,7 +61,7 @@ public struct Barcode: View {
     /// The properties handed to the current barcode style.
     private var configuration: BarcodeStyleConfiguration {
         BarcodeStyleConfiguration(
-            content: Image(code, label: label)
+            content: Image(picture, scale: 1, label: label)
                 .resizable()
                 .interpolation(.none)
                 .scaledToFit()
@@ -93,7 +93,7 @@ extension Barcode {
         Group {
             switch Result(catching: { try QRCode(previewText) }) {
             case .success(let code):
-                Barcode(code, label: Text("Ticket QR code"))
+                Barcode(code, label: Text("Check-in QR code"))
 
             case .failure(let error):
                 Text("No code: \(String(describing: error))")
