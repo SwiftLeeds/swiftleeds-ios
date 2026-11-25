@@ -6,7 +6,8 @@ import Foundation
 
 /// An Aztec code that carries a line of text, drawn as a square with a bullseye in the middle.
 ///
-/// Draw it with ``Barcode``.
+/// Draw it with ``Barcode``. The picture includes the code's quiet zone. Each module is a whole
+/// number of pixels, so the view can scale it up without blurring the edges.
 ///
 /// ```swift
 /// let code = try AztecCode("LOCKER-0042")

@@ -6,7 +6,8 @@ import Foundation
 
 /// A PDF417 barcode that carries a line of text, drawn as wide, stacked rows.
 ///
-/// Draw it with ``Barcode``.
+/// Draw it with ``Barcode``. The picture includes the code's quiet zone. Each module is a whole
+/// number of pixels, so the view can scale it up without blurring the edges.
 ///
 /// ```swift
 /// let code = try PDF417Barcode("EXAMPLE PASS 0001")

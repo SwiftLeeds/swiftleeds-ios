@@ -6,7 +6,8 @@ import Foundation
 
 /// A QR code that carries a piece of text.
 ///
-/// Draw it with ``Barcode``.
+/// Draw it with ``Barcode``. The picture includes the code's quiet zone. Each module is a whole
+/// number of pixels, so the view can scale it up without blurring the edges.
 public struct QRCode: BarcodeContent {
     /// The reason text does not become a code.
     public enum ParsingError: Error, Equatable, Sendable {

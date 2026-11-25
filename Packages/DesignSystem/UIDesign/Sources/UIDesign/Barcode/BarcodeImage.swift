@@ -1,6 +1,7 @@
 #if canImport(CoreImage)
 import CoreGraphics
 import CoreImage
+import CoreImage.CIFilterBuiltins
 
 /// The drawing steps every barcode shares, from the generator's picture to a rendered image.
 enum BarcodeImage {
@@ -28,6 +29,11 @@ enum BarcodeImage {
 
     /// The fewest pixels the image spends on each module.
     private static let fewestPixelsPerModule = 1
+
+    /// The number of tones a supplied image is merged into before the cut.
+    ///
+    /// It merges faint noise into one tone, so a flat area is not split into marks.
+    private static let toneLevels: Float = 16
 
     /// Returns a generated code as an image with alpha, at most ten pixels for each module.
     ///
@@ -59,12 +65,51 @@ enum BarcodeImage {
         return min(pixelsPerModule, max(fewestPixelsPerModule, longerSideCap / longerSide))
     }
 
+    /// Returns an image made elsewhere as opaque black marks on clear, at its own size.
+    ///
+    /// Each pixel is judged light or dark by the picture's own tones, so a code in any colors
+    /// gives marks. The image is not scaled and gets no quiet zone. Faint noise is merged into
+    /// one tone first, so a flat image gives no marks.
+    ///
+    /// - Parameter image: The image to read. A clear pixel counts as light.
+    /// - Returns: The marks, or `nil` when CoreImage draws none.
+    static func thresholded(_ image: CGImage) -> CGImage? {
+        let source = CIImage(cgImage: image)
+        guard let tones = posterized(backedWithWhite(source)) else { return nil }
+        let filter = CIFilter.colorThresholdOtsu()
+        filter.inputImage = tones
+        guard let blackOnWhite = filter.outputImage else { return nil }
+        let marks = blackModulesOnClear(blackOnWhite)
+        return context.createCGImage(marks, from: marks.extent)
+    }
+
+    /// Returns a picture backed with opaque white, so a clear pixel counts as light.
+    ///
+    /// - Parameter picture: The picture to back.
+    /// - Returns: The picture over white, cropped to the picture's extent.
+    private static func backedWithWhite(_ picture: CIImage) -> CIImage {
+        picture.composited(over: CIImage(color: .white).cropped(to: picture.extent))
+    }
+
+    /// Returns a picture with its tones merged into a few levels.
+    ///
+    /// Faint noise in a flat area falls into one tone, so the cut finds no marks there.
+    ///
+    /// - Parameter tones: The picture to merge.
+    /// - Returns: The picture at ``toneLevels`` levels, or `nil` when CoreImage draws none.
+    private static func posterized(_ tones: CIImage) -> CIImage? {
+        let filter = CIFilter.colorPosterize()
+        filter.inputImage = tones
+        filter.levels = toneLevels
+        return filter.outputImage
+    }
+
     /// Returns a picture where each dark module is opaque black and everything else is clear.
     ///
-    /// - Parameter generated: The generator's black on white picture.
+    /// - Parameter blackOnWhite: A black on white picture, from the generator or a threshold.
     /// - Returns: The picture with the white turned clear.
-    private static func blackModulesOnClear(_ generated: CIImage) -> CIImage {
-        let inverted = generated.applyingFilter("CIColorInvert")
+    private static func blackModulesOnClear(_ blackOnWhite: CIImage) -> CIImage {
+        let inverted = blackOnWhite.applyingFilter("CIColorInvert")
         let masked = inverted.applyingFilter("CIMaskToAlpha")
         return masked.applyingFilter(
             "CIColorMatrix",
