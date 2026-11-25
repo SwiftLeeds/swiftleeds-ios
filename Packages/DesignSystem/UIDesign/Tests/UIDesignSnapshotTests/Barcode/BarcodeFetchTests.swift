@@ -35,9 +35,6 @@ struct BarcodeFetchTests {
     /// The word the test style draws beside the content.
     private static let styleWord = "Styled"
 
-    /// The text the code carries, made up.
-    private static let text = "ti_ExampleTicket0000000000"
-
     /// Returns a barcode in the given phase, with a placeholder and a fallback of its own.
     ///
     /// - Parameter phase: The phase of the load to draw.
@@ -57,7 +54,7 @@ struct BarcodeFetchTests {
     /// - Returns: The success phase.
     /// - Throws: When the code, its image or its marks cannot be made.
     private static func successPhase() throws -> BarcodeLoadingPhase {
-        .success(try SuppliedBarcodeImage(LightBlueCodeImage.make(carrying: text)))
+        .success(try SuppliedBarcodeImage(LightBlueCodeImage.ticket))
     }
 
     @Test

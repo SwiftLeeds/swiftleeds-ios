@@ -38,10 +38,10 @@ struct BarcodeScanTests {
     /// - Returns: The pixels of the render, at the render scale.
     /// - Throws: When the code, the render or the pixels cannot be made.
     private func renderedPixels(
-        of fixture: BarcodePlateFixture,
+        of fixture: BarcodeFixture,
         layoutDirection: LayoutDirection = .leftToRight,
     ) throws -> RGBAPixels {
-        let code = try fixture.makeContent()
+        let code = try fixture.content
         let view = Barcode(code, label: Text("Code"))
             .barcodeStyle(ContentOnlyBarcodeStyle())
             .frame(width: fixture.frameSize.width, height: fixture.frameSize.height)
@@ -97,8 +97,8 @@ struct BarcodeScanTests {
         #expect(bottomRight.isOpaqueBlack)
     }
 
-    @Test(arguments: BarcodePlateFixture.allCases)
-    func whenScaledUp_shouldDrawOnlyOpaqueBlackOrClearPixels(fixture: BarcodePlateFixture) throws {
+    @Test(arguments: BarcodeFixture.allCases)
+    func whenScaledUp_shouldDrawOnlyOpaqueBlackOrClearPixels(fixture: BarcodeFixture) throws {
         let pixels = try renderedPixels(of: fixture)
         let failingCount = pixels.count(columns: pixels.columns, rows: pixels.rows) { pixel in
             !(pixel.isClear || pixel.isOpaqueBlack)
@@ -106,8 +106,8 @@ struct BarcodeScanTests {
         #expect(failingCount == 0, "\(failingCount) pixels are neither opaque black nor clear")
     }
 
-    @Test(arguments: BarcodePlateFixture.allCases)
-    func whenLayoutIsRightToLeft_shouldDrawSamePixelsAsLeftToRight(fixture: BarcodePlateFixture) throws {
+    @Test(arguments: BarcodeFixture.allCases)
+    func whenLayoutIsRightToLeft_shouldDrawSamePixelsAsLeftToRight(fixture: BarcodeFixture) throws {
         let leftToRight = try renderedPixels(of: fixture, layoutDirection: .leftToRight)
         let rightToLeft = try renderedPixels(of: fixture, layoutDirection: .rightToLeft)
         let asymmetry = Self.mirrorDifferenceCount(of: leftToRight)
@@ -122,8 +122,8 @@ struct BarcodeScanTests {
         #expect(differingCount == 0, "\(differingCount) pixels differ between the two directions")
     }
 
-    @Test(arguments: BarcodePlateFixture.allCases)
-    func whenFramed_shouldFillFrameWithCode(fixture: BarcodePlateFixture) throws {
+    @Test(arguments: BarcodeFixture.allCases)
+    func whenFramed_shouldFillFrameWithCode(fixture: BarcodeFixture) throws {
         let pixels = try renderedPixels(of: fixture)
         let opaqueColumns = pixels.columns.filter { column in
             !pixels.isClear(columns: column..<(column + 1), rows: pixels.rows)

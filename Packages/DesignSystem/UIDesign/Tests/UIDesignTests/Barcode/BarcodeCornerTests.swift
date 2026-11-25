@@ -83,9 +83,9 @@ struct BarcodeCornerTests {
         }
     }
 
-    @Test(arguments: BarcodeFixture.allCases)
+    @Test(arguments: BarcodeFixture.generated)
     func whenDrawnAtTypicalFrame_shouldKeepEveryMarkClearOfRoundedCorner(fixture: BarcodeFixture) throws {
-        let code = try fixture.makeContent()
+        let code = try fixture.content
         let plated = try pixels(
             of: Barcode(code, label: Text("Code"))
                 .frame(width: fixture.frameWidth, height: fixture.frameHeight)

@@ -18,7 +18,7 @@ struct BarcodePlateTests {
         let appearance: SystemAppearance
 
         /// The kind of code drawn.
-        let fixture: BarcodePlateFixture
+        let fixture: BarcodeFixture
 
         /// The name the test run shows for this case.
         var testDescription: String { "\(brand) \(appearance.name) \(fixture)" }
@@ -102,7 +102,7 @@ struct BarcodePlateTests {
     /// Every brand under every appearance with every kind of code.
     nonisolated private static let plateCases: [PlateCase] = Brand.allCases.flatMap { brand in
         appearances.flatMap { appearance in
-            BarcodePlateFixture.allCases.map { PlateCase(brand: brand, appearance: appearance, fixture: $0) }
+            BarcodeFixture.allCases.map { PlateCase(brand: brand, appearance: appearance, fixture: $0) }
         }
     }
 
@@ -118,7 +118,7 @@ struct BarcodePlateTests {
     private static func renderedPixels(
         brand: Brand,
         appearance: SystemAppearance,
-        fixture: BarcodePlateFixture = .qrCode,
+        fixture: BarcodeFixture = .qrCode,
     ) async throws -> RGBAPixels {
         try RGBAPixels(of: try await renderedImage(brand: brand, appearance: appearance, fixture: fixture))
     }
@@ -135,10 +135,10 @@ struct BarcodePlateTests {
     private static func renderedImage(
         brand: Brand,
         appearance: SystemAppearance,
-        fixture: BarcodePlateFixture = .qrCode,
+        fixture: BarcodeFixture = .qrCode,
     ) async throws -> CGImage {
         let size = fixture.frameSize
-        let view = Barcode(try fixture.makeContent(), label: Text("Code"))
+        let view = Barcode(try fixture.content, label: Text("Code"))
             .frame(width: size.width, height: size.height)
             .background(.groupedSurface)
             .environment(\.brand, brand)
@@ -180,7 +180,7 @@ struct BarcodePlateTests {
     ///   - pixels: The render to read.
     ///   - fixture: The kind of code the render draws.
     /// - Returns: Whether the pixel there is black.
-    private static func showsMarks(in pixels: RGBAPixels, of fixture: BarcodePlateFixture) -> Bool {
+    private static func showsMarks(in pixels: RGBAPixels, of fixture: BarcodeFixture) -> Bool {
         let layout = fixture.layout
         let column = Int(layout.darkColumn * Double(pixels.width) / Double(layout.modulesAcross))
         let row = Int(layout.darkRow * Double(pixels.height) / Double(layout.modulesDown))
@@ -201,7 +201,7 @@ struct BarcodePlateTests {
     ///   - pixels: The render to sample.
     ///   - fixture: The kind of code the render draws.
     /// - Returns: Every pixel of the quiet zone's innermost row, inside the plate's rounded corners.
-    private static func plateSamples(in pixels: RGBAPixels, of fixture: BarcodePlateFixture) -> [PixelPosition] {
+    private static func plateSamples(in pixels: RGBAPixels, of fixture: BarcodeFixture) -> [PixelPosition] {
         // This render blurs a one-module ring, so only the quiet zone's row can be read exactly.
         let layout = fixture.layout
         let rowModules = Double(layout.quietZone) - innermostRowInset
@@ -269,9 +269,9 @@ struct BarcodePlateTests {
         )
     }
 
-    @Test(arguments: BarcodePlateFixture.allCases)
-    func whenStored_shouldBeDarkAtPollModule(fixture: BarcodePlateFixture) throws {
-        let image = try fixture.makeContent().cgImage
+    @Test(arguments: BarcodeFixture.allCases)
+    func whenStored_shouldBeDarkAtPollModule(fixture: BarcodeFixture) throws {
+        let image = try fixture.content.cgImage
         let layout = fixture.layout
         let pixelsPerModule = image.width / layout.modulesAcross
         #expect(image.width == layout.modulesAcross * pixelsPerModule, "\(fixture): width is not whole modules")

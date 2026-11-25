@@ -1,12 +1,11 @@
 #if os(iOS)
 import CoreGraphics
-import UIDesign
 import UIDesignTestSupport
 
-/// A kind of code the plate tests draw, with the made-up text it carries and where to read its render.
+/// Where the plate tests read each code's render.
 ///
 /// Every distance is counted in modules of the stored picture, which spends ten pixels on each.
-enum BarcodePlateFixture: CaseIterable, Sendable {
+extension BarcodeFixture {
     /// Where to read a code's render, counted in modules of the stored picture.
     struct Layout: Sendable {
         /// The modules across the stored picture, quiet zone included.
@@ -23,38 +22,6 @@ enum BarcodePlateFixture: CaseIterable, Sendable {
 
         /// The distance from the top edge to a module that is dark in the stored picture.
         let darkRow: Double
-    }
-
-    /// A QR code.
-    case qrCode
-
-    /// A QR code supplied as an image, drawn light blue on white.
-    case suppliedLightBlueQRCode
-
-    /// An Aztec code.
-    case aztecCode
-
-    /// A PDF417 barcode.
-    case pdf417Barcode
-
-    /// A Code 128 barcode.
-    case code128Barcode
-
-    /// The side of a square frame, in points.
-    private static let squareSide: CGFloat = 220
-
-    /// The width of a wide frame, in points.
-    private static let wideWidth: CGFloat = 320
-
-    /// The made-up text the code carries.
-    var text: String {
-        switch self {
-        case .qrCode: "ti_ExampleTicket0000000000"
-        case .suppliedLightBlueQRCode: "ti_ExampleTicket0000000000"
-        case .aztecCode: "LOCKER-0042"
-        case .pdf417Barcode: "EXAMPLE PASS 0001"
-        case .code128Barcode: "ABCD-0001"
-        }
     }
 
     /// The sizes of the stored picture and the module the render poll reads.
@@ -90,29 +57,7 @@ enum BarcodePlateFixture: CaseIterable, Sendable {
     ///
     /// The width is fixed, and the height follows the code's aspect, so the plate fits the code.
     var frameSize: CGSize {
-        let width =
-            switch self {
-            case .qrCode: Self.squareSide
-            case .suppliedLightBlueQRCode: Self.squareSide
-            case .aztecCode: Self.squareSide
-            case .pdf417Barcode: Self.wideWidth
-            case .code128Barcode: Self.wideWidth
-            }
-        return CGSize(width: width, height: width * CGFloat(layout.modulesDown) / CGFloat(layout.modulesAcross))
-    }
-
-    /// Creates the code for this fixture's text.
-    ///
-    /// - Returns: The code.
-    /// - Throws: When the text cannot be encoded.
-    func makeContent() throws -> any BarcodeContent {
-        switch self {
-        case .qrCode: try QRCode(text)
-        case .suppliedLightBlueQRCode: try SuppliedBarcodeImage(LightBlueCodeImage.make(carrying: text))
-        case .aztecCode: try AztecCode(text)
-        case .pdf417Barcode: try PDF417Barcode(text)
-        case .code128Barcode: try Code128Barcode(text)
-        }
+        CGSize(width: frameWidth, height: frameWidth * CGFloat(layout.modulesDown) / CGFloat(layout.modulesAcross))
     }
 }
 #endif

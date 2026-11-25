@@ -129,18 +129,18 @@ struct BarcodePlateScanTests {
         #expect(BarcodeReader.payload(of: image, as: fixture.symbology) == fixture.text)
     }
 
-    @Test(arguments: Brand.allCases, BarcodeFixture.allCases)
+    @Test(arguments: Brand.allCases, BarcodeFixture.generated)
     func whenDrawnWithDefaultStyle_shouldScanBackAsCodeText(brand: Brand, fixture: BarcodeFixture) throws {
-        let code = try fixture.makeContent()
+        let code = try fixture.content
         let view = Barcode(code, label: Text("Code"))
             .frame(width: fixture.frameWidth, height: fixture.frameHeight)
             .environment(\.brand, brand)
         try expectScan(of: view, fixture: fixture, code: code, plate: brand.surface)
     }
 
-    @Test(arguments: Brand.allCases, BarcodeFixture.allCases)
+    @Test(arguments: Brand.allCases, BarcodeFixture.generated)
     func whenDrawnOnSecondarySurface_shouldScanBackAsCodeText(brand: Brand, fixture: BarcodeFixture) throws {
-        let code = try fixture.makeContent()
+        let code = try fixture.content
         let plate = Color(Self.resolvedLight(brand.secondarySurface))
         let view = Image(code.cgImage, scale: 1, label: Text("Code"))
             .resizable()

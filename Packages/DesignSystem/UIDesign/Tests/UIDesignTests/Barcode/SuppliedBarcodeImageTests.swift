@@ -138,7 +138,7 @@ struct SuppliedBarcodeImageTests {
     #if os(macOS)
     @Test
     func whenLightBlueCodeIsSupplied_shouldScanBackAsCodeText() throws {
-        let source = try LightBlueCodeImage.make(carrying: Self.codeText)
+        let source = try LightBlueCodeImage.ticket
         let sut = try SuppliedBarcodeImage(source)
         let text = BarcodeReader.payload(of: sut.cgImage, as: .qr)
         #expect(text == Self.codeText)
