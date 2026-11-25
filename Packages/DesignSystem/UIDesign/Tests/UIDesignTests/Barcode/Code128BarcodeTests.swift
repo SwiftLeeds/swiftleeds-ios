@@ -38,32 +38,6 @@ struct Code128BarcodeTests {
     /// The pixels the stored picture spends on each module.
     private static let storedPixelsPerModule = 10
 
-    /// Returns whether every pixel in a block of the picture is clear.
-    ///
-    /// - Parameters:
-    ///   - pixels: The stored picture.
-    ///   - columns: The columns of the block.
-    ///   - rows: The rows of the block.
-    /// - Returns: `true` when every pixel in the block is clear.
-    private static func isClear(_ pixels: RGBAPixels, columns: Range<Int>, rows: Range<Int>) -> Bool {
-        rows.allSatisfy { row in
-            columns.allSatisfy { column in pixels.pixel(at: PixelPosition(column: column, row: row)).isClear }
-        }
-    }
-
-    /// Returns whether any pixel in a block of the picture is opaque black.
-    ///
-    /// - Parameters:
-    ///   - pixels: The stored picture.
-    ///   - columns: The columns of the block.
-    ///   - rows: The rows of the block.
-    /// - Returns: `true` when at least one pixel in the block is opaque black.
-    private static func hasBlack(_ pixels: RGBAPixels, columns: Range<Int>, rows: Range<Int>) -> Bool {
-        rows.contains { row in
-            columns.contains { column in pixels.pixel(at: PixelPosition(column: column, row: row)).isOpaqueBlack }
-        }
-    }
-
     @Test
     func whenTextIsEncoded_shouldHaveTenClearModulesEachSide() throws {
         let sut = try Code128Barcode(Self.fixtureText)
@@ -71,19 +45,19 @@ struct Code128BarcodeTests {
         let zone = Self.quietZoneModules * Self.storedPixelsPerModule
         let width = pixels.width
         let height = pixels.height
-        let allColumns = 0..<width
-        let allRows = 0..<height
+        let allColumns = pixels.columns
+        let allRows = pixels.rows
         let left = 0..<zone
         let right = (width - zone)..<width
-        #expect(Self.isClear(pixels, columns: left, rows: allRows), "The left zone is not clear")
-        #expect(Self.isClear(pixels, columns: right, rows: allRows), "The right zone is not clear")
-        #expect(Self.isClear(pixels, columns: allColumns, rows: 0..<zone), "The top zone is not clear")
-        #expect(Self.isClear(pixels, columns: allColumns, rows: (height - zone)..<height), "The bottom is not clear")
+        #expect(pixels.isClear(columns: left, rows: allRows), "The left zone is not clear")
+        #expect(pixels.isClear(columns: right, rows: allRows), "The right zone is not clear")
+        #expect(pixels.isClear(columns: allColumns, rows: 0..<zone), "The top zone is not clear")
+        #expect(pixels.isClear(columns: allColumns, rows: (height - zone)..<height), "The bottom is not clear")
         let moduleSpan = Self.storedPixelsPerModule
         let innerLeft = zone..<(zone + moduleSpan)
         let innerRight = (width - zone - moduleSpan)..<(width - zone)
-        #expect(Self.hasBlack(pixels, columns: innerLeft, rows: allRows), "No bar starts at the left zone's edge")
-        #expect(Self.hasBlack(pixels, columns: innerRight, rows: allRows), "No bar ends at the right zone's edge")
+        #expect(pixels.hasOpaqueBlack(columns: innerLeft, rows: allRows), "No bar starts at the left zone's edge")
+        #expect(pixels.hasOpaqueBlack(columns: innerRight, rows: allRows), "No bar ends at the right zone's edge")
     }
 
     @Test

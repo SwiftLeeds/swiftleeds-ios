@@ -34,32 +34,6 @@ struct AztecCodeTests {
         String(repeating: "\u{E9}", count: count)
     }
 
-    /// Returns whether every pixel in a block of the picture is clear.
-    ///
-    /// - Parameters:
-    ///   - pixels: The stored picture.
-    ///   - columns: The columns of the block.
-    ///   - rows: The rows of the block.
-    /// - Returns: `true` when every pixel in the block is clear.
-    private static func isClear(_ pixels: RGBAPixels, columns: Range<Int>, rows: Range<Int>) -> Bool {
-        rows.allSatisfy { row in
-            columns.allSatisfy { column in pixels.pixel(at: PixelPosition(column: column, row: row)).isClear }
-        }
-    }
-
-    /// Returns whether any pixel in a block of the picture is opaque black.
-    ///
-    /// - Parameters:
-    ///   - pixels: The stored picture.
-    ///   - columns: The columns of the block.
-    ///   - rows: The rows of the block.
-    /// - Returns: `true` when at least one pixel in the block is opaque black.
-    private static func hasBlack(_ pixels: RGBAPixels, columns: Range<Int>, rows: Range<Int>) -> Bool {
-        rows.contains { row in
-            columns.contains { column in pixels.pixel(at: PixelPosition(column: column, row: row)).isOpaqueBlack }
-        }
-    }
-
     @Test(arguments: quietZoneTexts)
     func whenTextIsEncoded_shouldHaveTwoClearModulesEachSide(text: String) throws {
         let sut = try AztecCode(text)
@@ -69,20 +43,20 @@ struct AztecCodeTests {
         let width = pixels.width
         let height = pixels.height
         #expect(width.isMultiple(of: moduleSpan), "The picture is not at ten pixels for each module")
-        let allColumns = 0..<width
-        let allRows = 0..<height
-        #expect(Self.isClear(pixels, columns: 0..<zone, rows: allRows), "The left zone is not clear")
-        #expect(Self.isClear(pixels, columns: (width - zone)..<width, rows: allRows), "The right zone is not clear")
-        #expect(Self.isClear(pixels, columns: allColumns, rows: 0..<zone), "The top zone is not clear")
-        #expect(Self.isClear(pixels, columns: allColumns, rows: (height - zone)..<height), "The bottom is not clear")
+        let allColumns = pixels.columns
+        let allRows = pixels.rows
+        #expect(pixels.isClear(columns: 0..<zone, rows: allRows), "The left zone is not clear")
+        #expect(pixels.isClear(columns: (width - zone)..<width, rows: allRows), "The right zone is not clear")
+        #expect(pixels.isClear(columns: allColumns, rows: 0..<zone), "The top zone is not clear")
+        #expect(pixels.isClear(columns: allColumns, rows: (height - zone)..<height), "The bottom is not clear")
         let innerLeft = zone..<(zone + moduleSpan)
         let innerRight = (width - zone - moduleSpan)..<(width - zone)
         let innerTop = zone..<(zone + moduleSpan)
         let innerBottom = (height - zone - moduleSpan)..<(height - zone)
-        #expect(Self.hasBlack(pixels, columns: innerLeft, rows: allRows), "No mark just inside the left zone")
-        #expect(Self.hasBlack(pixels, columns: innerRight, rows: allRows), "No mark just inside the right zone")
-        #expect(Self.hasBlack(pixels, columns: allColumns, rows: innerTop), "No mark just inside the top zone")
-        #expect(Self.hasBlack(pixels, columns: allColumns, rows: innerBottom), "No mark just inside the bottom zone")
+        #expect(pixels.hasOpaqueBlack(columns: innerLeft, rows: allRows), "No mark just inside the left zone")
+        #expect(pixels.hasOpaqueBlack(columns: innerRight, rows: allRows), "No mark just inside the right zone")
+        #expect(pixels.hasOpaqueBlack(columns: allColumns, rows: innerTop), "No mark just inside the top zone")
+        #expect(pixels.hasOpaqueBlack(columns: allColumns, rows: innerBottom), "No mark just inside the bottom zone")
     }
 
     @Test
