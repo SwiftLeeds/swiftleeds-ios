@@ -1,4 +1,5 @@
 #if os(iOS)
+import QuartzCore
 import SwiftUI
 import Testing
 import UIDesignTestSupport

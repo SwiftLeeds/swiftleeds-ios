@@ -1,5 +1,4 @@
 #if os(iOS)
-import Foundation
 
 /// A distance or a count in modules, the squares a code is drawn from.
 ///
