@@ -49,6 +49,20 @@ package struct BarcodeLoader: Sendable {
     ///   ``LoadingError/notDrawn`` when CoreImage draws no marks from the image.
     package var load: @Sendable (URLRequest) async throws(LoadingError) -> SuppliedBarcodeImage
 
+    /// Creates a loader that loads each picture with a closure.
+    ///
+    /// ```swift
+    /// let loader = BarcodeLoader { _ in throw .transportFailed }
+    /// ```
+    ///
+    /// - Parameter load: The closure that loads the picture for a request. It may throw a
+    ///   ``LoadingError``.
+    package init(
+        load: @escaping @Sendable (URLRequest) async throws(LoadingError) -> SuppliedBarcodeImage
+    ) {
+        self.load = load
+    }
+
     /// Returns a loader that fetches each image with a session.
     ///
     /// The session's own cache is the only cache. The loader keeps no images.

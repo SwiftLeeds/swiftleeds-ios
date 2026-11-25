@@ -24,6 +24,21 @@ import SwiftUI
 /// ```swift
 /// Barcode(membershipCodeImage, label: Text("Membership QR code"))
 /// ```
+///
+/// ## Loading the code from a URL
+///
+/// A barcode can fetch its picture from a URL. It draws the placeholder while the code loads,
+/// and the fallback when no code loads or the URL is `nil`. A new URL starts a new load, and
+/// the placeholder shows until that load ends. The style draws only the loaded code.
+///
+/// ```swift
+/// Barcode(
+///     url: membershipCodeURL,
+///     label: Text("Membership QR code"),
+///     placeholder: { ProgressView() },
+///     fallback: { Text("No code to show") }
+/// )
+/// ```
 public struct Barcode<Placeholder: View, Fallback: View>: View {
     /// Where a barcode takes its picture from.
     private enum Source {
@@ -32,6 +47,12 @@ public struct Barcode<Placeholder: View, Fallback: View>: View {
 
         /// A phase of loading a picture.
         case phase(BarcodeLoadingPhase)
+
+        /// A request for a picture to fetch.
+        case request(URLRequest)
+
+        /// No request: there is no picture to fetch.
+        case noRequest
     }
 
     /// A view that draws a barcode in a given style.
@@ -49,6 +70,12 @@ public struct Barcode<Placeholder: View, Fallback: View>: View {
 
     /// The current barcode style.
     @Environment(\.barcodeStyle) private var style
+
+    /// The loader that fetches a picture from a request.
+    @Environment(\.barcodeLoader) private var loader
+
+    /// The phase of the picture a request fetches.
+    @State private var phase: BarcodeLoadingPhase = .empty
 
     /// Where the picture of the code comes from.
     private let source: Source
@@ -83,6 +110,41 @@ public struct Barcode<Placeholder: View, Fallback: View>: View {
         self.fallback = fallback()
     }
 
+    /// Creates a barcode that loads its code from a URL, with a placeholder and a fallback.
+    ///
+    /// The placeholder draws while the code loads. The fallback draws when no code loads, or
+    /// when `url` is `nil`. A new `url` starts a new load.
+    ///
+    /// ```swift
+    /// Barcode(
+    ///     url: membershipCodeURL,
+    ///     label: Text("Membership QR code"),
+    ///     placeholder: { ProgressView() },
+    ///     fallback: { Text("No code to show") }
+    /// )
+    /// ```
+    ///
+    /// - Parameters:
+    ///   - url: The URL of the image to display, or `nil` for none.
+    ///   - label: The label VoiceOver reads for the barcode.
+    ///   - placeholder: A content builder that creates the view drawn while the code loads.
+    ///   - fallback: A content builder that creates the view drawn when no code loads.
+    public init(
+        url: URL?,
+        label: Text,
+        @ViewBuilder placeholder: () -> Placeholder,
+        @ViewBuilder fallback: () -> Fallback,
+    ) {
+        if let url {
+            source = .request(URLRequest(url: url))
+        } else {
+            source = .noRequest
+        }
+        self.label = label
+        self.placeholder = placeholder()
+        self.fallback = fallback()
+    }
+
     public var body: some View {
         drawn
     }
@@ -92,9 +154,40 @@ public struct Barcode<Placeholder: View, Fallback: View>: View {
     private var drawn: some View {
         switch source {
         case .picture(let picture): AnyView(resolved(picture, in: style))
-        case .phase(.success(let marks)): AnyView(resolved(marks.cgImage, in: style))
-        case .phase(.empty): placeholder
-        case .phase(.failure): fallback
+        case .phase(let phase): drawing(phase)
+        case .request(let request): drawing(phase).task(id: request) { await load(request) }
+        case .noRequest: fallback
+        }
+    }
+
+    /// Returns a view that draws a phase of loading.
+    ///
+    /// - Parameter phase: The phase to draw.
+    /// - Returns: The code in the current style, the placeholder or the fallback.
+    @ViewBuilder
+    private func drawing(_ phase: BarcodeLoadingPhase) -> some View {
+        switch phase {
+        case .success(let marks): AnyView(resolved(marks.cgImage, in: style))
+        case .empty: placeholder
+        case .failure: fallback
+        }
+    }
+
+    /// Loads the picture for a request into the phase.
+    ///
+    /// The phase goes back to empty first. A load that was cancelled leaves the phase alone,
+    /// whether it succeeded or failed, so an old request never draws over a new one.
+    ///
+    /// - Parameter request: The request for the picture.
+    private func load(_ request: URLRequest) async {
+        phase = .empty
+        do {
+            let marks = try await loader.load(request)
+            guard !Task.isCancelled else { return }
+            phase = .success(marks)
+        } catch {
+            guard !Task.isCancelled else { return }
+            phase = .failure
         }
     }
 

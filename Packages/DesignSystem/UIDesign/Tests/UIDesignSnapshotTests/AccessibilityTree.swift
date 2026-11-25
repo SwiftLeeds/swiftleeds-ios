@@ -38,6 +38,10 @@ enum AccessibilityTree {
     private static let side: CGFloat = 400
     /// How long the run loop spins, in seconds, so SwiftUI can build its accessibility tree.
     private static let settleTime: TimeInterval = 0.3
+    /// How long the wait for a condition pauses between checks.
+    private static let pollPause = Duration(secondsComponent: 0, attosecondsComponent: pollAttoseconds)
+    /// The length of one pause between checks, in attoseconds: 5 milliseconds.
+    private static let pollAttoseconds: Int64 = 5_000_000_000_000_000
     /// The deepest level of the tree that the walk visits.
     private static let maximumDepth = 30
 
@@ -75,6 +79,73 @@ enum AccessibilityTree {
         var elements: [Element] = []
         walk(host.view, depth: 0, into: &elements)
         return elements
+    }
+
+    /// Hosts a view in a window, waits without blocking the main actor, and reads the elements it exposes.
+    ///
+    /// Use it for a view whose tree changes after asynchronous work. The wait lets tasks that need
+    /// the main actor run, which the run loop spin of ``elements(of:)`` does not.
+    ///
+    /// - Parameters:
+    ///   - view: The view to read.
+    ///   - settle: How long to wait before the tree is read.
+    /// - Returns: The elements, in the order the hierarchy lists them.
+    /// - Throws: ``SwitchOnError`` when accessibility cannot be turned on.
+    static func elements(of view: some View, settle: Duration) async throws(SwitchOnError) -> [Element] {
+        try switchOn()
+        let host = UIHostingController(rootView: view)
+        let frame = CGRect(x: 0, y: 0, width: side, height: side)
+        let window = (SceneFreeWindow() as any WindowMaking).makeWindow(frame: frame)
+        window.rootViewController = host
+        window.makeKeyAndVisible()
+        host.view.frame = frame
+        host.view.layoutIfNeeded()
+        try? await Task.sleep(for: settle)
+        host.view.layoutIfNeeded()
+        var elements: [Element] = []
+        walk(host.view, depth: 0, into: &elements)
+        withExtendedLifetime(window) {}
+        return elements
+    }
+
+    /// Hosts a view, waits until a condition holds, settles briefly, and reads the elements it exposes.
+    ///
+    /// The condition is checked every few milliseconds. When it still fails at the deadline, the
+    /// read goes ahead and the result says so.
+    ///
+    /// - Parameters:
+    ///   - view: The view to read.
+    ///   - condition: The check that must hold before the settle starts.
+    ///   - deadline: The longest the wait for the condition may last.
+    ///   - settle: How long to wait after the condition holds, before the tree is read.
+    /// - Returns: The elements, in the order the hierarchy lists them, and whether the condition held.
+    /// - Throws: ``SwitchOnError`` when accessibility cannot be turned on.
+    static func elements(
+        of view: some View,
+        until condition: () async -> Bool,
+        deadline: Duration,
+        settle: Duration,
+    ) async throws(SwitchOnError) -> (elements: [Element], conditionMet: Bool) {
+        try switchOn()
+        let host = UIHostingController(rootView: view)
+        let frame = CGRect(x: 0, y: 0, width: side, height: side)
+        let window = (SceneFreeWindow() as any WindowMaking).makeWindow(frame: frame)
+        window.rootViewController = host
+        window.makeKeyAndVisible()
+        host.view.frame = frame
+        host.view.layoutIfNeeded()
+        let end = ContinuousClock.now + deadline
+        var conditionMet = await condition()
+        while !conditionMet, ContinuousClock.now < end {
+            try? await Task.sleep(for: pollPause)
+            conditionMet = await condition()
+        }
+        try? await Task.sleep(for: settle)
+        host.view.layoutIfNeeded()
+        var elements: [Element] = []
+        walk(host.view, depth: 0, into: &elements)
+        withExtendedLifetime(window) {}
+        return (elements, conditionMet)
     }
 
     /// Appends the accessibility elements at or below an object, in the order the hierarchy lists them.
