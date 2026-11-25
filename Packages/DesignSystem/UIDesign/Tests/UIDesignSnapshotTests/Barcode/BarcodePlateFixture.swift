@@ -27,6 +27,9 @@ enum BarcodePlateFixture: CaseIterable, Sendable {
     /// A QR code.
     case qrCode
 
+    /// A QR code supplied as an image, drawn light blue on white.
+    case suppliedLightBlueQRCode
+
     /// An Aztec code.
     case aztecCode
 
@@ -46,6 +49,7 @@ enum BarcodePlateFixture: CaseIterable, Sendable {
     var text: String {
         switch self {
         case .qrCode: "ti_ExampleTicket0000000000"
+        case .suppliedLightBlueQRCode: "ti_ExampleTicket0000000000"
         case .aztecCode: "LOCKER-0042"
         case .pdf417Barcode: "EXAMPLE PASS 0001"
         case .code128Barcode: "ABCD-0001"
@@ -54,11 +58,16 @@ enum BarcodePlateFixture: CaseIterable, Sendable {
 
     /// The sizes of the stored picture and the module the render poll reads.
     ///
-    /// The poll module is the finder's center for a QR code, the bullseye's center for an Aztec
-    /// code, and the middle of the first bar of the start pattern for the two linear codes.
+    /// The poll module is the finder's center for a QR code, whether generated or supplied as an
+    /// image, the bullseye's center for an Aztec code, and the middle of the first bar of the
+    /// start pattern for the two linear codes.
     var layout: Layout {
         switch self {
         case .qrCode:
+            // swiftlint:disable:next no_magic_numbers - fixture data
+            Layout(modulesAcross: 37, modulesDown: 37, quietZone: 4, darkColumn: 7.5, darkRow: 7.5)
+
+        case .suppliedLightBlueQRCode:
             // swiftlint:disable:next no_magic_numbers - fixture data
             Layout(modulesAcross: 37, modulesDown: 37, quietZone: 4, darkColumn: 7.5, darkRow: 7.5)
 
@@ -83,6 +92,7 @@ enum BarcodePlateFixture: CaseIterable, Sendable {
         let width =
             switch self {
             case .qrCode: Self.squareSide
+            case .suppliedLightBlueQRCode: Self.squareSide
             case .aztecCode: Self.squareSide
             case .pdf417Barcode: Self.wideWidth
             case .code128Barcode: Self.wideWidth
@@ -97,6 +107,7 @@ enum BarcodePlateFixture: CaseIterable, Sendable {
     func makeContent() throws -> any BarcodeContent {
         switch self {
         case .qrCode: try QRCode(text)
+        case .suppliedLightBlueQRCode: try SuppliedBarcodeImage(LightBlueCodeImage.make(carrying: text))
         case .aztecCode: try AztecCode(text)
         case .pdf417Barcode: try PDF417Barcode(text)
         case .code128Barcode: try Code128Barcode(text)
