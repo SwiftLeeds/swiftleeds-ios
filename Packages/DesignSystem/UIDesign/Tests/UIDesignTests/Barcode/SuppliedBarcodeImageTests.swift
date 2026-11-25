@@ -2,6 +2,7 @@
 import CoreGraphics
 import Testing
 import UIDesign
+import UIDesignTestSupport
 
 #if os(macOS)
 import Vision
@@ -83,16 +84,13 @@ struct SuppliedBarcodeImageTests {
     ///   - leftHalf: Whether to check the left half or the right half.
     ///   - isBlack: Whether the half should be opaque black, or clear.
     /// - Returns: The number of pixels in the half that are not as expected.
-    private static func missCount(in pixels: RenderedPixels, leftHalf: Bool, isBlack: Bool) -> Int {
-        let columns = leftHalf ? 0..<pixels.side / 2 : pixels.side / 2..<pixels.side
+    private static func missCount(in pixels: RGBAPixels, leftHalf: Bool, isBlack: Bool) -> Int {
+        let columns = leftHalf ? 0..<pixels.width / 2 : pixels.width / 2..<pixels.width
         return columns.flatMap { column in
-            (0..<pixels.side).map { (column, $0) }
-        }.count { column, row in
-            let matches =
-                isBlack
-                ? pixels.isOpaqueBlack(column: column, row: row)
-                : pixels.isClear(column: column, row: row)
-            return !matches
+            pixels.rows.map { PixelPosition(column: column, row: $0) }
+        }.count { position in
+            let pixel = pixels.pixel(at: position)
+            return !(isBlack ? pixel.isOpaqueBlack : pixel.isClear)
         }
     }
 
@@ -100,7 +98,7 @@ struct SuppliedBarcodeImageTests {
     func whenImageIsSupplied_shouldTurnDarkAreasBlackAndLightAreasClear(fixture: Fixture) throws {
         let source = try TwoToneImage.image(mark: fixture.mark, background: fixture.background, noise: fixture.noise)
         let sut = try SuppliedBarcodeImage(source)
-        let pixels = try RenderedPixels(of: sut.cgImage)
+        let pixels = try RGBAPixels(of: sut.cgImage)
         let leftIsBlack = fixture.blackSide == .left
         let leftMisses = Self.missCount(in: pixels, leftHalf: true, isBlack: leftIsBlack)
         let rightMisses = Self.missCount(in: pixels, leftHalf: false, isBlack: !leftIsBlack)
@@ -126,7 +124,7 @@ struct SuppliedBarcodeImageTests {
         }
         let source = try TwoToneImage.image(width: TwoToneImage.side, height: TwoToneImage.side, bytes: bytes)
         let sut = try SuppliedBarcodeImage(source)
-        let pixels = try RenderedPixels(of: sut.cgImage)
+        let pixels = try RGBAPixels(of: sut.cgImage)
         let marks =
             Self.missCount(in: pixels, leftHalf: true, isBlack: false)
             + Self.missCount(in: pixels, leftHalf: false, isBlack: false)
@@ -135,18 +133,18 @@ struct SuppliedBarcodeImageTests {
 
     @Test
     func whenJPEGCodeIsSupplied_shouldDrawSameModulesAsOriginal() throws {
-        let original = try RenderedPixels(of: QRCode(Self.codeText).cgImage)
+        let original = try RGBAPixels(of: QRCode(Self.codeText).cgImage)
         let source = try JPEGRoundTrip.image(QRCode(Self.codeText).cgImage, quality: Self.jpegQuality)
         let sut = try SuppliedBarcodeImage(source)
-        let drawn = try RenderedPixels(of: sut.cgImage)
-        let pixels = (0..<original.side).flatMap { column in
-            (0..<original.side).map { (column, $0) }
+        let drawn = try RGBAPixels(of: sut.cgImage)
+        let positions = original.columns.flatMap { column in
+            original.rows.map { PixelPosition(column: column, row: $0) }
         }
-        let specks = pixels.count { column, row in
-            !drawn.isClear(column: column, row: row) && original.isClear(column: column, row: row)
+        let specks = positions.count { position in
+            !drawn.pixel(at: position).isClear && original.pixel(at: position).isClear
         }
-        let holes = pixels.count { column, row in
-            !drawn.isOpaqueBlack(column: column, row: row) && original.isOpaqueBlack(column: column, row: row)
+        let holes = positions.count { position in
+            !drawn.pixel(at: position).isOpaqueBlack && original.pixel(at: position).isOpaqueBlack
         }
         #expect(specks == 0, "\(specks) pixels are not clear where the code is clear")
         #expect(holes == 0, "\(holes) pixels are not black where the code is black")

@@ -28,7 +28,7 @@ let package = Package(
         ),
         .testTarget(
             name: "UIDesignTests",
-            dependencies: ["UIDesign"],
+            dependencies: ["UIDesign", "UIDesignTestSupport"],
         ),
         .testTarget(
             name: "UIDesignSnapshotTests",

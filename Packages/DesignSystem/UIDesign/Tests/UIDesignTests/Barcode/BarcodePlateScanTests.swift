@@ -2,18 +2,10 @@
 import SwiftUI
 import Testing
 import UIDesign
+import UIDesignTestSupport
 
 @MainActor
 struct BarcodePlateScanTests {
-    /// A pixel position in a rendered picture.
-    private struct PlatePoint {
-        /// The column, from the left.
-        let column: Int
-
-        /// The row, from the top.
-        let row: Int
-    }
-
     /// One edge of the plate.
     private enum Edge: CaseIterable, Sendable {
         /// The top edge.
@@ -35,12 +27,12 @@ struct BarcodePlateScanTests {
         ///   - height: The height of the picture in pixels.
         ///   - inset: How far in from the edge the point sits, in pixels.
         /// - Returns: The point.
-        func point(width: Int, height: Int, inset: Int) -> PlatePoint {
+        func point(width: Int, height: Int, inset: Int) -> PixelPosition {
             switch self {
-            case .top: PlatePoint(column: width / 2, row: inset)
-            case .left: PlatePoint(column: inset, row: height / 2)
-            case .bottom: PlatePoint(column: width / 2, row: height - 1 - inset)
-            case .right: PlatePoint(column: width - 1 - inset, row: height / 2)
+            case .top: PixelPosition(column: width / 2, row: inset)
+            case .left: PixelPosition(column: inset, row: height / 2)
+            case .bottom: PixelPosition(column: width / 2, row: height - 1 - inset)
+            case .right: PixelPosition(column: width - 1 - inset, row: height / 2)
             }
         }
     }
@@ -62,12 +54,6 @@ struct BarcodePlateScanTests {
     /// The largest value of one channel.
     private static let largestChannel = 255
 
-    /// The bytes that describe one pixel: red, green, blue and alpha.
-    private static let bytesPerPixel = 4
-
-    /// The position of the alpha byte in a pixel.
-    private static let alphaOffset = 3
-
     /// Returns a color as it resolves in light mode.
     ///
     /// - Parameter color: The color to resolve.
@@ -86,17 +72,6 @@ struct BarcodePlateScanTests {
         Int((value * Float(largestChannel)).rounded())
     }
 
-    /// Returns one byte of a pixel.
-    ///
-    /// - Parameters:
-    ///   - pixels: The rendered picture.
-    ///   - offset: The byte in the pixel: 0 red, 1 green, 2 blue, 3 alpha.
-    ///   - point: The pixel to read.
-    /// - Returns: The byte, from 0 to 255.
-    private static func byte(_ pixels: RenderedPixels, _ offset: Int, at point: PlatePoint) -> Int {
-        Int(pixels.bytes[(point.row * pixels.side + point.column) * bytesPerPixel + offset])
-    }
-
     /// Returns whether a pixel is opaque and the color of the plate.
     ///
     /// - Parameters:
@@ -105,16 +80,15 @@ struct BarcodePlateScanTests {
     ///   - expected: The color the plate should be.
     /// - Returns: `true` when the pixel is opaque and each channel is within the tolerance.
     private static func isPlate(
-        _ pixels: RenderedPixels,
-        at point: PlatePoint,
+        _ pixels: RGBAPixels,
+        at point: PixelPosition,
         matching expected: Color.Resolved,
     ) -> Bool {
-        let alpha = byte(pixels, alphaOffset, at: point)
-        guard alpha >= largestChannel - channelTolerance else { return false }
+        let pixel = pixels.pixel(at: point)
+        guard Int(pixel.alpha) >= largestChannel - channelTolerance else { return false }
         let wanted = [expected.red, expected.green, expected.blue].map(byteValue(of:))
-        return wanted.enumerated().allSatisfy { channel in
-            abs(byte(pixels, channel.offset, at: point) - channel.element) <= channelTolerance
-        }
+        let drawn = [pixel.red, pixel.green, pixel.blue].map(Int.init)
+        return zip(wanted, drawn).allSatisfy { abs($1 - $0) <= channelTolerance }
     }
 
     /// Checks the plate at the middle of each edge's quiet zone.
@@ -123,13 +97,12 @@ struct BarcodePlateScanTests {
     ///   - pixels: The rendered picture.
     ///   - code: The code the picture draws.
     ///   - plate: The color the plate should be.
-    private func expectPlate(in pixels: RenderedPixels, of code: any BarcodeContent, matching plate: Color) {
+    private func expectPlate(in pixels: RGBAPixels, of code: any BarcodeContent, matching plate: Color) {
         let expected = Self.resolvedLight(plate)
-        let height = pixels.bytes.count / Self.bytesPerPixel / pixels.side
         let modules = code.cgImage.width / Self.storedPixelsPerModule
-        let inset = Int(Double(pixels.side) / Double(modules) * Self.plateInsetModules)
+        let inset = Int(Double(pixels.width) / Double(modules) * Self.plateInsetModules)
         for edge in Edge.allCases {
-            let point = edge.point(width: pixels.side, height: height, inset: inset)
+            let point = edge.point(width: pixels.width, height: pixels.height, inset: inset)
             let isPlate = Self.isPlate(pixels, at: point, matching: expected)
             #expect(isPlate, "The plate is missing or the wrong color at the \(edge) edge")
         }
@@ -152,7 +125,7 @@ struct BarcodePlateScanTests {
         let renderer = ImageRenderer(content: view)
         renderer.scale = Self.renderScale
         let image = try #require(renderer.cgImage)
-        expectPlate(in: try RenderedPixels(of: image), of: code, matching: plate)
+        expectPlate(in: try RGBAPixels(of: image), of: code, matching: plate)
         #expect(BarcodeReader.payload(of: image, as: fixture.symbology) == fixture.text)
     }
 

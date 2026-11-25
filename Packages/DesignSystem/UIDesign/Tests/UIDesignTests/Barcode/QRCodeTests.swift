@@ -4,6 +4,7 @@ import Foundation
 import SwiftUI
 import Testing
 import UIDesign
+import UIDesignTestSupport
 
 @MainActor
 struct QRCodeTests {
@@ -125,22 +126,24 @@ struct QRCodeTests {
     ///   - column: The module's column, from the left.
     ///   - row: The module's row, from the top.
     /// - Returns: `true` when the square holds one value.
-    private static func isUniform(_ pixels: RenderedPixels, column: Int, row: Int) -> Bool {
+    private static func isUniform(_ pixels: RGBAPixels, column: Int, row: Int) -> Bool {
         let span = 0..<storedPixelsPerModule
         let squares = span.flatMap { down in
-            span.map { across in (column * storedPixelsPerModule + across, row * storedPixelsPerModule + down) }
+            span.map { across in
+                PixelPosition(column: column * storedPixelsPerModule + across, row: row * storedPixelsPerModule + down)
+            }
         }
-        let allClear = squares.allSatisfy { pixels.isClear(column: $0, row: $1) }
-        let allBlack = squares.allSatisfy { pixels.isOpaqueBlack(column: $0, row: $1) }
+        let allClear = squares.allSatisfy { pixels.pixel(at: $0).isClear }
+        let allBlack = squares.allSatisfy { pixels.pixel(at: $0).isOpaqueBlack }
         return allClear || allBlack
     }
 
     @Test
     func whenTextIsEncoded_shouldStoreEachModuleAsUniformTenPixelSquare() throws {
         let code = try QRCode(Self.fixtureText)
-        let pixels = try RenderedPixels(of: code.cgImage)
+        let pixels = try RGBAPixels(of: code.cgImage)
         let expectedSide = Self.modulesWithQuietZone * Self.storedPixelsPerModule
-        try #require(pixels.side == expectedSide, "The stored picture is \(pixels.side) pixels across")
+        try #require(pixels.width == expectedSide, "The stored picture is \(pixels.width) pixels across")
         let modules = 0..<Self.modulesWithQuietZone
         let mixed = modules.flatMap { row in
             modules.filter { column in !Self.isUniform(pixels, column: column, row: row) }
@@ -151,20 +154,19 @@ struct QRCodeTests {
     @Test
     func whenTextIsEncoded_shouldDrawBlackModulesInsideClearFourModuleQuietZone() throws {
         let code = try QRCode(Self.fixtureText)
-        let pixels = try RenderedPixels(of: try Self.renderWithoutPlate(code))
-        let modulePixels = Double(pixels.side) / Double(Self.modulesWithQuietZone)
+        let pixels = try RGBAPixels(of: try Self.renderWithoutPlate(code))
+        let modulePixels = Double(pixels.width) / Double(Self.modulesWithQuietZone)
         let ring = Double(Self.quietZoneModules) * modulePixels
         let inner = Double(Self.modulesWithQuietZone - Self.quietZoneModules) * modulePixels
-        let indices = 0..<pixels.side
-        let unclear = indices.flatMap { row in
-            indices.filter { column in
+        let unclear = pixels.rows.flatMap { row in
+            pixels.columns.filter { column in
                 let isInRing = [column, row].contains { Double($0) + 0.5 < ring || Double($0) + 0.5 > inner }
-                return isInRing && !pixels.isClear(column: column, row: row)
+                return isInRing && !pixels.pixel(at: PixelPosition(column: column, row: row)).isClear
             }
         }
         let sample = Int(Self.firstModuleCenter * modulePixels)
         #expect(unclear.isEmpty, "\(unclear.count) pixels in the quiet zone are not clear")
-        #expect(pixels.isOpaqueBlack(column: sample, row: sample))
+        #expect(pixels.pixel(at: PixelPosition(column: sample, row: sample)).isOpaqueBlack)
     }
 
     @Test

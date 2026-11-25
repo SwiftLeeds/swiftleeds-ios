@@ -1,6 +1,7 @@
 #if os(macOS)
 import Testing
 import UIDesign
+import UIDesignTestSupport
 import Vision
 
 struct Code128BarcodeTests {
@@ -44,8 +45,10 @@ struct Code128BarcodeTests {
     ///   - columns: The columns of the block.
     ///   - rows: The rows of the block.
     /// - Returns: `true` when every pixel in the block is clear.
-    private static func isClear(_ pixels: RenderedPixels, columns: Range<Int>, rows: Range<Int>) -> Bool {
-        rows.allSatisfy { row in columns.allSatisfy { column in pixels.isClear(column: column, row: row) } }
+    private static func isClear(_ pixels: RGBAPixels, columns: Range<Int>, rows: Range<Int>) -> Bool {
+        rows.allSatisfy { row in
+            columns.allSatisfy { column in pixels.pixel(at: PixelPosition(column: column, row: row)).isClear }
+        }
     }
 
     /// Returns whether any pixel in a block of the picture is opaque black.
@@ -55,17 +58,19 @@ struct Code128BarcodeTests {
     ///   - columns: The columns of the block.
     ///   - rows: The rows of the block.
     /// - Returns: `true` when at least one pixel in the block is opaque black.
-    private static func hasBlack(_ pixels: RenderedPixels, columns: Range<Int>, rows: Range<Int>) -> Bool {
-        rows.contains { row in columns.contains { column in pixels.isOpaqueBlack(column: column, row: row) } }
+    private static func hasBlack(_ pixels: RGBAPixels, columns: Range<Int>, rows: Range<Int>) -> Bool {
+        rows.contains { row in
+            columns.contains { column in pixels.pixel(at: PixelPosition(column: column, row: row)).isOpaqueBlack }
+        }
     }
 
     @Test
     func whenTextIsEncoded_shouldHaveTenClearModulesEachSide() throws {
         let sut = try Code128Barcode(Self.fixtureText)
-        let pixels = try RenderedPixels(of: sut.cgImage)
+        let pixels = try RGBAPixels(of: sut.cgImage)
         let zone = Self.quietZoneModules * Self.storedPixelsPerModule
-        let width = pixels.side
-        let height = sut.cgImage.height
+        let width = pixels.width
+        let height = pixels.height
         let allColumns = 0..<width
         let allRows = 0..<height
         let left = 0..<zone
