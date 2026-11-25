@@ -275,12 +275,19 @@ struct BarcodePlateTests {
     }
 
     @Test(arguments: BarcodeFixture.allCases)
-    func whenStored_shouldBeDarkAtPollModule(fixture: BarcodeFixture) throws {
+    func whenStored_shouldSpanWholeModules(fixture: BarcodeFixture) throws {
         let image = try fixture.content.cgImage
         let layout = fixture.layout
         let pixelsPerModule = image.width / layout.modulesAcross
         #expect(image.width == layout.modulesAcross * pixelsPerModule, "\(fixture): width is not whole modules")
         #expect(image.height == layout.modulesDown * pixelsPerModule, "\(fixture): height is not whole modules")
+    }
+
+    @Test(arguments: BarcodeFixture.allCases)
+    func whenStored_shouldBeDarkAtPollModule(fixture: BarcodeFixture) throws {
+        let image = try fixture.content.cgImage
+        let layout = fixture.layout
+        let pixelsPerModule = image.width / layout.modulesAcross
         let pixels = try RGBAPixels(of: image)
         let column = Int(layout.darkColumn * Double(pixelsPerModule))
         let row = Int(layout.darkRow * Double(pixelsPerModule))

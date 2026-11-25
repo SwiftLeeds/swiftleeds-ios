@@ -19,6 +19,49 @@ struct BarcodeScanTests {
         }
     }
 
+    /// One module of the checker picture and what the pixel at its center must be.
+    struct ModuleCase: Sendable, CustomTestStringConvertible {
+        /// What the pixel at a module's center must be.
+        enum Expectation: Sendable {
+            /// The pixel is opaque black.
+            case opaqueBlack
+
+            /// The pixel is clear.
+            case clear
+        }
+
+        /// The module's column, from the left.
+        let column: Int
+
+        /// The module's row, from the top.
+        let row: Int
+
+        /// What the pixel at the module's center must be.
+        let expectation: Expectation
+
+        /// The name the test run shows for this case.
+        var testDescription: String { "column \(column), row \(row) is \(expectation)" }
+
+        /// Returns whether a pixel is what the module must show.
+        ///
+        /// - Parameter pixel: The pixel at the module's center.
+        /// - Returns: Whether the pixel is the expected opaque black or clear.
+        func isMet(by pixel: RGBAPixels.Pixel) -> Bool {
+            switch expectation {
+            case .opaqueBlack: pixel.isOpaqueBlack
+            case .clear: pixel.isClear
+            }
+        }
+    }
+
+    /// The four modules of the checker picture: black on one diagonal, clear on the other.
+    nonisolated private static let moduleCases = [
+        ModuleCase(column: 0, row: 0, expectation: .opaqueBlack),
+        ModuleCase(column: 1, row: 0, expectation: .clear),
+        ModuleCase(column: 0, row: 1, expectation: .clear),
+        ModuleCase(column: 1, row: 1, expectation: .opaqueBlack),
+    ]
+
     /// The side of the frame the barcode fills, in points.
     private static let side = BarcodeFixture.qrCode.frameWidth
 
@@ -76,20 +119,14 @@ struct BarcodeScanTests {
         }
     }
 
-    @Test
-    func whenContentIsCustom_shouldDrawItsPixels() throws {
-        let view = Barcode(try CheckerBarcodeContent(), label: Text("Check-in QR code"))
+    @Test(arguments: moduleCases)
+    func whenContentIsCustom_shouldDrawItsPixels(module: ModuleCase) throws {
+        let sut = Barcode(try CheckerBarcodeContent(), label: Text("Check-in QR code"))
             .barcodeStyle(ContentOnlyBarcodeStyle())
             .frame(width: Self.side, height: Self.side)
-        let pixels = try RGBAPixels(of: CGImage.rendering(view, atScale: Self.scanScale))
-        let topLeft = Self.centerPixel(of: pixels, column: 0, row: 0)
-        let topRight = Self.centerPixel(of: pixels, column: 1, row: 0)
-        let bottomLeft = Self.centerPixel(of: pixels, column: 0, row: 1)
-        let bottomRight = Self.centerPixel(of: pixels, column: 1, row: 1)
-        #expect(topLeft.isOpaqueBlack)
-        #expect(topRight.isClear)
-        #expect(bottomLeft.isClear)
-        #expect(bottomRight.isOpaqueBlack)
+        let pixels = try RGBAPixels(of: CGImage.rendering(sut, atScale: Self.scanScale))
+        let center = Self.centerPixel(of: pixels, column: module.column, row: module.row)
+        #expect(module.isMet(by: center), "The center of column \(module.column), row \(module.row) is \(center)")
     }
 
     @Test(arguments: BarcodeFixture.allCases)

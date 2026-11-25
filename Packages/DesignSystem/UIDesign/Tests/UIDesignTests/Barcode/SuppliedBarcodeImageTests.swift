@@ -68,12 +68,6 @@ struct SuppliedBarcodeImageTests {
     /// The text the light blue code carries, made up.
     private static let codeText = BarcodeFixture.qrCode.text
 
-    /// How many rows of position step the pattern that lowers each pixel of the almost white picture.
-    private static let noiseRowStep = 3
-
-    /// The most a pixel of the almost white picture is lowered from white, out of 255.
-    private static let loweredLevels = 3
-
     /// The JPEG quality of the code a server might send, from 0 to 1.
     private static let jpegQuality = 0.7
 
@@ -104,13 +98,7 @@ struct SuppliedBarcodeImageTests {
 
     @Test
     func whenImageIsAlmostWhite_shouldDrawNoMarks() throws {
-        let almostWhite = (0..<TwoToneImage.side).flatMap { row -> [RGBAPixels.Pixel] in
-            (0..<TwoToneImage.side).map { column in
-                let channel = UInt8.max - UInt8((column + Self.noiseRowStep * row) % (Self.loweredLevels + 1))
-                return RGBAPixels.Pixel(red: channel, green: channel, blue: channel, alpha: .max)
-            }
-        }
-        let source = try RGBAPixels(width: TwoToneImage.side, height: TwoToneImage.side, pixels: almostWhite).image
+        let source = try TwoToneImage.almostWhite
         let sut = try SuppliedBarcodeImage(source)
         let pixels = try RGBAPixels(of: sut.cgImage)
         try #require(pixels.width == TwoToneImage.side && pixels.height == TwoToneImage.side)

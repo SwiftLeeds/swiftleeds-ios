@@ -12,6 +12,11 @@ struct ScannableSurfaceTests {
     /// How far a channel may sit from the expected one, as a fraction of its full range.
     private static let channelTolerance = toleranceLevels / Float(UInt8.max)
 
+    /// The appearances that have Increase Contrast on.
+    nonisolated private static let increasedContrastAppearances = SystemAppearance.allCases.filter {
+        $0.withoutIncreasedContrast != nil
+    }
+
     /// The traits of light mode at normal contrast and the base level.
     private static let lightTraits = SystemAppearance.light.traits
 
@@ -65,16 +70,17 @@ struct ScannableSurfaceTests {
         #expect(mismatched.isEmpty, "\(brand) scannable surface differs in \(mismatched)")
     }
 
-    @Test(arguments: Brand.allCases)
-    func whenContrastIsIncreased_shouldNotLowerContrastWithBlackMarks(brand: Brand) {
+    @Test(arguments: Brand.allCases, increasedContrastAppearances)
+    func whenContrastIsIncreased_shouldNotLowerContrastWithBlackMarks(
+        brand: Brand,
+        appearance: SystemAppearance,
+    ) throws {
+        let standard = try #require(appearance.withoutIncreasedContrast)
         let marks = Color.black.resolve(in: EnvironmentValues())
-        for appearance in SystemAppearance.allCases {
-            guard let standard = appearance.withoutIncreasedContrast else { continue }
-            let increased = WCAG.ratio(between: marks, and: WCAG.resolve(brand.scannableSurface, in: appearance))
-            let normal = WCAG.ratio(between: marks, and: WCAG.resolve(brand.scannableSurface, in: standard))
-            let shown = "\(WCAG.text(of: increased)) is below \(WCAG.text(of: normal))"
-            #expect(increased >= normal, "\(brand) \(appearance.name): \(shown)")
-        }
+        let increased = WCAG.ratio(between: marks, and: WCAG.resolve(brand.scannableSurface, in: appearance))
+        let normal = WCAG.ratio(between: marks, and: WCAG.resolve(brand.scannableSurface, in: standard))
+        let shown = "\(WCAG.text(of: increased)) is below \(WCAG.text(of: normal))"
+        #expect(increased >= normal, "\(brand) \(appearance.name): \(shown)")
     }
 
     @Test(arguments: Brand.allCases)

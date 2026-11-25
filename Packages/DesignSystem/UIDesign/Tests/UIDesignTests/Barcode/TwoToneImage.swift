@@ -19,6 +19,24 @@ enum TwoToneImage {
     /// The rows of a pixel's position that step the noise pattern.
     private static let noiseRowStep = 3
 
+    /// The most a pixel of the almost white picture is lowered from white, out of 255.
+    private static let loweredLevels = 3
+
+    /// A picture whose pixels sit a few levels below white, in a fixed pattern.
+    ///
+    /// - Throws: ``RGBAPixels/DrawingError/notDrawn`` when CoreGraphics makes no picture.
+    static var almostWhite: CGImage {
+        get throws(RGBAPixels.DrawingError) {
+            let pixels = (0..<side).flatMap { row -> [RGBAPixels.Pixel] in
+                (0..<side).map { column in
+                    let channel = UInt8.max - UInt8((column + noiseRowStep * row) % (loweredLevels + 1))
+                    return RGBAPixels.Pixel(red: channel, green: channel, blue: channel, alpha: .max)
+                }
+            }
+            return try RGBAPixels(width: side, height: side, pixels: pixels).image
+        }
+    }
+
     /// Returns a picture with the mark on its left half and the background on its right half.
     ///
     /// - Parameters:
