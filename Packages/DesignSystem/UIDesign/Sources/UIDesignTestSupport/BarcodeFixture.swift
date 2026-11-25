@@ -2,8 +2,10 @@
 import CoreGraphics
 import UIDesign
 
-/// A kind of code the barcode tests draw, with the made-up text it carries and the width it is drawn at.
-package enum BarcodeFixture: CaseIterable, Sendable {
+/// A kind of code the barcode tests draw.
+///
+/// Each kind has made-up text to carry and a frame width to be drawn at.
+package enum BarcodeFixture: CaseIterable, Equatable, Hashable, Sendable {
     /// A QR code.
     case qrCode
 

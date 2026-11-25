@@ -3,7 +3,7 @@ import CoreGraphics
 import UIDesignTestSupport
 import Vision
 
-/// What the Vision scans of the unit tests need to know about each code.
+/// The Vision symbology and the frame height of each code, for the unit tests.
 extension BarcodeFixture {
     /// The kind of barcode Vision looks for.
     var symbology: VNBarcodeSymbology {

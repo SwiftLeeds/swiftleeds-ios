@@ -4,7 +4,7 @@ import SwiftUI
 
 extension CGImage {
     /// The reason a view could not be drawn as an image.
-    package enum RenderingError: Error, Equatable {
+    package enum RenderingError: Error, Equatable, Hashable, Sendable {
         /// SwiftUI draws the view as no image.
         case noImage
     }
@@ -13,7 +13,7 @@ extension CGImage {
     ///
     /// ```swift
     /// let image = try CGImage.rendering(Color.red.frame(width: 4, height: 4), atScale: 2)
-    /// // image.width is 8
+    /// let width = image.width  // 8
     /// ```
     ///
     /// - Parameters:

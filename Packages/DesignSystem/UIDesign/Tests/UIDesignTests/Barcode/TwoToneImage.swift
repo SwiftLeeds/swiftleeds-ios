@@ -46,16 +46,16 @@ enum TwoToneImage {
     /// Returns a pixel with its color channels moved.
     ///
     /// - Parameters:
-    ///   - pixel: The color to start from.
+    ///   - color: The color to start from.
     ///   - shift: The amount to add to each color channel. A negative amount lowers them.
     /// - Returns: The pixel, with the color channels held between 0 and 255 and no change to a clear pixel.
-    private static func pixel(_ pixel: RGBAPixels.Pixel, shifted shift: Int) -> RGBAPixels.Pixel {
-        let applied = pixel.alpha == 0 ? 0 : shift
+    private static func pixel(_ color: RGBAPixels.Pixel, shifted shift: Int) -> RGBAPixels.Pixel {
+        let applied = color.alpha == 0 ? 0 : shift
         return RGBAPixels.Pixel(
-            red: moved(pixel.red, by: applied),
-            green: moved(pixel.green, by: applied),
-            blue: moved(pixel.blue, by: applied),
-            alpha: pixel.alpha,
+            red: moved(color.red, by: applied),
+            green: moved(color.green, by: applied),
+            blue: moved(color.blue, by: applied),
+            alpha: color.alpha,
         )
     }
 

@@ -159,7 +159,9 @@ package enum BarcodeImage {
 }
 
 extension Float {
-    /// Creates the width of a quiet zone in modules, for a generator that takes its margin as a number.
+    /// Creates the width of a quiet zone, in modules.
+    ///
+    /// A generator takes its margin as a number, and this reads it from the zone.
     ///
     /// - Parameter zone: The quiet zone to read.
     init(_ zone: BarcodeImage.QuietZone) {

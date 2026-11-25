@@ -1,7 +1,7 @@
 #if canImport(CoreGraphics)
 import CoreGraphics
 
-/// The pixels of an image with their alpha, for the barcode suites.
+/// The pixels of an image with their alpha.
 ///
 /// They are read from an image as 8-bit sRGB, or made from pixels and drawn as an image.
 package struct RGBAPixels: Equatable, Hashable, Sendable {
@@ -83,7 +83,7 @@ package struct RGBAPixels: Equatable, Hashable, Sendable {
     }
 
     /// The reason an image could not be read.
-    package enum ReadingError: Error, Equatable {
+    package enum ReadingError: Error, Equatable, Hashable, Sendable {
         /// The sRGB color space or the bitmap context is not available.
         case noContext
 
@@ -92,7 +92,7 @@ package struct RGBAPixels: Equatable, Hashable, Sendable {
     }
 
     /// The reason an image could not be made from pixels.
-    package enum DrawingError: Error, Equatable {
+    package enum DrawingError: Error, Equatable, Hashable, Sendable {
         /// The number of pixels is not the width times the height.
         case wrongPixelCount
 
@@ -141,7 +141,9 @@ package struct RGBAPixels: Equatable, Hashable, Sendable {
         bytes = Array(UnsafeBufferPointer(start: data.assumingMemoryBound(to: UInt8.self), count: count))
     }
 
-    /// Creates the pixels of an image from its pixels.
+    /// Creates a bitmap of the given size from premultiplied pixels in row order.
+    ///
+    /// The number of pixels must be the width times the height.
     ///
     /// ```swift
     /// let pixels = try RGBAPixels(width: 2, height: 1, pixels: [.black, .clear])
@@ -166,6 +168,7 @@ package struct RGBAPixels: Equatable, Hashable, Sendable {
     /// The pixels drawn as an image.
     ///
     /// - Throws: ``DrawingError/notDrawn`` when CoreGraphics makes no image.
+    /// - Complexity: O(*n*), where *n* is the number of pixels.
     package var image: CGImage {
         get throws(DrawingError) {
             guard let data = CFDataCreate(nil, bytes, bytes.count),

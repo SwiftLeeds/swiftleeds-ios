@@ -1,10 +1,10 @@
 #if canImport(CoreImage)
 import CoreImage
 
-/// Reads the text of a QR code in an image, as a phone's camera would.
+/// A reader of the text in a QR code in an image.
 package enum QRCodeScanner {
     /// The reason an image could not be scanned.
-    package enum ScanningError: Error, Equatable {
+    package enum ScanningError: Error, Equatable, Hashable, Sendable {
         /// CoreImage makes no QR detector.
         case noDetector
     }

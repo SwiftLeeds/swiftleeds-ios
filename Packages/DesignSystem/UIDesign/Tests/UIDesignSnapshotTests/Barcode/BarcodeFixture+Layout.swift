@@ -2,7 +2,7 @@
 import CoreGraphics
 import UIDesignTestSupport
 
-/// Where the plate tests read each code's render.
+/// Where the snapshot tests read each code's render, and the frame it is drawn in.
 ///
 /// Every distance is counted in modules of the stored picture, which spends ten pixels on each.
 extension BarcodeFixture {
