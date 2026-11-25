@@ -10,15 +10,6 @@ import UIKit
 @MainActor
 @Suite
 struct BarcodePlateTests {
-    /// A place in the render where the plate must show.
-    private struct Sample: Equatable, Hashable, Sendable {
-        /// The column of the pixel, from the left.
-        let column: Int
-
-        /// The row of the pixel, from the top.
-        let row: Int
-    }
-
     /// One brand, appearance and kind of code to check the plate under.
     struct PlateCase: Sendable, CustomTestStringConvertible {
         /// The brand the barcode reads from its environment.
@@ -211,7 +202,7 @@ struct BarcodePlateTests {
         let layout = fixture.layout
         let column = Int(layout.darkColumn * Double(pixels.width) / Double(layout.modulesAcross))
         let row = Int(layout.darkRow * Double(pixels.height) / Double(layout.modulesDown))
-        return isDark(pixels.pixel(x: column, y: row))
+        return isDark(pixels.pixel(at: PixelPosition(column: column, row: row)))
     }
 
     /// Returns whether a pixel is opaque and dark enough to be a mark.
@@ -228,13 +219,13 @@ struct BarcodePlateTests {
     ///   - pixels: The render to sample.
     ///   - fixture: The kind of code the render draws.
     /// - Returns: Every pixel of the quiet zone's innermost row, inside the plate's rounded corners.
-    private static func plateSamples(in pixels: RGBAPixels, of fixture: BarcodePlateFixture) -> [Sample] {
+    private static func plateSamples(in pixels: RGBAPixels, of fixture: BarcodePlateFixture) -> [PixelPosition] {
         // This render blurs a one-module ring, so only the quiet zone's row can be read exactly.
         let layout = fixture.layout
         let rowModules = Double(layout.quietZone) - innermostRowInset
         let ringRow = Int(rowModules * Double(pixels.height) / Double(layout.modulesDown))
         let columns = cornerRadiusInPixels..<(pixels.width - cornerRadiusInPixels)
-        return columns.map { Sample(column: $0, row: ringRow) }
+        return columns.map { PixelPosition(column: $0, row: ringRow) }
     }
 
     /// Returns the pixel the plate has under an appearance.
@@ -287,8 +278,8 @@ struct BarcodePlateTests {
         let pixels = try await Self.renderedPixels(brand: brand, appearance: appearance, fixture: fixture)
         let plate = Self.platePixel(of: brand, in: appearance)
         let samples = Self.plateSamples(in: pixels, of: fixture)
-        let failing = samples.filter { !Self.isPlate(pixels.pixel(x: $0.column, y: $0.row), plate) }
-        let shown = failing.first.map { pixels.pixel(x: $0.column, y: $0.row) }
+        let failing = samples.filter { !Self.isPlate(pixels.pixel(at: $0), plate) }
+        let shown = failing.first.map { pixels.pixel(at: $0) }
         let summary = "\(failing.count) of \(samples.count) samples miss the plate \(plate)"
         #expect(
             failing.isEmpty,
@@ -306,7 +297,8 @@ struct BarcodePlateTests {
         let pixels = try RGBAPixels(of: image)
         let column = Int(layout.darkColumn * Double(pixelsPerModule))
         let row = Int(layout.darkRow * Double(pixelsPerModule))
-        #expect(Self.isDark(pixels.pixel(x: column, y: row)), "\(fixture): the poll module is not dark")
+        let position = PixelPosition(column: column, row: row)
+        #expect(Self.isDark(pixels.pixel(at: position)), "\(fixture): the poll module is not dark")
     }
 
     /// Returns the pixel position of a distance counted in modules.
@@ -334,8 +326,10 @@ struct BarcodePlateTests {
         let first = Self.position(ofModules: Self.finderLightRingOffset - Self.finderLightRingHalfSpan, in: pixels)
         let last = Self.position(ofModules: Self.finderLightRingOffset + Self.finderLightRingHalfSpan, in: pixels)
         let row = Self.position(ofModules: Self.finderMarkOffset, in: pixels)
-        let failing = (first...last).filter { !Self.isPlate(pixels.pixel(x: $0, y: row), plate) }
-        let shown = failing.first.map { pixels.pixel(x: $0, y: row) }
+        let failing = (first...last).filter {
+            !Self.isPlate(pixels.pixel(at: PixelPosition(column: $0, row: row)), plate)
+        }
+        let shown = failing.first.map { pixels.pixel(at: PixelPosition(column: $0, row: row)) }
         let summary = "\(failing.count) of \(last - first + 1) ring pixels miss the plate \(plate)"
         #expect(
             failing.isEmpty,
@@ -352,7 +346,7 @@ struct BarcodePlateTests {
             let first = Self.position(ofModules: edge - 0.5, in: pixels)
             let last = Self.position(ofModules: edge + 0.5, in: pixels)
             return (first..<last).count { column in
-                let pixel = pixels.pixel(x: column, y: row)
+                let pixel = pixels.pixel(at: PixelPosition(column: column, row: row))
                 return !Self.isPlate(pixel, plate) && !Self.isBlack(pixel)
             }
         }

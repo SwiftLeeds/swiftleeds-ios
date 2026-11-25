@@ -42,7 +42,7 @@ enum LightBlueCodeImage {
         let pixels = try RGBAPixels(of: source)
         let bytes = (0..<pixels.height).flatMap { row -> [UInt8] in
             (0..<pixels.width).flatMap { column -> [UInt8] in
-                pixels.pixel(x: column, y: row).alpha > 0 ? lightBlue : white
+                pixels.pixel(at: PixelPosition(column: column, row: row)).alpha > 0 ? lightBlue : white
             }
         }
         return try image(width: pixels.width, height: pixels.height, bytes: bytes)

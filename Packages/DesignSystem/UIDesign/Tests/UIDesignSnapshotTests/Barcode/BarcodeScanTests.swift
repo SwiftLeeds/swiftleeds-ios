@@ -30,15 +30,6 @@ struct BarcodeScanTests {
     /// It runs from 0 to 1.
     private static let minimumSpan = 0.7
 
-    /// The most alpha, out of 255, a pixel may have and count as clear.
-    private static let clearTolerance: UInt8 = 8
-
-    /// The brightest color channel, out of 255, that still counts as black.
-    private static let blackCeiling: UInt8 = 8
-
-    /// The least alpha, out of 255, that a pixel must have to count as opaque.
-    private static let opaqueFloor = 255 - clearTolerance
-
     /// Returns the pixels of a barcode drawn at its typical frame, with no style around it.
     ///
     /// - Parameters:
@@ -71,7 +62,7 @@ struct BarcodeScanTests {
     private static func centerPixel(of pixels: RGBAPixels, column: Int, row: Int) -> RGBAPixels.Pixel {
         let module = pixels.width / CheckerBarcodeContent.modulesAcross
         let halfModule = module / 2
-        return pixels.pixel(x: column * module + halfModule, y: row * module + halfModule)
+        return pixels.pixel(at: PixelPosition(column: column * module + halfModule, row: row * module + halfModule))
     }
 
     /// Counts the pixels that differ from the pixel in the same row on the opposite side.
@@ -80,11 +71,11 @@ struct BarcodeScanTests {
     /// - Returns: The number of pixels that a left to right mirror would change. Zero means the
     ///   picture is its own mirror.
     private static func mirrorDifferenceCount(of pixels: RGBAPixels) -> Int {
-        let rows = 0..<pixels.height
-        return (0..<pixels.width).flatMap { column in
-            rows.map { (column, $0) }
-        }.count { column, row in
-            pixels.pixel(x: column, y: row) != pixels.pixel(x: pixels.width - 1 - column, y: row)
+        pixels.columns.flatMap { column in
+            pixels.rows.map { PixelPosition(column: column, row: $0) }
+        }.count { position in
+            let mirror = PixelPosition(column: pixels.width - 1 - position.column, row: position.row)
+            return pixels.pixel(at: position) != pixels.pixel(at: mirror)
         }
     }
 
@@ -100,25 +91,17 @@ struct BarcodeScanTests {
         let topRight = Self.centerPixel(of: pixels, column: 1, row: 0)
         let bottomLeft = Self.centerPixel(of: pixels, column: 0, row: 1)
         let bottomRight = Self.centerPixel(of: pixels, column: 1, row: 1)
-        #expect(topLeft.alpha >= Self.opaqueFloor)
-        #expect(max(topLeft.red, topLeft.green, topLeft.blue) <= Self.blackCeiling)
-        #expect(topRight.alpha <= Self.clearTolerance)
-        #expect(bottomLeft.alpha <= Self.clearTolerance)
-        #expect(bottomRight.alpha >= Self.opaqueFloor)
-        #expect(max(bottomRight.red, bottomRight.green, bottomRight.blue) <= Self.blackCeiling)
+        #expect(topLeft.isOpaqueBlack)
+        #expect(topRight.isClear)
+        #expect(bottomLeft.isClear)
+        #expect(bottomRight.isOpaqueBlack)
     }
 
     @Test(arguments: BarcodePlateFixture.allCases)
     func whenScaledUp_shouldDrawOnlyOpaqueBlackOrClearPixels(fixture: BarcodePlateFixture) throws {
         let pixels = try renderedPixels(of: fixture)
-        let rows = 0..<pixels.height
-        let failingCount = (0..<pixels.width).flatMap { column in
-            rows.map { pixels.pixel(x: column, y: $0) }
-        }.count { pixel in
-            let isClear = pixel.alpha <= Self.clearTolerance
-            let isOpaque = pixel.alpha >= Self.opaqueFloor
-            let isBlack = max(pixel.red, pixel.green, pixel.blue) <= Self.blackCeiling
-            return !(isClear || (isOpaque && isBlack))
+        let failingCount = pixels.count(columns: pixels.columns, rows: pixels.rows) { pixel in
+            !(pixel.isClear || pixel.isOpaqueBlack)
         }
         #expect(failingCount == 0, "\(failingCount) pixels are neither opaque black nor clear")
     }
@@ -131,11 +114,10 @@ struct BarcodeScanTests {
         try #require(asymmetry > 0, "The picture is its own mirror, so a mirrored render would look the same")
         #expect(leftToRight.width == rightToLeft.width)
         #expect(leftToRight.height == rightToLeft.height)
-        let rows = 0..<leftToRight.height
-        let differingCount = (0..<leftToRight.width).flatMap { column in
-            rows.map { (column, $0) }
-        }.count { column, row in
-            leftToRight.pixel(x: column, y: row) != rightToLeft.pixel(x: column, y: row)
+        let differingCount = leftToRight.columns.flatMap { column in
+            leftToRight.rows.map { PixelPosition(column: column, row: $0) }
+        }.count { position in
+            leftToRight.pixel(at: position) != rightToLeft.pixel(at: position)
         }
         #expect(differingCount == 0, "\(differingCount) pixels differ between the two directions")
     }
@@ -143,8 +125,8 @@ struct BarcodeScanTests {
     @Test(arguments: BarcodePlateFixture.allCases)
     func whenFramed_shouldFillFrameWithCode(fixture: BarcodePlateFixture) throws {
         let pixels = try renderedPixels(of: fixture)
-        let opaqueColumns = (0..<pixels.width).filter { column in
-            (0..<pixels.height).contains { pixels.pixel(x: column, y: $0).alpha > Self.clearTolerance }
+        let opaqueColumns = pixels.columns.filter { column in
+            !pixels.isClear(columns: column..<(column + 1), rows: pixels.rows)
         }
         let first = try #require(opaqueColumns.first)
         let last = try #require(opaqueColumns.last)

@@ -7,6 +7,9 @@ import CoreGraphics
 package struct RGBAPixels: Equatable, Hashable, Sendable {
     /// One pixel's channels, each from 0 to 255.
     package struct Pixel: Equatable, Hashable, Sendable {
+        /// How far, out of 255, a channel may sit from clear, black or opaque and still count as it.
+        private static let tolerance: UInt8 = 8
+
         /// The red channel, premultiplied by alpha.
         package let red: UInt8
 
@@ -31,6 +34,18 @@ package struct RGBAPixels: Equatable, Hashable, Sendable {
             self.green = green
             self.blue = blue
             self.alpha = alpha
+        }
+
+        /// Whether the pixel is clear: its alpha is within 8 of 0.
+        package var isClear: Bool {
+            alpha <= Self.tolerance
+        }
+
+        /// Whether the pixel is opaque black.
+        ///
+        /// Every color channel is within 8 of 0, and alpha is within 8 of 255.
+        package var isOpaqueBlack: Bool {
+            max(red, green, blue) <= Self.tolerance && alpha >= UInt8.max - Self.tolerance
         }
     }
 
@@ -99,15 +114,62 @@ package struct RGBAPixels: Equatable, Hashable, Sendable {
         bytes = Array(UnsafeBufferPointer(start: data.assumingMemoryBound(to: UInt8.self), count: count))
     }
 
-    /// Returns one pixel.
+    /// Every column of the image, from the left.
+    package var columns: Range<Int> {
+        0..<width
+    }
+
+    /// Every row of the image, from the top.
+    package var rows: Range<Int> {
+        0..<height
+    }
+
+    /// Returns whether every pixel in an area is clear.
     ///
     /// - Parameters:
-    ///   - x: The column of the pixel, from the left.
-    ///   - y: The row of the pixel, from the top.
+    ///   - columns: The columns of the area.
+    ///   - rows: The rows of the area.
+    /// - Returns: Whether each pixel is ``Pixel/isClear``. An empty area returns `true`.
+    /// - Precondition: The area must lie inside the image.
+    /// - Complexity: O(*n*), where *n* is the number of pixels in the area.
+    package func isClear(columns: Range<Int>, rows: Range<Int>) -> Bool {
+        count(columns: columns, rows: rows) { !$0.isClear } == 0
+    }
+
+    /// Returns whether any pixel in an area is opaque black.
+    ///
+    /// - Parameters:
+    ///   - columns: The columns of the area.
+    ///   - rows: The rows of the area.
+    /// - Returns: Whether some pixel is ``Pixel/isOpaqueBlack``.
+    /// - Precondition: The area must lie inside the image.
+    /// - Complexity: O(*n*), where *n* is the number of pixels in the area.
+    package func hasOpaqueBlack(columns: Range<Int>, rows: Range<Int>) -> Bool {
+        count(columns: columns, rows: rows) { $0.isOpaqueBlack } > 0
+    }
+
+    /// Counts the pixels in an area that match a test.
+    ///
+    /// - Parameters:
+    ///   - columns: The columns of the area.
+    ///   - rows: The rows of the area.
+    ///   - isMatch: Returns whether a pixel counts.
+    /// - Returns: The number of pixels in the area for which `isMatch` returns `true`.
+    /// - Precondition: The area must lie inside the image.
+    /// - Complexity: O(*n*), where *n* is the number of pixels in the area.
+    package func count(columns: Range<Int>, rows: Range<Int>, where isMatch: (Pixel) -> Bool) -> Int {
+        columns.reduce(0) { total, column in
+            total + rows.count { isMatch(pixel(at: PixelPosition(column: column, row: $0))) }
+        }
+    }
+
+    /// Returns one pixel.
+    ///
+    /// - Parameter position: The place of the pixel, from the top left.
     /// - Returns: The pixel's channels.
-    /// - Precondition: The column and row must lie inside the image.
-    package func pixel(x: Int, y: Int) -> Pixel {
-        let index = (y * width + x) * Self.channels
+    /// - Precondition: The position must lie inside the image.
+    package func pixel(at position: PixelPosition) -> Pixel {
+        let index = (position.row * width + position.column) * Self.channels
         return Pixel(
             red: bytes[index + Channel.red.rawValue],
             green: bytes[index + Channel.green.rawValue],
