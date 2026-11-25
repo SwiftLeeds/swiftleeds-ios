@@ -37,8 +37,8 @@ struct BarcodePlateScanTests {
         }
     }
 
-    /// The pixels in one point of the render.
-    private static let renderScale: CGFloat = 2
+    /// The scale of the picture whose plate is checked and scanned.
+    private static let scanScale = RenderScale(pixelsPerPoint: 2)
 
     /// How far in from an edge a plate sample sits, in modules.
     ///
@@ -112,7 +112,7 @@ struct BarcodePlateScanTests {
     ///   - plate: The color the plate should be.
     /// - Throws: When the picture cannot be made or read.
     private func expectScan(of view: some View, fixture: BarcodeFixture, plate: Color) throws {
-        let image = try CGImage.rendering(view, atScale: Self.renderScale)
+        let image = try CGImage.rendering(view, atScale: Self.scanScale)
         expectPlate(in: try RGBAPixels(of: image), of: fixture, matching: plate)
         #expect(BarcodeReader.payload(of: image, as: fixture.symbology) == fixture.text)
     }

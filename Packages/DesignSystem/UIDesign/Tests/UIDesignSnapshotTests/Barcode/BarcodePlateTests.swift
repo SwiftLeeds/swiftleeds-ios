@@ -80,13 +80,15 @@ struct BarcodePlateTests {
     /// How long to wait between two reads of the render.
     private static let pollInterval = Duration.milliseconds(20)
 
-    /// The number of pixels in one point of the render.
-    private static let renderScale: CGFloat = 3
+    /// The scale of the window picture whose pixels are read.
+    private static let windowScale = RenderScale(pixelsPerPoint: 3)
 
     /// The width, in pixels, of the plate's rounded corner at each side.
     ///
     /// The plate is not drawn there.
-    private static let cornerRadiusInPixels = Int((CGFloat(CornerRadius.tile.level) * renderScale).rounded(.up))
+    private static let cornerRadiusInPixels = Int(
+        (CGFloat(CornerRadius.tile.level) * CGFloat(windowScale)).rounded(.up)
+    )
 
     /// The most a channel may sit from the plate's, out of 255.
     private static let channelTolerance = 8
@@ -170,7 +172,7 @@ struct BarcodePlateTests {
     /// - Throws: When the picture cannot be made.
     private static func image(of window: UIWindow) throws -> CGImage {
         let format = UIGraphicsImageRendererFormat()
-        format.scale = renderScale
+        format.scale = CGFloat(windowScale)
         let image = UIGraphicsImageRenderer(size: window.bounds.size, format: format).image { context in
             window.layer.render(in: context.cgContext)
         }

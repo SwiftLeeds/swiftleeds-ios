@@ -22,8 +22,8 @@ struct BarcodeScanTests {
     /// The side of the frame the barcode fills, in points.
     private static let side = BarcodeFixture.qrCode.frameWidth
 
-    /// The number of pixels in one point of the render.
-    private static let renderScale: CGFloat = 3
+    /// The scale of the picture whose pixels are read.
+    private static let scanScale = RenderScale(pixelsPerPoint: 3)
 
     /// The share of the frame's width the code's marks must span.
     ///
@@ -46,7 +46,7 @@ struct BarcodeScanTests {
             .barcodeStyle(ContentOnlyBarcodeStyle())
             .frame(width: fixture.frameSize.width, height: fixture.frameSize.height)
             .environment(\.layoutDirection, layoutDirection)
-        return try RGBAPixels(of: CGImage.rendering(view, atScale: Self.renderScale))
+        return try RGBAPixels(of: CGImage.rendering(view, atScale: Self.scanScale))
     }
 
     /// Returns the pixel at the center of one module of a rendered picture.
@@ -81,7 +81,7 @@ struct BarcodeScanTests {
         let view = Barcode(try CheckerBarcodeContent(), label: Text("Check-in QR code"))
             .barcodeStyle(ContentOnlyBarcodeStyle())
             .frame(width: Self.side, height: Self.side)
-        let pixels = try RGBAPixels(of: CGImage.rendering(view, atScale: Self.renderScale))
+        let pixels = try RGBAPixels(of: CGImage.rendering(view, atScale: Self.scanScale))
         let topLeft = Self.centerPixel(of: pixels, column: 0, row: 0)
         let topRight = Self.centerPixel(of: pixels, column: 1, row: 0)
         let bottomLeft = Self.centerPixel(of: pixels, column: 0, row: 1)

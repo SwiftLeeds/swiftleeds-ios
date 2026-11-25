@@ -52,8 +52,8 @@ struct BarcodeCornerTests {
         }
     }
 
-    /// The pixels in one point of the render.
-    private static let renderScale: CGFloat = 2
+    /// The scale of the pictures whose corners are compared.
+    private static let cornerScale = RenderScale(pixelsPerPoint: 2)
 
     /// Renders a view to its pixels.
     ///
@@ -61,7 +61,7 @@ struct BarcodeCornerTests {
     /// - Returns: The pixels of the picture.
     /// - Throws: When the picture cannot be made or read.
     private func pixels(of view: some View) throws -> RGBAPixels {
-        try RGBAPixels(of: CGImage.rendering(view, atScale: Self.renderScale))
+        try RGBAPixels(of: CGImage.rendering(view, atScale: Self.cornerScale))
     }
 
     /// Counts the marks the plate removes from one quarter of the picture.

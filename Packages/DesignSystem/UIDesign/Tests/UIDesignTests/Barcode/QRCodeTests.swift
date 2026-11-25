@@ -13,8 +13,8 @@ struct QRCodeTests {
     /// The side of the square the code is drawn in, in points.
     private static let drawnSide = BarcodeFixture.qrCode.frameWidth
 
-    /// How many pixels the renderer draws for each point.
-    private static let renderScale: CGFloat = 8
+    /// The scale of the picture a scanner reads back.
+    private static let scanScale = RenderScale(pixelsPerPoint: 8)
 
     /// The modules across the drawn code, with its quiet zone.
     ///
@@ -89,7 +89,7 @@ struct QRCodeTests {
             .interpolation(.none)
             .frame(width: drawnSide, height: drawnSide)
             .background(.scannableSurface)
-        return try CGImage.rendering(content, atScale: renderScale)
+        return try CGImage.rendering(content, atScale: scanScale)
     }
 
     /// Returns the picture of a code with nothing behind it.
@@ -102,7 +102,7 @@ struct QRCodeTests {
             .resizable()
             .interpolation(.none)
             .frame(width: drawnSide, height: drawnSide)
-        return try CGImage.rendering(content, atScale: renderScale)
+        return try CGImage.rendering(content, atScale: scanScale)
     }
 
     /// Returns whether every pixel of one module's square is opaque black, or every one is clear.
