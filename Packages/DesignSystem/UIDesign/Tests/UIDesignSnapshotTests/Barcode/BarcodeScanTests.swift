@@ -20,7 +20,7 @@ struct BarcodeScanTests {
     }
 
     /// The side of the frame the barcode fills, in points.
-    private static let side: CGFloat = 220
+    private static let side = BarcodeFixture.qrCode.frameWidth
 
     /// The number of pixels in one point of the render.
     private static let renderScale: CGFloat = 3

@@ -31,7 +31,7 @@ struct BarcodePlateTests {
     }
 
     /// The made-up text the code carries.
-    private static let text = "ti_ExampleTicket0000000000"
+    private static let text = BarcodeFixture.qrCode.text
 
     /// The modules across the fixture's code with its quiet zone.
     ///

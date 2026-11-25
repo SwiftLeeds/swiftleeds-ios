@@ -7,7 +7,7 @@ import Vision
 
 struct AztecCodeTests {
     /// Made-up text for the code.
-    private static let fixtureText = "LOCKER-0042"
+    private static let fixtureText = BarcodeFixture.aztecCode.text
 
     /// The most e-acute characters CoreImage's generator draws in one code.
     ///

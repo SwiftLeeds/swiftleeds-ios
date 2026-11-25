@@ -2,6 +2,7 @@
 import SwiftUI
 import Testing
 import UIDesign
+import UIDesignTestSupport
 
 @MainActor
 @Suite
@@ -39,7 +40,7 @@ struct BarcodeStyleTests {
     private static let styleText = "Drawn by the style"
 
     /// The text the code carries, made up.
-    private static let text = "ti_ExampleTicket0000000000"
+    private static let text = BarcodeFixture.qrCode.text
 
     @Test
     func whenStyleIsSet_shouldDrawThatStylesBody() throws {

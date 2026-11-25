@@ -2,6 +2,7 @@
 import SwiftUI
 import Testing
 import UIDesign
+import UIDesignTestSupport
 import UIKit
 
 @MainActor
@@ -14,7 +15,7 @@ struct BarcodeAccessibilityTests {
     private static let customLabel = "Check-in QR code"
 
     /// The text the code carries, made up.
-    private static let text = "ti_ExampleTicket0000000000"
+    private static let text = BarcodeFixture.qrCode.text
 
     @Test
     func whenCodeIsDrawn_shouldExposeOneImageElementWithLabel() throws {

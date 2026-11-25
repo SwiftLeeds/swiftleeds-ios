@@ -3,27 +3,28 @@ import SnapshotTesting
 import SwiftUI
 import Testing
 import UIDesign
+import UIDesignTestSupport
 import UIKit
 
 @MainActor
 @Suite(.snapshots(record: .never)) struct BarcodeSnapshotTests {
     /// The made-up text the code carries.
-    private static let text = "ti_ExampleTicket0000000000"
+    private static let text = BarcodeFixture.qrCode.text
 
     /// The side of the barcode's frame, in points.
-    private static let side: CGFloat = 220
+    private static let side = BarcodeFixture.qrCode.frameWidth
 
     /// The made-up text the Aztec code carries.
-    private static let aztecText = "LOCKER-0042"
+    private static let aztecText = BarcodeFixture.aztecCode.text
 
     /// The made-up text the PDF417 barcode carries.
-    private static let pdf417Text = "EXAMPLE PASS 0001"
+    private static let pdf417Text = BarcodeFixture.pdf417Barcode.text
 
     /// The made-up text the Code 128 barcode carries.
-    private static let code128Text = "ABCD-0001"
+    private static let code128Text = BarcodeFixture.code128Barcode.text
 
     /// The width of the frame a wide barcode is drawn in, in points.
-    private static let wideWidth: CGFloat = 320
+    private static let wideWidth = BarcodeFixture.pdf417Barcode.frameWidth
 
     /// Returns a barcode in its own frame, with room around it, on a grouped surface.
     ///

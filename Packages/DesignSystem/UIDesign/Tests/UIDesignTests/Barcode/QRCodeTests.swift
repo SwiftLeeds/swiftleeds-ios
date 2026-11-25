@@ -8,10 +8,10 @@ import UIDesignTestSupport
 @MainActor
 struct QRCodeTests {
     /// The text the code carries.
-    private static let fixtureText = "ti_ExampleTicket0000000000"
+    private static let fixtureText = BarcodeFixture.qrCode.text
 
     /// The side of the square the code is drawn in, in points.
-    private static let drawnSide: CGFloat = 220
+    private static let drawnSide = BarcodeFixture.qrCode.frameWidth
 
     /// How many pixels the renderer draws for each point.
     private static let renderScale: CGFloat = 8

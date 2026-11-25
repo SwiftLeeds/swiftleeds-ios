@@ -12,7 +12,7 @@ struct PDF417BarcodeTests {
     private static let generatorLimit = 517
 
     /// Made-up text for the code.
-    private static let fixtureText = "EXAMPLE PASS 0001"
+    private static let fixtureText = BarcodeFixture.pdf417Barcode.text
 
     /// About two hundred made-up letters, to show the margin does not depend on the message size.
     private static let longText = String(repeating: "ABCDEFGHIJ", count: 20)

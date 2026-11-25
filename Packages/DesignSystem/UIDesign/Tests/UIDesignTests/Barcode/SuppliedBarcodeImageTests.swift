@@ -66,7 +66,7 @@ struct SuppliedBarcodeImageTests {
     }
 
     /// The text the light blue code carries, made up.
-    private static let codeText = "ti_ExampleTicket0000000000"
+    private static let codeText = BarcodeFixture.qrCode.text
 
     /// How many rows of position step the pattern that lowers each pixel of the almost white picture.
     private static let noiseRowStep = 3

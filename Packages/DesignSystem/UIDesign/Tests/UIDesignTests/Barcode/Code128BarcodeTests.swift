@@ -6,7 +6,7 @@ import Vision
 
 struct Code128BarcodeTests {
     /// Made-up text for the code.
-    private static let fixtureText = "ABCD-0001"
+    private static let fixtureText = BarcodeFixture.code128Barcode.text
 
     /// ASCII text that differs from a non-ASCII fixture only in one letter.
     private static let asciiText = "cafe"
