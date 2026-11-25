@@ -35,13 +35,14 @@ struct Code128BarcodeTests {
     /// The modules of clear quiet zone the Code 128 spec asks for on each side.
     private static let quietZoneModules = 10
 
-    /// Returns the quiet zone probe of the fixture code's stored picture.
+    /// Returns the quiet zone probe of a barcode's stored picture.
     ///
+    /// - Parameter barcode: The barcode whose picture to probe.
     /// - Returns: The probe of the picture.
-    /// - Throws: When the barcode cannot be made or its picture cannot be read.
-    private static func fixtureProbe() throws -> QuietZoneProbe {
+    /// - Throws: When the picture cannot be read.
+    private static func probe(of barcode: Code128Barcode) throws -> QuietZoneProbe {
         try QuietZoneProbe(
-            of: Code128Barcode(fixtureText).cgImage,
+            of: barcode.cgImage,
             modulesAcross: BarcodeFixture.code128Barcode.modulesAcross,
             quietZoneModules: quietZoneModules,
         )
@@ -49,20 +50,23 @@ struct Code128BarcodeTests {
 
     @Test
     func whenTextIsEncoded_shouldStoreWholePixelsForEachModule() throws {
-        let sut = try Self.fixtureProbe()
-        #expect(sut.hasWholeModules)
+        let sut = try Code128Barcode(Self.fixtureText)
+        let probe = try Self.probe(of: sut)
+        #expect(probe.hasWholeModules)
     }
 
     @Test(arguments: QuietZoneProbe.Side.allCases)
     func whenTextIsEncoded_shouldKeepTenModulesClearOnEachSide(side: QuietZoneProbe.Side) throws {
-        let sut = try Self.fixtureProbe()
-        #expect(sut.isClear(on: side), "The \(side) zone is not clear")
+        let sut = try Code128Barcode(Self.fixtureText)
+        let probe = try Self.probe(of: sut)
+        #expect(probe.isClear(on: side), "The \(side) zone is not clear")
     }
 
     @Test(arguments: [QuietZoneProbe.Side.left, .right])
     func whenTextIsEncoded_shouldDrawBarAtInnerEdgeOfQuietZone(side: QuietZoneProbe.Side) throws {
-        let sut = try Self.fixtureProbe()
-        #expect(sut.hasMark(justInside: side), "No bar just inside the \(side) zone")
+        let sut = try Code128Barcode(Self.fixtureText)
+        let probe = try Self.probe(of: sut)
+        #expect(probe.hasMark(justInside: side), "No bar just inside the \(side) zone")
     }
 
     @Test

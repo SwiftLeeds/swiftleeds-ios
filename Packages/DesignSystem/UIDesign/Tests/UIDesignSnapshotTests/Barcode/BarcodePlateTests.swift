@@ -140,14 +140,14 @@ struct BarcodePlateTests {
             .frame(width: size.width, height: size.height)
             .background(.groupedSurface)
             .environment(\.brand, brand)
-        let sut = HostedRender(
+        let host = HostedRender(
             size: size,
             appearance: appearance,
             scale: windowScale,
             attempts: attempts,
             interval: pollInterval,
         )
-        return try await sut.image(of: view) { image in
+        return try await host.image(of: view) { image in
             try showsMarks(in: RGBAPixels(of: image), of: fixture)
         }
     }

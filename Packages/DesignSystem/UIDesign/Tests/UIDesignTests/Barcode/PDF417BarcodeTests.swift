@@ -46,14 +46,16 @@ struct PDF417BarcodeTests {
         String(repeating: "\u{E9}", count: count)
     }
 
-    /// Returns the quiet zone probe of an example's stored picture.
+    /// Returns the quiet zone probe of a barcode's stored picture.
     ///
-    /// - Parameter example: The text and the modules across its picture.
+    /// - Parameters:
+    ///   - barcode: The barcode whose picture to probe.
+    ///   - example: The text and the modules across its picture.
     /// - Returns: The probe of the picture.
-    /// - Throws: When the barcode cannot be made or its picture cannot be read.
-    private static func probe(of example: QuietZoneExample) throws -> QuietZoneProbe {
+    /// - Throws: When the picture cannot be read.
+    private static func probe(of barcode: PDF417Barcode, in example: QuietZoneExample) throws -> QuietZoneProbe {
         try QuietZoneProbe(
-            of: PDF417Barcode(example.text).cgImage,
+            of: barcode.cgImage,
             modulesAcross: example.modulesAcross,
             quietZoneModules: quietZoneModules,
         )
@@ -61,8 +63,9 @@ struct PDF417BarcodeTests {
 
     @Test(arguments: quietZoneExamples)
     func whenTextIsEncoded_shouldStoreWholePixelsForEachModule(example: QuietZoneExample) throws {
-        let sut = try Self.probe(of: example)
-        #expect(sut.hasWholeModules)
+        let sut = try PDF417Barcode(example.text)
+        let probe = try Self.probe(of: sut, in: example)
+        #expect(probe.hasWholeModules)
     }
 
     @Test(arguments: quietZoneExamples, QuietZoneProbe.Side.allCases)
@@ -70,8 +73,9 @@ struct PDF417BarcodeTests {
         example: QuietZoneExample,
         side: QuietZoneProbe.Side,
     ) throws {
-        let sut = try Self.probe(of: example)
-        #expect(sut.isClear(on: side), "The \(side) zone is not clear")
+        let sut = try PDF417Barcode(example.text)
+        let probe = try Self.probe(of: sut, in: example)
+        #expect(probe.isClear(on: side), "The \(side) zone is not clear")
     }
 
     @Test(arguments: quietZoneExamples, QuietZoneProbe.Side.allCases)
@@ -79,8 +83,9 @@ struct PDF417BarcodeTests {
         example: QuietZoneExample,
         side: QuietZoneProbe.Side,
     ) throws {
-        let sut = try Self.probe(of: example)
-        #expect(sut.hasMark(justInside: side), "No bar just inside the \(side) zone")
+        let sut = try PDF417Barcode(example.text)
+        let probe = try Self.probe(of: sut, in: example)
+        #expect(probe.hasMark(justInside: side), "No bar just inside the \(side) zone")
     }
 
     @Test

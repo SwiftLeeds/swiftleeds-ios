@@ -4,8 +4,8 @@ import CoreGraphics
 /// The clear border of a stored barcode picture, read side by side.
 ///
 /// ```swift
-/// let sut = try QuietZoneProbe(of: code.cgImage, modulesAcross: 29, quietZoneModules: 2)
-/// let isLeftClear = sut.isClear(on: .left)
+/// let probe = try QuietZoneProbe(of: code.cgImage, modulesAcross: 29, quietZoneModules: 2)
+/// let isLeftClear = probe.isClear(on: .left)
 /// ```
 package struct QuietZoneProbe {
     /// One side of the picture.

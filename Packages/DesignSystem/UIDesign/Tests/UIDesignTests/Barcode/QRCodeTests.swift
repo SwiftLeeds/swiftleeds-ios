@@ -177,9 +177,10 @@ struct QRCodeTests {
 
     @Test
     func whenTextIsEncoded_shouldDrawBlackModuleAtInnerEdgeOfQuietZone() throws {
-        let sut = try Self.fixturePixelsWithoutPlate()
-        let sample = Int(Self.firstModuleCenter * Self.modulePixels(in: sut))
-        #expect(sut.pixel(at: PixelPosition(column: sample, row: sample)).isOpaqueBlack)
+        let sut = try QRCode(Self.fixtureText)
+        let pixels = try RGBAPixels(of: Self.renderWithoutPlate(sut))
+        let sample = Int(Self.firstModuleCenter * Self.modulePixels(in: pixels))
+        #expect(pixels.pixel(at: PixelPosition(column: sample, row: sample)).isOpaqueBlack)
     }
 
     @Test
