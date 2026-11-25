@@ -29,7 +29,18 @@ package enum BarcodeFixture: CaseIterable, Sendable {
     private static let ticketText = "ti_ExampleTicket0000000000"
 
     /// The cases that UIDesign generates itself, so the supplied image is left out.
-    package static let generated: [Self] = [.qrCode, .aztecCode, .pdf417Barcode, .code128Barcode]
+    package static let generated: [Self] = allCases.filter(\.isGenerated)
+
+    /// Whether UIDesign draws this code itself, rather than showing a supplied image.
+    private var isGenerated: Bool {
+        switch self {
+        case .qrCode: true
+        case .suppliedLightBlueQRCode: false
+        case .aztecCode: true
+        case .pdf417Barcode: true
+        case .code128Barcode: true
+        }
+    }
 
     /// The made-up text the code carries.
     package var text: String {
