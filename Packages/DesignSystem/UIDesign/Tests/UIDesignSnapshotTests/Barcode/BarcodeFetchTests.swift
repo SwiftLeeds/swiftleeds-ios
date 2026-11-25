@@ -2,6 +2,7 @@
 import SwiftUI
 import Testing
 import UIDesign
+import UIKit
 
 @MainActor
 @Suite
