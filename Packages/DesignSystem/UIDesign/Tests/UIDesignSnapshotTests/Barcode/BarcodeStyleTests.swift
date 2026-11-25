@@ -45,18 +45,18 @@ struct BarcodeStyleTests {
     @Test
     func whenStyleIsSet_shouldDrawThatStylesBody() throws {
         let code = try QRCode(Self.text)
-        let view = Barcode(code, label: Text("Ticket QR code")).barcodeStyle(TextBarcodeStyle())
-        let elements = try AccessibilityTree.elements(of: view)
+        let sut = Barcode(code, label: Text("Ticket QR code")).barcodeStyle(TextBarcodeStyle())
+        let elements = try AccessibilityTree.elements(of: sut)
         #expect(elements.map(\.label) == [Self.styleText])
     }
 
     @Test(arguments: ColorScheme.allCases)
     func whenStyleReadsColorScheme_shouldDrawThatScheme(colorScheme: ColorScheme) throws {
         let code = try QRCode(Self.text)
-        let view = Barcode(code, label: Text("Ticket QR code"))
+        let sut = Barcode(code, label: Text("Ticket QR code"))
             .barcodeStyle(SchemeBarcodeStyle())
             .environment(\.colorScheme, colorScheme)
-        let elements = try AccessibilityTree.elements(of: view)
+        let elements = try AccessibilityTree.elements(of: sut)
         #expect(elements.map(\.label) == [String(describing: colorScheme)])
     }
 }

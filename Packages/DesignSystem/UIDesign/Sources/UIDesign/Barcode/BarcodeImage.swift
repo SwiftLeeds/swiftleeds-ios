@@ -83,8 +83,10 @@ package enum BarcodeImage {
     ///
     /// - Parameter picture: The picture at one pixel for each module.
     /// - Returns: A number from ``fewestPixelsPerModule`` to ``pixelsPerModule``.
+    ///   For an empty picture, it is ``fewestPixelsPerModule``.
     private static func wholePixelsPerModule(for picture: CIImage) -> Int {
         let longerSide = Int(max(picture.extent.width, picture.extent.height))
+        guard longerSide > 0 else { return fewestPixelsPerModule }
         return min(pixelsPerModule, max(fewestPixelsPerModule, longerSideCap / longerSide))
     }
 

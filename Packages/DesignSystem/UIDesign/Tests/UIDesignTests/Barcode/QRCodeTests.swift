@@ -137,8 +137,8 @@ struct QRCodeTests {
 
     @Test
     func whenTextIsEncoded_shouldStoreEachModuleAsUniformSquare() throws {
-        let code = try QRCode(Self.fixtureText)
-        let pixels = try RGBAPixels(of: code.cgImage)
+        let sut = try QRCode(Self.fixtureText)
+        let pixels = try RGBAPixels(of: sut.cgImage)
         let pixelsPerModule = pixels.width / Self.modulesWithQuietZone
         try #require(
             pixels.width == Self.modulesWithQuietZone * pixelsPerModule,
@@ -208,8 +208,8 @@ struct QRCodeTests {
     @Test(arguments: QRCode.ErrorCorrectionLevel.allCases)
     func whenTextIsAtLevelCapacity_shouldEncodeAndScanBack(level: QRCode.ErrorCorrectionLevel) throws {
         let text = String(repeating: "a", count: Self.capacityInBytes(of: level))
-        let code = try QRCode(text, errorCorrection: level)
-        let message = try QRCodeScanner.payload(in: try Self.render(code))
+        let sut = try QRCode(text, errorCorrection: level)
+        let message = try QRCodeScanner.payload(in: try Self.render(sut))
         #expect(message == text)
     }
 
@@ -265,8 +265,8 @@ struct QRCodeTests {
 
     @Test
     func whenTextIsEncoded_shouldScanBackAsSameText() throws {
-        let code = try QRCode(Self.fixtureText)
-        let message = try QRCodeScanner.payload(in: try Self.render(code))
+        let sut = try QRCode(Self.fixtureText)
+        let message = try QRCodeScanner.payload(in: try Self.render(sut))
         #expect(message == Self.fixtureText)
     }
 }

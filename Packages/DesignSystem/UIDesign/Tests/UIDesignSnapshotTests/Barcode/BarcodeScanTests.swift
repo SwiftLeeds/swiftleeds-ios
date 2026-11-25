@@ -85,11 +85,11 @@ struct BarcodeScanTests {
         layoutDirection: LayoutDirection = .leftToRight,
     ) throws -> RGBAPixels {
         let code = try fixture.content
-        let view = Barcode(code, label: Text("Code"))
+        let sut = Barcode(code, label: Text("Code"))
             .barcodeStyle(ContentOnlyBarcodeStyle())
             .frame(width: fixture.frameSize.width, height: fixture.frameSize.height)
             .environment(\.layoutDirection, layoutDirection)
-        return try RGBAPixels(of: CGImage.rendering(view, atScale: Self.scanScale))
+        return try RGBAPixels(of: CGImage.rendering(sut, atScale: Self.scanScale))
     }
 
     /// Returns the pixel at the center of one module of a rendered picture.

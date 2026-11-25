@@ -71,7 +71,7 @@ struct ScannableSurfaceTests {
     }
 
     @Test(arguments: Brand.allCases, increasedContrastAppearances)
-    func whenContrastIsIncreased_shouldNotLowerContrastWithBlackMarks(
+    func whenContrastIsIncreased_shouldKeepContrastWithBlackMarksAtLeastStandard(
         brand: Brand,
         appearance: SystemAppearance,
     ) throws {
@@ -88,8 +88,8 @@ struct ScannableSurfaceTests {
         var environment = EnvironmentValues()
         environment.brand = brand
         environment.colorScheme = .dark
-        let style: BrandShapeStyle = .scannableSurface
-        let actual = Self.resolve(style.resolve(in: environment), with: SystemAppearance.dark.traits)
+        let sut: BrandShapeStyle = .scannableSurface
+        let actual = Self.resolve(sut.resolve(in: environment), with: SystemAppearance.dark.traits)
         let expected = Self.resolve(brand.scannableSurface, with: SystemAppearance.dark.traits)
         #expect(Self.areClose(actual, expected), "\(brand) plate \(actual), expected \(expected)")
     }

@@ -303,6 +303,7 @@ struct BarcodePlateTests {
         let first = Self.position(ofModules: Self.finderLightRingOffset - Self.finderLightRingHalfSpan, in: pixels)
         let last = Self.position(ofModules: Self.finderLightRingOffset + Self.finderLightRingHalfSpan, in: pixels)
         let row = Self.position(ofModules: Self.finderMarkOffset, in: pixels)
+        try #require(last > first, "The ring window holds \(last - first + 1) pixels, so no ring is checked")
         let failing = (first...last).filter {
             !Self.isPlate(pixels.pixel(at: PixelPosition(column: $0, row: row)), plate)
         }
@@ -319,10 +320,17 @@ struct BarcodePlateTests {
         let pixels = try await Self.renderedPixels(brand: brand, appearance: appearance)
         let plate = Self.platePixel(of: brand, in: appearance)
         let row = Self.position(ofModules: Self.finderMarkOffset, in: pixels)
-        let blended = Self.finderEdgeOffsets.map { edge in
+        let neighborhoods = Self.finderEdgeOffsets.map { edge in
             let first = Self.position(ofModules: edge - Self.edgeNeighborhood, in: pixels)
             let last = Self.position(ofModules: edge + Self.edgeNeighborhood, in: pixels)
-            return (first..<last).count { column in
+            return first..<last
+        }
+        try #require(
+            neighborhoods.allSatisfy { !$0.isEmpty },
+            "An edge neighborhood holds no pixels: \(neighborhoods)",
+        )
+        let blended = neighborhoods.map { neighborhood in
+            neighborhood.count { column in
                 let pixel = pixels.pixel(at: PixelPosition(column: column, row: row))
                 return !Self.isPlate(pixel, plate) && !Self.isBlack(pixel)
             }
