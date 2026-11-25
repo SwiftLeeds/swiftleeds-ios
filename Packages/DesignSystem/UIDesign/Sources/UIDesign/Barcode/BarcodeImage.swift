@@ -48,6 +48,12 @@ package enum BarcodeImage {
     /// It merges faint noise into one tone, so a flat area is not split into marks.
     private static let toneLevels: Float = 16
 
+    /// A color matrix row that adds no red, green, blue or alpha.
+    private static let noColor = CIVector(x: 0, y: 0, z: 0, w: 0)
+
+    /// A color matrix row that keeps only the alpha, so every mark becomes opaque black.
+    private static let alphaOnly = CIVector(x: 0, y: 0, z: 0, w: 1)
+
     /// Returns a generated code as an image with alpha, at most ten pixels for each module.
     ///
     /// - Parameters:
@@ -60,7 +66,7 @@ package enum BarcodeImage {
         generatorMargin: QuietZone,
         reaching required: QuietZone,
     ) -> CGImage? {
-        let marks = blackModulesOnClear(generated)
+        guard let marks = blackModulesOnClear(generated) else { return nil }
         let missing = generatorMargin.missing(toReach: required)
         let picture = scaledUp(addingQuietZone(missing, to: marks))
         return context.createCGImage(picture, from: picture.extent)
@@ -98,7 +104,7 @@ package enum BarcodeImage {
         let filter = CIFilter.colorThresholdOtsu()
         filter.inputImage = tones
         guard let blackOnWhite = filter.outputImage else { return nil }
-        let marks = blackModulesOnClear(blackOnWhite)
+        guard let marks = blackModulesOnClear(blackOnWhite) else { return nil }
         return context.createCGImage(marks, from: marks.extent)
     }
 
@@ -126,19 +132,19 @@ package enum BarcodeImage {
     /// Returns a picture where each dark module is opaque black and everything else is clear.
     ///
     /// - Parameter blackOnWhite: A black on white picture, from the generator or a threshold.
-    /// - Returns: The picture with the white turned clear.
-    private static func blackModulesOnClear(_ blackOnWhite: CIImage) -> CIImage {
-        let inverted = blackOnWhite.applyingFilter("CIColorInvert")
-        let masked = inverted.applyingFilter("CIMaskToAlpha")
-        return masked.applyingFilter(
-            "CIColorMatrix",
-            parameters: [
-                "inputRVector": CIVector(x: 0, y: 0, z: 0, w: 0),
-                "inputGVector": CIVector(x: 0, y: 0, z: 0, w: 0),
-                "inputBVector": CIVector(x: 0, y: 0, z: 0, w: 0),
-                "inputAVector": CIVector(x: 0, y: 0, z: 0, w: 1),
-            ],
-        )
+    /// - Returns: The picture with the white turned clear, or `nil` when CoreImage draws none.
+    private static func blackModulesOnClear(_ blackOnWhite: CIImage) -> CIImage? {
+        let invert = CIFilter.colorInvert()
+        invert.inputImage = blackOnWhite
+        let mask = CIFilter.maskToAlpha()
+        mask.inputImage = invert.outputImage
+        let blackWithAlpha = CIFilter.colorMatrix()
+        blackWithAlpha.inputImage = mask.outputImage
+        blackWithAlpha.rVector = noColor
+        blackWithAlpha.gVector = noColor
+        blackWithAlpha.bVector = noColor
+        blackWithAlpha.aVector = alphaOnly
+        return blackWithAlpha.outputImage
     }
 
     /// Returns a picture with a quiet zone added around it, clear.

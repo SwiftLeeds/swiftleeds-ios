@@ -2,6 +2,7 @@
 import CoreGraphics
 import Foundation
 import ImageIO
+import UniformTypeIdentifiers
 
 /// Saves a picture as a JPEG and reads it back, like a code fetched from a server.
 enum JPEGRoundTrip {
@@ -16,9 +17,6 @@ enum JPEGRoundTrip {
 
     /// The number of bits in one channel.
     private static let bitsPerChannel = 8
-
-    /// The type identifier of a JPEG file.
-    private static let jpegType = "public.jpeg"
 
     /// Returns a picture drawn over opaque white, because a JPEG has no alpha.
     ///
@@ -54,7 +52,9 @@ enum JPEGRoundTrip {
     /// - Throws: ``RoundTripError/notDrawn`` when a step makes nothing.
     static func image(_ picture: CGImage, quality: Double) throws(RoundTripError) -> CGImage {
         let data = NSMutableData()
-        guard let destination = CGImageDestinationCreateWithData(data, jpegType as CFString, 1, nil) else {
+        guard
+            let destination = CGImageDestinationCreateWithData(data, UTType.jpeg.identifier as CFString, 1, nil)
+        else {
             throw .notDrawn
         }
         let options = [kCGImageDestinationLossyCompressionQuality: quality] as CFDictionary

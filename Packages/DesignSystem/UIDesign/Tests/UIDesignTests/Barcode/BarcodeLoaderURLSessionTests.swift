@@ -4,6 +4,7 @@ import Foundation
 import ImageIO
 import Testing
 import UIDesign
+import UniformTypeIdentifiers
 
 // Everything that touches URLProtocolStub's shared state lives here:
 // .serialized only serializes within one suite.
@@ -14,9 +15,6 @@ struct BarcodeLoaderURLSessionTests {
         /// ImageIO made no PNG bytes.
         case notEncoded
     }
-
-    /// The type identifier of a PNG file.
-    private static let pngType = "public.png"
 
     /// The address every request goes to, made up.
     private let url: URL
@@ -38,7 +36,7 @@ struct BarcodeLoaderURLSessionTests {
     /// - Throws: ``EncodingError/notEncoded`` when ImageIO makes no bytes.
     private static func pngData(of picture: CGImage) throws -> Data {
         let data = NSMutableData()
-        guard let destination = CGImageDestinationCreateWithData(data, pngType as CFString, 1, nil) else {
+        guard let destination = CGImageDestinationCreateWithData(data, UTType.png.identifier as CFString, 1, nil) else {
             throw EncodingError.notEncoded
         }
         CGImageDestinationAddImage(destination, picture, nil)
