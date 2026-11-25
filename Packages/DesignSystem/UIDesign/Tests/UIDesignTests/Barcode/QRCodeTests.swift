@@ -1,5 +1,4 @@
 #if canImport(CoreImage)
-import CoreImage
 import Foundation
 import SwiftUI
 import Testing
@@ -102,23 +101,6 @@ struct QRCodeTests {
         return try #require(renderer.cgImage)
     }
 
-    /// Returns the text the first QR code in a picture carries.
-    ///
-    /// - Parameter picture: The picture to scan.
-    /// - Returns: The message, or `nil` when no code is found.
-    /// - Throws: When CoreImage makes no QR detector.
-    private static func scan(_ picture: CGImage) throws -> String? {
-        let detector = try #require(
-            CIDetector(
-                ofType: CIDetectorTypeQRCode,
-                context: nil,
-                options: [CIDetectorAccuracy: CIDetectorAccuracyHigh],
-            )
-        )
-        let features = detector.features(in: CIImage(cgImage: picture))
-        return features.compactMap { ($0 as? CIQRCodeFeature)?.messageString }.first
-    }
-
     /// Returns whether every pixel of one module's square is opaque black, or every one is clear.
     ///
     /// - Parameters:
@@ -178,7 +160,7 @@ struct QRCodeTests {
     func whenTextIsAtLevelCapacity_shouldEncodeAndScanBack(level: QRCode.ErrorCorrectionLevel) throws {
         let text = String(repeating: "a", count: Self.capacityInBytes(of: level))
         let code = try QRCode(text, errorCorrection: level)
-        let message = try Self.scan(try Self.render(code))
+        let message = try QRCodeScanner.payload(in: try Self.render(code))
         #expect(message == text)
     }
 
@@ -235,7 +217,7 @@ struct QRCodeTests {
     @Test
     func whenTextIsEncoded_shouldScanBackAsSameText() throws {
         let code = try QRCode(Self.fixtureText)
-        let message = try Self.scan(try Self.render(code))
+        let message = try QRCodeScanner.payload(in: try Self.render(code))
         #expect(message == Self.fixtureText)
     }
 }

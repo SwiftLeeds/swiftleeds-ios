@@ -1,5 +1,4 @@
 #if os(iOS)
-import CoreImage
 import QuartzCore
 import SwiftUI
 import Testing
@@ -175,23 +174,6 @@ struct BarcodePlateTests {
         return try #require(image.cgImage)
     }
 
-    /// Returns the text a QR code in a picture carries.
-    ///
-    /// - Parameter image: The picture to scan.
-    /// - Returns: The text of the first QR code found, or `nil` when there is none.
-    /// - Throws: When the detector cannot be made.
-    private static func decodedText(in image: CGImage) throws -> String? {
-        let detector = try #require(
-            CIDetector(
-                ofType: CIDetectorTypeQRCode,
-                context: nil,
-                options: [CIDetectorAccuracy: CIDetectorAccuracyHigh],
-            )
-        )
-        let features = detector.features(in: CIImage(cgImage: image))
-        return features.compactMap { ($0 as? CIQRCodeFeature)?.messageString }.first
-    }
-
     /// Returns whether a module that is dark in the stored code is dark in a render.
     ///
     /// - Parameters:
@@ -359,7 +341,7 @@ struct BarcodePlateTests {
     @Test(arguments: Brand.allCases, appearances)
     func whenDrawn_shouldScanBackAsCodeText(brand: Brand, appearance: SystemAppearance) async throws {
         let image = try await Self.renderedImage(brand: brand, appearance: appearance)
-        let decoded = try Self.decodedText(in: image)
+        let decoded = try QRCodeScanner.payload(in: image)
         var shown = "nothing"
         if let decoded { shown = "\"\(decoded)\"" }
         #expect(decoded == Self.text, "\(brand) \(appearance.name): decoded \(shown), expected \(Self.text)")
