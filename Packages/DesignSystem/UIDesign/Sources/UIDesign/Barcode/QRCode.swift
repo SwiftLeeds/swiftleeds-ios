@@ -23,7 +23,7 @@ public struct QRCode: BarcodeContent {
         /// Creates the text failure that matches a bytes failure.
         ///
         /// - Parameter error: The reason bytes do not become a code.
-        init(_ error: ValidationError) {
+        fileprivate init(_ error: ValidationError) {
             switch error {
             case .empty:
                 self = .empty

@@ -29,7 +29,7 @@ public struct AztecCode: BarcodeContent {
         /// Creates the text failure that matches a bytes failure.
         ///
         /// - Parameter error: The reason bytes do not become an Aztec code.
-        init(_ error: ValidationError) {
+        fileprivate init(_ error: ValidationError) {
             switch error {
             case .empty:
                 self = .empty
