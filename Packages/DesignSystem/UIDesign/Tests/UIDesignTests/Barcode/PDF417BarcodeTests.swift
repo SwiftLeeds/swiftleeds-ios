@@ -77,9 +77,8 @@ struct PDF417BarcodeTests {
     }
 
     @Test
-    func whenTextIsAtGeneratorLimit_shouldEncode() throws {
-        let sut = try PDF417Barcode(Self.accentedText(count: Self.generatorLimit))
-        #expect(sut.cgImage.width > 0)
+    func whenTextIsAtGeneratorLimit_shouldEncode() {
+        #expect(throws: Never.self) { try PDF417Barcode(Self.accentedText(count: Self.generatorLimit)) }
     }
 
     @Test

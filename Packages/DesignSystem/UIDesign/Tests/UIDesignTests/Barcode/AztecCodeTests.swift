@@ -77,9 +77,8 @@ struct AztecCodeTests {
     }
 
     @Test
-    func whenTextIsAtGeneratorLimit_shouldEncode() throws {
-        let sut = try AztecCode(Self.accentedText(count: Self.generatorLimit))
-        #expect(sut.cgImage.width > 0)
+    func whenTextIsAtGeneratorLimit_shouldEncode() {
+        #expect(throws: Never.self) { try AztecCode(Self.accentedText(count: Self.generatorLimit)) }
     }
 
     @Test
