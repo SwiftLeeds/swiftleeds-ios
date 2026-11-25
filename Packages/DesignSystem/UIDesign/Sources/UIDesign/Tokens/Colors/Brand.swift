@@ -146,6 +146,38 @@ public enum Brand: CaseIterable, Equatable, Hashable, Sendable {
     /// ``text`` reaches 4.5:1 against it.
     package var subtle: Color { color(for: .subtle) }
 
+    #if !os(watchOS)
+    /// The color of the plate a scanner reads a code from.
+    ///
+    /// It stays light in every appearance, so black marks on it scan. On iOS, dark mode at standard
+    /// contrast gives the light ``secondarySurface``. Every other appearance gives the light
+    /// ``surface``. On macOS, contrast has no effect, so the plate is always the light ``surface``.
+    package var scannableSurface: Color {
+        let standard = resource(named: "\(catalogName)-surface")
+        #if os(iOS)
+        let softer = resource(named: "\(catalogName)-secondarySurface")
+        let provider = UIColor { traits in
+            let isDarkAtStandardContrast = traits.userInterfaceStyle == .dark && traits.accessibilityContrast != .high
+            let chosen = isDarkAtStandardContrast ? softer : standard
+            return UIColor(resource: chosen).resolvedColor(with: Self.lightBaseTraits)
+        }
+        return Color(provider)
+        #else
+        var light = EnvironmentValues()
+        light.colorScheme = .light
+        return Color(Color(standard).resolve(in: light))
+        #endif
+    }
+    #endif
+
+    #if os(iOS)
+    /// The traits of light mode at normal contrast and the base level.
+    private static var lightBaseTraits: UITraitCollection {
+        // An unset contrast and level resolve as normal and base.
+        UITraitCollection(userInterfaceStyle: .light)
+    }
+    #endif
+
     /// The name this brand's color sets start with in the catalog.
     private var catalogName: String {
         switch self {

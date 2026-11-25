@@ -22,14 +22,19 @@ let package = Package(
             dependencies: [.product(name: "SFSafeSymbols", package: "SFSafeSymbols")],
             resources: [.process("Resources")],
         ),
+        .target(
+            name: "UIDesignTestSupport",
+            dependencies: ["UIDesign"],
+        ),
         .testTarget(
             name: "UIDesignTests",
-            dependencies: ["UIDesign"],
+            dependencies: ["UIDesign", "UIDesignTestSupport"],
         ),
         .testTarget(
             name: "UIDesignSnapshotTests",
             dependencies: [
                 "UIDesign",
+                "UIDesignTestSupport",
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
             ],
         ),

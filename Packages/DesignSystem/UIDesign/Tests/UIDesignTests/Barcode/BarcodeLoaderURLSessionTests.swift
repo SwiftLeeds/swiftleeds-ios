@@ -1,0 +1,125 @@
+#if canImport(CoreImage)
+import CoreGraphics
+import Foundation
+import ImageIO
+import Testing
+import UIDesign
+import UIDesignTestSupport
+import UniformTypeIdentifiers
+
+// Everything that touches URLProtocolStub's shared state lives here:
+// .serialized only serializes within one suite.
+@Suite(.serialized)
+struct BarcodeLoaderURLSessionTests {
+    /// The reason the made-up picture could not be saved as PNG bytes.
+    private enum EncodingError: Error {
+        /// ImageIO made no PNG bytes.
+        case notEncoded
+    }
+
+    /// The address every request goes to, made up.
+    private let url: URL
+
+    /// The bytes of a PNG with black on its left half and white on its right half.
+    private let png: Data
+
+    /// Creates the made-up address and picture, and forgets any earlier stub answer.
+    init() throws {
+        URLProtocolStub.removeAnswer()
+        url = try #require(URL(string: "https://barcode.example.com/code.png"))
+        png = try Self.pngData(of: TwoToneImage.image(mark: .black, background: .white))
+    }
+
+    /// Returns the bytes of a picture saved as PNG.
+    ///
+    /// - Parameter picture: The picture to save.
+    /// - Returns: The PNG file's bytes.
+    /// - Throws: ``EncodingError/notEncoded`` when ImageIO makes no bytes.
+    private static func pngData(of picture: CGImage) throws -> Data {
+        let data = NSMutableData()
+        guard let destination = CGImageDestinationCreateWithData(data, UTType.png.identifier as CFString, 1, nil) else {
+            throw EncodingError.notEncoded
+        }
+        CGImageDestinationAddImage(destination, picture, nil)
+        guard CGImageDestinationFinalize(destination) else { throw EncodingError.notEncoded }
+        return data as Data
+    }
+
+    @Test
+    func whenServerSendsPNG_shouldReturnMarksOnClear() async throws {
+        URLProtocolStub.answer = .response(statusCode: 200, data: png)
+        let sut = BarcodeLoader.urlSession(URLProtocolStub.session())
+
+        let image = try await sut.load(URLRequest(url: url))
+
+        let pixels = try RGBAPixels(of: image.cgImage)
+        #expect(image.cgImage.width == TwoToneImage.side)
+        #expect(image.cgImage.height == TwoToneImage.side)
+        #expect(pixels.count(columns: TwoToneImage.markColumns, rows: pixels.rows) { !$0.isOpaqueBlack } == 0)
+        #expect(pixels.count(columns: TwoToneImage.backgroundColumns, rows: pixels.rows) { !$0.isClear } == 0)
+    }
+
+    @Test(arguments: [199, 300, 404])
+    func whenStatusIsNotSuccess_shouldThrowUnacceptableStatus(statusCode: Int) async {
+        URLProtocolStub.answer = .response(statusCode: statusCode, data: png)
+        let sut = BarcodeLoader.urlSession(URLProtocolStub.session())
+
+        await #expect(throws: BarcodeLoader.LoadingError.unacceptableStatus) {
+            _ = try await sut.load(URLRequest(url: url))
+        }
+    }
+
+    @Test(arguments: [200, 299])
+    func whenStatusIsSuccess_shouldReturnImage(statusCode: Int) async throws {
+        URLProtocolStub.answer = .response(statusCode: statusCode, data: png)
+        let sut = BarcodeLoader.urlSession(URLProtocolStub.session())
+
+        let image = try await sut.load(URLRequest(url: url))
+
+        #expect(image.cgImage.width == TwoToneImage.side)
+    }
+
+    @Test
+    func whenBytesAreNotAnImage_shouldThrowUndecodable() async {
+        URLProtocolStub.answer = .response(statusCode: 200, data: Data("not an image".utf8))
+        let sut = BarcodeLoader.urlSession(URLProtocolStub.session())
+
+        await #expect(throws: BarcodeLoader.LoadingError.undecodable) {
+            _ = try await sut.load(URLRequest(url: url))
+        }
+    }
+
+    @Test
+    func whenSessionFails_shouldThrowTransportFailed() async {
+        URLProtocolStub.answer = .failure(URLError(.notConnectedToInternet))
+        let sut = BarcodeLoader.urlSession(URLProtocolStub.session())
+
+        await #expect(throws: BarcodeLoader.LoadingError.transportFailed) {
+            _ = try await sut.load(URLRequest(url: url))
+        }
+    }
+
+    @Test
+    func whenRequestCarriesHeader_shouldSendHeaderToSession() async throws {
+        URLProtocolStub.answer = .response(statusCode: 200, data: png)
+        let sut = BarcodeLoader.urlSession(URLProtocolStub.session())
+        var request = URLRequest(url: url)
+        request.setValue("example-value", forHTTPHeaderField: "X-Example-Header")
+
+        _ = try await sut.load(request)
+
+        let sent = try #require(URLProtocolStub.lastRequest)
+        #expect(sent.value(forHTTPHeaderField: "X-Example-Header") == "example-value")
+    }
+
+    @Test
+    func whenResponseIsNotHTTP_shouldReturnImage() async throws {
+        let dataURL = try #require(URL(string: "data:image/png;base64,\(png.base64EncodedString())"))
+        let sut = BarcodeLoader.urlSession(URLSession(configuration: .ephemeral))
+
+        let image = try await sut.load(URLRequest(url: dataURL))
+
+        #expect(image.cgImage.width == TwoToneImage.side)
+    }
+}
+#endif
