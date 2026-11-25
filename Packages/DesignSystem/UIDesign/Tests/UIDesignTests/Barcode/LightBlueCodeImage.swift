@@ -14,14 +14,12 @@ enum LightBlueCodeImage {
     /// - Throws: When the code, its pixels or the picture cannot be made.
     static func make(carrying text: String) throws -> CGImage {
         let pixels = try RGBAPixels(of: QRCode(text).cgImage)
-        let bytes = pixels.rows.flatMap { row in
-            pixels.columns.flatMap { column -> [UInt8] in
-                let isMark = pixels.pixel(at: PixelPosition(column: column, row: row)).alpha > 0
-                let shade = isMark ? TwoToneImage.Shade.lightBlue : TwoToneImage.Shade.white
-                return [shade.red, shade.green, shade.blue, shade.alpha]
+        let recolored = pixels.rows.flatMap { row -> [RGBAPixels.Pixel] in
+            pixels.columns.map { column in
+                pixels.pixel(at: PixelPosition(column: column, row: row)).alpha > 0 ? .lightBlue : .white
             }
         }
-        return try TwoToneImage.image(width: pixels.width, height: pixels.height, bytes: bytes)
+        return try RGBAPixels(width: pixels.width, height: pixels.height, pixels: recolored).image
     }
 }
 #endif

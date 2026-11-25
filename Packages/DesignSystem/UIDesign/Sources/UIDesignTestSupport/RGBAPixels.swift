@@ -1,14 +1,32 @@
 #if canImport(CoreGraphics)
 import CoreGraphics
 
-/// The pixels of a rendered image with their alpha, for the barcode suites.
+/// The pixels of an image with their alpha, for the barcode suites.
 ///
-/// They are read as 8-bit sRGB.
+/// They are read from an image as 8-bit sRGB, or made from pixels and drawn as an image.
 package struct RGBAPixels: Equatable, Hashable, Sendable {
     /// One pixel's channels, each from 0 to 255.
     package struct Pixel: Equatable, Hashable, Sendable {
         /// How far, out of 255, a channel may sit from clear, black or opaque and still count as it.
         private static let tolerance: UInt8 = 8
+
+        /// The red channel of light blue: 0.6 of 255.
+        private static let lightBlueRed: UInt8 = 153
+
+        /// The green channel of light blue: 0.8 of 255.
+        private static let lightBlueGreen: UInt8 = 204
+
+        /// Opaque black.
+        package static let black = Self(red: 0, green: 0, blue: 0, alpha: .max)
+
+        /// Opaque white.
+        package static let white = Self(red: .max, green: .max, blue: .max, alpha: .max)
+
+        /// Clear, with no color.
+        package static let clear = Self(red: 0, green: 0, blue: 0, alpha: 0)
+
+        /// An opaque light blue: red 0.6, green 0.8 and blue 1.0.
+        package static let lightBlue = Self(red: lightBlueRed, green: lightBlueGreen, blue: .max, alpha: .max)
 
         /// The red channel, premultiplied by alpha.
         package let red: UInt8
@@ -73,6 +91,15 @@ package struct RGBAPixels: Equatable, Hashable, Sendable {
         case noBytes
     }
 
+    /// The reason an image could not be made from pixels.
+    package enum DrawingError: Error, Equatable {
+        /// The number of pixels is not the width times the height.
+        case wrongPixelCount
+
+        /// CoreGraphics made no image from the bytes.
+        case notDrawn
+    }
+
     /// The number of bytes that describe one pixel: red, green, blue and alpha.
     private static let channels = 4
 
@@ -112,6 +139,53 @@ package struct RGBAPixels: Equatable, Hashable, Sendable {
         width = image.width
         height = image.height
         bytes = Array(UnsafeBufferPointer(start: data.assumingMemoryBound(to: UInt8.self), count: count))
+    }
+
+    /// Creates the pixels of an image from its pixels.
+    ///
+    /// ```swift
+    /// let pixels = try RGBAPixels(width: 2, height: 1, pixels: [.black, .clear])
+    /// ```
+    ///
+    /// - Parameters:
+    ///   - width: The width of the image in pixels.
+    ///   - height: The height of the image in pixels.
+    ///   - pixels: The pixels, one row after another, from the top row.
+    /// - Throws: ``DrawingError/wrongPixelCount`` when `pixels` does not hold
+    ///   `width` times `height` pixels.
+    /// - Complexity: O(*n*), where *n* is the number of pixels.
+    package init(width: Int, height: Int, pixels: [Pixel]) throws(DrawingError) {
+        guard pixels.count == width * height else { throw .wrongPixelCount }
+        self.width = width
+        self.height = height
+        bytes = pixels.flatMap { pixel in
+            [pixel.red, pixel.green, pixel.blue, pixel.alpha]
+        }
+    }
+
+    /// The pixels drawn as an image.
+    ///
+    /// - Throws: ``DrawingError/notDrawn`` when CoreGraphics makes no image.
+    package var image: CGImage {
+        get throws(DrawingError) {
+            guard let data = CFDataCreate(nil, bytes, bytes.count),
+                let provider = CGDataProvider(data: data),
+                let image = CGImage(
+                    width: width,
+                    height: height,
+                    bitsPerComponent: Self.bitsPerChannel,
+                    bitsPerPixel: Self.bitsPerChannel * Self.channels,
+                    bytesPerRow: width * Self.channels,
+                    space: CGColorSpaceCreateDeviceRGB(),
+                    bitmapInfo: CGBitmapInfo(rawValue: CGImageAlphaInfo.premultipliedLast.rawValue),
+                    provider: provider,
+                    decode: nil,
+                    shouldInterpolate: false,
+                    intent: .defaultIntent,
+                )
+            else { throw .notDrawn }
+            return image
+        }
     }
 
     /// Every column of the image, from the left.

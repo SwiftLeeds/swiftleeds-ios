@@ -24,10 +24,10 @@ struct SuppliedBarcodeImageTests {
         let testDescription: String
 
         /// The color of the left half.
-        let mark: TwoToneImage.Shade
+        let mark: RGBAPixels.Pixel
 
         /// The color of the right half.
-        let background: TwoToneImage.Shade
+        let background: RGBAPixels.Pixel
 
         /// The most each color channel moves, from 0 to 255.
         let noise: Int
@@ -103,13 +103,13 @@ struct SuppliedBarcodeImageTests {
 
     @Test
     func whenImageIsAlmostWhite_shouldDrawNoMarks() throws {
-        let bytes = (0..<TwoToneImage.side).flatMap { row in
-            (0..<TwoToneImage.side).flatMap { column -> [UInt8] in
+        let almostWhite = (0..<TwoToneImage.side).flatMap { row -> [RGBAPixels.Pixel] in
+            (0..<TwoToneImage.side).map { column in
                 let channel = UInt8.max - UInt8((column + Self.noiseRowStep * row) % (Self.loweredLevels + 1))
-                return [channel, channel, channel, UInt8.max]
+                return RGBAPixels.Pixel(red: channel, green: channel, blue: channel, alpha: .max)
             }
         }
-        let source = try TwoToneImage.image(width: TwoToneImage.side, height: TwoToneImage.side, bytes: bytes)
+        let source = try RGBAPixels(width: TwoToneImage.side, height: TwoToneImage.side, pixels: almostWhite).image
         let sut = try SuppliedBarcodeImage(source)
         let pixels = try RGBAPixels(of: sut.cgImage)
         let marks = pixels.count(columns: pixels.columns, rows: pixels.rows) { !$0.isClear }
@@ -144,5 +144,23 @@ struct SuppliedBarcodeImageTests {
         #expect(text == Self.codeText)
     }
     #endif
+}
+
+/// The colors only the threshold fixtures use.
+extension RGBAPixels.Pixel {
+    /// A channel at 0.3 of 255.
+    private static let threeTenths: UInt8 = 77
+
+    /// A channel at 0.8 of 255.
+    private static let eightTenths: UInt8 = 204
+
+    /// Opaque red: red 255, green 0 and blue 0.
+    fileprivate static let red = Self(red: .max, green: 0, blue: 0, alpha: .max)
+
+    /// An opaque dark grey: 0.3 in every channel.
+    fileprivate static let darkGrey = Self(red: threeTenths, green: threeTenths, blue: threeTenths, alpha: .max)
+
+    /// An opaque light grey: 0.8 in every channel.
+    fileprivate static let lightGrey = Self(red: eightTenths, green: eightTenths, blue: eightTenths, alpha: .max)
 }
 #endif
