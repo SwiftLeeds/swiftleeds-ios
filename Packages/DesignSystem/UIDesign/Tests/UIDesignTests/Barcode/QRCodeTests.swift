@@ -81,9 +81,7 @@ struct QRCodeTests {
             .interpolation(.none)
             .frame(width: drawnSide, height: drawnSide)
             .background(.scannableSurface)
-        let renderer = ImageRenderer(content: content)
-        renderer.scale = renderScale
-        return try #require(renderer.cgImage)
+        return try CGImage.rendering(content, atScale: renderScale)
     }
 
     /// Returns the picture of a code with nothing behind it.
@@ -96,9 +94,7 @@ struct QRCodeTests {
             .resizable()
             .interpolation(.none)
             .frame(width: drawnSide, height: drawnSide)
-        let renderer = ImageRenderer(content: content)
-        renderer.scale = renderScale
-        return try #require(renderer.cgImage)
+        return try CGImage.rendering(content, atScale: renderScale)
     }
 
     /// Returns whether every pixel of one module's square is opaque black, or every one is clear.

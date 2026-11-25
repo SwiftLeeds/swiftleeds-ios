@@ -122,9 +122,7 @@ struct BarcodePlateScanTests {
         code: any BarcodeContent,
         plate: Color,
     ) throws {
-        let renderer = ImageRenderer(content: view)
-        renderer.scale = Self.renderScale
-        let image = try #require(renderer.cgImage)
+        let image = try CGImage.rendering(view, atScale: Self.renderScale)
         expectPlate(in: try RGBAPixels(of: image), of: code, matching: plate)
         #expect(BarcodeReader.payload(of: image, as: fixture.symbology) == fixture.text)
     }

@@ -46,10 +46,7 @@ struct BarcodeScanTests {
             .barcodeStyle(ContentOnlyBarcodeStyle())
             .frame(width: fixture.frameSize.width, height: fixture.frameSize.height)
             .environment(\.layoutDirection, layoutDirection)
-        let renderer = ImageRenderer(content: view)
-        renderer.scale = Self.renderScale
-        let image = try #require(renderer.cgImage)
-        return try RGBAPixels(of: image)
+        return try RGBAPixels(of: CGImage.rendering(view, atScale: Self.renderScale))
     }
 
     /// Returns the pixel at the center of one module of a rendered picture.
@@ -84,9 +81,7 @@ struct BarcodeScanTests {
         let view = Barcode(try CheckerBarcodeContent(), label: Text("Check-in QR code"))
             .barcodeStyle(ContentOnlyBarcodeStyle())
             .frame(width: Self.side, height: Self.side)
-        let renderer = ImageRenderer(content: view)
-        renderer.scale = Self.renderScale
-        let pixels = try RGBAPixels(of: try #require(renderer.cgImage))
+        let pixels = try RGBAPixels(of: CGImage.rendering(view, atScale: Self.renderScale))
         let topLeft = Self.centerPixel(of: pixels, column: 0, row: 0)
         let topRight = Self.centerPixel(of: pixels, column: 1, row: 0)
         let bottomLeft = Self.centerPixel(of: pixels, column: 0, row: 1)

@@ -61,9 +61,7 @@ struct BarcodeCornerTests {
     /// - Returns: The pixels of the picture.
     /// - Throws: When the picture cannot be made or read.
     private func pixels(of view: some View) throws -> RGBAPixels {
-        let renderer = ImageRenderer(content: view)
-        renderer.scale = Self.renderScale
-        return try RGBAPixels(of: try #require(renderer.cgImage))
+        try RGBAPixels(of: CGImage.rendering(view, atScale: Self.renderScale))
     }
 
     /// Counts the marks the plate removes from one quarter of the picture.
