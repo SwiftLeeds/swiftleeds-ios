@@ -49,7 +49,7 @@ struct BarcodePlateScanTests {
     private static let channelTolerance = 8
 
     /// The largest value of one channel.
-    private static let largestChannel = 255
+    private static let largestChannel = Int(UInt8.max)
 
     /// Returns a color as it resolves in light mode.
     ///

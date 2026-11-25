@@ -5,8 +5,11 @@ import UIDesign
 
 @MainActor
 struct ScannableSurfaceMacTests {
+    /// How many of an 8-bit channel's levels the channel may sit from the expected one.
+    private static let toleranceLevels: Float = 2
+
     /// How far a channel may sit from the expected one, as a fraction of its full range.
-    private static let channelTolerance: Float = 2 / 255
+    private static let channelTolerance = toleranceLevels / Float(UInt8.max)
 
     /// Returns an environment that carries a brand and a color scheme.
     ///

@@ -32,23 +32,23 @@ extension BarcodeFixture {
     var layout: Layout {
         switch self {
         case .qrCode:
-            // swiftlint:disable:next no_magic_numbers - fixture data
+            // swiftlint:disable:next no_magic_numbers - the QR picture's rows and its finder center, no room for :this
             Layout(modulesAcross: modulesAcross, modulesDown: 37, quietZone: 4, darkColumn: 7.5, darkRow: 7.5)
 
         case .suppliedLightBlueQRCode:
-            // swiftlint:disable:next no_magic_numbers - fixture data
+            // swiftlint:disable:next no_magic_numbers - the same QR picture as the generated code, no room for :this
             Layout(modulesAcross: modulesAcross, modulesDown: 37, quietZone: 4, darkColumn: 7.5, darkRow: 7.5)
 
         case .aztecCode:
-            // swiftlint:disable:next no_magic_numbers - fixture data
+            // swiftlint:disable:next no_magic_numbers - the Aztec picture's rows and bullseye center, no room for :this
             Layout(modulesAcross: modulesAcross, modulesDown: 19, quietZone: 2, darkColumn: 9.5, darkRow: 9.5)
 
         case .pdf417Barcode:
-            // swiftlint:disable:next no_magic_numbers - fixture data
+            // swiftlint:disable:next no_magic_numbers - the PDF417 picture's rows and its first bar, no room for :this
             Layout(modulesAcross: modulesAcross, modulesDown: 31, quietZone: 2, darkColumn: 5.5, darkRow: 15.5)
 
         case .code128Barcode:
-            // swiftlint:disable:next no_magic_numbers - fixture data
+            // swiftlint:disable:next no_magic_numbers - the Code 128 picture's rows and first bar, no room for :this
             Layout(modulesAcross: modulesAcross, modulesDown: 52, quietZone: 10, darkColumn: 10.5, darkRow: 26.5)
         }
     }

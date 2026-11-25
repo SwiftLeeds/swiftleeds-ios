@@ -34,14 +34,17 @@ struct BarcodePlateTests {
     private static let text = BarcodeFixture.qrCode.text
 
     /// The modules across the fixture's code with its quiet zone.
-    ///
-    /// The code is 29 modules in version 3, and the quiet zone adds 4 on each side.
-    private static let modulesWithQuietZone = 37.0
+    private static let modulesWithQuietZone = Double(BarcodeFixture.qrCode.layout.modulesAcross)
 
     /// How far inside the quiet zone's far edge the middle of its innermost row sits.
     ///
     /// It is counted in modules, so the row's middle sits that far short of the code's first mark.
     private static let innermostRowInset = 0.5
+
+    /// How far either side of a finder edge the blended pixels are counted.
+    ///
+    /// It is counted in modules, so the count covers one module, centered on the edge.
+    private static let edgeNeighborhood = 0.5
 
     /// How far into the code the black center of the top-leading finder pattern sits.
     ///
@@ -89,7 +92,7 @@ struct BarcodePlateTests {
     private static let channelTolerance = 8
 
     /// The largest value of one 8-bit channel.
-    private static let channelMaximum: Float = 255
+    private static let channelMaximum = Float(UInt8.max)
 
     /// The appearances the plate is checked under.
     nonisolated private static let appearances: [SystemAppearance] = [
@@ -325,8 +328,8 @@ struct BarcodePlateTests {
         let plate = Self.platePixel(of: brand, in: appearance)
         let row = Self.position(ofModules: Self.finderMarkOffset, in: pixels)
         let blended = Self.finderEdgeOffsets.map { edge in
-            let first = Self.position(ofModules: edge - 0.5, in: pixels)
-            let last = Self.position(ofModules: edge + 0.5, in: pixels)
+            let first = Self.position(ofModules: edge - Self.edgeNeighborhood, in: pixels)
+            let last = Self.position(ofModules: edge + Self.edgeNeighborhood, in: pixels)
             return (first..<last).count { column in
                 let pixel = pixels.pixel(at: PixelPosition(column: column, row: row))
                 return !Self.isPlate(pixel, plate) && !Self.isBlack(pixel)

@@ -29,6 +29,9 @@ struct QRCodeTests {
     /// It is counted in modules.
     private static let firstModuleCenter = 4.5
 
+    /// How far into a pixel its center sits, in pixels.
+    private static let pixelCenterOffset = 0.5
+
     /// The pixels a code that fits under the size cap spends on each module.
     private static let tenPixelsPerModule = 10
 
@@ -47,8 +50,13 @@ struct QRCodeTests {
     /// The most bytes a version 40 code holds at the high level.
     private static let highCapacityInBytes = 1_273
 
-    /// The number of two-byte characters whose text is one byte over the capacity.
-    private static let twoByteCharactersOverCapacity = 637
+    /// The bytes one e-acute character takes in UTF-8.
+    private static let bytesPerAccentedCharacter = 2
+
+    /// The number of two-byte characters whose text is over the default level's capacity.
+    ///
+    /// The default level is high. This count is the fewest that holds more bytes than it does.
+    private static let twoByteCharactersOverCapacity = highCapacityInBytes / bytesPerAccentedCharacter + 1
 
     /// Returns the most bytes of text a code holds at a level.
     ///
@@ -150,7 +158,10 @@ struct QRCodeTests {
         let inner = Double(Self.modulesWithQuietZone - Self.quietZoneModules) * modulePixels
         let unclear = pixels.rows.flatMap { row in
             pixels.columns.filter { column in
-                let isInRing = [column, row].contains { Double($0) + 0.5 < ring || Double($0) + 0.5 > inner }
+                let isInRing = [column, row].contains {
+                    let center = Double($0) + Self.pixelCenterOffset
+                    return center < ring || center > inner
+                }
                 return isInRing && !pixels.pixel(at: PixelPosition(column: column, row: row)).isClear
             }
         }
