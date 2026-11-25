@@ -82,6 +82,7 @@ struct SuppliedBarcodeImageTests {
         let source = try TwoToneImage.image(mark: fixture.mark, background: fixture.background, noise: fixture.noise)
         let sut = try SuppliedBarcodeImage(source)
         let pixels = try RGBAPixels(of: sut.cgImage)
+        try #require(pixels.width == TwoToneImage.side && pixels.height == TwoToneImage.side)
         let leftIsBlack = fixture.blackSide == .left
         let leftMisses = pixels.count(columns: TwoToneImage.markColumns, rows: pixels.rows) { pixel in
             !(leftIsBlack ? pixel.isOpaqueBlack : pixel.isClear)
@@ -112,6 +113,7 @@ struct SuppliedBarcodeImageTests {
         let source = try RGBAPixels(width: TwoToneImage.side, height: TwoToneImage.side, pixels: almostWhite).image
         let sut = try SuppliedBarcodeImage(source)
         let pixels = try RGBAPixels(of: sut.cgImage)
+        try #require(pixels.width == TwoToneImage.side && pixels.height == TwoToneImage.side)
         let marks = pixels.count(columns: pixels.columns, rows: pixels.rows) { !$0.isClear }
         #expect(marks == 0, "\(marks) pixels are not clear")
     }
