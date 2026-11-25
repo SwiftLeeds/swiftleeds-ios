@@ -39,10 +39,17 @@ public struct PDF417Barcode: BarcodeContent {
         case notDrawn
     }
 
-    /// The modules the generator leaves out of the quiet zone.
+    /// The quiet zone the PDF417 spec asks for.
+    private static let requiredQuietZone = BarcodeImage.QuietZone(
+        modules: 2  // swiftlint:disable:this no_magic_numbers - the PDF417 spec's quiet zone
+    )
+
+    /// The clear margin the generator leaves around the barcode.
     ///
-    /// The PDF417 spec asks for a quiet zone of 2 modules, and the generator leaves all 2.
-    private static let missingQuietZone = BarcodeImage.QuietZone(modules: 0)
+    /// Measured on CoreImage on macOS 26.6.1 (25G76).
+    private static let generatorMargin = BarcodeImage.QuietZone(
+        modules: 2  // swiftlint:disable:this no_magic_numbers - measured generator margin
+    )
 
     /// The bytes the barcode carries.
     private let message: Data
@@ -90,7 +97,13 @@ public struct PDF417Barcode: BarcodeContent {
     public init(_ message: Data) throws(ValidationError) {
         try Self.check(message)
         guard let generated = Self.generate(message) else { throw .tooLong }
-        guard let image = BarcodeImage.render(generated, addingQuietZone: Self.missingQuietZone) else {
+        guard
+            let image = BarcodeImage.render(
+                generated,
+                generatorMargin: Self.generatorMargin,
+                reaching: Self.requiredQuietZone,
+            )
+        else {
             throw .notDrawn
         }
         self.message = message

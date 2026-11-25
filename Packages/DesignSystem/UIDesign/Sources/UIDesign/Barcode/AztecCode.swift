@@ -39,10 +39,17 @@ public struct AztecCode: BarcodeContent {
         case notDrawn
     }
 
-    /// The modules the generator leaves out of the quiet zone.
+    /// The clear border the picture keeps, so a rounded plate never cuts a mark.
+    private static let requiredQuietZone = BarcodeImage.QuietZone(
+        modules: 2  // swiftlint:disable:this no_magic_numbers - the picture's own two-module border
+    )
+
+    /// The clear margin the generator leaves around the code.
     ///
-    /// The code keeps 2 clear modules so a rounded plate never cuts a mark, and the generator leaves all 2.
-    private static let missingQuietZone = BarcodeImage.QuietZone(modules: 0)
+    /// Measured on CoreImage on macOS 26.6.1 (25G76).
+    private static let generatorMargin = BarcodeImage.QuietZone(
+        modules: 2  // swiftlint:disable:this no_magic_numbers - measured generator margin
+    )
 
     /// The bytes the code carries.
     private let message: Data
@@ -90,7 +97,13 @@ public struct AztecCode: BarcodeContent {
     public init(_ message: Data) throws(ValidationError) {
         try Self.check(message)
         guard let generated = Self.generate(message) else { throw .tooLong }
-        guard let image = BarcodeImage.render(generated, addingQuietZone: Self.missingQuietZone) else {
+        guard
+            let image = BarcodeImage.render(
+                generated,
+                generatorMargin: Self.generatorMargin,
+                reaching: Self.requiredQuietZone,
+            )
+        else {
             throw .notDrawn
         }
         self.message = message

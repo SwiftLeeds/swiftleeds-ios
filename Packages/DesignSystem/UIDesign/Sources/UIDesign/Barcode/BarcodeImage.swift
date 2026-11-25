@@ -4,17 +4,30 @@ import CoreImage
 import CoreImage.CIFilterBuiltins
 
 /// The drawing steps every barcode shares, from the generator's picture to a rendered image.
-enum BarcodeImage {
+package enum BarcodeImage {
     /// The clear border a scanner needs around a code.
-    struct QuietZone: Equatable, Hashable, Sendable {
+    package struct QuietZone: Equatable, Hashable, Sendable {
         /// The width of the border, counted in modules.
-        fileprivate let modules: Int
+        ///
+        /// It is unsigned, so a border cannot be negative.
+        fileprivate let modules: UInt
 
         /// Creates a quiet zone of the given width.
         ///
         /// - Parameter modules: The width of the border on each side, in modules.
-        init(modules: Int) {
+        package init(modules: UInt) {
             self.modules = modules
+        }
+
+        /// Returns the border to add so a margin that exists reaches a required width.
+        ///
+        /// This zone is the margin already there. A margin as wide as the requirement, or wider,
+        /// needs no addition.
+        ///
+        /// - Parameter required: The width the border must reach.
+        /// - Returns: The difference, or a zero-width border when this margin is wide enough.
+        package func missing(toReach required: Self) -> Self {
+            Self(modules: required.modules - min(modules, required.modules))
         }
     }
 
@@ -39,11 +52,17 @@ enum BarcodeImage {
     ///
     /// - Parameters:
     ///   - generated: The generator's picture: black modules on white.
-    ///   - missingQuietZone: The quiet zone the generator leaves out, added clear.
+    ///   - generatorMargin: The clear margin the generator already leaves around the code.
+    ///   - required: The quiet zone the code needs. Clear border is added only where the margin falls short.
     /// - Returns: The image, or `nil` when CoreImage draws none.
-    static func render(_ generated: CIImage, addingQuietZone missingQuietZone: QuietZone) -> CGImage? {
+    static func render(
+        _ generated: CIImage,
+        generatorMargin: QuietZone,
+        reaching required: QuietZone,
+    ) -> CGImage? {
         let marks = blackModulesOnClear(generated)
-        let picture = scaledUp(addingQuietZone(missingQuietZone, to: marks))
+        let missing = generatorMargin.missing(toReach: required)
+        let picture = scaledUp(addingQuietZone(missing, to: marks))
         return context.createCGImage(picture, from: picture.extent)
     }
 
@@ -132,6 +151,15 @@ enum BarcodeImage {
         let border = CGFloat(quietZone.modules)
         let extended = marks.extent.insetBy(dx: -border, dy: -border)
         return marks.composited(over: CIImage(color: .clear).cropped(to: extended))
+    }
+}
+
+extension Float {
+    /// Creates the width of a quiet zone, for a generator that takes its margin as a number.
+    ///
+    /// - Parameter zone: The quiet zone to read.
+    init(_ zone: BarcodeImage.QuietZone) {
+        self = Float(zone.modules)
     }
 }
 #endif

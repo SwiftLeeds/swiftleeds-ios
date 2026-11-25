@@ -86,12 +86,15 @@ public struct QRCode: BarcodeContent {
         }
     }
 
-    /// The modules the generator leaves out of the quiet zone.
-    ///
-    /// The QR standard asks for a quiet zone of 4 modules.
-    private static let missingQuietZone = BarcodeImage.QuietZone(
-        modules: 3  // swiftlint:disable:this no_magic_numbers - the QR standard's quiet zone, less 1
+    /// The quiet zone the QR standard asks for.
+    private static let requiredQuietZone = BarcodeImage.QuietZone(
+        modules: 4  // swiftlint:disable:this no_magic_numbers - the QR standard's quiet zone
     )
+
+    /// The clear margin the generator leaves around the code.
+    ///
+    /// Measured on CoreImage on macOS 26.6.1 (25G76).
+    private static let generatorMargin = BarcodeImage.QuietZone(modules: 1)
 
     /// The bytes the code carries.
     private let message: Data
@@ -148,7 +151,13 @@ public struct QRCode: BarcodeContent {
     public init(_ message: Data, errorCorrection: ErrorCorrectionLevel = .high) throws(ValidationError) {
         try Self.check(message, at: errorCorrection)
         guard let generated = Self.generate(message, at: errorCorrection) else { throw .notDrawn }
-        guard let image = BarcodeImage.render(generated, addingQuietZone: Self.missingQuietZone) else {
+        guard
+            let image = BarcodeImage.render(
+                generated,
+                generatorMargin: Self.generatorMargin,
+                reaching: Self.requiredQuietZone,
+            )
+        else {
             throw .notDrawn
         }
         self.message = message
