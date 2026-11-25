@@ -3,11 +3,11 @@ import CoreGraphics
 
 /// A type that supplies the picture of a code for a ``Barcode`` to draw.
 ///
-/// A barcode draws the picture as given and does not change its colors. The code types in this
-/// library supply opaque black marks on clear, which scan on the barcode's plate. A type of your
-/// own may supply other colors. Check that a code in those colors still scans.
+/// A barcode draws the picture as given and does not change its colors. Opaque black marks on
+/// clear scan on the barcode's plate. A conforming type may supply other colors; check that a code
+/// in those colors still scans.
 public protocol BarcodeContent: Equatable, Hashable, Sendable {
-    /// The code as an image, drawn as given.
+    /// The code as an image.
     var cgImage: CGImage { get }
 }
 #endif

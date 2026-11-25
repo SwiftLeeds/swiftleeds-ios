@@ -8,8 +8,6 @@ package enum BarcodeImage {
     /// The clear border a scanner needs around a code.
     package struct QuietZone: Equatable, Hashable, Sendable {
         /// The width of the border, counted in modules.
-        ///
-        /// It is unsigned, so a border cannot be negative.
         fileprivate let modules: UInt
 
         /// Creates a quiet zone of the given width.
@@ -59,7 +57,7 @@ package enum BarcodeImage {
     /// - Parameters:
     ///   - generated: The generator's picture: black modules on white.
     ///   - generatorMargin: The clear margin the generator already leaves around the code.
-    ///   - required: The quiet zone the code needs. Clear border is added only where the margin falls short.
+    ///   - required: The quiet zone the code needs. The render adds a clear border only where the margin falls short.
     /// - Returns: The image, or `nil` when CoreImage draws none.
     static func render(
         _ generated: CIImage,
@@ -161,7 +159,7 @@ package enum BarcodeImage {
 }
 
 extension Float {
-    /// Creates the width of a quiet zone, for a generator that takes its margin as a number.
+    /// Creates the width of a quiet zone in modules, for a generator that takes its margin as a number.
     ///
     /// - Parameter zone: The quiet zone to read.
     init(_ zone: BarcodeImage.QuietZone) {

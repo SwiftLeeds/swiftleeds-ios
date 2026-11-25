@@ -26,7 +26,7 @@ public struct AztecCode: BarcodeContent {
         /// CoreImage drew nothing. No known input causes it.
         case notDrawn
 
-        /// Creates the reason text fails, from the reason its bytes failed.
+        /// Creates the text failure that matches a bytes failure.
         ///
         /// - Parameter error: The reason bytes do not become an Aztec code.
         init(_ error: ValidationError) {
@@ -61,10 +61,8 @@ public struct AztecCode: BarcodeContent {
     )
 
     /// The clear margin the generator leaves around the code.
-    ///
-    /// Measured on CoreImage on macOS 26.6.1 (25G76).
     private static let generatorMargin = BarcodeImage.QuietZone(
-        modules: 2  // swiftlint:disable:this no_magic_numbers - measured generator margin
+        modules: 2  // swiftlint:disable:this no_magic_numbers - CoreImage's generator margin
     )
 
     /// The bytes the code carries.
