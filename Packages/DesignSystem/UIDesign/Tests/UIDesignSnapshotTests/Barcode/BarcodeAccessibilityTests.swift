@@ -37,6 +37,7 @@ struct BarcodeAccessibilityTests {
         #expect(elements.count == 1)
         #expect(element.label == Self.customLabel)
         #expect(element.traits.contains(.image))
+        #expect(element.value == nil)
     }
 
     @Test

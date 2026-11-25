@@ -19,8 +19,7 @@ import SwiftUI
 /// ## Choosing where the picture comes from
 ///
 /// A barcode draws a code made on the device, or an image you supply. Wrap a supplied image in
-/// a ``SuppliedBarcodeImage``, which turns its colors into black marks on clear. You keep the
-/// image's quiet zone: the barcode adds none.
+/// a ``SuppliedBarcodeImage``. You keep the image's quiet zone: the barcode adds none.
 ///
 /// ```swift
 /// Barcode(try SuppliedBarcodeImage(membershipCodeImage), label: Text("Membership QR code"))
