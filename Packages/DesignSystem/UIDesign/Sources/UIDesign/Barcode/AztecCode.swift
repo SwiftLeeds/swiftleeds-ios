@@ -81,6 +81,7 @@ public struct AztecCode: BarcodeContent {
     /// - Throws: ``ParsingError/empty`` when `text` is empty.
     ///   ``ParsingError/tooLong`` when the generator cannot fit `text` in one code.
     ///   ``ParsingError/notDrawn`` when CoreImage draws no picture of the generated code.
+    /// - Complexity: O(*p*), where *p* is the number of pixels in the picture of the code.
     public init(_ text: String) throws(ParsingError) {
         do throws(ValidationError) {
             try self.init(Data(text.utf8))
@@ -99,6 +100,7 @@ public struct AztecCode: BarcodeContent {
     /// - Throws: ``ValidationError/empty`` when `message` is empty.
     ///   ``ValidationError/tooLong`` when the generator cannot fit `message` in one code.
     ///   ``ValidationError/notDrawn`` when CoreImage draws no picture of the generated code.
+    /// - Complexity: O(*p*), where *p* is the number of pixels in the picture of the code.
     public init(_ message: Data) throws(ValidationError) {
         try Self.check(message)
         guard let generated = Self.generate(message) else { throw .tooLong }

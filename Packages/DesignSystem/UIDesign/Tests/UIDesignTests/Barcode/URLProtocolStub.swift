@@ -68,10 +68,8 @@ final class URLProtocolStub: URLProtocol {
         }
     }
 
-    /// Does nothing, because the stub answers as soon as loading starts.
-    override func stopLoading() {
-        // Nothing is in flight to cancel: the stub answers as soon as loading starts.
-    }
+    /// Does nothing: the stub has already answered when loading started.
+    override func stopLoading() {}  // swiftlint:disable:this no_empty_block - a required override with nothing to stop
 
     /// Hands the session a response and its body, then finishes.
     ///

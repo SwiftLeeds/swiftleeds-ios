@@ -149,7 +149,9 @@ public enum Brand: CaseIterable, Equatable, Hashable, Sendable {
     #if !os(watchOS)
     /// The color of the plate a scanner reads a code from.
     ///
-    /// It stays light in every appearance, so black marks on it scan.
+    /// It stays light in every appearance, so black marks on it scan. On iOS, dark mode at standard
+    /// contrast gives the light ``secondarySurface``. Every other appearance gives the light
+    /// ``surface``. On macOS, contrast has no effect, so the plate is always the light ``surface``.
     package var scannableSurface: Color {
         let standard = resource(named: "\(catalogName)-surface")
         #if os(iOS)

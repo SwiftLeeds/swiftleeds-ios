@@ -51,6 +51,7 @@ public struct Code128Barcode: BarcodeContent {
     /// - Throws: ``ParsingError/empty`` when `text` is empty.
     ///   ``ParsingError/unsupportedCharacter(_:)`` when `text` holds a character that is not ASCII.
     ///   ``ParsingError/notDrawn`` when CoreImage draws no picture of the text.
+    /// - Complexity: O(*p*), where *p* is the number of pixels in the picture of the barcode.
     public init(_ text: String) throws(ParsingError) {
         try Self.check(text)
         let message = Data(text.utf8)

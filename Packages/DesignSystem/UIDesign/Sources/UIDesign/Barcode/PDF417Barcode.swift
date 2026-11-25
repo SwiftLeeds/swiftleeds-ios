@@ -81,6 +81,7 @@ public struct PDF417Barcode: BarcodeContent {
     /// - Throws: ``ParsingError/empty`` when `text` is empty.
     ///   ``ParsingError/tooLong`` when the generator cannot fit `text` in one barcode.
     ///   ``ParsingError/notDrawn`` when CoreImage draws no picture of the generated barcode.
+    /// - Complexity: O(*p*), where *p* is the number of pixels in the picture of the barcode.
     public init(_ text: String) throws(ParsingError) {
         do throws(ValidationError) {
             try self.init(Data(text.utf8))
@@ -99,6 +100,7 @@ public struct PDF417Barcode: BarcodeContent {
     /// - Throws: ``ValidationError/empty`` when `message` is empty.
     ///   ``ValidationError/tooLong`` when the generator cannot fit `message` in one barcode.
     ///   ``ValidationError/notDrawn`` when CoreImage draws no picture of the generated barcode.
+    /// - Complexity: O(*p*), where *p* is the number of pixels in the picture of the barcode.
     public init(_ message: Data) throws(ValidationError) {
         try Self.check(message)
         guard let generated = Self.generate(message) else { throw .tooLong }

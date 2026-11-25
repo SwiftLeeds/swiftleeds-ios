@@ -37,6 +37,7 @@ public struct SuppliedBarcodeImage: BarcodeContent {
     ///
     /// - Parameter image: The image to read, in any colors. A clear pixel counts as light.
     /// - Throws: ``ValidationError/notDrawn`` when CoreImage draws no picture of the image.
+    /// - Complexity: O(*p*), where *p* is the number of pixels in `image`.
     public init(_ image: CGImage) throws(ValidationError) {
         guard let marks = BarcodeImage.thresholded(image) else { throw .notDrawn }
         cgImage = marks

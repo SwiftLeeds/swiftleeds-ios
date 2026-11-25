@@ -133,6 +133,7 @@ public struct QRCode: BarcodeContent {
     /// - Throws: ``ParsingError/empty`` when `text` is empty.
     ///   ``ParsingError/tooLong`` when `text` is more bytes in UTF-8 than the level holds.
     ///   ``ParsingError/notDrawn`` when CoreImage draws no picture of the text.
+    /// - Complexity: O(*p*), where *p* is the number of pixels in the picture of the code.
     public init(_ text: String, errorCorrection: ErrorCorrectionLevel = .high) throws(ParsingError) {
         do throws(ValidationError) {
             try self.init(Data(text.utf8), errorCorrection: errorCorrection)
@@ -153,6 +154,7 @@ public struct QRCode: BarcodeContent {
     /// - Throws: ``ValidationError/empty`` when `message` is empty.
     ///   ``ValidationError/tooLong`` when `message` is more bytes than the level holds.
     ///   ``ValidationError/notDrawn`` when CoreImage draws no picture of the bytes.
+    /// - Complexity: O(*p*), where *p* is the number of pixels in the picture of the code.
     public init(_ message: Data, errorCorrection: ErrorCorrectionLevel = .high) throws(ValidationError) {
         try Self.check(message, at: errorCorrection)
         guard let generated = Self.generate(message, at: errorCorrection) else { throw .notDrawn }
