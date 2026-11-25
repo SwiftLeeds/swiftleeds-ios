@@ -24,7 +24,16 @@ import SwiftUI
 /// ```swift
 /// Barcode(membershipCodeImage, label: Text("Membership QR code"))
 /// ```
-public struct Barcode: View {
+public struct Barcode<Placeholder: View, Fallback: View>: View {
+    /// Where a barcode takes its picture from.
+    private enum Source {
+        /// A picture that is ready to draw.
+        case picture(CGImage)
+
+        /// A phase of loading a picture.
+        case phase(BarcodeLoadingPhase)
+    }
+
     /// A view that draws a barcode in a given style.
     private struct ResolvedBarcodeStyle<Style: BarcodeStyle>: View {
         /// The style that draws the barcode.
@@ -41,12 +50,81 @@ public struct Barcode: View {
     /// The current barcode style.
     @Environment(\.barcodeStyle) private var style
 
-    /// The picture of the code to draw.
-    private let picture: CGImage
+    /// Where the picture of the code comes from.
+    private let source: Source
 
     /// The label VoiceOver reads for the barcode.
     private let label: Text
 
+    /// The view drawn while no picture has loaded.
+    private let placeholder: Placeholder
+
+    /// The view drawn when a load gave no picture.
+    private let fallback: Fallback
+
+    /// Creates a barcode that draws the phase of a load, with a placeholder and a fallback.
+    ///
+    /// The style draws only a loaded picture. The placeholder and the fallback draw as they are.
+    ///
+    /// - Parameters:
+    ///   - phase: The phase of the load to draw.
+    ///   - label: The label VoiceOver reads for the barcode.
+    ///   - placeholder: A content builder that creates the view drawn while no picture has loaded.
+    ///   - fallback: A content builder that creates the view drawn when a load gave no picture.
+    package init(
+        phase: BarcodeLoadingPhase,
+        label: Text,
+        @ViewBuilder placeholder: () -> Placeholder,
+        @ViewBuilder fallback: () -> Fallback,
+    ) {
+        source = .phase(phase)
+        self.label = label
+        self.placeholder = placeholder()
+        self.fallback = fallback()
+    }
+
+    public var body: some View {
+        drawn
+            // Smart Invert would turn the marks white, which may not scan, so it skips every style.
+            .accessibilityIgnoresInvertColors()
+    }
+
+    /// The view that draws the source.
+    @ViewBuilder
+    private var drawn: some View {
+        switch source {
+        case .picture(let picture): AnyView(resolved(picture, in: style))
+        case .phase(.success(let marks)): AnyView(resolved(marks.cgImage, in: style))
+        case .phase(.empty): placeholder
+        case .phase(.failure): fallback
+        }
+    }
+
+    /// Returns the properties handed to the current barcode style.
+    ///
+    /// - Parameter picture: The picture of the code to draw.
+    /// - Returns: The configuration that holds the picture, with the barcode's label.
+    private func configuration(drawing picture: CGImage) -> BarcodeStyleConfiguration {
+        BarcodeStyleConfiguration(
+            content: Image(picture, scale: 1, label: label)
+                .resizable()
+                .interpolation(.none)
+                .scaledToFit()
+        )
+    }
+
+    /// Returns a view that draws a picture of a code in the given style.
+    ///
+    /// - Parameters:
+    ///   - picture: The picture of the code to draw.
+    ///   - style: The style to draw the barcode in.
+    /// - Returns: A view that draws the barcode in `style`.
+    private func resolved(_ picture: CGImage, in style: some BarcodeStyle) -> some View {
+        ResolvedBarcodeStyle(style: style, configuration: configuration(drawing: picture))
+    }
+}
+
+extension Barcode where Placeholder == EmptyView, Fallback == EmptyView {
     /// Creates a barcode that draws a code, with a label for VoiceOver.
     ///
     /// ```swift
@@ -57,8 +135,10 @@ public struct Barcode: View {
     ///   - code: The code to draw.
     ///   - label: The label VoiceOver reads for the barcode.
     public init(_ code: some BarcodeContent, label: Text) {
-        picture = code.cgImage
+        source = .picture(code.cgImage)
         self.label = label
+        placeholder = EmptyView()
+        fallback = EmptyView()
     }
 
     /// Creates a barcode that draws an image you supply, with a label for VoiceOver.
@@ -75,37 +155,15 @@ public struct Barcode: View {
     ///   - image: The image to draw.
     ///   - label: The label VoiceOver reads for the barcode.
     public init(_ image: CGImage, label: Text) {
-        picture = image
+        source = .picture(image)
         self.label = label
-    }
-
-    public var body: some View {
-        AnyView(resolved(in: style))
-            // Smart Invert would turn the marks white, which may not scan, so it skips every style.
-            .accessibilityIgnoresInvertColors()
-    }
-
-    /// The properties handed to the current barcode style.
-    private var configuration: BarcodeStyleConfiguration {
-        BarcodeStyleConfiguration(
-            content: Image(picture, scale: 1, label: label)
-                .resizable()
-                .interpolation(.none)
-                .scaledToFit()
-        )
-    }
-
-    /// Returns a view that draws the barcode in the given style.
-    ///
-    /// - Parameter style: The style to draw the barcode in.
-    /// - Returns: A view that draws the barcode in `style`.
-    private func resolved(in style: some BarcodeStyle) -> some View {
-        ResolvedBarcodeStyle(style: style, configuration: configuration)
+        placeholder = EmptyView()
+        fallback = EmptyView()
     }
 }
 
 #if DEBUG
-extension Barcode {
+extension Barcode where Placeholder == EmptyView, Fallback == EmptyView {
     /// The made-up text the preview code carries.
     fileprivate static let previewText = "ti_ExampleTicket0000000000"
 
@@ -133,12 +191,12 @@ extension Barcode {
 }
 
 #Preview("Light") {
-    Barcode.preview
+    Barcode<EmptyView, EmptyView>.preview
         .preferredColorScheme(.light)
 }
 
 #Preview("Dark") {
-    Barcode.preview
+    Barcode<EmptyView, EmptyView>.preview
         .preferredColorScheme(.dark)
 }
 #endif
