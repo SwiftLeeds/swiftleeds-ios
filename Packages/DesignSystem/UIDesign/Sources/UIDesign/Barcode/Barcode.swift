@@ -85,8 +85,6 @@ public struct Barcode<Placeholder: View, Fallback: View>: View {
 
     public var body: some View {
         drawn
-            // Smart Invert would turn the marks white, which may not scan, so it skips every style.
-            .accessibilityIgnoresInvertColors()
     }
 
     /// The view that draws the source.
@@ -121,6 +119,8 @@ public struct Barcode<Placeholder: View, Fallback: View>: View {
     /// - Returns: A view that draws the barcode in `style`.
     private func resolved(_ picture: CGImage, in style: some BarcodeStyle) -> some View {
         ResolvedBarcodeStyle(style: style, configuration: configuration(drawing: picture))
+            // Smart Invert would turn the marks white, which may not scan, so the code skips it in every style.
+            .accessibilityIgnoresInvertColors()
     }
 }
 
