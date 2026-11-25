@@ -1,6 +1,7 @@
 #if os(iOS)
 import CoreGraphics
 import UIDesign
+import UIDesignTestSupport
 
 /// A kind of code the plate tests draw, with the made-up text it carries and where to read its render.
 ///
