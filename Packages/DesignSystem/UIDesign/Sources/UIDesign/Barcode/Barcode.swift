@@ -18,11 +18,12 @@ import SwiftUI
 ///
 /// ## Choosing where the picture comes from
 ///
-/// A barcode draws a code made on the device, or an image you supply. For a supplied image,
-/// you keep the image's quiet zone: the barcode adds none.
+/// A barcode draws a code made on the device, or an image you supply. Wrap a supplied image in
+/// a ``SuppliedBarcodeImage``, which turns its colors into black marks on clear. You keep the
+/// image's quiet zone: the barcode adds none.
 ///
 /// ```swift
-/// Barcode(membershipCodeImage, label: Text("Membership QR code"))
+/// Barcode(try SuppliedBarcodeImage(membershipCodeImage), label: Text("Membership QR code"))
 /// ```
 public struct Barcode<Placeholder: View, Fallback: View>: View {
     /// Where a barcode takes its picture from.
@@ -136,26 +137,6 @@ extension Barcode where Placeholder == EmptyView, Fallback == EmptyView {
     ///   - label: The label VoiceOver reads for the barcode.
     public init(_ code: some BarcodeContent, label: Text) {
         source = .picture(code.cgImage)
-        self.label = label
-        placeholder = EmptyView()
-        fallback = EmptyView()
-    }
-
-    /// Creates a barcode that draws an image you supply, with a label for VoiceOver.
-    ///
-    /// The barcode adds no quiet zone, the clear margin a scanner needs around the marks. Give
-    /// the image its own margin. A tightly cropped image can lose marks under the rounded
-    /// corners of the plate.
-    ///
-    /// ```swift
-    /// Barcode(membershipCodeImage, label: Text("Membership QR code"))
-    /// ```
-    ///
-    /// - Parameters:
-    ///   - image: The image to draw.
-    ///   - label: The label VoiceOver reads for the barcode.
-    public init(_ image: CGImage, label: Text) {
-        source = .picture(image)
         self.label = label
         placeholder = EmptyView()
         fallback = EmptyView()
