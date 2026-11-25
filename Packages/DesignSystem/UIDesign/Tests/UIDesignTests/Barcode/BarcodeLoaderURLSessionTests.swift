@@ -45,23 +45,6 @@ struct BarcodeLoaderURLSessionTests {
         return data as Data
     }
 
-    /// Returns the number of pixels in one half of a picture that are not as expected.
-    ///
-    /// - Parameters:
-    ///   - pixels: The picture's pixels.
-    ///   - leftHalf: Whether to check the left half or the right half.
-    ///   - isBlack: Whether the half should be opaque black, or clear.
-    /// - Returns: The number of pixels that are not as expected.
-    private static func missCount(in pixels: RGBAPixels, leftHalf: Bool, isBlack: Bool) -> Int {
-        let columns = leftHalf ? 0..<pixels.width / 2 : pixels.width / 2..<pixels.width
-        return columns.flatMap { column in
-            pixels.rows.map { PixelPosition(column: column, row: $0) }
-        }.count { position in
-            let pixel = pixels.pixel(at: position)
-            return !(isBlack ? pixel.isOpaqueBlack : pixel.isClear)
-        }
-    }
-
     @Test
     func whenServerSendsPNG_shouldReturnMarksOnClear() async throws {
         URLProtocolStub.answer = .response(statusCode: 200, data: png)
@@ -72,8 +55,8 @@ struct BarcodeLoaderURLSessionTests {
         let pixels = try RGBAPixels(of: image.cgImage)
         #expect(image.cgImage.width == TwoToneImage.side)
         #expect(image.cgImage.height == TwoToneImage.side)
-        #expect(Self.missCount(in: pixels, leftHalf: true, isBlack: true) == 0)
-        #expect(Self.missCount(in: pixels, leftHalf: false, isBlack: false) == 0)
+        #expect(pixels.count(columns: TwoToneImage.markColumns, rows: pixels.rows) { !$0.isOpaqueBlack } == 0)
+        #expect(pixels.count(columns: TwoToneImage.backgroundColumns, rows: pixels.rows) { !$0.isClear } == 0)
     }
 
     @Test(arguments: [199, 300, 404])

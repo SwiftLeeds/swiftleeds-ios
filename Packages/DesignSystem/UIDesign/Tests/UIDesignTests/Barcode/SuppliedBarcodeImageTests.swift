@@ -77,31 +77,18 @@ struct SuppliedBarcodeImageTests {
     /// The JPEG quality of the code a server might send, from 0 to 1.
     private static let jpegQuality = 0.7
 
-    /// Returns whether every pixel of one half of a picture is opaque black, or every one is clear.
-    ///
-    /// - Parameters:
-    ///   - pixels: The picture's pixels.
-    ///   - leftHalf: Whether to check the left half or the right half.
-    ///   - isBlack: Whether the half should be opaque black, or clear.
-    /// - Returns: The number of pixels in the half that are not as expected.
-    private static func missCount(in pixels: RGBAPixels, leftHalf: Bool, isBlack: Bool) -> Int {
-        let columns = leftHalf ? 0..<pixels.width / 2 : pixels.width / 2..<pixels.width
-        return columns.flatMap { column in
-            pixels.rows.map { PixelPosition(column: column, row: $0) }
-        }.count { position in
-            let pixel = pixels.pixel(at: position)
-            return !(isBlack ? pixel.isOpaqueBlack : pixel.isClear)
-        }
-    }
-
     @Test(arguments: Fixture.all)
     func whenImageIsSupplied_shouldTurnDarkAreasBlackAndLightAreasClear(fixture: Fixture) throws {
         let source = try TwoToneImage.image(mark: fixture.mark, background: fixture.background, noise: fixture.noise)
         let sut = try SuppliedBarcodeImage(source)
         let pixels = try RGBAPixels(of: sut.cgImage)
         let leftIsBlack = fixture.blackSide == .left
-        let leftMisses = Self.missCount(in: pixels, leftHalf: true, isBlack: leftIsBlack)
-        let rightMisses = Self.missCount(in: pixels, leftHalf: false, isBlack: !leftIsBlack)
+        let leftMisses = pixels.count(columns: TwoToneImage.markColumns, rows: pixels.rows) { pixel in
+            !(leftIsBlack ? pixel.isOpaqueBlack : pixel.isClear)
+        }
+        let rightMisses = pixels.count(columns: TwoToneImage.backgroundColumns, rows: pixels.rows) { pixel in
+            !(leftIsBlack ? pixel.isClear : pixel.isOpaqueBlack)
+        }
         #expect(leftMisses == 0, "\(leftMisses) pixels of the left half are not as expected")
         #expect(rightMisses == 0, "\(rightMisses) pixels of the right half are not as expected")
     }
@@ -125,9 +112,7 @@ struct SuppliedBarcodeImageTests {
         let source = try TwoToneImage.image(width: TwoToneImage.side, height: TwoToneImage.side, bytes: bytes)
         let sut = try SuppliedBarcodeImage(source)
         let pixels = try RGBAPixels(of: sut.cgImage)
-        let marks =
-            Self.missCount(in: pixels, leftHalf: true, isBlack: false)
-            + Self.missCount(in: pixels, leftHalf: false, isBlack: false)
+        let marks = pixels.count(columns: pixels.columns, rows: pixels.rows) { !$0.isClear }
         #expect(marks == 0, "\(marks) pixels are not clear")
     }
 

@@ -63,6 +63,12 @@ enum TwoToneImage {
     /// The number of parts a picture is split into across its width: the mark and the background.
     private static let halves = 2
 
+    /// The columns of the mark, on the left half of the picture.
+    static let markColumns = 0..<(side / halves)
+
+    /// The columns of the background, on the right half of the picture.
+    static let backgroundColumns = (side / halves)..<side
+
     /// The number of bytes in one pixel: red, green, blue and alpha.
     private static let bytesPerPixel = 4
 
@@ -111,7 +117,7 @@ enum TwoToneImage {
     static func image(mark: Shade, background: Shade, noise: Int = 0) throws(DrawingError) -> CGImage {
         let bytes = (0..<side).flatMap { row in
             (0..<side).flatMap { column in
-                let isMark = column < side / halves
+                let isMark = markColumns.contains(column)
                 let shift = (column + noiseRowStep * row) % (noise + 1)
                 return pixel(isMark ? mark : background, shifted: isMark ? shift : -shift)
             }
