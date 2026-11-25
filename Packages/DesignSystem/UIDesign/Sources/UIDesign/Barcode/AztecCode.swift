@@ -25,6 +25,22 @@ public struct AztecCode: BarcodeContent {
 
         /// CoreImage drew nothing. No known input causes it.
         case notDrawn
+
+        /// Creates the reason text fails, from the reason its bytes failed.
+        ///
+        /// - Parameter error: The reason bytes do not become an Aztec code.
+        init(_ error: ValidationError) {
+            switch error {
+            case .empty:
+                self = .empty
+
+            case .tooLong:
+                self = .tooLong
+
+            case .notDrawn:
+                self = .notDrawn
+            }
+        }
     }
 
     /// The reason bytes do not become an Aztec code.
@@ -71,16 +87,7 @@ public struct AztecCode: BarcodeContent {
         do throws(ValidationError) {
             try self.init(Data(text.utf8))
         } catch {
-            switch error {
-            case .empty:
-                throw .empty
-
-            case .tooLong:
-                throw .tooLong
-
-            case .notDrawn:
-                throw .notDrawn
-            }
+            throw ParsingError(error)
         }
     }
 
