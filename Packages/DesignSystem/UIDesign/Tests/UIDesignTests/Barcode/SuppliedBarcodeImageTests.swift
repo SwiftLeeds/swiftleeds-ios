@@ -60,6 +60,7 @@ struct SuppliedBarcodeImageTests {
                 noise: 6,
                 blackSide: .left,
             ),
+            Self(testDescription: "red on white", mark: .red, background: .white, noise: 0, blackSide: .left),
         ]
     }
 

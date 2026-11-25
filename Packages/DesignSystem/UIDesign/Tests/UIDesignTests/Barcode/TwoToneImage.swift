@@ -32,6 +32,9 @@ enum TwoToneImage {
         /// Opaque white.
         static let white = Self(red: .max, green: .max, blue: .max, alpha: .max)
 
+        /// Opaque red: red 255, green 0 and blue 0.
+        static let red = Self(red: .max, green: 0, blue: 0, alpha: .max)
+
         /// Clear, with no color.
         static let clear = Self(red: 0, green: 0, blue: 0, alpha: 0)
 
