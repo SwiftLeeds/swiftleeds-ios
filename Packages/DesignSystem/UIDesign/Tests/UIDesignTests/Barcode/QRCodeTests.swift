@@ -7,6 +7,18 @@ import UIDesignTestSupport
 
 @MainActor
 struct QRCodeTests {
+    /// A style that draws the barcode's content and nothing else.
+    private struct ContentOnlyBarcodeStyle: BarcodeStyle {
+        /// Creates a view that represents the body of a barcode.
+        ///
+        /// - Parameter configuration: The properties of the barcode.
+        /// - Returns: A view that represents the body of a barcode.
+        @MainActor
+        func makeBody(configuration: Configuration) -> some View {
+            configuration.content
+        }
+    }
+
     /// The text the code carries.
     private static let fixtureText = BarcodeFixture.qrCode.text
 
@@ -84,9 +96,8 @@ struct QRCodeTests {
     /// - Returns: The rendered picture.
     /// - Throws: When the renderer draws no picture.
     private static func render(_ code: QRCode) throws -> CGImage {
-        let content = Image(code.cgImage, scale: 1, label: Text("Test code"))
-            .resizable()
-            .interpolation(.none)
+        let content = Barcode(code, label: Text("Test code"))
+            .barcodeStyle(ContentOnlyBarcodeStyle())
             .frame(width: drawnSide, height: drawnSide)
             .background(.scannableSurface)
         return try CGImage.rendering(content, atScale: scanScale)
@@ -98,9 +109,8 @@ struct QRCodeTests {
     /// - Returns: The rendered picture, with alpha.
     /// - Throws: When the renderer draws no picture.
     private static func renderWithoutPlate(_ code: QRCode) throws -> CGImage {
-        let content = Image(code.cgImage, scale: 1, label: Text("Test code"))
-            .resizable()
-            .interpolation(.none)
+        let content = Barcode(code, label: Text("Test code"))
+            .barcodeStyle(ContentOnlyBarcodeStyle())
             .frame(width: drawnSide, height: drawnSide)
         return try CGImage.rendering(content, atScale: scanScale)
     }
