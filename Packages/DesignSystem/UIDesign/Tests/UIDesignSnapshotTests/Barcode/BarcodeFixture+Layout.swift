@@ -6,22 +6,38 @@ import UIDesignTestSupport
 ///
 /// Every distance is counted in modules of the stored picture.
 extension BarcodeFixture {
-    /// Where to read a code's render, counted in modules of the stored picture.
+    /// Where to read a code's render, in modules of the stored picture.
     struct Layout: Sendable {
         /// The modules across the stored picture, quiet zone included.
-        let modulesAcross: Int
+        let modulesAcross: Modules
 
         /// The modules down the stored picture, quiet zone included.
-        let modulesDown: Int
+        let modulesDown: Modules
 
         /// The clear modules the code keeps on each of its four sides.
-        let quietZone: Int
+        let quietZone: Modules
 
         /// The distance from the leading edge to a module that is dark in the stored picture.
-        let darkColumn: Double
+        let darkColumn: Modules
 
         /// The distance from the top edge to a module that is dark in the stored picture.
-        let darkRow: Double
+        let darkRow: Modules
+
+        /// Creates a layout of a stored picture that is a whole number of modules across.
+        ///
+        /// - Parameters:
+        ///   - modulesAcross: The modules across the stored picture, quiet zone included.
+        ///   - modulesDown: The modules down the stored picture, quiet zone included.
+        ///   - quietZone: The clear modules the code keeps on each of its four sides.
+        ///   - darkColumn: The distance from the leading edge to a module that is dark.
+        ///   - darkRow: The distance from the top edge to a module that is dark.
+        init(modulesAcross: Int, modulesDown: Modules, quietZone: Modules, darkColumn: Modules, darkRow: Modules) {
+            self.modulesAcross = Modules(modulesAcross)
+            self.modulesDown = modulesDown
+            self.quietZone = quietZone
+            self.darkColumn = darkColumn
+            self.darkRow = darkRow
+        }
     }
 
     /// The sizes of the stored picture and the module the render poll reads.
@@ -57,7 +73,8 @@ extension BarcodeFixture {
     ///
     /// The width is fixed, and the height follows the code's aspect, so the plate fits the code.
     var frameSize: CGSize {
-        CGSize(width: frameWidth, height: frameWidth * CGFloat(layout.modulesDown) / CGFloat(layout.modulesAcross))
+        let height = layout.modulesDown.length(onSideMeasuring: frameWidth, holding: layout.modulesAcross)
+        return CGSize(width: frameWidth, height: height)
     }
 }
 #endif

@@ -27,37 +27,37 @@ struct BarcodePlateTests {
     private static let text = BarcodeFixture.qrCode.text
 
     /// The modules across the fixture's code with its quiet zone.
-    private static let modulesWithQuietZone = Double(BarcodeFixture.qrCode.layout.modulesAcross)
+    private static let modulesWithQuietZone = BarcodeFixture.qrCode.layout.modulesAcross
 
     /// How far inside the quiet zone's far edge the middle of its innermost row sits.
     ///
-    /// It is counted in modules, so the row's middle sits that far short of the code's first mark.
-    private static let innermostRowInset = 0.5
+    /// The row's middle sits that far short of the code's first mark.
+    private static let innermostRowInset: Modules = 0.5
 
     /// How far either side of a finder edge the blended pixels are counted.
     ///
-    /// It is counted in modules, so the count covers one module, centered on the edge.
-    private static let edgeNeighborhood = 0.5
+    /// The count covers one module, centered on the edge.
+    private static let edgeNeighborhood: Modules = 0.5
 
     /// How far into the code the black center of the top-leading finder pattern sits.
     ///
-    /// It is counted in modules, to the middle of that center.
-    private static let finderMarkOffset = 7.5
+    /// It reaches the middle of that center.
+    private static let finderMarkOffset: Modules = 7.5
 
     /// How far into the render the middle of the finder's one-module light ring sits.
     ///
-    /// It is counted in modules, to the middle of the ring's leading side.
-    private static let finderLightRingOffset = 5.5
+    /// It reaches the middle of the ring's leading side.
+    private static let finderLightRingOffset: Modules = 5.5
 
     /// How far either side of the ring's middle the plate must show.
     ///
-    /// It is counted in modules, and half the ring's width leaves its edges unchecked.
-    private static let finderLightRingHalfSpan = 0.25
+    /// Half the ring's width leaves its edges unchecked.
+    private static let finderLightRingHalfSpan: Modules = 0.25
 
     /// Where the finder's edges lie along its center row.
     ///
-    /// Each is a boundary between a black and a light module, counted in modules from the leading edge.
-    private static let finderEdgeOffsets = [4.0, 5.0, 6.0, 9.0, 10.0, 11.0]
+    /// Each is a boundary between a black and a light module, measured from the leading edge.
+    private static let finderEdgeOffsets: [Modules] = [4, 5, 6, 9, 10, 11]
 
     /// The most pixels at one edge that may be neither plate nor black.
     private static let mostBlendedPixelsPerEdge = 2
@@ -159,10 +159,22 @@ struct BarcodePlateTests {
     ///   - fixture: The kind of code the render draws.
     /// - Returns: Whether the pixel there is black.
     private static func showsMarks(in pixels: RGBAPixels, of fixture: BarcodeFixture) -> Bool {
-        let layout = fixture.layout
-        let column = Int(layout.darkColumn * Double(pixels.width) / Double(layout.modulesAcross))
-        let row = Int(layout.darkRow * Double(pixels.height) / Double(layout.modulesDown))
-        return isDark(pixels.pixel(at: PixelPosition(column: column, row: row)))
+        isDark(pixels.pixel(at: darkModulePosition(of: fixture.layout, in: pixels)))
+    }
+
+    /// Returns where the module that is dark in the stored code lies in a picture.
+    ///
+    /// - Parameters:
+    ///   - layout: Where the code's stored picture holds its dark module.
+    ///   - pixels: The picture to measure in, drawn at the stored picture's proportions.
+    /// - Returns: The position of the dark module's center, in whole pixels.
+    private static func darkModulePosition(of layout: BarcodeFixture.Layout, in pixels: RGBAPixels) -> PixelPosition {
+        let width = Double(pixels.width)
+        let height = Double(pixels.height)
+        return PixelPosition(
+            column: Int(layout.darkColumn.length(onSideMeasuring: width, holding: layout.modulesAcross)),
+            row: Int(layout.darkRow.length(onSideMeasuring: height, holding: layout.modulesDown)),
+        )
     }
 
     /// Returns whether a pixel is opaque and dark enough to be a mark.
@@ -182,8 +194,8 @@ struct BarcodePlateTests {
     private static func plateSamples(in pixels: RGBAPixels, of fixture: BarcodeFixture) -> [PixelPosition] {
         // This render blurs a one-module ring, so only the quiet zone's row can be read exactly.
         let layout = fixture.layout
-        let rowModules = Double(layout.quietZone) - innermostRowInset
-        let ringRow = Int(rowModules * Double(pixels.height) / Double(layout.modulesDown))
+        let rowModules = layout.quietZone - innermostRowInset
+        let ringRow = Int(rowModules.length(onSideMeasuring: Double(pixels.height), holding: layout.modulesDown))
         let columns = cornerRadiusInPixels..<(pixels.width - cornerRadiusInPixels)
         return columns.map { PixelPosition(column: $0, row: ringRow) }
     }
@@ -251,20 +263,18 @@ struct BarcodePlateTests {
     func whenStored_shouldSpanWholeModules(fixture: BarcodeFixture) throws {
         let image = try fixture.content.cgImage
         let layout = fixture.layout
-        let pixelsPerModule = image.width / layout.modulesAcross
-        #expect(image.width == layout.modulesAcross * pixelsPerModule, "\(fixture): width is not whole modules")
-        #expect(image.height == layout.modulesDown * pixelsPerModule, "\(fixture): height is not whole modules")
+        let pixelsPerModule = layout.modulesAcross.wholePixelsPerModule(onSideMeasuring: image.width)
+        let width = layout.modulesAcross.pixels(atPixelsPerModule: pixelsPerModule)
+        let height = layout.modulesDown.pixels(atPixelsPerModule: pixelsPerModule)
+        #expect(image.width == width, "\(fixture): width is not whole modules")
+        #expect(image.height == height, "\(fixture): height is not whole modules")
     }
 
     @Test(arguments: BarcodeFixture.allCases)
     func whenStored_shouldBeDarkAtPollModule(fixture: BarcodeFixture) throws {
         let image = try fixture.content.cgImage
-        let layout = fixture.layout
-        let pixelsPerModule = image.width / layout.modulesAcross
         let pixels = try RGBAPixels(of: image)
-        let column = Int(layout.darkColumn * Double(pixelsPerModule))
-        let row = Int(layout.darkRow * Double(pixelsPerModule))
-        let position = PixelPosition(column: column, row: row)
+        let position = Self.darkModulePosition(of: fixture.layout, in: pixels)
         #expect(Self.isDark(pixels.pixel(at: position)), "\(fixture): the poll module is not dark")
     }
 
@@ -274,8 +284,8 @@ struct BarcodePlateTests {
     ///   - modules: The distance from the leading or top edge, in modules.
     ///   - pixels: The render the distance is measured in.
     /// - Returns: The position, in whole pixels.
-    private static func position(ofModules modules: Double, in pixels: RGBAPixels) -> Int {
-        Int(modules * Double(pixels.width) / modulesWithQuietZone)
+    private static func position(ofModules modules: Modules, in pixels: RGBAPixels) -> Int {
+        Int(modules.length(onSideMeasuring: Double(pixels.width), holding: modulesWithQuietZone))
     }
 
     /// Returns whether a pixel is opaque black, within the tolerance of every channel.
