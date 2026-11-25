@@ -1,23 +1,37 @@
-#if os(iOS)
+#if canImport(CoreGraphics)
 import CoreGraphics
 
 /// The pixels of a rendered image with their alpha, for the barcode suites.
 ///
 /// They are read as 8-bit sRGB.
-struct RGBAPixels: Equatable, Hashable, Sendable {
+package struct RGBAPixels: Equatable, Hashable, Sendable {
     /// One pixel's channels, each from 0 to 255.
-    struct Pixel: Equatable, Hashable, Sendable {
+    package struct Pixel: Equatable, Hashable, Sendable {
         /// The red channel, premultiplied by alpha.
-        let red: UInt8
+        package let red: UInt8
 
         /// The green channel, premultiplied by alpha.
-        let green: UInt8
+        package let green: UInt8
 
         /// The blue channel, premultiplied by alpha.
-        let blue: UInt8
+        package let blue: UInt8
 
         /// The alpha channel: 0 is clear and 255 is opaque.
-        let alpha: UInt8
+        package let alpha: UInt8
+
+        /// Creates a pixel from its four channels.
+        ///
+        /// - Parameters:
+        ///   - red: The red channel, premultiplied by alpha.
+        ///   - green: The green channel, premultiplied by alpha.
+        ///   - blue: The blue channel, premultiplied by alpha.
+        ///   - alpha: The alpha channel: 0 is clear and 255 is opaque.
+        package init(red: UInt8, green: UInt8, blue: UInt8, alpha: UInt8) {
+            self.red = red
+            self.green = green
+            self.blue = blue
+            self.alpha = alpha
+        }
     }
 
     /// A channel, numbered by its place in a pixel's bytes.
@@ -36,7 +50,7 @@ struct RGBAPixels: Equatable, Hashable, Sendable {
     }
 
     /// The reason an image could not be read.
-    enum ReadingError: Error, Equatable {
+    package enum ReadingError: Error, Equatable {
         /// The sRGB color space or the bitmap context is not available.
         case noContext
 
@@ -51,10 +65,10 @@ struct RGBAPixels: Equatable, Hashable, Sendable {
     private static let bitsPerChannel = 8
 
     /// The width of the image in pixels.
-    let width: Int
+    package let width: Int
 
     /// The height of the image in pixels.
-    let height: Int
+    package let height: Int
 
     /// The bytes of the image, one row after another, from the top row.
     private let bytes: [UInt8]
@@ -65,7 +79,7 @@ struct RGBAPixels: Equatable, Hashable, Sendable {
     /// - Throws: ``ReadingError/noContext`` when the context cannot be made.
     ///   ``ReadingError/noBytes`` when the context holds no bytes.
     /// - Complexity: O(*n*), where *n* is the number of pixels in the image.
-    init(of image: CGImage) throws(ReadingError) {
+    package init(of image: CGImage) throws(ReadingError) {
         guard let space = CGColorSpace(name: CGColorSpace.sRGB),
             let context = CGContext(
                 data: nil,
@@ -92,7 +106,7 @@ struct RGBAPixels: Equatable, Hashable, Sendable {
     ///   - y: The row of the pixel, from the top.
     /// - Returns: The pixel's channels.
     /// - Precondition: The column and row must lie inside the image.
-    func pixel(x: Int, y: Int) -> Pixel {
+    package func pixel(x: Int, y: Int) -> Pixel {
         let index = (y * width + x) * Self.channels
         return Pixel(
             red: bytes[index + Channel.red.rawValue],

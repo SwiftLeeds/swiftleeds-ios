@@ -4,6 +4,7 @@ import QuartzCore
 import SwiftUI
 import Testing
 import UIDesign
+import UIDesignTestSupport
 import UIKit
 
 @MainActor

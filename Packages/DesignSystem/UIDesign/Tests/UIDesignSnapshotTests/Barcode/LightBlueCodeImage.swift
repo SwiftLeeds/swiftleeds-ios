@@ -2,6 +2,7 @@
 import CoreGraphics
 import Foundation
 import UIDesign
+import UIDesignTestSupport
 
 /// A made-up picture of a QR code in light blue on white, like a code someone saved in a color.
 enum LightBlueCodeImage {
