@@ -46,29 +46,41 @@ struct PDF417BarcodeTests {
         String(repeating: "\u{E9}", count: count)
     }
 
+    /// Returns the quiet zone probe of an example's stored picture.
+    ///
+    /// - Parameter example: The text and the modules across its picture.
+    /// - Returns: The probe of the picture.
+    /// - Throws: When the barcode cannot be made or its picture cannot be read.
+    private static func probe(of example: QuietZoneExample) throws -> QuietZoneProbe {
+        try QuietZoneProbe(
+            of: PDF417Barcode(example.text).cgImage,
+            modulesAcross: example.modulesAcross,
+            quietZoneModules: quietZoneModules,
+        )
+    }
+
     @Test(arguments: quietZoneExamples)
-    func whenTextIsEncoded_shouldHaveTwoClearModulesEachSide(example: QuietZoneExample) throws {
-        let sut = try PDF417Barcode(example.text)
-        let pixels = try RGBAPixels(of: sut.cgImage)
-        let width = pixels.width
-        let height = pixels.height
-        let moduleSpan = width / example.modulesAcross
-        try #require(width == example.modulesAcross * moduleSpan, "The picture is not whole pixels for each module")
-        let zone = Self.quietZoneModules * moduleSpan
-        let allColumns = pixels.columns
-        let allRows = pixels.rows
-        #expect(pixels.isClear(columns: 0..<zone, rows: allRows), "The left zone is not clear")
-        #expect(pixels.isClear(columns: (width - zone)..<width, rows: allRows), "The right zone is not clear")
-        #expect(pixels.isClear(columns: allColumns, rows: 0..<zone), "The top zone is not clear")
-        #expect(pixels.isClear(columns: allColumns, rows: (height - zone)..<height), "The bottom is not clear")
-        let innerLeft = zone..<(zone + moduleSpan)
-        let innerRight = (width - zone - moduleSpan)..<(width - zone)
-        let innerTop = zone..<(zone + moduleSpan)
-        let innerBottom = (height - zone - moduleSpan)..<(height - zone)
-        #expect(pixels.hasOpaqueBlack(columns: innerLeft, rows: allRows), "No bar just inside the left zone")
-        #expect(pixels.hasOpaqueBlack(columns: innerRight, rows: allRows), "No bar just inside the right zone")
-        #expect(pixels.hasOpaqueBlack(columns: allColumns, rows: innerTop), "No bar just inside the top zone")
-        #expect(pixels.hasOpaqueBlack(columns: allColumns, rows: innerBottom), "No bar just inside the bottom zone")
+    func whenTextIsEncoded_shouldStoreWholePixelsForEachModule(example: QuietZoneExample) throws {
+        let sut = try Self.probe(of: example)
+        #expect(sut.hasWholeModules)
+    }
+
+    @Test(arguments: quietZoneExamples, QuietZoneProbe.Side.allCases)
+    func whenTextIsEncoded_shouldKeepTwoModulesClearOnEachSide(
+        example: QuietZoneExample,
+        side: QuietZoneProbe.Side,
+    ) throws {
+        let sut = try Self.probe(of: example)
+        #expect(sut.isClear(on: side), "The \(side) zone is not clear")
+    }
+
+    @Test(arguments: quietZoneExamples, QuietZoneProbe.Side.allCases)
+    func whenTextIsEncoded_shouldDrawBarAtInnerEdgeOfQuietZone(
+        example: QuietZoneExample,
+        side: QuietZoneProbe.Side,
+    ) throws {
+        let sut = try Self.probe(of: example)
+        #expect(sut.hasMark(justInside: side), "No bar just inside the \(side) zone")
     }
 
     @Test

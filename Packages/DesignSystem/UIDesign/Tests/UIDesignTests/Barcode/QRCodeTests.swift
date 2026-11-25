@@ -159,11 +159,33 @@ struct QRCodeTests {
         #expect(sut.cgImage.width == BarcodeFixture.qrCode.modulesAcross * Self.tenPixelsPerModule)
     }
 
+    /// Returns the pixels of the fixture code drawn with nothing behind it.
+    ///
+    /// - Returns: The pixels of the render.
+    /// - Throws: When the code, the render or the pixels cannot be made.
+    private static func fixturePixelsWithoutPlate() throws -> RGBAPixels {
+        try RGBAPixels(of: renderWithoutPlate(QRCode(fixtureText)))
+    }
+
+    /// Returns the pixels one module spans in a render.
+    ///
+    /// - Parameter pixels: The render of the fixture code.
+    /// - Returns: The width of a module in pixels. It may be a fraction.
+    private static func modulePixels(in pixels: RGBAPixels) -> Double {
+        Double(pixels.width) / Double(modulesWithQuietZone)
+    }
+
     @Test
-    func whenTextIsEncoded_shouldDrawBlackModulesInsideClearFourModuleQuietZone() throws {
-        let code = try QRCode(Self.fixtureText)
-        let pixels = try RGBAPixels(of: try Self.renderWithoutPlate(code))
-        let modulePixels = Double(pixels.width) / Double(Self.modulesWithQuietZone)
+    func whenTextIsEncoded_shouldDrawBlackModuleAtInnerEdgeOfQuietZone() throws {
+        let sut = try Self.fixturePixelsWithoutPlate()
+        let sample = Int(Self.firstModuleCenter * Self.modulePixels(in: sut))
+        #expect(sut.pixel(at: PixelPosition(column: sample, row: sample)).isOpaqueBlack)
+    }
+
+    @Test
+    func whenTextIsEncoded_shouldDrawClearFourModuleQuietZone() throws {
+        let pixels = try Self.fixturePixelsWithoutPlate()
+        let modulePixels = Self.modulePixels(in: pixels)
         let ring = Double(Self.quietZoneModules) * modulePixels
         let inner = Double(Self.modulesWithQuietZone - Self.quietZoneModules) * modulePixels
         let unclear = pixels.rows.flatMap { row in
@@ -175,9 +197,7 @@ struct QRCodeTests {
                 return isInRing && !pixels.pixel(at: PixelPosition(column: column, row: row)).isClear
             }
         }
-        let sample = Int(Self.firstModuleCenter * modulePixels)
         #expect(unclear.isEmpty, "\(unclear.count) pixels in the quiet zone are not clear")
-        #expect(pixels.pixel(at: PixelPosition(column: sample, row: sample)).isOpaqueBlack)
     }
 
     @Test

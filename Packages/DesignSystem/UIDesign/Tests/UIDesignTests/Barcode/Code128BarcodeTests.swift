@@ -35,28 +35,34 @@ struct Code128BarcodeTests {
     /// The modules of clear quiet zone the Code 128 spec asks for on each side.
     private static let quietZoneModules = 10
 
+    /// Returns the quiet zone probe of the fixture code's stored picture.
+    ///
+    /// - Returns: The probe of the picture.
+    /// - Throws: When the barcode cannot be made or its picture cannot be read.
+    private static func fixtureProbe() throws -> QuietZoneProbe {
+        try QuietZoneProbe(
+            of: Code128Barcode(fixtureText).cgImage,
+            modulesAcross: BarcodeFixture.code128Barcode.modulesAcross,
+            quietZoneModules: quietZoneModules,
+        )
+    }
+
     @Test
-    func whenTextIsEncoded_shouldHaveTenClearModulesEachSide() throws {
-        let sut = try Code128Barcode(Self.fixtureText)
-        let pixels = try RGBAPixels(of: sut.cgImage)
-        let modulesAcross = BarcodeFixture.code128Barcode.modulesAcross
-        let moduleSpan = pixels.width / modulesAcross
-        try #require(pixels.width == modulesAcross * moduleSpan, "The picture is not whole pixels for each module")
-        let zone = Self.quietZoneModules * moduleSpan
-        let width = pixels.width
-        let height = pixels.height
-        let allColumns = pixels.columns
-        let allRows = pixels.rows
-        let left = 0..<zone
-        let right = (width - zone)..<width
-        #expect(pixels.isClear(columns: left, rows: allRows), "The left zone is not clear")
-        #expect(pixels.isClear(columns: right, rows: allRows), "The right zone is not clear")
-        #expect(pixels.isClear(columns: allColumns, rows: 0..<zone), "The top zone is not clear")
-        #expect(pixels.isClear(columns: allColumns, rows: (height - zone)..<height), "The bottom is not clear")
-        let innerLeft = zone..<(zone + moduleSpan)
-        let innerRight = (width - zone - moduleSpan)..<(width - zone)
-        #expect(pixels.hasOpaqueBlack(columns: innerLeft, rows: allRows), "No bar starts at the left zone's edge")
-        #expect(pixels.hasOpaqueBlack(columns: innerRight, rows: allRows), "No bar ends at the right zone's edge")
+    func whenTextIsEncoded_shouldStoreWholePixelsForEachModule() throws {
+        let sut = try Self.fixtureProbe()
+        #expect(sut.hasWholeModules)
+    }
+
+    @Test(arguments: QuietZoneProbe.Side.allCases)
+    func whenTextIsEncoded_shouldKeepTenModulesClearOnEachSide(side: QuietZoneProbe.Side) throws {
+        let sut = try Self.fixtureProbe()
+        #expect(sut.isClear(on: side), "The \(side) zone is not clear")
+    }
+
+    @Test(arguments: [QuietZoneProbe.Side.left, .right])
+    func whenTextIsEncoded_shouldDrawBarAtInnerEdgeOfQuietZone(side: QuietZoneProbe.Side) throws {
+        let sut = try Self.fixtureProbe()
+        #expect(sut.hasMark(justInside: side), "No bar just inside the \(side) zone")
     }
 
     @Test
