@@ -7,11 +7,8 @@ import Vision
 ///
 /// Vision decodes nothing in the iOS simulator, so snapshot tests cannot use it.
 enum BarcodeReader {
-    /// The pixels the stored picture spends on each module.
-    private static let pixelsPerModule = 10
-
-    /// The modules of white border the reader adds on each side, so a scan does not depend on the code.
-    private static let borderModules = 10
+    /// The white border the reader adds on each side, in pixels, so a scan does not depend on the code.
+    private static let borderPixels: CGFloat = 100
 
     /// The context that draws the white page, in software so the result is the same everywhere.
     private static let context = CIContext(options: [.useSoftwareRenderer: true])
@@ -22,7 +19,7 @@ enum BarcodeReader {
     /// pixel can read as black.
     ///
     /// - Parameters:
-    ///   - image: The barcode image, at ten pixels for each module.
+    ///   - image: The barcode image.
     ///   - symbology: The kind of barcode to look for.
     /// - Returns: The text, or `nil` when Vision finds no barcode of that kind.
     static func payload(of image: CGImage, as symbology: VNBarcodeSymbology) -> String? {
@@ -43,8 +40,8 @@ enum BarcodeReader {
     /// - Returns: The image on white, or `nil` when CoreImage draws none.
     private static func onWhitePage(_ image: CGImage) -> CGImage? {
         let picture = CIImage(cgImage: image)
-        let border = CGFloat(borderModules * pixelsPerModule)
-        let page = CIImage(color: .white).cropped(to: picture.extent.insetBy(dx: -border, dy: -border))
+        let bordered = picture.extent.insetBy(dx: -borderPixels, dy: -borderPixels)
+        let page = CIImage(color: .white).cropped(to: bordered)
         let composite = picture.composited(over: page)
         return context.createCGImage(composite, from: composite.extent)
     }

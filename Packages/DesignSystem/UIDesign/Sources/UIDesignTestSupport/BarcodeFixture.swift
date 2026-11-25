@@ -30,6 +30,18 @@ package enum BarcodeFixture: CaseIterable, Equatable, Hashable, Sendable {
     /// The made-up text of a ticket code.
     private static let ticketText = "ti_ExampleTicket0000000000"
 
+    /// The modules across a QR code of the ticket text, quiet zone included.
+    private static let qrCodeModules = 37
+
+    /// The modules across an Aztec code of its text, quiet zone included.
+    private static let aztecCodeModules = 19
+
+    /// The modules across a PDF417 barcode of its text, quiet zone included.
+    private static let pdf417BarcodeModules = 107
+
+    /// The modules across a Code 128 barcode of its text, quiet zone included.
+    private static let code128BarcodeModules = 154
+
     /// The cases that UIDesign generates itself, so the supplied image is left out.
     package static let generated: [Self] = allCases.filter(\.isGenerated)
 
@@ -52,6 +64,19 @@ package enum BarcodeFixture: CaseIterable, Equatable, Hashable, Sendable {
         case .aztecCode: "LOCKER-0042"
         case .pdf417Barcode: "EXAMPLE PASS 0001"
         case .code128Barcode: "ABCD-0001"
+        }
+    }
+
+    /// The modules across the code's own picture, quiet zone included.
+    ///
+    /// A picture's width divided by this gives its pixels for each module.
+    package var modulesAcross: Int {
+        switch self {
+        case .qrCode: Self.qrCodeModules
+        case .suppliedLightBlueQRCode: Self.qrCodeModules
+        case .aztecCode: Self.aztecCodeModules
+        case .pdf417Barcode: Self.pdf417BarcodeModules
+        case .code128Barcode: Self.code128BarcodeModules
         }
     }
 

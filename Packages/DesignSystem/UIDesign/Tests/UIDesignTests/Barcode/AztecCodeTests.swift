@@ -6,6 +6,15 @@ import UIDesignTestSupport
 import Vision
 
 struct AztecCodeTests {
+    /// A text and the modules across the picture of its code, quiet zone included.
+    struct QuietZoneExample: Sendable {
+        /// The text the code carries.
+        let text: String
+
+        /// The modules across the stored picture.
+        let modulesAcross: Int
+    }
+
     /// Made-up text for the code.
     private static let fixtureText = BarcodeFixture.aztecCode.text
 
@@ -17,14 +26,17 @@ struct AztecCodeTests {
     /// About two hundred made-up letters, to show the margin does not depend on the message size.
     private static let longText = String(repeating: "ABCDEFGHIJ", count: 20)
 
-    /// The texts the quiet zone is checked on.
-    private static let quietZoneTexts = [fixtureText, longText]
+    /// The modules across the code of ``longText``, quiet zone included.
+    private static let longTextModules = 49
+
+    /// The texts the quiet zone is checked on, with the modules across each picture.
+    private static let quietZoneExamples = [
+        QuietZoneExample(text: fixtureText, modulesAcross: BarcodeFixture.aztecCode.modulesAcross),
+        QuietZoneExample(text: longText, modulesAcross: longTextModules),
+    ]
 
     /// The modules of clear quiet zone each side keeps.
     private static let quietZoneModules = 2
-
-    /// The pixels the stored picture spends on each module.
-    private static let storedPixelsPerModule = 10
 
     /// Returns text of e-acute characters, which the generator packs as bytes.
     ///
@@ -34,15 +46,15 @@ struct AztecCodeTests {
         String(repeating: "\u{E9}", count: count)
     }
 
-    @Test(arguments: quietZoneTexts)
-    func whenTextIsEncoded_shouldHaveTwoClearModulesEachSide(text: String) throws {
-        let sut = try AztecCode(text)
+    @Test(arguments: quietZoneExamples)
+    func whenTextIsEncoded_shouldHaveTwoClearModulesEachSide(example: QuietZoneExample) throws {
+        let sut = try AztecCode(example.text)
         let pixels = try RGBAPixels(of: sut.cgImage)
-        let zone = Self.quietZoneModules * Self.storedPixelsPerModule
-        let moduleSpan = Self.storedPixelsPerModule
         let width = pixels.width
         let height = pixels.height
-        #expect(width.isMultiple(of: moduleSpan), "The picture is not at ten pixels for each module")
+        let moduleSpan = width / example.modulesAcross
+        try #require(width == example.modulesAcross * moduleSpan, "The picture is not whole pixels for each module")
+        let zone = Self.quietZoneModules * moduleSpan
         let allColumns = pixels.columns
         let allRows = pixels.rows
         #expect(pixels.isClear(columns: 0..<zone, rows: allRows), "The left zone is not clear")

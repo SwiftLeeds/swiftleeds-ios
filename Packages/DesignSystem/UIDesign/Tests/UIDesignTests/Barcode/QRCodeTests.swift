@@ -19,7 +19,7 @@ struct QRCodeTests {
     /// The modules across the drawn code, with its quiet zone.
     ///
     /// The fixture is 29 modules, and the quiet zone adds 4 on each side.
-    private static let modulesWithQuietZone = 37
+    private static let modulesWithQuietZone = BarcodeFixture.qrCode.modulesAcross
 
     /// The modules of clear quiet zone on each side of the code.
     private static let quietZoneModules = 4
@@ -29,8 +29,8 @@ struct QRCodeTests {
     /// It is counted in modules.
     private static let firstModuleCenter = 4.5
 
-    /// The pixels the stored picture spends on each module.
-    private static let storedPixelsPerModule = 10
+    /// The pixels a code that fits under the size cap spends on each module.
+    private static let tenPixelsPerModule = 10
 
     /// Made-up text for two codes that differ only in level.
     private static let exampleText = "ex_member_0001"
@@ -100,15 +100,16 @@ struct QRCodeTests {
     /// Returns whether every pixel of one module's square is opaque black, or every one is clear.
     ///
     /// - Parameters:
-    ///   - pixels: The stored picture, at ``storedPixelsPerModule`` for each module.
+    ///   - pixels: The stored picture.
+    ///   - pixelsPerModule: The pixels the stored picture spends on each module.
     ///   - column: The module's column, from the left.
     ///   - row: The module's row, from the top.
     /// - Returns: `true` when the square holds one value.
-    private static func isUniform(_ pixels: RGBAPixels, column: Int, row: Int) -> Bool {
-        let span = 0..<storedPixelsPerModule
+    private static func isUniform(_ pixels: RGBAPixels, pixelsPerModule: Int, column: Int, row: Int) -> Bool {
+        let span = 0..<pixelsPerModule
         let squares = span.flatMap { down in
             span.map { across in
-                PixelPosition(column: column * storedPixelsPerModule + across, row: row * storedPixelsPerModule + down)
+                PixelPosition(column: column * pixelsPerModule + across, row: row * pixelsPerModule + down)
             }
         }
         let allClear = squares.allSatisfy { pixels.pixel(at: $0).isClear }
@@ -117,16 +118,27 @@ struct QRCodeTests {
     }
 
     @Test
-    func whenTextIsEncoded_shouldStoreEachModuleAsUniformTenPixelSquare() throws {
+    func whenTextIsEncoded_shouldStoreEachModuleAsUniformSquare() throws {
         let code = try QRCode(Self.fixtureText)
         let pixels = try RGBAPixels(of: code.cgImage)
-        let expectedSide = Self.modulesWithQuietZone * Self.storedPixelsPerModule
-        try #require(pixels.width == expectedSide, "The stored picture is \(pixels.width) pixels across")
+        let pixelsPerModule = pixels.width / Self.modulesWithQuietZone
+        try #require(
+            pixels.width == Self.modulesWithQuietZone * pixelsPerModule,
+            "The stored picture is \(pixels.width) pixels across",
+        )
         let modules = 0..<Self.modulesWithQuietZone
         let mixed = modules.flatMap { row in
-            modules.filter { column in !Self.isUniform(pixels, column: column, row: row) }
+            modules.filter { column in
+                !Self.isUniform(pixels, pixelsPerModule: pixelsPerModule, column: column, row: row)
+            }
         }
         #expect(mixed.isEmpty, "\(mixed.count) modules are not one value")
+    }
+
+    @Test
+    func whenCodeFitsUnderCap_shouldStoreTenPixelsPerModule() throws {
+        let sut = try QRCode(Self.fixtureText)
+        #expect(sut.cgImage.width == BarcodeFixture.qrCode.modulesAcross * Self.tenPixelsPerModule)
     }
 
     @Test

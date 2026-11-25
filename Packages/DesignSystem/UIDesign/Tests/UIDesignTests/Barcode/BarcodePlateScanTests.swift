@@ -40,9 +40,6 @@ struct BarcodePlateScanTests {
     /// The pixels in one point of the render.
     private static let renderScale: CGFloat = 2
 
-    /// The pixels the stored picture spends on each module.
-    private static let storedPixelsPerModule = 10
-
     /// How far in from an edge a plate sample sits, in modules.
     ///
     /// Every code keeps at least two clear modules at its edge, so this stays in the quiet zone.
@@ -95,12 +92,11 @@ struct BarcodePlateScanTests {
     ///
     /// - Parameters:
     ///   - pixels: The rendered picture.
-    ///   - code: The code the picture draws.
+    ///   - fixture: The fixture the picture draws.
     ///   - plate: The color the plate should be.
-    private func expectPlate(in pixels: RGBAPixels, of code: any BarcodeContent, matching plate: Color) {
+    private func expectPlate(in pixels: RGBAPixels, of fixture: BarcodeFixture, matching plate: Color) {
         let expected = Self.resolvedLight(plate)
-        let modules = code.cgImage.width / Self.storedPixelsPerModule
-        let inset = Int(Double(pixels.width) / Double(modules) * Self.plateInsetModules)
+        let inset = Int(Double(pixels.width) / Double(fixture.modulesAcross) * Self.plateInsetModules)
         for edge in Edge.allCases {
             let point = edge.point(width: pixels.width, height: pixels.height, inset: inset)
             let isPlate = Self.isPlate(pixels, at: point, matching: expected)
@@ -113,17 +109,11 @@ struct BarcodePlateScanTests {
     /// - Parameters:
     ///   - view: The view to render.
     ///   - fixture: The fixture the view draws.
-    ///   - code: The code the view draws.
     ///   - plate: The color the plate should be.
     /// - Throws: When the picture cannot be made or read.
-    private func expectScan(
-        of view: some View,
-        fixture: BarcodeFixture,
-        code: any BarcodeContent,
-        plate: Color,
-    ) throws {
+    private func expectScan(of view: some View, fixture: BarcodeFixture, plate: Color) throws {
         let image = try CGImage.rendering(view, atScale: Self.renderScale)
-        expectPlate(in: try RGBAPixels(of: image), of: code, matching: plate)
+        expectPlate(in: try RGBAPixels(of: image), of: fixture, matching: plate)
         #expect(BarcodeReader.payload(of: image, as: fixture.symbology) == fixture.text)
     }
 
@@ -133,7 +123,7 @@ struct BarcodePlateScanTests {
         let view = Barcode(code, label: Text("Code"))
             .frame(width: fixture.frameWidth, height: fixture.frameHeight)
             .environment(\.brand, brand)
-        try expectScan(of: view, fixture: fixture, code: code, plate: brand.surface)
+        try expectScan(of: view, fixture: fixture, plate: brand.surface)
     }
 
     @Test(arguments: Brand.allCases, BarcodeFixture.generated)
@@ -146,7 +136,7 @@ struct BarcodePlateScanTests {
             .scaledToFit()
             .frame(width: fixture.frameWidth, height: fixture.frameHeight)
             .background(plate)
-        try expectScan(of: view, fixture: fixture, code: code, plate: brand.secondarySurface)
+        try expectScan(of: view, fixture: fixture, plate: brand.secondarySurface)
     }
 }
 #endif

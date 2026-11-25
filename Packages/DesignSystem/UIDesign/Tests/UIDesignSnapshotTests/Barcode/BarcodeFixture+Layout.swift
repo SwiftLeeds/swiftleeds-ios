@@ -4,7 +4,7 @@ import UIDesignTestSupport
 
 /// Where the snapshot tests read each code's render, and the frame it is drawn in.
 ///
-/// Every distance is counted in modules of the stored picture, which spends ten pixels on each.
+/// Every distance is counted in modules of the stored picture.
 extension BarcodeFixture {
     /// Where to read a code's render, counted in modules of the stored picture.
     struct Layout: Sendable {
@@ -33,23 +33,23 @@ extension BarcodeFixture {
         switch self {
         case .qrCode:
             // swiftlint:disable:next no_magic_numbers - fixture data
-            Layout(modulesAcross: 37, modulesDown: 37, quietZone: 4, darkColumn: 7.5, darkRow: 7.5)
+            Layout(modulesAcross: modulesAcross, modulesDown: 37, quietZone: 4, darkColumn: 7.5, darkRow: 7.5)
 
         case .suppliedLightBlueQRCode:
             // swiftlint:disable:next no_magic_numbers - fixture data
-            Layout(modulesAcross: 37, modulesDown: 37, quietZone: 4, darkColumn: 7.5, darkRow: 7.5)
+            Layout(modulesAcross: modulesAcross, modulesDown: 37, quietZone: 4, darkColumn: 7.5, darkRow: 7.5)
 
         case .aztecCode:
             // swiftlint:disable:next no_magic_numbers - fixture data
-            Layout(modulesAcross: 19, modulesDown: 19, quietZone: 2, darkColumn: 9.5, darkRow: 9.5)
+            Layout(modulesAcross: modulesAcross, modulesDown: 19, quietZone: 2, darkColumn: 9.5, darkRow: 9.5)
 
         case .pdf417Barcode:
             // swiftlint:disable:next no_magic_numbers - fixture data
-            Layout(modulesAcross: 107, modulesDown: 31, quietZone: 2, darkColumn: 5.5, darkRow: 15.5)
+            Layout(modulesAcross: modulesAcross, modulesDown: 31, quietZone: 2, darkColumn: 5.5, darkRow: 15.5)
 
         case .code128Barcode:
             // swiftlint:disable:next no_magic_numbers - fixture data
-            Layout(modulesAcross: 154, modulesDown: 52, quietZone: 10, darkColumn: 10.5, darkRow: 26.5)
+            Layout(modulesAcross: modulesAcross, modulesDown: 52, quietZone: 10, darkColumn: 10.5, darkRow: 26.5)
         }
     }
 

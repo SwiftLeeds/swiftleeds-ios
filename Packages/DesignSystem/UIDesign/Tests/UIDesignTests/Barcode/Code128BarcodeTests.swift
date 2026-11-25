@@ -35,14 +35,14 @@ struct Code128BarcodeTests {
     /// The modules of clear quiet zone the Code 128 spec asks for on each side.
     private static let quietZoneModules = 10
 
-    /// The pixels the stored picture spends on each module.
-    private static let storedPixelsPerModule = 10
-
     @Test
     func whenTextIsEncoded_shouldHaveTenClearModulesEachSide() throws {
         let sut = try Code128Barcode(Self.fixtureText)
         let pixels = try RGBAPixels(of: sut.cgImage)
-        let zone = Self.quietZoneModules * Self.storedPixelsPerModule
+        let modulesAcross = BarcodeFixture.code128Barcode.modulesAcross
+        let moduleSpan = pixels.width / modulesAcross
+        try #require(pixels.width == modulesAcross * moduleSpan, "The picture is not whole pixels for each module")
+        let zone = Self.quietZoneModules * moduleSpan
         let width = pixels.width
         let height = pixels.height
         let allColumns = pixels.columns
@@ -53,7 +53,6 @@ struct Code128BarcodeTests {
         #expect(pixels.isClear(columns: right, rows: allRows), "The right zone is not clear")
         #expect(pixels.isClear(columns: allColumns, rows: 0..<zone), "The top zone is not clear")
         #expect(pixels.isClear(columns: allColumns, rows: (height - zone)..<height), "The bottom is not clear")
-        let moduleSpan = Self.storedPixelsPerModule
         let innerLeft = zone..<(zone + moduleSpan)
         let innerRight = (width - zone - moduleSpan)..<(width - zone)
         #expect(pixels.hasOpaqueBlack(columns: innerLeft, rows: allRows), "No bar starts at the left zone's edge")
@@ -61,11 +60,15 @@ struct Code128BarcodeTests {
     }
 
     @Test
-    func whenWidthAtTenPixelsWouldPassCap_shouldUseLargestWholeScaleUnderCap() throws {
+    func whenFullScaleWouldPassCap_shouldUseLargestWholeScaleUnderCap() throws {
         let sut = try Code128Barcode(Self.fortyLetters)
-        let scale = Self.longerSideCap / Self.fortyLetterModules
-        #expect(scale < Self.storedPixelsPerModule)
-        #expect(sut.cgImage.width == Self.fortyLetterModules * scale)
+        let fixture = try Code128Barcode(Self.fixtureText)
+        let fullScale = fixture.cgImage.width / BarcodeFixture.code128Barcode.modulesAcross
+        let scale = sut.cgImage.width / Self.fortyLetterModules
+        try #require(sut.cgImage.width == Self.fortyLetterModules * scale, "The picture is not whole pixels")
+        #expect(scale < fullScale)
+        #expect(sut.cgImage.width <= Self.longerSideCap)
+        #expect(Self.fortyLetterModules * (scale + 1) > Self.longerSideCap)
     }
 
     @Test
