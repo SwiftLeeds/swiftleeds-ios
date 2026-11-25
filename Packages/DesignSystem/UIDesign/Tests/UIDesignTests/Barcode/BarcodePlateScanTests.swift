@@ -127,7 +127,8 @@ struct BarcodePlateScanTests {
     }
 
     @Test(arguments: Brand.allCases, BarcodeFixture.generated)
-    func whenDrawnOnSecondarySurface_shouldScanBackAsCodeText(brand: Brand, fixture: BarcodeFixture) throws {
+    func whenCodeIsOnSecondarySurfaceColor_shouldScanBackAsCodeText(brand: Brand, fixture: BarcodeFixture) throws {
+        // macOS never picks the secondary surface, so this paints the plate itself instead of using `Barcode`.
         let code = try fixture.content
         let plate = Color(Self.resolvedLight(brand.secondarySurface))
         let view = Image(code.cgImage, scale: 1, label: Text("Code"))
