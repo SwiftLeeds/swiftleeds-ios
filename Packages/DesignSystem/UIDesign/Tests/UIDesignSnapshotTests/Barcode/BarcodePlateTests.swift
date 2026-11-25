@@ -1,5 +1,4 @@
 #if os(iOS)
-import QuartzCore
 import SwiftUI
 import Testing
 import UIDesign
@@ -22,12 +21,6 @@ struct BarcodePlateTests {
 
         /// The name the test run shows for this case.
         var testDescription: String { "\(brand) \(appearance.name) \(fixture)" }
-    }
-
-    /// The reason a test could not read the barcode's render.
-    private enum ProbeError: Error {
-        /// The render never showed the code's marks.
-        case codeNeverDrawn
     }
 
     /// The made-up text the code carries.
@@ -118,7 +111,7 @@ struct BarcodePlateTests {
     ///   - appearance: The appearance the host is drawn in.
     ///   - fixture: The kind of code to draw. The default is the QR code.
     /// - Returns: The pixels of the render, at the render scale.
-    /// - Throws: ``ProbeError/codeNeverDrawn`` when the code's marks never show in the render.
+    /// - Throws: ``HostedRender/RenderingError/neverReady`` when the code's marks never show in the render.
     ///   Also when the code, the render or the pixels cannot be made.
     private static func renderedPixels(
         brand: Brand,
@@ -135,7 +128,7 @@ struct BarcodePlateTests {
     ///   - appearance: The appearance the host is drawn in.
     ///   - fixture: The kind of code to draw. The default is the QR code.
     /// - Returns: The picture of the render, at the render scale.
-    /// - Throws: ``ProbeError/codeNeverDrawn`` when the code's marks never show in the render.
+    /// - Throws: ``HostedRender/RenderingError/neverReady`` when the code's marks never show in the render.
     ///   Also when the code, the render or the pixels cannot be made.
     private static func renderedImage(
         brand: Brand,
@@ -147,36 +140,16 @@ struct BarcodePlateTests {
             .frame(width: size.width, height: size.height)
             .background(.groupedSurface)
             .environment(\.brand, brand)
-        let host = UIHostingController(rootView: view.ignoresSafeArea())
-        // Traits, not `EnvironmentValues`, because the environment cannot set Increase Contrast.
-        host.traitOverrides.userInterfaceStyle = appearance.isLight ? .light : .dark
-        host.traitOverrides.accessibilityContrast = appearance.withoutIncreasedContrast == nil ? .normal : .high
-        let frame = CGRect(origin: .zero, size: size)
-        let window = (SceneFreeWindow() as any WindowMaking).makeWindow(frame: frame)
-        window.rootViewController = host
-        window.makeKeyAndVisible()
-        host.view.frame = frame
-        host.view.layoutIfNeeded()
-        for _ in 0..<attempts {
-            let image = try image(of: window)
-            if showsMarks(in: try RGBAPixels(of: image), of: fixture) { return image }
-            try await Task.sleep(for: pollInterval)
+        let sut = HostedRender(
+            size: size,
+            appearance: appearance,
+            scale: windowScale,
+            attempts: attempts,
+            interval: pollInterval,
+        )
+        return try await sut.image(of: view) { image in
+            try showsMarks(in: RGBAPixels(of: image), of: fixture)
         }
-        throw ProbeError.codeNeverDrawn
-    }
-
-    /// Returns the picture of what a window shows now.
-    ///
-    /// - Parameter window: The window to read.
-    /// - Returns: The window's picture, at the render scale.
-    /// - Throws: When the picture cannot be made.
-    private static func image(of window: UIWindow) throws -> CGImage {
-        let format = UIGraphicsImageRendererFormat()
-        format.scale = CGFloat(windowScale)
-        let image = UIGraphicsImageRenderer(size: window.bounds.size, format: format).image { context in
-            window.layer.render(in: context.cgContext)
-        }
-        return try #require(image.cgImage)
     }
 
     /// Returns whether a module that is dark in the stored code is dark in a render.
